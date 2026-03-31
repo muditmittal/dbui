@@ -3954,42 +3954,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docs@workspace:apps/docs":
-  version: 0.0.0-use.local
-  resolution: "docs@workspace:apps/docs"
-  dependencies:
-    "@base-ui/react": "npm:^1.3.0"
-    "@tailwindcss/postcss": "npm:^4"
-    "@types/node": "npm:^20"
-    "@types/react": "npm:^19"
-    "@types/react-dom": "npm:^19"
-    babel-plugin-react-compiler: "npm:1.0.0"
-    class-variance-authority: "npm:^0.7.1"
-    clsx: "npm:^2.1.1"
-    cmdk: "npm:^1.1.1"
-    date-fns: "npm:^4.1.0"
-    embla-carousel-react: "npm:^8.6.0"
-    eslint: "npm:^9"
-    eslint-config-next: "npm:16.1.6"
-    input-otp: "npm:^1.4.2"
-    lucide-react: "npm:^0.577.0"
-    next: "npm:16.1.6"
-    next-themes: "npm:^0.4.6"
-    react: "npm:19.2.3"
-    react-day-picker: "npm:^9.14.0"
-    react-dom: "npm:19.2.3"
-    react-resizable-panels: "npm:^4.7.3"
-    recharts: "npm:^2.15.4"
-    shadcn: "npm:^4.0.8"
-    sonner: "npm:^2.0.7"
-    tailwind-merge: "npm:^3.5.0"
-    tailwindcss: "npm:^4"
-    tw-animate-css: "npm:^1.4.0"
-    typescript: "npm:^5"
-    vaul: "npm:^1.1.2"
-  languageName: unknown
-  linkType: soft
-
 "doctrine@npm:^2.1.0":
   version: 2.1.0
   resolution: "doctrine@npm:2.1.0"
@@ -7394,6 +7358,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"portal@workspace:apps/portal":
+  version: 0.0.0-use.local
+  resolution: "portal@workspace:apps/portal"
+  dependencies:
+    "@base-ui/react": "npm:^1.3.0"
+    "@tailwindcss/postcss": "npm:^4"
+    "@types/node": "npm:^20"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
+    babel-plugin-react-compiler: "npm:1.0.0"
+    class-variance-authority: "npm:^0.7.1"
+    clsx: "npm:^2.1.1"
+    cmdk: "npm:^1.1.1"
+    date-fns: "npm:^4.1.0"
+    embla-carousel-react: "npm:^8.6.0"
+    eslint: "npm:^9"
+    eslint-config-next: "npm:16.1.6"
+    input-otp: "npm:^1.4.2"
+    lucide-react: "npm:^0.577.0"
+    next: "npm:16.1.6"
+    next-themes: "npm:^0.4.6"
+    react: "npm:19.2.3"
+    react-day-picker: "npm:^9.14.0"
+    react-dom: "npm:19.2.3"
+    react-resizable-panels: "npm:^4.7.3"
+    recharts: "npm:^2.15.4"
+    shadcn: "npm:^4.0.8"
+    sonner: "npm:^2.0.7"
+    tailwind-merge: "npm:^3.5.0"
+    tailwindcss: "npm:^4"
+    tw-animate-css: "npm:^1.4.0"
+    typescript: "npm:^5"
+    vaul: "npm:^1.1.2"
+  languageName: unknown
+  linkType: soft
+
 "possible-typed-array-names@npm:^1.0.0":
   version: 1.1.0
   resolution: "possible-typed-array-names@npm:1.1.0"
@@ -8252,9 +8252,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shadcn@npm:^4.0.8, shadcn@workspace:apps/shadcn-original":
+"shadcn@npm:^4.0.8, shadcn@workspace:apps/shadcn":
   version: 0.0.0-use.local
-  resolution: "shadcn@workspace:apps/shadcn-original"
+  resolution: "shadcn@workspace:apps/shadcn"
   dependencies:
     "@antfu/ni": "npm:^25.0.0"
     "@babel/core": "npm:^7.28.0"

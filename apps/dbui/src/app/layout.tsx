@@ -1,18 +1,21 @@
 import type { Metadata } from "next"
-import { Fira_Code } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Nav } from "@/components/nav"
+import { Geist, Geist_Mono } from "next/font/google"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import "./globals.css"
 
-const firaCode = Fira_Code({
-  variable: "--font-mono",
+const geistSans = Geist({
+  variable: "--font-sans",
+  subsets: ["latin"],
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
-  title: "DBUI — Databricks UI Kit",
-  description:
-    "DuBois design language on shadcn components. 172 design tokens, 413 icons, theme-switchable, LLM-native.",
+  title: "db-design-system",
+  description: "Databricks DuBois design system — shadcn/ui styled to match Databricks UI",
 }
 
 export default function RootLayout({
@@ -22,11 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${firaCode.variable} antialiased`}>
-        <ThemeProvider defaultMode="light">
-          <Nav />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <TooltipProvider>
           {children}
-        </ThemeProvider>
+        </TooltipProvider>
       </body>
     </html>
   )

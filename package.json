@@ -7,10 +7,11 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn workspace docs dev",
-    "build": "yarn workspace docs build",
-    "lint": "yarn workspace docs lint",
-    "typecheck": "yarn workspace docs typecheck"
+    "dev": "yarn workspace portal dev",
+    "dev:dbui": "yarn workspace dbui dev",
+    "build": "yarn workspace portal build",
+    "build:dbui": "yarn workspace dbui build",
+    "lint": "yarn workspace portal lint"
   },
   "engines": {
     "node": ">=22.0.0"

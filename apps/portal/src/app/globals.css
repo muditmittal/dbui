@@ -1,0 +1,221 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* ─── Color tokens ─── */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ─── DBUI extended tokens (not in default shadcn) ─── */
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-destructive-active: var(--destructive-active);
+  --color-border-accessible: var(--border-accessible);
+  --color-overlay: var(--overlay);
+  --color-code-background: var(--code-background);
+  --color-skeleton: var(--skeleton);
+  --color-ai-gradient-start: var(--ai-gradient-start);
+  --color-ai-gradient-mid: var(--ai-gradient-mid);
+  --color-ai-gradient-end: var(--ai-gradient-end);
+
+  /* ─── Fonts ─── */
+  --font-sans: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, "Cascadia Code", "Fira Code", monospace;
+
+  /* ─── Radius — DuBois values, mapped to shadcn usage ─── */
+  /* shadcn components use rounded-lg for buttons/inputs, rounded-md for inner elements */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 4px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 999px;
+}
+
+/* ─── Light mode — DuBois token values ─── */
+:root {
+  /* Surface */
+  --background: #FFFFFF;
+  --foreground: #161616;
+  --card: #FFFFFF;
+  --card-foreground: #161616;
+  --popover: #FFFFFF;
+  --popover-foreground: #161616;
+  --secondary: #F7F7F7;
+  --secondary-foreground: #161616;
+  --muted: #F7F7F7;
+  --muted-foreground: #6F6F6F;
+  --accent: #F0F8FF;
+  --accent-foreground: #0E538B;
+
+  /* Action */
+  --primary: #2272B4;
+  --primary-foreground: #FFFFFF;
+  --destructive: #C82D4C;
+  --destructive-foreground: #FFFFFF;
+  --warning: #BE501E;
+  --warning-foreground: #FFFFFF;
+  --success: #277C43;
+  --success-foreground: #FFFFFF;
+  --ring: #2272B4;
+
+  /* Interactive states (filled buttons) */
+  --primary-hover: #0E538B;
+  --primary-active: #04355D;
+  --destructive-hover: #9E102C;
+  --destructive-active: #630316;
+
+  /* Border */
+  --border: #EBEBEB;
+  --input: #CBCBCB;
+  --border-accessible: #6F6F6F;
+
+  /* Chart — DuBois categorical */
+  --chart-1: #4299E0;
+  --chart-2: #3BA65E;
+  --chart-3: #DE7921;
+  --chart-4: #8A63BF;
+  --chart-5: #C83243;
+
+  /* Utility */
+  --overlay: rgba(0, 0, 0, 0.26);
+  --code-background: rgba(82, 82, 82, 0.08);
+  --skeleton: rgba(162, 162, 162, 0.16);
+
+  /* AI Brand */
+  --ai-gradient-start: #4299E0;
+  --ai-gradient-mid: #CA42E0;
+  --ai-gradient-end: #FF5F46;
+
+  /* Sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #161616;
+  --sidebar-primary: #2272B4;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F7F7F7;
+  --sidebar-accent-foreground: #161616;
+  --sidebar-border: #EBEBEB;
+  --sidebar-ring: #2272B4;
+
+  /* Radius base */
+  --radius: 4px;
+}
+
+/* ─── Dark mode — DuBois token values ─── */
+.dark {
+  /* Surface */
+  --background: #11171C;
+  --foreground: #E8ECF0;
+  --card: #11171C;
+  --card-foreground: #E8ECF0;
+  --popover: #11171C;
+  --popover-foreground: #E8ECF0;
+  --secondary: #1F272D;
+  --secondary-foreground: #E8ECF0;
+  --muted: #1F272D;
+  --muted-foreground: #92A4B3;
+  --accent: #04355D;
+  --accent-foreground: #4299E0;
+
+  /* Action */
+  --primary: #4299E0;
+  --primary-foreground: #11171C;
+  --destructive: #E65B77;
+  --destructive-foreground: #11171C;
+  --warning: #DE7921;
+  --warning-foreground: #11171C;
+  --success: #3BA65E;
+  --success-foreground: #11171C;
+  --ring: #4299E0;
+
+  /* Interactive states (filled buttons) */
+  --primary-hover: #8ACAFF;
+  --primary-active: #BAE1FC;
+  --destructive-hover: #F792A6;
+  --destructive-active: #FBD0D8;
+
+  /* Border */
+  --border: #1F272D;
+  --input: #37444F;
+  --border-accessible: #C0CDD8;
+
+  /* Chart — same both modes */
+  --chart-1: #4299E0;
+  --chart-2: #3BA65E;
+  --chart-3: #DE7921;
+  --chart-4: #8A63BF;
+  --chart-5: #C83243;
+
+  /* Utility */
+  --overlay: rgba(0, 0, 0, 0.45);
+  --code-background: #37444F;
+  --skeleton: rgba(144, 164, 181, 0.16);
+
+  /* AI Brand */
+  --ai-gradient-start: #4299E0;
+  --ai-gradient-mid: #CA42E0;
+  --ai-gradient-end: #FF5F46;
+
+  /* Sidebar */
+  --sidebar: #11171C;
+  --sidebar-foreground: #E8ECF0;
+  --sidebar-primary: #4299E0;
+  --sidebar-primary-foreground: #11171C;
+  --sidebar-accent: #1F272D;
+  --sidebar-accent-foreground: #E8ECF0;
+  --sidebar-border: #1F272D;
+  --sidebar-ring: #4299E0;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 13px;
+    line-height: 20px;
+  }
+  html {
+    @apply font-sans;
+  }
+}

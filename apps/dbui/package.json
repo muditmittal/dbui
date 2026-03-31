@@ -1,7 +1,7 @@
 {
   "name": "dbui",
-  "version": "0.1.0",
   "description": "DBUI — Databricks UI Kit. DuBois design language on shadcn components.",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
