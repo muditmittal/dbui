@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useTheme } from "@/components/theme-provider"
+import { SyntaxHighlightedCode } from "@/components/syntax-highlighted-code"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -585,15 +586,7 @@ function VariantBar({ label, variants, states, sizes }: VariantBarProps) {
 // ─── Code Block ───
 
 function Code({ children }: { children: string }) {
-  const { t } = useTheme()
-  return (
-    <pre
-      className="text-[12px] leading-[1.6] p-4 rounded-lg overflow-x-auto"
-      style={{ backgroundColor: t.cardBg, border: `1px solid ${t.border}`, fontFamily: MONO, color: t.textMuted }}
-    >
-      <code>{children.trim()}</code>
-    </pre>
-  )
+  return <SyntaxHighlightedCode code={children} />
 }
 
 // ─── Component Section ───
@@ -601,13 +594,24 @@ function Code({ children }: { children: string }) {
 const DUBOIS_STORYBOOK = "https://ui-infra.dev.databricks.com/storybook/js/packages/du-bois/index.html"
 const DUBOIS_IFRAME = "https://ui-infra.dev.databricks.com/storybook/js/packages/du-bois/iframe.html"
 
-type TabKey = "dbui" | "code" | "dubois" | "figma"
+/** DuBois UI Kit file in Figma. Append `?node-id=123-456` (from Figma: Copy link to selection) for a component. */
+const FIGMA_LIBRARY_FILE = "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv"
+
+/**
+ * Per-section Figma URLs. Keys match Section `id`. Omit a key to hide the badge for that section.
+ */
+const FIGMA_URLS: Partial<Record<string, string>> = {
+  button: FIGMA_LIBRARY_FILE,
+}
+
+type TabKey = "dbui" | "code" | "dubois"
 
 function Section({
   id,
   title,
   code,
   duboisStoryId,
+  figmaUrl,
   hasVariantBar,
   children,
 }: {
@@ -615,6 +619,8 @@ function Section({
   title: string
   code: string
   duboisStoryId?: string
+  /** Overrides FIGMA_URLS[id] when set */
+  figmaUrl?: string
   hasVariantBar?: boolean
   children: React.ReactNode
 }) {
@@ -625,9 +631,10 @@ function Section({
     { key: "dbui", label: "DBUI" },
     { key: "code", label: "Code" },
     { key: "dubois", label: "DuBois", localOnly: true },
-    { key: "figma", label: "Figma" },
   ]
   const tabs = allTabs.filter((t) => !t.localOnly || isLocal)
+
+  const resolvedFigmaUrl = figmaUrl ?? FIGMA_URLS[id]
 
   return (
     <section id={id} className="scroll-mt-20">
@@ -637,20 +644,41 @@ function Section({
 
       <div className="rounded-lg overflow-hidden" style={{ border: `1px solid ${t.border}`, borderBottomLeftRadius: hasVariantBar ? 0 : undefined, borderBottomRightRadius: hasVariantBar ? 0 : undefined, borderBottom: hasVariantBar ? "none" : undefined }}>
         {/* Tab bar */}
-        <div className="flex items-center gap-0 px-1" style={{ borderBottom: `1px solid ${t.border}` }}>
-          {tabs.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => setTab(item.key)}
-              className="text-[13px] px-3 py-2.5 relative transition-colors"
+        <div
+          className="flex items-center justify-between gap-3 px-1 min-h-[41px]"
+          style={{ borderBottom: `1px solid ${t.border}` }}
+        >
+          <div className="flex items-center gap-0">
+            {tabs.map((item) => (
+              <button
+                key={item.key}
+                onClick={() => setTab(item.key)}
+                className="text-[13px] px-3 py-2.5 relative transition-colors"
+                style={{
+                  color: tab === item.key ? t.text : t.textSubtle,
+                  fontWeight: tab === item.key ? 500 : 400,
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+          {resolvedFigmaUrl ? (
+            <a
+              href={resolvedFigmaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-medium px-2 py-1 rounded-md mr-2 shrink-0 transition-opacity hover:opacity-90"
               style={{
-                color: tab === item.key ? t.text : t.textSubtle,
-                fontWeight: tab === item.key ? 500 : 400,
+                fontFamily: MONO,
+                color: t.primary,
+                border: `1px solid ${t.border}`,
+                backgroundColor: t.cardBg,
               }}
             >
-              {item.label}
-            </button>
-          ))}
+              Figma
+            </a>
+          ) : null}
         </div>
 
         {/* Tab content */}
@@ -661,12 +689,7 @@ function Section({
         )}
         {tab === "code" && (
           <div className="p-4">
-            <pre
-              className="text-[12px] leading-[1.6] overflow-x-auto"
-              style={{ fontFamily: MONO, color: t.textMuted }}
-            >
-              <code>{code.trim()}</code>
-            </pre>
+            <SyntaxHighlightedCode code={code} />
           </div>
         )}
         {tab === "dubois" && (
@@ -700,13 +723,6 @@ function Section({
               </p>
             </div>
           )
-        )}
-        {tab === "figma" && (
-          <div className="p-6 min-h-[120px] flex items-center justify-center">
-            <p className="text-[13px]" style={{ fontFamily: MONO, color: t.textSubtle }}>
-              Figma embed coming soon
-            </p>
-          </div>
         )}
       </div>
     </section>

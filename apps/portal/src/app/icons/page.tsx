@@ -3,7 +3,10 @@
 import { useState, useMemo } from "react"
 import { useTheme } from "@/components/theme-provider"
 import iconsData from "@/data/icons.json"
+import iconFigmaUrls from "@/data/icon-figma-urls.json"
 import { iconRegistry } from "@/data/icon-registry"
+
+const ICON_FIGMA_URLS = iconFigmaUrls as Record<string, string>
 
 const MONO = "'Fira Code', monospace"
 const SERIF = "Baskerville, 'Times New Roman', Georgia, serif"
@@ -268,10 +271,12 @@ export default function IconsPage() {
                       className="grid grid-cols-2"
                       style={{ borderBottom: ri < rows.length - 1 ? `1px solid ${t.border}` : undefined }}
                     >
-                      {pair.map((icon, ci) => (
+                      {pair.map((icon, ci) => {
+                        const figmaHref = ICON_FIGMA_URLS[icon.name]
+                        return (
                         <div
                           key={icon.name}
-                          className="flex items-center gap-3 px-4 py-2.5 transition-colors text-[13px]"
+                          className="group flex items-center gap-3 px-4 py-2.5 transition-colors text-[13px]"
                           style={{ borderRight: ci === 0 && pair.length > 1 ? `1px solid ${t.border}` : undefined }}
                           onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = t.hoverBg }}
                           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent" }}
@@ -306,8 +311,29 @@ export default function IconsPage() {
                               )}
                             </div>
                           </div>
+                          {figmaHref ? (
+                            <a
+                              href={figmaHref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              tabIndex={-1}
+                              title="Open in Figma"
+                              aria-label={`Open ${icon.name} in Figma`}
+                              className="text-[11px] font-medium px-2 py-1 rounded-md shrink-0 transition-opacity duration-150 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto hover:!opacity-90"
+                              style={{
+                                fontFamily: MONO,
+                                color: t.primary,
+                                border: `1px solid ${t.border}`,
+                                backgroundColor: t.cardBg,
+                              }}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Figma
+                            </a>
+                          ) : null}
                         </div>
-                      ))}
+                        )
+                      })}
                     </div>
                   ))
                 })()}
