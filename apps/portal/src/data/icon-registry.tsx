@@ -1,5 +1,5 @@
 // Auto-generated icon barrel — do not edit
-// Source: apps/docs/src/components/icons/ (symlinked)
+// Source: apps/dbui/src/components/icons/ (resolved via tsconfig paths)
 
 import { type ComponentType } from "react"
 

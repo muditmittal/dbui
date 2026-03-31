@@ -19,6 +19,7 @@
       }
     ],
     "paths": {
+      "@/components/icons/*": ["../dbui/src/components/icons/*"],
       "@/*": ["./src/*"]
     }
   },
@@ -30,5 +31,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "src/components/icons"]
+  "exclude": ["node_modules"]
 }
