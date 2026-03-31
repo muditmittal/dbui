@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+dist
+.env
+.env.local
+.yarn/cache
+.yarn/install-state.gz
+*.tsbuildinfo

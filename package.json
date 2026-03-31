@@ -1,0 +1,21 @@
+{
+  "name": "db-design-system",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace docs dev",
+    "build": "yarn workspace docs build",
+    "lint": "yarn workspace docs lint",
+    "typecheck": "yarn workspace docs typecheck"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "@figma/code-connect": "^1.4.2"
+  }
+}

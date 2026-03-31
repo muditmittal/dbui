@@ -1,0 +1,16 @@
+import { forwardRef } from "react"
+
+/** use:action outdent | decrease indent, shift left */
+const IndentDecrease = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
+  ({ className, size = 16, ...props }, ref) => (
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
+      <path d="M0 2H16V3.5H0V2Z" fill="currentColor"/>
+      <path d="M0 5.5H8V7H0V5.5Z" fill="currentColor"/>
+      <path d="M0 9H8V10.5H0V9Z" fill="currentColor"/>
+      <path d="M16 12.5V14H0V12.5H16Z" fill="currentColor"/>
+      <path d="M14.0303 6.03033L12.9697 4.96967L9.93933 8L12.9697 11.0303L14.0303 9.96967L12.0607 8L14.0303 6.03033Z" fill="currentColor"/>
+    </svg>
+  )
+)
+IndentDecrease.displayName = "IndentDecrease"
+export { IndentDecrease }
