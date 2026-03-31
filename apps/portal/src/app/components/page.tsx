@@ -33,6 +33,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 import { Spinner } from "@/components/ui/spinner"
+import { ChevronRight, Plus } from "lucide-react"
 
 const MONO = "'Fira Code', monospace"
 const SERIF = "Baskerville, 'Times New Roman', Georgia, serif"
@@ -398,15 +399,6 @@ function VariantBar({ label, variants, states, sizes }: VariantBarProps) {
   const [iconOnly, setIconOnly] = useState(false)
 
   const total = states * sizes * variants.length
-  const noteworthy = variants.filter((v) => v.status !== "covered")
-  // Indicator dots: small colored circles for non-covered statuses
-  const dotColors: Record<string, string> = {
-    new: "#0369A1",
-    tweaked: "#D97706",
-    gap: "#DC2626",
-    partial: "#D97706",
-    deferred: "#9CA3AF",
-  }
 
   return (
     <div>
@@ -424,40 +416,21 @@ function VariantBar({ label, variants, states, sizes }: VariantBarProps) {
           borderBottomRightRadius: open ? 0 : "0.5rem",
         }}
       >
-        <span
-          className="text-[10px] transition-transform flex-shrink-0"
+        <ChevronRight
+          className="size-4 flex-shrink-0 transition-transform"
           style={{ color: t.textSubtle, transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
-        >
-          ▶
-        </span>
-        <span className="text-[13px]" style={{ fontFamily: MONO, color: t.text }}>{label}</span>
+          aria-hidden
+        />
         <span
           className="text-[13px] font-semibold tabular-nums"
           style={{ fontFamily: MONO, color: t.primary }}
         >
           {total}
         </span>
+        <span className="text-[13px] font-medium" style={{ color: t.text }}>{label}</span>
         <span className="text-[12px]" style={{ color: t.textSubtle }}>
           {states} states × {sizes} sizes × {variants.length} variants
         </span>
-        <span className="flex-1" />
-        {/* Indicator dots for noteworthy items */}
-        {!open && noteworthy.length > 0 && (
-          <div className="flex items-center gap-1.5">
-            {noteworthy.map((v) => (
-              <span
-                key={v.name}
-                title={`${v.name}: ${v.status}`}
-                className="inline-block size-2.5 rounded-full flex-shrink-0 cursor-default"
-                style={{
-                  backgroundColor: dotColors[v.status] || "#9CA3AF",
-                  border: `1.5px solid ${t.bg}`,
-                  boxShadow: `0 0 0 1px ${dotColors[v.status] || "#9CA3AF"}33`,
-                }}
-              />
-            ))}
-          </div>
-        )}
       </button>
 
       {/* Expanded panel */}
@@ -633,18 +606,14 @@ type TabKey = "dbui" | "code" | "dubois" | "figma"
 function Section({
   id,
   title,
-  description,
   code,
-  figmaStatus,
   duboisStoryId,
   hasVariantBar,
   children,
 }: {
   id: string
   title: string
-  description: string
   code: string
-  figmaStatus?: "ready" | "planned" | "none"
   duboisStoryId?: string
   hasVariantBar?: boolean
   children: React.ReactNode
@@ -652,10 +621,6 @@ function Section({
   const { t } = useTheme()
   const [tab, setTab] = useState<TabKey>("dbui")
   const isLocal = typeof window !== "undefined" && window.location.hostname === "localhost"
-  const status = figmaStatus || "planned"
-  const statusColor = status === "ready" ? t.success : status === "planned" ? t.primary : t.textSubtle
-  const statusLabel = status === "ready" ? "Figma ready" : status === "planned" ? "Figma planned" : "Code only"
-
   const allTabs: { key: TabKey; label: string; localOnly?: boolean }[] = [
     { key: "dbui", label: "DBUI" },
     { key: "code", label: "Code" },
@@ -666,41 +631,24 @@ function Section({
 
   return (
     <section id={id} className="scroll-mt-20">
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <h2 className="text-[22px] leading-[1.2] mb-1" style={{ fontFamily: SERIF }}>
-            <em className="font-normal">{title}</em>
-          </h2>
-          <p className="text-[13px]" style={{ color: t.textMuted }}>{description}</p>
-        </div>
-        <span
-          className="text-[11px] px-2 py-0.5 rounded-full flex-shrink-0 mt-1"
-          style={{ fontFamily: MONO, color: statusColor, border: `1px solid ${statusColor}33`, backgroundColor: `${statusColor}0D` }}
-        >
-          {statusLabel}
-        </span>
-      </div>
+      <h2 className="text-[22px] leading-[1.2] font-semibold mb-4" style={{ color: t.text }}>
+        {title}
+      </h2>
 
       <div className="rounded-lg overflow-hidden" style={{ border: `1px solid ${t.border}`, borderBottomLeftRadius: hasVariantBar ? 0 : undefined, borderBottomRightRadius: hasVariantBar ? 0 : undefined, borderBottom: hasVariantBar ? "none" : undefined }}>
         {/* Tab bar */}
-        <div className="flex items-center gap-0 px-4" style={{ backgroundColor: t.cardBg, borderBottom: `1px solid ${t.border}` }}>
+        <div className="flex items-center gap-0 px-1" style={{ borderBottom: `1px solid ${t.border}` }}>
           {tabs.map((item) => (
             <button
               key={item.key}
               onClick={() => setTab(item.key)}
-              className="text-[12px] px-3 py-2.5 relative transition-colors"
+              className="text-[13px] px-3 py-2.5 relative transition-colors"
               style={{
-                fontFamily: MONO,
                 color: tab === item.key ? t.text : t.textSubtle,
+                fontWeight: tab === item.key ? 500 : 400,
               }}
             >
               {item.label}
-              {tab === item.key && (
-                <span
-                  className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full"
-                  style={{ backgroundColor: t.primary }}
-                />
-              )}
             </button>
           ))}
         </div>
@@ -856,38 +804,57 @@ export default function ComponentsPage() {
                 id="button"
                 title="Button"
                 duboisStoryId="primitives-button-stories--default"
-                description="6 variants × 8 sizes. Primary is DuBois blue600."
                 hasVariantBar
-                code={`<Button>Default</Button>
+                code={`{/* Variants */}
+<Button>Primary</Button>
 <Button variant="outline">Outline</Button>
 <Button variant="secondary">Secondary</Button>
 <Button variant="ghost">Ghost</Button>
 <Button variant="destructive">Destructive</Button>
 <Button variant="link">Link</Button>
+<Button size="icon" variant="ghost" aria-label="Add"><Plus /></Button>
 
 {/* Sizes */}
-<Button size="xs">XS</Button>
 <Button size="sm">Small</Button>
-<Button size="default">Default</Button>
-<Button size="lg">Large</Button>`}
+<Button size="default">Default</Button>`}
               >
-                <div className="flex flex-wrap gap-2">
-                  <Button>Default</Button>
-                  <Button variant="outline">Outline</Button>
-                  <Button variant="secondary">Secondary</Button>
-                  <Button variant="ghost">Ghost</Button>
-                  <Button variant="destructive">Destructive</Button>
-                  <Button variant="link">Link</Button>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <Button size="xs">XS</Button>
-                  <Button size="sm">Small</Button>
-                  <Button size="default">Default</Button>
-                  <Button size="lg">Large</Button>
+                <div className="flex flex-col gap-4 w-full">
+                  {/* Row labels share fixed width so previews align */}
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span
+                      className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none"
+                      style={{ fontFamily: MONO, color: t.textSubtle }}
+                    >
+                      7 Variants
+                    </span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Button>Primary</Button>
+                      <Button variant="outline">Outline</Button>
+                      <Button variant="secondary">Secondary</Button>
+                      <Button variant="ghost">Ghost</Button>
+                      <Button variant="destructive">Destructive</Button>
+                      <Button variant="link">Link</Button>
+                      <Button size="icon" variant="ghost" aria-label="Add">
+                        <Plus className="size-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span
+                      className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none"
+                      style={{ fontFamily: MONO, color: t.textSubtle }}
+                    >
+                      2 Sizes
+                    </span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Button size="sm">Small</Button>
+                      <Button size="default">Default</Button>
+                    </div>
+                  </div>
                 </div>
               </Section>
 
-              <VariantBar label="Variant Mapping" variants={BUTTON_VARIANTS} states={6} sizes={2} />
+              <VariantBar label="Variants" variants={BUTTON_VARIANTS} states={6} sizes={2} />
               </div>
 
               {/* ─── Input ─── */}
@@ -895,7 +862,6 @@ export default function ComponentsPage() {
                 id="input"
                 title="Input"
                 duboisStoryId="primitives-input-stories--default"
-                description="Text input with DuBois border tokens. --input for borders, --ring for focus."
                 code={`<Input placeholder="Email address" />
 <Input type="password" placeholder="Password" />
 <Input disabled placeholder="Disabled" />`}
@@ -912,7 +878,6 @@ export default function ComponentsPage() {
                 id="textarea"
                 title="Textarea"
                 duboisStoryId="primitives-input-stories--textarea"
-                description="Multi-line input. Same border tokens as Input."
                 code={`<Textarea placeholder="Type your message..." />`}
               >
                 <Textarea placeholder="Type your message..." className="max-w-[300px]" />
@@ -923,7 +888,6 @@ export default function ComponentsPage() {
                 id="select"
                 title="Select"
                 duboisStoryId="primitives-select-stories--default"
-                description="Dropdown select with 2 sizes. Uses --popover for dropdown surface."
                 code={`<Select>
   <SelectTrigger className="w-[200px]">
     <SelectValue placeholder="Select a fruit" />
@@ -963,7 +927,6 @@ export default function ComponentsPage() {
                 id="dropdown"
                 title="Dropdown Menu"
                 duboisStoryId="primitives-dropdownmenu-stories--default"
-                description="Context menu with items, separators, labels, and checkbox items. Supports destructive variant."
                 code={`<DropdownMenu>
   <DropdownMenuTrigger>
     <Button variant="outline">Open Menu</Button>
@@ -1007,7 +970,6 @@ export default function ComponentsPage() {
                 id="checkbox"
                 title="Checkbox"
                 duboisStoryId="primitives-checkbox-stories--default"
-                description="Uses --primary for checked state."
                 code={`<div className="flex items-center gap-2">
   <Checkbox id="terms" />
   <Label htmlFor="terms">Accept terms</Label>
@@ -1034,7 +996,6 @@ export default function ComponentsPage() {
                 id="radio"
                 title="Radio Group"
                 duboisStoryId="primitives-radio-stories--default"
-                description="Uses --primary for selected indicator."
                 code={`<RadioGroup defaultValue="option-1">
   <div className="flex items-center gap-2">
     <RadioGroupItem value="option-1" id="r1" />
@@ -1067,7 +1028,6 @@ export default function ComponentsPage() {
                 id="switch"
                 title="Switch"
                 duboisStoryId="primitives-switch-stories--default"
-                description="2 sizes. Uses --primary for on state."
                 code={`<Switch />
 <Switch size="sm" />
 <Switch disabled />`}
@@ -1093,7 +1053,6 @@ export default function ComponentsPage() {
                 id="toggle"
                 title="Toggle"
                 duboisStoryId="primitives-segmentedcontrol-stories--default"
-                description="2 variants × 3 sizes."
                 code={`<Toggle>Default</Toggle>
 <Toggle variant="outline">Outline</Toggle>
 <Toggle size="sm">Small</Toggle>
@@ -1112,7 +1071,6 @@ export default function ComponentsPage() {
                 id="badge"
                 title="Badge"
                 duboisStoryId="primitives-tag-stories--default"
-                description="6 variants. Primary uses DuBois blue."
                 code={`<Badge>Default</Badge>
 <Badge variant="secondary">Secondary</Badge>
 <Badge variant="destructive">Destructive</Badge>
@@ -1133,7 +1091,6 @@ export default function ComponentsPage() {
                 id="alert"
                 title="Alert"
                 duboisStoryId="primitives-notification-stories--default"
-                description="2 variants: default and destructive."
                 code={`<Alert>
   <AlertTitle>Note</AlertTitle>
   <AlertDescription>
@@ -1165,7 +1122,6 @@ export default function ComponentsPage() {
                 id="tabs"
                 title="Tabs"
                 duboisStoryId="primitives-tabs-stories--default"
-                description="2 list variants: default (pill) and line."
                 code={`<Tabs defaultValue="tab1">
   <TabsList>
     <TabsTrigger value="tab1">Account</TabsTrigger>
@@ -1207,7 +1163,6 @@ export default function ComponentsPage() {
                 id="card"
                 title="Card"
                 duboisStoryId="primitives-card-stories--default"
-                description="Container with header, content, footer. 2 sizes."
                 code={`<Card>
   <CardHeader>
     <CardTitle>Card Title</CardTitle>
@@ -1244,7 +1199,6 @@ export default function ComponentsPage() {
                 id="tooltip"
                 title="Tooltip"
                 duboisStoryId="primitives-tooltip-stories--default"
-                description="Hover to see tooltip. Uses --popover tokens."
                 code={`<Tooltip>
   <TooltipTrigger asChild>
     <Button variant="outline">Hover me</Button>
@@ -1269,7 +1223,6 @@ export default function ComponentsPage() {
                 id="slider"
                 title="Slider"
                 duboisStoryId="primitives-slider-stories--default"
-                description="Range input. Track uses --primary."
                 code={`<Slider defaultValue={[50]} max={100} step={1} />`}
               >
                 <div className="w-full max-w-[300px]">
@@ -1282,7 +1235,6 @@ export default function ComponentsPage() {
                 id="progress"
                 title="Progress"
                 duboisStoryId="primitives-progress-stories--default"
-                description="Determinate progress bar. Fill uses --primary."
                 code={`<Progress value={62} />`}
               >
                 <div className="w-full max-w-[300px]">
@@ -1295,7 +1247,6 @@ export default function ComponentsPage() {
                 id="skeleton"
                 title="Skeleton"
                 duboisStoryId="primitives-skeleton-stories--default"
-                description="Loading placeholder. Uses --skeleton token."
                 code={`<Skeleton className="h-4 w-[250px]" />
 <Skeleton className="h-4 w-[200px]" />
 <Skeleton className="h-10 w-10 rounded-full" />`}
@@ -1313,7 +1264,6 @@ export default function ComponentsPage() {
               <Section
                 id="separator"
                 title="Separator"
-                description="Horizontal or vertical divider. Uses --border."
                 code={`<Separator />
 <Separator orientation="vertical" />`}
               >
@@ -1335,7 +1285,6 @@ export default function ComponentsPage() {
                 id="dialog"
                 title="Dialog"
                 duboisStoryId="primitives-dialogcombobox-stories--default"
-                description="Modal dialog with header, content, footer. Uses --popover surface."
                 code={`<Dialog>
   <DialogTrigger>
     <Button variant="outline">Open Dialog</Button>
@@ -1373,7 +1322,6 @@ export default function ComponentsPage() {
               <Section
                 id="sheet"
                 title="Sheet"
-                description="Slide-out panel from the edge. Uses --background surface."
                 code={`<Sheet>
   <SheetTrigger>
     <Button variant="outline">Open Sheet</Button>
@@ -1408,7 +1356,6 @@ export default function ComponentsPage() {
                 id="accordion"
                 title="Accordion"
                 duboisStoryId="primitives-accordion-stories--default"
-                description="Collapsible content sections. Uses --border for dividers."
                 code={`<Accordion>
   <AccordionItem value="item-1">
     <AccordionTrigger>Is it accessible?</AccordionTrigger>
@@ -1439,7 +1386,6 @@ export default function ComponentsPage() {
                 id="popover"
                 title="Popover"
                 duboisStoryId="primitives-popover-stories--default"
-                description="Floating content panel triggered by a button."
                 code={`<Popover>
   <PopoverTrigger>
     <Button variant="outline">Open Popover</Button>
@@ -1466,7 +1412,6 @@ export default function ComponentsPage() {
               <Section
                 id="hover-card"
                 title="Hover Card"
-                description="Card that appears on hover. Uses --popover surface."
                 code={`<HoverCard>
   <HoverCardTrigger>Hover me</HoverCardTrigger>
   <HoverCardContent>
@@ -1497,7 +1442,6 @@ export default function ComponentsPage() {
                 id="toggle-group"
                 title="Toggle Group"
                 duboisStoryId="primitives-segmentedcontrol-stories--default"
-                description="A set of toggles where one or multiple can be selected."
                 code={`<ToggleGroup>
   <ToggleGroupItem value="a">Left</ToggleGroupItem>
   <ToggleGroupItem value="b">Center</ToggleGroupItem>
@@ -1523,7 +1467,6 @@ export default function ComponentsPage() {
                 id="avatar"
                 title="Avatar"
                 duboisStoryId="primitives-avatar-stories--default"
-                description="User avatar with image and fallback."
                 code={`<Avatar>
   <AvatarImage src="..." alt="User" />
   <AvatarFallback>MM</AvatarFallback>
@@ -1547,7 +1490,6 @@ export default function ComponentsPage() {
                 id="table"
                 title="Table"
                 duboisStoryId="primitives-table-stories--default"
-                description="Data table with header, rows, and cells."
                 code={`<Table>
   <TableHeader>
     <TableRow>
@@ -1596,7 +1538,6 @@ export default function ComponentsPage() {
                 id="pagination"
                 title="Pagination"
                 duboisStoryId="primitives-pagination-stories--default"
-                description="Page navigation controls."
                 code={`<Pagination>
   <PaginationContent>
     <PaginationItem>
@@ -1637,7 +1578,6 @@ export default function ComponentsPage() {
                 id="breadcrumb"
                 title="Breadcrumb"
                 duboisStoryId="primitives-breadcrumb-stories--default"
-                description="Navigation breadcrumb trail."
                 code={`<Breadcrumb>
   <BreadcrumbList>
     <BreadcrumbItem>
@@ -1671,7 +1611,6 @@ export default function ComponentsPage() {
               <Section
                 id="input-otp"
                 title="Input OTP"
-                description="One-time password input with individual character slots."
                 code={`<InputOTP maxLength={6}>
   <InputOTPGroup>
     <InputOTPSlot index={0} />
@@ -1700,7 +1639,6 @@ export default function ComponentsPage() {
                 id="spinner"
                 title="Spinner"
                 duboisStoryId="primitives-spinner-stories--default"
-                description="Loading indicator."
                 code={`<Spinner />`}
               >
                 <Spinner />
@@ -1712,14 +1650,12 @@ export default function ComponentsPage() {
 
         {/* Footer */}
         <footer className="py-16 px-8" style={{ borderTop: `1px solid ${t.border}` }}>
-          <div className="max-w-[1100px] mx-auto flex justify-between items-end">
-            <div>
-              <span className="text-[14px] tracking-wider" style={{ fontFamily: MONO, color: t.textSubtle }}>DBUI</span>
-              <p className="text-[14px] mt-1" style={{ color: t.textSubtle, opacity: 0.5 }}>
-                DuBois design language on shadcn components.
-              </p>
-            </div>
-            <p className="text-[11px]" style={{ fontFamily: MONO, color: t.textSubtle, opacity: 0.4 }}>
+          <div className="max-w-[1100px] mx-auto text-center">
+            <span className="text-[14px] font-semibold tracking-wider block" style={{ color: t.textMuted }}>DBUI</span>
+            <p className="text-[13px] mt-1.5" style={{ color: t.textSubtle }}>
+              DuBois design language on shadcn components.
+            </p>
+            <p className="text-[12px] mt-1" style={{ color: t.textSubtle, opacity: 0.6 }}>
               Design · Databricks · 2026
             </p>
           </div>
