@@ -591,7 +591,7 @@ function BrowseSection({
             <div key={group.label}>
               {subGroups.length > 1 && (
                 <p
-                  className="text-[11px] tracking-[0.14em] uppercase mb-3 mt-4 first:mt-0"
+                  className="text-[11px] tracking-[0.14em] uppercase mb-4 pt-10 first:pt-0"
                   style={{ color: t.textSubtle, fontFamily: MONO }}
                 >
                   {group.label}
