@@ -4,7 +4,7 @@
   "description": "DBUI Portal — preview, compare, and document DBUI components.",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "UV_THREADPOOL_SIZE=4 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
