@@ -1,4 +1,4 @@
-// url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1069-1573
+// url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1060-3708
 // source=apps/portal/src/components/ui/tooltip.tsx
 // component=Tooltip
 const figma = require('figma')

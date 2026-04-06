@@ -113,13 +113,15 @@ function SegmentControlItem({
         // ── Outline variant items: flush (no radius), with input border dividers ──
         isOutline && [
           "rounded-none border border-input shadow-xs",
+          // Collapse double borders between adjacent items
+          "not-first:-ml-px",
           // First item: round left corners
           "first:rounded-l-sm",
           // Last item: round right corners
           "last:rounded-r-sm",
-          // Selected: accent bg + primary border, no shadow
-          "aria-pressed:bg-accent aria-pressed:border-primary aria-pressed:shadow-none",
-          "data-[state=on]:bg-accent data-[state=on]:border-primary data-[state=on]:shadow-none",
+          // Selected: accent bg + primary border, elevated z so blue border shows over neighbors
+          "aria-pressed:bg-accent aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:relative aria-pressed:z-10",
+          "data-[state=on]:bg-accent data-[state=on]:border-primary data-[state=on]:shadow-none data-[state=on]:relative data-[state=on]:z-10",
         ],
 
         // Sizes

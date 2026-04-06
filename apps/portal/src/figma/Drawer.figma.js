@@ -1,4 +1,4 @@
-// url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1072-1721
+// url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1060-3937
 // source=apps/portal/src/components/ui/drawer.tsx
 // component=Drawer
 const figma = require('figma')

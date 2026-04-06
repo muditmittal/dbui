@@ -32,10 +32,10 @@
 | 19 | Tabs | `1048:1469` | `Tabs.figma.js` | `tabs.tsx` | `Tabs` | `Tabs` | ✅ |
 | 20 | Slider | `1039:2406` | `Slider.figma.js` | `slider.tsx` | `Slider` | `Slider` | ✅ |
 | 21 | Radio tile | `1021:3727` | `RadioTile.figma.js` | `radio-tile.tsx` | `RadioTile` | `RadioTile` | ✅ |
-| 22 | Tooltip | `1069:1573` | `Tooltip.figma.js` | `tooltip.tsx` | `Tooltip` | `Tooltip` | ✅ |
-| 23 | Popover | `1070:1573` | `Popover.figma.js` | `popover.tsx` | `Popover` | `Popover` | ✅ |
+| 22 | Tooltip | `1060:3708` | `Tooltip.figma.js` | `tooltip.tsx` | `Tooltip` | `Tooltip` | ✅ |
+| 23 | Popover | `1060:3832` | `Popover.figma.js` | `popover.tsx` | `Popover` | `Popover` | ✅ |
 | 24 | HoverCard | `1071:1721` | `HoverCard.figma.js` | `hover-card.tsx` | `HoverCard` | `HoverCard` | ✅ |
-| 25 | Drawer | `1072:1721` | `Drawer.figma.js` | `drawer.tsx` | `Drawer` | `Drawer` | ✅ |
+| 25 | Drawer | `1060:3937` | `Drawer.figma.js` | `drawer.tsx` | `Drawer` | `Drawer` | ✅ |
 
 **Inner component with Code Connect:**
 

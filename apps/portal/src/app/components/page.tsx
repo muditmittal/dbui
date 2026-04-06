@@ -13,7 +13,10 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "@/components/ui/combobox"
-import { TooltipProvider } from "@/components/ui/tooltip"
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
+import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover"
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@/components/ui/drawer"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 import { SplitButton, SplitButtonSeparator } from "@/components/ui/split-button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
@@ -318,6 +321,14 @@ const SWITCH_VARIANTS: FormVariantRow[] = [
 const TOGGLE_VARIANTS_DATA: FormVariantRow[] = [
   { name: "Default", dbui: 'variant="default"', dubois: "ToggleButton", status: "covered" },
   { name: "Outline", dbui: 'variant="outline"', dubois: "—", status: "new" },
+  { name: "Icon", dbui: 'variant="icon"', dubois: "IconToggleButton", status: "covered" },
+  { name: "Button", dbui: 'variant="button"', dubois: "—", status: "new" },
+]
+
+// SplitButton.figma.js: Variant = Primary | Outline. Size = Default | Small.
+const SPLIT_BUTTON_VARIANTS: FormVariantRow[] = [
+  { name: "Primary", dbui: 'variant="default"', dubois: 'type="primary"', status: "covered" },
+  { name: "Outline", dbui: 'variant="outline"', dubois: "type=\"default\"", status: "covered" },
 ]
 
 // SegmentControl.figma.js: Variant = Default | Outline. Size = Default(md) | Small(sm).
@@ -586,12 +597,13 @@ const FORCE_STATE_FORM_CSS = `
     background-color: var(--color-hover) !important;
   }
 
-  /* Focus: border-ring + ring-3 ring-ring/50 stacked with shadow-xs */
+  /* Focus: border-2 border-ring, NO shadow-focus (text inputs use border only) */
   .force-form-focus input,
   .force-form-focus textarea,
   .force-form-focus [data-slot="select-trigger"] {
     border-color: var(--color-ring) !important;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 50%, transparent), 0 1px 0 rgba(0,0,0,0.05) !important;
+    border-width: 2px !important;
+    box-shadow: none !important;
   }
 
   /* Disabled: bg-disabled + border-disabled + text-disabled-foreground + no shadow */
@@ -623,20 +635,20 @@ const FORCE_STATE_FORM_CSS = `
   .force-form-focus [data-slot="checkbox"],
   .force-form-focus button[role="radio"] {
     border-color: var(--color-ring) !important;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 50%, transparent) !important;
+    box-shadow: 0 0 0 1px white, 0 0 0 3px var(--color-ring) !important;
   }
 
   /* ── Switch ── */
 
   .force-form-hover button[role="switch"]:not([data-checked]) {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent) !important;
+    background-color: var(--color-hover) !important;
+    border: 1px solid var(--color-primary-hover) !important;
   }
   .force-form-hover button[role="switch"][data-checked] {
     background-color: var(--color-primary-hover) !important;
   }
   .force-form-focus button[role="switch"] {
-    border-color: var(--color-ring) !important;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 50%, transparent) !important;
+    box-shadow: 0 0 0 1px white, 0 0 0 3px var(--color-ring) !important;
   }
 
   /* ── Toggle ── */
@@ -1254,9 +1266,14 @@ const COMPONENTS = [
   { id: "tabs", label: "Tabs" },
   { id: "slider", label: "Slider" },
   { id: "radio-tile", label: "Radio Tile" },
-  // ── Feedback ──
+  // ── Overlays ──
   { id: "dialog", label: "Dialog" },
   { id: "alert-dialog", label: "Alert Dialog" },
+  { id: "drawer", label: "Drawer" },
+  { id: "popover", label: "Popover" },
+  { id: "tooltip", label: "Tooltip" },
+  { id: "hover-card", label: "Hover Card" },
+  // ── Feedback ──
   { id: "alert", label: "Alert" },
   { id: "toast", label: "Toast" },
 ]
@@ -1409,9 +1426,11 @@ export default function ComponentsPage() {
               </div>
 
               {/* ─── Split Button ─── */}
+              <div>
               <Section
                 id="split-button"
                 title="Split Button"
+                hasVariantBar
                 code={`<SplitButton>
   <Button>Save</Button>
   <SplitButtonSeparator />
@@ -1471,6 +1490,44 @@ export default function ComponentsPage() {
                 </div>
               </Section>
 
+              <FormVariantBar<ToggleState, ToggleSizeKey>
+                label="Variants"
+                variants={SPLIT_BUTTON_VARIANTS}
+                states={TOGGLE_STATES}
+                sizes={TOGGLE_SIZES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state, size) => {
+                  const variant = v.name === "Outline" ? "outline" as const : "default" as const
+                  const iconSize = size === "sm" ? "icon-sm" as const : "icon-md" as const
+                  const stateClass = (state === "hover" || state === "press") ? `force-form-${state}` : ""
+                  return (
+                    <div className={stateClass}>
+                      <SplitButton>
+                        <Button variant={variant} size={size} disabled={state === "disabled"}>{v.name}</Button>
+                        <SplitButtonSeparator />
+                        <Button variant={variant} size={iconSize} disabled={state === "disabled"} aria-label="More">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </Button>
+                      </SplitButton>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state, size) => {
+                  const variant = v.name === "Outline" ? "outline" : "default"
+                  const iconSize = size === "sm" ? "icon-sm" : "icon-md"
+                  return (
+                    <div style={{ display: "inline-flex", alignItems: "stretch" }}>
+                      <button style={{ ...shadcnButtonStyle(variant, state, size), borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRight: "none" }} disabled={state === "disabled"}>{v.name}</button>
+                      <div style={{ width: "1px", alignSelf: "stretch", backgroundColor: variant === "outline" ? SC_FORM.border : "rgba(255,255,255,0.2)" }} />
+                      <button style={{ ...shadcnButtonStyle(variant, state, iconSize, true), borderTopLeftRadius: 0, borderBottomLeftRadius: 0, borderLeft: "none" }} disabled={state === "disabled"}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </button>
+                    </div>
+                  )
+                }}
+              />
+              </div>
+
               {/* ─── Toggle ─── */}
               <div>
               <Section
@@ -1480,15 +1537,19 @@ export default function ComponentsPage() {
                 hasVariantBar
                 code={`<Toggle>Default</Toggle>
 <Toggle variant="outline">Outline</Toggle>
+<Toggle variant="icon" size="icon-md" aria-label="Like"><ThumbsUpIcon /></Toggle>
+<Toggle variant="button"><CheckboxIcon />Button</Toggle>
 <Toggle size="sm">Small</Toggle>
 <Toggle defaultPressed>Pressed</Toggle>`}
               >
                 <div className="flex flex-col gap-4 w-full">
                   <div className="flex items-center gap-4 w-full min-w-0">
-                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Variants</span>
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>4 Variants</span>
                     <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
                       <Toggle defaultPressed>Default</Toggle>
                       <Toggle variant="outline">Outline</Toggle>
+                      <Toggle variant="icon" size="icon-md" defaultPressed aria-label="Like"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg></Toggle>
+                      <Toggle variant="button" defaultPressed><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="1" width="14" height="14" rx="3" /><path d="M4.5 8L7 10.5L11.5 5.5" /></svg>Button</Toggle>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 w-full min-w-0">
@@ -1508,12 +1569,14 @@ export default function ComponentsPage() {
                 sizes={TOGGLE_SIZES}
                 forceStateCss={FORCE_STATE_FORM_CSS}
                 renderDbui={(v, state, size) => {
-                  const variant = v.name === "Outline" ? "outline" as const : "default" as const
+                  const variant = v.name === "Default" ? "default" as const : v.name === "Outline" ? "outline" as const : v.name === "Icon" ? "icon" as const : "button" as const
+                  const isIcon = variant === "icon"
+                  const toggleSize = isIcon ? (size === "sm" ? "icon-sm" as const : "icon-md" as const) : size
                   const stateClass = (state === "hover" || state === "press") ? `force-form-${state}` : ""
                   return (
                     <div className={stateClass}>
-                      <Toggle variant={variant} size={size} disabled={state === "disabled"} data-slot="toggle">
-                        {v.name}
+                      <Toggle variant={variant} size={toggleSize} disabled={state === "disabled"} data-slot="toggle">
+                        {isIcon ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg> : variant === "button" ? <><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="1" width="14" height="14" rx="3" /><path d="M4.5 8L7 10.5L11.5 5.5" /></svg>{v.name}</> : v.name}
                       </Toggle>
                     </div>
                   )
@@ -2496,6 +2559,157 @@ export default function ComponentsPage() {
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              {/* ─── Drawer ─── */}
+              <Section
+                id="drawer"
+                title="Drawer"
+                code={`<Drawer>
+  <DrawerTrigger asChild>
+    <Button variant="outline">Open Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Settings</DrawerTitle>
+      <DrawerDescription>Configure your preferences.</DrawerDescription>
+    </DrawerHeader>
+    <DrawerFooter>
+      <DrawerClose asChild>
+        <Button variant="outline">Cancel</Button>
+      </DrawerClose>
+      <Button>Save</Button>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Bottom Sheet</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Drawer>
+                        <DrawerTrigger asChild>
+                          <Button variant="outline">Open Drawer</Button>
+                        </DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>Settings</DrawerTitle>
+                            <DrawerDescription>Configure your cluster preferences here.</DrawerDescription>
+                          </DrawerHeader>
+                          <div className="p-4">
+                            <Label>Cluster name</Label>
+                            <Input placeholder="my-cluster" className="mt-2" />
+                          </div>
+                          <DrawerFooter>
+                            <DrawerClose asChild>
+                              <Button variant="outline">Cancel</Button>
+                            </DrawerClose>
+                            <Button>Apply</Button>
+                          </DrawerFooter>
+                        </DrawerContent>
+                      </Drawer>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              {/* ─── Popover ─── */}
+              <Section
+                id="popover"
+                title="Popover"
+                code={`<Popover>
+  <PopoverTrigger>
+    <Button variant="outline">Open Popover</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle>Popover Title</PopoverTitle>
+      <PopoverDescription>Content goes here.</PopoverDescription>
+    </PopoverHeader>
+  </PopoverContent>
+</Popover>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Interactive</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Popover>
+                        <PopoverTrigger render={<Button variant="outline" />}>
+                          Open Popover
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverHeader>
+                            <PopoverTitle>Dimensions</PopoverTitle>
+                            <PopoverDescription>Set the dimensions for the layer.</PopoverDescription>
+                          </PopoverHeader>
+                          <div className="flex flex-col gap-2 pt-2">
+                            <Label>Width</Label>
+                            <Input placeholder="100%" />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              {/* ─── Tooltip ─── */}
+              <Section
+                id="tooltip"
+                title="Tooltip"
+                code={`<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="outline">Hover me</Button>
+    </TooltipTrigger>
+    <TooltipContent>Tooltip text</TooltipContent>
+  </Tooltip>
+</TooltipProvider>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Hover</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Button variant="outline">Hover me</Button>
+                        </TooltipTrigger>
+                        <TooltipContent>This is a tooltip</TooltipContent>
+                      </Tooltip>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              {/* ─── Hover Card ─── */}
+              <Section
+                id="hover-card"
+                title="Hover Card"
+                code={`<HoverCard>
+  <HoverCardTrigger>Hover me</HoverCardTrigger>
+  <HoverCardContent>
+    <p>Rich content on hover.</p>
+  </HoverCardContent>
+</HoverCard>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Hover</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <HoverCard>
+                        <HoverCardTrigger className="text-[13px] underline cursor-pointer" style={{ color: t.primary, fontFamily: MONO }}>
+                          Hover over this link
+                        </HoverCardTrigger>
+                        <HoverCardContent>
+                          <div>
+                            <p className="text-[13px] font-semibold">Databricks</p>
+                            <p className="text-[12px]" style={{ color: t.textMuted }}>The data and AI company.</p>
+                          </div>
+                        </HoverCardContent>
+                      </HoverCard>
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-// url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1070-1573
+// url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1060-3832
 // source=apps/portal/src/components/ui/popover.tsx
 // component=Popover
 const figma = require('figma')
