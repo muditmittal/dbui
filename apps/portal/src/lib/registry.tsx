@@ -8,7 +8,7 @@ import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, Breadcr
 import { Button } from "@/components/ui/button"
 import { buttonVariants } from "@/lib/button-variants"
 import { cn } from "@/lib/utils"
-import { ButtonGroup } from "@/components/ui/button-group"
+import { SplitButton } from "@/components/ui/split-button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -44,7 +44,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Toggle } from "@/components/ui/toggle"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { SegmentControl, SegmentControlItem } from "@/components/ui/segment-control"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
 export type ComponentEntry = {
@@ -198,16 +198,16 @@ export const components: ComponentEntry[] = [
     ),
   },
   {
-    name: "Button Group",
-    slug: "button-group",
-    description: "Groups related buttons together.",
-    installCommand: "npx shadcn add button-group",
+    name: "Split Button",
+    slug: "split-button",
+    description: "Groups a primary action with a secondary dropdown trigger.",
+    installCommand: "npx shadcn add split-button",
     preview: (
-      <ButtonGroup>
+      <SplitButton>
         <Button variant="outline">Left</Button>
         <Button variant="outline">Center</Button>
         <Button variant="outline">Right</Button>
-      </ButtonGroup>
+      </SplitButton>
     ),
   },
   {
@@ -863,27 +863,26 @@ export const components: ComponentEntry[] = [
         <Toggle>Default</Toggle>
         <Toggle variant="outline">Outline</Toggle>
         <Toggle size="sm">Small</Toggle>
-        <Toggle size="lg">Large</Toggle>
       </div>
     ),
   },
   {
-    name: "Toggle Group",
-    slug: "toggle-group",
-    description: "A set of two-state buttons that can be toggled on or off.",
-    installCommand: "npx shadcn add toggle-group",
+    name: "Segment Control",
+    slug: "segment-control",
+    description: "A group of toggle buttons for selecting one or more options.",
+    installCommand: "npx shadcn add segment-control",
     preview: (
       <div className="flex flex-col gap-4">
-        <ToggleGroup>
-          <ToggleGroupItem value="a">A</ToggleGroupItem>
-          <ToggleGroupItem value="b">B</ToggleGroupItem>
-          <ToggleGroupItem value="c">C</ToggleGroupItem>
-        </ToggleGroup>
-        <ToggleGroup multiple variant="outline">
-          <ToggleGroupItem value="bold">Bold</ToggleGroupItem>
-          <ToggleGroupItem value="italic">Italic</ToggleGroupItem>
-          <ToggleGroupItem value="underline">Underline</ToggleGroupItem>
-        </ToggleGroup>
+        <SegmentControl>
+          <SegmentControlItem value="a">A</SegmentControlItem>
+          <SegmentControlItem value="b">B</SegmentControlItem>
+          <SegmentControlItem value="c">C</SegmentControlItem>
+        </SegmentControl>
+        <SegmentControl variant="outline">
+          <SegmentControlItem value="bold">Bold</SegmentControlItem>
+          <SegmentControlItem value="italic">Italic</SegmentControlItem>
+          <SegmentControlItem value="underline">Underline</SegmentControlItem>
+        </SegmentControl>
       </div>
     ),
   },

@@ -2,7 +2,8 @@
   "codeConnect": {
     "include": [
       "apps/dbui/src/components/icons/*.figma.tsx",
-      "apps/dbui/src/components/icons/*.tsx"
+      "apps/dbui/src/components/icons/*.tsx",
+      "apps/portal/src/figma/*.figma.js"
     ],
     "parser": "react"
   }

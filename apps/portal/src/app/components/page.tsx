@@ -8,31 +8,23 @@ import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
-import { Badge } from "@/components/ui/badge"
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Toggle } from "@/components/ui/toggle"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
-import { Separator } from "@/components/ui/separator"
+import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "@/components/ui/combobox"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
-import { Slider } from "@/components/ui/slider"
-import { Progress } from "@/components/ui/progress"
-import { Skeleton } from "@/components/ui/skeleton"
+import { SplitButton, SplitButtonSeparator } from "@/components/ui/split-button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+import { Toaster } from "@/components/ui/sonner"
+import { SegmentControl, SegmentControlItem } from "@/components/ui/segment-control"
+import { Tabs as TabsComponent, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Slider } from "@/components/ui/slider"
+import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "@/components/ui/radio-tile"
+import { toast } from "sonner"
 import { Spinner } from "@/components/ui/spinner"
 import { ChevronRight, Plus } from "lucide-react"
 
@@ -64,7 +56,7 @@ function StatusBadge({ type, children }: { type: "new" | "tweaked" | "gap" | "co
 
 // ─── Component Comparison Table ───
 
-type ButtonState = "default" | "hover" | "active" | "focus" | "disabled" | "loading"
+type ButtonState = "default" | "hover" | "press" | "focus" | "disabled" | "loading"
 
 type VariantRow = {
   name: string
@@ -85,12 +77,12 @@ const BUTTON_VARIANTS: VariantRow[] = [
     previewVariant: "default",
     previewLabel: "Primary",
     states: {
-      default: { dbui: "bg-primary (blue600). Shadow-xs added (not in shadcn)", dubois: "Covered" },
-      hover: { dbui: "bg-primary-hover (blue700). Explicit token, not opacity", dubois: "Covered" },
-      active: { dbui: "bg-primary-active (blue800) + translate-y-px. Active token + micro-press added", dubois: "Covered" },
-      focus: { dbui: "3px ring at ring/50. Same as shadcn", dubois: "Covered" },
-      disabled: { dbui: "opacity-50. Same as shadcn", dubois: "Covered — DuBois uses distinct disabled tokens instead of opacity" },
-      loading: { dbui: "Not implemented", dubois: "Gap — DuBois has built-in spinner + aria-busy" },
+      default: { dbui: "bg-primary + shadow-xs", dubois: "Covered" },
+      hover: { dbui: "bg-primary-hover", dubois: "Covered" },
+      press: { dbui: "bg-primary-press", dubois: "Covered" },
+      focus: { dbui: "2px ring INSIDE + shadow-focus (white gap + blue ring)", dubois: "Covered" },
+      disabled: { dbui: "bg-disabled, text-white, no shadow", dubois: "Covered" },
+      loading: { dbui: "Label opacity=0, Loading icon centered. Button keeps dimensions.", dubois: "Covered" },
     },
   },
   {
@@ -101,44 +93,44 @@ const BUTTON_VARIANTS: VariantRow[] = [
     previewVariant: "outline",
     previewLabel: "Outline",
     states: {
-      default: { dbui: "border-input, transparent bg. Shadow-xs added", dubois: "Covered" },
-      hover: { dbui: "border-primary-hover + bg-accent. Border color change added", dubois: "Covered" },
-      active: { dbui: "No active-specific token yet", dubois: "Partial — DuBois has press state" },
-      focus: { dbui: "3px ring. Same as shadcn", dubois: "Covered" },
-      disabled: { dbui: "opacity-50", dubois: "Covered" },
-      loading: { dbui: "Not implemented", dubois: "Gap — DuBois has spinner" },
+      default: { dbui: "border-input, transparent bg, shadow-xs", dubois: "Covered" },
+      hover: { dbui: "bg-hover (primary@8%), border-primary, text-primary-hover", dubois: "Covered" },
+      press: { dbui: "bg-press (primary@16%), border-primary-press, text-primary-press", dubois: "Covered" },
+      focus: { dbui: "2px ring INSIDE, shadow-xs", dubois: "Covered" },
+      disabled: { dbui: "border-disabled, text-disabled-foreground, no shadow", dubois: "Covered" },
+      loading: { dbui: "Label opacity=0, Loading icon centered", dubois: "Covered" },
     },
   },
   {
     name: "Secondary",
     dbui: 'variant="secondary"',
-    dubois: "—",
-    status: "new",
+    dubois: 'type="tertiary"',
+    status: "covered",
     previewVariant: "secondary",
     previewLabel: "Secondary",
     states: {
-      default: { dbui: "bg-secondary (grey fill). Same as shadcn", dubois: "N/A — does not exist in DuBois" },
-      hover: { dbui: "bg-accent. Same as shadcn", dubois: "N/A" },
-      active: { dbui: "No active-specific token", dubois: "N/A" },
-      focus: { dbui: "3px ring", dubois: "N/A" },
-      disabled: { dbui: "opacity-50", dubois: "N/A" },
-      loading: { dbui: "Not implemented", dubois: "N/A" },
+      default: { dbui: "bg-secondary, shadow-xs", dubois: "Covered" },
+      hover: { dbui: "bg-hover (primary@8%), text-accent-foreground", dubois: "Covered" },
+      press: { dbui: "bg-press (primary@16%), text-primary-press", dubois: "Covered" },
+      focus: { dbui: "bg-secondary + 2px ring INSIDE", dubois: "Covered" },
+      disabled: { dbui: "No fill, text-disabled-foreground, no shadow", dubois: "Covered" },
+      loading: { dbui: "bg-secondary, Loading icon centered", dubois: "Covered" },
     },
   },
   {
     name: "Ghost",
     dbui: 'variant="ghost"',
-    dubois: 'type="tertiary"',
-    status: "tweaked",
+    dubois: "—",
+    status: "new",
     previewVariant: "ghost",
     previewLabel: "Ghost",
     states: {
-      default: { dbui: "Transparent, grey foreground text. Tweaked — DuBois uses blue text (actionTertiary)", dubois: "Tweaked — DBUI uses grey text instead of DuBois blue" },
-      hover: { dbui: "bg-accent. DuBois uses blue/8 tint", dubois: "Tweaked — different tint approach" },
-      active: { dbui: "No active-specific token", dubois: "Partial — DuBois has blue/16 press" },
-      focus: { dbui: "3px ring", dubois: "Covered" },
-      disabled: { dbui: "opacity-50", dubois: "Covered" },
-      loading: { dbui: "Not implemented", dubois: "Gap — DuBois has spinner" },
+      default: { dbui: "Transparent, text-foreground (grey)", dubois: "N/A" },
+      hover: { dbui: "bg-hover (primary@8%), text-primary-hover", dubois: "N/A" },
+      press: { dbui: "bg-press (primary@16%), text-primary-press", dubois: "N/A" },
+      focus: { dbui: "2px ring INSIDE", dubois: "N/A" },
+      disabled: { dbui: "text-disabled-foreground", dubois: "N/A" },
+      loading: { dbui: "Loading icon centered", dubois: "N/A" },
     },
   },
   {
@@ -149,12 +141,12 @@ const BUTTON_VARIANTS: VariantRow[] = [
     previewVariant: "link",
     previewLabel: "Link",
     states: {
-      default: { dbui: "text-primary + underline-offset. Same as shadcn", dubois: "Covered" },
-      hover: { dbui: "Underline on hover", dubois: "Covered" },
-      active: { dbui: "No active-specific style", dubois: "Partial" },
-      focus: { dbui: "No focus ring (text-only)", dubois: "Partial — DuBois may show focus" },
-      disabled: { dbui: "opacity-50", dubois: "Covered" },
-      loading: { dbui: "Not implemented", dubois: "N/A — link buttons don't typically show spinners" },
+      default: { dbui: "text-primary, no padding/radius/height/shadow", dubois: "Covered" },
+      hover: { dbui: "Underline + text-primary-hover", dubois: "Covered" },
+      press: { dbui: "Underline + text-primary-press", dubois: "Covered" },
+      focus: { dbui: "1px ring OUTSIDE", dubois: "Covered" },
+      disabled: { dbui: "text-disabled-foreground", dubois: "Covered" },
+      loading: { dbui: "No loading state for Link", dubois: "N/A" },
     },
   },
   {
@@ -165,26 +157,28 @@ const BUTTON_VARIANTS: VariantRow[] = [
     previewVariant: "destructive",
     previewLabel: "Destructive",
     states: {
-      default: { dbui: "bg-destructive (red600). Shadow-xs removed vs shadcn (added custom hover/active)", dubois: "Covered" },
-      hover: { dbui: "bg-destructive-hover (red700). Explicit token added", dubois: "Covered" },
-      active: { dbui: "bg-destructive-active (red800) + translate-y-px", dubois: "Covered" },
-      focus: { dbui: "ring-destructive/20. Destructive-specific ring added (not in shadcn)", dubois: "Covered" },
-      disabled: { dbui: "opacity-50", dubois: "Covered" },
-      loading: { dbui: "Not implemented", dubois: "Gap — DuBois has spinner" },
+      default: { dbui: "bg-destructive + shadow-xs", dubois: "Covered" },
+      hover: { dbui: "bg-destructive-hover", dubois: "Covered" },
+      press: { dbui: "bg-destructive-press", dubois: "Covered" },
+      focus: { dbui: "shadow-focus (white gap + red ring)", dubois: "Covered" },
+      disabled: { dbui: "bg-disabled, text-white, no shadow", dubois: "Covered" },
+      loading: { dbui: "Label opacity=0, Loading icon centered", dubois: "Covered" },
     },
   },
   {
-    name: "Destructive Outline",
-    dbui: "Not yet implemented",
+    name: "Danger",
+    dbui: 'variant="danger"',
     dubois: 'type="default" danger',
-    status: "gap",
+    status: "covered",
+    previewVariant: "danger",
+    previewLabel: "Danger",
     states: {
-      default: { dbui: "Needs: red border + transparent bg", dubois: "Gap — DuBois has danger secondary" },
-      hover: { dbui: "Needs: red border + red/8 bg", dubois: "Gap" },
-      active: { dbui: "Needs: red/16 bg", dubois: "Gap" },
-      focus: { dbui: "Needs: ring-destructive", dubois: "Gap" },
-      disabled: { dbui: "Needs: opacity-50", dubois: "Gap" },
-      loading: { dbui: "Not implemented", dubois: "Gap" },
+      default: { dbui: "border-destructive, text-destructive + shadow-xs", dubois: "Covered" },
+      hover: { dbui: "bg-destructive/10, border/text-destructive-hover", dubois: "Covered" },
+      press: { dbui: "bg-destructive/20, border/text-destructive-press", dubois: "Covered" },
+      focus: { dbui: "border-2 border-ring (blue focus ring)", dubois: "Covered" },
+      disabled: { dbui: "border-disabled, text-disabled-foreground", dubois: "Covered" },
+      loading: { dbui: "Same as default + spinner", dubois: "Covered" },
     },
   },
 ]
@@ -192,29 +186,29 @@ const BUTTON_VARIANTS: VariantRow[] = [
 const BUTTON_STATES: { key: ButtonState; label: string }[] = [
   { key: "default", label: "Default" },
   { key: "hover", label: "Hover" },
-  { key: "active", label: "Active" },
+  { key: "press", label: "Press" },
   { key: "focus", label: "Focus" },
   { key: "disabled", label: "Disabled" },
   { key: "loading", label: "Loading" },
 ]
 
-type ButtonSizeKey = "sm" | "default"
+type ButtonSizeKey = "sm" | "md"
 
 const BUTTON_SIZES: { key: ButtonSizeKey; label: string }[] = [
-  { key: "sm", label: "SM" },
-  { key: "default", label: "MD" },
+  { key: "md", label: "Default" },
+  { key: "sm", label: "Small" },
 ]
 
 // Map DBUI sizes → closest shadcn size
 const SHADCN_SIZE_MAP: Record<ButtonSizeKey, string> = {
   sm: "sm",
-  default: "default",
+  md: "default",
 }
 
 // DBUI icon-only sizes: sm→icon-sm (28px square), default→icon (32px square)
-const DBUI_ICON_SIZE_MAP: Record<ButtonSizeKey, "icon-sm" | "icon"> = {
+const DBUI_ICON_SIZE_MAP: Record<ButtonSizeKey, "icon-sm" | "icon-md"> = {
   sm: "icon-sm",
-  default: "icon",
+  md: "icon-md",
 }
 
 // Shadcn size styles from registry: sm=h-8/px-3/text-xs, default=h-9/px-4/text-sm
@@ -227,6 +221,237 @@ const SHADCN_SIZE_STYLES: Record<string, React.CSSProperties> = {
 const SHADCN_ICON_SIZE_STYLES: Record<string, React.CSSProperties> = {
   sm: { height: "32px", width: "32px", padding: "0", borderRadius: "calc(0.5rem - 2px)" },
   default: { height: "36px", width: "36px", padding: "0", borderRadius: "calc(0.5rem - 2px)" },
+}
+
+// ─── Form Control Variant Bar Types ───
+
+type FormState = "default" | "hover" | "focus" | "disabled" | "error"
+
+const FORM_STATES: { key: FormState; label: string }[] = [
+  { key: "default", label: "Default" },
+  { key: "hover", label: "Hover" },
+  { key: "focus", label: "Focus" },
+  { key: "disabled", label: "Disabled" },
+  { key: "error", label: "Danger" },
+]
+
+const SELECTION_STATES: { key: FormState; label: string }[] = [
+  { key: "default", label: "Default" },
+  { key: "hover", label: "Hover" },
+  { key: "focus", label: "Focus" },
+  { key: "disabled", label: "Disabled" },
+]
+
+type FormSizeKey = "sm" | "default"
+
+const FORM_SIZES: { key: FormSizeKey; label: string }[] = [
+  { key: "default", label: "Default" },
+  { key: "sm", label: "Small" },
+]
+
+type ToggleState = "default" | "hover" | "press" | "focus" | "disabled"
+
+const TOGGLE_STATES: { key: ToggleState; label: string }[] = [
+  { key: "default", label: "Default" },
+  { key: "hover", label: "Hover" },
+  { key: "press", label: "Press" },
+  { key: "disabled", label: "Disabled" },
+]
+
+type ToggleSizeKey = "sm" | "md"
+
+const TOGGLE_SIZES: { key: ToggleSizeKey; label: string }[] = [
+  { key: "md", label: "Default" },
+  { key: "sm", label: "Small" },
+]
+
+// ─── Form Control Variant Data ───
+
+// ─── Form Control Variant Data (matches Code Connect enums) ───
+
+// Input.figma.js: Content enum = Placeholder | Value. Size enum = Default | Small.
+// State enum = Default | Hover | Press | Focus | Disabled | Danger
+const INPUT_VARIANTS: FormVariantRow[] = [
+  { name: "Placeholder", dbui: 'Content="Placeholder"', dubois: "Input", status: "covered" },
+  { name: "Value", dbui: 'Content="Value"', dubois: "Input (filled)", status: "covered" },
+]
+
+// Textarea.figma.js: No variant/size enums. State = Default | Hover | Press | Focus | Disabled | Danger
+const TEXTAREA_VARIANTS: FormVariantRow[] = [
+  { name: "Placeholder", dbui: "placeholder text", dubois: "Input (textarea)", status: "covered" },
+  { name: "Value", dbui: "filled value", dubois: "Input (textarea, filled)", status: "covered" },
+]
+
+// Select.figma.js: Size enum = Default | Small. State = Default | Hover | Press | Focus | Disabled | Danger
+const SELECT_VARIANTS: FormVariantRow[] = [
+  { name: "Placeholder", dbui: "placeholder shown", dubois: "Select (DialogCombobox)", status: "covered" },
+  { name: "Value", dbui: "value selected", dubois: "Select (filled)", status: "covered" },
+]
+
+// Combobox.figma.js: Size enum = Default | Small. State = Default | Hover | Press | Focus | Disabled | Danger
+const COMBOBOX_VARIANTS: FormVariantRow[] = [
+  { name: "Placeholder", dbui: "empty input", dubois: "DialogCombobox", status: "covered" },
+  { name: "Value", dbui: "selected value", dubois: "DialogCombobox (filled)", status: "covered" },
+]
+
+// Checkbox.figma.js: Checked enum = Unchecked | Checked | Indeterminate. State = Default | Hover | Press | Focus | Disabled
+const CHECKBOX_VARIANTS: FormVariantRow[] = [
+  { name: "Unchecked", dbui: "defaultChecked={false}", dubois: "Checkbox", status: "covered" },
+  { name: "Checked", dbui: "defaultChecked={true}", dubois: "Checkbox checked", status: "covered" },
+  { name: "Indeterminate", dbui: 'checked="indeterminate"', dubois: "Checkbox indeterminate", status: "covered" },
+]
+
+// Radio.figma.js: Selected enum = false | true. State = Default | Hover | Press | Focus | Disabled
+const RADIO_VARIANTS: FormVariantRow[] = [
+  { name: "Unselected", dbui: "Selected=false", dubois: "Radio", status: "covered" },
+  { name: "Selected", dbui: "Selected=true", dubois: "Radio selected", status: "covered" },
+]
+
+// Switch.figma.js: On enum = false | true. State = Default | Hover | Press | Focus | Disabled
+const SWITCH_VARIANTS: FormVariantRow[] = [
+  { name: "Off", dbui: "On=false", dubois: "Switch", status: "covered" },
+  { name: "On", dbui: "On=true", dubois: "Switch checked", status: "covered" },
+]
+
+// ToggleButton.figma.js: Variant = Default | Outline. Size = Default | Small.
+// State = Default | Hover | Press | Selected | Disabled
+const TOGGLE_VARIANTS_DATA: FormVariantRow[] = [
+  { name: "Default", dbui: 'variant="default"', dubois: "ToggleButton", status: "covered" },
+  { name: "Outline", dbui: 'variant="outline"', dubois: "—", status: "new" },
+]
+
+// SegmentControl.figma.js: Variant = Default | Outline. Size = Default(md) | Small(sm).
+// No state enum on container (state is per-item)
+const SEGMENT_CONTROL_VARIANTS: FormVariantRow[] = [
+  { name: "Default", dbui: 'variant="default"', dubois: "SegmentedControlGroup", status: "covered" },
+  { name: "Outline", dbui: 'variant="outline"', dubois: "—", status: "new" },
+]
+
+// ─── Vanilla shadcn Form Styles (zinc theme) ───
+
+const SC_FORM = {
+  border: "#e3e3e7",
+  bg: "#ffffff",
+  fg: "#08080a",
+  muted: "#71717a",
+  ring: "#08080a",
+  destructive: "#ee4444",
+  accent: "#f4f4f5",
+  primary: "#17171b",
+  primaryFg: "#f9f9f9",
+  radius: "calc(0.5rem - 2px)",
+}
+
+function shadcnInputStyle(state: FormState, size: FormSizeKey = "default"): React.CSSProperties {
+  const base: React.CSSProperties = {
+    display: "flex",
+    width: "200px",
+    borderRadius: SC_FORM.radius,
+    border: `1px solid ${SC_FORM.border}`,
+    backgroundColor: "transparent",
+    padding: size === "sm" ? "4px 8px" : "6px 12px",
+    height: size === "sm" ? "28px" : "36px",
+    fontSize: "14px",
+    lineHeight: "20px",
+    color: SC_FORM.fg,
+    outline: "none",
+    fontFamily: 'ui-sans-serif, system-ui, -apple-system, sans-serif',
+    boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
+  }
+  if (state === "hover") return { ...base, borderColor: "#a1a1aa" }
+  if (state === "focus") return { ...base, borderColor: SC_FORM.ring, boxShadow: `0 0 0 1px ${SC_FORM.ring}` }
+  if (state === "disabled") return { ...base, opacity: 0.5, cursor: "not-allowed" }
+  if (state === "error") return { ...base, borderColor: SC_FORM.destructive, boxShadow: `0 0 0 1px ${SC_FORM.destructive}` }
+  return base
+}
+
+function shadcnCheckboxStyle(state: FormState, checked: boolean): React.CSSProperties {
+  const base: React.CSSProperties = {
+    width: "16px",
+    height: "16px",
+    borderRadius: "4px",
+    border: checked ? "none" : `1px solid ${SC_FORM.primary}`,
+    backgroundColor: checked ? SC_FORM.primary : "transparent",
+    color: checked ? SC_FORM.primaryFg : "transparent",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    flexShrink: 0,
+  }
+  if (state === "hover") return { ...base, borderColor: checked ? undefined : "#52525b" }
+  if (state === "focus") return { ...base, boxShadow: `0 0 0 2px ${SC_FORM.ring}` }
+  if (state === "disabled") return { ...base, opacity: 0.5, cursor: "not-allowed" }
+  if (state === "error") return { ...base, borderColor: SC_FORM.destructive }
+  return base
+}
+
+function shadcnRadioStyle(state: FormState, selected: boolean): React.CSSProperties {
+  const base: React.CSSProperties = {
+    width: "16px",
+    height: "16px",
+    borderRadius: "50%",
+    border: `1px solid ${SC_FORM.primary}`,
+    backgroundColor: "transparent",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    flexShrink: 0,
+  }
+  if (state === "hover") return { ...base, borderColor: "#52525b" }
+  if (state === "focus") return { ...base, boxShadow: `0 0 0 2px ${SC_FORM.ring}` }
+  if (state === "disabled") return { ...base, opacity: 0.5, cursor: "not-allowed" }
+  if (state === "error") return { ...base, borderColor: SC_FORM.destructive }
+  return base
+}
+
+function shadcnSwitchStyle(state: FormState, checked: boolean, size: FormSizeKey = "default"): React.CSSProperties {
+  const w = size === "sm" ? "36px" : "44px"
+  const h = size === "sm" ? "20px" : "24px"
+  const base: React.CSSProperties = {
+    width: w,
+    height: h,
+    borderRadius: "9999px",
+    backgroundColor: checked ? SC_FORM.primary : SC_FORM.border,
+    border: "none",
+    padding: "2px",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    transition: "background-color 0.15s",
+  }
+  if (state === "hover") return { ...base, backgroundColor: checked ? "#27272a" : "#a1a1aa" }
+  if (state === "focus") return { ...base, boxShadow: `0 0 0 2px ${SC_FORM.bg}, 0 0 0 4px ${SC_FORM.ring}` }
+  if (state === "disabled") return { ...base, opacity: 0.5, cursor: "not-allowed" }
+  return base
+}
+
+function shadcnToggleStyle(state: ToggleState, variant: "default" | "outline", size: ToggleSizeKey, pressed: boolean): React.CSSProperties {
+  const base: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
+    borderRadius: SC_FORM.radius,
+    fontSize: "14px",
+    fontWeight: 500,
+    fontFamily: 'ui-sans-serif, system-ui, -apple-system, sans-serif',
+    cursor: "pointer",
+    height: size === "sm" ? "32px" : "36px",
+    minWidth: size === "sm" ? "32px" : "36px",
+    padding: size === "sm" ? "0 6px" : "0 10px",
+    border: variant === "outline" ? `1px solid ${SC_FORM.border}` : "1px solid transparent",
+    backgroundColor: pressed ? SC_FORM.accent : "transparent",
+    color: pressed ? SC_FORM.fg : SC_FORM.muted,
+    boxShadow: variant === "outline" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+  }
+  if (state === "hover") return { ...base, backgroundColor: SC_FORM.accent, color: SC_FORM.fg }
+  if (state === "press") return { ...base, backgroundColor: SC_FORM.accent, color: SC_FORM.fg }
+  if (state === "focus") return { ...base, boxShadow: `0 0 0 1px ${SC_FORM.ring}` }
+  if (state === "disabled") return { ...base, opacity: 0.5, cursor: "not-allowed" }
+  return base
 }
 
 // ─── Vanilla shadcn Button (exact registry source + zinc theme tokens) ───
@@ -298,7 +523,7 @@ function shadcnButtonStyle(variant: string, state: ButtonState, size: string = "
   let style = { ...base, ...variants[variant] }
 
   if (state === "hover") style = { ...style, ...hoverMap[variant] }
-  if (state === "active") style = { ...style, ...hoverMap[variant] }
+  if (state === "press") style = { ...style, ...hoverMap[variant] }
   if (state === "focus") style = { ...style, ...focusStyle }
   if (state === "disabled") style = { ...style, opacity: 0.5, pointerEvents: "none", cursor: "default" }
   if (state === "loading") style = { ...style, opacity: 0.7 }
@@ -329,22 +554,116 @@ function ShadcnButton({ variant = "default", label, state, size = "sm", iconOnly
 const FORCE_STATE_CSS = `
   /* Hover */
   .force-state-hover button[data-variant="default"] { background-color: var(--color-primary-hover) !important; }
-  .force-state-hover button[data-variant="outline"] { background-color: var(--color-accent) !important; border-color: var(--color-primary-hover) !important; color: var(--color-accent-foreground) !important; }
-  .force-state-hover button[data-variant="secondary"] { background-color: var(--color-accent) !important; color: var(--color-accent-foreground) !important; }
-  .force-state-hover button[data-variant="ghost"] { background-color: var(--color-accent) !important; color: var(--color-accent-foreground) !important; }
+  .force-state-hover button[data-variant="outline"] { background-color: var(--color-hover) !important; border-color: var(--color-primary) !important; color: var(--color-primary-hover) !important; }
+  .force-state-hover button[data-variant="secondary"] { background-color: var(--color-hover) !important; color: var(--color-accent-foreground) !important; }
+  .force-state-hover button[data-variant="ghost"] { background-color: var(--color-hover) !important; color: var(--color-primary-hover) !important; }
   .force-state-hover button[data-variant="destructive"] { background-color: var(--color-destructive-hover) !important; }
-  .force-state-hover button[data-variant="link"] { text-decoration: underline !important; }
-  /* Active */
-  .force-state-active button[data-variant] { transform: translateY(1px) !important; }
-  .force-state-active button[data-variant="default"] { background-color: var(--color-primary-active) !important; }
-  .force-state-active button[data-variant="destructive"] { background-color: var(--color-destructive-active) !important; }
-  .force-state-active button[data-variant="outline"] { background-color: var(--color-accent) !important; border-color: var(--color-primary-hover) !important; }
-  .force-state-active button[data-variant="secondary"] { background-color: var(--color-accent) !important; }
-  .force-state-active button[data-variant="ghost"] { background-color: var(--color-accent) !important; }
-  .force-state-active button[data-variant="link"] { text-decoration: underline !important; }
-  /* Focus */
-  .force-state-focus button[data-variant] { border-color: var(--color-ring) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 50%, transparent) !important; outline: none !important; }
-  .force-state-focus button[data-variant="destructive"] { border-color: color-mix(in srgb, var(--color-destructive) 40%, transparent) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-destructive) 20%, transparent) !important; }
+  .force-state-hover button[data-variant="link"] { text-decoration: underline !important; color: var(--color-primary-hover) !important; }
+  /* Press */
+  .force-state-press button[data-variant="default"] { background-color: var(--color-primary-press) !important; }
+  .force-state-press button[data-variant="destructive"] { background-color: var(--color-destructive-press) !important; }
+  .force-state-press button[data-variant="outline"] { background-color: var(--color-press) !important; border-color: var(--color-primary-press) !important; color: var(--color-primary-press) !important; }
+  .force-state-press button[data-variant="secondary"] { background-color: var(--color-press) !important; color: var(--color-primary-press) !important; }
+  .force-state-press button[data-variant="ghost"] { background-color: var(--color-press) !important; color: var(--color-primary-press) !important; }
+  .force-state-press button[data-variant="link"] { text-decoration: underline !important; color: var(--color-primary-press) !important; }
+  /* Focus — filled variants: shadow-focus (white gap + blue ring), non-filled: 2px inside border */
+  .force-state-focus button[data-variant="default"] { box-shadow: 0 0 0 1px white, 0 0 0 3px var(--color-ring) !important; overflow: clip !important; border-color: transparent !important; outline: none !important; }
+  .force-state-focus button[data-variant="destructive"] { box-shadow: 0 0 0 1px white, 0 0 0 3px var(--color-ring) !important; overflow: clip !important; border-color: transparent !important; outline: none !important; }
+  .force-state-focus button[data-variant="outline"] { border-width: 2px !important; border-color: var(--color-ring) !important; outline: none !important; }
+  .force-state-focus button[data-variant="secondary"] { border-width: 2px !important; border-color: var(--color-ring) !important; outline: none !important; }
+  .force-state-focus button[data-variant="ghost"] { border-width: 2px !important; border-color: var(--color-ring) !important; outline: none !important; }
+  .force-state-focus button[data-variant="link"] { border-width: 1px !important; border-style: solid !important; border-color: var(--color-ring) !important; outline: none !important; }
+`
+
+const FORCE_STATE_FORM_CSS = `
+  /* ── Input / Textarea / Select ── */
+
+  /* Hover: border-primary-hover + bg-hover (matches Tailwind hover: classes) */
+  .force-form-hover input,
+  .force-form-hover textarea,
+  .force-form-hover [data-slot="select-trigger"] {
+    border-color: var(--color-primary-hover) !important;
+    background-color: var(--color-hover) !important;
+  }
+
+  /* Focus: border-ring + ring-3 ring-ring/50 stacked with shadow-xs */
+  .force-form-focus input,
+  .force-form-focus textarea,
+  .force-form-focus [data-slot="select-trigger"] {
+    border-color: var(--color-ring) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 50%, transparent), 0 1px 0 rgba(0,0,0,0.05) !important;
+  }
+
+  /* Disabled: bg-disabled + border-disabled + text-disabled-foreground + no shadow */
+  .force-form-disabled input,
+  .force-form-disabled textarea,
+  .force-form-disabled [data-slot="select-trigger"] {
+    background-color: var(--color-disabled) !important;
+    border-color: var(--color-disabled) !important;
+    color: var(--color-disabled-foreground) !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+
+  /* Error: border-destructive + ring-destructive/20 stacked with shadow-xs */
+  .force-form-error input,
+  .force-form-error textarea,
+  .force-form-error [data-slot="select-trigger"] {
+    border-color: var(--color-destructive) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-destructive) 20%, transparent), 0 1px 0 rgba(0,0,0,0.05) !important;
+  }
+
+  /* ── Checkbox / Radio ── */
+
+  .force-form-hover [data-slot="checkbox"],
+  .force-form-hover button[role="radio"] {
+    border-color: var(--color-primary-hover) !important;
+    background-color: var(--color-hover) !important;
+  }
+  .force-form-focus [data-slot="checkbox"],
+  .force-form-focus button[role="radio"] {
+    border-color: var(--color-ring) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 50%, transparent) !important;
+  }
+
+  /* ── Switch ── */
+
+  .force-form-hover button[role="switch"]:not([data-checked]) {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent) !important;
+  }
+  .force-form-hover button[role="switch"][data-checked] {
+    background-color: var(--color-primary-hover) !important;
+  }
+  .force-form-focus button[role="switch"] {
+    border-color: var(--color-ring) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ring) 50%, transparent) !important;
+  }
+
+  /* ── Toggle ── */
+
+  .force-form-hover button[data-slot="toggle"] {
+    background-color: var(--color-hover) !important;
+  }
+  .force-form-press button[data-slot="toggle"] {
+    background-color: var(--color-press) !important;
+  }
+  .force-form-focus button[data-slot="toggle"] {
+    border-width: 2px !important;
+    border-color: var(--color-ring) !important;
+  }
+
+  /* ── Segment Control ── */
+
+  .force-form-hover button[data-slot="segment-control-item"] {
+    background-color: var(--color-hover) !important;
+  }
+  .force-form-press button[data-slot="segment-control-item"] {
+    background-color: var(--color-press) !important;
+  }
+  .force-form-focus button[data-slot="segment-control-item"] {
+    border-width: 2px !important;
+    border-color: var(--color-ring) !important;
+  }
 `
 
 function StatePreviewButton({ variant, label, state, theme, size = "sm", iconOnly = false }: {
@@ -359,7 +678,7 @@ function StatePreviewButton({ variant, label, state, theme, size = "sm", iconOnl
     return <ShadcnButton variant={variant || "default"} label={label} state={state} size={SHADCN_SIZE_MAP[size]} iconOnly={iconOnly} />
   }
 
-  const stateClass = (state === "hover" || state === "active" || state === "focus") ? `force-state-${state}` : ""
+  const stateClass = (state === "hover" || state === "press" || state === "focus") ? `force-state-${state}` : ""
   const dbuiSize = iconOnly ? DBUI_ICON_SIZE_MAP[size] : size
   return (
     <div className={stateClass}>
@@ -583,6 +902,189 @@ function VariantBar({ label, variants, states, sizes }: VariantBarProps) {
   )
 }
 
+// ─── Form Control Variant Bar ───
+
+type FormVariantRow = {
+  name: string
+  dbui: string
+  dubois: string
+  status: "new" | "tweaked" | "gap" | "covered" | "partial" | "deferred"
+}
+
+type FormVariantBarProps<S extends string, SZ extends string> = {
+  label: string
+  variants: FormVariantRow[]
+  states: { key: S; label: string }[]
+  sizes?: { key: SZ; label: string }[]
+  renderDbui: (variant: FormVariantRow, state: S, size: SZ) => React.ReactNode
+  renderShadcn: (variant: FormVariantRow, state: S, size: SZ) => React.ReactNode
+  forceStateCss?: string
+}
+
+function FormVariantBar<S extends string, SZ extends string>({
+  label,
+  variants,
+  states,
+  sizes,
+  renderDbui,
+  renderShadcn,
+  forceStateCss,
+}: FormVariantBarProps<S, SZ>) {
+  const { t } = useTheme()
+  const [open, setOpen] = useState(false)
+  const [activeState, setActiveState] = useState<S>(states[0].key)
+  const [activeSize, setActiveSize] = useState<SZ>(sizes ? sizes[0].key : ("default" as SZ))
+
+  const stateCount = states.length
+  const sizeCount = sizes ? sizes.length : 1
+  const total = stateCount * sizeCount * variants.length
+
+  return (
+    <div>
+      {/* Collapsed bar */}
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center gap-4 px-5 py-3 text-left transition-colors"
+        style={{
+          backgroundColor: t.cardBg,
+          border: `1px solid ${t.border}`,
+          borderTop: "none",
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          borderBottomLeftRadius: open ? 0 : "0.5rem",
+          borderBottomRightRadius: open ? 0 : "0.5rem",
+        }}
+      >
+        <ChevronRight
+          className="size-4 flex-shrink-0 transition-transform"
+          style={{ color: t.textSubtle, transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
+          aria-hidden
+        />
+        <span
+          className="text-[13px] font-semibold tabular-nums"
+          style={{ fontFamily: MONO, color: t.primary }}
+        >
+          {total}
+        </span>
+        <span className="text-[13px] font-medium" style={{ color: t.text }}>{label}</span>
+        <span className="text-[12px]" style={{ color: t.textSubtle }}>
+          {stateCount} states{sizeCount > 1 ? ` × ${sizeCount} sizes` : ""} × {variants.length} variant{variants.length > 1 ? "s" : ""}
+        </span>
+      </button>
+
+      {/* Expanded panel */}
+      {open && (
+        <div
+          className="overflow-hidden"
+          style={{
+            border: `1px solid ${t.border}`,
+            borderTop: "none",
+            borderBottomLeftRadius: "0.5rem",
+            borderBottomRightRadius: "0.5rem",
+          }}
+        >
+          {/* Controls bar */}
+          <div
+            className="flex items-center justify-between px-5 py-2"
+            style={{ borderBottom: `1px solid ${t.border}`, backgroundColor: t.cardBg }}
+          >
+            <div className="flex items-center gap-4">
+              {sizes && sizes.length > 1 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px]" style={{ fontFamily: MONO, color: t.textSubtle }}>Size</span>
+                  <div className="flex gap-0.5">
+                    {sizes.map((s) => (
+                      <button
+                        key={s.key}
+                        onClick={() => setActiveSize(s.key)}
+                        className="text-[11px] px-2 py-1 rounded-md transition-colors"
+                        style={{
+                          fontFamily: MONO,
+                          color: activeSize === s.key ? t.text : t.textSubtle,
+                          backgroundColor: activeSize === s.key ? t.hoverBg : "transparent",
+                          border: activeSize === s.key ? `1px solid ${t.border}` : "1px solid transparent",
+                        }}
+                      >
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px]" style={{ fontFamily: MONO, color: t.textSubtle }}>State</span>
+              <div className="flex gap-0.5">
+                {states.map((s) => (
+                  <button
+                    key={s.key}
+                    onClick={() => setActiveState(s.key)}
+                    className="text-[11px] px-2.5 py-1 rounded-md transition-colors"
+                    style={{
+                      fontFamily: MONO,
+                      color: activeState === s.key ? t.text : t.textSubtle,
+                      backgroundColor: activeState === s.key ? t.hoverBg : "transparent",
+                      border: activeState === s.key ? `1px solid ${t.border}` : "1px solid transparent",
+                    }}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {forceStateCss && <style>{forceStateCss}</style>}
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-[12px]">
+              <thead>
+                <tr style={{ borderBottom: `1px solid ${t.border}`, backgroundColor: t.bg }}>
+                  <th className="text-left px-5 py-2.5 font-normal" style={{ color: t.textSubtle, width: "22%", fontFamily: MONO }}>Variant</th>
+                  <th className="text-center px-4 py-2.5 font-normal" style={{ color: t.textSubtle, width: "30%", fontFamily: MONO }}>DBUI</th>
+                  <th className="text-center px-4 py-2.5 font-normal" style={{ color: t.textSubtle, width: "30%", fontFamily: MONO }}>shadcn</th>
+                  <th className="text-left px-5 py-2.5 font-normal" style={{ color: t.textSubtle, width: "18%", fontFamily: MONO }}>DuBois</th>
+                </tr>
+              </thead>
+              <tbody>
+                {variants.map((v, i) => (
+                  <tr
+                    key={v.name}
+                    style={{ borderBottom: i < variants.length - 1 ? `1px solid ${t.border}` : undefined }}
+                  >
+                    <td className="px-5 py-4 align-middle" style={{ fontFamily: MONO }}>
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[13px]" style={{ color: t.text }}>{v.name}</span>
+                          {v.status !== "covered" && <StatusBadge type={v.status}>{v.status}</StatusBadge>}
+                        </div>
+                        <span className="text-[11px]" style={{ color: t.textSubtle }}>{v.dbui || "—"}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 align-middle" style={{ fontFamily: "inherit" }}>
+                      <div className="flex justify-center">
+                        {renderDbui(v, activeState, activeSize)}
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 align-middle" style={{ fontFamily: "inherit" }}>
+                      <div className="flex justify-center">
+                        {renderShadcn(v, activeState, activeSize)}
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 align-middle" style={{ fontFamily: MONO }}>
+                      <span className="text-[12px]" style={{ color: t.text }}>{v.dubois}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Code Block ───
 
 function Code({ children }: { children: string }) {
@@ -732,43 +1234,38 @@ function Section({
 // ─── Nav (table of contents) ───
 
 const COMPONENTS = [
+  // ── Button Family ──
   { id: "button", label: "Button" },
+  { id: "split-button", label: "Split Button" },
+  { id: "toggle", label: "Toggle" },
+  { id: "segment-control", label: "Segment Control" },
+  // ── Input Family ──
   { id: "input", label: "Input" },
   { id: "textarea", label: "Textarea" },
-  { id: "select", label: "Select" },
-  { id: "dropdown", label: "Dropdown Menu" },
+  // ── Selection Family ──
   { id: "checkbox", label: "Checkbox" },
   { id: "radio", label: "Radio Group" },
   { id: "switch", label: "Switch" },
-  { id: "toggle", label: "Toggle" },
-  { id: "badge", label: "Badge" },
-  { id: "alert", label: "Alert" },
+  { id: "select", label: "Select" },
+  { id: "combobox", label: "Combobox" },
+  { id: "typeahead-combobox", label: "TypeaheadCombobox" },
+  { id: "dropdown", label: "Dropdown Menu" },
+  // ── Controls ──
   { id: "tabs", label: "Tabs" },
-  { id: "card", label: "Card" },
-  { id: "tooltip", label: "Tooltip" },
   { id: "slider", label: "Slider" },
-  { id: "progress", label: "Progress" },
-  { id: "skeleton", label: "Skeleton" },
-  { id: "separator", label: "Separator" },
+  { id: "radio-tile", label: "Radio Tile" },
+  // ── Feedback ──
   { id: "dialog", label: "Dialog" },
-  { id: "sheet", label: "Sheet" },
-  { id: "accordion", label: "Accordion" },
-  { id: "popover", label: "Popover" },
-  { id: "hover-card", label: "Hover Card" },
-  { id: "toggle-group", label: "Toggle Group" },
-  { id: "avatar", label: "Avatar" },
-  { id: "table", label: "Table" },
-  { id: "pagination", label: "Pagination" },
-  { id: "breadcrumb", label: "Breadcrumb" },
-  { id: "input-otp", label: "Input OTP" },
-  { id: "spinner", label: "Spinner" },
+  { id: "alert-dialog", label: "Alert Dialog" },
+  { id: "alert", label: "Alert" },
+  { id: "toast", label: "Toast" },
 ]
 
 // ─── Page ───
 
 export default function ComponentsPage() {
   const { t } = useTheme()
-  const [progress] = useState(62)
+  const [componentSearch, setComponentSearch] = useState("")
 
   return (
     <TooltipProvider>
@@ -783,9 +1280,47 @@ export default function ComponentsPage() {
               <em className="font-normal">Components</em>
             </h1>
             <p className="text-[19px] max-w-[560px] leading-[1.5]" style={{ fontFamily: SERIF, color: t.textMuted }}>
-              Every shadcn component, dressed in DuBois tokens.
-              Live preview on the left, usage code on the right.
+              Every shadcn component, dressed in DuBois tokens. Live preview on the left, usage code on the right.
             </p>
+          </div>
+        </section>
+
+        {/* Search + Filter bar */}
+        <section
+          className="sticky top-12 z-40 px-8 py-3 backdrop-blur-xl"
+          style={{ backgroundColor: `${t.bg}cc`, borderBottom: `1px solid ${t.border}` }}
+        >
+          <div className="max-w-[1100px] mx-auto flex items-center gap-4">
+            <div className="relative flex-1 max-w-[360px]">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke={t.textSubtle} strokeWidth="1.5">
+                <circle cx="7" cy="7" r="5.5" />
+                <path d="M11 11l3.5 3.5" strokeLinecap="round" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search components…"
+                value={componentSearch}
+                onChange={(e) => setComponentSearch(e.target.value)}
+                className="w-full pl-9 pr-3 py-1.5 rounded-md text-[13px] outline-none transition-colors"
+                style={{ fontFamily: MONO, color: t.text, backgroundColor: t.cardBg, border: `1px solid ${t.border}` }}
+              />
+            </div>
+            <div className="flex items-center gap-1">
+              {["All", "Controls", "Content", "Containers", "Compositions"].map((cat) => (
+                <button
+                  key={cat}
+                  className="text-[11px] px-2.5 py-1 rounded-md transition-colors"
+                  style={{
+                    fontFamily: MONO,
+                    color: cat === "All" ? t.text : t.textSubtle,
+                    backgroundColor: cat === "All" ? t.hoverBg : "transparent",
+                    border: cat === "All" ? `1px solid ${t.border}` : "1px solid transparent",
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -828,11 +1363,11 @@ export default function ComponentsPage() {
 <Button variant="ghost">Ghost</Button>
 <Button variant="destructive">Destructive</Button>
 <Button variant="link">Link</Button>
-<Button size="icon" variant="ghost" aria-label="Add"><Plus /></Button>
+<Button size="icon-md" variant="ghost" aria-label="Add"><Plus /></Button>
 
 {/* Sizes */}
 <Button size="sm">Small</Button>
-<Button size="default">Default</Button>`}
+<Button size="md">Default</Button>`}
               >
                 <div className="flex flex-col gap-4 w-full">
                   {/* Row labels share fixed width so previews align */}
@@ -850,7 +1385,7 @@ export default function ComponentsPage() {
                       <Button variant="ghost">Ghost</Button>
                       <Button variant="destructive">Destructive</Button>
                       <Button variant="link">Link</Button>
-                      <Button size="icon" variant="ghost" aria-label="Add">
+                      <Button size="icon-md" variant="ghost" aria-label="Add">
                         <Plus className="size-4" />
                       </Button>
                     </div>
@@ -864,7 +1399,7 @@ export default function ComponentsPage() {
                     </span>
                     <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
                       <Button size="sm">Small</Button>
-                      <Button size="default">Default</Button>
+                      <Button size="md">Default</Button>
                     </div>
                   </div>
                 </div>
@@ -873,37 +1408,611 @@ export default function ComponentsPage() {
               <VariantBar label="Variants" variants={BUTTON_VARIANTS} states={6} sizes={2} />
               </div>
 
+              {/* ─── Split Button ─── */}
+              <Section
+                id="split-button"
+                title="Split Button"
+                code={`<SplitButton>
+  <Button>Save</Button>
+  <SplitButtonSeparator />
+  <Button size="icon-md" aria-label="More options">
+    <ChevronDown className="size-4" />
+  </Button>
+</SplitButton>
+
+{/* Outline variant */}
+<SplitButton>
+  <Button variant="outline">Export</Button>
+  <SplitButtonSeparator />
+  <Button variant="outline" size="icon-md">
+    <ChevronDown className="size-4" />
+  </Button>
+</SplitButton>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Variants</span>
+                    <div className="flex flex-wrap items-center gap-3 flex-1 min-w-0">
+                      <SplitButton>
+                        <Button>Save</Button>
+                        <SplitButtonSeparator />
+                        <Button size="icon-md" aria-label="More">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </Button>
+                      </SplitButton>
+                      <SplitButton>
+                        <Button variant="outline">Export</Button>
+                        <SplitButtonSeparator />
+                        <Button variant="outline" size="icon-md" aria-label="More">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </Button>
+                      </SplitButton>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-3 flex-1 min-w-0">
+                      <SplitButton>
+                        <Button size="sm">Small</Button>
+                        <SplitButtonSeparator />
+                        <Button size="icon-sm" aria-label="More">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </Button>
+                      </SplitButton>
+                      <SplitButton>
+                        <Button>Default</Button>
+                        <SplitButtonSeparator />
+                        <Button size="icon-md" aria-label="More">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </Button>
+                      </SplitButton>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              {/* ─── Toggle ─── */}
+              <div>
+              <Section
+                id="toggle"
+                title="Toggle"
+                duboisStoryId="primitives-segmentedcontrol-stories--default"
+                hasVariantBar
+                code={`<Toggle>Default</Toggle>
+<Toggle variant="outline">Outline</Toggle>
+<Toggle size="sm">Small</Toggle>
+<Toggle defaultPressed>Pressed</Toggle>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Variants</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Toggle defaultPressed>Default</Toggle>
+                      <Toggle variant="outline">Outline</Toggle>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Toggle size="sm">Small</Toggle>
+                      <Toggle size="md">Default</Toggle>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <FormVariantBar<ToggleState, ToggleSizeKey>
+                label="Variants"
+                variants={TOGGLE_VARIANTS_DATA}
+                states={TOGGLE_STATES}
+                sizes={TOGGLE_SIZES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state, size) => {
+                  const variant = v.name === "Outline" ? "outline" as const : "default" as const
+                  const stateClass = (state === "hover" || state === "press") ? `force-form-${state}` : ""
+                  return (
+                    <div className={stateClass}>
+                      <Toggle variant={variant} size={size} disabled={state === "disabled"} data-slot="toggle">
+                        {v.name}
+                      </Toggle>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state, size) => {
+                  const variant = v.name === "Outline" ? "outline" as const : "default" as const
+                  return (
+                    <button style={shadcnToggleStyle(state, variant, size, false)}>
+                      {v.name}
+                    </button>
+                  )
+                }}
+              />
+              </div>
+
+              {/* ─── Segment Control ─── */}
+              <div>
+              <Section
+                id="segment-control"
+                title="Segment Control"
+                duboisStoryId="primitives-segmentedcontrol-stories--default"
+                hasVariantBar
+                code={`<SegmentControl>
+  <SegmentControlItem value="a">Left</SegmentControlItem>
+  <SegmentControlItem value="b">Center</SegmentControlItem>
+  <SegmentControlItem value="c">Right</SegmentControlItem>
+</SegmentControl>
+
+{/* Outline variant */}
+<SegmentControl variant="outline">...</SegmentControl>
+
+{/* Small size */}
+<SegmentControl size="sm">...</SegmentControl>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Variants</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <SegmentControl defaultValue={["a"]}>
+                        <SegmentControlItem value="a">Left</SegmentControlItem>
+                        <SegmentControlItem value="b">Center</SegmentControlItem>
+                        <SegmentControlItem value="c">Right</SegmentControlItem>
+                      </SegmentControl>
+                      <SegmentControl variant="outline" defaultValue={["bold"]}>
+                        <SegmentControlItem value="bold">Bold</SegmentControlItem>
+                        <SegmentControlItem value="italic">Italic</SegmentControlItem>
+                      </SegmentControl>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <SegmentControl size="sm" defaultValue={["a"]}>
+                        <SegmentControlItem value="a">Small</SegmentControlItem>
+                        <SegmentControlItem value="b">Size</SegmentControlItem>
+                      </SegmentControl>
+                      <SegmentControl defaultValue={["a"]}>
+                        <SegmentControlItem value="a">Default</SegmentControlItem>
+                        <SegmentControlItem value="b">Size</SegmentControlItem>
+                      </SegmentControl>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <FormVariantBar<ToggleState, ToggleSizeKey>
+                label="Variants"
+                variants={SEGMENT_CONTROL_VARIANTS}
+                states={TOGGLE_STATES}
+                sizes={TOGGLE_SIZES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state, size) => {
+                  const variant = v.name === "Outline" ? "outline" as const : "default" as const
+                  const stateClass = (state === "hover" || state === "press") ? `force-form-${state}` : ""
+                  return (
+                    <div className={stateClass}>
+                      <SegmentControl variant={variant} size={size} defaultValue={["a"]}>
+                        <SegmentControlItem value="a" disabled={state === "disabled"}>One</SegmentControlItem>
+                        <SegmentControlItem value="b" disabled={state === "disabled"}>Two</SegmentControlItem>
+                        <SegmentControlItem value="c" disabled={state === "disabled"}>Three</SegmentControlItem>
+                      </SegmentControl>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state, size) => {
+                  const isOutline = v.name === "Outline"
+                  const h = size === "sm" ? "24px" : "32px"
+                  const px = size === "sm" ? "6px" : "10px"
+                  const fontSize = "14px"
+                  const containerBg = SC_FORM.accent
+                  const selectedBg = "#fff"
+                  const items = ["One", "Two", "Three"]
+                  return (
+                    <div style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      borderRadius: SC_FORM.radius,
+                      backgroundColor: containerBg,
+                      padding: "2px",
+                      border: isOutline ? `1px solid ${SC_FORM.border}` : "none",
+                      opacity: state === "disabled" ? 0.5 : 1,
+                    }}>
+                      {items.map((item, i) => (
+                        <div key={item} style={{
+                          height: h,
+                          padding: `0 ${px}`,
+                          fontSize,
+                          fontWeight: 500,
+                          fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: SC_FORM.radius,
+                          backgroundColor: i === 0 ? selectedBg : "transparent",
+                          color: SC_FORM.fg,
+                          boxShadow: i === 0 ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+                          border: i === 0 ? `1px solid ${SC_FORM.border}` : "1px solid transparent",
+                          cursor: state === "disabled" ? "not-allowed" : "pointer",
+                        }}>
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  )
+                }}
+              />
+              </div>
+
               {/* ─── Input ─── */}
+              <div>
               <Section
                 id="input"
                 title="Input"
                 duboisStoryId="primitives-input-stories--default"
+                hasVariantBar
                 code={`<Input placeholder="Email address" />
 <Input type="password" placeholder="Password" />
-<Input disabled placeholder="Disabled" />`}
+<Input size="sm" placeholder="Small" />
+<Input disabled placeholder="Disabled" />
+<Input aria-invalid placeholder="Error state" />`}
               >
-                <div className="flex flex-col gap-3 w-full max-w-[300px]">
-                  <Input placeholder="Email address" />
-                  <Input type="password" placeholder="Password" />
-                  <Input disabled placeholder="Disabled" />
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Input placeholder="Default (32px)" className="w-[200px]" />
+                      <Input size="sm" placeholder="Small (24px)" className="w-[200px]" />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>States</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Input placeholder="Default" className="w-[140px]" />
+                      <Input disabled placeholder="Disabled" className="w-[140px]" />
+                      <Input aria-invalid placeholder="Danger" className="w-[140px]" />
+                    </div>
+                  </div>
                 </div>
               </Section>
 
+              <FormVariantBar<FormState, FormSizeKey>
+                label="Variants"
+                variants={INPUT_VARIANTS}
+                states={FORM_STATES}
+                sizes={FORM_SIZES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state, size) => {
+                  const stateClass = (state === "hover" || state === "focus") ? `force-form-${state}` : state === "error" ? "force-form-error" : ""
+                  return (
+                    <div className={stateClass}>
+                      <Input
+                        placeholder={v.name === "Value" ? undefined : "Placeholder"}
+                        defaultValue={v.name === "Value" ? "john@databricks.com" : undefined}
+                        size={size}
+                        disabled={state === "disabled"}
+                        aria-invalid={state === "error" ? true : undefined}
+                        className="w-[200px]"
+                      />
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state, size) => (
+                  <input
+                    style={shadcnInputStyle(state === "disabled" ? "disabled" : state, size)}
+                    placeholder={v.name === "Value" ? undefined : "Placeholder"}
+                    defaultValue={v.name === "Value" ? "john@databricks.com" : undefined}
+                    disabled={state === "disabled"}
+                    readOnly
+                  />
+                )}
+              />
+              </div>
+
               {/* ─── Textarea ─── */}
+              <div>
               <Section
                 id="textarea"
                 title="Textarea"
                 duboisStoryId="primitives-input-stories--textarea"
-                code={`<Textarea placeholder="Type your message..." />`}
+                hasVariantBar
+                code={`<Textarea placeholder="Type your message..." />
+<Textarea disabled placeholder="Disabled" />
+<Textarea aria-invalid placeholder="Error state" />`}
               >
-                <Textarea placeholder="Type your message..." className="max-w-[300px]" />
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>States</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Textarea placeholder="Default" className="w-[180px] min-h-[60px]" />
+                      <Textarea disabled placeholder="Disabled" className="w-[180px] min-h-[60px]" />
+                      <Textarea aria-invalid placeholder="Danger" className="w-[180px] min-h-[60px]" />
+                    </div>
+                  </div>
+                </div>
               </Section>
 
+              <FormVariantBar<FormState, FormSizeKey>
+                label="Variants"
+                variants={TEXTAREA_VARIANTS}
+                states={FORM_STATES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state) => {
+                  const stateClass = (state === "hover" || state === "focus") ? `force-form-${state}` : state === "error" ? "force-form-error" : ""
+                  return (
+                    <div className={stateClass}>
+                      <Textarea
+                        placeholder={v.name === "Value" ? undefined : "Placeholder"}
+                        defaultValue={v.name === "Value" ? "This is some content..." : undefined}
+                        disabled={state === "disabled"}
+                        aria-invalid={state === "error" ? true : undefined}
+                        className="w-[200px] min-h-[60px]"
+                      />
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state) => (
+                  <textarea
+                    style={{
+                      ...shadcnInputStyle(state, "default"),
+                      width: "200px",
+                      minHeight: "60px",
+                      height: "auto",
+                      padding: "8px 12px",
+                      resize: "none" as const,
+                    }}
+                    placeholder={v.name === "Value" ? undefined : "Placeholder"}
+                    defaultValue={v.name === "Value" ? "This is some content..." : undefined}
+                    disabled={state === "disabled"}
+                    readOnly
+                  />
+                )}
+              />
+              </div>
+
+              {/* ─── Checkbox ─── */}
+              <div>
+              <Section
+                id="checkbox"
+                title="Checkbox"
+                duboisStoryId="primitives-checkbox-stories--default"
+                hasVariantBar
+                code={`<div className="flex items-center gap-2">
+  <Checkbox id="terms" />
+  <Label htmlFor="terms">Accept terms</Label>
+</div>
+
+<Checkbox defaultChecked />
+<Checkbox disabled />`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>3 States</span>
+                    <div className="flex flex-wrap items-center gap-4 flex-1 min-w-0">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox />
+                        <span className="text-[13px]">Unchecked</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox defaultChecked />
+                        <span className="text-[13px]">Checked</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox disabled />
+                        <span className="text-[13px]">Disabled</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <FormVariantBar<FormState, string>
+                label="Variants"
+                variants={CHECKBOX_VARIANTS}
+                states={SELECTION_STATES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state) => {
+                  const checked = v.name === "Checked"
+                  const indeterminate = v.name === "Indeterminate"
+                  const stateClass = (state === "hover" || state === "focus") ? `force-form-${state}` : ""
+                  return (
+                    <div className={`flex items-center gap-2 ${stateClass}`}>
+                      <Checkbox defaultChecked={checked || indeterminate} disabled={state === "disabled"} />
+                      <span className="text-[13px]">Label</span>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state) => {
+                  const checked = v.name === "Checked"
+                  const indeterminate = v.name === "Indeterminate"
+                  return (
+                    <div className="flex items-center gap-2">
+                      <div style={shadcnCheckboxStyle(state, checked || indeterminate)}>
+                        {checked && (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        )}
+                        {indeterminate && (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                          </svg>
+                        )}
+                      </div>
+                      <span style={{ fontSize: "14px", fontFamily: 'ui-sans-serif, system-ui, sans-serif', color: state === "disabled" ? SC_FORM.muted : SC_FORM.fg }}>Label</span>
+                    </div>
+                  )
+                }}
+              />
+              </div>
+
+              {/* ─── Radio Group ─── */}
+              <div>
+              <Section
+                id="radio"
+                title="Radio Group"
+                duboisStoryId="primitives-radio-stories--default"
+                hasVariantBar
+                code={`<RadioGroup defaultValue="option-1">
+  <div className="flex items-center gap-2">
+    <RadioGroupItem value="option-1" id="r1" />
+    <Label htmlFor="r1">Option 1</Label>
+  </div>
+  <div className="flex items-center gap-2">
+    <RadioGroupItem value="option-2" id="r2" />
+    <Label htmlFor="r2">Option 2</Label>
+  </div>
+</RadioGroup>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Selected</span>
+                    <div className="flex flex-wrap items-center gap-4 flex-1 min-w-0">
+                      <RadioGroup defaultValue="option-1">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <RadioGroupItem value="option-1" />
+                          <span className="text-[13px]">Default plan</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <RadioGroupItem value="option-2" />
+                          <span className="text-[13px]">Pro plan</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <RadioGroupItem value="option-3" />
+                          <span className="text-[13px]">Enterprise</span>
+                        </label>
+                      </RadioGroup>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <FormVariantBar<FormState, string>
+                label="Variants"
+                variants={RADIO_VARIANTS}
+                states={SELECTION_STATES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state) => {
+                  const selected = v.name === "Selected"
+                  const stateClass = (state === "hover" || state === "focus") ? `force-form-${state}` : ""
+                  return (
+                    <div className={stateClass}>
+                      <RadioGroup defaultValue={selected ? "opt" : undefined}>
+                        <label className="flex items-center gap-2">
+                          <RadioGroupItem value="opt" disabled={state === "disabled"} />
+                          <span className="text-[13px]">Label</span>
+                        </label>
+                      </RadioGroup>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state) => {
+                  const selected = v.name === "Selected"
+                  return (
+                    <div className="flex items-center gap-2">
+                      <div style={shadcnRadioStyle(state, selected)}>
+                        {selected && (
+                          <div style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: SC_FORM.primary }} />
+                        )}
+                      </div>
+                      <span style={{ fontSize: "14px", fontFamily: 'ui-sans-serif, system-ui, sans-serif', color: state === "disabled" ? SC_FORM.muted : SC_FORM.fg }}>Label</span>
+                    </div>
+                  )
+                }}
+              />
+              </div>
+
+              {/* ─── Switch ─── */}
+              <div>
+              <Section
+                id="switch"
+                title="Switch"
+                duboisStoryId="primitives-switch-stories--default"
+                hasVariantBar
+                code={`<Switch />
+<Switch defaultChecked />
+<Switch size="sm" />
+<Switch disabled />`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-4 flex-1 min-w-0">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Switch defaultChecked />
+                        <span className="text-[13px]">Default</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Switch size="sm" defaultChecked />
+                        <span className="text-[13px]">Small</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>States</span>
+                    <div className="flex flex-wrap items-center gap-4 flex-1 min-w-0">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Switch />
+                        <span className="text-[13px]">Off</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Switch defaultChecked />
+                        <span className="text-[13px]">On</span>
+                      </label>
+                      <label className="flex items-center gap-2">
+                        <Switch disabled />
+                        <span className="text-[13px]">Disabled</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <FormVariantBar<FormState, FormSizeKey>
+                label="Variants"
+                variants={SWITCH_VARIANTS}
+                states={SELECTION_STATES}
+                sizes={FORM_SIZES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state, size) => {
+                  const checked = v.name === "On"
+                  const stateClass = (state === "hover" || state === "focus") ? `force-form-${state}` : ""
+                  return (
+                    <div className={`flex items-center gap-2 ${stateClass}`}>
+                      <Switch defaultChecked={checked} size={size} disabled={state === "disabled"} />
+                      <span className="text-[13px]">Label</span>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state, size) => {
+                  const checked = v.name === "On"
+                  const thumbSize = size === "sm" ? "16px" : "20px"
+                  const travel = size === "sm" ? "16px" : "20px"
+                  return (
+                    <div className="flex items-center gap-2">
+                      <div style={shadcnSwitchStyle(state, checked, size)}>
+                        <div style={{
+                          width: thumbSize,
+                          height: thumbSize,
+                          borderRadius: "50%",
+                          backgroundColor: "#fff",
+                          boxShadow: "0 1px 2px rgba(0,0,0,0.2)",
+                          transform: checked ? `translateX(${travel})` : "translateX(0)",
+                          transition: "transform 0.15s",
+                        }} />
+                      </div>
+                      <span style={{ fontSize: "14px", fontFamily: 'ui-sans-serif, system-ui, sans-serif', color: state === "disabled" ? SC_FORM.muted : SC_FORM.fg }}>Label</span>
+                    </div>
+                  )
+                }}
+              />
+              </div>
+
               {/* ─── Select ─── */}
+              <div>
               <Section
                 id="select"
                 title="Select"
                 duboisStoryId="primitives-select-stories--default"
+                hasVariantBar
                 code={`<Select>
   <SelectTrigger className="w-[200px]">
     <SelectValue placeholder="Select a fruit" />
@@ -911,30 +2020,227 @@ export default function ComponentsPage() {
   <SelectContent>
     <SelectItem value="apple">Apple</SelectItem>
     <SelectItem value="banana">Banana</SelectItem>
-    <SelectItem value="cherry">Cherry</SelectItem>
   </SelectContent>
-</Select>`}
+</Select>
+
+{/* Small size */}
+<SelectTrigger size="sm">...</SelectTrigger>`}
               >
-                <div className="flex items-center gap-3">
-                  <Select>
-                    <SelectTrigger className="w-[200px]">
-                      <SelectValue placeholder="Select a fruit" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="cherry">Cherry</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select>
-                    <SelectTrigger className="w-[160px]" size="sm">
-                      <SelectValue placeholder="Small" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="a">Option A</SelectItem>
-                      <SelectItem value="b">Option B</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Select>
+                        <SelectTrigger className="w-[200px]">
+                          <SelectValue placeholder="Default (32px)" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="apple">Apple</SelectItem>
+                          <SelectItem value="banana">Banana</SelectItem>
+                          <SelectItem value="cherry">Cherry</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Select>
+                        <SelectTrigger className="w-[200px]" size="sm">
+                          <SelectValue placeholder="Small (28px)" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="a">Option A</SelectItem>
+                          <SelectItem value="b">Option B</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <FormVariantBar<FormState, FormSizeKey>
+                label="Variants"
+                variants={SELECT_VARIANTS}
+                states={FORM_STATES}
+                sizes={FORM_SIZES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state, size) => {
+                  const stateClass = (state === "hover" || state === "focus") ? `force-form-${state}` : state === "error" ? "force-form-error" : ""
+                  return (
+                    <div className={stateClass}>
+                      <Select defaultValue={v.name === "Value" ? "apple" : undefined}>
+                        <SelectTrigger className="w-[200px]" size={size} disabled={state === "disabled"} aria-invalid={state === "error" ? true : undefined}>
+                          <SelectValue placeholder="Select a fruit" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="apple">Apple</SelectItem>
+                          <SelectItem value="banana">Banana</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state, size) => (
+                  <div
+                    style={{
+                      ...shadcnInputStyle(state, size),
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      cursor: "pointer",
+                      color: v.name === "Placeholder" ? SC_FORM.muted : SC_FORM.fg,
+                    }}
+                  >
+                    <span>{v.name === "Value" ? "Apple" : "Select a fruit"}</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={SC_FORM.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                )}
+              />
+              </div>
+
+              {/* ─── Combobox ─── */}
+              <div>
+              <Section
+                id="combobox"
+                title="Combobox"
+                hasVariantBar
+                code={`<Combobox>
+  <ComboboxInput placeholder="Search fruits..." />
+  <ComboboxContent>
+    <ComboboxList>
+      <ComboboxItem value="apple">Apple</ComboboxItem>
+      <ComboboxItem value="banana">Banana</ComboboxItem>
+    </ComboboxList>
+    <ComboboxEmpty>No results found.</ComboboxEmpty>
+  </ComboboxContent>
+</Combobox>
+
+{/* Small size */}
+<ComboboxInput inputSize="sm" />`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>2 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Combobox>
+                        <ComboboxInput placeholder="Default (32px)" className="w-[200px]" />
+                        <ComboboxContent>
+                          <ComboboxList>
+                            <ComboboxItem value="apple">Apple</ComboboxItem>
+                            <ComboboxItem value="banana">Banana</ComboboxItem>
+                            <ComboboxItem value="cherry">Cherry</ComboboxItem>
+                          </ComboboxList>
+                          <ComboboxEmpty>No results.</ComboboxEmpty>
+                        </ComboboxContent>
+                      </Combobox>
+                      <Combobox>
+                        <ComboboxInput placeholder="Small (28px)" inputSize="sm" className="w-[200px]" />
+                        <ComboboxContent>
+                          <ComboboxList>
+                            <ComboboxItem value="a">Option A</ComboboxItem>
+                          </ComboboxList>
+                          <ComboboxEmpty>No results.</ComboboxEmpty>
+                        </ComboboxContent>
+                      </Combobox>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Clear</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Combobox>
+                        <ComboboxInput placeholder="With clear button" showClear className="w-[200px]" />
+                        <ComboboxContent>
+                          <ComboboxList>
+                            <ComboboxItem value="a">Option A</ComboboxItem>
+                            <ComboboxItem value="b">Option B</ComboboxItem>
+                          </ComboboxList>
+                          <ComboboxEmpty>No results.</ComboboxEmpty>
+                        </ComboboxContent>
+                      </Combobox>
+                    </div>
+                  </div>
+                </div>
+              </Section>
+
+              <FormVariantBar<FormState, FormSizeKey>
+                label="Variants"
+                variants={COMBOBOX_VARIANTS}
+                states={FORM_STATES}
+                sizes={FORM_SIZES}
+                forceStateCss={FORCE_STATE_FORM_CSS}
+                renderDbui={(v, state, size) => {
+                  const stateClass = (state === "hover" || state === "focus") ? `force-form-${state}` : state === "error" ? "force-form-error" : ""
+                  return (
+                    <div className={stateClass}>
+                      <Combobox>
+                        <ComboboxInput
+                          placeholder={v.name === "Value" ? "Apple" : "Search..."}
+                          inputSize={size}
+                          disabled={state === "disabled"}
+                          className="w-[200px]"
+                        />
+                        <ComboboxContent>
+                          <ComboboxList>
+                            <ComboboxItem value="apple">Apple</ComboboxItem>
+                          </ComboboxList>
+                        </ComboboxContent>
+                      </Combobox>
+                    </div>
+                  )
+                }}
+                renderShadcn={(v, state, size) => (
+                  <div
+                    style={{
+                      ...shadcnInputStyle(state, size),
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke={SC_FORM.muted} strokeWidth="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M11 11l3.5 3.5" strokeLinecap="round"/></svg>
+                    <span style={{ color: v.name === "Placeholder" ? SC_FORM.muted : SC_FORM.fg, fontSize: "14px" }}>
+                      {v.name === "Value" ? "Apple" : "Search..."}
+                    </span>
+                  </div>
+                )}
+              />
+              </div>
+
+              {/* ─── TypeaheadCombobox ─── */}
+              <Section
+                id="typeahead-combobox"
+                title="TypeaheadCombobox"
+                code={`<Combobox>
+  <ComboboxChips>
+    <ComboboxChip value="react">React</ComboboxChip>
+    <ComboboxChip value="vue">Vue</ComboboxChip>
+    <ComboboxChipsInput placeholder="Add tag..." />
+  </ComboboxChips>
+  <ComboboxContent>
+    <ComboboxList>
+      <ComboboxItem value="angular">Angular</ComboboxItem>
+      <ComboboxItem value="svelte">Svelte</ComboboxItem>
+    </ComboboxList>
+  </ComboboxContent>
+</Combobox>`}
+              >
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Multi-select</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Combobox>
+                        <ComboboxChips className="w-[300px]">
+                          <ComboboxChip>React</ComboboxChip>
+                          <ComboboxChip>Vue</ComboboxChip>
+                          <ComboboxChipsInput placeholder="Add framework..." />
+                        </ComboboxChips>
+                        <ComboboxContent>
+                          <ComboboxList>
+                            <ComboboxItem value="angular">Angular</ComboboxItem>
+                            <ComboboxItem value="svelte">Svelte</ComboboxItem>
+                            <ComboboxItem value="solid">Solid</ComboboxItem>
+                          </ComboboxList>
+                          <ComboboxEmpty>No results.</ComboboxEmpty>
+                        </ComboboxContent>
+                      </Combobox>
+                    </div>
+                  </div>
                 </div>
               </Section>
 
@@ -953,183 +2259,35 @@ export default function ComponentsPage() {
     <DropdownMenuItem>Profile</DropdownMenuItem>
     <DropdownMenuItem>Settings</DropdownMenuItem>
     <DropdownMenuSeparator />
-    <DropdownMenuItem variant="destructive">
-      Delete account
-    </DropdownMenuItem>
+    <DropdownMenuCheckboxItem checked>Show sidebar</DropdownMenuCheckboxItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="destructive">Delete account</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>`}
               >
-                <div className="flex gap-3">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger render={<Button variant="outline" />}>
-                      Open Menu
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>Profile</DropdownMenuItem>
-                      <DropdownMenuItem>Billing</DropdownMenuItem>
-                      <DropdownMenuItem>Settings</DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuCheckboxItem checked>Show sidebar</DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>Show statusbar</DropdownMenuCheckboxItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem variant="destructive">Delete account</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </Section>
-
-              {/* ─── Checkbox ─── */}
-              <Section
-                id="checkbox"
-                title="Checkbox"
-                duboisStoryId="primitives-checkbox-stories--default"
-                code={`<div className="flex items-center gap-2">
-  <Checkbox id="terms" />
-  <Label htmlFor="terms">Accept terms</Label>
-</div>`}
-              >
-                <div className="flex flex-col gap-3">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <Checkbox id="c1" defaultChecked />
-                    <span className="text-[13px]">Checked</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <Checkbox id="c2" />
-                    <span className="text-[13px]">Unchecked</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer opacity-50">
-                    <Checkbox id="c3" disabled />
-                    <span className="text-[13px]">Disabled</span>
-                  </label>
-                </div>
-              </Section>
-
-              {/* ─── Radio Group ─── */}
-              <Section
-                id="radio"
-                title="Radio Group"
-                duboisStoryId="primitives-radio-stories--default"
-                code={`<RadioGroup defaultValue="option-1">
-  <div className="flex items-center gap-2">
-    <RadioGroupItem value="option-1" id="r1" />
-    <Label htmlFor="r1">Option 1</Label>
-  </div>
-  <div className="flex items-center gap-2">
-    <RadioGroupItem value="option-2" id="r2" />
-    <Label htmlFor="r2">Option 2</Label>
-  </div>
-</RadioGroup>`}
-              >
-                <RadioGroup defaultValue="option-1">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <RadioGroupItem value="option-1" id="r1" />
-                    <span className="text-[13px]">Default plan</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <RadioGroupItem value="option-2" id="r2" />
-                    <span className="text-[13px]">Pro plan</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <RadioGroupItem value="option-3" id="r3" />
-                    <span className="text-[13px]">Enterprise</span>
-                  </label>
-                </RadioGroup>
-              </Section>
-
-              {/* ─── Switch ─── */}
-              <Section
-                id="switch"
-                title="Switch"
-                duboisStoryId="primitives-switch-stories--default"
-                code={`<Switch />
-<Switch size="sm" />
-<Switch disabled />`}
-              >
-                <div className="flex flex-col gap-3">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <Switch id="s1" defaultChecked />
-                    <span className="text-[13px]">Notifications</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <Switch id="s2" size="sm" />
-                    <span className="text-[13px]">Small size</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer opacity-50">
-                    <Switch id="s3" disabled />
-                    <span className="text-[13px]">Disabled</span>
-                  </label>
-                </div>
-              </Section>
-
-              {/* ─── Toggle ─── */}
-              <Section
-                id="toggle"
-                title="Toggle"
-                duboisStoryId="primitives-segmentedcontrol-stories--default"
-                code={`<Toggle>Default</Toggle>
-<Toggle variant="outline">Outline</Toggle>
-<Toggle size="sm">Small</Toggle>
-<Toggle size="lg">Large</Toggle>`}
-              >
-                <div className="flex flex-wrap items-center gap-2">
-                  <Toggle defaultPressed>Default</Toggle>
-                  <Toggle variant="outline">Outline</Toggle>
-                  <Toggle size="sm">Sm</Toggle>
-                  <Toggle size="lg">Lg</Toggle>
-                </div>
-              </Section>
-
-              {/* ─── Badge ─── */}
-              <Section
-                id="badge"
-                title="Badge"
-                duboisStoryId="primitives-tag-stories--default"
-                code={`<Badge>Default</Badge>
-<Badge variant="secondary">Secondary</Badge>
-<Badge variant="destructive">Destructive</Badge>
-<Badge variant="outline">Outline</Badge>
-<Badge variant="ghost">Ghost</Badge>`}
-              >
-                <div className="flex flex-wrap gap-2">
-                  <Badge>Default</Badge>
-                  <Badge variant="secondary">Secondary</Badge>
-                  <Badge variant="destructive">Destructive</Badge>
-                  <Badge variant="outline">Outline</Badge>
-                  <Badge variant="ghost">Ghost</Badge>
-                </div>
-              </Section>
-
-              {/* ─── Alert ─── */}
-              <Section
-                id="alert"
-                title="Alert"
-                duboisStoryId="primitives-notification-stories--default"
-                code={`<Alert>
-  <AlertTitle>Note</AlertTitle>
-  <AlertDescription>
-    This is a default alert.
-  </AlertDescription>
-</Alert>
-
-<Alert variant="destructive">
-  <AlertTitle>Error</AlertTitle>
-  <AlertDescription>
-    Something went wrong.
-  </AlertDescription>
-</Alert>`}
-              >
-                <div className="flex flex-col gap-3 w-full">
-                  <Alert>
-                    <AlertTitle>Note</AlertTitle>
-                    <AlertDescription>This is a default alert with DuBois border tokens.</AlertDescription>
-                  </Alert>
-                  <Alert variant="destructive">
-                    <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>Something went wrong. Uses --destructive.</AlertDescription>
-                  </Alert>
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>4 Item Types</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger render={<Button variant="outline" />}>
+                          Open Menu
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>Action item</DropdownMenuItem>
+                          <DropdownMenuItem>Another action</DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuCheckboxItem checked>Multi-select</DropdownMenuCheckboxItem>
+                          <DropdownMenuCheckboxItem>Another option</DropdownMenuCheckboxItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem variant="destructive">Destructive</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </div>
                 </div>
               </Section>
 
@@ -1137,162 +2295,116 @@ export default function ComponentsPage() {
               <Section
                 id="tabs"
                 title="Tabs"
-                duboisStoryId="primitives-tabs-stories--default"
-                code={`<Tabs defaultValue="tab1">
-  <TabsList>
-    <TabsTrigger value="tab1">Account</TabsTrigger>
-    <TabsTrigger value="tab2">Password</TabsTrigger>
-  </TabsList>
-  <TabsContent value="tab1">...</TabsContent>
-  <TabsContent value="tab2">...</TabsContent>
-</Tabs>
+                code={`import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 
-{/* Line variant */}
-<TabsList variant="line">...</TabsList>`}
+<Tabs defaultValue="tab-1">
+  <TabsList>
+    <TabsTrigger value="tab-1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab-2">Tab 2</TabsTrigger>
+    <TabsTrigger value="tab-3">Tab 3</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab-1">Content for Tab 1</TabsContent>
+  <TabsContent value="tab-2">Content for Tab 2</TabsContent>
+  <TabsContent value="tab-3">Content for Tab 3</TabsContent>
+</Tabs>`}
               >
                 <div className="flex flex-col gap-6 w-full">
-                  <Tabs defaultValue="tab1">
-                    <TabsList>
-                      <TabsTrigger value="tab1">Account</TabsTrigger>
-                      <TabsTrigger value="tab2">Password</TabsTrigger>
-                      <TabsTrigger value="tab3">Settings</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="tab1">
-                      <p className="text-[13px] pt-3" style={{ color: t.textMuted }}>Account settings content.</p>
-                    </TabsContent>
-                    <TabsContent value="tab2">
-                      <p className="text-[13px] pt-3" style={{ color: t.textMuted }}>Password settings content.</p>
-                    </TabsContent>
-                  </Tabs>
-                  <Tabs defaultValue="t1">
-                    <TabsList variant="line">
-                      <TabsTrigger value="t1">Overview</TabsTrigger>
-                      <TabsTrigger value="t2">Analytics</TabsTrigger>
-                      <TabsTrigger value="t3">Reports</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
+                  <div className="flex items-start gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none pt-2" style={{ fontFamily: MONO, color: t.textSubtle }}>Default (lined)</span>
+                    <TabsComponent defaultValue="tab-1" className="flex-1 min-w-0">
+                      <TabsList>
+                        <TabsTrigger value="tab-1">Overview</TabsTrigger>
+                        <TabsTrigger value="tab-2">Configuration</TabsTrigger>
+                        <TabsTrigger value="tab-3">Permissions</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="tab-1"><div className="pt-3 text-[13px]" style={{ color: t.textSubtle }}>Overview content</div></TabsContent>
+                      <TabsContent value="tab-2"><div className="pt-3 text-[13px]" style={{ color: t.textSubtle }}>Configuration content</div></TabsContent>
+                      <TabsContent value="tab-3"><div className="pt-3 text-[13px]" style={{ color: t.textSubtle }}>Permissions content</div></TabsContent>
+                    </TabsComponent>
+                  </div>
+                  <div className="flex items-start gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none pt-2" style={{ fontFamily: MONO, color: t.textSubtle }}>Pill</span>
+                    <TabsComponent defaultValue="tab-1" className="flex-1 min-w-0">
+                      <TabsList variant="pill">
+                        <TabsTrigger value="tab-1">Overview</TabsTrigger>
+                        <TabsTrigger value="tab-2">Configuration</TabsTrigger>
+                        <TabsTrigger value="tab-3">Permissions</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="tab-1"><div className="pt-3 text-[13px]" style={{ color: t.textSubtle }}>Overview content</div></TabsContent>
+                      <TabsContent value="tab-2"><div className="pt-3 text-[13px]" style={{ color: t.textSubtle }}>Configuration content</div></TabsContent>
+                      <TabsContent value="tab-3"><div className="pt-3 text-[13px]" style={{ color: t.textSubtle }}>Permissions content</div></TabsContent>
+                    </TabsComponent>
+                  </div>
                 </div>
-              </Section>
-
-              {/* ─── Card ─── */}
-              <Section
-                id="card"
-                title="Card"
-                duboisStoryId="primitives-card-stories--default"
-                code={`<Card>
-  <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Description text</CardDescription>
-  </CardHeader>
-  <CardContent>
-    <p>Card content here.</p>
-  </CardContent>
-  <CardFooter>
-    <Button>Save</Button>
-  </CardFooter>
-</Card>`}
-              >
-                <Card className="w-full">
-                  <CardHeader>
-                    <CardTitle>Cluster Configuration</CardTitle>
-                    <CardDescription>Set up your compute resources.</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col gap-2">
-                      <Label>Cluster name</Label>
-                      <Input placeholder="my-cluster" />
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-end gap-2">
-                    <Button variant="outline">Cancel</Button>
-                    <Button>Create</Button>
-                  </CardFooter>
-                </Card>
-              </Section>
-
-              {/* ─── Tooltip ─── */}
-              <Section
-                id="tooltip"
-                title="Tooltip"
-                duboisStoryId="primitives-tooltip-stories--default"
-                code={`<Tooltip>
-  <TooltipTrigger asChild>
-    <Button variant="outline">Hover me</Button>
-  </TooltipTrigger>
-  <TooltipContent>
-    <p>Tooltip content</p>
-  </TooltipContent>
-</Tooltip>`}
-              >
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Button variant="outline">Hover me</Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>This is a tooltip</p>
-                  </TooltipContent>
-                </Tooltip>
               </Section>
 
               {/* ─── Slider ─── */}
               <Section
                 id="slider"
                 title="Slider"
-                duboisStoryId="primitives-slider-stories--default"
-                code={`<Slider defaultValue={[50]} max={100} step={1} />`}
-              >
-                <div className="w-full max-w-[300px]">
-                  <Slider defaultValue={[50]} max={100} step={1} />
-                </div>
-              </Section>
+                code={`import { Slider } from "@/components/ui/slider"
 
-              {/* ─── Progress ─── */}
-              <Section
-                id="progress"
-                title="Progress"
-                duboisStoryId="primitives-progress-stories--default"
-                code={`<Progress value={62} />`}
+<Slider defaultValue={[50]} min={0} max={100} />
+<Slider defaultValue={[25, 75]} min={0} max={100} />`}
               >
-                <div className="w-full max-w-[300px]">
-                  <Progress value={progress} />
-                </div>
-              </Section>
-
-              {/* ─── Skeleton ─── */}
-              <Section
-                id="skeleton"
-                title="Skeleton"
-                duboisStoryId="primitives-skeleton-stories--default"
-                code={`<Skeleton className="h-4 w-[250px]" />
-<Skeleton className="h-4 w-[200px]" />
-<Skeleton className="h-10 w-10 rounded-full" />`}
-              >
-                <div className="flex items-center gap-4">
-                  <Skeleton className="h-10 w-10 rounded-full" />
-                  <div className="flex flex-col gap-2">
-                    <Skeleton className="h-4 w-[200px]" />
-                    <Skeleton className="h-4 w-[160px]" />
+                <div className="flex flex-col gap-6 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Single</span>
+                    <div className="flex-1 min-w-0 max-w-xs"><Slider defaultValue={[50]} min={0} max={100} /></div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Range</span>
+                    <div className="flex-1 min-w-0 max-w-xs"><Slider defaultValue={[25, 75]} min={0} max={100} /></div>
+                  </div>
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Disabled</span>
+                    <div className="flex-1 min-w-0 max-w-xs"><Slider defaultValue={[50]} min={0} max={100} disabled /></div>
                   </div>
                 </div>
               </Section>
 
-              {/* ─── Separator ─── */}
+              {/* ─── Radio Tile ─── */}
               <Section
-                id="separator"
-                title="Separator"
-                code={`<Separator />
-<Separator orientation="vertical" />`}
+                id="radio-tile"
+                title="Radio Tile"
+                code={`import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "@/components/ui/radio-tile"
+
+<RadioTileGroup defaultValue="option-1">
+  <RadioTile value="option-1">
+    <RadioTileHeader>
+      <RadioTileTitle>Standard cluster</RadioTileTitle>
+    </RadioTileHeader>
+    <RadioTileDescription>Best for general-purpose workloads</RadioTileDescription>
+  </RadioTile>
+  <RadioTile value="option-2">
+    <RadioTileHeader>
+      <RadioTileTitle>GPU cluster</RadioTileTitle>
+    </RadioTileHeader>
+    <RadioTileDescription>Optimized for ML training and inference</RadioTileDescription>
+  </RadioTile>
+</RadioTileGroup>`}
               >
-                <div className="w-full flex flex-col gap-4">
-                  <div>
-                    <p className="text-[13px] mb-2">Horizontal</p>
-                    <Separator />
-                  </div>
-                  <div className="flex items-center gap-4 h-8">
-                    <span className="text-[13px]">Left</span>
-                    <Separator orientation="vertical" />
-                    <span className="text-[13px]">Right</span>
-                  </div>
+                <div className="flex flex-col gap-4 w-full max-w-md">
+                  <RadioTileGroup defaultValue="option-1">
+                    <RadioTile value="option-1">
+                      <RadioTileHeader>
+                        <RadioTileTitle>Standard cluster</RadioTileTitle>
+                      </RadioTileHeader>
+                      <RadioTileDescription>Best for general-purpose workloads</RadioTileDescription>
+                    </RadioTile>
+                    <RadioTile value="option-2">
+                      <RadioTileHeader>
+                        <RadioTileTitle>GPU cluster</RadioTileTitle>
+                      </RadioTileHeader>
+                      <RadioTileDescription>Optimized for ML training and inference</RadioTileDescription>
+                    </RadioTile>
+                    <RadioTile value="option-3" disabled>
+                      <RadioTileHeader>
+                        <RadioTileTitle>Serverless</RadioTileTitle>
+                      </RadioTileHeader>
+                      <RadioTileDescription>Not available in your region</RadioTileDescription>
+                    </RadioTile>
+                  </RadioTileGroup>
                 </div>
               </Section>
 
@@ -1300,364 +2412,155 @@ export default function ComponentsPage() {
               <Section
                 id="dialog"
                 title="Dialog"
-                duboisStoryId="primitives-dialogcombobox-stories--default"
                 code={`<Dialog>
   <DialogTrigger>
     <Button variant="outline">Open Dialog</Button>
   </DialogTrigger>
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Are you sure?</DialogTitle>
-      <DialogDescription>This action cannot be undone.</DialogDescription>
+      <DialogTitle>Edit Profile</DialogTitle>
+      <DialogDescription>Make changes to your profile.</DialogDescription>
     </DialogHeader>
     <DialogFooter>
       <Button variant="outline">Cancel</Button>
-      <Button>Confirm</Button>
+      <Button>Save</Button>
     </DialogFooter>
   </DialogContent>
-</Dialog>`}
-              >
-                <Dialog>
-                  <DialogTrigger render={<Button variant="outline" />}>
-                    Open Dialog
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Are you sure?</DialogTitle>
-                      <DialogDescription>This action cannot be undone. This will permanently delete your cluster.</DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                      <Button variant="outline">Cancel</Button>
-                      <Button>Confirm</Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </Section>
+</Dialog>
 
-              {/* ─── Sheet ─── */}
-              <Section
-                id="sheet"
-                title="Sheet"
-                code={`<Sheet>
-  <SheetTrigger>
-    <Button variant="outline">Open Sheet</Button>
-  </SheetTrigger>
-  <SheetContent>
-    <SheetHeader>
-      <SheetTitle>Settings</SheetTitle>
-      <SheetDescription>Configure your preferences.</SheetDescription>
-    </SheetHeader>
-  </SheetContent>
-</Sheet>`}
+{/* Sizes: normal (640px), wide (880px), extrawide (1200px) */}
+<DialogContent size="wide">...</DialogContent>`}
               >
-                <Sheet>
-                  <SheetTrigger render={<Button variant="outline" />}>
-                    Open Sheet
-                  </SheetTrigger>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle>Settings</SheetTitle>
-                      <SheetDescription>Configure your cluster preferences here.</SheetDescription>
-                    </SheetHeader>
-                    <div className="flex flex-col gap-3 mt-4">
-                      <Label>Cluster name</Label>
-                      <Input placeholder="my-cluster" />
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>3 Sizes</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Dialog>
+                        <DialogTrigger render={<Button variant="outline" />}>
+                          Open Dialog
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Edit Profile</DialogTitle>
+                            <DialogDescription>Make changes to your profile here.</DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter>
+                            <Button variant="outline">Cancel</Button>
+                            <Button>Save</Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </div>
-                  </SheetContent>
-                </Sheet>
-              </Section>
-
-              {/* ─── Accordion ─── */}
-              <Section
-                id="accordion"
-                title="Accordion"
-                duboisStoryId="primitives-accordion-stories--default"
-                code={`<Accordion>
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-    <AccordionContent>
-      Yes. It follows WAI-ARIA patterns.
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>`}
-              >
-                <Accordion className="w-full">
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>What is DBUI?</AccordionTrigger>
-                    <AccordionContent>DBUI is the DuBois design language on shadcn components.</AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-2">
-                    <AccordionTrigger>How does token mapping work?</AccordionTrigger>
-                    <AccordionContent>Every DuBois token is mapped to a shadcn CSS variable in globals.css.</AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-3">
-                    <AccordionTrigger>Can I use this with LLMs?</AccordionTrigger>
-                    <AccordionContent>Yes — the registry is designed so LLMs can produce pixel-perfect Databricks UI.</AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </Section>
-
-              {/* ─── Popover ─── */}
-              <Section
-                id="popover"
-                title="Popover"
-                duboisStoryId="primitives-popover-stories--default"
-                code={`<Popover>
-  <PopoverTrigger>
-    <Button variant="outline">Open Popover</Button>
-  </PopoverTrigger>
-  <PopoverContent>
-    <p>Popover content here.</p>
-  </PopoverContent>
-</Popover>`}
-              >
-                <Popover>
-                  <PopoverTrigger render={<Button variant="outline" />}>
-                    Open Popover
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <div className="flex flex-col gap-2">
-                      <Label>Width</Label>
-                      <Input placeholder="100%" />
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </Section>
-
-              {/* ─── Hover Card ─── */}
-              <Section
-                id="hover-card"
-                title="Hover Card"
-                code={`<HoverCard>
-  <HoverCardTrigger>Hover me</HoverCardTrigger>
-  <HoverCardContent>
-    <p>Card content on hover.</p>
-  </HoverCardContent>
-</HoverCard>`}
-              >
-                <HoverCard>
-                  <HoverCardTrigger className="text-[13px] underline cursor-pointer" style={{ color: t.primary, fontFamily: MONO }}>
-                    Hover over this link
-                  </HoverCardTrigger>
-                  <HoverCardContent>
-                    <div className="flex gap-3">
-                      <Avatar>
-                        <AvatarFallback>DB</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="text-[13px] font-semibold">Databricks</p>
-                        <p className="text-[12px]" style={{ color: t.textMuted }}>The data and AI company.</p>
-                      </div>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-              </Section>
-
-              {/* ─── Toggle Group ─── */}
-              <Section
-                id="toggle-group"
-                title="Toggle Group"
-                duboisStoryId="primitives-segmentedcontrol-stories--default"
-                code={`<ToggleGroup>
-  <ToggleGroupItem value="a">Left</ToggleGroupItem>
-  <ToggleGroupItem value="b">Center</ToggleGroupItem>
-  <ToggleGroupItem value="c">Right</ToggleGroupItem>
-</ToggleGroup>`}
-              >
-                <div className="flex flex-col gap-4">
-                  <ToggleGroup>
-                    <ToggleGroupItem value="a">Left</ToggleGroupItem>
-                    <ToggleGroupItem value="b">Center</ToggleGroupItem>
-                    <ToggleGroupItem value="c">Right</ToggleGroupItem>
-                  </ToggleGroup>
-                  <ToggleGroup variant="outline">
-                    <ToggleGroupItem value="bold">Bold</ToggleGroupItem>
-                    <ToggleGroupItem value="italic">Italic</ToggleGroupItem>
-                    <ToggleGroupItem value="underline">Underline</ToggleGroupItem>
-                  </ToggleGroup>
+                  </div>
                 </div>
               </Section>
 
-              {/* ─── Avatar ─── */}
+              {/* ─── Alert Dialog ─── */}
               <Section
-                id="avatar"
-                title="Avatar"
-                duboisStoryId="primitives-avatar-stories--default"
-                code={`<Avatar>
-  <AvatarImage src="..." alt="User" />
-  <AvatarFallback>MM</AvatarFallback>
-</Avatar>`}
+                id="alert-dialog"
+                title="Alert Dialog"
+                code={`<AlertDialog>
+  <AlertDialogTrigger>
+    <Button variant="destructive">Delete</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Continue</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`}
               >
-                <div className="flex gap-3">
-                  <Avatar>
-                    <AvatarFallback>MM</AvatarFallback>
-                  </Avatar>
-                  <Avatar>
-                    <AvatarFallback>DB</AvatarFallback>
-                  </Avatar>
-                  <Avatar>
-                    <AvatarFallback>AI</AvatarFallback>
-                  </Avatar>
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>Confirmation</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <AlertDialog>
+                        <AlertDialogTrigger render={<Button variant="destructive" />}>
+                          Delete Cluster
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>This will permanently delete the cluster and all associated data.</AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction>Delete</AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </div>
                 </div>
               </Section>
 
-              {/* ─── Table ─── */}
+              {/* ─── Alert ─── */}
               <Section
-                id="table"
-                title="Table"
-                duboisStoryId="primitives-table-stories--default"
-                code={`<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead>Name</TableHead>
-      <TableHead>Status</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    <TableRow>
-      <TableCell>my-cluster</TableCell>
-      <TableCell>Running</TableCell>
-    </TableRow>
-  </TableBody>
-</Table>`}
+                id="alert"
+                title="Alert"
+                code={`<Alert variant="info">
+  <AlertTitle>Note</AlertTitle>
+  <AlertDescription>This is an info alert.</AlertDescription>
+</Alert>
+
+<Alert variant="warning">...</Alert>
+<Alert variant="destructive">...</Alert>
+<Alert variant="success">...</Alert>`}
               >
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Cluster</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Runtime</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>prod-etl</TableCell>
-                      <TableCell><Badge>Running</Badge></TableCell>
-                      <TableCell>15.4 LTS</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>dev-notebook</TableCell>
-                      <TableCell><Badge variant="secondary">Terminated</Badge></TableCell>
-                      <TableCell>14.3 LTS</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>ml-training</TableCell>
-                      <TableCell><Badge variant="destructive">Error</Badge></TableCell>
-                      <TableCell>15.4 ML</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>4 Variants</span>
+                    <div className="flex flex-col gap-3 flex-1 min-w-0">
+                      <Alert variant="info">
+                        <AlertTitle>Info</AlertTitle>
+                        <AlertDescription>This is an informational alert.</AlertDescription>
+                      </Alert>
+                      <Alert variant="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        <AlertDescription>This action may have consequences.</AlertDescription>
+                      </Alert>
+                      <Alert variant="destructive">
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>Something went wrong.</AlertDescription>
+                      </Alert>
+                      <Alert variant="success">
+                        <AlertTitle>Success</AlertTitle>
+                        <AlertDescription>Operation completed successfully.</AlertDescription>
+                      </Alert>
+                    </div>
+                  </div>
+                </div>
               </Section>
 
-              {/* ─── Pagination ─── */}
+              {/* ─── Toast ─── */}
               <Section
-                id="pagination"
-                title="Pagination"
-                duboisStoryId="primitives-pagination-stories--default"
-                code={`<Pagination>
-  <PaginationContent>
-    <PaginationItem>
-      <PaginationPrevious href="#" />
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationLink href="#">1</PaginationLink>
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationNext href="#" />
-    </PaginationItem>
-  </PaginationContent>
-</Pagination>`}
-              >
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious href="#" />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink href="#" isActive>1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink href="#">2</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink href="#">3</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationNext href="#" />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-              </Section>
+                id="toast"
+                title="Toast"
+                code={`import { toast } from "sonner"
 
-              {/* ─── Breadcrumb ─── */}
-              <Section
-                id="breadcrumb"
-                title="Breadcrumb"
-                duboisStoryId="primitives-breadcrumb-stories--default"
-                code={`<Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbPage>Current</BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>`}
+toast.success("Cluster created successfully")
+toast.info("Deployment in progress")
+toast.warning("API rate limit approaching")
+toast.error("Connection failed")`}
               >
-                <Breadcrumb>
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbLink href="#">Workspace</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <BreadcrumbLink href="#">Clusters</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>prod-etl</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
-              </Section>
-
-              {/* ─── Input OTP ─── */}
-              <Section
-                id="input-otp"
-                title="Input OTP"
-                code={`<InputOTP maxLength={6}>
-  <InputOTPGroup>
-    <InputOTPSlot index={0} />
-    <InputOTPSlot index={1} />
-    <InputOTPSlot index={2} />
-    <InputOTPSlot index={3} />
-    <InputOTPSlot index={4} />
-    <InputOTPSlot index={5} />
-  </InputOTPGroup>
-</InputOTP>`}
-              >
-                <InputOTP maxLength={6}>
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                    <InputOTPSlot index={3} />
-                    <InputOTPSlot index={4} />
-                    <InputOTPSlot index={5} />
-                  </InputOTPGroup>
-                </InputOTP>
-              </Section>
-
-              {/* ─── Spinner ─── */}
-              <Section
-                id="spinner"
-                title="Spinner"
-                duboisStoryId="primitives-spinner-stories--default"
-                code={`<Spinner />`}
-              >
-                <Spinner />
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex items-center gap-4 w-full min-w-0">
+                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>4 Types</span>
+                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                      <Button variant="outline" size="sm" onClick={() => toast.success("Cluster created successfully")}>Success</Button>
+                      <Button variant="outline" size="sm" onClick={() => toast.info("Deployment in progress")}>Info</Button>
+                      <Button variant="outline" size="sm" onClick={() => toast.warning("API rate limit approaching")}>Warning</Button>
+                      <Button variant="outline" size="sm" onClick={() => toast.error("Connection failed")}>Error</Button>
+                    </div>
+                  </div>
+                </div>
               </Section>
 
             </div>
@@ -1677,6 +2580,7 @@ export default function ComponentsPage() {
           </div>
         </footer>
       </div>
+      <Toaster />
     </TooltipProvider>
   )
 }

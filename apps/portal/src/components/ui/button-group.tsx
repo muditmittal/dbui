@@ -1,3 +1,9 @@
+/**
+ * @deprecated Renamed to Split Button. Use `@/components/ui/split-button` instead.
+ * This file is kept for backwards compatibility during the transition.
+ *
+ * import { SplitButton, SplitButtonSeparator, SplitButtonText } from "@/components/ui/split-button"
+ */
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"

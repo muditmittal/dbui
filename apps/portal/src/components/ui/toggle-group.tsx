@@ -1,3 +1,9 @@
+/**
+ * @deprecated Renamed to Segment Control. Use `@/components/ui/segment-control` instead.
+ * This file is kept for backwards compatibility during the transition.
+ *
+ * import { SegmentControl, SegmentControlItem } from "@/components/ui/segment-control"
+ */
 "use client"
 
 import * as React from "react"
@@ -8,13 +14,23 @@ import { type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { toggleVariants } from "@/components/ui/toggle"
 
+/**
+ * Toggle Group styles for DBUI.
+ *
+ * Figma component: "Toggle Group" (2 variants × 2 sizes)
+ *
+ * Container: bg-accent, p-0.5 (2px), rounded-sm
+ * Outline variant: + border-input on container
+ * Selected item: bg-white, border-primary, shadow-xs, text-accent-foreground
+ * Non-selected items: transparent, text-foreground
+ */
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants> & {
     spacing?: number
     orientation?: "horizontal" | "vertical"
   }
 >({
-  size: "default",
+  size: "md",
   variant: "default",
   spacing: 0,
   orientation: "horizontal",
@@ -40,9 +56,10 @@ function ToggleGroup({
       data-size={size}
       data-spacing={spacing}
       data-orientation={orientation}
-      style={{ "--gap": spacing } as React.CSSProperties}
       className={cn(
-        "group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-lg data-[size=sm]:rounded-[min(var(--radius-md),10px)] data-vertical:flex-col data-vertical:items-stretch",
+        "group/toggle-group inline-flex items-center rounded-sm bg-accent p-0.5",
+        variant === "outline" && "border border-input",
+        orientation === "vertical" && "flex-col items-stretch",
         className
       )}
       {...props}
@@ -60,23 +77,29 @@ function ToggleGroupItem({
   className,
   children,
   variant = "default",
-  size = "default",
+  size = "md",
   ...props
 }: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
   const context = React.useContext(ToggleGroupContext)
+  const resolvedSize = context.size || size
 
   return (
     <TogglePrimitive
       data-slot="toggle-group-item"
-      data-variant={context.variant || variant}
-      data-size={context.size || size}
-      data-spacing={context.spacing}
       className={cn(
-        "shrink-0 group-data-[spacing=0]/toggle-group:rounded-none group-data-[spacing=0]/toggle-group:px-2 focus:z-10 focus-visible:z-10 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-l-lg group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-lg group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-r-lg group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-lg group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:border-l-0 group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:border-t-0 group-data-horizontal/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-l group-data-vertical/toggle-group:data-[spacing=0]:data-[variant=outline]:first:border-t",
-        toggleVariants({
-          variant: context.variant || variant,
-          size: context.size || size,
-        }),
+        "inline-flex items-center justify-center gap-1",
+        "rounded-sm border border-transparent",
+        "text-[13px] leading-[20px] font-normal whitespace-nowrap",
+        "transition-all outline-none select-none",
+        "text-foreground",
+        "hover:bg-hover",
+        "active:bg-press",
+        "focus-visible:border-2 focus-visible:border-ring focus:z-10",
+        "disabled:pointer-events-none disabled:text-disabled-foreground",
+        "aria-pressed:bg-background aria-pressed:border-primary aria-pressed:text-accent-foreground aria-pressed:shadow-xs",
+        "data-[state=on]:bg-background data-[state=on]:border-primary data-[state=on]:text-accent-foreground data-[state=on]:shadow-xs",
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        resolvedSize === "sm" ? "h-6 min-w-6 px-2" : "h-8 min-w-8 px-3",
         className
       )}
       {...props}

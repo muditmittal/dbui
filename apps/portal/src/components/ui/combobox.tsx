@@ -40,7 +40,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
   return (
     <ComboboxPrimitive.Clear
       data-slot="combobox-clear"
-      render={<InputGroupButton variant="ghost" size="icon-xs" />}
+      render={<InputGroupButton variant="ghost" size="icon-sm" />}
       className={cn(className)}
       {...props}
     >
@@ -55,13 +55,15 @@ function ComboboxInput({
   disabled = false,
   showTrigger = true,
   showClear = false,
+  inputSize = "default",
   ...props
 }: ComboboxPrimitive.Input.Props & {
   showTrigger?: boolean
   showClear?: boolean
+  inputSize?: "sm" | "default"
 }) {
   return (
-    <InputGroup className={cn("w-auto", className)}>
+    <InputGroup className={cn("w-auto", inputSize === "sm" && "h-6", className)}>
       <ComboboxPrimitive.Input
         render={<InputGroupInput disabled={disabled} />}
         {...props}
@@ -69,7 +71,7 @@ function ComboboxInput({
       <InputGroupAddon align="inline-end">
         {showTrigger && (
           <InputGroupButton
-            size="icon-xs"
+            size="icon-sm"
             variant="ghost"
             render={<ComboboxTrigger />}
             data-slot="input-group-button"
@@ -110,7 +112,7 @@ function ComboboxContent({
         <ComboboxPrimitive.Popup
           data-slot="combobox-content"
           data-chips={!!anchor}
-          className={cn("group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+          className={cn("group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-lg bg-background text-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
           {...props}
         />
       </ComboboxPrimitive.Positioner>
@@ -249,7 +251,7 @@ function ComboboxChip({
       {children}
       {showRemove && (
         <ComboboxPrimitive.ChipRemove
-          render={<Button variant="ghost" size="icon-xs" />}
+          render={<Button variant="ghost" size="icon-sm" />}
           className="-ml-1 opacity-50 hover:opacity-100"
           data-slot="combobox-chip-remove"
         >

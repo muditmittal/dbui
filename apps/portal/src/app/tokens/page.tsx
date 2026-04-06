@@ -43,7 +43,7 @@ function formatFullDate(dateStr: string) {
 
 function relativeDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00")
-  const now = new Date("2026-03-27T12:00:00")
+  const now = new Date("2026-03-31T12:00:00")
   const diff = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
   if (diff === 0) return "Today"
   if (diff === 1) return "Yesterday"
@@ -586,12 +586,12 @@ function BrowseSection({
         <ChevronIcon open={open} color={t.textSubtle} />
       </button>
       {open && (
-        <div className="px-6 py-5" style={{ borderTop: `1px solid ${t.border}` }}>
+        <div className="px-6 py-5 flex flex-col gap-10" style={{ borderTop: `1px solid ${t.border}` }}>
           {filteredGroups.map((group) => (
             <div key={group.label}>
               {subGroups.length > 1 && (
                 <p
-                  className="text-[11px] tracking-[0.14em] uppercase mb-4 pt-10 first:pt-0"
+                  className="text-[11px] tracking-[0.14em] uppercase mb-4"
                   style={{ color: t.textSubtle, fontFamily: MONO }}
                 >
                   {group.label}
@@ -707,7 +707,7 @@ const SEMANTIC_SURFACE: Token[] = [
   { figma: "surface/popover", dubois: "surfacePopover", duboisValue: "#FFFFFF (white)", shadcn: "--popover", shadcnValue: "oklch(1 0 0)", light: "#FFFFFF (white)", dark: "#11171C (grey800)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "surface/secondary", dubois: "surfaceSecondary", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--secondary", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "surface/muted", dubois: "surfaceMuted", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--muted", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
-  { figma: "surface/accent", dubois: "surfaceAccent", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--accent", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
+  { figma: "surface/accent", dubois: "infoWash", duboisValue: "#F0F8FF (blue100)", shadcn: "--accent", shadcnValue: "oklch(0.97 0 0)", light: "#F0F8FF (blue100)", dark: "#04355D (blue800)", lastUpdated: "2026-04-02", updateNote: "Updated to blue wash — distinct from secondary (neutral)", decision: "Blue wash" },
   { figma: "surface/sidebar", dubois: "surfaceSidebar", duboisValue: "#FFFFFF (white)", shadcn: "--sidebar", shadcnValue: "oklch(0.985 0 0)", light: "#FFFFFF (white)", dark: "#11171C (grey800)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "surface/sidebar-accent", dubois: "surfaceSidebarAccent", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--sidebar-accent", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
 ]
@@ -718,7 +718,7 @@ const SEMANTIC_TEXT: Token[] = [
   { figma: "text/popover-foreground", dubois: "textPopover", duboisValue: "#161616 (neutral800)", shadcn: "--popover-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "text/secondary-foreground", dubois: "textSecondary", duboisValue: "#161616 (neutral800)", shadcn: "--secondary-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "text/muted-foreground", dubois: "textMuted", duboisValue: "#6F6F6F (neutral500)", shadcn: "--muted-foreground", shadcnValue: "oklch(0.556 0 0)", light: "#6F6F6F (neutral500)", dark: "#92A4B3 (grey350)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
-  { figma: "text/accent-foreground", dubois: "textAccent", duboisValue: "#161616 (neutral800)", shadcn: "--accent-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
+  { figma: "text/accent-foreground", dubois: "actionPrimaryBg", duboisValue: "#0E538B (blue700)", shadcn: "--accent-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#0E538B (blue700)", dark: "#4299E0 (blue500)", lastUpdated: "2026-04-02", updateNote: "Updated to blue text on accent surfaces", decision: "Blue text" },
   { figma: "text/sidebar-foreground", dubois: "textSidebar", duboisValue: "#161616 (neutral800)", shadcn: "--sidebar-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "text/sidebar-accent-foreground", dubois: "textSidebarAccent", duboisValue: "#161616 (neutral800)", shadcn: "--sidebar-accent-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
 ]
@@ -736,9 +736,9 @@ const SEMANTIC_ACTION: Token[] = [
   { figma: "action/success", dubois: "actionSuccessBg", duboisValue: "#277C43 (green600)", shadcn: "--success", shadcnValue: "\u2014 (not in shadcn)", light: "#277C43 (green600)", dark: "#3BA65E (green500)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
   { figma: "action/success-foreground", dubois: "actionSuccessText", duboisValue: "#FFFFFF (white)", shadcn: "--success-foreground", shadcnValue: "\u2014 (not in shadcn)", light: "#FFFFFF (white)", dark: "#11171C (grey800)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
   { figma: "action/primary-hover", dubois: "actionPrimaryHover", duboisValue: "#0E538B (blue700)", shadcn: "--primary-hover", shadcnValue: "\u2014 (not in shadcn)", light: "#0E538B (blue700)", dark: "#8ACAFF (blue400)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
-  { figma: "action/primary-active", dubois: "actionPrimaryActive", duboisValue: "#04355D (blue800)", shadcn: "--primary-active", shadcnValue: "\u2014 (not in shadcn)", light: "#04355D (blue800)", dark: "#BAE1FC (blue300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
+  { figma: "action/primary-press", dubois: "actionPrimaryPress", duboisValue: "#04355D (blue800)", shadcn: "--primary-press", shadcnValue: "\u2014 (not in shadcn)", light: "#04355D (blue800)", dark: "#BAE1FC (blue300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
   { figma: "action/destructive-hover", dubois: "actionDestructiveHover", duboisValue: "#9E102C (red700)", shadcn: "--destructive-hover", shadcnValue: "\u2014 (not in shadcn)", light: "#9E102C (red700)", dark: "#F792A6 (red400)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
-  { figma: "action/destructive-active", dubois: "actionDestructiveActive", duboisValue: "#630316 (red800)", shadcn: "--destructive-active", shadcnValue: "\u2014 (not in shadcn)", light: "#630316 (red800)", dark: "#FBD0D8 (red300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
+  { figma: "action/destructive-press", dubois: "actionDestructivePress", duboisValue: "#630316 (red800)", shadcn: "--destructive-press", shadcnValue: "\u2014 (not in shadcn)", light: "#630316 (red800)", dark: "#FBD0D8 (red300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
 ]
 
 const SEMANTIC_BORDER: Token[] = [
@@ -770,14 +770,13 @@ const SEMANTIC_BRAND: Token[] = [
 ]
 
 const RADIUS: Token[] = [
-  { figma: "radius/radius-0", dubois: "borderRadius0", duboisValue: "0 (borderRadius0)", shadcn: "--radius-none", shadcnValue: "\u2014 (not in shadcn)", light: "0px (Figma) \u2192 0px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "No change between Figma and CSS", decision: "New token" },
-  { figma: "radius/radius-sm", dubois: "borderRadiusSm", duboisValue: "4px (borderRadiusSm)", shadcn: "--radius-sm", shadcnValue: "2px (CSS) \u2014 inner elements", light: "4px (Figma) \u2192 2px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: small inner elements. Figma: buttons/inputs use this directly.", decision: "Remapped for CSS" },
-  { figma: "radius/radius", dubois: "borderRadius", duboisValue: "8px (borderRadiusMd)", shadcn: "--radius (base)", shadcnValue: "4px (CSS) \u2014 base reference", light: "8px (Figma) \u2192 4px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS base --radius. Components use rounded-lg not --radius directly.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-md", dubois: "borderRadiusMd", duboisValue: "8px (borderRadiusMd)", shadcn: "--radius-md \u2192 rounded-md", shadcnValue: "4px (CSS) \u2014 inner component elements", light: "8px (Figma) \u2192 4px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: used inside components. Figma: cards, containers.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-lg", dubois: "borderRadiusLg", duboisValue: "12px (borderRadiusLg)", shadcn: "--radius-lg \u2192 rounded-lg", shadcnValue: "4px (CSS) \u2014 buttons, inputs, selects", light: "12px (Figma) \u2192 4px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CRITICAL: shadcn uses rounded-lg for all interactive elements. Set to 4px (DuBois borderRadiusSm) so buttons/inputs match DuBois.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-xl", dubois: "borderRadiusXl", duboisValue: "16px (borderRadiusXl)", shadcn: "--radius-xl \u2192 rounded-xl", shadcnValue: "8px (CSS) \u2014 cards, dialogs", light: "16px (Figma) \u2192 8px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: cards, dialogs, larger containers.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-2xl", dubois: "borderRadius2xl", duboisValue: "16px (borderRadiusXl)", shadcn: "--radius-2xl \u2192 rounded-2xl", shadcnValue: "12px (CSS) \u2014 large containers, modals", light: "16px (Figma) \u2192 12px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: modals, large containers.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-3xl", dubois: "borderRadius3xl", duboisValue: "999px (borderRadiusFull)", shadcn: "--radius-3xl \u2192 rounded-3xl", shadcnValue: "999px (CSS) \u2014 pills", light: "999px (Figma) \u2192 999px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "Same in both \u2014 full round for pills, tags.", decision: "DuBois value" },
+  { figma: "radius/radius-0", dubois: "borderRadius0", duboisValue: "0px", shadcn: "--radius-none", shadcnValue: "— (not in shadcn)", light: "0px", dark: "—", lastUpdated: "2026-03-27", updateNote: "Sharp corners for table cells, inline elements", decision: "New token" },
+  { figma: "radius/radius-sm", dubois: "borderRadiusSm", duboisValue: "4px", shadcn: "--radius-sm → rounded-sm", shadcnValue: "calc(var(--radius) - 4px)", light: "4px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Buttons, inputs, badges, small chips. The most-used radius.", decision: "DuBois 1:1" },
+  { figma: "radius/radius", dubois: "borderRadiusMd", duboisValue: "8px", shadcn: "--radius (base)", shadcnValue: "0.625rem", light: "8px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Base radius variable. Components derive from this.", decision: "DuBois 1:1" },
+  { figma: "radius/radius-md", dubois: "borderRadiusMd", duboisValue: "8px", shadcn: "--radius-md → rounded-md", shadcnValue: "calc(var(--radius) - 2px)", light: "8px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Cards, dialog corners, medium panels.", decision: "DuBois 1:1" },
+  { figma: "radius/radius-lg", dubois: "borderRadiusLg", duboisValue: "12px", shadcn: "--radius-lg → rounded-lg", shadcnValue: "var(--radius)", light: "12px", dark: "—", lastUpdated: "2026-04-02", updateNote: "shadcn uses rounded-lg for interactive elements (buttons, inputs, selects).", decision: "DuBois 1:1" },
+  { figma: "radius/radius-xl", dubois: "borderRadiusXl", duboisValue: "16px", shadcn: "--radius-xl → rounded-xl", shadcnValue: "calc(var(--radius) + 4px)", light: "16px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Large modals, bottom sheets, page sections.", decision: "DuBois 1:1" },
+  { figma: "radius/radius-2xl", dubois: "borderRadiusFull", duboisValue: "999px", shadcn: "--radius-2xl → rounded-2xl", shadcnValue: "calc(var(--radius) + 4px)", light: "999px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Pill shape. Avatars, pill badges, rounded buttons. Absorbs old 3xl.", decision: "DuBois full" },
 ]
 
 const SPACING: Token[] = [
@@ -855,6 +854,7 @@ const EXCLUDED_DUBOIS: Token[] = [
 ]
 
 const EXCLUDED_SHADCN: Token[] = [
+  { figma: "—", dubois: "—", shadcn: "--radius-3xl", shadcnValue: "999px (CSS) — pills", light: "—", dark: "—", lastUpdated: "2026-04-02", updateNote: "Absorbed by --radius-2xl (999px). Scale simplified to 6 stops: 0/4/8/12/16/999.", decision: "Absorbed" },
   { figma: "—", dubois: "—", shadcn: "--radius-4xl", shadcnValue: "calc(--radius \u00d7 2.6) \u2248 26px", light: "—", dark: "—", lastUpdated: "2026-03-26", updateNote: "Marked redundant \u2014 DuBois has no equivalent, borderRadiusFull (999px) covers large radius needs", decision: "Redundant" },
   { figma: "—", dubois: "—", shadcn: "shadow-xl", shadcnValue: "0 20px 25px -5px rgb(0,0,0/.1)", light: "—", dark: "—", lastUpdated: "2026-03-26", updateNote: "DuBois xl maps to shadow-lg. No need for a 6th level.", decision: "Redundant" },
   { figma: "—", dubois: "—", shadcn: "shadow-2xl", shadcnValue: "0 25px 50px -12px rgb(0,0,0/.25)", light: "—", dark: "—", lastUpdated: "2026-03-26", updateNote: "Excessive \u2014 DuBois caps at 5 shadow levels", decision: "Redundant" },
@@ -866,6 +866,7 @@ const EXCLUDED_SHADCN: Token[] = [
 
 // ─── Section Definitions ────────────────────────────────────────────────────
 
+// Semantic colors: CSS custom properties + Figma variables (Semantic collection, 2 modes: Light / Dark)
 const SEMANTIC_GROUPS: SubGroup[] = [
   { label: "Surface", tokens: SEMANTIC_SURFACE },
   { label: "Text", tokens: SEMANTIC_TEXT },
@@ -877,18 +878,18 @@ const SEMANTIC_GROUPS: SubGroup[] = [
 ]
 
 const TYPOGRAPHY_GROUPS: SubGroup[] = [
-  { label: "Text Styles", tokens: TEXT_STYLES },
-  { label: "Variables", tokens: TYPOGRAPHY },
+  { label: "Text Styles — Figma text styles, mapped to Tailwind classes", tokens: TEXT_STYLES },
+  { label: "Variables — Figma variables (Typography collection, 2 modes: Production / Wireframe)", tokens: TYPOGRAPHY },
 ]
 
 const NUMBERS_GROUPS: SubGroup[] = [
-  { label: "Radius", tokens: RADIUS },
-  { label: "Spacing", tokens: SPACING },
-  { label: "Shadows", tokens: SHADOWS },
+  { label: "Radius — CSS custom properties + Figma variables", tokens: RADIUS },
+  { label: "Spacing — Tailwind CSS utilities + Figma variables (no CSS custom properties)", tokens: SPACING },
+  { label: "Shadows — Figma effect styles (not yet in CSS)", tokens: SHADOWS },
 ]
 
 const PRIMITIVES_GROUPS: SubGroup[] = [
-  { label: "Primitives", tokens: PRIMITIVES },
+  { label: "Primitives — Figma variables (hidden, aliased by semantic tokens)", tokens: PRIMITIVES },
 ]
 
 const EXCLUDED_DUBOIS_GROUPS: SubGroup[] = [
@@ -937,52 +938,60 @@ export default function TokensPage() {
   return (
     <div>
       {/* ─── Header ─── */}
-      <section className="pt-24 pb-10 px-8" style={{ borderBottom: `1px solid ${t.border}` }}>
+      <section className="pt-24 pb-16 px-8" style={{ borderBottom: `1px solid ${t.border}` }}>
         <div className="max-w-[1100px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase mb-3" style={{ color: t.textSubtle, fontFamily: MONO }}>
+          <p className="text-[11px] tracking-[0.2em] uppercase mb-4" style={{ color: t.textSubtle, fontFamily: MONO }}>
             Design Language
           </p>
-          <h1 className="text-[42px] leading-[1.05] tracking-[-0.01em] mb-8" style={{ fontFamily: SERIF, color: t.text }}>
+          <h1 className="text-[42px] leading-[1.05] tracking-[-0.01em] mb-6" style={{ fontFamily: SERIF, color: t.text }}>
             <em className="font-normal">Tokens</em>
           </h1>
-          <div className="flex items-center gap-4">
-            {/* Search */}
-            <div className="relative max-w-[420px] flex-1">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[12px] pointer-events-none select-none" style={{ color: t.textSubtle, fontFamily: MONO }}>/</span>
-              <input
-                type="text"
-                placeholder="Filter tokens by name, value, or CSS var..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full rounded-lg pl-8 pr-4 py-2.5 text-[14px] focus:outline-none transition-all"
-                style={{ backgroundColor: t.cardBg, border: `1px solid ${t.border}`, color: t.text, fontFamily: MONO }}
-              />
-              {query && (
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px]" style={{ color: t.textSubtle, fontFamily: MONO }}>
-                  {matchCount} result{matchCount !== 1 ? "s" : ""}
-                </span>
-              )}
-            </div>
-            {/* Toggle */}
-            <div
-              className="flex rounded-lg overflow-hidden"
-              style={{ border: `1px solid ${t.border}`, backgroundColor: t.cardBg }}
-            >
-              {(["browse", "compare"] as const).map((m) => (
-                <button
-                  key={m}
-                  onClick={() => setViewMode(m)}
-                  className="px-4 py-2.5 text-[13px] transition-colors"
-                  style={{
-                    fontFamily: MONO,
-                    color: viewMode === m ? "#FFFFFF" : t.textMuted,
-                    backgroundColor: viewMode === m ? t.primary : "transparent",
-                  }}
-                >
-                  {m === "browse" ? "Browse" : "Compare"}
-                </button>
-              ))}
-            </div>
+          <p className="text-[19px] max-w-[560px] leading-[1.5]" style={{ fontFamily: SERIF, color: t.textMuted }}>
+            {TOTAL} design tokens across colors, typography, spacing, and effects. Synced from Figma variables.
+          </p>
+        </div>
+      </section>
+
+      {/* ─── Search + Controls bar ─── */}
+      <section
+        className="sticky top-12 z-40 px-8 py-3 backdrop-blur-xl"
+        style={{ backgroundColor: `${t.bg}cc`, borderBottom: `1px solid ${t.border}` }}
+      >
+        <div className="max-w-[1100px] mx-auto flex items-center gap-4">
+          {/* Search */}
+          <div className="relative flex-1 max-w-[360px]">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke={t.textSubtle} strokeWidth="1.5">
+              <circle cx="7" cy="7" r="5.5" />
+              <path d="M11 11l3.5 3.5" strokeLinecap="round" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search tokens..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full pl-9 pr-3 py-1.5 rounded-md text-[13px] outline-none transition-colors"
+              style={{ fontFamily: MONO, color: t.text, backgroundColor: t.cardBg, border: `1px solid ${t.border}` }}
+            />
+          </div>
+          {/* Toggle */}
+          <div
+            className="flex rounded-lg overflow-hidden"
+            style={{ border: `1px solid ${t.border}`, backgroundColor: t.cardBg }}
+          >
+            {(["browse", "compare"] as const).map((m) => (
+              <button
+                key={m}
+                onClick={() => setViewMode(m)}
+                className="px-4 py-1.5 text-[13px] transition-colors"
+                style={{
+                  fontFamily: MONO,
+                  color: viewMode === m ? "#FFFFFF" : t.textMuted,
+                  backgroundColor: viewMode === m ? t.primary : "transparent",
+                }}
+              >
+                {m === "browse" ? "Browse" : "Compare"}
+              </button>
+            ))}
           </div>
         </div>
       </section>

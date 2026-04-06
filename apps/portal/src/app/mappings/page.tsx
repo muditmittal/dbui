@@ -43,7 +43,7 @@ function formatFullDate(dateStr: string) {
 
 function relativeDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00")
-  const now = new Date("2026-03-27T12:00:00") // today's date
+  const now = new Date("2026-03-31T12:00:00") // today's date
   const diff = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
   if (diff === 0) return "Today"
   if (diff === 1) return "Yesterday"
@@ -568,7 +568,7 @@ const SEMANTIC_SURFACE: Token[] = [
   { figma: "surface/popover", dubois: "surfacePopover", duboisValue: "#FFFFFF (white)", shadcn: "--popover", shadcnValue: "oklch(1 0 0)", light: "#FFFFFF (white)", dark: "#11171C (grey800)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "surface/secondary", dubois: "surfaceSecondary", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--secondary", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "surface/muted", dubois: "surfaceMuted", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--muted", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
-  { figma: "surface/accent", dubois: "surfaceAccent", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--accent", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
+  { figma: "surface/accent", dubois: "infoWash", duboisValue: "#F0F8FF (blue100)", shadcn: "--accent", shadcnValue: "oklch(0.97 0 0)", light: "#F0F8FF (blue100)", dark: "#04355D (blue800)", lastUpdated: "2026-04-02", updateNote: "Updated to blue wash — distinct from secondary (neutral)", decision: "Blue wash" },
   { figma: "surface/sidebar", dubois: "surfaceSidebar", duboisValue: "#FFFFFF (white)", shadcn: "--sidebar", shadcnValue: "oklch(0.985 0 0)", light: "#FFFFFF (white)", dark: "#11171C (grey800)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "surface/sidebar-accent", dubois: "surfaceSidebarAccent", duboisValue: "#F7F7F7 (neutral050)", shadcn: "--sidebar-accent", shadcnValue: "oklch(0.97 0 0)", light: "#F7F7F7 (neutral050)", dark: "#1F272D (grey700)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
 ]
@@ -579,7 +579,7 @@ const SEMANTIC_TEXT: Token[] = [
   { figma: "text/popover-foreground", dubois: "textPopover", duboisValue: "#161616 (neutral800)", shadcn: "--popover-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "text/secondary-foreground", dubois: "textSecondary", duboisValue: "#161616 (neutral800)", shadcn: "--secondary-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "text/muted-foreground", dubois: "textMuted", duboisValue: "#6F6F6F (neutral500)", shadcn: "--muted-foreground", shadcnValue: "oklch(0.556 0 0)", light: "#6F6F6F (neutral500)", dark: "#92A4B3 (grey350)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
-  { figma: "text/accent-foreground", dubois: "textAccent", duboisValue: "#161616 (neutral800)", shadcn: "--accent-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
+  { figma: "text/accent-foreground", dubois: "actionPrimaryBg", duboisValue: "#0E538B (blue700)", shadcn: "--accent-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#0E538B (blue700)", dark: "#4299E0 (blue500)", lastUpdated: "2026-04-02", updateNote: "Updated to blue text on accent surfaces", decision: "Blue text" },
   { figma: "text/sidebar-foreground", dubois: "textSidebar", duboisValue: "#161616 (neutral800)", shadcn: "--sidebar-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
   { figma: "text/sidebar-accent-foreground", dubois: "textSidebarAccent", duboisValue: "#161616 (neutral800)", shadcn: "--sidebar-accent-foreground", shadcnValue: "oklch(0.145 0 0)", light: "#161616 (neutral800)", dark: "#E8ECF0 (grey100)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois value" },
 ]
@@ -597,9 +597,9 @@ const SEMANTIC_ACTION: Token[] = [
   { figma: "action/success", dubois: "actionSuccessBg", duboisValue: "#277C43 (green600)", shadcn: "--success", shadcnValue: "— (not in shadcn)", light: "#277C43 (green600)", dark: "#3BA65E (green500)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
   { figma: "action/success-foreground", dubois: "actionSuccessText", duboisValue: "#FFFFFF (white)", shadcn: "--success-foreground", shadcnValue: "— (not in shadcn)", light: "#FFFFFF (white)", dark: "#11171C (grey800)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
   { figma: "action/primary-hover", dubois: "actionPrimaryHover", duboisValue: "#0E538B (blue700)", shadcn: "--primary-hover", shadcnValue: "— (not in shadcn)", light: "#0E538B (blue700)", dark: "#8ACAFF (blue400)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
-  { figma: "action/primary-active", dubois: "actionPrimaryActive", duboisValue: "#04355D (blue800)", shadcn: "--primary-active", shadcnValue: "— (not in shadcn)", light: "#04355D (blue800)", dark: "#BAE1FC (blue300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
+  { figma: "action/primary-press", dubois: "actionPrimaryPress", duboisValue: "#04355D (blue800)", shadcn: "--primary-press", shadcnValue: "— (not in shadcn)", light: "#04355D (blue800)", dark: "#BAE1FC (blue300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
   { figma: "action/destructive-hover", dubois: "actionDestructiveHover", duboisValue: "#9E102C (red700)", shadcn: "--destructive-hover", shadcnValue: "— (not in shadcn)", light: "#9E102C (red700)", dark: "#F792A6 (red400)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
-  { figma: "action/destructive-active", dubois: "actionDestructiveActive", duboisValue: "#630316 (red800)", shadcn: "--destructive-active", shadcnValue: "— (not in shadcn)", light: "#630316 (red800)", dark: "#FBD0D8 (red300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
+  { figma: "action/destructive-press", dubois: "actionDestructivePress", duboisValue: "#630316 (red800)", shadcn: "--destructive-press", shadcnValue: "— (not in shadcn)", light: "#630316 (red800)", dark: "#FBD0D8 (red300)", lastUpdated: "2026-03-26", updateNote: "Initial token creation", decision: "DuBois, no shadcn" },
 ]
 
 const SEMANTIC_BORDER: Token[] = [
@@ -631,18 +631,16 @@ const SEMANTIC_BRAND: Token[] = [
 ]
 
 // NOTE: Figma radius values and CSS radius values differ intentionally.
-// shadcn components use rounded-lg (→ --radius-lg) for buttons, inputs, selects.
-// So --radius-lg must be 4px (DuBois button radius), not 12px (DuBois borderRadiusLg).
-// Figma values = DuBois canonical. CSS values = remapped for shadcn component usage.
+// Radius tokens: CSS custom properties + Figma variables (Numbers collection).
+// Scale: 0 / 4 / 8 / 12 / 16 / 999px — clean DuBois 1:1 mapping.
 const RADIUS: Token[] = [
-  { figma: "radius/radius-0", dubois: "borderRadius0", duboisValue: "0 (borderRadius0)", shadcn: "--radius-none", shadcnValue: "— (not in shadcn)", light: "0px (Figma) → 0px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "No change between Figma and CSS", decision: "New token" },
-  { figma: "radius/radius-sm", dubois: "borderRadiusSm", duboisValue: "4px (borderRadiusSm)", shadcn: "--radius-sm", shadcnValue: "2px (CSS) — inner elements", light: "4px (Figma) → 2px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: small inner elements. Figma: buttons/inputs use this directly.", decision: "Remapped for CSS" },
-  { figma: "radius/radius", dubois: "borderRadius", duboisValue: "8px (borderRadiusMd)", shadcn: "--radius (base)", shadcnValue: "4px (CSS) — base reference", light: "8px (Figma) → 4px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS base --radius. Components use rounded-lg not --radius directly.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-md", dubois: "borderRadiusMd", duboisValue: "8px (borderRadiusMd)", shadcn: "--radius-md → rounded-md", shadcnValue: "4px (CSS) — inner component elements", light: "8px (Figma) → 4px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: used inside components. Figma: cards, containers.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-lg", dubois: "borderRadiusLg", duboisValue: "12px (borderRadiusLg)", shadcn: "--radius-lg → rounded-lg", shadcnValue: "4px (CSS) — buttons, inputs, selects", light: "12px (Figma) → 4px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CRITICAL: shadcn uses rounded-lg for all interactive elements. Set to 4px (DuBois borderRadiusSm) so buttons/inputs match DuBois.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-xl", dubois: "borderRadiusXl", duboisValue: "16px (borderRadiusXl)", shadcn: "--radius-xl → rounded-xl", shadcnValue: "8px (CSS) — cards, dialogs", light: "16px (Figma) → 8px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: cards, dialogs, larger containers.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-2xl", dubois: "borderRadius2xl", duboisValue: "16px (borderRadiusXl)", shadcn: "--radius-2xl → rounded-2xl", shadcnValue: "12px (CSS) — large containers, modals", light: "16px (Figma) → 12px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "CSS: modals, large containers.", decision: "Remapped for CSS" },
-  { figma: "radius/radius-3xl", dubois: "borderRadius3xl", duboisValue: "999px (borderRadiusFull)", shadcn: "--radius-3xl → rounded-3xl", shadcnValue: "999px (CSS) — pills", light: "999px (Figma) → 999px (CSS)", dark: "—", lastUpdated: "2026-03-27", updateNote: "Same in both — full round for pills, tags.", decision: "DuBois value" },
+  { figma: "radius/radius-0", dubois: "borderRadius0", duboisValue: "0px", shadcn: "--radius-none", shadcnValue: "— (not in shadcn)", light: "0px", dark: "—", lastUpdated: "2026-03-27", updateNote: "Sharp corners for table cells, inline elements", decision: "New token" },
+  { figma: "radius/radius-sm", dubois: "borderRadiusSm", duboisValue: "4px", shadcn: "--radius-sm → rounded-sm", shadcnValue: "calc(var(--radius) - 4px)", light: "4px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Buttons, inputs, badges, small chips. The most-used radius.", decision: "DuBois 1:1" },
+  { figma: "radius/radius", dubois: "borderRadiusMd", duboisValue: "8px", shadcn: "--radius (base)", shadcnValue: "0.625rem", light: "8px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Base radius variable. Components derive from this.", decision: "DuBois 1:1" },
+  { figma: "radius/radius-md", dubois: "borderRadiusMd", duboisValue: "8px", shadcn: "--radius-md → rounded-md", shadcnValue: "calc(var(--radius) - 2px)", light: "8px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Cards, dialog corners, medium panels.", decision: "DuBois 1:1" },
+  { figma: "radius/radius-lg", dubois: "borderRadiusLg", duboisValue: "12px", shadcn: "--radius-lg → rounded-lg", shadcnValue: "var(--radius)", light: "12px", dark: "—", lastUpdated: "2026-04-02", updateNote: "shadcn uses rounded-lg for interactive elements (buttons, inputs, selects).", decision: "DuBois 1:1" },
+  { figma: "radius/radius-xl", dubois: "borderRadiusXl", duboisValue: "16px", shadcn: "--radius-xl → rounded-xl", shadcnValue: "calc(var(--radius) + 4px)", light: "16px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Large modals, bottom sheets, page sections.", decision: "DuBois 1:1" },
+  { figma: "radius/radius-2xl", dubois: "borderRadiusFull", duboisValue: "999px", shadcn: "--radius-2xl → rounded-2xl", shadcnValue: "calc(var(--radius) + 4px)", light: "999px", dark: "—", lastUpdated: "2026-04-02", updateNote: "Pill shape. Avatars, pill badges, rounded buttons. Absorbs old 3xl.", decision: "DuBois full" },
 ]
 
 const SPACING: Token[] = [
@@ -701,8 +699,8 @@ const TYPOGRAPHY: Token[] = [
 // ─── Section Definitions ─────────────────────────────────────────────────────
 
 const TYPOGRAPHY_GROUPS: SubGroup[] = [
-  { label: "Text Styles", tokens: TEXT_STYLES },
-  { label: "Variables", tokens: TYPOGRAPHY },
+  { label: "Text Styles — Figma text styles, mapped to Tailwind classes", tokens: TEXT_STYLES },
+  { label: "Variables — Figma variables (Typography collection, 2 modes: Production / Wireframe)", tokens: TYPOGRAPHY },
 ]
 
 const SEMANTIC_GROUPS: SubGroup[] = [
@@ -716,13 +714,13 @@ const SEMANTIC_GROUPS: SubGroup[] = [
 ]
 
 const NUMBERS_GROUPS: SubGroup[] = [
-  { label: "Radius", tokens: RADIUS },
-  { label: "Spacing", tokens: SPACING },
-  { label: "Shadows", tokens: SHADOWS },
+  { label: "Radius — CSS custom properties + Figma variables", tokens: RADIUS },
+  { label: "Spacing — Tailwind CSS utilities + Figma variables (no CSS custom properties)", tokens: SPACING },
+  { label: "Shadows — Figma effect styles (not yet in CSS)", tokens: SHADOWS },
 ]
 
 const PRIMITIVES_GROUPS: SubGroup[] = [
-  { label: "Primitives", tokens: PRIMITIVES },
+  { label: "Primitives — Figma variables (hidden, aliased by semantic tokens)", tokens: PRIMITIVES },
 ]
 
 // ─── Excluded Tokens ──────────────────────────────────────────────────────────
@@ -753,6 +751,7 @@ const EXCLUDED_DUBOIS: Token[] = [
 ]
 
 const EXCLUDED_SHADCN: Token[] = [
+  { figma: "—", dubois: "—", shadcn: "--radius-3xl", shadcnValue: "999px (CSS) — pills", light: "—", dark: "—", lastUpdated: "2026-04-02", updateNote: "Absorbed by --radius-2xl (999px). Scale simplified to 6 stops: 0/4/8/12/16/999.", decision: "Absorbed" },
   { figma: "—", dubois: "—", shadcn: "--radius-4xl", shadcnValue: "calc(--radius \u00d7 2.6) \u2248 26px", light: "—", dark: "—", lastUpdated: "2026-03-26", updateNote: "Marked redundant \u2014 DuBois has no equivalent, borderRadiusFull (999px) covers large radius needs", decision: "Redundant" },
   { figma: "—", dubois: "—", shadcn: "shadow-xl", shadcnValue: "0 20px 25px -5px rgb(0,0,0/.1)", light: "—", dark: "—", lastUpdated: "2026-03-26", updateNote: "DuBois xl maps to shadow-lg. No need for a 6th level.", decision: "Redundant" },
   { figma: "—", dubois: "—", shadcn: "shadow-2xl", shadcnValue: "0 25px 50px -12px rgb(0,0,0/.25)", light: "—", dark: "—", lastUpdated: "2026-03-26", updateNote: "Excessive \u2014 DuBois caps at 5 shadow levels", decision: "Redundant" },

@@ -57,7 +57,7 @@ export default function Home() {
               { title: "Paste a prompt, get Databricks UI", desc: "shadcn is the most understood component API by LLMs. Every component is pre-skinned to match DuBois." },
               { title: "Figma ↔ Code, no drift", desc: "Every token is mapped between Figma variables, DuBois names, and Tailwind classes. Change one, the rest follow." },
               { title: "Light, Dark, Wireframe — one click", desc: "Color and typography themes switch independently. Preview in Dark mode, wireframe in Space Grotesk, ship in Production." },
-              { title: "Icons, shadows, spacing — all included", desc: "413 DuBois icons, 5 shadow levels, 7 spacing steps, 8 text styles. No missing pieces when you prototype." },
+              { title: "Icons, shadows, spacing — all included", desc: "450 DuBois icons, 5 shadow levels, 7 spacing steps, 8 text styles. No missing pieces when you prototype." },
             ].map((item) => (
               <div key={item.title}>
                 <h3 className="text-[17px] mb-2" style={{ fontFamily: serif }}>{item.title}</h3>
@@ -121,7 +121,7 @@ export default function Home() {
             </table>
           </div>
           <div className="flex items-center justify-between mt-6">
-            <p className="text-[12px]" style={{ fontFamily: mono, color: t.textSubtle }}>5 of 172 tokens shown.</p>
+            <p className="text-[12px]" style={{ fontFamily: mono, color: t.textSubtle }}>5 of 189 tokens shown.</p>
             <Link href="/mappings" className="text-[13px]" style={{ fontFamily: mono, color: t.primary }}>
               View all tokens →
             </Link>

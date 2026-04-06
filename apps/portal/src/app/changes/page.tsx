@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { useTheme } from "@/components/theme-provider"
 
 const serif = "Baskerville, 'Times New Roman', Georgia, serif"
@@ -20,6 +21,42 @@ const TAG_COLORS: Record<string, { light: string; dark: string }> = {
 }
 
 const changes: ChangeEntry[] = [
+  {
+    date: "2026-04-02",
+    title: "Radius scale simplified and aligned with DuBois",
+    tag: "tokens",
+    items: [
+      "New 6-stop scale: 0 / 4 / 8 / 12 / 16 / 999px — clean DuBois 1:1 mapping",
+      "--radius (base) set to 8px, --radius-sm = 4px, --radius-md = 8px, --radius-lg = 12px, --radius-xl = 16px",
+      "--radius-2xl now 999px (pill shape) — absorbs old --radius-3xl",
+      "--radius-3xl removed (redundant), --radius-4xl already excluded",
+      "Updated CSS, spreadsheet (Token Mapping + Figma Token Map), and portal",
+    ],
+  },
+  {
+    date: "2026-04-02",
+    title: "Accent tokens updated to blue wash",
+    tag: "tokens",
+    items: [
+      "--accent changed from neutral050/grey700 to blue100/blue800 (blue-tinted wash)",
+      "--accent-foreground changed from neutral800/grey100 to blue700/blue500 (blue text)",
+      "Differentiates accent (interactive highlight) from secondary (passive surface)",
+      "Matches DuBois info-wash pattern for selected/highlighted states",
+      "Updated CSS, spreadsheet, Figma Token Map, and portal",
+    ],
+  },
+  {
+    date: "2026-04-02",
+    title: "Portal token annotations added",
+    tag: "portal",
+    items: [
+      "Each token subcategory now annotated with where it lives: CSS custom properties, Tailwind utilities, Figma variables, or effect styles",
+      "Spacing: Tailwind CSS utilities + Figma variables (no CSS custom properties)",
+      "Radius: CSS custom properties + Figma variables",
+      "Shadows: Figma effect styles (not yet in CSS)",
+      "Typography: Figma text styles + Tailwind classes; Variables in Figma Typography collection",
+    ],
+  },
   {
     date: "2026-03-27",
     title: "Removed colors/ prefix from semantic tokens",
@@ -84,7 +121,7 @@ const changes: ChangeEntry[] = [
   },
   {
     date: "2026-03-27",
-    title: "413 icons copied from DuBois library",
+    title: "450 icons copied from DuBois library",
     tag: "icons",
     items: [
       "All icons from the 🧰 Du Bois Design System Figma file",
@@ -120,6 +157,7 @@ const changes: ChangeEntry[] = [
 
 export default function ChangesPage() {
   const { mode, t } = useTheme()
+  const [changeSearch, setChangeSearch] = useState("")
 
   return (
     <div>
@@ -139,11 +177,40 @@ export default function ChangesPage() {
         </div>
       </section>
 
+      {/* Search bar */}
+      <section
+        className="sticky top-12 z-40 px-8 py-3 backdrop-blur-xl"
+        style={{ backgroundColor: `${t.bg}cc`, borderBottom: `1px solid ${t.border}` }}
+      >
+        <div className="max-w-[800px] mx-auto flex items-center gap-4">
+          <div className="relative flex-1 max-w-[360px]">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke={t.textSubtle} strokeWidth="1.5">
+              <circle cx="7" cy="7" r="5.5" />
+              <path d="M11 11l3.5 3.5" strokeLinecap="round" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search changes…"
+              value={changeSearch}
+              onChange={(e) => setChangeSearch(e.target.value)}
+              className="w-full pl-9 pr-3 py-1.5 rounded-md text-[13px] outline-none transition-colors"
+              style={{ fontFamily: mono, color: t.text, backgroundColor: t.cardBg, border: `1px solid ${t.border}` }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Timeline */}
       <section className="py-16 px-8">
         <div className="max-w-[800px] mx-auto">
           <div className="space-y-0">
-            {changes.map((entry, i) => {
+            {(() => {
+              const filteredChanges = changes.filter((entry) => {
+                if (!changeSearch) return true
+                const q = changeSearch.toLowerCase()
+                return entry.title.toLowerCase().includes(q) || entry.items.some(item => item.toLowerCase().includes(q)) || entry.tag.includes(q)
+              })
+              return filteredChanges.map((entry, i) => {
               const tagColor = TAG_COLORS[entry.tag]?.[mode] ?? t.textMuted
               return (
                 <div
@@ -183,7 +250,8 @@ export default function ChangesPage() {
                   </ul>
                 </div>
               )
-            })}
+            })
+            })()}
           </div>
         </div>
       </section>

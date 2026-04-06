@@ -62,7 +62,7 @@ export default async function ComponentPage({
         <section className="mb-10">
           <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-4">Preview</h2>
           <div
-            className="rounded-lg border bg-card p-10 flex items-center justify-center min-h-48"
+            className="rounded-lg border bg-background p-10 flex items-center justify-center min-h-48"
             suppressHydrationWarning
           >
             <ComponentPreview className="min-h-32 flex w-full items-center justify-center">

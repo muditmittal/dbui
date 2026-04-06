@@ -373,10 +373,10 @@ Uses DuBois names. Fonts bound to Typography collection variables for instant th
 Accordion, Breadcrumb, Checkbox, Context Menu, Drawer, Dropdown Menu, Empty, Hover Card, Label, Navigation Menu, Popover, Progress, Radio Group, Slider, Spinner, Switch, Tabs, Tooltip, Collapsible, Separator, Scroll Area, Toggle, Textarea
 
 **Medium complexity (variant/prop additions) — ~15 components:**
-Alert (add warning/info), Card (add PreviewCard), Dialog (add sizes), Input (add validation + sizes), Pagination (add features), Select (different internals), Skeleton (add sub-types), Sonner/Toaster (reskin), Badge/Tag (different systems), Button Group/SplitButton, Calendar/DatePicker, Field/FormV2, Input Group, Menubar/Menu, Toggle Group/SegmentedControl
+Alert (add warning/info), Card (add PreviewCard), Dialog (add sizes), Input (add validation + sizes), Pagination (add features), Select (different internals), Skeleton (add sub-types), Sonner/Toaster (reskin), Badge/Tag (different systems), Split Button, Calendar/DatePicker, Field/FormV2, Input Group, Menubar/Menu, Segment Control
 
 **High complexity (significant redesign) — ~8 components:**
-Avatar (6 sizes + types + colors), Button (heights, loading, danger), Combobox (DB has 2 complex variants), Sidebar (completely different architectures), Table (DB has built-in actions/filters/select), Calendar/DatePicker (7 AntD variants), Badge vs Tag (fundamentally different variant systems), Tree (no shadcn equiv)
+Avatar (6 sizes + types + colors), Button (7 variants incl. danger, loading state, icon-only), Combobox (DB has 2 complex variants), Sidebar (completely different architectures), Table (DB has built-in actions/filters/select), Calendar/DatePicker (7 AntD variants), Badge vs Tag (fundamentally different variant systems), Tree (no shadcn equiv)
 
 ### 5.3 Components to Build New
 RadioTile, ResourceStatusIndicator (→ "StatusIndicator"), Stepper, Tree (composition), Typography (text styles + component)
@@ -626,6 +626,15 @@ Every component had: `text-sm` → `text-[13px]`, `text-xs` → `text-[12px]`, `
 | `--primary-hover` | (new) | `#0E538B` (blue700) | Filled button hover |
 | `--primary-active` | (new) | `#04355D` (blue800) | Filled button press |
 | `--radius-lg` | 10px | 4px | Buttons/inputs use `rounded-lg` |
+
+#### Inverted surface pattern (2026-04-06)
+
+For components with inverted colors (dark bg, light text) like Tooltip:
+- Use `text/foreground` as the fill (dark surface)
+- Use `surface/background` as the text color (light text)
+- No dedicated `surface/inverted` token — only 1 component uses this pattern today
+- In dark mode, this naturally flips since foreground ↔ background swap
+- If more inverted components emerge (dark snackbar, floating toolbar), revisit and add dedicated tokens
 
 ### 12.2 Known Gaps — Components Needing Attention
 

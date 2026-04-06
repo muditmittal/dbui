@@ -77,7 +77,7 @@ function Calendar({
           defaultClassNames.dropdown_root
         ),
         dropdown: cn(
-          "absolute inset-0 bg-popover opacity-0",
+          "absolute inset-0 bg-background opacity-0",
           defaultClassNames.dropdown
         ),
         caption_label: cn(
@@ -197,7 +197,7 @@ function CalendarDayButton({
   return (
     <Button
       variant="ghost"
-      size="icon"
+      size="icon-md"
       data-day={day.date.toLocaleDateString(locale?.code)}
       data-selected-single={
         modifiers.selected &&

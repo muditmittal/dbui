@@ -12,7 +12,21 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "DBUI — Databricks UI Kit",
   description:
-    "DuBois design language on shadcn components. 172 design tokens, 413 icons, theme-switchable, LLM-native.",
+    "DuBois design language on shadcn/ui — 189 design tokens, 450 icons, theme-switchable, LLM-native. Prototype Databricks features, instantly.",
+  openGraph: {
+    title: "DBUI — Databricks UI Kit",
+    description:
+      "DuBois design language on shadcn/ui — 189 design tokens, 450 icons, theme-switchable, LLM-native. Prototype Databricks features, instantly.",
+    siteName: "DBUI",
+    type: "website",
+    url: "https://dbuidesign.vercel.app",
+  },
+  twitter: {
+    card: "summary",
+    title: "DBUI — Databricks UI Kit",
+    description:
+      "DuBois design language on shadcn/ui — 189 tokens, 450 icons, light/dark themes. Prototype Databricks features, instantly.",
+  },
 }
 
 export default function RootLayout({

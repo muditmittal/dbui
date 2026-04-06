@@ -15,13 +15,16 @@
 | 4 | **Tertiary** (borderless, blue text) | `ghost` | actionTertiary | **Tweaked** | DuBois uses blue text; DBUI uses grey foreground. Prefer DBUI treatment |
 | 5 | **Link** (underline on hover) | `link` | actionLink | Covered | Blue text + underline hover |
 | 6 | **Danger Primary** (filled red) | `destructive` | actionDangerPrimary | Covered | Red fill, white text |
-| 7 | **Danger Secondary** (red border) | — | actionDangerDefault | **Gap** | Red border + transparent bg. Add as `destructive-outline` in DBUI. Long-term: consolidate to single destructive variant |
+| 7 | **Danger Secondary** (red border) | `danger` | actionDangerDefault | **Covered** | Red border + transparent bg. Reuses destructive tokens at 10%/20% opacity for hover/press |
 
 ### Decision: 7 variants for Figma Button
 
 ```
-Primary | Outline | Secondary (New) | Ghost (Tweaked) | Link | Destructive | Destructive-outline (Gap fill, sunset later)
+Primary | Outline | Secondary (New) | Ghost (Tweaked) | Link | Destructive | Danger
 ```
+
+> **Note:** Figma "Primary" variant maps to code `variant="default"` (CVA default).
+> "Danger" maps to code `variant="danger"` — bordered red, distinct from filled `destructive`.
 
 ---
 
@@ -87,7 +90,7 @@ Figma property **Icon** with values: `None | Start | End`
 | Active/Press | ✅ | ✅ | DBUI adds `translate-y-px` micro-animation |
 | Focus | ✅ | ✅ | 3px ring at 50% opacity of ring color |
 | Disabled | ✅ | ✅ | 50% opacity, pointer-events-none |
-| Loading | ✅ | ❌ **Gap** | DuBois has built-in `loading` prop with spinner + a11y label |
+| Loading | ✅ | ✅ | Added as Figma state + code prop. Spinner replaces start icon, button auto-disables |
 | aria-expanded | — | ✅ | DBUI styles expanded state (accent bg) for menu triggers |
 
 ### Decision: Add Loading state
@@ -124,7 +127,7 @@ These are handled via Button variants/props — **not separate components**:
 | Pattern | DuBois | DBUI | Notes |
 |---|---|---|---|
 | **ButtonGroup** | ✅ (H + V) | ✅ `button-group.tsx` | Adjacent buttons share borders/corners |
-| **SplitButton** | ✅ (action + chevron) | ❌ Compose from Button + DropdownMenu | Solve as ButtonGroup + DropdownMenuTrigger |
+| **SplitButton** | ✅ (action + chevron) | ✅ `split-button.tsx` | Composition: Button + Separator + Icon Button in overflow-clip container |
 | **ButtonGroupSeparator** | — | ✅ | Visual separator between grouped buttons |
 | **ButtonGroupText** | — | ✅ | Text label within a button group |
 
@@ -133,8 +136,7 @@ These are handled via Button variants/props — **not separate components**:
 | Pattern | Component | Notes |
 |---|---|---|
 | **ToggleButton** | Toggle | Separate component, pressed/unpressed semantics |
-| **ToggleGroup** | ToggleGroup | Container for multiple toggles |
-| **SegmentedControl** | ToggleGroup (partial) | DuBois uses radio semantics; shadcn ToggleGroup uses toggle. Semantic gap to address when building ToggleGroup |
+| **SegmentControl** | SegmentControl | Renamed from ToggleGroup. 2 variants (Default, Outline) × 2 sizes. Code Connect: ✅ linked |
 | **Tabs** | Tabs | Tab triggers are not buttons despite looking similar |
 | **PillControl** | TBD | Filter chip / pill-shaped toggle. Rare in DuBois, storybook-only. **Defer** |
 | **Toolbar** | TBD | Container for action buttons. Storybook-only in DuBois. **Defer** |
@@ -151,13 +153,15 @@ These are handled via Button variants/props — **not separate components**:
 
 ```
 Button
-├── Variant: Primary | Outline | Secondary | Ghost | Destructive | Destructive-outline | Link
-├── Size: XS (24) | SM (28) | Default (32) | LG (36)
-├── Icon: None | Start | End
-├── Icon Only: boolean (false)
-├── State: Default | Hover | Active | Disabled | Loading
-├── Dark Mode: boolean (via Figma variable modes, not a prop)
-└── [Label]: text override
+├── Variant: Primary | Outline | Secondary | Ghost | Link | Destructive | Danger
+├── Size: Default (32) | Small (24)
+├── State: Default | Hover | Press | Focus | Disabled | Loading
+└── Content: via nested .Action Label (Icon, Label text, Menu chevron)
+
+Icon Button (separate Figma component, same code component)
+├── Variant: Primary | Outline | Secondary | Ghost | Destructive | Danger
+├── Size: Default (32) | Small (24)
+└── State: Default | Hover | Press | Focus | Disabled
 ```
 
 ### Variant × State matrix (what to build)
@@ -171,7 +175,7 @@ Not every variant × state combo needs unique treatment. The pattern:
 | **Secondary** | grey fill | accent bg | — | 50% opacity | spinner + dim |
 | **Ghost** | transparent | accent bg | — | 50% opacity | spinner + dim |
 | **Destructive** | red fill | darker red | darkest red | 50% opacity | spinner + dim |
-| **Destructive-outline** | red border + transparent | red border + red/8 bg | — | 50% opacity | spinner + dim |
+| **Danger** | red border + transparent | red border + destructive/10 bg | destructive/20 bg | 50% opacity | spinner + dim |
 | **Link** | blue text | underline | — | 50% opacity | — |
 
 ---
@@ -186,7 +190,7 @@ For reference when checking token coverage:
 | actionDefault | `--input` (border), `--background` | `--primary-hover` (border hover) |
 | actionTertiary | `--accent`, `--accent-foreground` | (opacity composition) |
 | actionDangerPrimary | `--destructive`, `--destructive-foreground` | `--destructive-hover`, `--destructive-active` |
-| actionDangerDefault | ❌ Missing | Need `--destructive` border + transparent bg |
+| actionDangerDefault | `--destructive` (border + text) | Hover/press: `--destructive` at 10%/20% opacity. No new tokens needed |
 | actionIcon | Reuses ghost tokens | (opacity composition) |
 | actionLink | `--primary` | (underline) |
 | actionDisabled | `opacity-50` | (cross-variant) |
@@ -195,12 +199,12 @@ For reference when checking token coverage:
 
 ## 8. Open Questions
 
-1. **Destructive-outline tokens:** Do we need new semantic tokens (`--destructive-border`?) or can we compose from existing `--destructive` + opacity?
-2. **Loading spinner design:** Use DuBois spinner component or create a simple animated SVG? What color — inherit text color?
-3. **SegmentedControl vs ToggleGroup:** When we get to ToggleGroup, do we add radio semantics or keep it as-is?
+1. ~~**Destructive-outline tokens:**~~ Resolved — reuses existing `--destructive` tokens at 10%/20% opacity. No new tokens.
+2. ~~**Loading spinner design:**~~ Resolved — loading state added to Figma and code.
+3. ~~**SegmentedControl vs ToggleGroup:**~~ Resolved — renamed to Segment Control. Uses Base UI ToggleGroup primitive with single/multi selection support.
 4. **Ghost text color:** We chose DBUI grey treatment over DuBois blue. Confirm this holds for icon-only ghost buttons too?
 
 ---
 
 *Created: 2026-03-27*
-*Last updated: 2026-03-27*
+*Last updated: 2026-04-03*

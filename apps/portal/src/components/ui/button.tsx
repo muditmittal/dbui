@@ -5,19 +5,42 @@ import { type VariantProps } from "class-variance-authority"
 
 import { buttonVariants } from "@/lib/button-variants"
 import { cn } from "@/lib/utils"
+import { Loading as LoadingIcon } from "@/components/icons/Loading"
 
 function Button({
   className,
   variant = "default",
-  size = "default",
+  size = "md",
+  loading = false,
+  loadingText,
+  children,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    loading?: boolean
+    loadingText?: string
+  }) {
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      disabled={props.disabled}
+      aria-busy={loading || undefined}
+      aria-disabled={loading || props.disabled || undefined}
+      className={cn(
+        buttonVariants({ variant, size, className }),
+        loading && "pointer-events-none"
+      )}
       {...props}
-    />
+    >
+      {loading ? (
+        <>
+          <LoadingIcon className="animate-spin" />
+          {loadingText ?? <span className="opacity-0">{children}</span>}
+        </>
+      ) : (
+        children
+      )}
+    </ButtonPrimitive>
   )
 }
 
