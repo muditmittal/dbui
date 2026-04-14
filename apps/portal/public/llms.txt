@@ -1,0 +1,593 @@
+# DBUI Design System — LLM Context File
+# Version: 1.0.0 | Updated: 2026-04-14
+# Source: packages/dbui/ in github.com/muditmittal/dbui
+#
+# This file contains everything an LLM needs to generate Databricks-styled UI
+# using the DBUI component library. DBUI is shadcn/ui reskinned with Databricks
+# DuBois design tokens. It uses React 19, Next.js 15, Tailwind CSS v4, Base UI
+# primitives, and Class Variance Authority (CVA).
+#
+# CRITICAL: Do not use default shadcn token values. Every color, radius, shadow,
+# and font size below overrides shadcn defaults.
+
+## 1. TYPOGRAPHY
+
+Base font size is 13px (NOT 16px). Only two weights: 400 (Regular) and 600 (Semibold).
+
+| Style     | Font            | Size/LH  | Weight | Tailwind                                              |
+|-----------|-----------------|----------|--------|-------------------------------------------------------|
+| Hint      | SF Pro Text     | 12/16    | 400    | text-[12px] leading-[16px]                            |
+| Paragraph | SF Pro Text     | 13/20    | 400    | text-[13px] leading-[20px] font-normal                |
+| Bold      | SF Pro Text     | 13/20    | 600    | text-[13px] leading-[20px] font-semibold              |
+| Code      | SF Mono         | 13/20    | 400    | font-mono text-[13px] leading-[20px]                  |
+| Title 4   | SF Pro Display  | 13/20    | 600    | font-display text-[13px] leading-[20px] font-semibold |
+| Title 3   | SF Pro Display  | 18/24    | 600    | font-display text-[18px] leading-[24px] font-semibold |
+| Title 2   | SF Pro Display  | 22/28    | 600    | font-display text-[22px] leading-[28px] font-semibold |
+| Title 1   | SF Pro Display  | 32/40    | 600    | font-display text-[32px] leading-[40px] font-semibold |
+
+Rules:
+- text-sm → text-[13px], text-xs → text-[12px]
+- font-medium → font-semibold (no 500 weight exists)
+- font-bold → font-semibold (capped at 600)
+
+## 2. COLOR TOKENS
+
+### Surface / Background
+| Token                  | Tailwind               | Light     | Dark      |
+|------------------------|------------------------|-----------|-----------|
+| --background           | bg-background          | #FFFFFF   | #11171C   |
+| --foreground           | text-foreground        | #161616   | #E8ECF0   |
+| --card                 | bg-card                | #FFFFFF   | #11171C   |
+| --popover              | bg-popover             | #FFFFFF   | #11171C   |
+| --secondary            | bg-secondary           | #EBEBEB   | #1F272D   |
+| --secondary-foreground | text-secondary-fg      | #161616   | #E8ECF0   |
+| --muted                | bg-muted               | #F7F7F7   | #1F272D   |
+| --muted-foreground     | text-muted-foreground  | #6F6F6F   | #92A4B3   |
+| --accent               | bg-accent              | #D7EDFE   | #04355D   |
+| --accent-foreground    | text-accent-foreground | #0E538B   | #4299E0   |
+
+### Action / Interactive
+| Token                      | Tailwind                  | Light     | Dark      |
+|----------------------------|---------------------------|-----------|-----------|
+| --primary                  | bg-primary / text-primary | #2272B4   | #4299E0   |
+| --primary-foreground       | text-primary-foreground   | #FFFFFF   | #11171C   |
+| --primary-hover            | bg-primary-hover          | #0E538B   | #8ACAFF   |
+| --primary-press            | bg-primary-press          | #04355D   | #BAE1FC   |
+| --destructive              | bg-destructive            | #C82D4C   | #E65B77   |
+| --destructive-foreground   | text-destructive-fg       | #FFFFFF   | #11171C   |
+| --destructive-hover        | bg-destructive-hover      | #9E102C   | #F792A6   |
+| --destructive-press        | bg-destructive-press      | #630316   | #FBD0D8   |
+| --warning                  | text-warning              | #BE501E   | #DE7921   |
+| --warning-foreground       | text-warning-foreground   | #FFFFFF   | #11171C   |
+| --success                  | text-success              | #277C43   | #3BA65E   |
+| --success-foreground       | text-success-foreground   | #FFFFFF   | #11171C   |
+| --ring                     | border-ring               | #2272B4   | #4299E0   |
+| --hover                    | bg-hover                  | primary@8%  | primary@8%  |
+| --press                    | bg-press                  | primary@16% | primary@16% |
+| --disabled                 | bg-disabled               | #D8D8D8   | #37444F   |
+| --disabled-foreground      | text-disabled-foreground  | #A2A2A2   | #5F7281   |
+
+### Border
+| Token              | Tailwind             | Light   | Dark    |
+|--------------------|----------------------|---------|---------|
+| --border           | border-border        | #EBEBEB | #1F272D |
+| --input            | border-input         | #CBCBCB | #37444F |
+| --border-accessible| border-accessible    | #6F6F6F | #C0CDD8 |
+
+### Status Surfaces
+| Token            | Tailwind          | Light   | Dark              |
+|------------------|-------------------|---------|-------------------|
+| --surface-info   | bg-surface-info   | #F0F8FF | primary@16%       |
+| --surface-success| bg-surface-success| #F3FCF6 | success@16%       |
+| --surface-warning| bg-surface-warning| #FFF9EB | warning@16%       |
+| --surface-danger | bg-surface-danger | #FFF5F7 | destructive@16%   |
+
+### Utility
+| Token              | Tailwind          | Light                    | Dark                     |
+|--------------------|-------------------|--------------------------|--------------------------|
+| --overlay          | bg-overlay        | rgba(64,63,63,0.72)      | rgba(64,63,63,0.85)      |
+| --code-background  | bg-code-background| rgba(82,82,82,0.08)      | #37444F                  |
+| --skeleton         | bg-skeleton       | rgba(162,162,162,0.16)   | rgba(144,164,181,0.16)   |
+
+### Chart (same both modes)
+--chart-1: #4299E0, --chart-2: #3BA65E, --chart-3: #DE7921, --chart-4: #8A63BF, --chart-5: #C83243
+
+### AI Brand
+--ai-gradient-start: #4299E0, --ai-gradient-mid: #CA42E0, --ai-gradient-end: #FF5F46
+
+## 3. RADIUS
+
+| Token       | Value | Tailwind     | Use                                      |
+|-------------|-------|--------------|------------------------------------------|
+| radius-sm   | 4px   | rounded-sm   | Buttons, inputs, form controls, menu items |
+| radius-md   | 8px   | rounded-md   | Dialogs, popups, dropdowns, alerts       |
+| radius-lg   | 12px  | rounded-lg   | Drawer corners                           |
+| radius-xl   | 16px  | rounded-xl   | Cards                                    |
+| radius-2xl  | 24px  | rounded-2xl  | Large rounded containers                 |
+| radius-3xl  | 999px | rounded-full | Badges, pills, switch, radio, avatar     |
+
+## 4. SHADOWS
+
+| Token        | Tailwind     | Light Value                                    | Use                    |
+|--------------|--------------|------------------------------------------------|------------------------|
+| shadow-xs    | shadow-xs    | 0 1px 0 0 rgba(0,0,0,.05)                     | Form controls, buttons |
+| shadow-sm    | shadow-sm    | 0 2px 3px -1px rgba(0,0,0,.05), 0 1px 0 0 rgba(0,0,0,.02) | Active tabs  |
+| shadow       | shadow       | 0 3px 6px 0 rgba(0,0,0,.05)                   | Cards                  |
+| shadow-md    | shadow-md    | 0 2px 16px 0 rgba(0,0,0,.08)                  | Popovers, dropdowns    |
+| shadow-lg    | shadow-lg    | 0 8px 40px 0 rgba(0,0,0,.13)                  | Dialogs                |
+| shadow-focus | shadow-focus | 0 0 0 1px white, 0 0 0 3px var(--ring)        | Focus on filled controls |
+
+## 5. SPACING
+
+| Token       | Value | Tailwind |
+|-------------|-------|----------|
+| spacing-0   | 0px   | p-0      |
+| spacing-xs  | 4px   | p-1      |
+| spacing-sm  | 8px   | p-2      |
+| spacing-mid | 12px  | p-3      |
+| spacing-md  | 16px  | p-4      |
+| spacing-lg  | 24px  | p-6      |
+| spacing-xl  | 32px  | p-8      |
+
+## 6. INTERACTIVE STATE RULES
+
+### Text Inputs (Input, Textarea, Select, Combobox)
+| State    | Border            | Shadow    | Other                          |
+|----------|-------------------|-----------|--------------------------------|
+| Default  | border-input      | shadow-xs |                                |
+| Hover    | border-primary    | shadow-xs |                                |
+| Press    | border-primary-press | shadow-xs |                             |
+| Focus    | border-ring       | shadow-xs | 1px border, NO outer ring      |
+| Disabled | border-disabled   | none      | bg-disabled, text-disabled-fg  |
+| Error    | border-destructive| shadow-xs | 1px border only, no outer ring |
+| Warning  | border-warning    | shadow-xs | 1px border only                |
+| Success  | border-success    | shadow-xs | 1px border only                |
+
+### Filled Buttons (Primary, Destructive)
+| State    | Background             | Shadow       |
+|----------|------------------------|--------------|
+| Default  | bg-{color}             | shadow-xs    |
+| Hover    | bg-{color}-hover       | shadow-xs    |
+| Press    | bg-{color}-press       | shadow-xs    |
+| Focus    | unchanged              | shadow-focus |
+| Disabled | bg-disabled            | none         |
+
+### Non-Filled Buttons (Outline, Secondary, Ghost, Link, Danger)
+| State    | Background  | Border              | Focus                    |
+|----------|-------------|---------------------|--------------------------|
+| Default  | transparent | border-input (outline) / transparent (ghost) | — |
+| Hover    | bg-hover    | border-primary      |                          |
+| Press    | bg-press    | border-primary-press|                          |
+| Focus    | —           | border-ring         | border-2 border-ring     |
+| Disabled | —           | border-disabled     | text-disabled-foreground |
+
+### Selection Controls (Checkbox, Radio, Switch)
+- Focus: shadow-focus (outer ring) — always, regardless of checked state
+- Unchecked: border-input, bg-background
+- Checked: border-primary, bg-primary, text-primary-foreground
+- Hover (unchecked): border-primary-hover, bg-hover
+- Hover (checked): bg-primary-hover
+
+### Focus Ring Summary
+| Components                        | Focus Style                     |
+|-----------------------------------|---------------------------------|
+| Filled buttons (Primary, Destructive) | shadow-focus (outer ring)   |
+| Checkbox, Radio, Switch           | shadow-focus (outer ring)       |
+| Outline/Ghost/Link/Danger buttons | border-2 border-ring            |
+| All text inputs                   | border-ring (1px, NO border-2)  |
+
+## 7. COMPONENT REFERENCE
+
+### Buttons
+```tsx
+import { Button } from "dbui/components/ui/button"
+// Variants: default (primary), outline, secondary, ghost, link, destructive, danger
+// Sizes: sm (24px), md (32px)
+<Button variant="default" size="md">Save</Button>
+<Button variant="outline">Cancel</Button>
+<Button variant="destructive">Delete</Button>
+<Button variant="danger">Remove</Button>
+```
+
+Note: Button secondary uses bg-muted (#F7F7F7), NOT bg-secondary (#EBEBEB).
+
+### Icon Button
+```tsx
+<Button variant="ghost" size="icon-md"><PlusIcon /></Button>
+<Button variant="outline" size="icon-sm"><SearchIcon /></Button>
+```
+
+### Split Button
+```tsx
+import { SplitButton } from "dbui/components/ui/split-button"
+<SplitButton>
+  <Button>Save</Button>
+  <SplitButtonSeparator />
+  <Select>...</Select>
+</SplitButton>
+```
+
+### Toggle Button
+```tsx
+import { Toggle } from "dbui/components/ui/toggle"
+// Variants: default, filter (bordered), pill (rounded-full), icon
+<Toggle variant="filter" size="md">Filter</Toggle>
+<Toggle variant="pill" size="md">Tag</Toggle>
+```
+
+### Segment Control
+```tsx
+import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
+// Variants: default (slider with muted bg), outline (bordered tabs)
+<SegmentControl variant="default">
+  <SegmentControlItem value="a">Left</SegmentControlItem>
+  <SegmentControlItem value="b">Center</SegmentControlItem>
+</SegmentControl>
+```
+
+### Input
+```tsx
+import { Input } from "dbui/components/ui/input"
+// Sizes: default (32px), sm (24px)
+// Validation: aria-invalid for error, validation="warning"|"success"
+<Input placeholder="Email" />
+<Input size="sm" placeholder="Small" />
+<Input aria-invalid placeholder="Error" />
+```
+
+### Textarea
+```tsx
+import { Textarea } from "dbui/components/ui/textarea"
+<Textarea placeholder="Message..." />
+```
+
+### Select
+```tsx
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "dbui/components/ui/select"
+// Variants: default (bordered), ghost (no border)
+// Sizes: default (32px), sm (24px)
+<Select>
+  <SelectTrigger><SelectValue placeholder="Choose..." /></SelectTrigger>
+  <SelectContent>
+    <SelectItem value="a">Option A</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+### Combobox
+```tsx
+import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem } from "dbui/components/ui/combobox"
+<Combobox>
+  <ComboboxInput placeholder="Search..." />
+  <ComboboxContent>
+    <ComboboxList>
+      <ComboboxItem value="a">Item A</ComboboxItem>
+    </ComboboxList>
+  </ComboboxContent>
+</Combobox>
+```
+
+### Checkbox
+```tsx
+import { Checkbox } from "dbui/components/ui/checkbox"
+import { Label } from "dbui/components/ui/label"
+<div className="flex items-center gap-2">
+  <Checkbox id="terms" />
+  <Label htmlFor="terms">Accept terms</Label>
+</div>
+```
+
+### Radio Group
+```tsx
+import { RadioGroup, RadioGroupItem } from "dbui/components/ui/radio-group"
+<RadioGroup defaultValue="a">
+  <div className="flex items-center gap-2">
+    <RadioGroupItem value="a" id="a" />
+    <Label htmlFor="a">Option A</Label>
+  </div>
+</RadioGroup>
+```
+
+### Switch
+```tsx
+import { Switch } from "dbui/components/ui/switch"
+// Sizes: default, sm
+<Switch size="default" />
+```
+
+### Slider
+```tsx
+import { Slider } from "dbui/components/ui/slider"
+<Slider defaultValue={[50]} max={100} step={1} />
+```
+
+### Label
+```tsx
+import { Label } from "dbui/components/ui/label"
+// Uses Bold style: 13px/20px Semibold
+<Label htmlFor="email">Email</Label>
+```
+
+### Dialog
+```tsx
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "dbui/components/ui/dialog"
+// rounded-md, shadow-lg, border-border
+<Dialog>
+  <DialogTrigger asChild><Button>Open</Button></DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+      <DialogDescription>Description</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <Button variant="outline">Cancel</Button>
+      <Button>Confirm</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+### Alert Dialog
+```tsx
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "dbui/components/ui/alert-dialog"
+<AlertDialog>
+  <AlertDialogTrigger asChild><Button variant="destructive">Delete</Button></AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+      <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Delete</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+### Alert
+```tsx
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertAction, AlertClose } from "dbui/components/ui/alert"
+// Variants: info (default), warning, success, danger
+// Layouts: inline (action beside) or stacked (action below description)
+// Structure: [Icon] [Content] [Action] [Close]
+
+// Inline layout (action beside title)
+<Alert variant="warning">
+  <AlertIcon><WarningFillIcon /></AlertIcon>
+  <AlertContent>
+    <AlertTitle>Warning</AlertTitle>
+    <AlertDescription>This action may have consequences.</AlertDescription>
+  </AlertContent>
+  <AlertAction><Button variant="outline" size="sm">Label</Button></AlertAction>
+  <AlertClose />
+</Alert>
+
+// Stacked layout (action below description)
+<Alert variant="danger">
+  <AlertIcon><DangerFillIcon /></AlertIcon>
+  <AlertContent>
+    <AlertTitle>Error</AlertTitle>
+    <AlertDescription>Something went wrong.</AlertDescription>
+    <AlertAction><Button variant="outline">Label</Button></AlertAction>
+  </AlertContent>
+  <AlertClose />
+</Alert>
+```
+
+### Toast (via Sonner)
+```tsx
+import { toast } from "sonner"
+toast.success("Saved!")
+toast.error("Failed")
+toast.warning("Check your input")
+toast.info("FYI")
+```
+
+### Dropdown Menu
+```tsx
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "dbui/components/ui/dropdown-menu"
+// Popup: rounded-md, bg-popover, shadow-md, ring-1 ring-foreground/10
+<DropdownMenu>
+  <DropdownMenuTrigger asChild><Button variant="outline">Menu</Button></DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuItem>Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+### Popover
+```tsx
+import { Popover, PopoverTrigger, PopoverContent } from "dbui/components/ui/popover"
+// rounded-md, bg-popover, shadow-md
+<Popover>
+  <PopoverTrigger asChild><Button>Info</Button></PopoverTrigger>
+  <PopoverContent>Content here</PopoverContent>
+</Popover>
+```
+
+### Tooltip
+```tsx
+import { Tooltip, TooltipTrigger, TooltipContent } from "dbui/components/ui/tooltip"
+// Inverted: bg-foreground, text-background, rounded-sm, Hint style (12px)
+<Tooltip>
+  <TooltipTrigger>Hover me</TooltipTrigger>
+  <TooltipContent>Helpful tip</TooltipContent>
+</Tooltip>
+```
+
+### Tabs
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "dbui/components/ui/tabs"
+// Only use default (lined) variant. For pill-style, use SegmentControl instead.
+<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="settings">Settings</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">...</TabsContent>
+</Tabs>
+```
+
+### Card
+```tsx
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "dbui/components/ui/card"
+// rounded-xl, ring-1 ring-foreground/10
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>Content</CardContent>
+</Card>
+```
+
+### Avatar
+```tsx
+import { Avatar, AvatarImage, AvatarFallback } from "dbui/components/ui/avatar"
+<Avatar>
+  <AvatarImage src="/photo.jpg" />
+  <AvatarFallback>JD</AvatarFallback>
+</Avatar>
+```
+
+### Badge
+```tsx
+import { Badge } from "dbui/components/ui/badge"
+// Variants: default (primary fill), secondary (grey fill), destructive, outline, ghost
+// rounded-full, Hint style (12px)
+<Badge>New</Badge>
+<Badge variant="outline">v2.1</Badge>
+```
+
+### Tag
+```tsx
+import { Tag, TagIcon, TagLabel, TagValue, TagRemove } from "dbui/components/ui/tag"
+// bg-muted, rounded-sm, 13px
+<Tag>
+  <TagLabel>env</TagLabel>
+  <TagValue>production</TagValue>
+  <TagRemove />
+</Tag>
+```
+
+### Table
+```tsx
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "dbui/components/ui/table"
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Status</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Pipeline A</TableCell>
+      <TableCell>Running</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+### Breadcrumb
+```tsx
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "dbui/components/ui/breadcrumb"
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem><BreadcrumbPage>Settings</BreadcrumbPage></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+### Pagination
+```tsx
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "dbui/components/ui/pagination"
+```
+
+### Progress
+```tsx
+import { Progress } from "dbui/components/ui/progress"
+<Progress value={66} />
+```
+
+### Spinner
+```tsx
+import { Spinner } from "dbui/components/ui/spinner"
+<Spinner />
+```
+
+### Skeleton
+```tsx
+import { Skeleton } from "dbui/components/ui/skeleton"
+<Skeleton className="h-4 w-[200px]" />
+```
+
+### Separator
+```tsx
+import { Separator } from "dbui/components/ui/separator"
+<Separator />
+```
+
+### Accordion
+```tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "dbui/components/ui/accordion"
+<Accordion>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Section 1</AccordionTrigger>
+    <AccordionContent>Content here</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+### Drawer
+```tsx
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "dbui/components/ui/drawer"
+```
+
+### Empty
+```tsx
+import { Empty } from "dbui/components/ui/empty"
+<Empty title="No results" description="Try adjusting your filters." />
+```
+
+## 8. POPUP CONTAINER PATTERN
+
+All popup/overlay containers follow this pattern:
+```
+rounded-md bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10
+```
+Applies to: DropdownMenu, Select popup, Combobox popup, Popover, HoverCard, ContextMenu, Menubar popup.
+
+Dialogs use: `rounded-md bg-background shadow-lg border border-border`
+Cards use: `rounded-xl bg-background ring-1 ring-foreground/10`
+
+## 9. IMPORTANT RULES
+
+1. NEVER hardcode hex colors — always use semantic tokens (bg-primary, text-foreground, etc.)
+2. Base font is 13px/20px, NOT 16px — use text-[13px] leading-[20px]
+3. All interactive elements need shadow-xs EXCEPT ghost and link variants
+4. Focus on text inputs = border-ring (1px). NO border-2, NO shadow-focus.
+5. Focus on filled buttons = shadow-focus. Focus on non-filled buttons = border-2 border-ring.
+6. Focus on checkbox/radio/switch = shadow-focus (outer ring always).
+7. Danger variant focus uses blue ring (border-ring), NOT red — consistent accessibility.
+8. Validation states (error/warning/success) = colored 1px border only, no outer ring shadow.
+9. Disabled = bg-disabled + text-disabled-foreground + no shadow + pointer-events-none.
+10. Icons are 16×16 (size-4) by default. Import from "dbui/components/icons/{Name}".
+11. 451 icons available — all from Databricks DuBois icon set.
+
+## 10. ICONS
+
+Import pattern:
+```tsx
+import { ChevronDown } from "dbui/components/icons/ChevronDown"
+import { Plus } from "dbui/components/icons/Plus"
+import { Search } from "dbui/components/icons/Search"
+```
+
+All icons render at 16×16 by default. Override with className="size-5" etc.
+Full icon list: 451 icons covering actions, objects, indicators, and component icons.
+Top used: ChevronDown, Plus, Search, ChevronRight, NewWindow, Close, Warning, Danger, Overflow, Pencil, Trash, CheckCircle.

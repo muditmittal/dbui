@@ -1,0 +1,85 @@
+{
+  "$component": "Button",
+  "$source": "Figma node 477-773, extracted 2026-04-14 via get_design_context",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=477-773",
+
+  "base": {
+    "radius": "rounded-sm (4px)",
+    "text": "text-[13px] leading-[20px] font-normal",
+    "textStyle": "Paragraph",
+    "border": "border border-transparent",
+    "iconSize": "size-4 (16px)"
+  },
+
+  "sizes": {
+    "default": { "height": "h-8", "px": "px-3", "gap": "gap-1" },
+    "small":   { "height": "h-6", "px": "px-2", "gap": "gap-1" },
+    "icon-default": { "size": "size-8" },
+    "icon-small":   { "size": "size-6" }
+  },
+
+  "variants": {
+    "Primary": {
+      "type": "filled",
+      "default":  { "bg": "bg-primary", "text": "text-primary-foreground", "shadow": "shadow-xs" },
+      "hover":    { "bg": "bg-primary-hover" },
+      "press":    { "bg": "bg-primary-press" },
+      "focus":    { "shadow": "shadow-focus" },
+      "disabled": { "bg": "bg-disabled", "text": "text-disabled-foreground", "shadow": "none" }
+    },
+    "Outline": {
+      "type": "bordered",
+      "default":  { "bg": "transparent", "text": "text-foreground", "border": "border-input", "shadow": "shadow-xs" },
+      "hover":    { "bg": "bg-hover", "border": "border-primary" },
+      "press":    { "bg": "bg-press", "border": "border-primary-press" },
+      "focus":    { "border": "border-ring", "borderWidth": 2 },
+      "disabled": { "border": "border-disabled", "text": "text-disabled-foreground", "shadow": "none" }
+    },
+    "Secondary": {
+      "type": "filled-subtle",
+      "default":  { "bg": "bg-secondary", "text": "text-secondary-foreground", "shadow": "shadow-xs" },
+      "hover":    { "bg": "bg-hover" },
+      "press":    { "bg": "bg-press" },
+      "focus":    { "border": "border-ring", "borderWidth": 2 },
+      "disabled": { "bg": "transparent", "text": "text-disabled-foreground", "shadow": "none" }
+    },
+    "Ghost": {
+      "type": "minimal",
+      "default":  { "bg": "transparent", "text": "text-foreground", "shadow": "none" },
+      "hover":    { "bg": "bg-hover" },
+      "press":    { "bg": "bg-press" },
+      "focus":    { "border": "border-ring", "borderWidth": 2 },
+      "disabled": { "text": "text-disabled-foreground" }
+    },
+    "Link": {
+      "type": "text-only",
+      "default":  { "bg": "transparent", "text": "text-primary", "shadow": "none" },
+      "hover":    { "text": "text-primary-hover", "decoration": "underline" },
+      "press":    { "text": "text-primary-press" },
+      "focus":    { "border": "border-ring", "borderWidth": 1 },
+      "disabled": { "text": "text-disabled-foreground" }
+    },
+    "Destructive": {
+      "type": "filled",
+      "default":  { "bg": "bg-destructive", "text": "text-destructive-foreground", "shadow": "shadow-xs" },
+      "hover":    { "bg": "bg-destructive-hover" },
+      "press":    { "bg": "bg-destructive-press" },
+      "focus":    { "shadow": "shadow-focus" },
+      "disabled": { "bg": "bg-disabled", "text": "text-disabled-foreground", "shadow": "none" }
+    },
+    "Danger": {
+      "type": "bordered-danger",
+      "default":  { "bg": "transparent", "text": "text-destructive", "border": "border-destructive", "shadow": "shadow-xs" },
+      "hover":    { "border": "border-destructive-hover", "text": "text-destructive-hover" },
+      "press":    { "border": "border-destructive-press", "text": "text-destructive-press" },
+      "focus":    { "border": "border-ring", "borderWidth": 2, "note": "Blue focus ring, NOT red" },
+      "disabled": { "border": "border-disabled", "text": "text-disabled-foreground", "shadow": "none" }
+    }
+  },
+
+  "drift": [
+    { "issue": "Secondary bg token", "figma": "#ebebeb (neutral100)", "code": "#F7F7F7 (neutral050)", "severity": "needs-decision", "note": "Figma may have wrong variable binding — neutral050 seems more correct for a subtle background" },
+    { "issue": "Outline hover text", "figma": "verify if text changes to primary-hover", "code": "text-primary-hover", "severity": "verify" },
+    { "issue": "Danger press bg", "figma": "verify bg-destructive/20", "code": "bg-destructive/20", "severity": "verify" }
+  ]
+}

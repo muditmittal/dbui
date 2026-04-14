@@ -1,0 +1,39 @@
+{
+  "$component": "Input",
+  "$source": "Figma node 722-658, extracted 2026-04-14 via get_design_context",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=722-658",
+
+  "base": {
+    "bg": "bg-background",
+    "radius": "rounded-sm",
+    "text": "text-[13px] leading-[20px]",
+    "textStyle": "Paragraph",
+    "placeholder": "text-muted-foreground",
+    "borderWidth": 1,
+    "outline": "outline-none"
+  },
+
+  "sizes": {
+    "default": { "height": "h-8", "px": "px-3", "py": "py-0", "gap": "gap-2" },
+    "small":   { "height": "h-6", "px": "px-2", "py": "py-0", "gap": "gap-1" }
+  },
+
+  "states": {
+    "default":  { "border": "border-input",          "shadow": "shadow-xs" },
+    "hover":    { "border": "border-primary",         "shadow": "shadow-xs" },
+    "press":    { "border": "border-primary-press",   "shadow": "shadow-xs" },
+    "focus":    { "border": "border-ring",            "shadow": "shadow-xs", "borderWidth": 1, "note": "Figma shows 1px border, NOT 2px. shadow-focus effect has spread=0 (invisible)." },
+    "disabled": { "border": "border-disabled",        "shadow": "none",     "bg": "bg-disabled", "text": "text-disabled-foreground", "pointer": "pointer-events-none" },
+    "danger":   { "border": "border-destructive",     "shadow": "shadow-xs", "note": "No outer ring. Spread=0 in Figma." },
+    "warning":  { "border": "border-warning",         "shadow": "shadow-xs", "note": "No outer ring. Spread=0 in Figma." },
+    "success":  { "border": "border-success",         "shadow": "shadow-xs", "note": "No outer ring. Spread=0 in Figma." }
+  },
+
+  "tailwindClasses": {
+    "generated": "w-full min-w-0 rounded-sm border border-input bg-background text-[13px] leading-[20px] shadow-xs transition-colors outline-none placeholder:text-muted-foreground hover:border-primary active:border-primary-press focus-visible:border-ring disabled:bg-disabled disabled:text-disabled-foreground disabled:border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-destructive data-[validation=warning]:border-warning data-[validation=success]:border-success"
+  },
+
+  "codeVsFigmaDrift": [
+    { "property": "focus borderWidth", "code": "border-2", "figma": "border (1px)", "action": "fix code to 1px" }
+  ]
+}

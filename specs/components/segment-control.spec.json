@@ -1,0 +1,25 @@
+{
+  "$component": "Segment Control",
+  "$source": "Figma node 481-661, extracted 2026-04-14 via get_variable_defs",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=481-661",
+
+  "variants": {
+    "Slider": {
+      "container": { "bg": "bg-muted", "radius": "rounded-sm", "padding": "p-1 (default) / p-0.5 (small)", "gap": "gap-1 / gap-0.5" },
+      "selected": { "bg": "bg-background", "shadow": "shadow-xs", "text": "text-foreground" },
+      "unselected": { "bg": "transparent", "text": "text-muted-foreground" }
+    },
+    "Outline": {
+      "container": { "bg": "bg-background", "radius": "rounded-sm", "padding": "p-0", "gap": "gap-0", "shadow": "shadow-xs" },
+      "selected": { "bg": "bg-accent", "border": "border-primary", "text": "text-accent-foreground", "shadow": "none" },
+      "unselected": { "border": "border-input", "shadow": "shadow-xs", "radius": "rounded-none (flush)" }
+    }
+  },
+
+  "sizes": {
+    "default": { "item-height": "h-6 (slider) / h-8 (outline)", "px": "px-2 / px-3" },
+    "small":   { "item-height": "h-5 (slider) / h-6 (outline)", "px": "px-2" }
+  },
+
+  "drift": []
+}

@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { componentsBySlug, components } from "@/lib/registry"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+import { Badge } from "dbui/components/ui/badge"
+import { Separator } from "dbui/components/ui/separator"
 import { ComponentPreview } from "@/components/component-preview"
 
 export function generateStaticParams() {

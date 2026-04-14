@@ -1,0 +1,48 @@
+{
+  "$component": "Alert",
+  "$source": "Figma node 949-962, extracted 2026-04-14 via get_design_context",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=949-962",
+
+  "structure": {
+    "layout": "flex row",
+    "slots": ["AlertIcon", "AlertContent", "AlertAction (inline)", "AlertClose"],
+    "contentSlots": ["AlertTitle", "AlertDescription", "AlertAction (stacked)"]
+  },
+
+  "props": {
+    "variant": ["info", "warning", "success", "danger"],
+    "layout": ["inline", "stacked"],
+    "removable": "boolean — shows/hides close button"
+  },
+
+  "base": {
+    "display": "flex items-start",
+    "gap": "gap-2 (8px)",
+    "padding": "p-3 (12px)",
+    "radius": "rounded-md (8px)",
+    "text": "text-[13px] leading-[20px]"
+  },
+
+  "variants": {
+    "info":    { "bg": "bg-muted", "border": "border-border", "titleColor": "text-foreground", "icon": "InfoFill (muted-foreground)" },
+    "warning": { "bg": "bg-surface-warning", "border": "border-warning", "titleColor": "text-warning", "icon": "WarningFill" },
+    "success": { "bg": "bg-surface-success", "border": "border-success", "titleColor": "text-success", "icon": "CheckCircleFill" },
+    "danger":  { "bg": "bg-surface-danger", "border": "border-destructive", "titleColor": "text-destructive", "icon": "DangerFill" }
+  },
+
+  "slots": {
+    "icon": { "size": "size-4", "alignment": "py-0.5 (vertically centered with title)" },
+    "title": { "style": "Bold (13px/20px Semibold)", "color": "per variant" },
+    "description": { "style": "Paragraph (13px/20px Regular)", "color": "text-foreground (always)" },
+    "action": {
+      "inline": "Button variant=outline size=sm, sits beside content",
+      "stacked": "Button variant=outline size=default, sits below description"
+    },
+    "close": { "size": "size-6 (24px touchable)", "icon": "CloseSmall (16px)" }
+  },
+
+  "usage": {
+    "inline": "<Alert variant='warning'>\n  <AlertIcon><WarningFillIcon /></AlertIcon>\n  <AlertContent>\n    <AlertTitle>Warning</AlertTitle>\n    <AlertDescription>Description text.</AlertDescription>\n  </AlertContent>\n  <AlertAction><Button variant='outline' size='sm'>Label</Button></AlertAction>\n  <AlertClose />\n</Alert>",
+    "stacked": "<Alert variant='danger'>\n  <AlertIcon><DangerFillIcon /></AlertIcon>\n  <AlertContent>\n    <AlertTitle>Error</AlertTitle>\n    <AlertDescription>Description text.</AlertDescription>\n    <AlertAction><Button variant='outline'>Label</Button></AlertAction>\n  </AlertContent>\n  <AlertClose />\n</Alert>"
+  }
+}

@@ -1,0 +1,13 @@
+import { forwardRef } from "react"
+
+/** use:action heading 4 | minor heading */
+const H4 = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
+  ({ className, size = 16, ...props }, ref) => (
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
+      <path d="M2.5 7.25H6V3H7.5V13H6V8.75H2.5V13H1V3H2.5V7.25Z" fill="currentColor"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.249 3C13.6631 3.00013 13.999 3.3359 13.999 3.75L14 9.5H15V11H14V13H12.5V11H9.25C8.83579 11 8.5 10.6642 8.5 10.25V9.5C8.5 9.37071 8.53308 9.24342 8.59668 9.13086L11.8467 3.38086L11.9023 3.29688C12.0429 3.11139 12.2635 3 12.5 3H13.249ZM10.1123 9.5H12.5L12.499 5.27637L10.1123 9.5Z" fill="currentColor"/>
+    </svg>
+  )
+)
+H4.displayName = "H4"
+export { H4 }

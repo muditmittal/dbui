@@ -1,0 +1,28 @@
+{
+  "$component": "DropdownMenu",
+  "$source": "Figma node 787-706, extracted 2026-04-14 via get_variable_defs",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=787-706",
+
+  "container": {
+    "bg": "bg-popover",
+    "text": "text-popover-foreground",
+    "radius": "rounded-md (8px)",
+    "shadow": "shadow-md",
+    "border": "ring-1 ring-foreground/10",
+    "padding": "p-1 (4px)"
+  },
+
+  "item": {
+    "radius": "rounded-sm (4px)",
+    "text": "text-[13px] leading-[20px]",
+    "padding": "px-2 py-1",
+    "gap": "gap-2",
+    "focus": { "bg": "bg-accent", "text": "text-accent-foreground" },
+    "disabled": { "opacity": "0.5", "pointer": "pointer-events-none" }
+  },
+
+  "drift": [
+    { "issue": "Container bg", "figma": "popover", "code": "was bg-background", "action": "fixed to bg-popover" },
+    { "issue": "Container radius", "figma": "radius-md (8px)", "code": "was rounded-lg (12px)", "action": "fixed to rounded-md" }
+  ]
+}

@@ -1,0 +1,280 @@
+{
+  "$schema": "DBUI Global Design Rules — machine-readable token map",
+  "version": "1.1.0",
+  "lastUpdated": "2026-04-14",
+  "packagePath": "packages/dbui",
+
+  "typography": {
+    "Paragraph":       { "font": "SF Pro Text",    "weight": 400, "size": 13, "lineHeight": 20, "tailwind": "text-[13px] leading-[20px] font-normal" },
+    "Bold":            { "font": "SF Pro Text",    "weight": 600, "size": 13, "lineHeight": 20, "tailwind": "text-[13px] leading-[20px] font-semibold" },
+    "Hint":            { "font": "SF Pro Text",    "weight": 400, "size": 12, "lineHeight": 16, "tailwind": "text-[12px] leading-[16px]" },
+    "Code":            { "font": "SF Mono",        "weight": 400, "size": 13, "lineHeight": 20, "tailwind": "font-mono text-[13px] leading-[20px]" },
+    "Title 4":         { "font": "SF Pro Display", "weight": 600, "size": 13, "lineHeight": 20, "tailwind": "font-display text-[13px] leading-[20px] font-semibold" },
+    "Title 3":         { "font": "SF Pro Display", "weight": 600, "size": 18, "lineHeight": 24, "tailwind": "font-display text-[18px] leading-[24px] font-semibold" },
+    "Title 2":         { "font": "SF Pro Display", "weight": 600, "size": 22, "lineHeight": 28, "tailwind": "font-display text-[22px] leading-[28px] font-semibold" },
+    "Title 1":         { "font": "SF Pro Display", "weight": 600, "size": 32, "lineHeight": 40, "tailwind": "font-display text-[32px] leading-[40px] font-semibold" }
+  },
+
+  "shadows": {
+    "shadow/shadow-xs":    { "light": "0 1px 0 0 rgba(0,0,0,0.05)",                                            "dark": "0 1px 0 0 rgba(0,0,0,0.45)",                                            "tailwind": "shadow-xs",    "use": "form-controls, bordered-buttons" },
+    "shadow/shadow-sm":    { "light": "0 2px 3px -1px rgba(0,0,0,0.05), 0 1px 0 0 rgba(0,0,0,0.02)",          "dark": "0 2px 3px -1px rgba(0,0,0,0.45), 0 1px 0 0 rgba(0,0,0,0.26)",          "tailwind": "shadow-sm",    "use": "elevated-elements, active-pill-tabs" },
+    "shadow/shadow":       { "light": "0 3px 6px 0 rgba(0,0,0,0.05)",                                          "dark": "0 3px 6px 0 rgba(0,0,0,0.45)",                                          "tailwind": "shadow",       "use": "cards" },
+    "shadow/shadow-md":    { "light": "0 2px 16px 0 rgba(0,0,0,0.08)",                                         "dark": "0 2px 16px 0 rgba(0,0,0,0.61)",                                         "tailwind": "shadow-md",    "use": "popovers, dropdowns" },
+    "shadow/shadow-lg":    { "light": "0 8px 40px 0 rgba(0,0,0,0.13)",                                         "dark": "0 8px 40px 0 rgba(0,0,0,0.87)",                                         "tailwind": "shadow-lg",    "use": "dialogs, modals" },
+    "shadow/shadow-focus": { "light": "0 0 0 1px white, 0 0 0 3px var(--ring)",                                "dark": "0 0 0 1px #11171C, 0 0 0 3px var(--ring)",                              "tailwind": "shadow-focus", "use": "focus-indicator-filled" }
+  },
+
+  "radius": {
+    "radius/radius-sm":  { "value": 4,   "tailwind": "rounded-sm",   "use": "buttons, inputs, form-controls, menu-items, toggle-items" },
+    "radius/radius-md":  { "value": 8,   "tailwind": "rounded-md",   "use": "cards, dialogs, popups, dropdown-menus, alerts, accordion-triggers" },
+    "radius/radius-lg":  { "value": 12,  "tailwind": "rounded-lg",   "use": "drawer-corners" },
+    "radius/radius-xl":  { "value": 16,  "tailwind": "rounded-xl",   "use": "large-containers" },
+    "radius/radius-2xl": { "value": 24,  "tailwind": "rounded-2xl",  "use": "count-badge, slider-handle, large-rounded-containers" },
+    "radius/radius-3xl": { "value": 999, "tailwind": "rounded-full", "use": "badges, pills, switch, radio, avatar, progress-track" }
+  },
+
+  "colors": {
+    "surface/background":           { "css": "--background",           "tailwind": "background",           "light": "#FFFFFF",              "dark": "#11171C" },
+    "surface/foreground":           { "css": "--foreground",           "tailwind": "foreground",           "light": "#161616",              "dark": "#E8ECF0" },
+    "surface/card":                 { "css": "--card",                 "tailwind": "card",                 "light": "#FFFFFF",              "dark": "#11171C",  "note": "Same as background" },
+    "surface/card-foreground":      { "css": "--card-foreground",      "tailwind": "card-foreground",      "light": "#161616",              "dark": "#E8ECF0" },
+    "surface/popover":              { "css": "--popover",              "tailwind": "popover",              "light": "#FFFFFF",              "dark": "#11171C",  "note": "Same as background" },
+    "surface/popover-foreground":   { "css": "--popover-foreground",   "tailwind": "popover-foreground",   "light": "#161616",              "dark": "#E8ECF0" },
+    "surface/secondary":            { "css": "--secondary",            "tailwind": "secondary",            "light": "#F7F7F7",              "dark": "#1F272D" },
+    "text/secondary-foreground":    { "css": "--secondary-foreground", "tailwind": "secondary-foreground", "light": "#161616",              "dark": "#E8ECF0" },
+    "surface/muted":                { "css": "--muted",                "tailwind": "muted",                "light": "#F7F7F7",              "dark": "#1F272D" },
+    "text/muted-foreground":        { "css": "--muted-foreground",     "tailwind": "muted-foreground",     "light": "#6F6F6F",              "dark": "#92A4B3" },
+    "surface/accent":               { "css": "--accent",               "tailwind": "accent",               "light": "#D7EDFE",              "dark": "#04355D" },
+    "text/accent-foreground":       { "css": "--accent-foreground",    "tailwind": "accent-foreground",    "light": "#0E538B",              "dark": "#4299E0" },
+
+    "action/primary":               { "css": "--primary",              "tailwind": "primary",              "light": "#2272B4",              "dark": "#4299E0" },
+    "action/primary-foreground":    { "css": "--primary-foreground",   "tailwind": "primary-foreground",   "light": "#FFFFFF",              "dark": "#11171C" },
+    "action/primary-hover":         { "css": "--primary-hover",        "tailwind": "primary-hover",        "light": "#0E538B",              "dark": "#8ACAFF" },
+    "action/primary-press":         { "css": "--primary-press",        "tailwind": "primary-press",        "light": "#04355D",              "dark": "#BAE1FC" },
+
+    "action/destructive":           { "css": "--destructive",           "tailwind": "destructive",           "light": "#C82D4C",            "dark": "#E65B77" },
+    "action/destructive-foreground":{ "css": "--destructive-foreground","tailwind": "destructive-foreground","light": "#FFFFFF",              "dark": "#11171C" },
+    "action/destructive-hover":     { "css": "--destructive-hover",    "tailwind": "destructive-hover",    "light": "#9E102C",              "dark": "#F792A6" },
+    "action/destructive-press":     { "css": "--destructive-press",    "tailwind": "destructive-press",    "light": "#630316",              "dark": "#FBD0D8" },
+
+    "action/warning":               { "css": "--warning",              "tailwind": "warning",              "light": "#BE501E",              "dark": "#DE7921" },
+    "action/warning-foreground":    { "css": "--warning-foreground",   "tailwind": "warning-foreground",   "light": "#FFFFFF",              "dark": "#11171C" },
+    "action/success":               { "css": "--success",              "tailwind": "success",              "light": "#277C43",              "dark": "#3BA65E" },
+    "action/success-foreground":    { "css": "--success-foreground",   "tailwind": "success-foreground",   "light": "#FFFFFF",              "dark": "#11171C" },
+
+    "action/ring":                  { "css": "--ring",                 "tailwind": "ring",                 "light": "#2272B4",              "dark": "#4299E0" },
+    "action/hover":                 { "css": "--hover",                "tailwind": "hover",                "light": "rgba(34,114,180,0.08)","dark": "rgba(66,153,224,0.08)" },
+    "action/press":                 { "css": "--press",                "tailwind": "press",                "light": "rgba(34,114,180,0.16)","dark": "rgba(66,153,224,0.16)" },
+    "action/disabled":              { "css": "--disabled",             "tailwind": "disabled",             "light": "#D8D8D8",              "dark": "#37444F" },
+    "action/disabled-foreground":   { "css": "--disabled-foreground",  "tailwind": "disabled-foreground",  "light": "#A2A2A2",              "dark": "#5F7281" },
+
+    "border/border":                { "css": "--border",               "tailwind": "border",               "light": "#EBEBEB",              "dark": "#1F272D" },
+    "border/input":                 { "css": "--input",                "tailwind": "input",                "light": "#CBCBCB",              "dark": "#37444F" },
+    "border/border-accessible":     { "css": "--border-accessible",    "tailwind": "border-accessible",    "light": "#6F6F6F",              "dark": "#C0CDD8" },
+
+    "chart/chart-1":                { "css": "--chart-1",              "tailwind": "chart-1",              "light": "#4299E0",              "dark": "#4299E0" },
+    "chart/chart-2":                { "css": "--chart-2",              "tailwind": "chart-2",              "light": "#3BA65E",              "dark": "#3BA65E" },
+    "chart/chart-3":                { "css": "--chart-3",              "tailwind": "chart-3",              "light": "#DE7921",              "dark": "#DE7921" },
+    "chart/chart-4":                { "css": "--chart-4",              "tailwind": "chart-4",              "light": "#8A63BF",              "dark": "#8A63BF" },
+    "chart/chart-5":                { "css": "--chart-5",              "tailwind": "chart-5",              "light": "#C83243",              "dark": "#C83243" },
+
+    "surface/info":                 { "css": "--surface-info",         "tailwind": "surface-info",         "light": "#F0F8FF",              "dark": "rgba(66,153,224,0.16)",  "note": "Alert info background" },
+    "surface/success":              { "css": "--surface-success",      "tailwind": "surface-success",      "light": "#F3FCF6",              "dark": "rgba(39,124,67,0.16)",   "note": "Alert success background" },
+    "surface/warning":              { "css": "--surface-warning",      "tailwind": "surface-warning",      "light": "#FFF9EB",              "dark": "rgba(190,80,30,0.16)",   "note": "Alert warning background" },
+    "surface/danger":               { "css": "--surface-danger",       "tailwind": "surface-danger",       "light": "#FFF5F7",              "dark": "rgba(200,45,76,0.16)",   "note": "Alert danger background" },
+
+    "utility/overlay":              { "css": "--overlay",              "tailwind": "overlay",              "light": "rgba(0,0,0,0.26)",     "dark": "rgba(0,0,0,0.45)" },
+    "utility/skeleton":             { "css": "--skeleton",             "tailwind": "skeleton",             "light": "rgba(162,162,162,0.16)","dark": "rgba(144,164,181,0.16)" },
+    "utility/code-background":      { "css": "--code-background",      "tailwind": "code-background",      "light": "rgba(82,82,82,0.08)",  "dark": "#37444F" },
+
+    "brand/ai-gradient-start":      { "css": "--ai-gradient-start",    "tailwind": "ai-gradient-start",    "light": "#4299E0",              "dark": "#4299E0" },
+    "brand/ai-gradient-mid":        { "css": "--ai-gradient-mid",      "tailwind": "ai-gradient-mid",      "light": "#CA42E0",              "dark": "#CA42E0" },
+    "brand/ai-gradient-end":        { "css": "--ai-gradient-end",      "tailwind": "ai-gradient-end",      "light": "#FF5F46",              "dark": "#FF5F46" }
+  },
+
+  "interactiveStates": {
+    "nonFilled": {
+      "default":  { "bg": "transparent",    "border": "border/input",        "text": "text/foreground",            "shadow": "shadow/shadow-xs" },
+      "hover":    { "bg": "action/hover",    "border": "action/primary",      "text": "varies",                     "shadow": "shadow/shadow-xs" },
+      "press":    { "bg": "action/press",    "border": "action/primary-press","text": "varies",                     "shadow": "shadow/shadow-xs" },
+      "focus":    { "bg": null,              "border": "action/ring",         "borderWidth": 2,                     "text": "unchanged",          "shadow": "varies" },
+      "disabled": { "bg": null,              "border": "action/disabled",     "text": "action/disabled-foreground", "shadow": "none" }
+    },
+    "filled": {
+      "default":  { "bg": "action/{color}",         "text": "action/{color}-foreground", "shadow": "shadow/shadow-xs" },
+      "hover":    { "bg": "action/{color}-hover",    "text": "unchanged",                 "shadow": "shadow/shadow-xs" },
+      "press":    { "bg": "action/{color}-press",    "text": "unchanged",                 "shadow": "shadow/shadow-xs" },
+      "focus":    { "bg": "unchanged",                "text": "unchanged",                 "shadow": "shadow/shadow-focus" },
+      "disabled": { "bg": "action/disabled",          "text": "action/disabled-foreground", "shadow": "none" }
+    }
+  },
+
+  "focusRing": {
+    "textInputs":       { "border": "action/ring", "borderWidth": 1, "tailwind": "focus-visible:border-ring", "applies": ["Input", "Textarea", "Select", "Combobox", "TypeaheadCombobox"], "note": "1px border per Figma — shadow-focus effect exists but has spread=0 (invisible)" },
+    "filledControls":   { "shadow": "shadow/shadow-focus", "tailwind": "focus-visible:shadow-focus", "applies": ["Button (filled)", "Checkbox", "Radio", "Switch"] },
+    "outlineButtons":   { "border": "action/ring", "borderWidth": 2, "tailwind": "focus-visible:border-2 focus-visible:border-ring", "applies": ["Button (outline/ghost/link/danger)"] },
+    "dangerVariant":    { "border": "action/ring", "note": "Always blue, NOT action/destructive — consistent system-wide for accessibility" }
+  },
+
+  "validation": {
+    "_note": "Validation states use 1px colored border only — no outer ring shadow. Same shadow-xs as default state.",
+    "error":   { "border": "action/destructive", "borderWidth": 1, "shadow": "unchanged (shadow-xs)" },
+    "warning": { "border": "action/warning",     "borderWidth": 1, "shadow": "unchanged (shadow-xs)" },
+    "success": { "border": "action/success",     "borderWidth": 1, "shadow": "unchanged (shadow-xs)" }
+  },
+
+  "alertSurfaces": {
+    "_note": "Alert/feedback backgrounds use solid primitives (light) or opacity (dark). Decided 2026-04-11.",
+    "info":    { "bg": "surface/info",    "border": "border/border",       "text": "text/foreground",      "icon": "text/muted-foreground" },
+    "warning": { "bg": "surface/warning", "border": "action/warning",      "text": "action/warning",       "icon": "text-current" },
+    "success": { "bg": "surface/success", "border": "action/success",      "text": "action/success",       "icon": "text-current" },
+    "danger":  { "bg": "surface/danger",  "border": "action/destructive",  "text": "action/destructive",   "icon": "text-current" }
+  },
+
+  "componentCoverage": {
+    "_note": "Updated 2026-04-14. Tracks components with Figma + Code Connect.",
+    "figmaAndCC": [
+      "Button", "IconButton", "SplitButton", "ToggleButton", "SegmentControl",
+      "Input", "InputGroup", "Textarea", "Select", "Combobox", "TypeaheadCombobox",
+      "Checkbox", "CheckboxLabel", "CheckboxGroup",
+      "Radio", "RadioLabel", "RadioGroup", "RadioTile",
+      "Switch", "SwitchLabel", "Slider",
+      "Label", "FormInput",
+      "DropdownMenu", "Dialog", "AlertDialog", "Toast", "Alert",
+      "Popover", "Tooltip", "HoverCard", "Drawer",
+      "Tabs", "Card", "Avatar", "Badge", "Tag", "Table",
+      "Skeleton", "Spinner", "Progress", "Status",
+      "Accordion", "Empty", "Breadcrumb", "Pagination",
+      "EditorTabs", "Navbar", "KeyValuePair",
+      "AspectRatio", "Separator"
+    ],
+    "compositionsPlanned": ["Tree", "Header", "Stepper", "DatePicker"],
+    "notBuilt": ["Banner", "CodeBlock"],
+    "excluded": {
+      "NavigationMenu": "Zero production usage — 2026-04-12",
+      "ContextMenu": "Maps to DropdownMenu — 2026-04-12",
+      "Command": "No DuBois equivalent — 2026-04-04",
+      "Sheet": "Maps to Drawer — 2026-04-14"
+    }
+  },
+
+  "componentSpecs": {
+    "_note": "Per-component structural specs. Captures slots, layout, composition — not just tokens. Source: Figma get_design_context + screenshot comparison.",
+
+    "Alert": {
+      "layout": "flex row",
+      "container": { "gap": "gap-2", "padding": "p-3", "radius": "rounded-md", "border": "1px solid" },
+      "slots": {
+        "icon":        { "required": true, "element": "AlertIcon", "size": "size-4", "alignment": "py-0.5", "content": "DangerFill | WarningFill | InfoFill | CheckCircleFill per variant" },
+        "content":     { "required": true, "element": "AlertContent", "layout": "flex col gap-1", "sizing": "flex-1 min-w-0" },
+        "title":       { "required": true, "element": "AlertTitle", "inside": "content", "style": "Bold (13/20 Semibold)", "color": "per variant: destructive | warning | foreground | success" },
+        "description": { "required": true, "element": "AlertDescription", "inside": "content", "style": "Paragraph (13/20 Regular)", "color": "text-foreground (always)" },
+        "action":      { "required": false, "element": "AlertAction", "position": { "inline": "beside content (Button sm outline)", "stacked": "inside content, below description (Button default outline)" } },
+        "close":       { "required": false, "element": "AlertClose", "size": "size-6", "icon": "CloseSmall 16px" }
+      },
+      "variants": {
+        "info":    { "bg": "bg-muted", "border": "border-border", "titleColor": "text-foreground", "iconColor": "text-muted-foreground" },
+        "warning": { "bg": "bg-surface-warning", "border": "border-warning", "titleColor": "text-warning", "iconColor": "text-current" },
+        "success": { "bg": "bg-surface-success", "border": "border-success", "titleColor": "text-success", "iconColor": "text-current" },
+        "danger":  { "bg": "bg-surface-danger", "border": "border-destructive", "titleColor": "text-destructive", "iconColor": "text-current" }
+      },
+      "structureVerified": "2026-04-14"
+    },
+
+    "Dialog": {
+      "layout": "grid, gap-4",
+      "container": { "padding": "p-4", "radius": "rounded-md", "border": "border-border", "shadow": "shadow-lg", "bg": "bg-background" },
+      "slots": {
+        "overlay":     { "required": true, "element": "DialogOverlay", "bg": "bg-overlay" },
+        "header":      { "required": true, "element": "DialogHeader", "layout": "flex col gap-1" },
+        "title":       { "required": true, "element": "DialogTitle", "inside": "header", "style": "Title 2 (22/28 Semibold)" },
+        "description": { "required": false, "element": "DialogDescription", "inside": "header", "style": "Paragraph, text-muted-foreground" },
+        "content":     { "required": true, "note": "Direct children of DialogContent" },
+        "footer":      { "required": false, "element": "DialogFooter", "layout": "flex row justify-end gap-2" },
+        "close":       { "required": false, "element": "DialogClose", "position": "absolute top-2 right-2", "icon": "X (ghost icon button)" }
+      },
+      "structureVerified": "2026-04-14"
+    },
+
+    "RadioTile": {
+      "layout": "flex col gap-1",
+      "container": { "padding": "p-4", "radius": "rounded-sm", "border": "border-input", "shadow": "shadow-xs" },
+      "slots": {
+        "header":      { "required": true, "element": "RadioTileHeader", "layout": "flex row items-center gap-2" },
+        "icon":        { "required": false, "inside": "header", "size": "size-4" },
+        "title":       { "required": true, "element": "RadioTileTitle", "inside": "header", "style": "Bold (13/20 Semibold)" },
+        "indicator":   { "required": true, "inside": "header", "position": "ml-auto", "note": "Always visible — border circle, dot appears on check" },
+        "description": { "required": false, "element": "RadioTileDescription", "style": "Hint (12/16), text-muted-foreground" }
+      },
+      "states": {
+        "default":  { "border": "border-input" },
+        "hover":    { "border": "border-primary-hover" },
+        "selected": { "border": "border-primary", "shadow": "none" },
+        "focus":    { "border": "border-ring", "ring": "ring-3 ring-ring/50" },
+        "disabled": { "border": "border-disabled", "opacity": "0.5" }
+      },
+      "structureVerified": "2026-04-14"
+    },
+
+    "Empty": {
+      "layout": "flex col items-center text-center gap-2",
+      "slots": {
+        "media":       { "required": false, "element": "EmptyMedia", "note": "Icon or illustration" },
+        "title":       { "required": true, "element": "EmptyTitle", "style": "Bold (13/20 Semibold)" },
+        "description": { "required": false, "element": "EmptyDescription", "style": "Paragraph, text-muted-foreground" },
+        "content":     { "required": false, "element": "EmptyContent", "note": "Action buttons" }
+      },
+      "structureVerified": "2026-04-14"
+    },
+
+    "Card": {
+      "layout": "flex col gap-4",
+      "container": { "padding": "py-4", "radius": "rounded-xl", "border": "ring-1 ring-foreground/10", "bg": "bg-background" },
+      "slots": {
+        "header":      { "required": false, "element": "CardHeader", "layout": "flex col gap-1 px-4" },
+        "title":       { "required": false, "element": "CardTitle", "inside": "header", "style": "Bold (13/20 Semibold)" },
+        "description": { "required": false, "element": "CardDescription", "inside": "header", "style": "Paragraph, text-muted-foreground" },
+        "content":     { "required": true, "element": "CardContent", "padding": "px-4" },
+        "footer":      { "required": false, "element": "CardFooter", "padding": "px-4" }
+      },
+      "types": ["post", "asset-preview", "source", "asset-result"],
+      "structureVerified": "2026-04-14"
+    },
+
+    "EditorTabs": {
+      "layout": "flex row, bg-muted, border-b border-border",
+      "slots": {
+        "tab":       { "element": "EditorTab", "layout": "flex row items-center gap-2 h-8 px-2", "props": ["active", "closable", "onClose"] },
+        "tabIcon":   { "inside": "tab", "note": "File type icon via children" },
+        "tabLabel":  { "inside": "tab", "note": "File name via children" },
+        "tabClose":  { "inside": "tab", "note": "× button, visible on hover or when active" },
+        "addButton": { "element": "EditorTabAddButton", "note": "+ button at end" }
+      },
+      "structureVerified": "2026-04-14"
+    },
+
+    "Tag": {
+      "layout": "inline-flex items-center gap-1",
+      "container": { "bg": "bg-muted", "radius": "rounded-sm", "padding": "px-1 py-0" },
+      "slots": {
+        "icon":    { "required": false, "element": "TagIcon", "size": "size-3 (12px)" },
+        "label":   { "required": true, "element": "TagLabel", "style": "Paragraph, text-foreground" },
+        "divider": { "required": false, "note": "Auto-inserted before TagValue" },
+        "value":   { "required": false, "element": "TagValue", "style": "Paragraph, text-muted-foreground" },
+        "remove":  { "required": false, "element": "TagRemove", "size": "size-4", "icon": "×" }
+      },
+      "structureVerified": "2026-04-14"
+    },
+
+    "Navbar": {
+      "layout": "flex col gap-4, w-[180px] px-2",
+      "slots": {
+        "newButton": { "element": "NavbarNewButton", "style": "shadow-md rounded-lg, semibold" },
+        "section":   { "element": "NavbarSection", "layout": "flex col gap-0" },
+        "sectionHeader": { "element": "NavbarSectionHeader", "style": "Hint (12/16), text-muted-foreground" },
+        "item":      { "element": "NavbarItem", "layout": "flex row h-7 gap-2 px-2 rounded-sm", "props": ["active"] }
+      },
+      "structureVerified": "2026-04-14"
+    }
+  }
+}

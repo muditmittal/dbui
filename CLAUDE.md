@@ -1,4 +1,4 @@
-# DBUI Design System — Agent Rules
+y# DBUI Design System — Agent Rules
 
 > These rules govern all AI-assisted work in this repo, especially Figma MCP integration.
 > Read `research/DESIGN-SYSTEM-DECISIONS.md` for full rationale behind each decision.
@@ -15,14 +15,18 @@ DBUI is a shadcn-based component library reskinned with Databricks DuBois design
 
 ## 1. Component Organization
 
-- **Source of truth (code):** `apps/portal/src/components/ui/` — the DuBois-reskinned components
-- **DBUI kit:** `apps/dbui/src/components/ui/` — shadcn-closer versions (less customized)
-- **Icons:** `apps/dbui/src/components/icons/` — 453 React icon components, one per file
-- **Variant utilities:** `apps/portal/src/lib/button-variants.ts` (CVA definitions)
-- **Code Connect:** `apps/portal/src/figma/*.figma.js` — maps Figma components to code
+- **Source of truth (code):** `packages/dbui/src/components/ui/` — the DuBois-reskinned components
+- **Icons:** `packages/dbui/src/components/icons/` — 451 React icon components, one per file
+- **Variant utilities:** `packages/dbui/src/lib/button-variants.ts` (CVA definitions)
+- **Tokens:** `packages/dbui/src/tokens/globals.css` — CSS custom properties
+- **Code Connect:** `packages/dbui/src/figma/*.figma.js` — maps Figma components to code
+- **LLM context:** `packages/dbui/llms.txt` — single-file reference for AI tools
+- **Registry:** `apps/portal/src/app/r/` — dynamic shadcn registry API (serves live source)
+- **Portal:** `apps/portal/` — preview/inspection tool (imports from dbui package)
+- **Legacy kit:** `apps/dbui/` — original shadcn base (superseded by packages/dbui)
 - **Config:** `figma.config.json` at repo root
 
-IMPORTANT: When implementing Figma designs, use components from `apps/portal/src/components/ui/`. This is the authoritative DuBois-reskinned set.
+IMPORTANT: When implementing Figma designs, use components from `packages/dbui/src/components/ui/`. This is the authoritative DuBois-reskinned set.
 
 ---
 
@@ -63,9 +67,10 @@ Effects (shadow xs–xl)
 
 ### CSS Token Reference
 ```css
-/* Light mode values — see globals.css for full list */
+/* Light mode values — see packages/dbui/src/tokens/globals.css for full list */
 --primary: #2272B4;          /* Databricks blue */
 --primary-foreground: #FFFFFF;
+--accent: #D7EDFE;           /* blue200 — selected/active backgrounds */
 --destructive: #C82D4C;
 --warning: #BE501E;
 --success: #277C43;
@@ -76,6 +81,8 @@ Effects (shadow xs–xl)
 --ring: #2272B4;
 --hover: rgba(34, 114, 180, 0.08);
 --press: rgba(34, 114, 180, 0.16);
+--overlay: rgba(64, 63, 63, 0.72);
+--ai-gradient: linear-gradient(90deg, #4299E0 24%, #CA42E0 47%, #FF5F46 76%);
 ```
 
 ---
@@ -93,8 +100,9 @@ Effects (shadow xs–xl)
 ## 4. Component Styling Patterns
 
 ### Radius
-- Buttons, inputs, selects: `rounded-sm` (4px) — mapped via `--radius-sm`
-- Cards, dialogs, popovers: `rounded-lg` (8px) — mapped via `--radius-md`
+- Buttons, inputs, selects, menu items: `rounded-sm` (4px) — mapped via `--radius-sm`
+- Dialogs, popups, dropdowns, alerts: `rounded-md` (8px) — mapped via `--radius-md`
+- Cards: `rounded-xl` (16px) — mapped via `--radius-xl`
 - Badges, pills: `rounded-full` (999px)
 
 ### Shadows
@@ -105,36 +113,31 @@ Effects (shadow xs–xl)
 
 ### Interactive States (non-filled variants)
 - Hover background: `bg-hover` (primary@8% opacity)
-- Hover border: `border-primary-hover` on form controls
+- Hover border: `border-primary` on form controls
 - Press background: `bg-press` (primary@16% opacity)
-- Focus: `border-ring` + `ring-3 ring-ring/50` (non-filled), `shadow-focus` (filled)
-- Disabled: `opacity-50` + `pointer-events-none` OR per-variant (`bg-disabled text-disabled-foreground`)
+- Disabled: `bg-disabled text-disabled-foreground pointer-events-none shadow-none`
 
 ### Interactive States (filled variants — Primary, Destructive)
 - Hover: `bg-primary-hover` / `bg-destructive-hover` (explicit darker token)
 - Press: `bg-primary-press` / `bg-destructive-press`
-- Focus: `shadow-focus` (white gap + blue ring)
 
-### Danger Variant Focus (design decision 2026-04-03)
-- Danger Focus uses `border-ring` (blue) NOT `border-destructive` (red)
+### Focus Rules (verified against Figma 2026-04-14)
+- Text inputs (Input, Textarea, Select, Combobox): `focus-visible:border-ring` (1px, NO border-2, NO shadow-focus)
+- Filled buttons (Primary, Destructive): `focus-visible:shadow-focus` (outer ring)
+- Non-filled buttons (Outline, Ghost, Link, Danger): `focus-visible:border-2 focus-visible:border-ring`
+- Checkbox, Radio, Switch: `focus-visible:shadow-focus` (outer ring always)
+- Danger variant focus: uses `border-ring` (blue) NOT `border-destructive` (red)
+
+### Validation States (verified against Figma 2026-04-14)
+- Error: `border-destructive` (1px border only, NO outer ring shadow)
+- Warning: `border-warning` (1px border only)
+- Success: `border-success` (1px border only)
 - Rationale: focus ring should be consistent system-wide for accessibility — always blue `--ring` color
 - This matches how Outline Focus uses blue ring regardless of variant
 
 ---
 
 ## 5. Figma MCP Integration Rules
-
-### Figma Tool Selection Rule (MANDATORY — no exceptions)
-
-**Reading/inspecting Figma** (getting node properties, checking variables, auditing structure):
-→ Use `use_figma` directly. This is the correct tool for reads.
-
-**Writing to Figma** (creating components, updating variants, building tokens, setting up theming, binding variables, modifying layouts, any canvas mutation):
-→ MUST invoke `/figma-generate-library` or `/figma-generate-design` skill FIRST. NEVER use raw `use_figma` for write operations without loading the appropriate skill.
-
-The only exception for raw `use_figma` writes: targeted single-property fixes (e.g., renaming a variant, binding one variable, adjusting a shadow) where the skill would be overkill.
-
-**If you catch yourself about to call `use_figma` with code that creates or modifies nodes — STOP and load the skill first.**
 
 ### Required Flow for Implementing Figma Designs
 1. Run `get_design_context` for the target node(s)
@@ -166,8 +169,8 @@ The only exception for raw `use_figma` writes: targeted single-property fixes (e
 | "Danger" variant | `variant="danger"` | Bordered red; distinct from filled `destructive` |
 | Size "Default" | `size="md"` | 32px height |
 | Size "Small" | `size="sm"` | 24px height |
-| `primary-active` (Figma) | `--primary-press` (CSS) | Same value, different name |
-| `destructive-active` (Figma) | `--destructive-press` (CSS) | Same value, different name |
+| `primary-press` | `--primary-press` | Standardized — Figma renamed from `primary-active` to `primary-press` (2026-04-10) |
+| `destructive-press` | `--destructive-press` | Standardized — Figma renamed from `destructive-active` to `destructive-press` (2026-04-10) |
 
 ---
 
@@ -175,11 +178,9 @@ The only exception for raw `use_figma` writes: targeted single-property fixes (e
 
 When creating or updating Figma components via `use_figma`:
 
-### NEVER USE RAW `use_figma` FOR WRITE OPERATIONS:
-- For ANY Figma write (create, update, delete, layout, bind) → invoke `/figma-generate-library` or `/figma-generate-design` skill FIRST
-- For Figma reads (inspect, audit, get properties) → `use_figma` is correct
-- Only exception: single-property targeted fixes (rename, bind one variable, adjust one shadow)
-- If you are writing a `use_figma` script that calls `create`, `clone`, `appendChild`, `resize`, or sets fills/strokes/effects on multiple nodes — you MUST use the skill instead
+### PREFER SKILLS OVER RAW API:
+- IMPORTANT: When building or updating Figma components, prefer invoking `/figma-generate-library` or `/figma-generate-design` skills over raw `use_figma` calls. These skills produce production-grade components with proper layout, variable bindings, and designer-friendly structure.
+- Only use raw `use_figma` for targeted fixes (e.g., adding a shadow, renaming variants, binding a variable) — NOT for creating full components from scratch.
 
 ### ZERO HARDCODED VALUES (mandatory for every component):
 - IMPORTANT: Every visual property must be bound to a Figma variable or style. No hardcoded hex, pixel values, or raw font settings anywhere.
@@ -276,7 +277,7 @@ When creating or updating Figma components via `use_figma`:
 
 ### DON'T:
 - Don't overlap existing content — position new nodes away from (0,0)
-- Don't modify existing Button, IconButton, SplitButton, ToggleButton, SegmentControl, Input, Textarea, Checkbox, Radio, Switch, Select, Combobox, .DropdownMenuItem, .SelectItem, .ComboboxItem, DropdownMenu, SelectDropdown, or Icon components — these are finalized (except for layout/label fixes)
+- Don't modify existing Button, IconButton, SplitButton, ToggleButton, SegmentControl, or Icon components — these are finalized (except for layout/label fixes)
 - Don't create new tokens — reuse existing 162 tokens via opacity composition
 - Don't use `figma.notify()` — it throws "not implemented"
 - Don't leave new variants at random positions — always reflow the grid
@@ -345,7 +346,7 @@ Code Connect files live in `apps/portal/src/figma/*.figma.js` and follow this pa
 - `findInstance()` / `findText()` for nested content extraction
 - Template export with `example`, `imports`, `id`, `metadata`
 
-**Connected components (17 + Icons):** Button, IconButton, SplitButton, ToggleButton, SegmentControl, Input, Textarea, Checkbox, Radio, Switch, Select, Combobox, .DropdownMenuItem, .SelectItem, .ComboboxItem, DropdownMenu, SelectDropdown, 600+ Icons
+**Connected components:** Button, IconButton, SplitButton, ToggleButton, SegmentControl, 600+ Icons
 **Config:** `figma.config.json` at repo root — includes `apps/portal/src/figma/*.figma.js`
 
 ---

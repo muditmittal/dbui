@@ -1,51 +1,51 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import { buttonVariants } from "@/lib/button-variants"
-import { cn } from "@/lib/utils"
-import { SplitButton } from "@/components/ui/split-button"
-import { Calendar } from "@/components/ui/calendar"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Empty } from "@/components/ui/empty"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
-import { Input } from "@/components/ui/input"
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
-import { Kbd } from "@/components/ui/kbd"
-import { Label } from "@/components/ui/label"
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar"
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
-import { NativeSelect } from "@/components/ui/native-select"
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Progress } from "@/components/ui/progress"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Slider } from "@/components/ui/slider"
-import { Spinner } from "@/components/ui/spinner"
-import { Switch } from "@/components/ui/switch"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Toggle } from "@/components/ui/toggle"
-import { SegmentControl, SegmentControlItem } from "@/components/ui/segment-control"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "dbui/components/ui/accordion"
+import { Alert, AlertDescription, AlertTitle } from "dbui/components/ui/alert"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "dbui/components/ui/alert-dialog"
+import { AspectRatio } from "dbui/components/ui/aspect-ratio"
+import { Avatar, AvatarFallback, AvatarImage } from "dbui/components/ui/avatar"
+import { Badge } from "dbui/components/ui/badge"
+import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "dbui/components/ui/breadcrumb"
+import { Button } from "dbui/components/ui/button"
+import { buttonVariants } from "dbui/lib/button-variants"
+import { cn } from "dbui/lib/utils"
+import { SplitButton } from "dbui/components/ui/split-button"
+import { Calendar } from "dbui/components/ui/calendar"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "dbui/components/ui/card"
+import { Checkbox } from "dbui/components/ui/checkbox"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "dbui/components/ui/collapsible"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "dbui/components/ui/command"
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "dbui/components/ui/context-menu"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "dbui/components/ui/dialog"
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "dbui/components/ui/drawer"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "dbui/components/ui/dropdown-menu"
+import { Empty } from "dbui/components/ui/empty"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "dbui/components/ui/hover-card"
+import { Input } from "dbui/components/ui/input"
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "dbui/components/ui/input-otp"
+import { Kbd } from "dbui/components/ui/kbd"
+import { Label } from "dbui/components/ui/label"
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "dbui/components/ui/menubar"
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "dbui/components/ui/navigation-menu"
+import { NativeSelect } from "dbui/components/ui/native-select"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "dbui/components/ui/pagination"
+import { Popover, PopoverContent, PopoverTrigger } from "dbui/components/ui/popover"
+import { Progress } from "dbui/components/ui/progress"
+import { RadioGroup, RadioGroupItem } from "dbui/components/ui/radio-group"
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "dbui/components/ui/resizable"
+import { ScrollArea } from "dbui/components/ui/scroll-area"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "dbui/components/ui/select"
+import { Separator } from "dbui/components/ui/separator"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "dbui/components/ui/sheet"
+import { Skeleton } from "dbui/components/ui/skeleton"
+import { Slider } from "dbui/components/ui/slider"
+import { Spinner } from "dbui/components/ui/spinner"
+import { Switch } from "dbui/components/ui/switch"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "dbui/components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
+import { Textarea } from "dbui/components/ui/textarea"
+import { Toggle } from "dbui/components/ui/toggle"
+import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
+import { Tooltip, TooltipContent, TooltipTrigger } from "dbui/components/ui/tooltip"
 
 export type ComponentEntry = {
   name: string
@@ -247,16 +247,16 @@ export const components: ComponentEntry[] = [
     preview: (
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
-          <Checkbox id="cb1" defaultChecked />
-          <Label htmlFor="cb1">Checked</Label>
-        </div>
-        <div className="flex items-center gap-2">
           <Checkbox id="cb2" />
           <Label htmlFor="cb2">Unchecked</Label>
         </div>
         <div className="flex items-center gap-2">
-          <Checkbox id="cb3" disabled />
-          <Label htmlFor="cb3" className="text-muted-foreground">Disabled</Label>
+          <Checkbox id="cb1" defaultChecked />
+          <Label htmlFor="cb1">Checked</Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox id="cb3" indeterminate />
+          <Label htmlFor="cb3">Indeterminate</Label>
         </div>
       </div>
     ),
@@ -445,8 +445,8 @@ export const components: ComponentEntry[] = [
     installCommand: "npx shadcn add input",
     preview: (
       <div className="flex flex-col gap-3 w-full max-w-sm">
-        <Input placeholder="Default input" />
-        <Input placeholder="Disabled input" disabled />
+        <Input placeholder="Default (32px)" />
+        <Input placeholder="Small (24px)" size="sm" />
       </div>
     ),
   },

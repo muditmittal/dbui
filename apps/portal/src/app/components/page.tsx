@@ -3,32 +3,32 @@
 import { useState } from "react"
 import { useTheme } from "@/components/theme-provider"
 import { SyntaxHighlightedCode } from "@/components/syntax-highlighted-code"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Switch } from "@/components/ui/switch"
-import { Toggle } from "@/components/ui/toggle"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "@/components/ui/combobox"
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover"
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@/components/ui/drawer"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
-import { SplitButton, SplitButtonSeparator } from "@/components/ui/split-button"
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { Toaster } from "@/components/ui/sonner"
-import { SegmentControl, SegmentControlItem } from "@/components/ui/segment-control"
-import { Tabs as TabsComponent, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Slider } from "@/components/ui/slider"
-import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "@/components/ui/radio-tile"
+import { Button } from "dbui/components/ui/button"
+import { Input } from "dbui/components/ui/input"
+import { Checkbox } from "dbui/components/ui/checkbox"
+import { RadioGroup, RadioGroupItem } from "dbui/components/ui/radio-group"
+import { Switch } from "dbui/components/ui/switch"
+import { Toggle } from "dbui/components/ui/toggle"
+import { Label } from "dbui/components/ui/label"
+import { Textarea } from "dbui/components/ui/textarea"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "dbui/components/ui/select"
+import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty, ComboboxChips, ComboboxChip, ComboboxChipsInput } from "dbui/components/ui/combobox"
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "dbui/components/ui/tooltip"
+import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "dbui/components/ui/popover"
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "dbui/components/ui/hover-card"
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "dbui/components/ui/drawer"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuCheckboxItem } from "dbui/components/ui/dropdown-menu"
+import { SplitButton, SplitButtonSeparator } from "dbui/components/ui/split-button"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "dbui/components/ui/dialog"
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "dbui/components/ui/alert-dialog"
+import { Alert, AlertTitle, AlertDescription } from "dbui/components/ui/alert"
+import { Toaster } from "dbui/components/ui/sonner"
+import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
+import { Tabs as TabsComponent, TabsList, TabsTrigger, TabsContent } from "dbui/components/ui/tabs"
+import { Slider } from "dbui/components/ui/slider"
+import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "dbui/components/ui/radio-tile"
 import { toast } from "sonner"
-import { Spinner } from "@/components/ui/spinner"
+import { Spinner } from "dbui/components/ui/spinner"
 import { ChevronRight, Plus } from "lucide-react"
 
 const MONO = "'Fira Code', monospace"
@@ -1726,14 +1726,6 @@ export default function ComponentsPage() {
                       <Input size="sm" placeholder="Small (24px)" className="w-[200px]" />
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 w-full min-w-0">
-                    <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>States</span>
-                    <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
-                      <Input placeholder="Default" className="w-[140px]" />
-                      <Input disabled placeholder="Disabled" className="w-[140px]" />
-                      <Input aria-invalid placeholder="Danger" className="w-[140px]" />
-                    </div>
-                  </div>
                 </div>
               </Section>
 
@@ -2358,7 +2350,7 @@ export default function ComponentsPage() {
               <Section
                 id="tabs"
                 title="Tabs"
-                code={`import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+                code={`import { Tabs, TabsList, TabsTrigger, TabsContent } from "dbui/components/ui/tabs"
 
 <Tabs defaultValue="tab-1">
   <TabsList>
@@ -2405,7 +2397,7 @@ export default function ComponentsPage() {
               <Section
                 id="slider"
                 title="Slider"
-                code={`import { Slider } from "@/components/ui/slider"
+                code={`import { Slider } from "dbui/components/ui/slider"
 
 <Slider defaultValue={[50]} min={0} max={100} />
 <Slider defaultValue={[25, 75]} min={0} max={100} />`}
@@ -2430,7 +2422,7 @@ export default function ComponentsPage() {
               <Section
                 id="radio-tile"
                 title="Radio Tile"
-                code={`import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "@/components/ui/radio-tile"
+                code={`import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "dbui/components/ui/radio-tile"
 
 <RadioTileGroup defaultValue="option-1">
   <RadioTile value="option-1">
