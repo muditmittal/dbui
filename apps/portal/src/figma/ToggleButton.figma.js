@@ -7,9 +7,9 @@ const instance = figma.selectedInstance
 // ─── Variant ───
 const variant = instance.getEnum('Variant', {
   'Default': 'default',
-  'Outline': 'outline',
-  'Button': 'button',
+  'Filter': 'filter',
   'Icon': 'icon',
+  'Pill': 'pill',
 })
 
 // ─── Size ───

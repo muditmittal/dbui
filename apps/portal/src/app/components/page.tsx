@@ -21,7 +21,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { SplitButton, SplitButtonSeparator } from "dbui/components/ui/split-button"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "dbui/components/ui/dialog"
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "dbui/components/ui/alert-dialog"
-import { Alert, AlertTitle, AlertDescription } from "dbui/components/ui/alert"
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertAction, AlertClose } from "dbui/components/ui/alert"
 import { Toaster } from "dbui/components/ui/sonner"
 import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
 import { Tabs as TabsComponent, TabsList, TabsTrigger, TabsContent } from "dbui/components/ui/tabs"
@@ -2711,34 +2711,55 @@ export default function ComponentsPage() {
               <Section
                 id="alert"
                 title="Alert"
-                code={`<Alert variant="info">
-  <AlertTitle>Note</AlertTitle>
-  <AlertDescription>This is an info alert.</AlertDescription>
-</Alert>
-
-<Alert variant="warning">...</Alert>
-<Alert variant="destructive">...</Alert>
-<Alert variant="success">...</Alert>`}
+                code={`<Alert variant="warning">
+  <AlertIcon><WarningFillIcon /></AlertIcon>
+  <AlertContent>
+    <AlertTitle>Warning</AlertTitle>
+    <AlertDescription>This action may have consequences.</AlertDescription>
+  </AlertContent>
+  <AlertAction><Button variant="outline" size="sm">Label</Button></AlertAction>
+  <AlertClose />
+</Alert>`}
               >
                 <div className="flex flex-col gap-4 w-full">
                   <div className="flex items-center gap-4 w-full min-w-0">
                     <span className="w-[7.5rem] shrink-0 text-right text-[12px] font-medium leading-none" style={{ fontFamily: MONO, color: t.textSubtle }}>4 Variants</span>
                     <div className="flex flex-col gap-3 flex-1 min-w-0">
-                      <Alert variant="info">
-                        <AlertTitle>Info</AlertTitle>
-                        <AlertDescription>This is an informational alert.</AlertDescription>
+                      <Alert variant="danger">
+                        <AlertIcon><svg className="size-4" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg></AlertIcon>
+                        <AlertContent>
+                          <AlertTitle>Error</AlertTitle>
+                          <AlertDescription>Something went wrong.</AlertDescription>
+                        </AlertContent>
+                        <AlertAction><Button variant="outline" size="sm">Label</Button></AlertAction>
+                        <AlertClose />
                       </Alert>
                       <Alert variant="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                        <AlertDescription>This action may have consequences.</AlertDescription>
+                        <AlertIcon><svg className="size-4" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L15 14H1L8 1Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><circle cx="8" cy="11" r="0.75"/><rect x="7.25" y="6" width="1.5" height="3.5" rx="0.75"/></svg></AlertIcon>
+                        <AlertContent>
+                          <AlertTitle>Warning</AlertTitle>
+                          <AlertDescription>This action may have consequences.</AlertDescription>
+                        </AlertContent>
+                        <AlertAction><Button variant="outline" size="sm">Label</Button></AlertAction>
+                        <AlertClose />
                       </Alert>
-                      <Alert variant="destructive">
-                        <AlertTitle>Error</AlertTitle>
-                        <AlertDescription>Something went wrong.</AlertDescription>
+                      <Alert variant="info">
+                        <AlertIcon><svg className="size-4" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="5" r="1"/><rect x="7.25" y="7" width="1.5" height="4" rx="0.75"/></svg></AlertIcon>
+                        <AlertContent>
+                          <AlertTitle>Info</AlertTitle>
+                          <AlertDescription>This is an informational alert.</AlertDescription>
+                        </AlertContent>
+                        <AlertAction><Button variant="outline" size="sm">Label</Button></AlertAction>
+                        <AlertClose />
                       </Alert>
                       <Alert variant="success">
-                        <AlertTitle>Success</AlertTitle>
-                        <AlertDescription>Operation completed successfully.</AlertDescription>
+                        <AlertIcon><svg className="size-4" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg></AlertIcon>
+                        <AlertContent>
+                          <AlertTitle>Success</AlertTitle>
+                          <AlertDescription>Operation completed successfully.</AlertDescription>
+                        </AlertContent>
+                        <AlertAction><Button variant="outline" size="sm">Label</Button></AlertAction>
+                        <AlertClose />
                       </Alert>
                     </div>
                   </div>

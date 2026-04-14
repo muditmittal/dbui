@@ -6,7 +6,7 @@ const instance = figma.selectedInstance
 
 // ─── Variant ───
 const variant = instance.getEnum('Variant', {
-  'Default': 'default',
+  'Slider': 'default',
   'Outline': 'outline',
 })
 

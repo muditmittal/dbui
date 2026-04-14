@@ -1,5 +1,5 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "dbui/components/ui/accordion"
-import { Alert, AlertDescription, AlertTitle } from "dbui/components/ui/alert"
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertAction, AlertClose } from "dbui/components/ui/alert"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "dbui/components/ui/alert-dialog"
 import { AspectRatio } from "dbui/components/ui/aspect-ratio"
 import { Avatar, AvatarFallback, AvatarImage } from "dbui/components/ui/avatar"
@@ -82,17 +82,37 @@ export const components: ComponentEntry[] = [
   {
     name: "Alert",
     slug: "alert",
-    description: "Displays a callout for user attention.",
+    description: "Callout for important messages — info, warning, success, danger.",
     installCommand: "npx shadcn add alert",
     preview: (
-      <div className="flex flex-col gap-4 w-full max-w-sm">
-        <Alert>
-          <AlertTitle>Default</AlertTitle>
-          <AlertDescription>This is a default alert message.</AlertDescription>
+      <div className="flex flex-col gap-3 w-full">
+        <Alert variant="info">
+          <AlertIcon><svg className="size-4 text-muted-foreground" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="5" r="1"/><rect x="7.25" y="7" width="1.5" height="4" rx="0.75"/></svg></AlertIcon>
+          <AlertContent>
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>This is an informational alert.</AlertDescription>
+          </AlertContent>
         </Alert>
-        <Alert variant="destructive">
-          <AlertTitle>Destructive</AlertTitle>
-          <AlertDescription>Something went wrong. Please try again.</AlertDescription>
+        <Alert variant="warning">
+          <AlertIcon><svg className="size-4" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L15 14H1L8 1Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><circle cx="8" cy="11" r="0.75"/><rect x="7.25" y="6" width="1.5" height="3.5" rx="0.75"/></svg></AlertIcon>
+          <AlertContent>
+            <AlertTitle>Warning</AlertTitle>
+            <AlertDescription>This action may have consequences.</AlertDescription>
+          </AlertContent>
+        </Alert>
+        <Alert variant="danger">
+          <AlertIcon><svg className="size-4" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg></AlertIcon>
+          <AlertContent>
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>Something went wrong.</AlertDescription>
+          </AlertContent>
+        </Alert>
+        <Alert variant="success">
+          <AlertIcon><svg className="size-4" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg></AlertIcon>
+          <AlertContent>
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription>Operation completed successfully.</AlertDescription>
+          </AlertContent>
         </Alert>
       </div>
     ),
