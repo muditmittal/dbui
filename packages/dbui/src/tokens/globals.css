@@ -94,6 +94,7 @@
   --color-border-accessible: var(--border-accessible);
   --color-hover: var(--hover);
   --color-press: var(--press);
+  --color-active: var(--active);
   --color-disabled: var(--disabled);
   --color-disabled-foreground: var(--disabled-foreground);
   --color-overlay: var(--overlay);
@@ -173,6 +174,7 @@
   /* Interactive states */
   --hover: rgba(34, 114, 180, 0.08);
   --press: rgba(34, 114, 180, 0.16);
+  --active: #F0F8FF;
   --disabled: #D8D8D8;
   --disabled-foreground: #A2A2A2;
 
@@ -255,6 +257,7 @@
   /* Interactive states */
   --hover: rgba(66, 153, 224, 0.08);
   --press: rgba(66, 153, 224, 0.16);
+  --active: #04355D;
   --disabled: #37444F;
   --disabled-foreground: #5F7281;
 
