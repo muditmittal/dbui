@@ -1,0 +1,31 @@
+{
+  "$component": "Toggle Button",
+  "$figmaId": "478:613",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=478-613",
+  "$codePath": "packages/dbui/src/components/ui/toggle.tsx",
+  "$storyPath": "apps/portal/src/stories/Toggle.stories.tsx",
+  "variants": {
+    "Variant": {
+      "figma": ["Default", "Filter", "Icon", "Pill"],
+      "code": ["default", "filter", "icon", "pill"],
+      "mapping": {
+        "Default": "default",
+        "Filter": "filter",
+        "Icon": "icon",
+        "Pill": "pill"
+      }
+    },
+    "Size": {
+      "figma": ["Default", "Small"],
+      "code": ["md", "sm", "icon-md", "icon-sm"],
+      "mapping": {
+        "Default": "md",
+        "Small": "sm"
+      }
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Selected", "Disabled"],
+      "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "aria-pressed/data-state=on (CSS)", "disabled (prop)"]
+    }
+  }
+}

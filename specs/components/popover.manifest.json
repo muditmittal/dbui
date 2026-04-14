@@ -1,0 +1,10 @@
+{
+  "$component": "Popover",
+  "$figmaId": "1060:3832",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3832",
+  "variants": {
+    "Arrow": ["Top", "Right", "Bottom", "Left"]
+  },
+  "props": {},
+  "code": "popover.tsx"
+}

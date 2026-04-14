@@ -1,0 +1,117 @@
+{
+  "$composition": "Platform Shell",
+  "$source": "Figma node 3215-5546, extracted 2026-04-14",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3215-5546",
+  "$description": "The Databricks platform shell — every product page lives inside this layout. Fixed header, fixed left nav, scrollable content surface.",
+
+  "shell": {
+    "bg": "bg-muted",
+    "layout": "flex flex-col h-screen overflow-hidden",
+    "note": "Viewport fills entire screen. No scrolling on shell — only content surface scrolls."
+  },
+
+  "platformHeader": {
+    "element": "header",
+    "layout": "flex items-center justify-between",
+    "height": "h-12 (48px = 8px padding + 32px content + 8px padding)",
+    "padding": "px-3 py-2",
+    "width": "full viewport (edge-to-edge)",
+    "position": "top of shell, not sticky (part of flex col)",
+    "slots": {
+      "left": {
+        "element": ".WorkspaceNav",
+        "content": "Sidebar toggle (icon button) + Cloud badge (text 14px) + Databricks logo",
+        "layout": "flex items-center gap-1"
+      },
+      "center": {
+        "element": "Search input",
+        "width": "w-[552px]",
+        "height": "h-8 (32px)",
+        "style": "border-input shadow-xs rounded-sm",
+        "placeholder": "Search data, notebooks, recents, and more...",
+        "shortcut": "⌘ + P (Hint style, muted-foreground)"
+      },
+      "right": {
+        "element": ".PlatformActions",
+        "content": "Catalog selector (ghost select) + Genie button + App grid button + Avatar",
+        "layout": "flex items-center gap-1",
+        "buttons": "ghost icon buttons, size-8 (32px)"
+      }
+    }
+  },
+
+  "page": {
+    "layout": "flex flex-row flex-1 min-h-0",
+    "padding": "pb-2 pr-2 (8px bottom, 8px right, NO top, NO left)",
+    "gap": "gap-0",
+    "note": "min-h-0 is critical — allows flex-1 child to shrink and enable scrolling"
+  },
+
+  "navbar": {
+    "element": "nav",
+    "width": "w-[180px] shrink-0",
+    "height": "full remaining height",
+    "padding": "px-2",
+    "gap": "gap-4 (16px between sections)",
+    "layout": "flex flex-col",
+    "overflow": "overflow-y-auto (nav can scroll if too many items)",
+    "collapsible": "toggled by sidebar button in header",
+    "slots": {
+      "newButton": {
+        "height": "h-8 (32px)",
+        "width": "full",
+        "radius": "rounded-md (8px)",
+        "style": "shadow, icon + 'New' label, semibold"
+      },
+      "section": {
+        "layout": "flex flex-col gap-0",
+        "header": "Hint style (12px muted-foreground) + ChevronDown, px-2 py-1",
+        "items": ".NavItem list"
+      },
+      "navItem": {
+        "height": "h-7 (28px)",
+        "padding": "px-2 py-1",
+        "gap": "gap-2 (icon + label)",
+        "radius": "rounded-sm",
+        "text": "Paragraph (13px/20px Regular)",
+        "icon": "size-4 (16px)",
+        "states": {
+          "default": "text-foreground",
+          "hover": "bg-hover",
+          "active": "bg-accent text-accent-foreground font-semibold"
+        }
+      }
+    }
+  },
+
+  "contentSurface": {
+    "element": "main",
+    "sizing": "flex-1 min-w-0 min-h-0",
+    "bg": "bg-background (white)",
+    "border": "border border-border",
+    "radius": "rounded-[8px]",
+    "shadow": "shadow-md",
+    "overflow": "overflow-y-auto (THIS is where page content scrolls)",
+    "note": "Content ALWAYS scrolls within this surface. Platform header and navbar remain fixed. The white surface is the application viewport."
+  },
+
+  "rules": [
+    "Shell background is bg-muted — the grey surround. Content surface is bg-background — the white area.",
+    "Only the content surface scrolls. Header and navbar are always visible.",
+    "Navbar is fixed 180px width. Content surface fills remaining space.",
+    "Content surface has 8px margin on top (from page padding), right, and bottom. Left edge is flush with navbar.",
+    "Platform header is 48px tall, edge-to-edge, no border-bottom (muted bg provides visual separation).",
+    "Search bar is centered in header, fixed 552px width.",
+    "Nav items are 28px tall, icons are 16px, text is 13px Paragraph.",
+    "Active nav item uses bg-accent + text-accent-foreground + font-semibold.",
+    "Section headers use Hint style (12px, muted-foreground) with ChevronDown."
+  ],
+
+  "tailwind": {
+    "shell": "flex flex-col h-screen overflow-hidden bg-muted",
+    "header": "flex items-center justify-between px-3 py-2",
+    "page": "flex flex-1 min-h-0 pb-2 pr-2",
+    "navbar": "flex flex-col w-[180px] shrink-0 gap-4 px-2 overflow-y-auto",
+    "content": "flex-1 min-w-0 min-h-0 overflow-y-auto bg-background border border-border rounded-[8px] shadow-md"
+  }
+}

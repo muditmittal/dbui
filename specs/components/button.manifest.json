@@ -1,0 +1,55 @@
+{
+  "$component": "Button",
+  "$figmaId": "477:773",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=477-773",
+  "$codePath": "packages/dbui/src/lib/button-variants.ts",
+  "$storyPath": "apps/portal/src/stories/Button.stories.tsx",
+  "variants": {
+    "Variant": {
+      "figma": ["Primary", "Outline", "Secondary", "Ghost", "Link", "Destructive", "Danger"],
+      "code": ["default", "outline", "secondary", "ghost", "link", "destructive", "danger"],
+      "mapping": {
+        "Primary": "default",
+        "Outline": "outline",
+        "Secondary": "secondary",
+        "Ghost": "ghost",
+        "Link": "link",
+        "Destructive": "destructive",
+        "Danger": "danger"
+      }
+    },
+    "Size": {
+      "figma": ["Default", "Small"],
+      "code": ["md", "sm", "icon-md", "icon-sm"],
+      "mapping": {
+        "Default": "md",
+        "Small": "sm"
+      }
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Loading"],
+      "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "focus-visible (CSS)", "disabled (prop)", "loading (prop)"]
+    }
+  },
+  "innerComponents": {
+    ".ActionLabel": {
+      "props": {
+        "Show Icon": { "code": "<ButtonIcon>", "type": "composition" },
+        "Show Menu": { "code": "<ButtonChevron />", "type": "composition" },
+        "Label": { "code": "children text", "type": "children" },
+        "Icon": { "code": "children of <ButtonIcon>", "type": "instance-swap" },
+        "Menu": { "code": "children of <ButtonChevron>", "type": "instance-swap" }
+      }
+    }
+  },
+  "storyControls": {
+    "variant": "✅ select (7 options)",
+    "size": "✅ select (4 options incl icon sizes)",
+    "label": "✅ text",
+    "showIcon": "✅ boolean",
+    "icon": "✅ select (6 icons)",
+    "showChevron": "✅ boolean",
+    "loading": "✅ boolean",
+    "disabled": "✅ boolean"
+  }
+}

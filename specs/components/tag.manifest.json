@@ -1,0 +1,14 @@
+{
+  "$component": "Tag",
+  "$figmaId": "3154:4442",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3154-4442",
+  "variants": {
+    "Value": ["True", "False"]
+  },
+  "props": {
+    "Closable": { "type": "boolean", "default": false },
+    "Icon": { "type": "boolean", "default": true }
+  },
+  "code": "tag.tsx",
+  "subComponents": ["TagIcon", "TagLabel", "TagValue", "TagRemove"]
+}

@@ -1,0 +1,24 @@
+{
+  "$component": "Input Group",
+  "$figmaId": "3178:3973",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3178-3973",
+  "$codePath": "packages/dbui/src/components/ui/input-group.tsx",
+  "$storyPath": "apps/portal/src/stories/InputGroup.stories.tsx",
+  "variants": {
+    "Type": {
+      "figma": ["Browse", "Filter"],
+      "code": "Composition — InputGroup + addons",
+      "note": "Browse = input + browse button, Filter = input + filter icon"
+    },
+    "Active": {
+      "figma": ["False", "True"],
+      "code": "CSS focus-within states"
+    }
+  },
+  "storyControls": {
+    "showLeftIcon": "✅ boolean",
+    "showRightIndicator": "✅ boolean",
+    "showRightAction": "✅ boolean",
+    "disabled": "✅ boolean"
+  }
+}

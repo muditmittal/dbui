@@ -1,0 +1,72 @@
+import type { StorybookConfig } from "@storybook/react-webpack5"
+import path from "path"
+
+const config: StorybookConfig = {
+  stories: ["../src/**/*.stories.@(ts|tsx)"],
+  addons: [
+    "@storybook/addon-essentials",
+    "@storybook/addon-a11y",
+  ],
+  typescript: {
+    check: false,
+    reactDocgen: false,
+  },
+  framework: {
+    name: "@storybook/react-webpack5",
+    options: {},
+  },
+  staticDirs: ["../public"],
+  webpackFinal: async (config) => {
+    if (config.resolve) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@/components/icons": path.resolve(__dirname, "../../dbui/src/components/icons"),
+        "@": path.resolve(__dirname, "../src"),
+      }
+    }
+
+    // TypeScript support via ts-loader
+    config.module.rules = config.module.rules || []
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      exclude: /node_modules/,
+      use: [
+        {
+          loader: "ts-loader",
+          options: {
+            transpileOnly: true,
+            configFile: path.resolve(__dirname, "../tsconfig.json"),
+          },
+        },
+      ],
+    })
+
+    // Support CSS imports (Tailwind via PostCSS)
+    config.module = config.module || { rules: [] }
+    config.module.rules = config.module.rules || []
+    // Remove any existing CSS rules
+    config.module.rules = config.module.rules.filter(
+      (rule) => rule && typeof rule === "object" && rule.test?.toString() !== "/\\.css$/"
+    )
+    // Add PostCSS loader for Tailwind v4
+    config.module.rules.push({
+      test: /\.css$/,
+      use: [
+        "style-loader",
+        "css-loader",
+        {
+          loader: "postcss-loader",
+          options: {
+            postcssOptions: {
+              plugins: [["@tailwindcss/postcss", {}]],
+            },
+          },
+        },
+      ],
+    })
+
+    return config
+  },
+}
+
+export default config

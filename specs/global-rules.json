@@ -158,6 +158,20 @@
     }
   },
 
+  "compositions": {
+    "_note": "Page-level layout patterns. These define how DBUI components compose into Databricks product pages.",
+    "platformShell": {
+      "spec": "specs/compositions/platform-shell.json",
+      "structure": "shell (bg-muted, h-screen) → header (48px, edge-to-edge) + page (flex row) → navbar (180px fixed) + content (flex-1, bg-background, scrollable)",
+      "rules": [
+        "Only content surface scrolls — header and navbar are always visible",
+        "Content surface: bg-background, border border-border, rounded-[8px], shadow-md",
+        "Content has 8px margin on top/right/bottom, flush left with navbar",
+        "Navbar: 180px fixed width, collapsible via header toggle"
+      ]
+    }
+  },
+
   "componentSpecs": {
     "_note": "Per-component structural specs. Captures slots, layout, composition — not just tokens. Source: Figma get_design_context + screenshot comparison.",
 

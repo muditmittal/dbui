@@ -1,0 +1,10 @@
+{
+  "$component": "Tooltip",
+  "$figmaId": "1060:3708",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3708",
+  "variants": {
+    "Arrow": ["Bottom", "Left", "Right", "Top"]
+  },
+  "props": {},
+  "code": "tooltip.tsx"
+}

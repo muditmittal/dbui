@@ -1,0 +1,17 @@
+{
+  "$component": "Badge",
+  "$figmaId": "1088:1544",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1088-1544",
+  "variants": {
+    "Variant": ["Fill", "Outline"]
+  },
+  "props": {},
+  "code": "badge.tsx",
+  "codeAPI": {
+    "variant": ["default", "secondary", "destructive", "outline", "ghost", "link"]
+  },
+  "variantMapping": {
+    "Fill": "default",
+    "Outline": "outline"
+  }
+}

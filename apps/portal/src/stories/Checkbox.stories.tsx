@@ -1,37 +1,54 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Checkbox } from "dbui/components/ui/checkbox"
 
-const meta: Meta<typeof Checkbox> = {
+const meta: Meta = {
   title: "Controls/Checkbox",
-  component: Checkbox,
   argTypes: {
     disabled: { control: "boolean" },
-    defaultChecked: { control: "boolean" },
+    showLabel: { control: "boolean", name: "Show Label" },
+    label: { control: "text", if: { arg: "showLabel" } },
+  },
+  args: {
+    disabled: false,
+    showLabel: true,
+    label: "Accept terms and conditions",
   },
 }
 
 export default meta
-type Story = StoryObj<typeof Checkbox>
 
-export const Default: Story = {}
-
-export const Checked: Story = {
-  args: { defaultChecked: true },
-}
-
-export const Disabled: Story = {
-  args: { disabled: true },
-}
-
-export const DisabledChecked: Story = {
-  args: { disabled: true, defaultChecked: true },
-}
-
-export const WithLabel: Story = {
-  render: (args) => (
+export const Playground: StoryObj = {
+  render: (args: any) => (
     <div className="flex items-center gap-2">
-      <Checkbox id="terms" {...args} />
-      <label htmlFor="terms" className="text-[13px] leading-[20px]">Accept terms and conditions</label>
+      <Checkbox id="cb" disabled={args.disabled} />
+      {args.showLabel && <label className="text-[13px] leading-[20px] font-normal" htmlFor="cb">{args.label}</label>}
+    </div>
+  ),
+}
+
+export const States: StoryObj = {
+  render: () => (
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <Checkbox id="s1" />
+        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s1">Unchecked</label>
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox id="s2" defaultChecked />
+        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s2">Checked</label>
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox id="s3" disabled />
+        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s3">Disabled</label>
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox id="s4" defaultChecked disabled />
+        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s4">Checked + Disabled</label>
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox id="s5" indeterminate />
+        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s5">Indeterminate</label>
+      </div>
     </div>
   ),
 }

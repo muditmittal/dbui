@@ -8,7 +8,7 @@ import { Button } from "dbui/components/ui/button"
 import { Input } from "dbui/components/ui/input"
 
 const meta: Meta<typeof Popover> = {
-  title: "Feedback/Popover",
+  title: "Overlays/Popover",
   component: Popover,
 }
 

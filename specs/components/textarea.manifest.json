@@ -1,0 +1,17 @@
+{
+  "$component": "Textarea",
+  "$figmaId": "724:658",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=724-658",
+  "$codePath": "packages/dbui/src/components/ui/textarea.tsx",
+  "$storyPath": "apps/portal/src/stories/Textarea.stories.tsx",
+  "variants": {
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid"]
+    }
+  },
+  "props": {
+    "Text": { "figmaType": "TEXT", "default": "Placeholder", "code": "placeholder prop" }
+  },
+  "note": "Figma has no Size variant — Textarea is always default height. No Warning/Success states (only Input has those)."
+}

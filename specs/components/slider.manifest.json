@@ -1,0 +1,13 @@
+{
+  "$component": "Slider",
+  "$figmaId": "1039:2406",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1039-2406",
+  "$codePath": "packages/dbui/src/components/ui/slider.tsx",
+  "$storyPath": "apps/portal/src/stories/Slider.stories.tsx",
+  "variants": {
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
+    }
+  }
+}

@@ -5,7 +5,7 @@ import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import { XIcon } from "lucide-react"
+import { Close as CloseIcon } from "../icons/Close"
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
@@ -39,6 +39,14 @@ function DialogOverlay({
   )
 }
 
+/**
+ * @constraints
+ * - Non-alert dialogs MUST have showCloseButton=true. Users need an escape hatch.
+ *   Only AlertDialog can omit the close button (it requires an explicit decision).
+ * - DialogFooter: primary action button must be RIGHTMOST. Cancel/secondary on left.
+ * - Sizes: normal (640px) for forms, wide (880px) for tables/previews,
+ *   extrawide (1200px) for full editors. Don't use extrawide for simple confirmations.
+ */
 function DialogContent({
   className,
   children,
@@ -56,7 +64,7 @@ function DialogContent({
         data-slot="dialog-content"
         data-size={size}
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-md border border-border bg-background p-4 text-[13px] shadow-lg duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 rounded-md border border-border bg-background text-[13px] shadow-lg duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}
@@ -68,13 +76,12 @@ function DialogContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-2 right-2"
-                size="icon-sm"
+                className="absolute top-3 right-3"
+                size="icon-md"
               />
             }
           >
-            <XIcon
-            />
+            <CloseIcon />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
         )}
@@ -83,11 +90,42 @@ function DialogContent({
   )
 }
 
+/**
+ * DialogHeader — header area with optional icon, title, and description.
+ * Maps to Figma .DialogHeader (Icon + Content + Close Button).
+ *
+ * Usage:
+ *   <DialogHeader>
+ *     <DialogHeaderIcon><WarningFill /></DialogHeaderIcon>
+ *     <DialogTitle>Title</DialogTitle>
+ *     <DialogDescription>Description</DialogDescription>
+ *   </DialogHeader>
+ */
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-2", className)}
+      className={cn("flex flex-col gap-2 p-4", className)}
+      {...props}
+    />
+  )
+}
+
+/**
+ * DialogHeaderIcon — optional leading icon in dialog header.
+ * Maps to Figma .DialogHeader "Icon" frame (hidden by default, shown for confirmation dialogs).
+ */
+function DialogHeaderIcon({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="dialog-header-icon"
+      className={cn(
+        "inline-flex size-10 items-center justify-center rounded-md bg-muted [&_svg:not([class*='size-'])]:size-6",
+        className
+      )}
       {...props}
     />
   )
@@ -105,7 +143,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-lg p-4 pt-0 sm:flex-row sm:justify-end",
+        "flex flex-col-reverse gap-2 border-t border-border p-4 sm:flex-row sm:justify-end",
         className
       )}
       {...props}
@@ -153,6 +191,7 @@ export {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogHeaderIcon,
   DialogOverlay,
   DialogPortal,
   DialogTitle,

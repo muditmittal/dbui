@@ -11,12 +11,14 @@
     "dev:dbui": "yarn workspace dbui dev",
     "build": "yarn workspace portal build",
     "build:dbui": "yarn workspace dbui build",
-    "lint": "yarn workspace portal lint"
+    "lint": "yarn workspace portal lint",
+    "preview": "concurrently -n portal,storybook -c blue,magenta \"yarn dev\" \"yarn workspace portal storybook\""
   },
   "engines": {
     "node": ">=22.0.0"
   },
   "devDependencies": {
-    "@figma/code-connect": "^1.4.2"
+    "@figma/code-connect": "^1.4.2",
+    "concurrently": "^9.2.1"
   }
 }

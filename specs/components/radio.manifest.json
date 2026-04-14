@@ -1,0 +1,17 @@
+{
+  "$component": "Radio",
+  "$figmaId": "715:650",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=715-650",
+  "$codePath": "packages/dbui/src/components/ui/radio-group.tsx",
+  "$storyPath": "apps/portal/src/stories/RadioGroup.stories.tsx",
+  "variants": {
+    "Selected": {
+      "figma": ["False", "True"],
+      "code": "data-checked attribute (Base UI)"
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
+    }
+  }
+}

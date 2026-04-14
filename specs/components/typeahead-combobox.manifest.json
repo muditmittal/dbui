@@ -1,0 +1,16 @@
+{
+  "$component": "Typeahead Combobox",
+  "$figmaId": "842:889",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=842-889",
+  "$codePath": "packages/dbui/src/components/ui/combobox.tsx",
+  "$storyPath": "apps/portal/src/stories/TypeaheadCombobox.stories.tsx",
+  "variants": {
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
+      "code": ["CSS", "CSS", "CSS", "focus-visible", "disabled", "aria-invalid"]
+    }
+  },
+  "props": {
+    "Show Clear": { "figmaType": "BOOLEAN", "default": false, "code": "clear button" }
+  }
+}

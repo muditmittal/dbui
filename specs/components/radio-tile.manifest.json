@@ -1,0 +1,22 @@
+{
+  "$component": "Radio Tile",
+  "$figmaId": "1021:3727",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1021-3727",
+  "$codePath": "packages/dbui/src/components/ui/radio-tile.tsx",
+  "$storyPath": "apps/portal/src/stories/RadioTile.stories.tsx",
+  "variants": {
+    "Selected": {
+      "figma": ["False", "True"],
+      "code": "data-checked (Base UI Radio)"
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
+    }
+  },
+  "props": {
+    "Icon": { "figmaType": "BOOLEAN", "default": true, "code": "RadioTileIcon sub-component", "storyControl": "showIcon" },
+    "Text": { "figmaType": "BOOLEAN", "default": true, "code": "RadioTileDescription sub-component", "storyControl": "showDescription" }
+  },
+  "note": "Figma 'Icon' = show/hide icon. Figma 'Text' = show/hide description (not title)."
+}

@@ -1,27 +1,57 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Textarea } from "dbui/components/ui/textarea"
 
-const meta: Meta<typeof Textarea> = {
-  title: "Inputs/Textarea",
-  component: Textarea,
+const meta: Meta = {
+  title: "Controls/Textarea",
+  argTypes: {
+    state: {
+      control: "select",
+      options: ["default", "disabled", "invalid", "warning", "success"],
+      name: "State",
+    },
+    placeholder: { control: "text" },
+    rows: { control: { type: "range", min: 2, max: 10, step: 1 } },
+  },
   args: {
-    placeholder: "Type your message here...",
+    state: "default",
+    placeholder: "Placeholder",
+    rows: 4,
   },
 }
 
 export default meta
-type Story = StoryObj<typeof Textarea>
 
-export const Default: Story = {}
-
-export const WithValue: Story = {
-  args: { defaultValue: "This is a longer piece of text that fills the textarea." },
+export const Playground: StoryObj = {
+  render: (args: any) => (
+    <div className="w-[320px]">
+      <Textarea
+        placeholder={args.placeholder}
+        rows={args.rows}
+        disabled={args.state === "disabled"}
+        aria-invalid={args.state === "invalid" || undefined}
+        validation={args.state === "warning" ? "warning" : args.state === "success" ? "success" : undefined}
+      />
+    </div>
+  ),
 }
 
-export const Disabled: Story = {
-  args: { disabled: true, placeholder: "Disabled" },
-}
-
-export const Invalid: Story = {
-  args: { "aria-invalid": true, defaultValue: "Invalid content" },
+export const AllStates: StoryObj = {
+  name: "All States ",
+  render: () => (
+    <div className="flex flex-col gap-3 w-[320px]">
+      <div className="flex flex-col gap-1">
+        <p className="text-[12px] text-muted-foreground">Default</p>
+        <Textarea placeholder="Placeholder" />
+      </div>
+      <div className="flex flex-col gap-1">
+        <p className="text-[12px] text-muted-foreground">Disabled</p>
+        <Textarea placeholder="Disabled" disabled />
+      </div>
+      <div className="flex flex-col gap-1">
+        <p className="text-[12px] text-muted-foreground">Danger — border + ring</p>
+        <Textarea defaultValue="Invalid content" aria-invalid />
+      </div>
+      <p className="text-[11px] text-muted-foreground mt-2">Hover/Focus states are interactive. Focus shows blue outer ring.</p>
+    </div>
+  ),
 }

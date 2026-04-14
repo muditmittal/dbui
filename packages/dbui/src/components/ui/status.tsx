@@ -1,26 +1,24 @@
 import * as React from "react"
 
 import { cn } from "../../lib/utils"
-import {
-  CheckCircleSmall,
-  CheckCircle,
-  CircleOutline,
-  CircleOff,
-  CircleOffLarge,
-  Running,
-  SyncSmall,
-  Sync,
-  StopCircle,
-  XCircle,
-  CloseSmall,
-  Info,
-  InfoSmall,
-  Warning,
-  Triangle,
-  Danger,
-  DangerSmall,
-  DotsCircle,
-} from "../icons"
+import { CheckCircleSmall } from "../icons/CheckCircleSmall"
+import { CheckCircle } from "../icons/CheckCircle"
+import { CircleOutline } from "../icons/CircleOutline"
+import { CircleOff } from "../icons/CircleOff"
+import { CircleOffLarge } from "../icons/CircleOffLarge"
+import { Running } from "../icons/Running"
+import { SyncSmall } from "../icons/SyncSmall"
+import { Sync } from "../icons/Sync"
+import { StopCircle } from "../icons/StopCircle"
+import { XCircle } from "../icons/XCircle"
+import { CloseSmall } from "../icons/CloseSmall"
+import { Info } from "../icons/Info"
+import { InfoSmall } from "../icons/InfoSmall"
+import { Warning } from "../icons/Warning"
+import { Triangle } from "../icons/Triangle"
+import { Danger } from "../icons/Danger"
+import { DangerSmall } from "../icons/DangerSmall"
+import { DotsCircle } from "../icons/DotsCircle"
 
 type StatusType =
   | "online"

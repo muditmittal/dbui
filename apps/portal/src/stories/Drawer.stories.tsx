@@ -13,7 +13,7 @@ import { Button } from "dbui/components/ui/button"
 import { Input } from "dbui/components/ui/input"
 
 const meta: Meta<typeof Drawer> = {
-  title: "Feedback/Drawer",
+  title: "Overlays/Drawer",
   component: Drawer,
 }
 

@@ -1,0 +1,27 @@
+{
+  "$component": "Select",
+  "$figmaId": "732:601",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=732-601",
+  "$codePath": "packages/dbui/src/components/ui/select.tsx",
+  "$storyPath": "apps/portal/src/stories/Select.stories.tsx",
+  "variants": {
+    "Type": {
+      "figma": ["Default", "Ghost"],
+      "code": ["default", "ghost"],
+      "mapping": { "Default": "default", "Ghost": "ghost" }
+    },
+    "Size": {
+      "figma": ["Default", "Small"],
+      "code": ["default", "sm"],
+      "mapping": { "Default": "default", "Small": "sm" }
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid"]
+    }
+  },
+  "props": {
+    "Show Icon": { "figmaType": "BOOLEAN", "default": false, "code": "icon child inside SelectTrigger before SelectValue" },
+    "Icon": { "figmaType": "INSTANCE_SWAP", "default": "Search (35:5024)", "code": "React icon component" }
+  }
+}

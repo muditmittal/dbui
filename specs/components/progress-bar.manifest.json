@@ -1,0 +1,8 @@
+{
+  "$component": "ProgressBar",
+  "$figmaId": "3157:2839",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3157-2839",
+  "variants": {},
+  "props": {},
+  "code": "progress.tsx"
+}

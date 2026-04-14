@@ -1,0 +1,17 @@
+{
+  "$component": "Dialog",
+  "$figmaId": "882:2798",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=882-2798",
+  "variants": {},
+  "props": {},
+  "innerComponents": {
+    ".DialogHeader": {},
+    ".DialogFooter": {},
+    ".DialogBody": {
+      "variants": {
+        "Size": ["Normal", "Wide", "Extrawide"]
+      }
+    }
+  },
+  "code": "dialog.tsx"
+}

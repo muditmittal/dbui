@@ -1,0 +1,19 @@
+{
+  "$component": "Tabs",
+  "$figmaId": "1048:1469",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1048-1469",
+  "variants": {},
+  "props": {},
+  "innerComponents": {
+    ".TabItem": {
+      "variants": {
+        "State": ["Default", "Hover", "Press", "Selected", "Disabled"]
+      },
+      "props": {
+        "Icon": { "type": "boolean", "default": false }
+      }
+    }
+  },
+  "code": "tabs.tsx",
+  "subComponents": ["TabsIcon"]
+}

@@ -63,19 +63,15 @@ function ComboboxInput({
   inputSize?: "sm" | "default"
 }) {
   return (
-    <InputGroup className={cn("w-auto", inputSize === "sm" && "h-6", className)}>
+    <InputGroup className={cn("w-auto has-[[data-slot=input-group-control]:focus-visible]:shadow-none", inputSize === "sm" && "h-6", className)}>
       <ComboboxPrimitive.Input
         render={<InputGroupInput disabled={disabled} />}
         {...props}
       />
-      <InputGroupAddon align="inline-end">
+      <InputGroupAddon align="inline-end" className="pr-0">
         {showTrigger && (
-          <InputGroupButton
-            size="icon-sm"
-            variant="ghost"
-            render={<ComboboxTrigger />}
-            data-slot="input-group-button"
-            className="group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent"
+          <ComboboxTrigger
+            className="inline-flex shrink-0 items-center justify-center text-muted-foreground group-has-data-[slot=combobox-clear]/input-group:hidden [&_svg:not([class*='size-'])]:size-4"
             disabled={disabled}
           />
         )}
@@ -142,7 +138,7 @@ function ComboboxItem({
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-2 rounded-md py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex w-full cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none data-highlighted:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

@@ -13,7 +13,7 @@ import {
 import { Button } from "dbui/components/ui/button"
 
 const meta: Meta<typeof AlertDialog> = {
-  title: "Feedback/AlertDialog",
+  title: "Overlays/AlertDialog",
   component: AlertDialog,
 }
 

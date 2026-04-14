@@ -1,0 +1,10 @@
+{
+  "$component": "Empty",
+  "$figmaId": "3130:1793",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3130-1793",
+  "variants": {},
+  "props": {
+    "Actions": { "type": "boolean", "default": true }
+  },
+  "code": "empty.tsx"
+}

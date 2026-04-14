@@ -76,6 +76,13 @@ function DropdownMenuLabel({
   )
 }
 
+/**
+ * @constraints
+ * - ICON CONSISTENCY: if one item in a group has DropdownMenuItemIcon, ALL items
+ *   in that group must. Mixed icon/no-icon creates misaligned labels.
+ * - DESTRUCTIVE ITEMS: must appear at the bottom, preceded by a DropdownMenuSeparator.
+ * - SHORTCUTS: use symbols (⌘⇧⌥⌃), not text (Cmd/Shift/Alt/Ctrl).
+ */
 function DropdownMenuItem({
   className,
   inset,
@@ -91,7 +98,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "group/dropdown-menu-item relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1 text-[13px] outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive",
+        "group/dropdown-menu-item relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive data-[variant=destructive]:focus:text-destructive-foreground dark:data-[variant=destructive]:focus:bg-destructive data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive data-[variant=destructive]:focus:*:[svg]:text-destructive-foreground",
         className
       )}
       {...props}
@@ -116,7 +123,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "flex cursor-default items-center gap-2 rounded-sm px-2 py-1 text-[13px] outline-hidden select-none focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-inset:pl-7 data-popup-open:bg-accent data-popup-open:text-accent-foreground data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex cursor-default items-center gap-2 rounded-sm px-2 py-1 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-popup-open:bg-hover data-open:bg-hover [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -162,7 +169,7 @@ function DropdownMenuCheckboxItem({
       data-slot="dropdown-menu-checkbox-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-2 text-[13px] outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-2 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
@@ -204,7 +211,7 @@ function DropdownMenuRadioItem({
       data-slot="dropdown-menu-radio-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-2 text-[13px] outline-hidden select-none focus:bg-accent focus:text-accent-foreground focus:**:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-2 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -236,6 +243,10 @@ function DropdownMenuSeparator({
   )
 }
 
+/**
+ * DropdownMenuShortcut — keyboard shortcut hint on trailing side.
+ * Maps to Figma .MenuTrailing Type="Hint".
+ */
 function DropdownMenuShortcut({
   className,
   ...props
@@ -244,7 +255,178 @@ function DropdownMenuShortcut({
     <span
       data-slot="dropdown-menu-shortcut"
       className={cn(
-        "ml-auto text-[12px] tracking-widest text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground",
+        "ml-auto text-[12px] tracking-widest text-muted-foreground group-focus/dropdown-menu-item:text-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * DropdownMenuItemIcon — leading icon inside a menu item.
+ * Maps to Figma .MenuLabel "Show Icon" + "Icon" instance swap.
+ *
+ * Usage: <DropdownMenuItem><DropdownMenuItemIcon><Pencil /></DropdownMenuItemIcon>Edit</DropdownMenuItem>
+ */
+function DropdownMenuItemIcon({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="dropdown-menu-item-icon"
+      className={cn(
+        "pointer-events-none shrink-0 text-muted-foreground group-focus/dropdown-menu-item:text-foreground [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * DropdownMenuItemDescription — secondary description text below label.
+ * Maps to Figma .MenuLabel Content="With Description".
+ *
+ * Usage:
+ *   <DropdownMenuItem>
+ *     <div>
+ *       <div>Option</div>
+ *       <DropdownMenuItemDescription>Helper text</DropdownMenuItemDescription>
+ *     </div>
+ *   </DropdownMenuItem>
+ */
+function DropdownMenuItemDescription({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="dropdown-menu-item-description"
+      className={cn(
+        "block text-[12px] leading-[16px] text-muted-foreground font-normal group-focus/dropdown-menu-item:text-foreground/70",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * DropdownMenuItemBadge — trailing count/badge.
+ * Maps to Figma .MenuTrailing Type="Count".
+ */
+function DropdownMenuItemBadge({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="dropdown-menu-item-badge"
+      className={cn(
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-muted px-1.5 text-[12px] font-semibold text-muted-foreground group-focus/dropdown-menu-item:bg-accent-foreground/10 group-focus/dropdown-menu-item:text-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * DropdownMenuSearch — search input inside dropdown.
+ * Maps to Figma .MenuRow Type="Search".
+ */
+function DropdownMenuSearch({
+  className,
+  ...props
+}: React.ComponentProps<"input">) {
+  return (
+    <div className="p-1" data-slot="dropdown-menu-search">
+      <input
+        type="text"
+        className={cn(
+          "flex h-8 w-full rounded-sm border border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring",
+          className
+        )}
+        {...props}
+      />
+    </div>
+  )
+}
+
+/**
+ * DropdownMenuEmpty — empty state shown when no results match.
+ * Maps to Figma .MenuRow Type="Empty".
+ */
+function DropdownMenuEmpty({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="dropdown-menu-empty"
+      className={cn(
+        "flex items-center justify-center px-2 py-4 text-[13px] text-muted-foreground",
+        className
+      )}
+      {...props}
+    >
+      {children ?? "No results found."}
+    </div>
+  )
+}
+
+/**
+ * DropdownMenuLoading — loading spinner state.
+ * Maps to Figma .MenuRow Type="Loading".
+ */
+function DropdownMenuLoading({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="dropdown-menu-loading"
+      className={cn(
+        "flex items-center justify-center gap-2 px-2 py-4 text-[13px] text-muted-foreground",
+        className
+      )}
+      {...props}
+    >
+      <svg
+        className="size-4 animate-spin"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8 1.5A6.5 6.5 0 1 0 14.5 8"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      </svg>
+      {children ?? "Loading..."}
+    </div>
+  )
+}
+
+/**
+ * DropdownMenuFooter — action buttons at bottom of dropdown.
+ * Maps to Figma .MenuRow Type="Footer" (Cancel + Apply pattern).
+ */
+function DropdownMenuFooter({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="dropdown-menu-footer"
+      className={cn(
+        "flex items-center justify-end gap-2 border-t border-border p-2",
         className
       )}
       {...props}
@@ -260,11 +442,18 @@ export {
   DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuItem,
+  DropdownMenuItemIcon,
+  DropdownMenuItemDescription,
+  DropdownMenuItemBadge,
   DropdownMenuCheckboxItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSearch,
+  DropdownMenuEmpty,
+  DropdownMenuLoading,
+  DropdownMenuFooter,
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,

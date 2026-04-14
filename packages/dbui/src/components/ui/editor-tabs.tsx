@@ -85,4 +85,26 @@ function EditorTabAddButton({ className, ...props }: React.ComponentProps<"butto
   )
 }
 
-export { EditorTabs, EditorTab, EditorTabAddButton }
+/**
+ * EditorTabIcon — leading file-type icon slot inside EditorTab.
+ * Maps to Figma .EditorTab "Notebook icon" instance.
+ *
+ * Usage: <EditorTab><EditorTabIcon><Notebook /></EditorTabIcon>query.sql</EditorTab>
+ */
+function EditorTabIcon({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="editor-tab-icon"
+      className={cn(
+        "pointer-events-none shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export { EditorTabs, EditorTab, EditorTabIcon, EditorTabAddButton }

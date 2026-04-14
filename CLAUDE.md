@@ -121,19 +121,18 @@ Effects (shadow xs–xl)
 - Hover: `bg-primary-hover` / `bg-destructive-hover` (explicit darker token)
 - Press: `bg-primary-press` / `bg-destructive-press`
 
-### Focus Rules (verified against Figma 2026-04-14)
-- Text inputs (Input, Textarea, Select, Combobox): `focus-visible:border-ring` (1px, NO border-2, NO shadow-focus)
+### Focus Rules
+- Text inputs (Input, Textarea, Select, Combobox): `focus-visible:border-ring` (1px border change only, NO shadow-focus, NO border-2)
 - Filled buttons (Primary, Destructive): `focus-visible:shadow-focus` (outer ring)
 - Non-filled buttons (Outline, Ghost, Link, Danger): `focus-visible:border-2 focus-visible:border-ring`
 - Checkbox, Radio, Switch: `focus-visible:shadow-focus` (outer ring always)
 - Danger variant focus: uses `border-ring` (blue) NOT `border-destructive` (red)
 
-### Validation States (verified against Figma 2026-04-14)
+### Validation States
 - Error: `border-destructive` (1px border only, NO outer ring shadow)
 - Warning: `border-warning` (1px border only)
 - Success: `border-success` (1px border only)
-- Rationale: focus ring should be consistent system-wide for accessibility — always blue `--ring` color
-- This matches how Outline Focus uses blue ring regardless of variant
+- Validation states are border-only at rest. No ring, no shadow changes.
 
 ---
 
@@ -296,11 +295,32 @@ ComponentName
 
 ## 7. Icon System
 
-- **453 icons** in `apps/dbui/src/components/icons/`, one React component per file
+- **451 icons** in `packages/dbui/src/components/icons/`, one React component per file
 - **Naming:** PascalCase matching DuBois names (e.g., `ChevronDown.tsx`)
 - **Default size:** 16×16px (`size-4`) via `[&_svg:not([class*='size-'])]:size-4`
-- **Code Connect:** All mapped in `apps/dbui/src/components/icons/icons.figma.tsx`
-- **Figma:** Icons page with all 453 icons as components
+- **Code Connect:** All mapped in `packages/dbui/src/figma/icons.figma.tsx`
+- **Figma:** Icons page with all 451 icons as components
+
+### Icon Selection — READ BEFORE INSERTING ANY ICON
+
+Every icon has a semantic tag: `/** use:<category> <concept> | <product_area> | <synonyms> */`
+
+**Categories:**
+| Category | Meaning | Use in |
+|----------|---------|--------|
+| `use:object` | Databricks product concept | Nav items, table cells, cards, tree nodes |
+| `use:action` | Verb the user performs | Buttons, toolbar actions, menu items |
+| `use:indicator` | Status or state | Status badges, alert icons, table status cells |
+| `use:component` | Control chrome | Only inside the designated control (chevrons, checks, close) |
+
+**How to find the right icon:**
+1. Determine category — object? action? status? control?
+2. `grep "use:object Experiment" packages/dbui/src/components/icons/` (search by concept)
+3. `grep "flask\|lab" packages/dbui/src/components/icons/` (search by synonym)
+
+**NEVER guess. NEVER use `use:component` icons outside their control. NEVER use `use:action` icons to represent objects.**
+
+See `specs/composition-rules.md` → "Icon Selection Rules" for the full mapping table.
 
 ---
 

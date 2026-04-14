@@ -1,0 +1,8 @@
+{
+  "$component": "Spinner",
+  "$figmaId": "1060:3970",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3970",
+  "variants": {},
+  "props": {},
+  "code": "spinner.tsx"
+}

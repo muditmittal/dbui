@@ -20,7 +20,7 @@ import { toggleVariants } from "./toggle"
  *
  * ── Outline variant ──
  * Container: bg-background, rounded-sm, shadow-xs, p-0, gap-0
- * Selected item: bg-accent, border-primary (blue), NO rounded corners (flush)
+ * Selected item: bg-active, border-primary (blue), NO rounded corners (flush)
  * Unselected items: no fill, border-input (grey dividers), shadow-xs, NO rounded corners
  *
  * Supports both single and multiple selection via Base UI ToggleGroup primitive.
@@ -29,6 +29,8 @@ import { toggleVariants } from "./toggle"
 const SegmentControlContext = React.createContext<
   VariantProps<typeof toggleVariants> & {
     orientation?: "horizontal" | "vertical"
+    registerItem?: (value: string, el: HTMLButtonElement | null) => void
+    activeValue?: string
   }
 >({
   size: "md",
@@ -81,6 +83,7 @@ function SegmentControlItem({
   children,
   variant = "default",
   size = "md",
+  onPressedChange,
   ...props
 }: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
   const context = React.useContext(SegmentControlContext)
@@ -91,20 +94,19 @@ function SegmentControlItem({
   return (
     <TogglePrimitive
       data-slot="segment-control-item"
+      onPressedChange={onPressedChange}
       className={cn(
-        "inline-flex items-center justify-center gap-1",
+        "relative z-10 flex-1 inline-flex items-center justify-center gap-1",
         "text-[13px] leading-[20px] font-normal whitespace-nowrap",
-        "transition-all outline-none select-none",
-        "hover:bg-hover",
-        "active:bg-press",
-        "focus-visible:border-2 focus-visible:border-ring focus:z-10",
+        "transition-colors outline-none select-none",
+        "focus-visible:border-2 focus-visible:border-ring focus:z-20",
         "disabled:pointer-events-none disabled:text-disabled-foreground",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 
-        // ── Default variant items: rounded pills, no border ──
+        // ── Default (slider) variant items: rounded pills, no border ──
         !isOutline && [
           "rounded-sm border border-transparent text-muted-foreground",
-          // Selected: white bg + shadow, foreground text
+          "hover:text-foreground",
           "aria-pressed:bg-background aria-pressed:shadow-xs aria-pressed:text-foreground",
           "data-[state=on]:bg-background data-[state=on]:shadow-xs data-[state=on]:text-foreground",
         ],
@@ -112,15 +114,13 @@ function SegmentControlItem({
         // ── Outline variant items: flush (no radius), with input border dividers ──
         isOutline && [
           "rounded-none border border-input shadow-xs",
-          // Collapse double borders between adjacent items
+          "hover:bg-hover",
+          "active:bg-press",
           "not-first:-ml-px",
-          // First item: round left corners
           "first:rounded-l-sm",
-          // Last item: round right corners
           "last:rounded-r-sm",
-          // Selected: accent bg + primary border + accent-foreground text, elevated z so blue border shows over neighbors
-          "aria-pressed:bg-accent aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:text-accent-foreground aria-pressed:relative aria-pressed:z-10",
-          "data-[state=on]:bg-accent data-[state=on]:border-primary data-[state=on]:shadow-none data-[state=on]:text-accent-foreground data-[state=on]:relative data-[state=on]:z-10",
+          "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:text-accent-foreground aria-pressed:relative aria-pressed:z-10",
+          "data-[state=on]:bg-active data-[state=on]:border-primary data-[state=on]:shadow-none data-[state=on]:text-accent-foreground data-[state=on]:relative data-[state=on]:z-10",
         ],
 
         // Sizes

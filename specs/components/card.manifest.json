@@ -1,0 +1,20 @@
+{
+  "$component": "Card",
+  "$figmaId": "3154:4736",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3154-4736",
+  "variants": {
+    "Type": ["Post", "Asset Preview", "Source", "Asset Result"]
+  },
+  "props": {},
+  "code": "card.tsx",
+  "codeAPI": {
+    "type": ["post", "preview", "source", "result"],
+    "size": ["default", "sm", "lg"]
+  },
+  "variantMapping": {
+    "Post": "post",
+    "Asset Preview": "preview",
+    "Source": "source",
+    "Asset Result": "result"
+  }
+}

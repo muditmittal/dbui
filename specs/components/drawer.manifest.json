@@ -1,0 +1,8 @@
+{
+  "$component": "Drawer",
+  "$figmaId": "1060:3937",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3937",
+  "variants": {},
+  "props": {},
+  "code": "drawer.tsx"
+}

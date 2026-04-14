@@ -13,11 +13,10 @@ import {
 } from "dbui/components/ui/combobox"
 
 const meta: Meta = {
-  title: "Inputs/TypeaheadCombobox",
+  title: "Controls/TypeaheadCombobox",
 }
 
 export default meta
-type Story = StoryObj
 
 const tags = [
   { value: "python", label: "Python" },
@@ -28,10 +27,10 @@ const tags = [
   { value: "typescript", label: "TypeScript" },
 ]
 
-function TypeaheadExample() {
+function TypeaheadExample({ preSelected = false }: { preSelected?: boolean }) {
   const anchor = useComboboxAnchor()
   return (
-    <Combobox multiple>
+    <Combobox multiple defaultValue={preSelected ? ["python", "sql"] : undefined}>
       <ComboboxChips ref={anchor}>
         {(chip) => <ComboboxChip key={chip.value}>{chip.label}</ComboboxChip>}
         <ComboboxChipsInput placeholder="Add languages..." />
@@ -50,6 +49,12 @@ function TypeaheadExample() {
   )
 }
 
-export const Default: Story = {
+export const Default: StoryObj = {
+  name: "Empty (type to add)",
   render: () => <TypeaheadExample />,
+}
+
+export const WithChips: StoryObj = {
+  name: "With Pre-selected Chips",
+  render: () => <TypeaheadExample preSelected />,
 }

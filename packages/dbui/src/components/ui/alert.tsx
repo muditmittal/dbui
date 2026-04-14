@@ -32,6 +32,14 @@ const alertVariants = cva(
   }
 )
 
+/**
+ * @constraints
+ * - ALWAYS include AlertIcon with the variant-appropriate icon:
+ *   danger=DangerFill, warning=WarningFill, info=InfoFill, success=CheckCircleFill.
+ * - ALWAYS include AlertTitle. Description is supplementary.
+ * - INLINE layout: action button uses size="sm". STACKED layout: action uses size="md".
+ * - Action button placement: inline=beside content, stacked=inside content below description.
+ */
 function Alert({
   className,
   variant,
@@ -52,7 +60,14 @@ function AlertIcon({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-icon"
-      className={cn("flex shrink-0 items-center py-0.5 [&_svg:not([class*='size-'])]:size-4", className)}
+      className={cn(
+        "flex shrink-0 items-center py-0.5 [&_svg:not([class*='size-'])]:size-4",
+        "group-data-[variant=danger]/alert:text-destructive",
+        "group-data-[variant=warning]/alert:text-warning",
+        "group-data-[variant=success]/alert:text-success",
+        "group-data-[variant=info]/alert:text-foreground",
+        className
+      )}
       {...props}
     />
   )
@@ -114,12 +129,16 @@ function AlertClose({
       type="button"
       aria-label="Dismiss"
       className={cn(
-        "inline-flex size-6 shrink-0 items-center justify-center rounded-sm p-1 text-muted-foreground hover:text-foreground",
+        "inline-flex size-6 shrink-0 items-center justify-center rounded-sm p-1 text-muted-foreground hover:text-foreground [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
-      ×
+      {props.children ?? (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )}
     </button>
   )
 }

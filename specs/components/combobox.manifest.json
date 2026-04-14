@@ -1,0 +1,25 @@
+{
+  "$component": "Combobox",
+  "$figmaId": "811:976",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=811-976",
+  "$codePath": "packages/dbui/src/components/ui/combobox.tsx",
+  "$storyPath": "apps/portal/src/stories/Combobox.stories.tsx",
+  "variants": {
+    "Size": {
+      "figma": ["Default", "Small"],
+      "code": ["default", "sm"],
+      "mapping": { "Default": "default", "Small": "sm" }
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
+      "code": ["CSS", "CSS", "CSS", "focus-visible", "disabled", "aria-invalid"]
+    }
+  },
+  "props": {
+    "Show Clear": { "figmaType": "BOOLEAN", "default": false, "code": "clear button in trigger" },
+    "Show Label": { "figmaType": "BOOLEAN", "default": false, "code": "inline label prefix" },
+    "Label": { "figmaType": "TEXT", "default": "Label:", "code": "label text" },
+    "Show Badge": { "figmaType": "BOOLEAN", "default": false, "code": "count badge" },
+    "Text": { "figmaType": "TEXT", "default": "Search...", "code": "placeholder" }
+  }
+}

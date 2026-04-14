@@ -104,6 +104,7 @@
   --color-surface-success: var(--surface-success);
   --color-surface-warning: var(--surface-warning);
   --color-surface-danger: var(--surface-danger);
+  --color-active: var(--active);
   --color-ai-gradient-start: var(--ai-gradient-start);
   --color-ai-gradient-mid: var(--ai-gradient-mid);
   --color-ai-gradient-end: var(--ai-gradient-end);
@@ -188,6 +189,9 @@
   --surface-warning: #FFF9EB;
   --surface-danger: #FFF5F7;
 
+  /* Selected/active state */
+  --active: #F0F8FF;
+
   /* AI Brand */
   --ai-gradient-start: #4299E0;
   --ai-gradient-mid: #CA42E0;
@@ -269,6 +273,9 @@
   --surface-success: rgba(39, 124, 67, 0.16);
   --surface-warning: rgba(190, 80, 30, 0.16);
   --surface-danger: rgba(200, 45, 76, 0.16);
+
+  /* Selected/active state */
+  --active: #04355D;
 
   /* AI Brand */
   --ai-gradient-start: #4299E0;

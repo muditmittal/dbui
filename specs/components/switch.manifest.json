@@ -1,0 +1,22 @@
+{
+  "$component": "Switch",
+  "$figmaId": "717:650",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=717-650",
+  "$codePath": "packages/dbui/src/components/ui/switch.tsx",
+  "$storyPath": "apps/portal/src/stories/Switch.stories.tsx",
+  "variants": {
+    "On": {
+      "figma": ["false", "true"],
+      "code": "defaultChecked / checked prop"
+    },
+    "Size": {
+      "figma": ["Default", "Small"],
+      "code": ["default", "sm"],
+      "mapping": { "Default": "default", "Small": "sm" }
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
+    }
+  }
+}

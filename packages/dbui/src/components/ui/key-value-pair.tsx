@@ -2,12 +2,20 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * KeyValuePair — container for key-value rows.
+ * Maps to Figma .Key Value (Type: Horizontal/Vertical/Flexible).
+ *
+ * - horizontal: key (120px fixed) + value, side by side
+ * - vertical: key (12px Hint) above value
+ * - flexible: key + value share space equally, value right-aligned
+ */
 function KeyValuePair({
   className,
   layout = "vertical",
   ...props
 }: React.ComponentProps<"div"> & {
-  layout?: "horizontal" | "vertical"
+  layout?: "horizontal" | "vertical" | "flexible"
 }) {
   return (
     <div
@@ -15,7 +23,7 @@ function KeyValuePair({
       data-layout={layout}
       className={cn(
         "flex flex-col gap-0 text-[13px]",
-        layout === "horizontal" ? "w-full" : "w-[280px]",
+        layout === "horizontal" ? "w-full" : layout === "flexible" ? "w-full" : "w-[280px]",
         className
       )}
       {...props}
@@ -41,7 +49,7 @@ function KeyValueRow({
   layout = "vertical",
   ...props
 }: React.ComponentProps<"div"> & {
-  layout?: "horizontal" | "vertical"
+  layout?: "horizontal" | "vertical" | "flexible"
 }) {
   return (
     <div
@@ -63,16 +71,18 @@ function KeyValueKey({
   layout = "horizontal",
   ...props
 }: React.ComponentProps<"span"> & {
-  layout?: "horizontal" | "vertical"
+  layout?: "horizontal" | "vertical" | "flexible"
 }) {
   return (
     <span
       data-slot="key-value-key"
       className={cn(
-        "shrink-0 overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground",
+        "overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground",
         layout === "vertical"
-          ? "w-full text-[12px] leading-[16px]"
-          : "w-[120px] text-[13px] leading-[20px]",
+          ? "w-full shrink-0 text-[12px] leading-[16px]"
+          : layout === "flexible"
+            ? "min-w-0 flex-1 text-[13px] leading-[20px]"
+            : "w-[120px] shrink-0 text-[13px] leading-[20px]",
         className
       )}
       {...props}
@@ -86,6 +96,23 @@ function KeyValueValue({ className, ...props }: React.ComponentProps<"span">) {
       data-slot="key-value-value"
       className={cn(
         "flex min-h-px min-w-px flex-1 items-center gap-2 text-[13px] leading-[20px] text-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * KeyValueValueEnd — right-aligned value for flexible layout.
+ * Maps to Figma .Key Value Type="Flexible" (value text-right).
+ */
+function KeyValueValueEnd({ className, ...props }: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="key-value-value-end"
+      className={cn(
+        "flex min-h-px min-w-px flex-1 items-center justify-end gap-2 text-[13px] leading-[20px] text-foreground text-right",
         className
       )}
       {...props}
@@ -112,5 +139,6 @@ export {
   KeyValueRow,
   KeyValueKey,
   KeyValueValue,
+  KeyValueValueEnd,
   KeyValueGrid,
 }

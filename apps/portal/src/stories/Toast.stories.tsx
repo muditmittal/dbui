@@ -4,7 +4,7 @@ import { Toaster } from "dbui/components/ui/sonner"
 import { Button } from "dbui/components/ui/button"
 
 const meta: Meta = {
-  title: "Feedback/Toast",
+  title: "Overlays/Toast",
   decorators: [
     (Story) => (
       <>

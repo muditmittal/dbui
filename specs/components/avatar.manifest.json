@@ -1,0 +1,14 @@
+{
+  "$component": "Avatar",
+  "$figmaId": "1084:1542",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1084-1542",
+  "variants": {
+    "Type": ["Initials", "Icon"]
+  },
+  "props": {},
+  "code": "avatar.tsx",
+  "codeAPI": {
+    "size": ["sm", "default", "lg"],
+    "type": ["initials", "icon"]
+  }
+}

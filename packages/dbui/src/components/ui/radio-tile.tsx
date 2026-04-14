@@ -47,12 +47,12 @@ function RadioTileHeader({
       {...props}
     >
       {children}
-      <RadioPrimitive.Indicator
+      <div
         data-slot="radio-tile-indicator"
-        className="ml-auto flex size-4 shrink-0 items-center justify-center rounded-full border border-input bg-background data-checked:border-primary data-checked:bg-primary"
+        className="ml-auto flex size-4 shrink-0 items-center justify-center rounded-full border border-input bg-background group-data-checked/radio-tile:border-primary group-data-checked/radio-tile:bg-primary"
       >
-        <span className="size-1.5 rounded-full bg-primary-foreground" />
-      </RadioPrimitive.Indicator>
+        <span className="size-1.5 rounded-full bg-primary-foreground opacity-0 group-data-checked/radio-tile:opacity-100" />
+      </div>
     </div>
   )
 }
@@ -83,4 +83,23 @@ function RadioTileDescription({
   )
 }
 
-export { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription }
+/**
+ * RadioTileIcon — optional leading icon in the header.
+ */
+function RadioTileIcon({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="radio-tile-icon"
+      className={cn(
+        "pointer-events-none shrink-0 text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription, RadioTileIcon }

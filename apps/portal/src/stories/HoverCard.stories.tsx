@@ -6,7 +6,7 @@ import {
 } from "dbui/components/ui/hover-card"
 
 const meta: Meta<typeof HoverCard> = {
-  title: "Feedback/HoverCard",
+  title: "Overlays/HoverCard",
   component: HoverCard,
 }
 

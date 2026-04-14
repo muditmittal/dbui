@@ -1,0 +1,11 @@
+{
+  "$component": "Status",
+  "$figmaId": "3174:4132",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3174-4132",
+  "variants": {
+    "Size": ["sm", "md"],
+    "Status": ["Online", "Ready", "Offline", "Pending", "Running", "Syncing", "Canceled", "Stopped", "Info", "Success", "Warning", "Error"]
+  },
+  "props": {},
+  "code": "status.tsx"
+}

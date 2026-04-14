@@ -1,0 +1,10 @@
+{
+  "$component": "Pagination",
+  "$figmaId": "3140:1999",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3140-1999",
+  "variants": {},
+  "props": {
+    "Settings": { "type": "boolean", "default": true }
+  },
+  "code": "pagination.tsx"
+}

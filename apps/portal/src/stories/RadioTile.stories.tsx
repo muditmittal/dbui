@@ -5,56 +5,81 @@ import {
   RadioTileHeader,
   RadioTileTitle,
   RadioTileDescription,
+  RadioTileIcon,
 } from "dbui/components/ui/radio-tile"
 import { Cloud } from "@/components/icons/Cloud"
 import { Gear } from "@/components/icons/Gear"
+import { Lightning } from "@/components/icons/Lightning"
 
-const meta: Meta<typeof RadioTileGroup> = {
+const meta: Meta = {
   title: "Controls/RadioTile",
-  component: RadioTileGroup,
+  argTypes: {
+    showIcon: { control: "boolean", name: "Show Icon" },
+    showDescription: { control: "boolean", name: "Show Description" },
+    columns: { control: "radio", options: [1, 2, 3], name: "Grid Columns" },
+    disabled: { control: "boolean" },
+  },
+  args: {
+    showIcon: false,
+    showDescription: true,
+    columns: 1,
+    disabled: false,
+  },
 }
 
 export default meta
-type Story = StoryObj<typeof RadioTileGroup>
 
-export const Default: Story = {
-  render: () => (
-    <RadioTileGroup defaultValue="standard" className="max-w-md grid-cols-1">
+export const Playground: StoryObj = {
+  render: (args: any) => (
+    <RadioTileGroup
+      defaultValue="standard"
+      disabled={args.disabled}
+      className={`max-w-lg ${args.columns === 1 ? "grid-cols-1" : args.columns === 2 ? "grid-cols-2" : "grid-cols-3"}`}
+    >
       <RadioTile value="standard">
         <RadioTileHeader>
+          {args.showIcon && <RadioTileIcon><Gear /></RadioTileIcon>}
           <RadioTileTitle>Standard</RadioTileTitle>
         </RadioTileHeader>
-        <RadioTileDescription>General purpose compute for most workloads</RadioTileDescription>
+        {args.showDescription && (
+          <RadioTileDescription>General purpose compute for most workloads</RadioTileDescription>
+        )}
       </RadioTile>
       <RadioTile value="performance">
         <RadioTileHeader>
+          {args.showIcon && <RadioTileIcon><Lightning /></RadioTileIcon>}
           <RadioTileTitle>Performance</RadioTileTitle>
         </RadioTileHeader>
-        <RadioTileDescription>Optimized for compute-intensive tasks</RadioTileDescription>
+        {args.showDescription && (
+          <RadioTileDescription>Optimized for compute-intensive tasks</RadioTileDescription>
+        )}
       </RadioTile>
       <RadioTile value="memory">
         <RadioTileHeader>
+          {args.showIcon && <RadioTileIcon><Cloud /></RadioTileIcon>}
           <RadioTileTitle>Memory Optimized</RadioTileTitle>
         </RadioTileHeader>
-        <RadioTileDescription>For large datasets that need to fit in memory</RadioTileDescription>
+        {args.showDescription && (
+          <RadioTileDescription>For large datasets that need to fit in memory</RadioTileDescription>
+        )}
       </RadioTile>
     </RadioTileGroup>
   ),
 }
 
-export const WithIcons: Story = {
+export const WithIcons: StoryObj = {
   render: () => (
     <RadioTileGroup defaultValue="on-demand" className="max-w-lg grid-cols-2">
       <RadioTile value="on-demand">
         <RadioTileHeader>
-          <Gear className="size-4 text-muted-foreground" />
+          <RadioTileIcon><Gear /></RadioTileIcon>
           <RadioTileTitle>On-Demand</RadioTileTitle>
         </RadioTileHeader>
         <RadioTileDescription>Pay as you go, no commitment</RadioTileDescription>
       </RadioTile>
       <RadioTile value="serverless">
         <RadioTileHeader>
-          <Cloud className="size-4 text-muted-foreground" />
+          <RadioTileIcon><Cloud /></RadioTileIcon>
           <RadioTileTitle>Serverless</RadioTileTitle>
         </RadioTileHeader>
         <RadioTileDescription>Auto-scaling, zero management</RadioTileDescription>
@@ -63,7 +88,7 @@ export const WithIcons: Story = {
   ),
 }
 
-export const Disabled: Story = {
+export const Disabled: StoryObj = {
   render: () => (
     <RadioTileGroup className="max-w-md grid-cols-1">
       <RadioTile value="available">

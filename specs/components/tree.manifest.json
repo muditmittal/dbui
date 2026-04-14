@@ -1,0 +1,17 @@
+{
+  "$component": "Tree",
+  "$figmaId": "3211:5106",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3211-5106",
+  "variants": {},
+  "props": {},
+  "innerComponents": {
+    ".DataTreeNode": {
+      "variants": {
+        "Type": ["Header", "Open folder", "File", "Focused folder"],
+        "Selected": ["False", "True"],
+        "Hover": ["False", "True"]
+      }
+    }
+  },
+  "code": "data-tree.tsx"
+}

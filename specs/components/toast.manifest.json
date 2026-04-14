@@ -1,0 +1,12 @@
+{
+  "$component": "Toast",
+  "$figmaId": "968:944",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=968-944",
+  "variants": {
+    "Type": ["Success", "Info", "Warning", "Error"]
+  },
+  "props": {
+    "Removable": { "type": "boolean", "default": true }
+  },
+  "code": "sonner.tsx"
+}

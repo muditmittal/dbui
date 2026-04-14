@@ -1,0 +1,8 @@
+{
+  "$component": "Skeleton",
+  "$figmaId": "3128:1778",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3128-1778",
+  "variants": {},
+  "props": {},
+  "code": "skeleton.tsx"
+}

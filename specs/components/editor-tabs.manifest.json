@@ -1,0 +1,17 @@
+{
+  "$component": "EditorTabs",
+  "$figmaId": "3179:5135",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3179-5135",
+  "variants": {},
+  "props": {},
+  "innerComponents": {
+    ".EditorTab": {
+      "variants": {
+        "State": ["Default", "Hover", "Press"],
+        "Selected": ["False", "True"]
+      }
+    }
+  },
+  "code": "editor-tabs.tsx",
+  "subComponents": ["EditorTabIcon"]
+}

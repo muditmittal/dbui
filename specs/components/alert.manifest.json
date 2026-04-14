@@ -1,0 +1,13 @@
+{
+  "$component": "Alert",
+  "$figmaId": "949:962",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=949-962",
+  "variants": {
+    "Variant": ["Danger", "Warning", "Info", "Success"],
+    "Layout": ["Inline", "Stacked"]
+  },
+  "props": {
+    "Removable": { "type": "boolean", "default": true }
+  },
+  "code": "alert.tsx"
+}

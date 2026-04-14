@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -25,8 +26,8 @@ const toggleVariants = cva(
     "active:bg-press",
     "focus-visible:border-2 focus-visible:border-ring",
     "disabled:pointer-events-none disabled:text-disabled-foreground",
-    "aria-pressed:bg-accent aria-pressed:border-primary aria-pressed:text-accent-foreground",
-    "data-[state=on]:bg-accent data-[state=on]:border-primary data-[state=on]:text-accent-foreground",
+    "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:text-accent-foreground",
+    "data-[state=on]:bg-active data-[state=on]:border-primary data-[state=on]:text-accent-foreground",
     "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ].join(" "),
@@ -39,8 +40,8 @@ const toggleVariants = cva(
         pill: [
           "shadow-xs border-input bg-transparent gap-2 rounded-full",
           "hover:bg-hover hover:border-primary",
-          "aria-pressed:bg-accent aria-pressed:text-primary-press aria-pressed:border-primary aria-pressed:shadow-none",
-          "data-[state=on]:bg-accent data-[state=on]:text-primary-press data-[state=on]:border-primary data-[state=on]:shadow-none",
+          "aria-pressed:bg-active aria-pressed:text-primary-press aria-pressed:border-primary aria-pressed:shadow-none",
+          "data-[state=on]:bg-active data-[state=on]:text-primary-press data-[state=on]:border-primary data-[state=on]:shadow-none",
           "disabled:border-disabled disabled:shadow-none",
         ].join(" "),
         icon: "bg-transparent",
@@ -74,4 +75,52 @@ function Toggle({
   )
 }
 
-export { Toggle, toggleVariants }
+/**
+ * FilterToggle — Toggle with built-in checkbox→checkmark swap.
+ * Maps to Figma Toggle Button variant="Filter".
+ *
+ * OFF: empty checkbox + label
+ * ON: check icon + label, active bg + primary border
+ *
+ * Usage: <FilterToggle>Filter label</FilterToggle>
+ */
+function FilterToggle({
+  className,
+  size = "md",
+  children,
+  defaultPressed,
+  pressed: controlledPressed,
+  onPressedChange,
+  ...props
+}: Omit<TogglePrimitive.Props, "children"> &
+  Pick<VariantProps<typeof toggleVariants>, "size"> & {
+    children?: React.ReactNode
+  }) {
+  const [internalPressed, setInternalPressed] = React.useState(defaultPressed ?? false)
+  const isPressed = controlledPressed ?? internalPressed
+
+  return (
+    <TogglePrimitive
+      data-slot="toggle"
+      pressed={controlledPressed}
+      defaultPressed={defaultPressed}
+      onPressedChange={(pressed, event) => {
+        setInternalPressed(pressed)
+        onPressedChange?.(pressed, event)
+      }}
+      className={cn(toggleVariants({ variant: "filter", size, className }))}
+      {...props}
+    >
+      {isPressed ? (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="size-4 shrink-0">
+          <path d="M3 8.5L6.5 12L13 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ) : (
+        <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-sm border border-input" />
+      )}
+      {children}
+    </TogglePrimitive>
+  )
+}
+
+export { Toggle, FilterToggle, toggleVariants }

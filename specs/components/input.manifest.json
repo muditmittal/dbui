@@ -1,0 +1,34 @@
+{
+  "$component": "Input",
+  "$figmaId": "722:658",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=722-658",
+  "$codePath": "packages/dbui/src/components/ui/input.tsx",
+  "$storyPath": "apps/portal/src/stories/Input.stories.tsx",
+  "variants": {
+    "Size": {
+      "figma": ["Default", "Small"],
+      "code": ["default", "sm"],
+      "mapping": { "Default": "default", "Small": "sm" }
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger", "Warning", "Success"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid", "validation='warning'", "validation='success'"]
+    }
+  },
+  "innerComponents": {
+    ".InputContent": {
+      "Content": ["Placeholder", "Value"],
+      "Show Icon": "boolean → InputGroupAddon inline-start",
+      "Show Indicator": "boolean → InputGroupAddon inline-end (status icon)",
+      "Show Action": "boolean → InputGroupAddon inline-end (button)",
+      "Size": ["Default", "Small"]
+    }
+  },
+  "storyControls": {
+    "size": "✅ select",
+    "validation": "✅ select",
+    "disabled": "✅ boolean",
+    "placeholder": "✅ text",
+    "InputContent playground": "✅ showLeftIcon, showRightIndicator, showRightAction"
+  }
+}

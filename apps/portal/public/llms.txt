@@ -591,3 +591,62 @@ import { Search } from "dbui/components/icons/Search"
 All icons render at 16×16 by default. Override with className="size-5" etc.
 Full icon list: 451 icons covering actions, objects, indicators, and component icons.
 Top used: ChevronDown, Plus, Search, ChevronRight, NewWindow, Close, Warning, Danger, Overflow, Pencil, Trash, CheckCircle.
+
+## 11. PAGE LAYOUT — PLATFORM SHELL
+
+Every Databricks product page uses this shell. The content surface is the only scrollable area.
+
+```
+┌──────────────────────────────────────────────────┐
+│  Platform Header (h-12, 48px, px-3 py-2)         │
+│  [≡ Cloud Logo] ···· [Search ⌘P] ···· [Actions]  │
+├────────┬─────────────────────────────────────────┤
+│ Navbar │                                    8px  │
+│ w-180  │     Content Surface                     │
+│ px-2   │     (bg-background, border,        8px  │
+│        │      rounded-[8px], shadow-md,          │
+│ + New  │      overflow-y-auto)                   │
+│ ────── │                                         │
+│ Items  │     ← only this area scrolls →          │
+│ ────── │                                         │
+│ SQL ▾  │                                         │
+│  ···   │                                    8px  │
+└────────┴─────────────────────────────────────────┘
+```
+
+```tsx
+// Shell
+<div className="flex flex-col h-screen overflow-hidden bg-muted">
+  {/* Platform Header — 48px, edge-to-edge */}
+  <header className="flex items-center justify-between px-3 py-2">
+    <div className="flex items-center gap-1">{/* sidebar toggle + cloud + logo */}</div>
+    <Input placeholder="Search..." className="w-[552px]" />
+    <div className="flex items-center gap-1">{/* catalog selector + icons + avatar */}</div>
+  </header>
+
+  {/* Page — fills remaining height */}
+  <div className="flex flex-1 min-h-0 pb-2 pr-2">
+    {/* Navbar — fixed 180px, scrolls independently if needed */}
+    <nav className="flex flex-col w-[180px] shrink-0 gap-4 px-2 overflow-y-auto">
+      <Button className="w-full">+ New</Button>
+      <NavbarSection>
+        <NavbarItem active><CatalogIcon /> Catalog</NavbarItem>
+        <NavbarItem><WorkflowsIcon /> Workflows</NavbarItem>
+      </NavbarSection>
+    </nav>
+
+    {/* Content Surface — the ONLY scrollable area */}
+    <main className="flex-1 min-w-0 min-h-0 overflow-y-auto bg-background border border-border rounded-[8px] shadow-md">
+      {/* Your page content goes here */}
+    </main>
+  </div>
+</div>
+```
+
+Rules:
+- Shell bg is `bg-muted` (grey). Content surface is `bg-background` (white).
+- ONLY the content surface scrolls. Header and navbar stay fixed.
+- Content surface has 8px margin on top, right, bottom. Left is flush with navbar.
+- Navbar is 180px fixed width, collapsible via header toggle button.
+- Nav items: h-7, px-2, gap-2, rounded-sm. Active: bg-accent + text-accent-foreground + font-semibold.
+- Platform header: 48px tall, edge-to-edge, search bar centered at 552px width.

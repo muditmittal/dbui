@@ -20,6 +20,7 @@ export * from "./components/ui/collapsible";
 export * from "./components/ui/combobox";
 export * from "./components/ui/command";
 export * from "./components/ui/context-menu";
+export * from "./components/ui/data-tree";
 export * from "./components/ui/dialog";
 export * from "./components/ui/direction";
 export * from "./components/ui/drawer";
@@ -39,7 +40,9 @@ export * from "./components/ui/menubar";
 export * from "./components/ui/native-select";
 export * from "./components/ui/navbar";
 export * from "./components/ui/navigation-menu";
+export * from "./components/ui/page-header";
 export * from "./components/ui/pagination";
+export * from "./components/ui/platform-header";
 export * from "./components/ui/popover";
 export * from "./components/ui/progress";
 export * from "./components/ui/radio-group";
@@ -69,3 +72,7 @@ export * from "./components/ui/tooltip";
 // Utilities
 export * from "./lib/utils";
 export * from "./lib/button-variants";
+
+// Rules (for linters, Storybook decorators, or LLM context)
+export { compositionRules } from "./rules/composition-rules";
+export { layoutRules } from "./rules/layout-rules";

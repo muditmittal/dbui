@@ -1,0 +1,8 @@
+{
+  "$component": "Breadcrumb",
+  "$figmaId": "3140:1914",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3140-1914",
+  "variants": {},
+  "props": {},
+  "code": "breadcrumb.tsx"
+}

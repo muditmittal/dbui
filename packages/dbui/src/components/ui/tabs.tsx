@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -86,4 +87,26 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   )
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
+/**
+ * TabsIcon — leading icon slot inside TabsTrigger.
+ * Maps to Figma .TabItem "Icon" boolean prop.
+ *
+ * Usage: <TabsTrigger value="sql"><TabsIcon><Query /></TabsIcon>SQL</TabsTrigger>
+ */
+function TabsIcon({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="tabs-icon"
+      className={cn(
+        "pointer-events-none shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export { Tabs, TabsList, TabsTrigger, TabsContent, TabsIcon, tabsListVariants }

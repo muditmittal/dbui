@@ -1,0 +1,8 @@
+{
+  "$component": "Separator",
+  "$figmaId": "3177:2832",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3177-2832",
+  "variants": {},
+  "props": {},
+  "code": "separator.tsx"
+}

@@ -1,73 +1,81 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "dbui/components/ui/select"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectLabel, SelectGroup, SelectSeparator } from "dbui/components/ui/select"
+import { Search } from "@/components/icons/Search"
 
-const meta: Meta<typeof Select> = {
-  title: "Inputs/Select",
-  component: Select,
+const meta: Meta = {
+  title: "Controls/Select",
+  argTypes: {
+    variant: { control: "radio", options: ["default", "ghost"], name: "Type (Default / Ghost)" },
+    size: { control: "radio", options: ["default", "sm"], name: "Size" },
+    showIcon: { control: "boolean", name: "Show Icon (Search)" },
+    disabled: { control: "boolean" },
+    placeholder: { control: "text" },
+  },
+  args: {
+    variant: "default",
+    size: "default",
+    showIcon: false,
+    disabled: false,
+    placeholder: "Select an option...",
+  },
 }
 
 export default meta
-type Story = StoryObj<typeof Select>
 
-export const Default: Story = {
-  render: () => (
-    <Select>
-      <SelectTrigger className="w-[200px]">
-        <SelectValue placeholder="Select an option" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="option-1">Option 1</SelectItem>
-        <SelectItem value="option-2">Option 2</SelectItem>
-        <SelectItem value="option-3">Option 3</SelectItem>
-      </SelectContent>
-    </Select>
+export const Playground: StoryObj = {
+  render: (args: any) => (
+    <div className="w-[240px]">
+      <Select>
+        <SelectTrigger size={args.size} variant={args.variant} disabled={args.disabled}>
+          {args.showIcon && <Search className="size-4 shrink-0 text-muted-foreground" />}
+          <SelectValue placeholder={args.placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Workspace</SelectLabel>
+            <SelectItem value="notebook">Notebook</SelectItem>
+            <SelectItem value="query">Query</SelectItem>
+            <SelectItem value="dashboard">Dashboard</SelectItem>
+          </SelectGroup>
+          <SelectSeparator />
+          <SelectGroup>
+            <SelectLabel>Data</SelectLabel>
+            <SelectItem value="table">Table</SelectItem>
+            <SelectItem value="volume">Volume</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
   ),
 }
 
-export const Small: Story = {
+export const AllStates: StoryObj = {
+  name: "All States ",
   render: () => (
-    <Select>
-      <SelectTrigger size="sm" className="w-[200px]">
-        <SelectValue placeholder="Small select" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="a">Alpha</SelectItem>
-        <SelectItem value="b">Beta</SelectItem>
-        <SelectItem value="c">Gamma</SelectItem>
-      </SelectContent>
-    </Select>
-  ),
-}
-
-export const Ghost: Story = {
-  render: () => (
-    <Select>
-      <SelectTrigger variant="ghost" className="w-[200px]">
-        <SelectValue placeholder="Ghost variant" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="x">Choice X</SelectItem>
-        <SelectItem value="y">Choice Y</SelectItem>
-      </SelectContent>
-    </Select>
-  ),
-}
-
-export const Disabled: Story = {
-  render: () => (
-    <Select disabled>
-      <SelectTrigger className="w-[200px]">
-        <SelectValue placeholder="Disabled" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="a">A</SelectItem>
-      </SelectContent>
-    </Select>
+    <div className="flex flex-col gap-3 w-[240px]">
+      {[
+        { label: "Default", props: {} },
+        { label: "Ghost", props: { variant: "ghost" as const } },
+        { label: "With Icon", props: {}, icon: true },
+        { label: "Small", props: { size: "sm" as const } },
+        { label: "Disabled", props: { disabled: true } },
+        { label: "Danger (invalid)", props: { "aria-invalid": true } },
+      ].map(({ label, props, icon }) => (
+        <div key={label} className="flex flex-col gap-1">
+          <p className="text-[12px] text-muted-foreground">{label}</p>
+          <Select defaultValue="notebook">
+            <SelectTrigger {...props}>
+              {icon && <Search className="size-4 shrink-0 text-muted-foreground" />}
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="notebook">Notebook</SelectItem>
+              <SelectItem value="query">Query</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      ))}
+      <p className="text-[11px] text-muted-foreground mt-2">Hover/Focus states are interactive.</p>
+    </div>
   ),
 }

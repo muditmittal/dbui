@@ -1,0 +1,55 @@
+{
+  "$component": "DropdownMenu",
+  "$figmaId": "787:706",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=787-706",
+  "$codePath": "packages/dbui/src/components/ui/dropdown-menu.tsx",
+  "$storyPath": "apps/portal/src/stories/DropdownMenu.stories.tsx",
+  "structure": "Composition of .MenuRow instances (no variants on parent)",
+  "innerComponents": {
+    ".MenuRow": {
+      "Type": ["DropdownItem", "Section Header", "Divider", "Search", "Empty", "Loading", "Add New", "Footer"],
+      "codeMapping": {
+        "DropdownItem": "DropdownMenuItem",
+        "Section Header": "DropdownMenuLabel",
+        "Divider": "DropdownMenuSeparator",
+        "Search": "DropdownMenuSearch",
+        "Empty": "DropdownMenuEmpty",
+        "Loading": "DropdownMenuLoading",
+        "Add New": "DropdownMenuItem + Plus icon",
+        "Footer": "DropdownMenuFooter"
+      }
+    },
+    ".DropdownMenuItem": {
+      "Type": ["Action", "SingleSelect", "MultiSelect", "Submenu", "Destructive"],
+      "State": ["Default", "Hover", "Press", "Disabled", "Selected"],
+      "codeMapping": {
+        "Action": "DropdownMenuItem",
+        "SingleSelect": "DropdownMenuRadioItem",
+        "MultiSelect": "DropdownMenuCheckboxItem",
+        "Submenu": "DropdownMenuSubTrigger",
+        "Destructive": "DropdownMenuItem variant='destructive'"
+      }
+    },
+    ".MenuLabel": {
+      "Content": ["Label Only", "With Description"],
+      "Show Icon": "boolean → DropdownMenuItemIcon",
+      "Icon": "instance swap → children of DropdownMenuItemIcon"
+    },
+    ".MenuTrailing": {
+      "Type": ["None", "Icon", "Hint", "Count"],
+      "codeMapping": {
+        "None": "no trailing element",
+        "Icon": "trailing icon in children",
+        "Hint": "DropdownMenuShortcut",
+        "Count": "DropdownMenuItemBadge"
+      }
+    }
+  },
+  "storyControls": {
+    "MenuItem Playground": "✅ showIcon, showDescription, trailing type, variant",
+    "Default": "✅ basic menu",
+    "With Icons & Shortcuts": "✅ full menu with all sub-components",
+    "With Description": "✅ description variant",
+    "Menu Row Types": "✅ Search, Empty, Loading, Footer"
+  }
+}

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Slider } from "dbui/components/ui/slider"
 
 const meta: Meta<typeof Slider> = {
-  title: "Inputs/Slider",
+  title: "Controls/Slider",
   component: Slider,
   args: {
     defaultValue: [50],

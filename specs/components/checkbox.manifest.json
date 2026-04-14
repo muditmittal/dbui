@@ -1,0 +1,17 @@
+{
+  "$component": "Checkbox",
+  "$figmaId": "713:650",
+  "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=713-650",
+  "$codePath": "packages/dbui/src/components/ui/checkbox.tsx",
+  "$storyPath": "apps/portal/src/stories/Checkbox.stories.tsx",
+  "variants": {
+    "Checked": {
+      "figma": ["Unchecked", "Checked", "Indeterminate"],
+      "code": ["unchecked", "checked", "indeterminate (mixed)"]
+    },
+    "State": {
+      "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
+      "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid"]
+    }
+  }
+}

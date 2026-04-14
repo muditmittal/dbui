@@ -4,35 +4,44 @@ import { Plus } from "@/components/icons/Plus"
 import { Gear } from "@/components/icons/Gear"
 import { Trash } from "@/components/icons/Trash"
 import { Search } from "@/components/icons/Search"
+import { Pencil } from "@/components/icons/Pencil"
+import { Filter } from "@/components/icons/Filter"
 
-const meta: Meta<typeof Button> = {
+const iconMap: Record<string, React.ReactNode> = {
+  Plus: <Plus />, Gear: <Gear />, Trash: <Trash />,
+  Search: <Search />, Pencil: <Pencil />, Filter: <Filter />,
+}
+
+const meta: Meta = {
   title: "Actions/IconButton",
-  component: Button,
   argTypes: {
     variant: {
       control: "select",
       options: ["default", "outline", "secondary", "ghost", "destructive", "danger"],
     },
-    size: {
-      control: "select",
-      options: ["icon-sm", "icon-md"],
-    },
+    size: { control: "radio", options: ["icon-sm", "icon-md"] },
+    icon: { control: "select", options: ["Plus", "Gear", "Trash", "Search", "Pencil", "Filter"] },
     disabled: { control: "boolean" },
   },
   args: {
+    variant: "default",
     size: "icon-md",
-    "aria-label": "Action",
+    icon: "Plus",
+    disabled: false,
   },
 }
 
 export default meta
-type Story = StoryObj<typeof Button>
 
-export const Default: Story = {
-  args: { children: <Plus /> },
+export const Playground: StoryObj = {
+  render: (args: any) => (
+    <Button variant={args.variant} size={args.size} disabled={args.disabled} aria-label="Action">
+      {iconMap[args.icon] || <Plus />}
+    </Button>
+  ),
 }
 
-export const AllVariants: Story = {
+export const AllVariants: StoryObj = {
   render: () => (
     <div className="flex items-center gap-3">
       <Button size="icon-md" variant="default" aria-label="Add"><Plus /></Button>
@@ -45,7 +54,7 @@ export const AllVariants: Story = {
   ),
 }
 
-export const Sizes: Story = {
+export const Sizes: StoryObj = {
   render: () => (
     <div className="flex items-center gap-3">
       <Button size="icon-sm" variant="outline" aria-label="Small"><Plus /></Button>
@@ -54,7 +63,7 @@ export const Sizes: Story = {
   ),
 }
 
-export const Disabled: Story = {
+export const Disabled: StoryObj = {
   render: () => (
     <div className="flex items-center gap-3">
       <Button size="icon-md" disabled aria-label="Add"><Plus /></Button>
