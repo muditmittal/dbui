@@ -7,6 +7,15 @@ import { cn } from "../../lib/utils"
 import { Checkbox } from "./checkbox"
 import { ChevronRightIcon, CheckIcon } from "lucide-react"
 
+/**
+ * @standard Dropdown Menu
+ * @guideline Popup left-aligns with trigger (align="start")
+ * @guideline Destructive items go last, separated by a divider
+ * @constraint Menu items use bg-hover on focus, not bg-accent
+ * @constraint Destructive hover uses bg-destructive with destructive-foreground text
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=787-706
+ */
+
 function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
   return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
 }

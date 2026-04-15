@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const H1 = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M1 3V8V13H2.5V8.75H6V13H7.5V8V3H6V7.25H2.5V3H1ZM11.25 3C11.25 4.24264 10.2426 5.25 9 5.25V6.75C9.8442 6.75 10.6233 6.47104 11.25 6.00027V11.5H9V13H12H15V11.5H12.75V3H11.25Z" fill="currentColor"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M1 3V8V13H2.5V8.75H6V13H7.5V8V3H6V7.25H2.5V3H1ZM11.25 3C11.25 4.24264 10.2426 5.25 9 5.25V6.75C9.8442 6.75 10.6233 6.47104 11.25 6.00027V11.5H9V13H12H15V11.5H12.75V3H11.25Z" fill="currentColor"/>
     </svg>
   )
 )

@@ -5,6 +5,15 @@ import { useRender } from "@base-ui/react/use-render"
 import { cn } from "../../lib/utils"
 import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
+/**
+ * @standard Breadcrumb
+ * @guideline Last item is the current page (non-clickable)
+ * @guideline Separator uses ChevronRight, not slash
+ * @constraint Max 5 levels — use ellipsis for deeper hierarchies
+ * @constraint Don't use for non-hierarchical navigation
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3140-1914
+ */
+
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav

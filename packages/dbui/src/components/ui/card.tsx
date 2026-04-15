@@ -2,6 +2,15 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Card
+ * @guideline Uses rounded-xl (16px) radius — the largest radius in the system
+ * @guideline Cards use shadow for elevation, not border
+ * @constraint Don't nest cards inside cards
+ * @constraint Don't use for full-width content — Cards imply bounded areas
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3154-4736
+ */
+
 function Card({
   className,
   size = "default",

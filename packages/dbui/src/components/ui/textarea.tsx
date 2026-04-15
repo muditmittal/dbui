@@ -2,6 +2,15 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Textarea
+ * @guideline Defaults to field-sizing: content (auto-grows)
+ * @guideline Same validation styling as Input — border-only
+ * @constraint Don't set explicit rows unless content has a known max length
+ * @constraint No resize handle when auto-sizing is enabled
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=724-658
+ */
+
 function Textarea({
   className,
   validation,

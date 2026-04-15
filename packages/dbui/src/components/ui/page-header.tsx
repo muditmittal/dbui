@@ -4,6 +4,8 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/** @standard Page Header (planned P1 — Title + breadcrumb + actions) */
+
 /**
  * PageHeader — top bar of a content page inside the platform shell.
  * Maps to Figma .PageTitle + .PageActions composition.

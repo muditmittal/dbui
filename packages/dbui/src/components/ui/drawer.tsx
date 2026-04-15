@@ -5,6 +5,15 @@ import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Drawer
+ * @guideline Slides in from the right by default
+ * @guideline Use for detail panels, settings, and secondary content
+ * @constraint Don't use for primary workflows — use Dialog instead
+ * @constraint Content scrolls independently from the page
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3937
+ */
+
 function Drawer({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) {

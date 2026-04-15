@@ -5,6 +5,15 @@ import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Avatar
+ * @guideline Always provide a fallback (initials or default icon)
+ * @guideline Initials are 1-2 characters max
+ * @constraint Don't use for decorative purposes — Avatar implies a user entity
+ * @constraint Image must have alt text
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1084-1542
+ */
+
 function Avatar({
   className,
   size = "default",

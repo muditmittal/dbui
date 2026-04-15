@@ -4,6 +4,8 @@ import { cva } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 import { ChevronDownIcon } from "lucide-react"
 
+/** @standard Navigation Menu (excluded — zero production usage) */
+
 function NavigationMenu({
   align = "start",
   className,

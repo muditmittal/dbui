@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from "dbui/components/ui/pagination"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "dbui/components/ui/select"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/pagination.manifest.json"
+import componentSource from "dbui/components/ui/pagination?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Pagination",
@@ -40,7 +41,10 @@ export const Playground: StoryObj = {
         </Select>
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="pagination" />
     </div>
   ),
 }

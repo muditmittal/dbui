@@ -4,6 +4,15 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Tag
+ * @guideline Use for removable labels and filter chips
+ * @guideline Group horizontally with 4px gap
+ * @constraint Don't use for status — use Badge instead
+ * @constraint Truncate with ellipsis at max width
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3154-4442
+ */
+
 function Tag({
   className,
   children,

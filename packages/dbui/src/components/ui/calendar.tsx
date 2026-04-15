@@ -12,6 +12,8 @@ import { cn } from "../../lib/utils"
 import { Button, buttonVariants } from "./button"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
 
+/** @standard Calendar (planned P1 — complex: Calendar + Popover + range modes) */
+
 function Calendar({
   className,
   classNames,

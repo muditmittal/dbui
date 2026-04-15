@@ -4,6 +4,15 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Table
+ * @guideline Use for structured data with sortable columns
+ * @guideline Row hover uses muted/50 background
+ * @constraint Don't use for layout — Tables are for data only
+ * @constraint Header cells use font-semibold, body cells use font-normal
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3157-2794
+ */
+
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div

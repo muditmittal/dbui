@@ -4,7 +4,8 @@ import { DangerFill } from "@/components/icons/DangerFill"
 import { WarningFill } from "@/components/icons/WarningFill"
 import { InfoFill } from "@/components/icons/InfoFill"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/toast.manifest.json"
+import componentSource from "dbui/components/ui/sonner?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Overlays/Toast",
@@ -56,7 +57,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="sonner" />
+
+      <ProductionMap componentKey="sonner" />
     </div>
   ),
 }

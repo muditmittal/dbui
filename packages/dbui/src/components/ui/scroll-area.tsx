@@ -5,6 +5,8 @@ import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
 
 import { cn } from "../../lib/utils"
 
+/** @standard Scroll Area (utility — for fixed-height containers) */
+
 function ScrollArea({
   className,
   children,

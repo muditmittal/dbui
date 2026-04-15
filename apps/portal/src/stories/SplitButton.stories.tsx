@@ -3,7 +3,8 @@ import { SplitButton, SplitButtonSeparator } from "dbui/components/ui/split-butt
 import { Button } from "dbui/components/ui/button"
 import { ChevronDown } from "@/components/icons/ChevronDown"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/split-button.manifest.json"
+import componentSource from "dbui/components/ui/split-button?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Actions/SplitButton",
@@ -52,7 +53,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="split-button" />
+
+      <ProductionMap componentKey="split-button" />
     </div>
   ),
 }

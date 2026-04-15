@@ -6,6 +6,15 @@ import { cn } from "../../lib/utils"
 import { CheckSmall } from "../icons/CheckSmall"
 import { Dash } from "../icons/Dash"
 
+/**
+ * @standard Checkbox
+ * @guideline Use indeterminate for parent when children are partially selected
+ * @guideline Group related checkboxes vertically
+ * @constraint Label uses Paragraph style (13px Regular), not Bold
+ * @constraint No standalone checkboxes — always pair with a visible label
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=713-650
+ */
+
 function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
   return (
     <CheckboxPrimitive.Root

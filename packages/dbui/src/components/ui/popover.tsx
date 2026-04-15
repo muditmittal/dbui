@@ -5,6 +5,15 @@ import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Popover
+ * @guideline Left-aligns with trigger (align="start"), 4px offset
+ * @guideline Use for date pickers, color pickers, and mini-forms
+ * @constraint For simple text, use Tooltip instead
+ * @constraint If content grows complex, switch to Dialog
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3832
+ */
+
 function Popover({ ...props }: PopoverPrimitive.Root.Props) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />
 }

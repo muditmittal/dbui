@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { RadioGroup, RadioGroupItem } from "dbui/components/ui/radio-group"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/radio.manifest.json"
+import componentSource from "dbui/components/ui/radio-group?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Controls/RadioGroup",
@@ -30,7 +31,10 @@ export const Playground: StoryObj = {
         </label>
       </RadioGroup>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="radio-group" />
+
+      <ProductionMap componentKey="radio-group" />
     </div>
   ),
 }

@@ -23,6 +23,15 @@ import { Triangle } from "../icons/Triangle"
 import { Danger } from "../icons/Danger"
 import { DangerSmall } from "../icons/DangerSmall"
 
+/**
+ * @standard Status
+ * @guideline Always pair icon with a text label
+ * @guideline Icon must match semantic meaning (check=success, x=error)
+ * @constraint Stick to semantic color tokens — no custom colors
+ * @constraint Status is read-only — don't use for actions
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3174-4132
+ */
+
 type StatusType =
   | "online"
   | "ready"

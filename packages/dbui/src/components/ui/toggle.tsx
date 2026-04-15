@@ -7,6 +7,16 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 
 /**
+ * @standard Toggle Button
+ * @guideline Use when button needs to save state
+ * @guideline Pill variant used as quick filters
+ * @constraint Filter variant auto-swaps checkbox/checkmark — don't override icon
+ * @constraint Pill variant should be used in groups, not standalone
+ * @constraint Icon variant requires aria-label
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=478-613
+ */
+
+/**
  * Toggle Button styles for DBUI.
  *
  * Figma component: "Toggle Button" (4 variants × 2 sizes × 5 states)

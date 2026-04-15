@@ -4,6 +4,8 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/** @standard Platform Header (composition) */
+
 /**
  * PlatformHeader — the 48px top bar of the Databricks platform shell.
  * Maps to Figma Platform Shell → platformHeader composition.

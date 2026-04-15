@@ -4,6 +4,15 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Editor Tabs
+ * @guideline Use for code editor-style tab switching with closeable tabs
+ * @guideline Show file type icon before the label
+ * @constraint Tabs must be closeable via X button
+ * @constraint Don't use for general navigation — use regular Tabs
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3179-5135
+ */
+
 function EditorTabs({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

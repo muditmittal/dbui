@@ -1,5 +1,7 @@
 import { cn } from "../../lib/utils"
 
+/** @standard Kbd (excluded — maps to inner .MenuTrailing) */
+
 function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
   return (
     <kbd

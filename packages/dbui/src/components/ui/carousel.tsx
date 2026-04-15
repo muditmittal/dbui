@@ -9,6 +9,8 @@ import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
+/** @standard Carousel (deprioritized P2 — no DuBois equivalent) */
+
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
 type CarouselOptions = UseCarouselParameters[0]

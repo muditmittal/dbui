@@ -19,7 +19,7 @@
       }
     ],
     "paths": {
-      "@/components/icons/*": ["../dbui/src/components/icons/*"],
+      "@/components/icons/*": ["../../packages/dbui/src/components/icons/*"],
       "@/*": ["./src/*"]
     }
   },

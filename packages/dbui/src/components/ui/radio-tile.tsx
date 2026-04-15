@@ -6,6 +6,15 @@ import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Radio Tile
+ * @guideline Use for visual selection with icon + title + description
+ * @guideline Limit to 2-5 options
+ * @constraint Title is required; icon and description are optional
+ * @constraint Don't mix tiles with different content structures in the same group
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1021-3727
+ */
+
 function RadioTileGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   return (
     <RadioGroupPrimitive

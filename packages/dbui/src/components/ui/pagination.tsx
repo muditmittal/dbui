@@ -4,6 +4,15 @@ import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
+/**
+ * @standard Pagination
+ * @guideline Use ellipsis for large page counts
+ * @guideline Always show previous/next buttons, even when disabled
+ * @constraint Don't use for fewer than 2 pages
+ * @constraint Don't use for infinite scroll — those load automatically
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3140-1999
+ */
+
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav

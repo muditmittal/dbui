@@ -6,6 +6,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Tabs
+ * @guideline First tab is the default view
+ * @guideline Keep labels to single words when possible
+ * @constraint Min 2, max 7 tabs
+ * @constraint Don't use for navigation between unrelated pages — use Navbar
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1048-1469
+ */
+
 function Tabs({
   className,
   orientation = "horizontal",

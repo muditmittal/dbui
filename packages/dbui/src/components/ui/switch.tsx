@@ -4,6 +4,15 @@ import { Switch as SwitchPrimitive } from "@base-ui/react/switch"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Switch
+ * @guideline Use for immediate toggles that take effect without a save action
+ * @guideline Small size (20x12) is for compact UIs only (tables, toolbars)
+ * @constraint Never use inside a form that requires submit — use Checkbox instead
+ * @constraint Place to the right of its label
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=717-650
+ */
+
 function Switch({
   className,
   size = "default",

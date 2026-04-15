@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Sliders } from "@/components/icons/Sliders"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/input-group.manifest.json"
+import componentSource from "dbui/components/ui/input-group?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Controls/InputGroup",
@@ -77,7 +78,10 @@ export const Playground: StoryObj = {
         </div>
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="input-group" />
+
+      <ProductionMap componentKey="input-group" />
     </div>
   ),
 }

@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Switch } from "dbui/components/ui/switch"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/switch.manifest.json"
+import componentSource from "dbui/components/ui/switch?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Controls/Switch",
@@ -62,7 +63,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="switch" />
+
+      <ProductionMap componentKey="switch" />
     </div>
   ),
 }

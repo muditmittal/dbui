@@ -7,7 +7,8 @@ import { Pencil } from "@/components/icons/Pencil"
 import { Download } from "@/components/icons/Download"
 import { Trash } from "@/components/icons/Trash"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/button.manifest.json"
+import componentSource from "dbui/components/ui/button?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Actions/Button",
@@ -130,8 +131,10 @@ export const Playground: StoryObj = {
       {/* All key variants */}
       <AllVariants />
 
-      {/* Meta */}
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="button" />
+
+      <ProductionMap componentKey="button" />
     </div>
   ),
 }

@@ -20,16 +20,23 @@ const config: StorybookConfig = {
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
-        "@/components/icons": path.resolve(__dirname, "../../dbui/src/components/icons"),
+        "@/components/icons": path.resolve(__dirname, "../../../packages/dbui/src/components/icons"),
         "@": path.resolve(__dirname, "../src"),
       }
     }
 
-    // TypeScript support via ts-loader
+    // Raw source imports: import src from "dbui/components/ui/button?raw"
+    config.module.rules.push({
+      resourceQuery: /raw/,
+      type: "asset/source",
+    })
+
+    // TypeScript support via ts-loader (skip ?raw imports)
     config.module.rules = config.module.rules || []
     config.module.rules.push({
       test: /\.tsx?$/,
       exclude: /node_modules/,
+      resourceQuery: { not: [/raw/] },
       use: [
         {
           loader: "ts-loader",

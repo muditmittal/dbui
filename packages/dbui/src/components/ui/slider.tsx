@@ -5,6 +5,15 @@ import { Slider as SliderPrimitive } from "@base-ui/react/slider"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Slider
+ * @guideline Always show the current value near the slider
+ * @guideline For discrete choices, use Segment Control or Radio instead
+ * @constraint Minimum track width 200px
+ * @constraint Don't use for exact number entry — pair with an Input
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1039-2406
+ */
+
 function Slider({
   className,
   defaultValue,

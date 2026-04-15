@@ -11,7 +11,8 @@ import { Cloud } from "@/components/icons/Cloud"
 import { Gear } from "@/components/icons/Gear"
 import { Lightning } from "@/components/icons/Lightning"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/radio-tile.manifest.json"
+import componentSource from "dbui/components/ui/radio-tile?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Controls/RadioTile",
@@ -97,7 +98,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="radio-tile" />
+
+      <ProductionMap componentKey="radio-tile" />
     </div>
   ),
 }

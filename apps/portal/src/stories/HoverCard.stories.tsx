@@ -4,6 +4,7 @@ import {
   HoverCardTrigger,
   HoverCardContent,
 } from "dbui/components/ui/hover-card"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Overlays/HoverCard",
@@ -40,6 +41,8 @@ export const Playground: StoryObj = {
           </HoverCardContent>
         </HoverCard>
       </div>
+
+      <ProductionMap componentKey="hover-card" />
     </div>
   ),
 }

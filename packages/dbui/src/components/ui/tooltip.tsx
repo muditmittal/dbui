@@ -4,6 +4,15 @@ import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Tooltip
+ * @guideline Default to 8px offset from trigger
+ * @guideline Always add tooltips to icon-only buttons
+ * @constraint No interactive content in tooltips — use Popover instead
+ * @constraint Keep to one line of text
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3708
+ */
+
 function TooltipProvider({
   delay = 0,
   ...props

@@ -14,6 +14,8 @@ import { type VariantProps } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 import { toggleVariants } from "./toggle"
 
+/** @standard Toggle Group (excluded — no product use) */
+
 /**
  * Toggle Group styles for DBUI.
  *

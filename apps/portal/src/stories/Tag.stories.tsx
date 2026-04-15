@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Tag, TagIcon, TagLabel, TagValue, TagRemove } from "dbui/components/ui/tag"
 import { Key } from "@/components/icons/Key"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/tag.manifest.json"
+import componentSource from "dbui/components/ui/tag?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Tag",
@@ -60,7 +61,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="tag" />
+
+      <ProductionMap componentKey="tag" />
     </div>
   ),
 }

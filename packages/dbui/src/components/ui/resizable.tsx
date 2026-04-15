@@ -4,6 +4,8 @@ import * as ResizablePrimitive from "react-resizable-panels"
 
 import { cn } from "../../lib/utils"
 
+/** @standard Resizable (utility — drag handles + panel layout) */
+
 function ResizablePanelGroup({
   className,
   ...props

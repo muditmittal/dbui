@@ -4,6 +4,15 @@ import { Progress as ProgressPrimitive } from "@base-ui/react/progress"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Progress Bar
+ * @guideline Use for determinate progress with a known endpoint
+ * @guideline Show percentage or step count nearby
+ * @constraint For indeterminate progress, use Spinner instead
+ * @constraint Don't animate backwards
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3157-2839
+ */
+
 function Progress({
   className,
   children,

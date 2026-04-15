@@ -7,6 +7,8 @@ import { cn } from "../../lib/utils"
 import { Label } from "./label"
 import { Separator } from "./separator"
 
+/** @standard Field (internal utility) */
+
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return (
     <fieldset

@@ -12,7 +12,8 @@ import {
 } from "dbui/components/ui/alert-dialog"
 import { Button } from "dbui/components/ui/button"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/alert-dialog.manifest.json"
+import componentSource from "dbui/components/ui/alert-dialog?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Overlays/AlertDialog",
@@ -42,7 +43,10 @@ export const Playground: StoryObj = {
         </AlertDialogContent>
       </AlertDialog>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="alert-dialog" />
     </div>
   ),
 }

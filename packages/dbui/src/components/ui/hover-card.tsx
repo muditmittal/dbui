@@ -4,6 +4,12 @@ import { PreviewCard as PreviewCardPrimitive } from "@base-ui/react/preview-card
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Hover Card
+ * @guideline Use for preview content on hover (user profiles, link previews)
+ * @constraint Don't use for actions — it's for passive information only
+ */
+
 function HoverCard({ ...props }: PreviewCardPrimitive.Root.Props) {
   return <PreviewCardPrimitive.Root data-slot="hover-card" {...props} />
 }

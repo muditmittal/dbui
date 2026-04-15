@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Spinner } from "dbui/components/ui/spinner"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/spinner.manifest.json"
+import componentSource from "dbui/components/ui/spinner?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Spinner",
@@ -47,7 +48,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="spinner" />
     </div>
   ),
 }

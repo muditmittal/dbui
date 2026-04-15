@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/segment-control.manifest.json"
+import componentSource from "dbui/components/ui/segment-control?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Actions/SegmentControl",
@@ -55,7 +56,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="segment-control" />
+
+      <ProductionMap componentKey="segment-control" />
     </div>
   ),
 }

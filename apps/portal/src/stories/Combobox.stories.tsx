@@ -16,7 +16,8 @@ import {
   useComboboxAnchor,
 } from "dbui/components/ui/combobox"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/combobox.manifest.json"
+import componentSource from "dbui/components/ui/combobox?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 /* ── Data ── */
 
@@ -236,7 +237,10 @@ export const Playground: StoryObj = {
         </div>
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="combobox" />
+
+      <ProductionMap componentKey="combobox" />
     </div>
   ),
 }

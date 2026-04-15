@@ -4,7 +4,14 @@ import { forwardRef } from "react"
 const ThumbsDown = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6551 2.27362C13.5082 2.14753 13.3201 2.07977 13.1266 2.08319L13.1133 2.08343L12.0833 2.08331V7.91664H13.1266C13.3201 7.92007 13.5082 7.85242 13.6551 7.72633C13.7913 7.60943 13.8833 7.44994 13.9167 7.27442V2.72553C13.8833 2.55002 13.7913 2.39052 13.6551 2.27362Z" fill="currentColor"/>
+      <g clipPath="url(#ThumbsDownIcon_svg__a)">
+        <path fill="currentColor" fillRule="evenodd" d="M13.655 2.274a.8.8 0 0 0-.528-.19h-1.044v5.833h1.044a.79.79 0 0 0 .79-.643V2.725a.8.8 0 0 0-.262-.451m-3.072 6.233V2.083H3.805a.58.58 0 0 0-.583.496v.001l-.92 6a.585.585 0 0 0 .583.67h3.782a.75.75 0 0 1 .75.75v2.667a1.25 1.25 0 0 0 .8 1.166zm1.238.91L9.352 14.97a.75.75 0 0 1-.685.446 2.75 2.75 0 0 1-2.75-2.75V10.75h-3.02A2.082 2.082 0 0 1 .82 8.354l.92-6A2.085 2.085 0 0 1 3.816.584h9.29a2.29 2.29 0 0 1 2.303 1.982 1 1 0 0 1 .007.1v4.667a1 1 0 0 1-.007.1 2.29 2.29 0 0 1-2.303 1.984z" clipRule="evenodd"/>
+      </g>
+      <defs>
+        <clipPath>
+          <path fill="#fff" d="M0 0h16v16H0z"/>
+        </clipPath>
+      </defs>
     </svg>
   )
 )

@@ -4,6 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 
 /**
+ * @standard Alert
+ * @guideline Use for persistent inline messages related to page content
+ * @guideline Default to info variant; use Danger/Warning/Success for semantic states
+ * @constraint Don't use for transient feedback — use Toast instead
+ * @constraint Omit close button for critical messages that can't be dismissed
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=949-962
+ */
+
+/**
  * Alert — DBUI
  *
  * Figma component: "Alert" (4 variants × 2 layouts × removable)

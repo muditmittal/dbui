@@ -7,7 +7,7 @@ const Group = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?:
       <path d="M2.5 13.5H4V15H1.75C1.55109 15 1.36038 14.9209 1.21973 14.7803C1.07907 14.6396 1 14.4489 1 14.25V12H2.5V13.5Z" fill="currentColor"/>
       <path d="M10 15H6V13.5H10V15Z" fill="currentColor"/>
       <path d="M15 14.25C15 14.6642 14.6642 15 14.25 15H12V13.5H13.5V12H15V14.25Z" fill="currentColor"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 6.5C9.16421 6.5 9.5 6.83579 9.5 7.25V11.25C9.5 11.6642 9.16421 12 8.75 12H4.75C4.33579 12 4 11.6642 4 11.25V7.25C4 6.83579 4.33579 6.5 4.75 6.5H8.75ZM5.5 10.5H8V8H5.5V10.5Z" fill="currentColor"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M8.75 6.5C9.16421 6.5 9.5 6.83579 9.5 7.25V11.25C9.5 11.6642 9.16421 12 8.75 12H4.75C4.33579 12 4 11.6642 4 11.25V7.25C4 6.83579 4.33579 6.5 4.75 6.5H8.75ZM5.5 10.5H8V8H5.5V10.5Z" fill="currentColor"/>
       <path d="M2.5 10H1V6H2.5V10Z" fill="currentColor"/>
       <path d="M15 10H13.5V6H15V10Z" fill="currentColor"/>
       <path d="M11.25 4C11.6642 4.00001 12 4.33579 12 4.75V9H10.5V5.5H7V4H11.25Z" fill="currentColor"/>

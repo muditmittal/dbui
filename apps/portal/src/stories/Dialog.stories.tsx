@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Button } from "dbui/components/ui/button"
 import { CloseSmall } from "@/components/icons/CloseSmall"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/dialog.manifest.json"
+import componentSource from "dbui/components/ui/dialog?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Overlays/Dialog",
@@ -44,7 +45,10 @@ export const Playground: StoryObj = {
         </div>
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="dialog" />
     </div>
   ),
 }

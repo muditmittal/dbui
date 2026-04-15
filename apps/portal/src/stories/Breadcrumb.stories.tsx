@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "dbui/components/ui/breadcrumb"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/breadcrumb.manifest.json"
+import componentSource from "dbui/components/ui/breadcrumb?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Breadcrumb",
@@ -27,7 +28,10 @@ export const Playground: StoryObj = {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="breadcrumb" />
     </div>
   ),
 }

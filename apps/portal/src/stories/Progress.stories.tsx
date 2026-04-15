@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Progress } from "dbui/components/ui/progress"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/progress-bar.manifest.json"
+import componentSource from "dbui/components/ui/progress?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Progress",
@@ -47,7 +48,10 @@ export const Playground: StoryObj = {
         </div>
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="progress" />
     </div>
   ),
 }

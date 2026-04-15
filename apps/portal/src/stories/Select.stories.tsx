@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator } from "dbui/components/ui/select"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/select.manifest.json"
+import componentSource from "dbui/components/ui/select?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Controls/Select",
@@ -66,7 +67,10 @@ export const Playground: StoryObj = {
         </div>
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="select" />
+
+      <ProductionMap componentKey="select" />
     </div>
   ),
 }

@@ -5,6 +5,7 @@ import { Home } from "@/components/icons/Home"
 import { Gear } from "@/components/icons/Gear"
 import { Plus } from "@/components/icons/Plus"
 import { useState } from "react"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Navbar",
@@ -27,32 +28,35 @@ export const Default: StoryObj = {
   render: () => {
     const [expanded, setExpanded] = useState(true)
     return (
-      <div className="bg-muted p-4 rounded-lg">
-        <Navbar>
-          <NavbarNewButton><Plus /> New</NavbarNewButton>
-          <NavbarSection>
-            <NavbarSectionHeader expanded={expanded} onToggle={() => setExpanded(!expanded)}>
-              Workspace
-            </NavbarSectionHeader>
-            {expanded && (
-              <>
-                <NavbarItem active>
-                  <NavbarItemIcon><Home /></NavbarItemIcon>
-                  Home
-                </NavbarItem>
-                <NavbarItem>
-                  <NavbarItemIcon><Notebook /></NavbarItemIcon>
-                  Notebooks
-                </NavbarItem>
-                <NavbarItem>
-                  <NavbarItemIcon><Gear /></NavbarItemIcon>
-                  Settings
-                </NavbarItem>
-              </>
-            )}
-          </NavbarSection>
-        </Navbar>
-      </div>
+      <>
+        <div className="bg-muted p-4 rounded-lg">
+          <Navbar>
+            <NavbarNewButton><Plus /> New</NavbarNewButton>
+            <NavbarSection>
+              <NavbarSectionHeader expanded={expanded} onToggle={() => setExpanded(!expanded)}>
+                Workspace
+              </NavbarSectionHeader>
+              {expanded && (
+                <>
+                  <NavbarItem active>
+                    <NavbarItemIcon><Home /></NavbarItemIcon>
+                    Home
+                  </NavbarItem>
+                  <NavbarItem>
+                    <NavbarItemIcon><Notebook /></NavbarItemIcon>
+                    Notebooks
+                  </NavbarItem>
+                  <NavbarItem>
+                    <NavbarItemIcon><Gear /></NavbarItemIcon>
+                    Settings
+                  </NavbarItem>
+                </>
+              )}
+            </NavbarSection>
+          </Navbar>
+        </div>
+        <ProductionMap componentKey="navbar" />
+      </>
     )
   },
 }

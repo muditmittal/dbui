@@ -4,7 +4,8 @@ import { forwardRef } from "react"
 const UserKey = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M4.75 4.25C4.75 2.45507 6.20507 1 8 1C9.79493 1 11.25 2.45507 11.25 4.25C11.25 6.04493 9.79493 7.5 8 7.5C6.20507 7.5 4.75 6.04493 4.75 4.25ZM8 2.5C7.0335 2.5 6.25 3.2835 6.25 4.25C6.25 5.2165 7.0335 6 8 6C8.9665 6 9.75 5.2165 9.75 4.25C9.75 3.2835 8.9665 2.5 8 2.5Z" fill="currentColor"/><path d="M1.75 15H9.75V13.5H2.5V13.0262C3.83065 11.4784 5.80084 10.5 8 10.5L8.45922 9.01185C8.30714 9.00398 8.15403 9 8 9C5.23352 9 2.7666 10.2847 1.16438 12.2872C1.05797 12.4202 1 12.5855 1 12.7558V14.25C1 14.6642 1.33579 15 1.75 15Z" fill="currentColor"/>
+      <path fill="currentColor" fillRule="evenodd" d="M4.75 4.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0M8 2.5A1.75 1.75 0 1 0 8 6a1.75 1.75 0 0 0 0-3.5M12.75 12.372a2.251 2.251 0 1 0-1.5 0v2.878c0 .414.336.75.75.75h2v-2.75h-1.25zM12 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5" clipRule="evenodd"/>
+      <path fill="currentColor" d="M1.75 15h8v-1.5H2.5v-.474a7.23 7.23 0 0 1 5.759-2.521 3.8 3.8 0 0 1 .2-1.493 8.735 8.735 0 0 0-7.295 3.275.75.75 0 0 0-.164.469v1.494c0 .414.336.75.75.75"/>
     </svg>
   )
 )

@@ -1,25 +1,32 @@
 import React from "react"
+import { parseComponentDoc } from "./parseComponentDoc"
+import variantMappings from "./variant-mappings.json"
 
-type ManifestData = {
-  $component: string
-  $figmaId?: string
-  $figmaUrl?: string
-  $codePath?: string
-  variants?: Record<string, {
-    figma?: string[]
-    code?: string[]
-    mapping?: Record<string, string>
-  }>
-  guidelines?: string[]
-  constraints?: string[]
-  innerComponents?: Record<string, any>
-  storyControls?: Record<string, string>
+type VariantData = {
+  figma?: string[]
+  code?: string[]
 }
 
-export function ComponentMeta({ manifest }: { manifest: ManifestData }) {
-  const hasGuidelines = manifest.guidelines && manifest.guidelines.length > 0
-  const hasConstraints = manifest.constraints && manifest.constraints.length > 0
-  const hasVariants = manifest.variants && Object.keys(manifest.variants).length > 0
+type Props = {
+  /** Raw source code of the component file — parsed for @standard, @guideline, @constraint, @figma */
+  source: string
+  /** Key into variant-mappings.json (e.g. "button", "select") for the Property|Figma|Code table */
+  componentKey?: string
+}
+
+export function ComponentMeta({ source, componentKey }: Props) {
+  const doc = parseComponentDoc(source)
+  if (!doc) return null
+
+  const { guidelines, constraints, figmaUrl } = doc
+  const mappingEntry = componentKey
+    ? (variantMappings as Record<string, { figmaCode?: Record<string, VariantData> }>)[componentKey]
+    : undefined
+  const variants = mappingEntry?.figmaCode
+
+  const hasGuidelines = guidelines.length > 0
+  const hasConstraints = constraints.length > 0
+  const hasVariants = variants && Object.keys(variants).length > 0
 
   return (
     <div style={{
@@ -32,19 +39,16 @@ export function ComponentMeta({ manifest }: { manifest: ManifestData }) {
       lineHeight: "20px",
       color: "#161616",
     }}>
-      {/* Source + Figma link */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-        {manifest.$codePath ? (
-          <code style={codeStyle}>{manifest.$codePath}</code>
-        ) : <span />}
-        {manifest.$figmaUrl && (
-          <a href={manifest.$figmaUrl} target="_blank" rel="noopener" style={{ color: "#2272B4", textDecoration: "none", fontSize: 12 }}>
+      {/* Figma link */}
+      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", marginBottom: 16 }}>
+        {figmaUrl && (
+          <a href={figmaUrl} target="_blank" rel="noopener" style={{ color: "#2272B4", textDecoration: "none", fontSize: 12 }}>
             Figma ↗
           </a>
         )}
       </div>
 
-      {/* Variant Mapping */}
+      {/* Variant Mapping Table */}
       {hasVariants && (
         <div style={{ marginBottom: 20 }}>
           <table style={tableStyle}>
@@ -56,30 +60,31 @@ export function ComponentMeta({ manifest }: { manifest: ManifestData }) {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(manifest.variants!).map(([prop, data]) => {
-                const figmaValues = Array.isArray(data) ? data : (Array.isArray(data?.figma) ? data.figma : typeof data?.figma === 'string' ? [data.figma] : [])
-                const codeValues = Array.isArray(data) ? [] : (Array.isArray(data?.code) ? data.code : typeof data?.code === 'string' ? [data.code] : [])
+              {Object.entries(variants!).map(([prop, data]) => {
+                const figmaValues = Array.isArray(data) ? data : (data?.figma || [])
+                const codeValues = Array.isArray(data) ? [] : (data?.code || [])
                 return (
-                <tr key={prop}>
-                  <td style={tdStyle}>
-                    <span style={{ fontWeight: 600 }}>{prop}</span>
-                  </td>
-                  <td style={tdStyle}>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                      {figmaValues.map((v: string) => (
-                        <span key={v} style={tagStyle}>{v}</span>
-                      ))}
-                    </div>
-                  </td>
-                  <td style={tdStyle}>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                      {codeValues.map((v: string) => (
-                        <span key={v} style={{ ...tagStyle, background: "#EEF4FB", color: "#2272B4" }}>{v}</span>
-                      ))}
-                    </div>
-                  </td>
-                </tr>
-              )})}
+                  <tr key={prop}>
+                    <td style={tdStyle}>
+                      <span style={{ fontWeight: 600 }}>{prop}</span>
+                    </td>
+                    <td style={tdStyle}>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                        {figmaValues.map((v: string) => (
+                          <span key={v} style={tagStyle}>{v}</span>
+                        ))}
+                      </div>
+                    </td>
+                    <td style={tdStyle}>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                        {codeValues.map((v: string) => (
+                          <span key={v} style={{ ...tagStyle, background: "#EEF4FB", color: "#2272B4" }}>{v}</span>
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
@@ -87,10 +92,10 @@ export function ComponentMeta({ manifest }: { manifest: ManifestData }) {
 
       {/* Guidelines */}
       {hasGuidelines && (
-        <div style={{ borderTop: "1px solid #EBEBEB", paddingTop: 16, marginBottom: 20 }}>
+        <div style={{ borderTop: hasVariants ? "1px solid #EBEBEB" : "none", paddingTop: hasVariants ? 16 : 0, marginBottom: hasConstraints ? 20 : 0 }}>
           <div style={sectionHeaderStyle}>Guidelines</div>
           <ul style={listStyle}>
-            {manifest.guidelines!.map((g, i) => (
+            {guidelines.map((g, i) => (
               <li key={i} style={listItemStyle}>{g}</li>
             ))}
           </ul>
@@ -99,10 +104,10 @@ export function ComponentMeta({ manifest }: { manifest: ManifestData }) {
 
       {/* Constraints */}
       {hasConstraints && (
-        <div style={{ borderTop: "1px solid #EBEBEB", paddingTop: 16, marginBottom: 20 }}>
+        <div style={{ borderTop: "1px solid #EBEBEB", paddingTop: 16 }}>
           <div style={sectionHeaderStyle}>Constraints</div>
           <ul style={listStyle}>
-            {manifest.constraints!.map((c, i) => (
+            {constraints.map((c, i) => (
               <li key={i} style={listItemStyle}>
                 <span style={{ color: "#C82D4C", fontWeight: 600, marginRight: 4 }}>✕</span>
                 {c}
@@ -168,12 +173,4 @@ const tagStyle: React.CSSProperties = {
   fontSize: 11,
   fontFamily: "'SF Mono', ui-monospace, monospace",
   color: "#404040",
-}
-
-const codeStyle: React.CSSProperties = {
-  fontFamily: "'SF Mono', ui-monospace, monospace",
-  fontSize: 11,
-  background: "#F7F7F7",
-  padding: "1px 4px",
-  borderRadius: 2,
 }

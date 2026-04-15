@@ -6,6 +6,15 @@ import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { cn } from "../../lib/utils"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 
+/**
+ * @standard Select
+ * @guideline Default to Outline; use Ghost inside toolbars
+ * @guideline Popup left-aligns with trigger and matches trigger width
+ * @constraint Over 15 options, switch to Combobox
+ * @constraint Ghost variant gains border on hover only
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=732-601
+ */
+
 const Select = SelectPrimitive.Root
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {

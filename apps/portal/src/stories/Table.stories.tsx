@@ -3,6 +3,7 @@ import {
   Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
   TableSortButton,
 } from "dbui/components/ui/table"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Table",
@@ -54,6 +55,8 @@ export const Playground: StoryObj = {
           </TableBody>
         </Table>
       </div>
+
+      <ProductionMap componentKey="table" />
     </div>
   ),
 }

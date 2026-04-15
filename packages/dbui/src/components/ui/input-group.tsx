@@ -8,6 +8,15 @@ import { Button } from "./button"
 import { Input } from "./input"
 import { Textarea } from "./textarea"
 
+/**
+ * @standard Input Group
+ * @guideline Use to attach icons, buttons, or text to an input
+ * @guideline Addon buttons default to Ghost variant
+ * @constraint Inner input must use InputGroupInput, not plain Input
+ * @constraint Don't nest InputGroups
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3178-3973
+ */
+
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

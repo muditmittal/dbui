@@ -9,6 +9,17 @@ import { cn } from "../../lib/utils"
 import { toggleVariants } from "./toggle"
 
 /**
+ * @standard Segment Control
+ * @guideline Use Slider for primary view switching (tab-like)
+ * @guideline Use Outline for secondary or compact controls
+ * @guideline Items distribute equally across available width
+ * @constraint Minimum 2 items, maximum 5 items
+ * @constraint Labels should be single words or very short phrases
+ * @constraint Avoid icons with text
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=481-661
+ */
+
+/**
  * Segment Control styles for DBUI.
  *
  * Figma component: "Segment Control" (2 variants × 2 sizes)

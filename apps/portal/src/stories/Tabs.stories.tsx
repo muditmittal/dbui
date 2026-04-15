@@ -4,7 +4,8 @@ import { Home } from "@/components/icons/Home"
 import { Notebook } from "@/components/icons/Notebook"
 import { Gear } from "@/components/icons/Gear"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/tabs.manifest.json"
+import componentSource from "dbui/components/ui/tabs?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Tabs",
@@ -35,7 +36,10 @@ export const Playground: StoryObj = {
         </TabsContent>
       </Tabs>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="tabs" />
     </div>
   ),
 }

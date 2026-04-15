@@ -5,6 +5,17 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../lib/utils"
 import { Separator } from "./separator"
 
+/**
+ * @standard Split Button
+ * @guideline Use when there's a primary action with related alternatives
+ * @guideline Primary action should be the most common choice
+ * @guideline Limit dropdown to 3-5 related actions
+ * @constraint Max 2 variants: Primary and Outline only
+ * @constraint Dropdown items must be related to the primary action
+ * @constraint Never nest SplitButtons inside menus
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=580-527
+ */
+
 const splitButtonVariants = cva(
   "flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=split-button]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-sm [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
   {

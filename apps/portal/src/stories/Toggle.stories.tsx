@@ -3,7 +3,8 @@ import { Toggle, FilterToggle } from "dbui/components/ui/toggle"
 import { Bold } from "@/components/icons/Bold"
 import { Notebook } from "@/components/icons/Notebook"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/toggle-button.manifest.json"
+import componentSource from "dbui/components/ui/toggle?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Actions/Toggle",
@@ -74,7 +75,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="toggle" />
+
+      <ProductionMap componentKey="toggle" />
     </div>
   ),
 }

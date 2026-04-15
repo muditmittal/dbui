@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Separator } from "dbui/components/ui/separator"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/separator.manifest.json"
+import componentSource from "dbui/components/ui/separator?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Separator",
@@ -55,7 +56,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="separator" />
     </div>
   ),
 }

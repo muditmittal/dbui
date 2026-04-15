@@ -25,6 +25,8 @@ import {
 } from "./tooltip"
 import { PanelLeftIcon } from "lucide-react"
 
+/** @standard Sidebar (composition — not in DuBois) */
+
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = "16rem"

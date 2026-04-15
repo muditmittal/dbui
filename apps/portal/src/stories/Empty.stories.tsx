@@ -3,7 +3,8 @@ import { Empty, EmptyTitle, EmptyDescription } from "dbui/components/ui/empty"
 import { Button } from "dbui/components/ui/button"
 import { Search } from "@/components/icons/Search"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/empty.manifest.json"
+import componentSource from "dbui/components/ui/empty?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Empty",
@@ -24,7 +25,10 @@ export const Playground: StoryObj = {
         <Button variant="outline" className="mt-2">Clear filters</Button>
       </Empty>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="empty" />
     </div>
   ),
 }

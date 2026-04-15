@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Status } from "dbui/components/ui/status"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/status.manifest.json"
+import componentSource from "dbui/components/ui/status?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const allStatuses = ["online", "ready", "offline", "pending", "running", "syncing", "canceled", "stopped", "info", "success", "warning", "error"] as const
 
@@ -53,7 +54,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="status" />
+
+      <ProductionMap componentKey="status" />
     </div>
   ),
 }

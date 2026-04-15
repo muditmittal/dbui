@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Badge } from "dbui/components/ui/badge"
 import { Key } from "@/components/icons/Key"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/badge.manifest.json"
+import componentSource from "dbui/components/ui/badge?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Badge",
@@ -48,7 +49,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="badge" />
+
+      <ProductionMap componentKey="badge" />
     </div>
   ),
 }

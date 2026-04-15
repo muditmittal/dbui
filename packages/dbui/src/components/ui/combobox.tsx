@@ -7,6 +7,15 @@ import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
+/**
+ * @standard Combobox
+ * @guideline Use when the list has 10+ options and users need search
+ * @guideline Popup left-aligns with trigger and matches trigger width
+ * @constraint Under 5 options, use Select instead
+ * @constraint Chevron icon has no independent hover state
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=811-976
+ */
+
 const Combobox = ComboboxPrimitive.Root
 
 function ComboboxValue({ ...props }: ComboboxPrimitive.Value.Props) {

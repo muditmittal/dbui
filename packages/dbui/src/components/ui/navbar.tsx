@@ -6,6 +6,15 @@ import { cn } from "../../lib/utils"
 import { ChevronDown } from "../icons/ChevronDown"
 
 /**
+ * @standard Navbar
+ * @guideline Use for top-level product navigation (workspace switcher, global actions)
+ * @guideline Fixed to top of viewport
+ * @constraint Don't duplicate navigation that belongs in Tabs or Breadcrumb
+ * @constraint Max one Navbar per page
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3179-14163
+ */
+
+/**
  * Navbar — fixed-width sidebar navigation.
  * Figma: 180px, flex-col, no gap between items.
  */
@@ -100,7 +109,7 @@ NavbarSectionHeader.displayName = "NavbarSectionHeader"
 /**
  * NavbarItem — single navigation item.
  * h-7 (28px), gap-2, px-2, rounded-sm.
- * Active: bg-accent, text-primary, font-semibold.
+ * Active: bg-accent, text-accent-foreground, font-semibold.
  */
 function NavbarItem({
   className,
@@ -114,7 +123,7 @@ function NavbarItem({
       className={cn(
         "flex h-7 w-full items-center gap-2 rounded-sm px-2 text-[13px] leading-[20px] font-normal text-foreground text-left",
         "hover:bg-hover",
-        active && "bg-accent text-primary font-semibold [&_[data-slot=navbar-item-icon]]:text-primary",
+        active && "bg-accent text-accent-foreground font-semibold [&_[data-slot=navbar-item-icon]]:text-accent-foreground",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

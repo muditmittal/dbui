@@ -8,6 +8,15 @@ import { WarningFill } from "../icons/WarningFill"
 import { DangerFill } from "../icons/DangerFill"
 import { Loading } from "../icons/Loading"
 
+/**
+ * @standard Toast
+ * @guideline Use for transient feedback after an action (save, delete, copy)
+ * @guideline Auto-dismisses after a few seconds
+ * @constraint Don't use for critical errors that need user action — use Alert
+ * @constraint Max 3 toasts stacked at once
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=968-944
+ */
+
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
 

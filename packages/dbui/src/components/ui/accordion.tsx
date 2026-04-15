@@ -5,6 +5,15 @@ import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 import { cn } from "../../lib/utils"
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
+/**
+ * @standard Accordion
+ * @guideline First item can be open by default for the most important content
+ * @guideline Use for settings panels and filter groups
+ * @constraint Don't nest accordions inside accordions
+ * @constraint Don't use for primary navigation — use Tabs
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3155-1983
+ */
+
 function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
   return (
     <AccordionPrimitive.Root

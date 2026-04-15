@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Avatar, AvatarImage, AvatarFallback, AvatarGroup, AvatarGroupCount } from "dbui/components/ui/avatar"
 import { User } from "@/components/icons/User"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/avatar.manifest.json"
+import componentSource from "dbui/components/ui/avatar?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Avatar",
@@ -64,7 +65,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="avatar" />
+
+      <ProductionMap componentKey="avatar" />
     </div>
   ),
 }

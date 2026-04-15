@@ -5,6 +5,15 @@ import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Radio
+ * @guideline Default to the most common or recommended option pre-selected
+ * @guideline For on/off, use Switch instead
+ * @constraint Minimum 2 options
+ * @constraint Label uses Paragraph style (13px Regular), not Bold
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=715-650
+ */
+
 function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   return (
     <RadioGroupPrimitive

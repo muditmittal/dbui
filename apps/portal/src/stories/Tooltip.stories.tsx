@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "dbui/components/ui/tooltip"
 import { Button } from "dbui/components/ui/button"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/tooltip.manifest.json"
+import componentSource from "dbui/components/ui/tooltip?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Overlays/Tooltip",
@@ -60,7 +61,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="tooltip" />
+
+      <ProductionMap componentKey="tooltip" />
     </div>
   ),
 }

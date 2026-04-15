@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "dbui/components/ui/accordion"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/accordion.manifest.json"
+import componentSource from "dbui/components/ui/accordion?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Accordion",
@@ -30,7 +31,10 @@ export const Playground: StoryObj = {
         </AccordionItem>
       </Accordion>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="accordion" />
     </div>
   ),
 }

@@ -7,7 +7,8 @@ import {
 import { Button } from "dbui/components/ui/button"
 import { Input } from "dbui/components/ui/input"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/popover.manifest.json"
+import componentSource from "dbui/components/ui/popover?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Overlays/Popover",
@@ -36,9 +37,9 @@ export const Playground: StoryObj = {
         </Popover>
       </div>
 
-      <div style={{ marginTop: 200 }}>
-        <ComponentMeta manifest={manifest} />
-      </div>
+      <ComponentMeta source={componentSource} componentKey="popover" />
+
+      <ProductionMap componentKey="popover" />
     </div>
   ),
 }

@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "dbui/components/ui/card"
 import { Button } from "dbui/components/ui/button"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/card.manifest.json"
+import componentSource from "dbui/components/ui/card?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Content/Card",
@@ -68,7 +69,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="card" />
+
+      <ProductionMap componentKey="card" />
     </div>
   ),
 }

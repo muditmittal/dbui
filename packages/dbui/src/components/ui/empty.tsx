@@ -2,6 +2,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Empty
+ * @guideline Include a primary action to populate the view
+ * @guideline Center vertically and horizontally in the content area
+ * @constraint Don't show empty state while loading — show Skeleton instead
+ * @constraint Keep the message helpful, not apologetic
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3130-1793
+ */
+
 function Empty({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

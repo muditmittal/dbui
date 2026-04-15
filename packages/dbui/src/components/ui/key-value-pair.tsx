@@ -3,6 +3,15 @@ import * as React from "react"
 import { cn } from "../../lib/utils"
 
 /**
+ * @standard Key Value Pair
+ * @guideline Use for metadata display in detail panels and sidebars
+ * @guideline Key uses muted-foreground; value uses foreground
+ * @constraint Keep keys short — they're labels, not sentences
+ * @constraint Don't use for editable fields — use Form Input
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3178-3901
+ */
+
+/**
  * KeyValuePair — container for key-value rows.
  * Maps to Figma .Key Value (Type: Horizontal/Vertical/Flexible).
  *

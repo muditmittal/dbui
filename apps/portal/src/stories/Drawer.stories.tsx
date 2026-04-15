@@ -10,7 +10,8 @@ import {
 } from "dbui/components/ui/drawer"
 import { Button } from "dbui/components/ui/button"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/drawer.manifest.json"
+import componentSource from "dbui/components/ui/drawer?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Overlays/Drawer",
@@ -43,7 +44,10 @@ export const Playground: StoryObj = {
         </DrawerContent>
       </Drawer>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="drawer" />
     </div>
   ),
 }

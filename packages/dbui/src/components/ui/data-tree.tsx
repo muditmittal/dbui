@@ -4,6 +4,8 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
+/** @standard Tree (planned P1 — expand/collapse, icons, nesting) */
+
 /**
  * DataTree — file/folder tree view.
  * Maps to Figma .DataTreeNode (Type: Header/Open folder/File/Focused folder × Selected × Hover).

@@ -6,7 +6,8 @@ import { WarningFill } from "@/components/icons/WarningFill"
 import { InfoFill } from "@/components/icons/InfoFill"
 import { CheckCircleFill } from "@/components/icons/CheckCircleFill"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/alert.manifest.json"
+import componentSource from "dbui/components/ui/alert?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const variantConfig: { variant: "danger" | "warning" | "info" | "success"; icon: React.ReactNode; label: string }[] = [
   { variant: "info", icon: <InfoFill />, label: "Info (default)" },
@@ -72,7 +73,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="alert" />
+
+      <ProductionMap componentKey="alert" />
     </div>
   ),
 }

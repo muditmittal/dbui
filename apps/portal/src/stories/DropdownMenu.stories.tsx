@@ -33,7 +33,8 @@ import { Pipeline } from "@/components/icons/Pipeline"
 import { Query } from "@/components/icons/Query"
 import { Folder } from "@/components/icons/Folder"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/dropdown-menu.manifest.json"
+import componentSource from "dbui/components/ui/dropdown-menu?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Controls/DropdownMenu",
@@ -214,7 +215,10 @@ export const Playground: StoryObj = {
 
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} />
+
+      <ProductionMap componentKey="dropdown-menu" />
     </div>
   ),
 }

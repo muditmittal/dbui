@@ -9,6 +9,16 @@ import { cn } from "../../lib/utils"
 import { Loading as LoadingIcon } from "../icons/Loading"
 
 /**
+ * @standard Button
+ * @guideline Use to trigger all click actions, no state memory
+ * @guideline Default to Outline for text, Ghost for icon buttons
+ * @constraint Avoid icons for Menu button variants
+ * @constraint No icons for Link variant - only exception is trailing NewWindow for external links
+ * @constraint Limit to one Primary button on a page or dialog
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=477-773
+ */
+
+/**
  * Button — primary action component.
  *
  * Composition (maps to Figma .ActionLabel inner component):

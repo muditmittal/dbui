@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Input } from "dbui/components/ui/input"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/input.manifest.json"
+import componentSource from "dbui/components/ui/input?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
   title: "Controls/Input",
@@ -59,7 +60,10 @@ export const Playground: StoryObj = {
         </tbody>
       </table>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="input" />
+
+      <ProductionMap componentKey="input" />
     </div>
   ),
 }

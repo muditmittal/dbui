@@ -6,6 +6,15 @@ import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
 
+/**
+ * @standard Alert Dialog
+ * @guideline Use for destructive or irreversible actions that need explicit confirmation
+ * @guideline Confirm button uses Destructive variant for dangerous actions
+ * @constraint Must have both Cancel and Confirm actions
+ * @constraint Cannot be dismissed by clicking overlay — buttons only
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=882-4236
+ */
+
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
 }

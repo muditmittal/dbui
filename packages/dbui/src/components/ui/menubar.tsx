@@ -24,6 +24,8 @@ import {
 } from "./dropdown-menu"
 import { CheckIcon } from "lucide-react"
 
+/** @standard Menubar (excluded — maps to DropdownMenu) */
+
 function Menubar({ className, ...props }: MenubarPrimitive.Props) {
   return (
     <MenubarPrimitive

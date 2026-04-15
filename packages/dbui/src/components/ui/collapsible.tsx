@@ -2,6 +2,8 @@
 
 import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible"
 
+/** @standard Collapsible (utility — inner primitive for Accordion) */
+
 function Collapsible({ ...props }: CollapsiblePrimitive.Root.Props) {
   return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />
 }

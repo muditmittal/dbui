@@ -15,7 +15,8 @@ import {
   useComboboxAnchor,
 } from "dbui/components/ui/combobox"
 import { ComponentMeta } from "./components/ComponentMeta"
-import manifest from "../../../../specs/components/typeahead-combobox.manifest.json"
+import componentSource from "dbui/components/ui/combobox?raw"
+import { ProductionMap } from "./components/ProductionMap"
 
 const allTags = [
   { value: "pii", label: "PII" },
@@ -192,7 +193,10 @@ export const Playground: StoryObj = {
         </div>
       </div>
 
-      <ComponentMeta manifest={manifest} />
+
+      <ComponentMeta source={componentSource} componentKey="typeahead-combobox" />
+
+      <ProductionMap componentKey="combobox" />
     </div>
   ),
 }

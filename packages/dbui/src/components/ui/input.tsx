@@ -3,6 +3,15 @@ import { Input as InputPrimitive } from "@base-ui/react/input"
 
 import { cn } from "../../lib/utils"
 
+/**
+ * @standard Input
+ * @guideline Default to md size (32px) unless inside a toolbar or table
+ * @guideline Validation is border-only — no ring shadows
+ * @constraint Never use placeholder as a substitute for a label
+ * @constraint Focus shows border-ring only, no shadow-focus
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=722-658
+ */
+
 function Input({
   className,
   type,

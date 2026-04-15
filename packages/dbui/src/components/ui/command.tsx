@@ -17,6 +17,8 @@ import {
 } from "./input-group"
 import { SearchIcon, CheckIcon } from "lucide-react"
 
+/** @standard Command (excluded) */
+
 function Command({
   className,
   ...props
