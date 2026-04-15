@@ -130,23 +130,23 @@ export const Playground: StoryObj = {
             <DropdownMenuTrigger render={<Button variant="outline">Filter Assets</Button>} />
             <DropdownMenuContent align="start" className="min-w-[220px]">
               <DropdownMenuLabel>Asset Type</DropdownMenuLabel>
-              <DropdownMenuCheckboxItem defaultChecked>
+              <DropdownMenuCheckboxItem defaultChecked closeOnClick={false}>
                 <DropdownMenuItemIcon><Table /></DropdownMenuItemIcon>
                 Tables
               </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem closeOnClick={false}>
                 <DropdownMenuItemIcon><Notebook /></DropdownMenuItemIcon>
                 Notebooks
               </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem defaultChecked>
+              <DropdownMenuCheckboxItem defaultChecked closeOnClick={false}>
                 <DropdownMenuItemIcon><Dashboard /></DropdownMenuItemIcon>
                 Dashboards
               </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem closeOnClick={false}>
                 <DropdownMenuItemIcon><Pipeline /></DropdownMenuItemIcon>
                 Pipelines
               </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem closeOnClick={false}>
                 <DropdownMenuItemIcon><Query /></DropdownMenuItemIcon>
                 Queries
               </DropdownMenuCheckboxItem>
