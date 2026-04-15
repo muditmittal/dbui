@@ -138,7 +138,7 @@ function ComboboxItem({
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "relative flex h-7 w-full cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none data-highlighted:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 w-full cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none data-highlighted:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -172,7 +172,7 @@ function ComboboxLabel({
   return (
     <ComboboxPrimitive.GroupLabel
       data-slot="combobox-label"
-      className={cn("px-1.5 py-1 text-[11px] font-semibold text-muted-foreground", className)}
+      className={cn("px-2 py-1 text-[12px] leading-[16px] text-muted-foreground", className)}
       {...props}
     />
   )
