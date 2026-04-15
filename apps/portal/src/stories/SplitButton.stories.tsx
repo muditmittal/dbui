@@ -30,8 +30,7 @@ export const Playground: StoryObj = {
         <thead>
           <tr>
             <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Variant</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Small</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
           </tr>
         </thead>
         <tbody>
@@ -46,13 +45,6 @@ export const Playground: StoryObj = {
                   <Button variant={v}>Save</Button>
                   <SplitButtonSeparator />
                   <Button variant={v} size="icon-md" aria-label="More options"><ChevronDown /></Button>
-                </SplitButton>
-              </td>
-              <td style={{ padding: "14px 24px 14px 0" }}>
-                <SplitButton>
-                  <Button variant={v} size="sm">Save</Button>
-                  <SplitButtonSeparator />
-                  <Button variant={v} size="icon-sm" aria-label="More options"><ChevronDown /></Button>
                 </SplitButton>
               </td>
             </tr>

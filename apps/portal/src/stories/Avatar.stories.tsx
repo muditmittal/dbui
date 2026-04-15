@@ -33,39 +33,25 @@ export const Playground: StoryObj = {
         <thead>
           <tr>
             <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 140 }}>Variant</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Small</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Large</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Initials fallback</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Avatar size="sm"><AvatarFallback>MM</AvatarFallback></Avatar>
-            </td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
               <Avatar size="default"><AvatarFallback>MM</AvatarFallback></Avatar>
-            </td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
-              <Avatar size="lg"><AvatarFallback>MM</AvatarFallback></Avatar>
             </td>
           </tr>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Icon fallback</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Avatar size="sm" type="icon"><AvatarFallback>?</AvatarFallback></Avatar>
-            </td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
               <Avatar size="default" type="icon"><AvatarFallback>?</AvatarFallback></Avatar>
-            </td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
-              <Avatar size="lg" type="icon"><AvatarFallback>?</AvatarFallback></Avatar>
             </td>
           </tr>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Group</td>
-            <td colSpan={3} style={{ padding: "14px 24px 14px 0" }}>
+            <td style={{ padding: "14px 24px 14px 0" }}>
               <AvatarGroup>
                 <Avatar><AvatarFallback>A</AvatarFallback></Avatar>
                 <Avatar><AvatarFallback>B</AvatarFallback></Avatar>

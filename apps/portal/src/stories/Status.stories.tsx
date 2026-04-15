@@ -35,8 +35,7 @@ export const Playground: StoryObj = {
         <thead>
           <tr>
             <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 120 }}>Status</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>MD</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>SM</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
           </tr>
         </thead>
         <tbody>
@@ -47,12 +46,6 @@ export const Playground: StoryObj = {
                 <div className="flex items-center gap-2">
                   <Status status={s} size="md" />
                   <span className="text-[13px] capitalize">{s}</span>
-                </div>
-              </td>
-              <td style={{ padding: "14px 24px 14px 0" }}>
-                <div className="flex items-center gap-2">
-                  <Status status={s} size="sm" />
-                  <span className="text-[12px] text-muted-foreground capitalize">{s}</span>
                 </div>
               </td>
             </tr>
