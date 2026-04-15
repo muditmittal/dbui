@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Badge } from "dbui/components/ui/badge"
+import { Key } from "@/components/icons/Key"
 import { ComponentMeta } from "./components/ComponentMeta"
 import manifest from "../../../../specs/components/badge.manifest.json"
 
@@ -32,19 +33,18 @@ export const Playground: StoryObj = {
           </tr>
         </thead>
         <tbody>
-          {([
-            { variant: "default" as const, name: "Default" },
-            { variant: "secondary" as const, name: "Secondary" },
-            { variant: "outline" as const, name: "Outline" },
-            { variant: "destructive" as const, name: "Destructive" },
-          ]).map(({ variant, name }) => (
-            <tr key={variant}>
-              <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", fontSize: 12, color: "#6F6F6F" }}>{name}</td>
-              <td style={{ padding: "14px 24px 14px 0" }}>
-                <Badge variant={variant}>{name}</Badge>
-              </td>
-            </tr>
-          ))}
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", fontSize: 12, color: "#6F6F6F" }}>Fill</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Badge variant="fill"><Key /> Badge</Badge>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", fontSize: 12, color: "#6F6F6F" }}>Outline</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Badge variant="outline"><Key /> Badge</Badge>
+            </td>
+          </tr>
         </tbody>
       </table>
 
