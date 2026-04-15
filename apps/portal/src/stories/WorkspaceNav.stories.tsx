@@ -3,26 +3,26 @@ import { Navbar, NavbarSection, NavbarSectionHeader, NavbarItem, NavbarItemIcon 
 import { Button, ButtonIcon } from "dbui/components/ui/button"
 import { Plus } from "@/components/icons/Plus"
 import { Clock } from "@/components/icons/Clock"
-import { FolderOpen } from "@/components/icons/FolderOpen"
-import { Catalog } from "@/components/icons/Catalog"
+import { Folder } from "@/components/icons/Folder"
+import { Data } from "@/components/icons/Data"
 import { Workflows } from "@/components/icons/Workflows"
 import { Cloud } from "@/components/icons/Cloud"
 import { Storefront } from "@/components/icons/Storefront"
 import { QueryEditor } from "@/components/icons/QueryEditor"
 import { Query } from "@/components/icons/Query"
 import { Dashboard } from "@/components/icons/Dashboard"
-import { GenieCode } from "@/components/icons/GenieCode"
+import { SparkleRectangle } from "@/components/icons/SparkleRectangle"
 import { Notification } from "@/components/icons/Notification"
 import { History } from "@/components/icons/History"
-import { Workspaces } from "@/components/icons/Workspaces"
+import { CloudDatabase } from "@/components/icons/CloudDatabase"
 import { Checklist } from "@/components/icons/Checklist"
 import { Ingestion } from "@/components/icons/Ingestion"
 import { Pipeline } from "@/components/icons/Pipeline"
-import { GenieDeepResearch } from "@/components/icons/GenieDeepResearch"
+import { Robot } from "@/components/icons/Robot"
 import { Beaker } from "@/components/icons/Beaker"
 import { Layer } from "@/components/icons/Layer"
 import { Models } from "@/components/icons/Models"
-import { MCP } from "@/components/icons/MCP"
+import { CloudModel } from "@/components/icons/CloudModel"
 
 const meta: Meta = {
   title: "Compositions/Workspace Nav",
@@ -48,8 +48,8 @@ export const Playground: StoryObj = {
         {/* Main nav — no section header */}
         <Navbar>
           <NavbarItem><NavbarItemIcon><Clock /></NavbarItemIcon>Recents</NavbarItem>
-          <NavbarItem><NavbarItemIcon><FolderOpen /></NavbarItemIcon>Workspace</NavbarItem>
-          <NavbarItem active><NavbarItemIcon><Catalog /></NavbarItemIcon>Catalog</NavbarItem>
+          <NavbarItem><NavbarItemIcon><Folder /></NavbarItemIcon>Workspace</NavbarItem>
+          <NavbarItem active><NavbarItemIcon><Data /></NavbarItemIcon>Catalog</NavbarItem>
           <NavbarItem><NavbarItemIcon><Workflows /></NavbarItemIcon>Workflows</NavbarItem>
           <NavbarItem><NavbarItemIcon><Cloud /></NavbarItemIcon>Compute</NavbarItem>
           <NavbarItem><NavbarItemIcon><Storefront /></NavbarItemIcon>Marketplace</NavbarItem>
@@ -60,10 +60,10 @@ export const Playground: StoryObj = {
             <NavbarItem><NavbarItemIcon><QueryEditor /></NavbarItemIcon>Editor</NavbarItem>
             <NavbarItem><NavbarItemIcon><Query /></NavbarItemIcon>Queries</NavbarItem>
             <NavbarItem><NavbarItemIcon><Dashboard /></NavbarItemIcon>Dashboards</NavbarItem>
-            <NavbarItem><NavbarItemIcon><GenieCode /></NavbarItemIcon>Genie</NavbarItem>
+            <NavbarItem><NavbarItemIcon><SparkleRectangle /></NavbarItemIcon>Genie</NavbarItem>
             <NavbarItem><NavbarItemIcon><Notification /></NavbarItemIcon>Alerts</NavbarItem>
             <NavbarItem><NavbarItemIcon><History /></NavbarItemIcon>Query History</NavbarItem>
-            <NavbarItem><NavbarItemIcon><Workspaces /></NavbarItemIcon>SQL Warehouses</NavbarItem>
+            <NavbarItem><NavbarItemIcon><CloudDatabase /></NavbarItemIcon>SQL Warehouses</NavbarItem>
           </NavbarSection>
 
           {/* Data Engineering */}
@@ -77,11 +77,11 @@ export const Playground: StoryObj = {
           {/* Machine Learning */}
           <NavbarSection>
             <NavbarSectionHeader>Machine Learning</NavbarSectionHeader>
-            <NavbarItem><NavbarItemIcon><GenieDeepResearch /></NavbarItemIcon>Playground</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Robot /></NavbarItemIcon>Playground</NavbarItem>
             <NavbarItem><NavbarItemIcon><Beaker /></NavbarItemIcon>Experiments</NavbarItem>
             <NavbarItem><NavbarItemIcon><Layer /></NavbarItemIcon>Features</NavbarItem>
             <NavbarItem><NavbarItemIcon><Models /></NavbarItemIcon>Models</NavbarItem>
-            <NavbarItem><NavbarItemIcon><MCP /></NavbarItemIcon>Serving</NavbarItem>
+            <NavbarItem><NavbarItemIcon><CloudModel /></NavbarItemIcon>Serving</NavbarItem>
           </NavbarSection>
         </Navbar>
       </div>
