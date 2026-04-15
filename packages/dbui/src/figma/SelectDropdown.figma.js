@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=787-804
-// source=apps/portal/src/components/ui/select.tsx
+// source=packages/dbui/src/components/ui/select.tsx
 // component=SelectDropdown (composition)
 const figma = require('figma')
 const instance = figma.selectedInstance

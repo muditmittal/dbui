@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=724-658
-// source=apps/portal/src/components/ui/textarea.tsx
+// source=packages/dbui/src/components/ui/textarea.tsx
 // component=Textarea
 const figma = require('figma')
 const instance = figma.selectedInstance

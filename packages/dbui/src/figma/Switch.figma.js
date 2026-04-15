@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=717-650
-// source=apps/portal/src/components/ui/switch.tsx
+// source=packages/dbui/src/components/ui/switch.tsx
 // component=Switch
 const figma = require('figma')
 const instance = figma.selectedInstance

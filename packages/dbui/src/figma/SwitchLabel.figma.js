@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3165-2582
-// source=apps/portal/src/components/ui/switch.tsx
+// source=packages/dbui/src/components/ui/switch.tsx
 // component=Switch Label
 const figma = require('figma')
 const instance = figma.selectedInstance

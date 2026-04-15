@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=842-889
-// source=apps/portal/src/components/ui/combobox.tsx
+// source=packages/dbui/src/components/ui/combobox.tsx
 // component=TypeaheadCombobox (multi-select with chips)
 const figma = require('figma')
 const instance = figma.selectedInstance

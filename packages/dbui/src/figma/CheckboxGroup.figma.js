@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3157-2892
-// source=apps/portal/src/components/ui/checkbox.tsx
+// source=packages/dbui/src/components/ui/checkbox.tsx
 // component=Checkbox Group
 const figma = require('figma')
 const instance = figma.selectedInstance

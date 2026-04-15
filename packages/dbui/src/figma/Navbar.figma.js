@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3179-14163
-// source=apps/portal/src/components/ui/navbar.tsx
+// source=packages/dbui/src/components/ui/navbar.tsx
 // component=Navbar
 const figma = require('figma')
 const instance = figma.selectedInstance

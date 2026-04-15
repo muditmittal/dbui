@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3154-4736
-// source=apps/portal/src/components/ui/card.tsx
+// source=packages/dbui/src/components/ui/card.tsx
 // component=Card
 const figma = require('figma')
 const instance = figma.selectedInstance

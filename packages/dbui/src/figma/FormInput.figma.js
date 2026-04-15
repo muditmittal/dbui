@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3157-3399
-// source=apps/portal/src/components/ui/field.tsx
+// source=packages/dbui/src/components/ui/field.tsx
 // component=Form Input (Field)
 const figma = require('figma')
 const instance = figma.selectedInstance

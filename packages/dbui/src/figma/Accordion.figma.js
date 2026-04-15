@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3155-1983
-// source=apps/portal/src/components/ui/accordion.tsx
+// source=packages/dbui/src/components/ui/accordion.tsx
 // component=Accordion
 const figma = require('figma')
 const instance = figma.selectedInstance

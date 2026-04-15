@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3178-3901
-// source=apps/portal/src/components/ui/key-value-pair.tsx
+// source=packages/dbui/src/components/ui/key-value-pair.tsx
 // component=Key Value Pair
 const figma = require('figma')
 const instance = figma.selectedInstance

@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3140-1999
-// source=apps/portal/src/components/ui/pagination.tsx
+// source=packages/dbui/src/components/ui/pagination.tsx
 // component=Pagination
 const figma = require('figma')
 const instance = figma.selectedInstance

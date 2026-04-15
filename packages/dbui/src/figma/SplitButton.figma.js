@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=580-527
-// source=apps/portal/src/components/ui/button.tsx
+// source=packages/dbui/src/components/ui/button.tsx
 // component=SplitButton (composition pattern)
 const figma = require('figma')
 const instance = figma.selectedInstance

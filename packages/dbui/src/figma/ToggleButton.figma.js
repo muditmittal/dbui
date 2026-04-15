@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=478-613
-// source=apps/portal/src/components/ui/toggle.tsx
+// source=packages/dbui/src/components/ui/toggle.tsx
 // component=Toggle
 const figma = require('figma')
 const instance = figma.selectedInstance

@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1039-2406
-// source=apps/portal/src/components/ui/slider.tsx
+// source=packages/dbui/src/components/ui/slider.tsx
 // component=Slider
 const figma = require('figma')
 const instance = figma.selectedInstance

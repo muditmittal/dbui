@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3157-2854
-// source=apps/portal/src/components/ui/label.tsx
+// source=packages/dbui/src/components/ui/label.tsx
 // component=Label
 const figma = require('figma')
 const instance = figma.selectedInstance

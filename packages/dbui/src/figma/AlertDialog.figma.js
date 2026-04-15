@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=882-4236
-// source=apps/portal/src/components/ui/alert-dialog.tsx
+// source=packages/dbui/src/components/ui/alert-dialog.tsx
 // component=AlertDialog
 const figma = require('figma')
 const instance = figma.selectedInstance

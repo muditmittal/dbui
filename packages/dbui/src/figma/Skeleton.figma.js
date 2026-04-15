@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3128-1778
-// source=apps/portal/src/components/ui/skeleton.tsx
+// source=packages/dbui/src/components/ui/skeleton.tsx
 // component=Skeleton
 const figma = require('figma')
 const instance = figma.selectedInstance

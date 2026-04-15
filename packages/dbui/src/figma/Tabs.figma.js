@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1048-1469
-// source=apps/portal/src/components/ui/tabs.tsx
+// source=packages/dbui/src/components/ui/tabs.tsx
 // component=Tabs
 const figma = require('figma')
 const instance = figma.selectedInstance

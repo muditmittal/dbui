@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3154-4442
-// source=apps/portal/src/components/ui/tag.tsx
+// source=packages/dbui/src/components/ui/tag.tsx
 // component=Tag
 const figma = require('figma')
 const instance = figma.selectedInstance

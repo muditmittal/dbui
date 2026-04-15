@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1060-3970
-// source=apps/portal/src/components/ui/spinner.tsx
+// source=packages/dbui/src/components/ui/spinner.tsx
 // component=Spinner
 const figma = require('figma')
 const instance = figma.selectedInstance

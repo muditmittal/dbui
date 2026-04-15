@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=481-661
-// source=apps/portal/src/components/ui/segment-control.tsx
+// source=packages/dbui/src/components/ui/segment-control.tsx
 // component=SegmentControl
 const figma = require('figma')
 const instance = figma.selectedInstance

@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3140-1914
-// source=apps/portal/src/components/ui/breadcrumb.tsx
+// source=packages/dbui/src/components/ui/breadcrumb.tsx
 // component=Breadcrumb
 const figma = require('figma')
 const instance = figma.selectedInstance

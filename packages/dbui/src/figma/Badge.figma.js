@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1088-1544
-// source=apps/portal/src/components/ui/badge.tsx
+// source=packages/dbui/src/components/ui/badge.tsx
 // component=Badge
 const figma = require('figma')
 const instance = figma.selectedInstance

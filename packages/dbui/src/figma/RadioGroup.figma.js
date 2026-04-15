@@ -1,5 +1,5 @@
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3157-2958
-// source=apps/portal/src/components/ui/radio-group.tsx
+// source=packages/dbui/src/components/ui/radio-group.tsx
 // component=Radio Group
 const figma = require('figma')
 const instance = figma.selectedInstance
