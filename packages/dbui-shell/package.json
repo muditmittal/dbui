@@ -1,0 +1,19 @@
+{
+  "name": "dbui-shell",
+  "version": "0.1.0",
+  "description": "DBUI Shell — composable page surfaces for Databricks UI",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    "./shell": "./src/surfaces/Shell.tsx",
+    "./catalog": "./src/surfaces/CatalogLayout.tsx",
+    "./components/*": "./src/components/*.tsx"
+  },
+  "dependencies": {
+    "dbui": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  }
+}
