@@ -14,6 +14,7 @@
     "lint": "yarn workspace portal lint",
     "preview": "concurrently -n portal,storybook -c blue,magenta \"yarn dev\" \"yarn workspace portal storybook\""
   },
+  "packageManager": "yarn@4.13.0",
   "engines": {
     "node": ">=22.0.0"
   },
