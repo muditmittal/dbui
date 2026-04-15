@@ -35,28 +35,28 @@ export const Playground: StoryObj = {
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Off</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <div className="flex items-center gap-2">
+              <label className="group/field flex cursor-pointer items-center gap-2">
                 <Switch />
                 <span className="text-[13px] text-foreground">Notifications</span>
-              </div>
+              </label>
             </td>
           </tr>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>On</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <div className="flex items-center gap-2">
+              <label className="group/field flex cursor-pointer items-center gap-2">
                 <Switch defaultChecked />
                 <span className="text-[13px] text-foreground">Auto-save</span>
-              </div>
+              </label>
             </td>
           </tr>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Disabled</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <div className="flex items-center gap-2">
+              <label className="group/field flex cursor-pointer items-center gap-2">
                 <Switch disabled />
                 <span className="text-[13px] text-muted-foreground">Managed by admin</span>
-              </div>
+              </label>
             </td>
           </tr>
         </tbody>

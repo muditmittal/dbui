@@ -35,28 +35,28 @@ export const Playground: StoryObj = {
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Unchecked</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <label className="group/field flex cursor-pointer items-center gap-2">
                 <Checkbox id="cb-unchecked" />
-                <label htmlFor="cb-unchecked" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Accept terms</label>
-              </div>
+                <span className="text-[13px] leading-[20px]">Accept terms</span>
+              </label>
             </td>
           </tr>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Checked</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <label className="group/field flex cursor-pointer items-center gap-2">
                 <Checkbox id="cb-checked" defaultChecked />
-                <label htmlFor="cb-checked" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Accept terms</label>
-              </div>
+                <span className="text-[13px] leading-[20px]">Accept terms</span>
+              </label>
             </td>
           </tr>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Indeterminate</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <label className="group/field flex cursor-pointer items-center gap-2">
                 <Checkbox id="cb-indeterminate" indeterminate />
-                <label htmlFor="cb-indeterminate" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Select all</label>
-              </div>
+                <span className="text-[13px] leading-[20px]">Select all</span>
+              </label>
             </td>
           </tr>
         </tbody>

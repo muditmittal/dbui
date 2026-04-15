@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import React, { useState, useRef } from "react"
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "dbui/components/ui/input-group"
+// Uses two-sibling pattern matching Figma InputGroup specs
 import { Popover } from "@base-ui/react/popover"
 import { Checkbox } from "dbui/components/ui/checkbox"
 import { Switch } from "dbui/components/ui/switch"
@@ -79,9 +79,10 @@ function FacetedFilter() {
 
   return (
     <div className="w-[360px]">
-      <InputGroup>
+      <div className="group/ig flex items-center rounded-sm border border-transparent focus-within:border-primary focus-within:shadow-xs">
+        {/* Chips */}
         {selectedChips.length > 0 && (
-          <InputGroupAddon align="inline-start" className="gap-1">
+          <div className="flex items-center gap-1 pl-2">
             {selectedChips.slice(0, 2).map((chip) => (
               <span
                 key={`${chip.facet}:${chip.value}`}
@@ -100,25 +101,32 @@ function FacetedFilter() {
               <span className="text-[12px] text-muted-foreground whitespace-nowrap">+{selectedChips.length - 2}</span>
             )}
             <button className="text-[12px] text-primary hover:underline whitespace-nowrap" onClick={resetAll}>Reset</button>
-          </InputGroupAddon>
+          </div>
         )}
-        <InputGroupInput placeholder="Search" />
-        <InputGroupAddon align="inline-end" className="border-l border-input ml-0 mr-[-1px] pr-0 pl-0">
-          <Popover.Root
-            open={open}
-            onOpenChange={(o) => {
-              setOpen(o)
-              if (!o) { setActiveFacet(null); setActiveNested(null); setSearch("") }
-            }}
-          >
-            <Popover.Trigger
-              ref={buttonRef}
-              render={
-                <InputGroupButton size="icon-sm" variant="ghost" aria-label="Filter">
-                  <Sliders />
-                </InputGroupButton>
-              }
-            />
+        {/* Input */}
+        <input
+          placeholder="Search"
+          className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
+        />
+        {/* Filter button with popover */}
+        <Popover.Root
+          open={open}
+          onOpenChange={(o) => {
+            setOpen(o)
+            if (!o) { setActiveFacet(null); setActiveNested(null); setSearch("") }
+          }}
+        >
+          <Popover.Trigger
+            ref={buttonRef}
+            render={
+              <button
+                aria-label="Filter"
+                className="flex size-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-background shadow-xs text-muted-foreground transition-colors hover:bg-hover hover:text-foreground active:bg-press focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
+              >
+                <Sliders />
+              </button>
+            }
+          />
             <Popover.Portal>
               <Popover.Positioner side="bottom" sideOffset={4} align="end" className="z-50">
                 <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden">
@@ -210,8 +218,7 @@ function FacetedFilter() {
               </Popover.Positioner>
             </Popover.Portal>
           </Popover.Root>
-        </InputGroupAddon>
-      </InputGroup>
+      </div>
     </div>
   )
 }
