@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "dbui/components/ui/input-group"
-import { Button } from "dbui/components/ui/button"
 import { Sliders } from "@/components/icons/Sliders"
 import { ComponentMeta } from "./components/ComponentMeta"
 import manifest from "../../../../specs/components/input-group.manifest.json"
@@ -31,18 +30,15 @@ export const Playground: StoryObj = {
         <div>
           <div style={sectionLabel}>Filter</div>
           <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Search input with Sliders icon button</div>
-          <div className="flex w-[240px]">
-            <InputGroup className="flex-1 rounded-r-none border-r-0">
+          <div className="w-[240px]">
+            <InputGroup>
               <InputGroupInput placeholder="Search" />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton size="icon-xs" variant="ghost" aria-label="Filter">
+                  <Sliders />
+                </InputGroupButton>
+              </InputGroupAddon>
             </InputGroup>
-            <Button
-              variant="outline"
-              size="icon-md"
-              className="rounded-l-none border-l-0"
-              aria-label="Filter"
-            >
-              <Sliders />
-            </Button>
           </div>
         </div>
 
@@ -50,16 +46,13 @@ export const Playground: StoryObj = {
         <div>
           <div style={sectionLabel}>Browse</div>
           <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Search input with Browse text button</div>
-          <div className="flex w-[240px]">
-            <InputGroup className="flex-1 rounded-r-none border-r-0">
+          <div className="w-[240px]">
+            <InputGroup>
               <InputGroupInput placeholder="Search" />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton size="xs" variant="ghost">Browse</InputGroupButton>
+              </InputGroupAddon>
             </InputGroup>
-            <Button
-              variant="outline"
-              className="rounded-l-none border-l-0"
-            >
-              Browse
-            </Button>
           </div>
         </div>
       </div>

@@ -63,7 +63,7 @@ export const Playground: StoryObj = {
           <div style={sectionLabel}>Simple</div>
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline">Options</Button>} />
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="start" className="min-w-[200px]">
               <DropdownMenuItem>Option 1</DropdownMenuItem>
               <DropdownMenuItem>Option 2</DropdownMenuItem>
               <DropdownMenuItem>Option 3</DropdownMenuItem>
@@ -78,7 +78,7 @@ export const Playground: StoryObj = {
           <div style={sectionLabel}>Rich Actions</div>
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline">Actions</Button>} />
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="start" className="min-w-[220px]">
               <DropdownMenuItem>
                 <DropdownMenuItemIcon><Pencil /></DropdownMenuItemIcon>
                 Edit
@@ -128,7 +128,7 @@ export const Playground: StoryObj = {
           <div style={sectionLabel}>Checkbox Select</div>
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline">Filter Assets</Button>} />
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="start" className="min-w-[220px]">
               <DropdownMenuLabel>Asset Type</DropdownMenuLabel>
               <DropdownMenuCheckboxItem defaultChecked>
                 <DropdownMenuItemIcon><Table /></DropdownMenuItemIcon>
@@ -159,7 +159,7 @@ export const Playground: StoryObj = {
           <div style={sectionLabel}>Radio Select</div>
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline">Sort by</Button>} />
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="start" className="min-w-[220px]">
               <DropdownMenuLabel>Sort Order</DropdownMenuLabel>
               <DropdownMenuRadioGroup defaultValue="modified">
                 <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
@@ -176,7 +176,7 @@ export const Playground: StoryObj = {
           <div style={sectionLabel}>Create New</div>
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button><Plus /> New</Button>} />
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="start" className="min-w-[220px]">
               <DropdownMenuGroup>
                 <DropdownMenuLabel>Workspace</DropdownMenuLabel>
                 <DropdownMenuItem>
