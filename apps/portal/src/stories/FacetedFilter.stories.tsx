@@ -1,0 +1,229 @@
+import type { Meta, StoryObj } from "@storybook/react"
+import React, { useState, useRef } from "react"
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton } from "dbui/components/ui/input-group"
+import { Popover } from "@base-ui/react/popover"
+import { Checkbox } from "dbui/components/ui/checkbox"
+import { Switch } from "dbui/components/ui/switch"
+import { Sliders } from "@/components/icons/Sliders"
+import { Search } from "@/components/icons/Search"
+import { ChevronLeft } from "@/components/icons/ChevronLeft"
+import { ChevronRight } from "@/components/icons/ChevronRight"
+import { Close } from "@/components/icons/Close"
+
+const meta: Meta = {
+  title: "Compositions/Faceted Filter",
+  parameters: { layout: "padded" },
+}
+
+export default meta
+
+/* ── Data ── */
+
+const facets: Record<string, { values: string[]; nested?: Record<string, string[]> }> = {
+  "Type": { values: ["Table", "View", "Materialized View", "Streaming Table"] },
+  "Tag": {
+    values: ["billing", "production", "cost_center", "class", "marketing", "finance", "env"],
+    nested: {
+      "class": ["email", "phone_number", "us_passport", "ip_address", "location", "name"],
+      "env": ["dev", "staging", "production", "sandbox"],
+    },
+  },
+  "Column": { values: ["id", "name", "email", "created_at", "updated_at", "status"] },
+  "Location": { values: ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"] },
+}
+
+function FacetedFilter() {
+  const [open, setOpen] = useState(false)
+  const [activeFacet, setActiveFacet] = useState<string | null>(null)
+  const [activeNested, setActiveNested] = useState<string | null>(null)
+  const [search, setSearch] = useState("")
+  const [selected, setSelected] = useState<Record<string, Set<string>>>({})
+  const [showCanUse, setShowCanUse] = useState(false)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  const toggleValue = (facet: string, value: string) => {
+    setSelected((prev) => {
+      const next = { ...prev }
+      const set = new Set(next[facet] || [])
+      if (set.has(value)) set.delete(value)
+      else set.add(value)
+      if (set.size === 0) delete next[facet]
+      else next[facet] = set
+      return next
+    })
+  }
+
+  const selectedChips = Object.entries(selected).flatMap(([facet, values]) =>
+    Array.from(values).map((v) => ({ facet, value: v }))
+  )
+
+  const resetAll = () => {
+    setSelected({})
+    setActiveFacet(null)
+    setActiveNested(null)
+    setSearch("")
+  }
+
+  const currentValues = activeNested && activeFacet
+    ? facets[activeFacet]?.nested?.[activeNested] || []
+    : activeFacet
+      ? facets[activeFacet]?.values || []
+      : []
+
+  const filteredValues = search
+    ? currentValues.filter((v) => v.toLowerCase().includes(search.toLowerCase()))
+    : currentValues
+
+  /* Menu item classes — matches DropdownMenuItem styling */
+  const menuItemClass = "flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover cursor-default"
+
+  return (
+    <div className="w-[360px]">
+      <InputGroup>
+        {selectedChips.length > 0 && (
+          <InputGroupAddon align="inline-start" className="gap-1">
+            {selectedChips.slice(0, 2).map((chip) => (
+              <span
+                key={`${chip.facet}:${chip.value}`}
+                className="inline-flex items-center gap-0.5 rounded-sm bg-accent px-1.5 py-0.5 text-[12px] text-primary whitespace-nowrap"
+              >
+                {chip.facet}: {chip.value}
+                <button
+                  className="ml-0.5 text-primary/60 hover:text-primary [&_svg]:size-3"
+                  onClick={() => toggleValue(chip.facet, chip.value)}
+                >
+                  <Close />
+                </button>
+              </span>
+            ))}
+            {selectedChips.length > 2 && (
+              <span className="text-[12px] text-muted-foreground whitespace-nowrap">+{selectedChips.length - 2}</span>
+            )}
+            <button className="text-[12px] text-primary hover:underline whitespace-nowrap" onClick={resetAll}>Reset</button>
+          </InputGroupAddon>
+        )}
+        <InputGroupInput placeholder="Search" />
+        <InputGroupAddon align="inline-end" className="border-l border-input ml-0 mr-[-1px] pr-0 pl-0">
+          <Popover.Root
+            open={open}
+            onOpenChange={(o) => {
+              setOpen(o)
+              if (!o) { setActiveFacet(null); setActiveNested(null); setSearch("") }
+            }}
+          >
+            <Popover.Trigger
+              ref={buttonRef}
+              render={
+                <InputGroupButton size="icon-sm" variant="ghost" aria-label="Filter">
+                  <Sliders />
+                </InputGroupButton>
+              }
+            />
+            <Popover.Portal>
+              <Popover.Positioner side="bottom" sideOffset={4} align="end" className="z-50">
+                <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden">
+
+                  {/* Root: facet categories */}
+                  {!activeFacet && (
+                    <div className="p-1">
+                      {Object.keys(facets).map((facet) => {
+                        const count = selected[facet]?.size || 0
+                        return (
+                          <button
+                            key={facet}
+                            className={menuItemClass}
+                            onClick={() => { setActiveFacet(facet); setSearch("") }}
+                          >
+                            <span className="flex-1 text-left font-semibold">{facet}:</span>
+                            {count > 0 && <span className="text-[12px] text-primary">{count}</span>}
+                            <span className="text-muted-foreground [&_svg]:size-4"><ChevronRight /></span>
+                          </button>
+                        )
+                      })}
+                      <div className="-mx-1 my-1 h-px bg-border" />
+                      <label className={`${menuItemClass} cursor-pointer`}>
+                        <Switch checked={showCanUse} onCheckedChange={setShowCanUse} />
+                        <span className="flex-1">Show can-use only</span>
+                      </label>
+                    </div>
+                  )}
+
+                  {/* Drilled-in: facet values */}
+                  {activeFacet && (
+                    <div>
+                      {/* Back header */}
+                      <button
+                        className="flex w-full items-center gap-1 px-1.5 py-1.5 text-[13px] font-semibold text-foreground hover:bg-hover"
+                        onClick={() => {
+                          if (activeNested) { setActiveNested(null); setSearch("") }
+                          else { setActiveFacet(null); setSearch("") }
+                        }}
+                      >
+                        <span className="text-muted-foreground [&_svg]:size-4"><ChevronLeft /></span>
+                        {activeFacet}:
+                      </button>
+                      <div className="-mx-0 h-px bg-border" />
+                      {/* Search inside facet */}
+                      <div className="p-1">
+                        <div className="flex items-center gap-1.5 rounded-sm border border-input/50 bg-input/30 px-2 h-7">
+                          <span className="text-muted-foreground [&_svg]:size-3.5"><Search /></span>
+                          <input
+                            className="flex-1 bg-transparent text-[13px] leading-[20px] outline-none placeholder:text-muted-foreground"
+                            placeholder="Search"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            autoFocus
+                          />
+                          {search && (
+                            <button className="text-muted-foreground hover:text-foreground [&_svg]:size-3" onClick={() => setSearch("")}>
+                              <Close />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      {/* Values */}
+                      <div className="max-h-[220px] overflow-y-auto p-1 pt-0">
+                        {filteredValues.map((value) => {
+                          const hasNested = !activeNested && facets[activeFacet]?.nested?.[value]
+                          const fullValue = activeNested ? `${activeNested}/${value}` : value
+                          const isChecked = selected[activeFacet]?.has(fullValue) || false
+                          return (
+                            <button
+                              key={value}
+                              className={menuItemClass}
+                              onClick={() => hasNested ? setActiveNested(value) : toggleValue(activeFacet, fullValue)}
+                            >
+                              <Checkbox checked={isChecked} className="pointer-events-none" />
+                              <span className="flex-1 text-left">{value}</span>
+                              {hasNested && <span className="text-muted-foreground [&_svg]:size-4"><ChevronRight /></span>}
+                            </button>
+                          )
+                        })}
+                        {filteredValues.length === 0 && (
+                          <div className="py-4 text-center text-[13px] text-muted-foreground">No results found.</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                </Popover.Popup>
+              </Popover.Positioner>
+            </Popover.Portal>
+          </Popover.Root>
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
+  )
+}
+
+export const Playground: StoryObj = {
+  render: () => (
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Faceted Filter</h2>
+
+      <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 12 }}>Click the Sliders icon to open the drill-down filter menu. Select values, drill into nested facets, and see chips in the search bar.</div>
+
+      <FacetedFilter />
+    </div>
+  ),
+}
