@@ -3,17 +3,18 @@
 import * as React from "react"
 
 import { cn } from "../../lib/utils"
+import { ChevronDown } from "../icons/ChevronDown"
 
 /**
  * Navbar — fixed-width sidebar navigation.
- * Maps to Figma Platform Shell navbar (180px, flex-col, gap-4).
+ * Figma: 180px, flex-col, no gap between items.
  */
 function Navbar({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
       data-slot="navbar"
       className={cn(
-        "flex w-[180px] flex-col gap-4 px-2 py-0",
+        "flex w-full flex-col",
         className
       )}
       {...props}
@@ -23,35 +24,50 @@ function Navbar({ className, ...props }: React.ComponentProps<"nav">) {
 
 /**
  * NavbarSection — collapsible group of nav items.
- * Maps to Figma .NavSection (Expanded: True/False).
- *
- * Usage:
- *   <NavbarSection>
- *     <NavbarSectionHeader expanded onToggle={...}>SQL</NavbarSectionHeader>
- *     <NavbarItem><Notebook />Editor</NavbarItem>
- *     <NavbarItem active><Query />Queries</NavbarItem>
- *   </NavbarSection>
+ * Separated from previous section by a border-top + padding.
  */
-function NavbarSection({ className, ...props }: React.ComponentProps<"div">) {
+function NavbarSection({
+  className,
+  children,
+  defaultExpanded = true,
+  ...props
+}: React.ComponentProps<"div"> & { defaultExpanded?: boolean }) {
+  const [expanded, setExpanded] = React.useState(defaultExpanded)
+  const childArray = React.Children.toArray(children)
+  const header = childArray.find(
+    (child) => React.isValidElement(child) && (child as React.ReactElement<any>).props?.["data-slot"] === "navbar-section-header"
+  )
+  const items = childArray.filter(
+    (child) => !(React.isValidElement(child) && (child as React.ReactElement<any>).props?.["data-slot"] === "navbar-section-header")
+  )
+
   return (
     <div
       data-slot="navbar-section"
-      className={cn("flex flex-col gap-0", className)}
+      className={cn("flex flex-col border-t border-border pt-2 mt-2", className)}
       {...props}
-    />
+    >
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child) && (child.type as any)?.displayName === "NavbarSectionHeader") {
+          return React.cloneElement(child as React.ReactElement<any>, {
+            expanded,
+            onToggle: () => setExpanded(!expanded),
+          })
+        }
+        if (expanded) return child
+        return null
+      })}
+    </div>
   )
 }
 
 /**
- * NavbarSectionHeader — collapsible section title with chevron.
- * Maps to Figma .NavSection header row.
- *
- * - Collapsed: label + ChevronRight
- * - Expanded: label + ChevronDown
+ * NavbarSectionHeader — section title with chevron toggle.
+ * 12px Hint style, muted-foreground, ChevronDown rotates when collapsed.
  */
 function NavbarSectionHeader({
   className,
-  expanded,
+  expanded = true,
   onToggle,
   children,
   ...props
@@ -67,45 +83,24 @@ function NavbarSectionHeader({
       aria-expanded={expanded}
       onClick={onToggle}
       className={cn(
-        "flex w-full items-center gap-1 rounded-sm px-2 py-1 text-[12px] leading-[16px] text-muted-foreground",
-        "[&_svg:not([class*='size-'])]:size-4",
+        "flex w-full items-center gap-1 px-2 py-1 text-[12px] leading-[16px] text-muted-foreground hover:text-foreground",
         className
       )}
       {...props}
     >
       <span className="flex-1 truncate text-left">{children}</span>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={cn("size-4 shrink-0 transition-transform", expanded && "rotate-90")}
-      >
-        <path
-          d="M6 4L10 8L6 12"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <ChevronDown
+        className={cn("size-3 shrink-0 text-muted-foreground transition-transform", !expanded && "-rotate-90")}
+      />
     </button>
   )
 }
+NavbarSectionHeader.displayName = "NavbarSectionHeader"
 
 /**
  * NavbarItem — single navigation item.
- * Maps to Figma .NavItem (State: Default/Hover × Selected: True/False).
- *
- * Figma spec:
- * - h-7 (28px), w-160, gap-2 (8px), px-2, py-1, rounded-sm
- * - Default: text-foreground, font-normal
- * - Hover: bg-hover
- * - Selected: bg-active, text-accent-foreground, font-semibold
- *
- * @constraints
- * - MUST include an icon (via NavbarItemIcon). Label-only items look broken in the sidebar.
+ * h-7 (28px), gap-2, px-2, rounded-sm.
+ * Active: bg-accent, text-primary, font-semibold.
  */
 function NavbarItem({
   className,
@@ -117,9 +112,9 @@ function NavbarItem({
       data-slot="navbar-item"
       data-active={active || undefined}
       className={cn(
-        "flex h-7 w-full items-center gap-2 rounded-sm px-2 py-1 text-[13px] leading-[20px] font-normal text-foreground text-left",
+        "flex h-7 w-full items-center gap-2 rounded-sm px-2 text-[13px] leading-[20px] font-normal text-foreground text-left",
         "hover:bg-hover",
-        active && "bg-active text-accent-foreground font-semibold",
+        active && "bg-accent text-primary font-semibold",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}
@@ -129,8 +124,7 @@ function NavbarItem({
 }
 
 /**
- * NavbarItemIcon — leading icon slot inside NavbarItem.
- * Maps to Figma .NavItem icon instance swap.
+ * NavbarItemIcon — leading icon slot.
  */
 function NavbarItemIcon({
   className,

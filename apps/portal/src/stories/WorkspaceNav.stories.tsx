@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Navbar, NavbarSection, NavbarSectionHeader, NavbarItem, NavbarItemIcon, NavbarNewButton } from "dbui/components/ui/navbar"
+import { Navbar, NavbarSection, NavbarSectionHeader, NavbarItem, NavbarItemIcon } from "dbui/components/ui/navbar"
 import { Button, ButtonIcon } from "dbui/components/ui/button"
 import { Plus } from "@/components/icons/Plus"
 import { Clock } from "@/components/icons/Clock"
@@ -36,117 +36,54 @@ export const Playground: StoryObj = {
     <div>
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Workspace Nav</h2>
 
-      <div className="w-[180px] border-r border-border bg-background py-2">
+      <div className="w-[180px] border-r border-border bg-background">
         {/* New button */}
-        <div className="px-2 pb-2">
-          <Button variant="outline" className="w-full justify-start gap-2">
+        <div className="px-2 py-2">
+          <Button variant="outline" className="w-full justify-start gap-2 text-primary">
             <ButtonIcon><Plus /></ButtonIcon>
             New
           </Button>
         </div>
 
-        {/* Main nav */}
+        {/* Main nav — no section header */}
         <Navbar>
-          <NavbarItem>
-            <NavbarItemIcon><Clock /></NavbarItemIcon>
-            Recents
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><FolderOpen /></NavbarItemIcon>
-            Workspace
-          </NavbarItem>
-          <NavbarItem active>
-            <NavbarItemIcon><Catalog /></NavbarItemIcon>
-            Catalog
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Workflows /></NavbarItemIcon>
-            Workflows
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Cloud /></NavbarItemIcon>
-            Compute
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Storefront /></NavbarItemIcon>
-            Marketplace
-          </NavbarItem>
+          <NavbarItem><NavbarItemIcon><Clock /></NavbarItemIcon>Recents</NavbarItem>
+          <NavbarItem><NavbarItemIcon><FolderOpen /></NavbarItemIcon>Workspace</NavbarItem>
+          <NavbarItem active><NavbarItemIcon><Catalog /></NavbarItemIcon>Catalog</NavbarItem>
+          <NavbarItem><NavbarItemIcon><Workflows /></NavbarItemIcon>Workflows</NavbarItem>
+          <NavbarItem><NavbarItemIcon><Cloud /></NavbarItemIcon>Compute</NavbarItem>
+          <NavbarItem><NavbarItemIcon><Storefront /></NavbarItemIcon>Marketplace</NavbarItem>
+
+          {/* SQL */}
+          <NavbarSection>
+            <NavbarSectionHeader>SQL</NavbarSectionHeader>
+            <NavbarItem><NavbarItemIcon><QueryEditor /></NavbarItemIcon>Editor</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Query /></NavbarItemIcon>Queries</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Dashboard /></NavbarItemIcon>Dashboards</NavbarItem>
+            <NavbarItem><NavbarItemIcon><GenieCode /></NavbarItemIcon>Genie</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Notification /></NavbarItemIcon>Alerts</NavbarItem>
+            <NavbarItem><NavbarItemIcon><History /></NavbarItemIcon>Query History</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Workspaces /></NavbarItemIcon>SQL Warehouses</NavbarItem>
+          </NavbarSection>
+
+          {/* Data Engineering */}
+          <NavbarSection>
+            <NavbarSectionHeader>Data Engineering</NavbarSectionHeader>
+            <NavbarItem><NavbarItemIcon><Checklist /></NavbarItemIcon>Job runs</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Ingestion /></NavbarItemIcon>Ingestion</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Pipeline /></NavbarItemIcon>Pipelines</NavbarItem>
+          </NavbarSection>
+
+          {/* Machine Learning */}
+          <NavbarSection>
+            <NavbarSectionHeader>Machine Learning</NavbarSectionHeader>
+            <NavbarItem><NavbarItemIcon><GenieDeepResearch /></NavbarItemIcon>Playground</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Beaker /></NavbarItemIcon>Experiments</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Layer /></NavbarItemIcon>Features</NavbarItem>
+            <NavbarItem><NavbarItemIcon><Models /></NavbarItemIcon>Models</NavbarItem>
+            <NavbarItem><NavbarItemIcon><MCP /></NavbarItemIcon>Serving</NavbarItem>
+          </NavbarSection>
         </Navbar>
-
-        {/* SQL section */}
-        <NavbarSection>
-          <NavbarSectionHeader>SQL</NavbarSectionHeader>
-          <NavbarItem>
-            <NavbarItemIcon><QueryEditor /></NavbarItemIcon>
-            Editor
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Query /></NavbarItemIcon>
-            Queries
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Dashboard /></NavbarItemIcon>
-            Dashboards
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><GenieCode /></NavbarItemIcon>
-            Genie
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Notification /></NavbarItemIcon>
-            Alerts
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><History /></NavbarItemIcon>
-            Query History
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Workspaces /></NavbarItemIcon>
-            SQL Warehouses
-          </NavbarItem>
-        </NavbarSection>
-
-        {/* Data Engineering section */}
-        <NavbarSection>
-          <NavbarSectionHeader>Data Engineering</NavbarSectionHeader>
-          <NavbarItem>
-            <NavbarItemIcon><Checklist /></NavbarItemIcon>
-            Job runs
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Ingestion /></NavbarItemIcon>
-            Ingestion
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Pipeline /></NavbarItemIcon>
-            Pipelines
-          </NavbarItem>
-        </NavbarSection>
-
-        {/* Machine Learning section */}
-        <NavbarSection>
-          <NavbarSectionHeader>Machine Learning</NavbarSectionHeader>
-          <NavbarItem>
-            <NavbarItemIcon><GenieDeepResearch /></NavbarItemIcon>
-            Playground
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Beaker /></NavbarItemIcon>
-            Experiments
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Layer /></NavbarItemIcon>
-            Features
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><Models /></NavbarItemIcon>
-            Models
-          </NavbarItem>
-          <NavbarItem>
-            <NavbarItemIcon><MCP /></NavbarItemIcon>
-            Serving
-          </NavbarItem>
-        </NavbarSection>
       </div>
     </div>
   ),
