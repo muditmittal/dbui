@@ -27,7 +27,7 @@ const sectionLabel: React.CSSProperties = {
  */
 function SearchFilter() {
   return (
-    <div className="group/ig flex w-[240px] items-center rounded-sm focus-within:border focus-within:border-primary focus-within:shadow-xs">
+    <div className="group/ig flex w-[240px] items-center rounded-sm border border-transparent focus-within:border-primary focus-within:shadow-xs">
       <input
         placeholder="Search"
         className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
@@ -44,7 +44,7 @@ function SearchFilter() {
 
 function SearchBrowse() {
   return (
-    <div className="group/ig flex w-[240px] items-center rounded-sm focus-within:border focus-within:border-primary focus-within:shadow-xs">
+    <div className="group/ig flex w-[240px] items-center rounded-sm border border-transparent focus-within:border-primary focus-within:shadow-xs">
       <input
         placeholder="Search"
         className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
