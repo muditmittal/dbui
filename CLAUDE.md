@@ -125,6 +125,12 @@ Effects (shadow xs–xl)
 - Dialogs: `shadow-lg` + `ring-1 ring-foreground/10`
 - Ghost/link variants: no shadow
 
+### Dropdown/Popup Alignment
+- IMPORTANT: All dropdown menus, select popups, combobox popups, and popovers MUST be **left-aligned** (`align="start"`) with their trigger by default
+- If there is not enough space on the right, the popup should flip to right-aligned automatically (handled by the positioner)
+- Popup width should match trigger width (`w-(--anchor-width)`) — never wider than the trigger
+- `sideOffset: 4` for all popups (gap between trigger and popup)
+
 ### Interactive States (non-filled variants)
 - Hover background: `bg-hover` (primary@8% opacity)
 - Hover border: `border-primary` on form controls
