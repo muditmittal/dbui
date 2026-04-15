@@ -169,11 +169,12 @@ function MultiSelectComma() {
 /* ── Multi Select with chips ── */
 
 function MultiSelectChips() {
+  const [selected, setSelected] = React.useState<string[]>(["pii", "production"])
   const anchor = useComboboxAnchor()
 
   return (
     <div className="w-[320px]">
-      <Combobox multiple defaultValue={["pii", "production"]}>
+      <Combobox multiple value={selected} onValueChange={setSelected}>
         <ComboboxChips ref={anchor}>
           {(chip: { value: string; label: string }) => (
             <ComboboxChip key={chip.value} value={chip.value}>

@@ -99,9 +99,10 @@ function EmptyMultiSelect() {
 /* ── Pre-selected chips ── */
 
 function PreSelectedMultiSelect() {
+  const [selected, setSelected] = React.useState<string[]>(["pii", "production", "tested"])
   const anchor = useComboboxAnchor()
   return (
-    <Combobox multiple defaultValue={["pii", "production", "tested"]}>
+    <Combobox multiple value={selected} onValueChange={setSelected}>
       <ComboboxChips ref={anchor}>
         {(chip: any) => (
           <ComboboxChip key={chip.value} value={chip.value}>
@@ -127,9 +128,10 @@ function PreSelectedMultiSelect() {
 /* ── Grouped multi-select (users) ── */
 
 function GroupedMultiSelect() {
+  const [selected, setSelected] = React.useState<string[]>(["alice"])
   const anchor = useComboboxAnchor()
   return (
-    <Combobox multiple defaultValue={["alice"]}>
+    <Combobox multiple value={selected} onValueChange={setSelected}>
       <ComboboxChips ref={anchor}>
         {(chip: any) => (
           <ComboboxChip key={chip.value} value={chip.value}>
