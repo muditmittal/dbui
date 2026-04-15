@@ -33,19 +33,17 @@ export const Playground: StoryObj = {
       <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 140 }}>Variant</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Preview</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 180 }}>Variant</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>With Remove</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Default</td>
+            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Label only</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
               <Tag><TagLabel>environment</TagLabel></Tag>
             </td>
-          </tr>
-          <tr>
-            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>With remove</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
               <Tag><TagLabel>environment</TagLabel><TagRemove /></Tag>
             </td>
@@ -55,9 +53,6 @@ export const Playground: StoryObj = {
             <td style={{ padding: "14px 24px 14px 0" }}>
               <Tag><TagIcon><Key /></TagIcon><TagLabel>env</TagLabel><TagValue>production</TagValue></Tag>
             </td>
-          </tr>
-          <tr>
-            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Full (icon + kv + remove)</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
               <Tag><TagIcon><Key /></TagIcon><TagLabel>env</TagLabel><TagValue>production</TagValue><TagRemove /></Tag>
             </td>
