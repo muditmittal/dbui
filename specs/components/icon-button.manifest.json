@@ -34,5 +34,15 @@
   },
   "props": {
     "Icon": { "figmaType": "INSTANCE_SWAP", "code": "children", "default": "Plus (35:4924)" }
-  }
+  },
+  "guidelines": [
+    "Use for toolbar actions where the icon alone is sufficient",
+    "Prefer Ghost for low-emphasis repeated actions",
+    "Always provide aria-label for accessibility"
+  ],
+  "constraints": [
+    "MUST have aria-label — no visible text to convey meaning",
+    "Avoid Primary variant for icon-only — it's visually heavy without a label",
+    "Never use without a tooltip to explain the action"
+  ]
 }

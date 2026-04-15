@@ -13,5 +13,15 @@
       "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
       "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
     }
-  }
+  },
+  "guidelines": [
+    "Use when only one option can be selected from a group",
+    "Default to the most common or recommended option",
+    "List options in logical order (alphabetical, frequency, or severity)"
+  ],
+  "constraints": [
+    "Minimum 2 options — for on/off use Switch instead",
+    "Label text must use Paragraph style (13px Regular)",
+    "Never use radio buttons for actions — they're for selection only"
+  ]
 }

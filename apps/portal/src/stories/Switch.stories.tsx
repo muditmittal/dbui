@@ -1,105 +1,60 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Switch } from "dbui/components/ui/switch"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/switch.manifest.json"
 
-const meta: Meta<typeof Switch> = {
+const meta: Meta = {
   title: "Controls/Switch",
-  component: Switch,
-  argTypes: {
-    size: { control: "select", options: ["default", "sm"] },
-    disabled: { control: "boolean" },
-    defaultChecked: { control: "boolean" },
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
-type Story = StoryObj<typeof Switch>
 
-export const Default: Story = {}
-
-export const Checked: Story = {
-  args: { defaultChecked: true },
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
 }
 
-export const Small: Story = {
-  args: { size: "sm" },
-}
-
-export const SmallChecked: Story = {
-  args: { size: "sm", defaultChecked: true },
-}
-
-export const Disabled: Story = {
-  args: { disabled: true },
-}
-
-export const DisabledChecked: Story = {
-  args: { disabled: true, defaultChecked: true },
-}
-
-export const AllStates: Story = {
-  name: "All Sizes × States",
+export const Playground: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-6">
-      <div>
-        <p className="text-[13px] font-semibold leading-[20px] mb-3">Default Size</p>
-        <div className="flex items-center gap-6">
-          <div className="flex flex-col items-center gap-1">
-            <Switch />
-            <span className="text-[12px] text-muted-foreground">Off</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Switch defaultChecked />
-            <span className="text-[12px] text-muted-foreground">On</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Switch disabled />
-            <span className="text-[12px] text-muted-foreground">Disabled Off</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Switch disabled defaultChecked />
-            <span className="text-[12px] text-muted-foreground">Disabled On</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p className="text-[13px] font-semibold leading-[20px] mb-3">Small Size</p>
-        <div className="flex items-center gap-6">
-          <div className="flex flex-col items-center gap-1">
-            <Switch size="sm" />
-            <span className="text-[12px] text-muted-foreground">Off</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Switch size="sm" defaultChecked />
-            <span className="text-[12px] text-muted-foreground">On</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Switch size="sm" disabled />
-            <span className="text-[12px] text-muted-foreground">Disabled Off</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <Switch size="sm" disabled defaultChecked />
-            <span className="text-[12px] text-muted-foreground">Disabled On</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p className="text-[12px] text-muted-foreground mt-2">Hover and press states are interactive — hover/click to see fill color transitions.</p>
-      </div>
-    </div>
-  ),
-}
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Switch</h2>
 
-export const WithLabel: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Switch id="airplane" />
-        <label htmlFor="airplane" className="text-[13px] leading-[20px]">Airplane mode</label>
-      </div>
-      <div className="flex items-center gap-2">
-        <Switch id="notifications" size="sm" defaultChecked />
-        <label htmlFor="notifications" className="text-[13px] leading-[20px]">Notifications</label>
-      </div>
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Size</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Off</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>On</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Default</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Switch />
+            </td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Switch defaultChecked />
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Small</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Switch size="sm" />
+            </td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Switch size="sm" defaultChecked />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

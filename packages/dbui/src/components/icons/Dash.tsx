@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const Dash = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M15 8.75H1V7.25H15V8.75Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M13 8.75H3V7.25H13V8.75Z" fill="currentColor"/>
 </svg>
   )
 )

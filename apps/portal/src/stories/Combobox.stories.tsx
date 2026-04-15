@@ -1,125 +1,267 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import React from "react"
 import {
   Combobox,
   ComboboxInput,
   ComboboxContent,
   ComboboxList,
   ComboboxItem,
+  ComboboxGroup,
+  ComboboxLabel,
+  ComboboxSeparator,
   ComboboxEmpty,
+  ComboboxChips,
+  ComboboxChip,
+  ComboboxChipsInput,
+  useComboboxAnchor,
 } from "dbui/components/ui/combobox"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/combobox.manifest.json"
 
-const frameworks = [
-  { value: "react", label: "React" },
-  { value: "vue", label: "Vue" },
-  { value: "angular", label: "Angular" },
-  { value: "svelte", label: "Svelte" },
-  { value: "solid", label: "Solid" },
-  { value: "next", label: "Next.js" },
+/* ── Data ── */
+
+const databases = [
+  { value: "main", label: "main" },
+  { value: "analytics", label: "analytics" },
+  { value: "staging", label: "staging" },
+  { value: "production", label: "production" },
+  { value: "sandbox", label: "sandbox" },
+]
+
+const schemas = [
+  { value: "default", label: "default" },
+  { value: "public", label: "public" },
+  { value: "raw", label: "raw" },
+  { value: "curated", label: "curated" },
+  { value: "archive", label: "archive" },
+]
+
+const tables = [
+  { value: "users", label: "users" },
+  { value: "orders", label: "orders" },
+  { value: "products", label: "products" },
+  { value: "events", label: "events" },
+  { value: "sessions", label: "sessions" },
+  { value: "transactions", label: "transactions" },
+  { value: "logs", label: "logs" },
+  { value: "metrics", label: "metrics" },
+  { value: "experiments", label: "experiments" },
+  { value: "models", label: "models" },
+  { value: "features", label: "features" },
+  { value: "predictions", label: "predictions" },
+]
+
+const tags = [
+  { value: "pii", label: "PII" },
+  { value: "gdpr", label: "GDPR" },
+  { value: "production", label: "Production" },
+  { value: "deprecated", label: "Deprecated" },
+  { value: "tested", label: "Tested" },
+  { value: "ml-ready", label: "ML Ready" },
+  { value: "aggregated", label: "Aggregated" },
+  { value: "real-time", label: "Real-time" },
 ]
 
 const meta: Meta = {
   title: "Controls/Combobox",
-  argTypes: {
-    size: { control: "radio", options: ["default", "sm"], name: "Size" },
-    showClear: { control: "boolean", name: "Show Clear (XCircleFill)" },
-    disabled: { control: "boolean" },
-    placeholder: { control: "text" },
-  },
-  args: {
-    size: "default",
-    showClear: false,
-    disabled: false,
-    placeholder: "Search...",
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
-export const Playground: StoryObj = {
-  render: (args: any) => (
-    <div className="w-[240px]">
+const sectionLabel: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
+}
+
+/* ── Single Select with grouped options ── */
+
+function SingleSelectGrouped() {
+  return (
+    <div className="w-[280px]">
       <Combobox>
-        <ComboboxInput
-          placeholder={args.placeholder}
-          inputSize={args.size}
-          showClear={args.showClear}
-          disabled={args.disabled}
-        />
+        <ComboboxInput placeholder="Search tables..." />
         <ComboboxContent>
           <ComboboxList>
-            {frameworks.map((fw) => (
-              <ComboboxItem key={fw.value} value={fw.value}>
-                {fw.label}
-              </ComboboxItem>
+            <ComboboxGroup>
+              <ComboboxLabel>Databases</ComboboxLabel>
+              {databases.map((d) => (
+                <ComboboxItem key={d.value} value={d.value}>{d.label}</ComboboxItem>
+              ))}
+            </ComboboxGroup>
+            <ComboboxSeparator />
+            <ComboboxGroup>
+              <ComboboxLabel>Schemas</ComboboxLabel>
+              {schemas.map((s) => (
+                <ComboboxItem key={s.value} value={s.value}>{s.label}</ComboboxItem>
+              ))}
+            </ComboboxGroup>
+            <ComboboxSeparator />
+            <ComboboxGroup>
+              <ComboboxLabel>Tables</ComboboxLabel>
+              {tables.map((t) => (
+                <ComboboxItem key={t.value} value={t.value}>{t.label}</ComboboxItem>
+              ))}
+            </ComboboxGroup>
+            <ComboboxEmpty>No results found</ComboboxEmpty>
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+    </div>
+  )
+}
+
+/* ── Single Select simple ── */
+
+function SingleSelectSimple() {
+  return (
+    <div className="w-[280px]">
+      <Combobox>
+        <ComboboxInput placeholder="Search..." />
+        <ComboboxContent>
+          <ComboboxList>
+            {tables.map((t) => (
+              <ComboboxItem key={t.value} value={t.value}>{t.label}</ComboboxItem>
             ))}
             <ComboboxEmpty>No results found</ComboboxEmpty>
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
     </div>
-  ),
+  )
 }
 
-export const AllStates: StoryObj = {
-  name: "All Variants",
+/* ── Single Select Small ── */
+
+function SingleSelectSmall() {
+  return (
+    <div className="w-[240px]">
+      <Combobox>
+        <ComboboxInput placeholder="Search..." inputSize="sm" />
+        <ComboboxContent>
+          <ComboboxList>
+            {databases.map((d) => (
+              <ComboboxItem key={d.value} value={d.value}>{d.label}</ComboboxItem>
+            ))}
+            <ComboboxEmpty>No results found</ComboboxEmpty>
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+    </div>
+  )
+}
+
+/* ── Multi Select with comma display ── */
+
+function MultiSelectComma() {
+  const [selected, setSelected] = React.useState<string[]>(["pii", "production"])
+
+  const selectedLabels = selected.map(v => tags.find(t => t.value === v)?.label).filter(Boolean).join(", ")
+
+  return (
+    <div className="w-[320px]">
+      <Combobox multiple value={selected} onValueChange={setSelected}>
+        <ComboboxInput placeholder="Select tags..." value={selectedLabels} readOnly />
+        <ComboboxContent>
+          <ComboboxList>
+            {tags.map((t) => (
+              <ComboboxItem key={t.value} value={t.value} label={t.label}>
+                {t.label}
+              </ComboboxItem>
+            ))}
+            <ComboboxEmpty>No tags found</ComboboxEmpty>
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+    </div>
+  )
+}
+
+/* ── Multi Select with chips ── */
+
+function MultiSelectChips() {
+  const anchor = useComboboxAnchor()
+
+  return (
+    <div className="w-[320px]">
+      <Combobox multiple defaultValue={["pii", "production"]}>
+        <ComboboxChips ref={anchor}>
+          {(chip: any) => (
+            <ComboboxChip key={chip.value} value={chip.value}>
+              {chip.label}
+            </ComboboxChip>
+          )}
+          <ComboboxChipsInput placeholder="Add tags..." />
+        </ComboboxChips>
+        <ComboboxContent anchor={anchor}>
+          <ComboboxList>
+            {tags.map((t) => (
+              <ComboboxItem key={t.value} value={t.value} label={t.label}>
+                {t.label}
+              </ComboboxItem>
+            ))}
+            <ComboboxEmpty>No tags found</ComboboxEmpty>
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+    </div>
+  )
+}
+
+export const Playground: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-3 w-[240px]">
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Default</p>
-        <Combobox>
-          <ComboboxInput placeholder="Search..." />
-          <ComboboxContent>
-            <ComboboxList>
-              {frameworks.map((fw) => (
-                <ComboboxItem key={fw.value} value={fw.value}>{fw.label}</ComboboxItem>
-              ))}
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Combobox</h2>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+        {/* Single Select */}
+        <div>
+          <div style={sectionLabel}>Single Select</div>
+          <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
+            <div>
+              <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Default</div>
+              <SingleSelectSimple />
+            </div>
+            <div>
+              <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Small</div>
+              <SingleSelectSmall />
+            </div>
+          </div>
+        </div>
+
+        {/* Grouped Options */}
+        <div>
+          <div style={sectionLabel}>Grouped Options + Search</div>
+          <div>
+            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Groups with separators, scrollable list</div>
+            <SingleSelectGrouped />
+          </div>
+        </div>
+
+        {/* Multi Select — comma display */}
+        <div>
+          <div style={sectionLabel}>Multi Select</div>
+          <div>
+            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Trigger shows comma-separated selected values</div>
+            <MultiSelectComma />
+          </div>
+        </div>
+
+        {/* Multi Select — chips */}
+        <div>
+          <div style={sectionLabel}>Multi Select (Chips)</div>
+          <div>
+            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Selected items as removable chips — use for tagging</div>
+            <MultiSelectChips />
+          </div>
+        </div>
       </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">With Clear</p>
-        <Combobox>
-          <ComboboxInput placeholder="Search..." showClear />
-          <ComboboxContent>
-            <ComboboxList>
-              {frameworks.map((fw) => (
-                <ComboboxItem key={fw.value} value={fw.value}>{fw.label}</ComboboxItem>
-              ))}
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Small</p>
-        <Combobox>
-          <ComboboxInput placeholder="Search..." inputSize="sm" />
-          <ComboboxContent>
-            <ComboboxList>
-              {frameworks.map((fw) => (
-                <ComboboxItem key={fw.value} value={fw.value}>{fw.label}</ComboboxItem>
-              ))}
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Disabled</p>
-        <Combobox>
-          <ComboboxInput placeholder="Search..." disabled />
-          <ComboboxContent>
-            <ComboboxList>
-              {frameworks.map((fw) => (
-                <ComboboxItem key={fw.value} value={fw.value}>{fw.label}</ComboboxItem>
-              ))}
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
-      </div>
-      <p className="text-[11px] text-muted-foreground mt-2">
-        Combobox focus: border-ring only (no outer shadow ring).<br />
-        Chevron is a plain icon — no hover state.
-      </p>
+
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

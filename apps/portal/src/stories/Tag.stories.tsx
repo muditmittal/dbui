@@ -1,48 +1,71 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tag, TagIcon, TagLabel, TagValue, TagRemove } from "dbui/components/ui/tag"
 import { Key } from "@/components/icons/Key"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/tag.manifest.json"
 
 const meta: Meta = {
   title: "Content/Tag",
-  argTypes: {
-    showIcon: { control: "boolean", name: "Show Icon" },
-    showValue: { control: "boolean", name: "Show Value (key:value)" },
-    removable: { control: "boolean", name: "Removable" },
-    label: { control: "text" },
-    value: { control: "text", if: { arg: "showValue" } },
-  },
-  args: {
-    showIcon: true,
-    showValue: false,
-    removable: false,
-    label: "environment",
-    value: "production",
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
-export const Playground: StoryObj = {
-  render: (args: any) => (
-    <Tag>
-      {args.showIcon && <TagIcon><Key /></TagIcon>}
-      <TagLabel>{args.label}</TagLabel>
-      {args.showValue && <TagValue>{args.value}</TagValue>}
-      {args.removable && <TagRemove />}
-    </Tag>
-  ),
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
 }
 
-export const AllVariants: StoryObj = {
+const rowLabel: React.CSSProperties = {
+  fontSize: 12,
+  color: "#6F6F6F",
+}
+
+export const Playground: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-2">
-        <Tag><TagLabel>key only</TagLabel></Tag>
-        <Tag><TagIcon><Key /></TagIcon><TagLabel>with icon</TagLabel></Tag>
-        <Tag><TagLabel>key</TagLabel><TagValue>value</TagValue></Tag>
-        <Tag><TagIcon><Key /></TagIcon><TagLabel>key</TagLabel><TagValue>value</TagValue></Tag>
-        <Tag><TagLabel>removable</TagLabel><TagRemove /></Tag>
-      </div>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Tag</h2>
+
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 140 }}>Variant</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Default</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Tag><TagLabel>environment</TagLabel></Tag>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>With remove</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Tag><TagLabel>environment</TagLabel><TagRemove /></Tag>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Key : Value</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Tag><TagIcon><Key /></TagIcon><TagLabel>env</TagLabel><TagValue>production</TagValue></Tag>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Full (icon + kv + remove)</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <Tag><TagIcon><Key /></TagIcon><TagLabel>env</TagLabel><TagValue>production</TagValue><TagRemove /></Tag>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

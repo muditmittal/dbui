@@ -2,73 +2,65 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { SplitButton, SplitButtonSeparator } from "dbui/components/ui/split-button"
 import { Button } from "dbui/components/ui/button"
 import { ChevronDown } from "@/components/icons/ChevronDown"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/split-button.manifest.json"
 
 const meta: Meta = {
   title: "Actions/SplitButton",
-  argTypes: {
-    variant: { control: "radio", options: ["default", "outline"], name: "Variant" },
-    size: { control: "radio", options: ["md", "sm"], name: "Size" },
-  },
-  args: {
-    variant: "default",
-    size: "md",
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
-export const Playground: StoryObj = {
-  render: (args: any) => {
-    const iconSize = args.size === "sm" ? "icon-sm" : "icon-md"
-    return (
-      <SplitButton>
-        <Button variant={args.variant} size={args.size}>Save</Button>
-        <SplitButtonSeparator />
-        <Button variant={args.variant} size={iconSize} aria-label="More options"><ChevronDown /></Button>
-      </SplitButton>
-    )
-  },
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
 }
 
-export const AllVariants: StoryObj = {
+export const Playground: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        <div className="flex flex-col gap-1">
-          <p className="text-[12px] text-muted-foreground">Primary · Default</p>
-          <SplitButton>
-            <Button>Save</Button>
-            <SplitButtonSeparator />
-            <Button size="icon-md" aria-label="More"><ChevronDown /></Button>
-          </SplitButton>
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-[12px] text-muted-foreground">Primary · Small</p>
-          <SplitButton>
-            <Button size="sm">Save</Button>
-            <SplitButtonSeparator />
-            <Button size="icon-sm" aria-label="More"><ChevronDown /></Button>
-          </SplitButton>
-        </div>
-      </div>
-      <div className="flex items-center gap-4">
-        <div className="flex flex-col gap-1">
-          <p className="text-[12px] text-muted-foreground">Outline · Default</p>
-          <SplitButton>
-            <Button variant="outline">Options</Button>
-            <SplitButtonSeparator />
-            <Button variant="outline" size="icon-md" aria-label="More"><ChevronDown /></Button>
-          </SplitButton>
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-[12px] text-muted-foreground">Outline · Small</p>
-          <SplitButton>
-            <Button variant="outline" size="sm">Options</Button>
-            <SplitButtonSeparator />
-            <Button variant="outline" size="icon-sm" aria-label="More"><ChevronDown /></Button>
-          </SplitButton>
-        </div>
-      </div>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Split Button</h2>
+
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Variant</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Small</th>
+          </tr>
+        </thead>
+        <tbody>
+          {([
+            ["default", "Primary"],
+            ["outline", "Outline"],
+          ] as const).map(([v, name]) => (
+            <tr key={v}>
+              <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>{name}</td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                <SplitButton>
+                  <Button variant={v}>Save</Button>
+                  <SplitButtonSeparator />
+                  <Button variant={v} size="icon-md" aria-label="More options"><ChevronDown /></Button>
+                </SplitButton>
+              </td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                <SplitButton>
+                  <Button variant={v} size="sm">Save</Button>
+                  <SplitButtonSeparator />
+                  <Button variant={v} size="icon-sm" aria-label="More options"><ChevronDown /></Button>
+                </SplitButton>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

@@ -2,6 +2,16 @@
   "$component": "Toast",
   "$figmaId": "968:944",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=968-944",
+  "guidelines": [
+    "Use for transient feedback after an action (save, delete, copy)",
+    "Auto-dismisses after a few seconds",
+    "Use success for confirmations, error for failures"
+  ],
+  "constraints": [
+    "Don't use for critical errors that need user action — use Alert",
+    "Keep message to one line",
+    "Don't stack more than 3 toasts"
+  ],
   "variants": {
     "Type": ["Success", "Info", "Warning", "Error"]
   },

@@ -13,5 +13,15 @@
   "props": {
     "Text": { "figmaType": "TEXT", "default": "Placeholder", "code": "placeholder prop" }
   },
-  "note": "Figma has no Size variant — Textarea is always default height. No Warning/Success states (only Input has those)."
+  "note": "Figma has no Size variant — Textarea is always default height. No Warning/Success states (only Input has those).",
+  "guidelines": [
+    "Use for multi-line text input",
+    "Field auto-sizes to content with field-sizing-content",
+    "Always pair with a visible label above"
+  ],
+  "constraints": [
+    "Same validation styling as Input — border-only, no ring shadows",
+    "Disabled uses bg-muted background",
+    "Don't set explicit rows unless content has a known max length"
+  ]
 }

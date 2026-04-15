@@ -6,68 +6,61 @@ import { Trash } from "@/components/icons/Trash"
 import { Search } from "@/components/icons/Search"
 import { Pencil } from "@/components/icons/Pencil"
 import { Filter } from "@/components/icons/Filter"
-
-const iconMap: Record<string, React.ReactNode> = {
-  Plus: <Plus />, Gear: <Gear />, Trash: <Trash />,
-  Search: <Search />, Pencil: <Pencil />, Filter: <Filter />,
-}
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/icon-button.manifest.json"
 
 const meta: Meta = {
   title: "Actions/IconButton",
-  argTypes: {
-    variant: {
-      control: "select",
-      options: ["default", "outline", "secondary", "ghost", "destructive", "danger"],
-    },
-    size: { control: "radio", options: ["icon-sm", "icon-md"] },
-    icon: { control: "select", options: ["Plus", "Gear", "Trash", "Search", "Pencil", "Filter"] },
-    disabled: { control: "boolean" },
-  },
-  args: {
-    variant: "default",
-    size: "icon-md",
-    icon: "Plus",
-    disabled: false,
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
+}
+
 export const Playground: StoryObj = {
-  render: (args: any) => (
-    <Button variant={args.variant} size={args.size} disabled={args.disabled} aria-label="Action">
-      {iconMap[args.icon] || <Plus />}
-    </Button>
-  ),
-}
-
-export const AllVariants: StoryObj = {
   render: () => (
-    <div className="flex items-center gap-3">
-      <Button size="icon-md" variant="default" aria-label="Add"><Plus /></Button>
-      <Button size="icon-md" variant="outline" aria-label="Settings"><Gear /></Button>
-      <Button size="icon-md" variant="secondary" aria-label="Search"><Search /></Button>
-      <Button size="icon-md" variant="ghost" aria-label="Search"><Search /></Button>
-      <Button size="icon-md" variant="destructive" aria-label="Delete"><Trash /></Button>
-      <Button size="icon-md" variant="danger" aria-label="Delete"><Trash /></Button>
-    </div>
-  ),
-}
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Icon Button</h2>
 
-export const Sizes: StoryObj = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Button size="icon-sm" variant="outline" aria-label="Small"><Plus /></Button>
-      <Button size="icon-md" variant="outline" aria-label="Default"><Plus /></Button>
-    </div>
-  ),
-}
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Variant</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Small</th>
+          </tr>
+        </thead>
+        <tbody>
+          {([
+            ["default", "Primary", <Plus />],
+            ["outline", "Outline", <Gear />],
+            ["ghost", "Ghost", <Search />],
+            ["secondary", "Secondary", <Pencil />],
+            ["danger", "Danger", <Trash />],
+            ["destructive", "Destructive", <Filter />],
+          ] as [string, string, React.ReactNode][]).map(([v, name, icon]) => (
+            <tr key={v}>
+              <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>{name}</td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                <Button variant={v as any} size="icon-md" aria-label={name}>{icon}</Button>
+              </td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                <Button variant={v as any} size="icon-sm" aria-label={name}>{icon}</Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-export const Disabled: StoryObj = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Button size="icon-md" disabled aria-label="Add"><Plus /></Button>
-      <Button size="icon-md" variant="outline" disabled aria-label="Settings"><Gear /></Button>
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

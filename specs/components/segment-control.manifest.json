@@ -27,10 +27,20 @@
     }
   },
   "storyControls": {
-    "variant": "✅ radio (Slider/Outline)",
-    "size": "✅ radio (sm/md)",
-    "showIcons": "✅ boolean",
-    "iconOnly": "✅ boolean",
-    "disabled": "✅ boolean"
-  }
+    "variant": "radio (Slider/Outline)",
+    "size": "radio (sm/md)",
+    "showIcons": "boolean",
+    "iconOnly": "boolean",
+    "disabled": "boolean"
+  },
+  "guidelines": [
+    "Use Slider for primary view switching (tab-like)",
+    "Use Outline for secondary or compact controls",
+    "Items distribute equally across available width"
+  ],
+  "constraints": [
+    "Minimum 2 items, maximum 5 items",
+    "Labels should be single words or very short phrases",
+    "Don't mix icons and text within the same control"
+  ]
 }

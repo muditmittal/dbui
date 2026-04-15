@@ -2,6 +2,16 @@
   "$component": "Card",
   "$figmaId": "3154:4736",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3154-4736",
+  "guidelines": [
+    "Use to group related content into a visual container",
+    "Cards should have a clear hierarchy: header, content, optional footer",
+    "Use rounded-xl (16px) border radius"
+  ],
+  "constraints": [
+    "Don't nest cards inside cards",
+    "Cards use shadow, not border for elevation",
+    "Don't use for full-width content — cards imply bounded areas"
+  ],
   "variants": {
     "Type": ["Post", "Asset Preview", "Source", "Asset Result"]
   },

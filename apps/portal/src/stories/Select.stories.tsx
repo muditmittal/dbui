@@ -1,81 +1,96 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectLabel, SelectGroup, SelectSeparator } from "dbui/components/ui/select"
-import { Search } from "@/components/icons/Search"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "dbui/components/ui/select"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/select.manifest.json"
 
 const meta: Meta = {
   title: "Controls/Select",
-  argTypes: {
-    variant: { control: "radio", options: ["default", "ghost"], name: "Type (Default / Ghost)" },
-    size: { control: "radio", options: ["default", "sm"], name: "Size" },
-    showIcon: { control: "boolean", name: "Show Icon (Search)" },
-    disabled: { control: "boolean" },
-    placeholder: { control: "text" },
-  },
-  args: {
-    variant: "default",
-    size: "default",
-    showIcon: false,
-    disabled: false,
-    placeholder: "Select an option...",
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
-export const Playground: StoryObj = {
-  render: (args: any) => (
-    <div className="w-[240px]">
-      <Select>
-        <SelectTrigger size={args.size} variant={args.variant} disabled={args.disabled}>
-          {args.showIcon && <Search className="size-4 shrink-0 text-muted-foreground" />}
-          <SelectValue placeholder={args.placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Workspace</SelectLabel>
-            <SelectItem value="notebook">Notebook</SelectItem>
-            <SelectItem value="query">Query</SelectItem>
-            <SelectItem value="dashboard">Dashboard</SelectItem>
-          </SelectGroup>
-          <SelectSeparator />
-          <SelectGroup>
-            <SelectLabel>Data</SelectLabel>
-            <SelectItem value="table">Table</SelectItem>
-            <SelectItem value="volume">Volume</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
-  ),
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
 }
 
-export const AllStates: StoryObj = {
-  name: "All States ",
+export const Playground: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-3 w-[240px]">
-      {[
-        { label: "Default", props: {} },
-        { label: "Ghost", props: { variant: "ghost" as const } },
-        { label: "With Icon", props: {}, icon: true },
-        { label: "Small", props: { size: "sm" as const } },
-        { label: "Disabled", props: { disabled: true } },
-        { label: "Danger (invalid)", props: { "aria-invalid": true } },
-      ].map(({ label, props, icon }) => (
-        <div key={label} className="flex flex-col gap-1">
-          <p className="text-[12px] text-muted-foreground">{label}</p>
-          <Select defaultValue="notebook">
-            <SelectTrigger {...props}>
-              {icon && <Search className="size-4 shrink-0 text-muted-foreground" />}
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="notebook">Notebook</SelectItem>
-              <SelectItem value="query">Query</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      ))}
-      <p className="text-[11px] text-muted-foreground mt-2">Hover/Focus states are interactive.</p>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Select</h2>
+
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Type</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Small</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Default</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 200 }}>
+                <Select defaultValue="notebook">
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="notebook">Notebook</SelectItem>
+                    <SelectItem value="query">Query</SelectItem>
+                    <SelectItem value="dashboard">Dashboard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 200 }}>
+                <Select defaultValue="notebook">
+                  <SelectTrigger size="sm"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="notebook">Notebook</SelectItem>
+                    <SelectItem value="query">Query</SelectItem>
+                    <SelectItem value="dashboard">Dashboard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Ghost</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 200 }}>
+                <Select defaultValue="notebook">
+                  <SelectTrigger variant="ghost"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="notebook">Notebook</SelectItem>
+                    <SelectItem value="query">Query</SelectItem>
+                    <SelectItem value="dashboard">Dashboard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 200 }}>
+                <Select defaultValue="notebook">
+                  <SelectTrigger variant="ghost" size="sm"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="notebook">Notebook</SelectItem>
+                    <SelectItem value="query">Query</SelectItem>
+                    <SelectItem value="dashboard">Dashboard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

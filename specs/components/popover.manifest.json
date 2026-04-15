@@ -2,6 +2,16 @@
   "$component": "Popover",
   "$figmaId": "1060:3832",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3832",
+  "guidelines": [
+    "Use for rich interactive content attached to a trigger",
+    "Good for date pickers, color pickers, and mini-forms",
+    "Closes on outside click"
+  ],
+  "constraints": [
+    "Don't use for simple text — use Tooltip instead",
+    "Keep content focused — if it grows complex, use Dialog",
+    "Position away from screen edges"
+  ],
   "variants": {
     "Arrow": ["Top", "Right", "Bottom", "Left"]
   },

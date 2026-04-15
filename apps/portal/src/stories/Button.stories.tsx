@@ -6,27 +6,12 @@ import { Filter } from "@/components/icons/Filter"
 import { Pencil } from "@/components/icons/Pencil"
 import { Download } from "@/components/icons/Download"
 import { Trash } from "@/components/icons/Trash"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/button.manifest.json"
 
-/**
- * Interactive playground that maps to Figma's .ActionLabel inner component.
- * Toggle Show Icon, Show Chevron, and pick an icon to match any Figma variant.
- */
 const meta: Meta = {
   title: "Actions/Button",
-  parameters: {
-    docs: {
-      description: {
-        component: [
-          "### Constraints",
-          "- **Link variant:** NO icons. No ButtonIcon, no ButtonChevron. Only trailing icon allowed: NewWindow for external links.",
-          "- **Ghost variant:** Prefer icon-only (`size: icon-sm/icon-md`). Ghost with icon+label competes with Outline.",
-          "- **Icon-only** (`size: icon-sm/icon-md`): MUST have `aria-label`.",
-          "- **Menu trigger** (with ButtonChevron): Avoid leading ButtonIcon. Prefer outline or secondary variant — not primary.",
-          "- **Destructive:** Should only appear inside AlertDialog or as the final confirmed action.",
-        ].join("\n"),
-      },
-    },
-  },
+  parameters: { layout: "padded" },
   argTypes: {
     variant: {
       control: "select",
@@ -37,13 +22,13 @@ const meta: Meta = {
       options: ["sm", "md", "icon-sm", "icon-md"],
     },
     label: { control: "text" },
-    showIcon: { control: "boolean", name: "Show Icon (.ActionLabel)" },
+    showIcon: { control: "boolean", name: "Show Icon" },
     icon: {
       control: "select",
       options: ["Plus", "Search", "Filter", "Pencil", "Download", "Trash"],
       if: { arg: "showIcon" },
     },
-    showChevron: { control: "boolean", name: "Show Menu Chevron (.ActionLabel)" },
+    showChevron: { control: "boolean", name: "Show Chevron" },
     loading: { control: "boolean" },
     disabled: { control: "boolean" },
   },
@@ -70,85 +55,83 @@ const iconMap: Record<string, React.ReactNode> = {
   Trash: <Trash />,
 }
 
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
+}
+
+function AllVariants() {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      {/* Row per variant — Default size, then Small */}
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Variant</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Icon + Label</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Icon Only</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Menu</th>
+          </tr>
+        </thead>
+        <tbody>
+          {([
+            ["default", "Primary"],
+            ["outline", "Outline"],
+            ["secondary", "Secondary"],
+            ["ghost", "Ghost"],
+            ["link", "Link"],
+            ["destructive", "Destructive"],
+            ["danger", "Danger"],
+          ] as const).map(([v, name]) => (
+            <tr key={v}>
+              <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>{name}</td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                <Button variant={v}>{name}</Button>
+              </td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                {v === "link" ? (
+                  <span style={{ fontSize: 11, color: "#CBCBCB" }}>—</span>
+                ) : (
+                  <Button variant={v}><ButtonIcon><Plus /></ButtonIcon>{name}</Button>
+                )}
+              </td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                {v === "link" ? (
+                  <span style={{ fontSize: 11, color: "#CBCBCB" }}>—</span>
+                ) : (
+                  <Button variant={v} size="icon-md" aria-label={name}><Plus /></Button>
+                )}
+              </td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                {v === "link" ? (
+                  <span style={{ fontSize: 11, color: "#CBCBCB" }}>—</span>
+                ) : (
+                  <Button variant={v}>{name}<ButtonChevron /></Button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 export const Playground: StoryObj = {
-  render: (args: any) => (
-    <Button
-      variant={args.variant}
-      size={args.size}
-      loading={args.loading}
-      disabled={args.disabled}
-    >
-      {args.showIcon && <ButtonIcon>{iconMap[args.icon] || <Plus />}</ButtonIcon>}
-      {args.label}
-      {args.showChevron && <ButtonChevron />}
-    </Button>
-  ),
-}
-
-export const AllVariants: StoryObj = {
   render: () => (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button variant="default">Primary</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
-      <Button variant="destructive">Destructive</Button>
-      <Button variant="danger">Danger</Button>
-    </div>
-  ),
-}
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Button</h2>
 
-export const Sizes: StoryObj = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Button size="sm">Small</Button>
-      <Button size="md">Default</Button>
-      <Button size="icon-sm"><Plus /></Button>
-      <Button size="icon-md"><Plus /></Button>
-    </div>
-  ),
-}
+      {/* All key variants */}
+      <AllVariants />
 
-export const IconCompositions: StoryObj = {
-  name: "Icon Compositions (.ActionLabel)",
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <p className="text-[12px] text-muted-foreground">Maps to Figma .ActionLabel — icon + label + optional chevron</p>
-      <div className="flex items-center gap-3">
-        <Button><ButtonIcon><Plus /></ButtonIcon>Create</Button>
-        <Button variant="outline"><ButtonIcon><Search /></ButtonIcon>Search</Button>
-        <Button variant="secondary"><ButtonIcon><Filter /></ButtonIcon>Filter</Button>
-      </div>
-      <div className="flex items-center gap-3">
-        <Button variant="outline">Options<ButtonChevron /></Button>
-        <Button variant="secondary"><ButtonIcon><Filter /></ButtonIcon>Filter<ButtonChevron /></Button>
-      </div>
-      <div className="flex items-center gap-3">
-        <Button size="sm"><ButtonIcon><Plus /></ButtonIcon>Create</Button>
-        <Button size="sm" variant="outline">Options<ButtonChevron /></Button>
-      </div>
-    </div>
-  ),
-}
-
-export const Loading: StoryObj = {
-  args: {
-    label: "Saving...",
-    loading: true,
-  },
-  render: (args: any) => (
-    <Button loading={args.loading}>{args.label}</Button>
-  ),
-}
-
-export const Disabled: StoryObj = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Button disabled>Primary</Button>
-      <Button variant="outline" disabled>Outline</Button>
-      <Button variant="secondary" disabled>Secondary</Button>
-      <Button variant="destructive" disabled>Destructive</Button>
+      {/* Meta */}
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

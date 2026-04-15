@@ -10,5 +10,16 @@
   "codeAPI": {
     "size": ["sm", "default", "lg"],
     "type": ["initials", "icon"]
-  }
+  },
+  "$codePath": "packages/dbui/src/components/ui/avatar.tsx",
+  "guidelines": [
+    "Use to represent users or entities",
+    "Always provide a fallback (initials or default icon)",
+    "Use in headers, comment threads, and user lists"
+  ],
+  "constraints": [
+    "Image must have alt text for accessibility",
+    "Initials should be 1-2 characters max",
+    "Don't use for decorative purposes — it implies a user"
+  ]
 }

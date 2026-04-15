@@ -1,126 +1,61 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
-import { Grid } from "@/components/icons/Grid"
-import { List } from "@/components/icons/List"
-import { Rows } from "@/components/icons/Rows"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/segment-control.manifest.json"
 
 const meta: Meta = {
   title: "Actions/SegmentControl",
-  argTypes: {
-    variant: { control: "radio", options: ["default", "outline"], name: "Variant (Slider / Outline)" },
-    size: { control: "radio", options: ["sm", "md"], name: "Size" },
-    showIcons: { control: "boolean", name: "Show Icons (.SegmentControlItem)" },
-    iconOnly: { control: "boolean", name: "Icon Only", if: { arg: "showIcons" } },
-    disabled: { control: "boolean" },
-  },
-  args: {
-    variant: "default",
-    size: "md",
-    showIcons: false,
-    iconOnly: false,
-    disabled: false,
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
+}
+
 export const Playground: StoryObj = {
-  render: (args: any) => (
-    <SegmentControl
-      defaultValue="list"
-      variant={args.variant}
-      size={args.size}
-      disabled={args.disabled}
-    >
-      <SegmentControlItem value="list">
-        {args.showIcons && <List />}
-        {!args.iconOnly && "List"}
-      </SegmentControlItem>
-      <SegmentControlItem value="grid">
-        {args.showIcons && <Grid />}
-        {!args.iconOnly && "Grid"}
-      </SegmentControlItem>
-      <SegmentControlItem value="board">
-        {args.showIcons && <Rows />}
-        {!args.iconOnly && "Board"}
-      </SegmentControlItem>
-    </SegmentControl>
-  ),
-}
-
-export const AllVariants: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Slider (default) — Default size</p>
-        <SegmentControl defaultValue="list" variant="default">
-          <SegmentControlItem value="list">List</SegmentControlItem>
-          <SegmentControlItem value="grid">Grid</SegmentControlItem>
-          <SegmentControlItem value="board">Board</SegmentControlItem>
-        </SegmentControl>
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Slider (default) — Small</p>
-        <SegmentControl defaultValue="list" variant="default" size="sm">
-          <SegmentControlItem value="list">List</SegmentControlItem>
-          <SegmentControlItem value="grid">Grid</SegmentControlItem>
-          <SegmentControlItem value="board">Board</SegmentControlItem>
-        </SegmentControl>
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Outline — Default size</p>
-        <SegmentControl defaultValue="list" variant="outline">
-          <SegmentControlItem value="list">List</SegmentControlItem>
-          <SegmentControlItem value="grid">Grid</SegmentControlItem>
-          <SegmentControlItem value="board">Board</SegmentControlItem>
-        </SegmentControl>
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Outline — Small</p>
-        <SegmentControl defaultValue="list" variant="outline" size="sm">
-          <SegmentControlItem value="list">List</SegmentControlItem>
-          <SegmentControlItem value="grid">Grid</SegmentControlItem>
-          <SegmentControlItem value="board">Board</SegmentControlItem>
-        </SegmentControl>
-      </div>
-    </div>
-  ),
-}
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Segment Control</h2>
 
-export const WithIcons: StoryObj = {
-  render: () => (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Icon + Label</p>
-        <SegmentControl defaultValue="list" variant="outline">
-          <SegmentControlItem value="list"><List /> List</SegmentControlItem>
-          <SegmentControlItem value="grid"><Grid /> Grid</SegmentControlItem>
-          <SegmentControlItem value="board"><Rows /> Board</SegmentControlItem>
-        </SegmentControl>
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Icon only</p>
-        <SegmentControl defaultValue="list" variant="outline">
-          <SegmentControlItem value="list" aria-label="List"><List /></SegmentControlItem>
-          <SegmentControlItem value="grid" aria-label="Grid"><Grid /></SegmentControlItem>
-          <SegmentControlItem value="board" aria-label="Board"><Rows /></SegmentControlItem>
-        </SegmentControl>
-      </div>
-    </div>
-  ),
-}
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Variant</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Slider</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <SegmentControl defaultValue="list" variant="default">
+                <SegmentControlItem value="list">List</SegmentControlItem>
+                <SegmentControlItem value="grid">Grid</SegmentControlItem>
+                <SegmentControlItem value="board">Board</SegmentControlItem>
+              </SegmentControl>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Outline</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <SegmentControl defaultValue="list" variant="outline">
+                <SegmentControlItem value="list">List</SegmentControlItem>
+                <SegmentControlItem value="grid">Grid</SegmentControlItem>
+                <SegmentControlItem value="board">Board</SegmentControlItem>
+              </SegmentControl>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-export const Disabled: StoryObj = {
-  render: () => (
-    <div className="flex items-center gap-4">
-      <SegmentControl defaultValue="list" variant="default" disabled>
-        <SegmentControlItem value="list">List</SegmentControlItem>
-        <SegmentControlItem value="grid">Grid</SegmentControlItem>
-      </SegmentControl>
-      <SegmentControl defaultValue="list" variant="outline" disabled>
-        <SegmentControlItem value="list">List</SegmentControlItem>
-        <SegmentControlItem value="grid">Grid</SegmentControlItem>
-      </SegmentControl>
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

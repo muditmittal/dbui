@@ -12,5 +12,15 @@
   },
   "props": {
     "Show Clear": { "figmaType": "BOOLEAN", "default": false, "code": "clear button" }
-  }
+  },
+  "guidelines": [
+    "Use for multi-value selection with tags/chips",
+    "Selected items appear as removable chips above the input",
+    "Use for tagging, multi-select filters, email recipients"
+  ],
+  "constraints": [
+    "Chips must be removable via X button",
+    "Input should remain functional after chip selection",
+    "Don't use for single-value selection — use Combobox instead"
+  ]
 }

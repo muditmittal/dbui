@@ -6,5 +6,16 @@
     "Arrow": ["Bottom", "Left", "Right", "Top"]
   },
   "props": {},
-  "code": "tooltip.tsx"
+  "code": "tooltip.tsx",
+  "$codePath": "packages/dbui/src/components/ui/tooltip.tsx",
+  "guidelines": [
+    "Use to provide additional context for UI elements",
+    "Keep tooltip text short — one line max",
+    "Always add tooltips to icon-only buttons"
+  ],
+  "constraints": [
+    "8px offset from trigger element",
+    "Don't put interactive content in tooltips — use Popover instead",
+    "Don't use for essential information — it's hidden by default"
+  ]
 }

@@ -1,65 +1,42 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import {
-  AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
-  AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "dbui/components/ui/alert-dialog"
-import { Button } from "dbui/components/ui/button"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/alert-dialog.manifest.json"
 
-const meta: Meta<typeof AlertDialog> = {
+const meta: Meta = {
   title: "Overlays/AlertDialog",
-  component: AlertDialog,
+  parameters: { layout: "padded" },
 }
 
 export default meta
-type Story = StoryObj<typeof AlertDialog>
 
-export const Default: Story = {
+export const Playground: StoryObj = {
   render: () => (
-    <AlertDialog>
-      <AlertDialogTrigger render={<Button variant="destructive" />}>
-        Delete workspace
-      </AlertDialogTrigger>
-      <AlertDialogContent>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>AlertDialog</h2>
+
+      {/* Static structure preview — no trigger needed */}
+      <div className="w-[440px] rounded-lg border border-border bg-background p-6 shadow-lg">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This will permanently delete the workspace and all associated resources. This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="mt-4">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
         </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  ),
-}
+      </div>
 
-export const SmallSize: Story = {
-  render: () => (
-    <AlertDialog>
-      <AlertDialogTrigger render={<Button variant="outline" />}>
-        Log out
-      </AlertDialogTrigger>
-      <AlertDialogContent size="sm">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Log out?</AlertDialogTitle>
-          <AlertDialogDescription>
-            You will need to sign in again to access your account.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Log out</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      <ComponentMeta manifest={manifest} />
+    </div>
   ),
 }

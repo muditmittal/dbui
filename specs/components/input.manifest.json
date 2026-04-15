@@ -25,10 +25,20 @@
     }
   },
   "storyControls": {
-    "size": "✅ select",
-    "validation": "✅ select",
-    "disabled": "✅ boolean",
-    "placeholder": "✅ text",
-    "InputContent playground": "✅ showLeftIcon, showRightIndicator, showRightAction"
-  }
+    "size": "select",
+    "validation": "select",
+    "disabled": "boolean",
+    "placeholder": "text",
+    "InputContent playground": "showLeftIcon, showRightIndicator, showRightAction"
+  },
+  "guidelines": [
+    "Use for single-line text entry",
+    "Always pair with a visible label above",
+    "Use placeholder text sparingly — it disappears on focus"
+  ],
+  "constraints": [
+    "Never use placeholder as a substitute for a label",
+    "Validation border is the only visual change — no ring shadows",
+    "Disabled inputs use bg-muted background"
+  ]
 }

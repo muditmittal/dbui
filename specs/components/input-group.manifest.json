@@ -20,5 +20,15 @@
     "showRightIndicator": "✅ boolean",
     "showRightAction": "✅ boolean",
     "disabled": "✅ boolean"
-  }
+  },
+  "guidelines": [
+    "Use to combine an input with related addons (icons, buttons, text)",
+    "Addons can be placed inline-start, inline-end, block-start, or block-end",
+    "Focus state applies to the entire group border"
+  ],
+  "constraints": [
+    "Inner input/textarea must use InputGroupInput/InputGroupTextarea — not plain Input",
+    "Addon buttons use InputGroupButton with ghost variant by default",
+    "Don't nest InputGroups inside other InputGroups"
+  ]
 }

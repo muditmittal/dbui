@@ -2,6 +2,16 @@
   "$component": "Accordion",
   "$figmaId": "3155:1983",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3155-1983",
+  "guidelines": [
+    "Use to progressively disclose content in limited space",
+    "First item can be open by default for the most important content",
+    "Use for FAQs, settings panels, and filter groups"
+  ],
+  "constraints": [
+    "Don't nest accordions inside accordions",
+    "Keep headers concise — they're the primary scanning mechanism",
+    "Don't use for primary navigation — use Tabs instead"
+  ],
   "variants": {},
   "props": {},
   "code": "accordion.tsx"

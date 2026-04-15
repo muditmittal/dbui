@@ -51,5 +51,15 @@
     "With Icons & Shortcuts": "✅ full menu with all sub-components",
     "With Description": "✅ description variant",
     "Menu Row Types": "✅ Search, Empty, Loading, Footer"
-  }
+  },
+  "guidelines": [
+    "Use for contextual actions triggered by a button click",
+    "Group related items with separators",
+    "Destructive items go last, separated from other items"
+  ],
+  "constraints": [
+    "Menu items use bg-hover on focus, not bg-accent",
+    "Disabled items use text-disabled-foreground, not opacity",
+    "Destructive hover uses bg-destructive with destructive-foreground text"
+  ]
 }

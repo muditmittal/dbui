@@ -18,5 +18,15 @@
       "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
       "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
     }
-  }
+  },
+  "guidelines": [
+    "Use for immediate on/off toggles that take effect without a save action",
+    "Label should describe the setting, not the action",
+    "Place to the right of its label"
+  ],
+  "constraints": [
+    "Never use inside a form that requires a submit button — use Checkbox instead",
+    "Small size is for compact UIs only (tables, toolbars)",
+    "Don't use for multi-step or reversible choices"
+  ]
 }

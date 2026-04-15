@@ -1,35 +1,36 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { RadioGroup, RadioGroupItem } from "dbui/components/ui/radio-group"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/radio.manifest.json"
 
 const meta: Meta = {
   title: "Controls/RadioGroup",
-  argTypes: {
-    orientation: { control: "radio", options: ["vertical", "horizontal"] },
-    disabled: { control: "boolean" },
-  },
-  args: {
-    orientation: "vertical",
-    disabled: false,
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
 export const Playground: StoryObj = {
-  render: (args: any) => (
-    <RadioGroup defaultValue="option-1" orientation={args.orientation} disabled={args.disabled} className={args.orientation === "horizontal" ? "flex-row" : ""}>
-      <div className="flex items-center gap-2">
-        <RadioGroupItem value="option-1" id="r1" />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="r1">Option 1</label>
-      </div>
-      <div className="flex items-center gap-2">
-        <RadioGroupItem value="option-2" id="r2" />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="r2">Option 2</label>
-      </div>
-      <div className="flex items-center gap-2">
-        <RadioGroupItem value="option-3" id="r3" />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="r3">Option 3</label>
-      </div>
-    </RadioGroup>
+  render: () => (
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Radio Group</h2>
+
+      <RadioGroup defaultValue="option-1">
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0" }}>
+          <RadioGroupItem value="option-1" id="rg-1" />
+          <label htmlFor="rg-1" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Selected option</label>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0" }}>
+          <RadioGroupItem value="option-2" id="rg-2" />
+          <label htmlFor="rg-2" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Unselected option</label>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0" }}>
+          <RadioGroupItem value="option-3" id="rg-3" disabled />
+          <label htmlFor="rg-3" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400, opacity: 0.5 }}>Disabled option</label>
+        </div>
+      </RadioGroup>
+
+      <ComponentMeta manifest={manifest} />
+    </div>
   ),
 }

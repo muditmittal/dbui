@@ -18,5 +18,15 @@
     "Icon": { "figmaType": "BOOLEAN", "default": true, "code": "RadioTileIcon sub-component", "storyControl": "showIcon" },
     "Text": { "figmaType": "BOOLEAN", "default": true, "code": "RadioTileDescription sub-component", "storyControl": "showDescription" }
   },
-  "note": "Figma 'Icon' = show/hide icon. Figma 'Text' = show/hide description (not title)."
+  "note": "Figma 'Icon' = show/hide icon. Figma 'Text' = show/hide description (not title).",
+  "guidelines": [
+    "Use for visual selection with rich content (icon + title + description)",
+    "Limit to 2-5 options for scanability",
+    "Selected tile gets accent border and radio indicator"
+  ],
+  "constraints": [
+    "Always include a title — icon and description are optional",
+    "Radio indicator must be visible on both selected and unselected states",
+    "Don't mix tiles with different content structures in the same group"
+  ]
 }

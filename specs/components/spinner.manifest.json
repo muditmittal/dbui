@@ -2,6 +2,16 @@
   "$component": "Spinner",
   "$figmaId": "1060:3970",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3970",
+  "guidelines": [
+    "Use for indeterminate loading that takes more than 1 second",
+    "Center within the loading area",
+    "Pair with a label for accessibility ('Loading...')"
+  ],
+  "constraints": [
+    "Don't use for page-level loading — use Skeleton instead",
+    "Keep size proportional to the area it's in",
+    "Always set aria-label or screen reader text"
+  ],
   "variants": {},
   "props": {},
   "code": "spinner.tsx"

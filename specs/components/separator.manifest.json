@@ -2,6 +2,16 @@
   "$component": "Separator",
   "$figmaId": "3177:2832",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3177-2832",
+  "guidelines": [
+    "Use to visually divide sections of content",
+    "Horizontal for stacking, vertical for side-by-side",
+    "Use within menus to group related items"
+  ],
+  "constraints": [
+    "Use border token for color — never hardcode",
+    "Don't use multiple separators adjacent to each other",
+    "In menus, use the component's built-in separator, not a generic one"
+  ],
   "variants": {},
   "props": {},
   "code": "separator.tsx"

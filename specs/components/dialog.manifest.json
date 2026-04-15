@@ -13,5 +13,16 @@
       }
     }
   },
-  "code": "dialog.tsx"
+  "code": "dialog.tsx",
+  "$codePath": "packages/dbui/src/components/ui/dialog.tsx",
+  "guidelines": [
+    "Use for focused tasks that require user attention",
+    "Always include a clear title and primary action",
+    "Footer actions: primary right, cancel left"
+  ],
+  "constraints": [
+    "Max one dialog open at a time — never stack",
+    "Close button must be visible (top-right, icon-md size)",
+    "Don't use for simple confirmations — use AlertDialog instead"
+  ]
 }

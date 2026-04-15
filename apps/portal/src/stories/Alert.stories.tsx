@@ -5,154 +5,74 @@ import { DangerFill } from "@/components/icons/DangerFill"
 import { WarningFill } from "@/components/icons/WarningFill"
 import { InfoFill } from "@/components/icons/InfoFill"
 import { CheckCircleFill } from "@/components/icons/CheckCircleFill"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/alert.manifest.json"
 
-const variantIcons: Record<string, React.ReactNode> = {
-  danger: <DangerFill />,
-  warning: <WarningFill />,
-  info: <InfoFill />,
-  success: <CheckCircleFill />,
-}
+const variantConfig: { variant: "danger" | "warning" | "info" | "success"; icon: React.ReactNode; label: string }[] = [
+  { variant: "info", icon: <InfoFill />, label: "Info (default)" },
+  { variant: "danger", icon: <DangerFill />, label: "Danger" },
+  { variant: "warning", icon: <WarningFill />, label: "Warning" },
+  { variant: "success", icon: <CheckCircleFill />, label: "Success" },
+]
 
 const meta: Meta = {
-  title: "Overlays/Alert",
-  parameters: {
-    docs: {
-      description: {
-        component: [
-          "### Constraints",
-          "- **Always include AlertIcon** with the variant-appropriate icon: danger=DangerFill, warning=WarningFill, info=InfoFill, success=CheckCircleFill.",
-          "- **Always include AlertTitle.** Description is supplementary.",
-          "- **Inline layout:** Action button uses `size=\"sm\"`. **Stacked layout:** Action uses `size=\"md\"`.",
-        ].join("\n"),
-      },
-    },
-  },
-  argTypes: {
-    variant: {
-      control: "select",
-      options: ["danger", "warning", "info", "success"],
-    },
-    layout: {
-      control: "radio",
-      options: ["inline", "stacked"],
-      name: "Layout (Figma)",
-    },
-    removable: { control: "boolean", name: "Removable (Close button)" },
-    showAction: { control: "boolean", name: "Show Action button" },
-    title: { control: "text" },
-    description: { control: "text" },
-    actionLabel: { control: "text", if: { arg: "showAction" } },
-  },
-  args: {
-    variant: "danger",
-    layout: "inline",
-    removable: true,
-    showAction: true,
-    title: "Alert title",
-    description: "Description to clarify what the user needs to do.",
-    actionLabel: "Label",
-  },
+  title: "Feedback/Alert",
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
+}
+
+const rowLabel: React.CSSProperties = {
+  fontSize: 12,
+  color: "#6F6F6F",
+}
+
 export const Playground: StoryObj = {
-  render: (args: any) => {
-    const isStacked = args.layout === "stacked"
-    return (
-      <div className="w-[480px]">
-        <Alert variant={args.variant}>
-          <AlertIcon>{variantIcons[args.variant]}</AlertIcon>
-          <AlertContent>
-            <AlertTitle>{args.title}</AlertTitle>
-            <AlertDescription>{args.description}</AlertDescription>
-            {isStacked && args.showAction && (
-              <AlertAction>
-                <Button variant="outline" size="md">{args.actionLabel}</Button>
-              </AlertAction>
-            )}
-          </AlertContent>
-          {!isStacked && args.showAction && (
-            <AlertAction>
-              <Button variant="outline" size="sm">{args.actionLabel}</Button>
-            </AlertAction>
-          )}
-          {args.removable && <AlertClose />}
-        </Alert>
-      </div>
-    )
-  },
-}
-
-export const AllVariantsInline: StoryObj = {
-  name: "All Variants — Inline",
   render: () => (
-    <div className="flex flex-col gap-3 w-[480px]">
-      {(["danger", "warning", "info", "success"] as const).map((variant) => (
-        <Alert key={variant} variant={variant}>
-          <AlertIcon>{variantIcons[variant]}</AlertIcon>
-          <AlertContent>
-            <AlertTitle>Alert title</AlertTitle>
-            <AlertDescription>Description to clarify what the user needs to do.</AlertDescription>
-          </AlertContent>
-          <AlertAction>
-            <Button variant="outline" size="sm">Label</Button>
-          </AlertAction>
-          <AlertClose />
-        </Alert>
-      ))}
-    </div>
-  ),
-}
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Alert</h2>
 
-export const AllVariantsStacked: StoryObj = {
-  name: "All Variants — Stacked",
-  render: () => (
-    <div className="flex flex-col gap-3 w-[480px]">
-      {(["danger", "warning", "info", "success"] as const).map((variant) => (
-        <Alert key={variant} variant={variant}>
-          <AlertIcon>{variantIcons[variant]}</AlertIcon>
-          <AlertContent>
-            <AlertTitle>Alert title</AlertTitle>
-            <AlertDescription>Description to clarify what the user needs to do.</AlertDescription>
-            <AlertAction>
-              <Button variant="outline" size="md">Label</Button>
-            </AlertAction>
-          </AlertContent>
-          <AlertClose />
-        </Alert>
-      ))}
-    </div>
-  ),
-}
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 120 }}>Variant</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          {variantConfig.map(({ variant, icon, label: name }) => (
+            <tr key={variant}>
+              <td style={{ padding: "14px 24px 14px 0", verticalAlign: "top", ...rowLabel }}>{name}</td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                <div className="w-[480px]">
+                  <Alert variant={variant}>
+                    <AlertIcon>{icon}</AlertIcon>
+                    <AlertContent>
+                      <AlertTitle>Alert title</AlertTitle>
+                      <AlertDescription>Description to clarify what the user needs to do.</AlertDescription>
+                    </AlertContent>
+                    <AlertAction>
+                      <Button variant="outline" size="sm">Label</Button>
+                    </AlertAction>
+                    <AlertClose />
+                  </Alert>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-export const WithoutClose: StoryObj = {
-  name: "Without Close (Removable=false)",
-  render: () => (
-    <div className="w-[480px]">
-      <Alert variant="info">
-        <AlertIcon><InfoFill /></AlertIcon>
-        <AlertContent>
-          <AlertTitle>Persistent alert</AlertTitle>
-          <AlertDescription>This alert cannot be dismissed by the user.</AlertDescription>
-        </AlertContent>
-      </Alert>
-    </div>
-  ),
-}
-
-export const WithoutAction: StoryObj = {
-  name: "Without Action button",
-  render: () => (
-    <div className="w-[480px]">
-      <Alert variant="warning">
-        <AlertIcon><WarningFill /></AlertIcon>
-        <AlertContent>
-          <AlertTitle>Warning</AlertTitle>
-          <AlertDescription>Your workspace is approaching its storage limit.</AlertDescription>
-        </AlertContent>
-        <AlertClose />
-      </Alert>
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

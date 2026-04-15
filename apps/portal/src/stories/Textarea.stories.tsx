@@ -1,57 +1,65 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Textarea } from "dbui/components/ui/textarea"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/textarea.manifest.json"
 
 const meta: Meta = {
   title: "Controls/Textarea",
-  argTypes: {
-    state: {
-      control: "select",
-      options: ["default", "disabled", "invalid", "warning", "success"],
-      name: "State",
-    },
-    placeholder: { control: "text" },
-    rows: { control: { type: "range", min: 2, max: 10, step: 1 } },
-  },
-  args: {
-    state: "default",
-    placeholder: "Placeholder",
-    rows: 4,
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
-export const Playground: StoryObj = {
-  render: (args: any) => (
-    <div className="w-[320px]">
-      <Textarea
-        placeholder={args.placeholder}
-        rows={args.rows}
-        disabled={args.state === "disabled"}
-        aria-invalid={args.state === "invalid" || undefined}
-        validation={args.state === "warning" ? "warning" : args.state === "success" ? "success" : undefined}
-      />
-    </div>
-  ),
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
 }
 
-export const AllStates: StoryObj = {
-  name: "All States ",
+export const Playground: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-3 w-[320px]">
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Default</p>
-        <Textarea placeholder="Placeholder" />
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Disabled</p>
-        <Textarea placeholder="Disabled" disabled />
-      </div>
-      <div className="flex flex-col gap-1">
-        <p className="text-[12px] text-muted-foreground">Danger — border + ring</p>
-        <Textarea defaultValue="Invalid content" aria-invalid />
-      </div>
-      <p className="text-[11px] text-muted-foreground mt-2">Hover/Focus states are interactive. Focus shows blue outer ring.</p>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Textarea</h2>
+
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Validation</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Default</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 320 }}><Textarea placeholder="Placeholder" /></div>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Danger</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 320 }}><Textarea defaultValue="Invalid content" aria-invalid /></div>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Warning</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 320 }}><Textarea defaultValue="Needs attention" validation="warning" /></div>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Success</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ width: 320 }}><Textarea defaultValue="Looks good" validation="success" /></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

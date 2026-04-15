@@ -23,5 +23,15 @@
   "props": {
     "Show Icon": { "figmaType": "BOOLEAN", "default": false, "code": "icon child inside SelectTrigger before SelectValue" },
     "Icon": { "figmaType": "INSTANCE_SWAP", "default": "Search (35:5024)", "code": "React icon component" }
-  }
+  },
+  "guidelines": [
+    "Use for choosing one option from a predefined list",
+    "Use Ghost variant inside toolbars or compact layouts",
+    "Default to the most common option or show placeholder"
+  ],
+  "constraints": [
+    "Don't use for more than ~15 options — use Combobox with search instead",
+    "Ghost variant has no border by default — gains border on hover",
+    "Menu items use bg-hover on focus, not bg-accent"
+  ]
 }

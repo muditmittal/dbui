@@ -15,5 +15,16 @@
     }
   },
   "code": "tabs.tsx",
-  "subComponents": ["TabsIcon"]
+  "subComponents": ["TabsIcon"],
+  "$codePath": "packages/dbui/src/components/ui/tabs.tsx",
+  "guidelines": [
+    "Use for switching between related views in the same context",
+    "First tab should be the default/most common view",
+    "Keep tab labels short — single words preferred"
+  ],
+  "constraints": [
+    "Don't use for navigation between unrelated pages — use Navbar",
+    "Tab content should load instantly — no loading states in the tab bar",
+    "Minimum 2 tabs, maximum 7"
+  ]
 }

@@ -4,6 +4,16 @@
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=477-773",
   "$codePath": "packages/dbui/src/lib/button-variants.ts",
   "$storyPath": "apps/portal/src/stories/Button.stories.tsx",
+  "guidelines": [
+    "Use Primary for the single most important action on a page or dialog",
+    "Use Outline as the default for secondary actions alongside Primary",
+    "Use Destructive only inside AlertDialog or as a confirmed final action"
+  ],
+  "constraints": [
+    "Link variant: NO icons — only exception is trailing NewWindow for external links",
+    "Icon-only buttons (icon-sm/icon-md) MUST have aria-label",
+    "Max one Primary button per visible area"
+  ],
   "variants": {
     "Variant": {
       "figma": ["Primary", "Outline", "Secondary", "Ghost", "Link", "Destructive", "Danger"],
@@ -41,15 +51,5 @@
         "Menu": { "code": "children of <ButtonChevron>", "type": "instance-swap" }
       }
     }
-  },
-  "storyControls": {
-    "variant": "✅ select (7 options)",
-    "size": "✅ select (4 options incl icon sizes)",
-    "label": "✅ text",
-    "showIcon": "✅ boolean",
-    "icon": "✅ select (6 icons)",
-    "showChevron": "✅ boolean",
-    "loading": "✅ boolean",
-    "disabled": "✅ boolean"
   }
 }

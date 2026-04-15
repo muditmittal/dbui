@@ -1,0 +1,326 @@
+{/* Landing page for DBUI Design System Storybook */}
+import { Meta } from "@storybook/blocks"
+
+<Meta title="Welcome" />
+
+<style>
+  {`
+    .welcome-wrapper {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      color: #161616;
+    }
+    .welcome-header {
+      margin-bottom: 32px;
+    }
+    .welcome-header h1 {
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 40px;
+      margin: 0 0 8px 0;
+      color: #161616;
+    }
+    .welcome-header p {
+      font-size: 15px;
+      line-height: 24px;
+      color: #6F6F6F;
+      margin: 0;
+    }
+
+    /* Browser window */
+    .browser-window {
+      border: 1px solid #CBCBCB;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08), 0 2px 16px rgba(0,0,0,0.04);
+    }
+    .browser-toolbar {
+      background: #F7F7F7;
+      border-bottom: 1px solid #EBEBEB;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .browser-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: block;
+    }
+    .browser-dots .red { background: #EC6A5E; }
+    .browser-dots .yellow { background: #F4BF4F; }
+    .browser-dots .green { background: #61C554; }
+    .browser-url {
+      flex: 1;
+      background: #fff;
+      border: 1px solid #EBEBEB;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: #8C8C8C;
+      font-family: "SF Mono", ui-monospace, monospace;
+    }
+    .browser-content {
+      background: #fff;
+      position: relative;
+      min-height: 380px;
+    }
+    .browser-content img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .browser-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+      background: linear-gradient(135deg, #f8fafc 0%, #eef4fb 100%);
+      color: #8C8C8C;
+      font-size: 13px;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .browser-placeholder .db-logo {
+      font-size: 24px;
+      font-weight: 600;
+      color: #2272B4;
+      font-family: "SF Pro Display", -apple-system, sans-serif;
+    }
+
+    /* Install section */
+    .install-section {
+      margin-bottom: 40px;
+    }
+    .install-section h2 {
+      font-family: "SF Pro Display", -apple-system, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+    }
+    .install-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .install-step {
+      border: 1px solid #EBEBEB;
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .install-step .step-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #8C8C8C;
+      margin-bottom: 8px;
+    }
+    .install-step code {
+      display: block;
+      font-family: "SF Mono", ui-monospace, monospace;
+      font-size: 13px;
+      color: #161616;
+      background: #F7F7F7;
+      padding: 10px 14px;
+      border-radius: 4px;
+      line-height: 20px;
+    }
+    .install-step .step-note {
+      font-size: 12px;
+      color: #8C8C8C;
+      margin-top: 8px;
+    }
+
+    /* Stats */
+    .welcome-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: #F7F7F7;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .stat-card .number {
+      font-family: "SF Pro Display", -apple-system, sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #2272B4;
+      line-height: 1;
+    }
+    .stat-card .label {
+      font-size: 12px;
+      color: #6F6F6F;
+      margin-top: 4px;
+    }
+
+    /* Sections */
+    .welcome-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .section-card {
+      border: 1px solid #EBEBEB;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .section-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 6px 0;
+      color: #161616;
+    }
+    .section-card p {
+      font-size: 13px;
+      line-height: 20px;
+      color: #6F6F6F;
+      margin: 0;
+    }
+    .section-card .component-list {
+      font-size: 12px;
+      color: #8C8C8C;
+      margin-top: 8px;
+    }
+
+    /* Footer */
+    .welcome-footer {
+      border-top: 1px solid #EBEBEB;
+      padding-top: 24px;
+      font-size: 12px;
+      color: #8C8C8C;
+      display: flex;
+      gap: 24px;
+    }
+    .welcome-footer a {
+      color: #2272B4;
+      text-decoration: none;
+    }
+  `}
+</style>
+
+<div className="welcome-wrapper">
+  <div className="welcome-header">
+    <h1>DBUI Design System</h1>
+    <p>
+      Databricks component library built on shadcn/ui, reskinned with DuBois design tokens.
+      Every component here matches its Figma counterpart 1:1.
+    </p>
+  </div>
+
+  <div className="browser-window">
+    <div className="browser-toolbar">
+      <div className="browser-dots">
+        <span className="red" />
+        <span className="yellow" />
+        <span className="green" />
+      </div>
+      <div className="browser-url">databricks.com</div>
+    </div>
+    <div className="browser-content">
+      {/* Replace this placeholder with a real screenshot: save as public/databricks-ui.png */}
+      <img src="databricks-ui.png" alt="Databricks UI" onError={(e) => {
+        e.currentTarget.style.display = 'none';
+        e.currentTarget.nextElementSibling.style.display = 'flex';
+      }} />
+      <div className="browser-placeholder" style={{ display: 'none' }}>
+        <div className="db-logo">Databricks</div>
+        <span>Drop a screenshot at public/databricks-ui.png</span>
+      </div>
+    </div>
+  </div>
+
+  <div className="install-section">
+    <h2>Getting Started</h2>
+    <div className="install-steps">
+      <div className="install-step">
+        <div className="step-label">1. Install the package</div>
+        <code>yarn add dbui</code>
+        <div className="step-note">Or add <code style={{ display: 'inline', padding: '2px 6px' }}>"dbui": "workspace:*"</code> to your package.json in the monorepo.</div>
+      </div>
+      <div className="install-step">
+        <div className="step-label">2. Import global styles</div>
+        <code>@import "dbui/tokens/globals.css";</code>
+        <div className="step-note">Add this to your root CSS file. Includes all color, radius, spacing, and shadow tokens.</div>
+      </div>
+      <div className="install-step">
+        <div className="step-label">3. Use components</div>
+        <code>{`import { Button } from "dbui/components/ui/button"
+import { Input } from "dbui/components/ui/input"
+import { Dialog } from "dbui/components/ui/dialog"`}</code>
+        <div className="step-note">All components are tree-shakeable. Import only what you need.</div>
+      </div>
+    </div>
+  </div>
+
+  <div className="welcome-stats">
+    <div className="stat-card">
+      <div className="number">46</div>
+      <div className="label">Components</div>
+    </div>
+    <div className="stat-card">
+      <div className="number">451</div>
+      <div className="label">Icons</div>
+    </div>
+    <div className="stat-card">
+      <div className="number">162</div>
+      <div className="label">Tokens</div>
+    </div>
+    <div className="stat-card">
+      <div className="number">8</div>
+      <div className="label">Text Styles</div>
+    </div>
+  </div>
+
+  <div className="welcome-sections">
+    <div className="section-card">
+      <h3>Actions</h3>
+      <p>Buttons, icon buttons, split buttons, toggles, and segment controls.</p>
+      <div className="component-list">Button · IconButton · SplitButton · Toggle · SegmentControl</div>
+    </div>
+    <div className="section-card">
+      <h3>Controls</h3>
+      <p>Form inputs, selects, comboboxes, checkboxes, radios, switches, and sliders.</p>
+      <div className="component-list">Input · Select · Combobox · Checkbox · Radio · Switch · Slider</div>
+    </div>
+    <div className="section-card">
+      <h3>Content</h3>
+      <p>Data display components: tables, tags, badges, avatars, status indicators.</p>
+      <div className="component-list">Table · Tag · Badge · Avatar · Status · Card · Tabs</div>
+    </div>
+    <div className="section-card">
+      <h3>Overlays</h3>
+      <p>Popovers, dialogs, drawers, dropdown menus, tooltips, and toasts.</p>
+      <div className="component-list">Dialog · DropdownMenu · Tooltip · Popover · Drawer · Toast</div>
+    </div>
+    <div className="section-card">
+      <h3>Compositions</h3>
+      <p>Full layout patterns: navigation, page headers, platform shell.</p>
+      <div className="component-list">Navbar · PageHeader · PlatformShell</div>
+    </div>
+    <div className="section-card">
+      <h3>Foundations</h3>
+      <p>Design tokens (colors, radius, spacing, shadows) and the full icon set.</p>
+      <div className="component-list">Tokens · Icons (451) · Typography</div>
+    </div>
+  </div>
+
+  <div className="welcome-footer">
+    <span>DBUI v0.1.0</span>
+    <span>13px / 20px base · SF Pro Text</span>
+    <a href="https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv" target="_blank">Figma Source ↗</a>
+  </div>
+</div>

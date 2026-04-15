@@ -7,5 +7,16 @@
     "Status": ["Online", "Ready", "Offline", "Pending", "Running", "Syncing", "Canceled", "Stopped", "Info", "Success", "Warning", "Error"]
   },
   "props": {},
-  "code": "status.tsx"
+  "code": "status.tsx",
+  "$codePath": "packages/dbui/src/components/ui/status.tsx",
+  "guidelines": [
+    "Use to indicate the current state of an entity",
+    "Always pair icon with a text label for clarity",
+    "Use in tables, cards, and detail views"
+  ],
+  "constraints": [
+    "Icon must match the semantic meaning (check=success, x=error, etc.)",
+    "Don't use custom colors — stick to semantic tokens",
+    "Don't use for actions — status is read-only"
+  ]
 }

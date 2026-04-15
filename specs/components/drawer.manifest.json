@@ -2,6 +2,16 @@
   "$component": "Drawer",
   "$figmaId": "1060:3937",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1060-3937",
+  "guidelines": [
+    "Use for secondary content or actions that don't warrant a full page",
+    "Slides in from the right by default",
+    "Good for detail panels, settings, and filters"
+  ],
+  "constraints": [
+    "Don't use for primary workflows — use Dialog instead",
+    "Content should be scrollable independently",
+    "Always include a close mechanism (X button or swipe)"
+  ],
   "variants": {},
   "props": {},
   "code": "drawer.tsx"

@@ -27,5 +27,15 @@
       "figma": ["Default", "Hover", "Press", "Selected", "Disabled"],
       "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "aria-pressed/data-state=on (CSS)", "disabled (prop)"]
     }
-  }
+  },
+  "guidelines": [
+    "Use Default for toolbar on/off toggles",
+    "Use Filter for filter bar chips with checkbox behavior",
+    "Use Pill for tab-like segment switching"
+  ],
+  "constraints": [
+    "Filter variant auto-swaps checkbox/checkmark — don't override icon",
+    "Pill variant should be used in groups, not standalone",
+    "Icon variant requires aria-label"
+  ]
 }

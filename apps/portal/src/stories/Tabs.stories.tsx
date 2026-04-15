@@ -1,46 +1,41 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs, TabsContent, TabsList, TabsTrigger, TabsIcon } from "dbui/components/ui/tabs"
+import { Home } from "@/components/icons/Home"
 import { Notebook } from "@/components/icons/Notebook"
 import { Gear } from "@/components/icons/Gear"
-import { Home } from "@/components/icons/Home"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/tabs.manifest.json"
 
 const meta: Meta = {
   title: "Content/Tabs",
-  argTypes: {
-    showIcons: { control: "boolean", name: "Show Icons (.TabItem)" },
-    orientation: { control: "radio", options: ["horizontal", "vertical"] },
-  },
-  args: {
-    showIcons: false,
-    orientation: "horizontal",
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
 export const Playground: StoryObj = {
-  render: (args: any) => (
-    <Tabs defaultValue="home" orientation={args.orientation}>
-      <TabsList>
-        <TabsTrigger value="home">
-          {args.showIcons && <TabsIcon><Home /></TabsIcon>}
-          Home
-        </TabsTrigger>
-        <TabsTrigger value="notebooks">
-          {args.showIcons && <TabsIcon><Notebook /></TabsIcon>}
-          Notebooks
-        </TabsTrigger>
-        <TabsTrigger value="settings">
-          {args.showIcons && <TabsIcon><Gear /></TabsIcon>}
-          Settings
-        </TabsTrigger>
-        <TabsTrigger value="disabled" disabled>
-          Disabled
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="home">Home content</TabsContent>
-      <TabsContent value="notebooks">Notebooks content</TabsContent>
-      <TabsContent value="settings">Settings content</TabsContent>
-    </Tabs>
+  render: () => (
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Tabs</h2>
+
+      <Tabs defaultValue="home">
+        <TabsList>
+          <TabsTrigger value="home">Home</TabsTrigger>
+          <TabsTrigger value="notebooks">Notebooks</TabsTrigger>
+          <TabsTrigger value="settings">Settings</TabsTrigger>
+        </TabsList>
+        <TabsContent value="home">
+          <div className="text-[13px] text-muted-foreground p-4">Home content</div>
+        </TabsContent>
+        <TabsContent value="notebooks">
+          <div className="text-[13px] text-muted-foreground p-4">Notebooks content</div>
+        </TabsContent>
+        <TabsContent value="settings">
+          <div className="text-[13px] text-muted-foreground p-4">Settings content</div>
+        </TabsContent>
+      </Tabs>
+
+      <ComponentMeta manifest={manifest} />
+    </div>
   ),
 }

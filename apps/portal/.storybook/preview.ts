@@ -17,11 +17,13 @@ const preview: Preview = {
       storySort: {
         method: "alphabetical",
         order: [
+          "Welcome",
           "Actions",
           "Controls",
           "Content",
           "Overlays",
           "Compositions",
+          "Foundations",
         ],
       },
     },

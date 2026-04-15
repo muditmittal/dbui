@@ -1,17 +1,29 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Empty, EmptyIcon, EmptyTitle, EmptyDescription } from "dbui/components/ui/empty"
 import { Button } from "dbui/components/ui/button"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/empty.manifest.json"
 
-const meta: Meta = { title: "Content/Empty" }
+const meta: Meta = {
+  title: "Content/Empty",
+  parameters: { layout: "padded" },
+}
+
 export default meta
 
-export const Default: StoryObj = {
+export const Playground: StoryObj = {
   render: () => (
-    <Empty>
-      <EmptyIcon />
-      <EmptyTitle>No results found</EmptyTitle>
-      <EmptyDescription>Try adjusting your search or filters.</EmptyDescription>
-      <Button variant="outline" className="mt-2">Clear filters</Button>
-    </Empty>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Empty</h2>
+
+      <Empty>
+        <EmptyIcon />
+        <EmptyTitle>No results found</EmptyTitle>
+        <EmptyDescription>Try adjusting your search or filters to find what you're looking for.</EmptyDescription>
+        <Button variant="outline" className="mt-2">Clear filters</Button>
+      </Empty>
+
+      <ComponentMeta manifest={manifest} />
+    </div>
   ),
 }

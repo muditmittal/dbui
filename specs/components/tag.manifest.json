@@ -10,5 +10,16 @@
     "Icon": { "type": "boolean", "default": true }
   },
   "code": "tag.tsx",
-  "subComponents": ["TagIcon", "TagLabel", "TagValue", "TagRemove"]
+  "subComponents": ["TagIcon", "TagLabel", "TagValue", "TagRemove"],
+  "$codePath": "packages/dbui/src/components/ui/tag.tsx",
+  "guidelines": [
+    "Use for removable labels and filter chips",
+    "Always include a remove button for user-created tags",
+    "Group tags horizontally with 4px gap"
+  ],
+  "constraints": [
+    "Remove button must be accessible via keyboard",
+    "Don't use for status — use Badge instead",
+    "Max width should truncate with ellipsis"
+  ]
 }

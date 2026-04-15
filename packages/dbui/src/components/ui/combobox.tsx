@@ -5,12 +5,6 @@ import { Combobox as ComboboxPrimitive } from "@base-ui/react"
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "./input-group"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
 const Combobox = ComboboxPrimitive.Root
@@ -40,7 +34,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
   return (
     <ComboboxPrimitive.Clear
       data-slot="combobox-clear"
-      render={<InputGroupButton variant="ghost" size="icon-sm" />}
+      render={<Button variant="ghost" size="icon-sm" />}
       className={cn(className)}
       {...props}
     >
@@ -63,22 +57,29 @@ function ComboboxInput({
   inputSize?: "sm" | "default"
 }) {
   return (
-    <InputGroup className={cn("w-auto has-[[data-slot=input-group-control]:focus-visible]:shadow-none", inputSize === "sm" && "h-6", className)}>
+    <div
+      data-slot="combobox-input-wrapper"
+      className={cn(
+        "flex w-full items-center rounded-sm border border-input bg-background shadow-xs transition-colors hover:border-primary has-[:focus-visible]:border-ring has-[:disabled]:bg-muted has-[:disabled]:border-disabled has-[:disabled]:shadow-none has-[:disabled]:pointer-events-none has-[[aria-invalid=true]]:border-destructive",
+        inputSize === "default" && "h-8 gap-2 px-3",
+        inputSize === "sm" && "h-6 gap-1 px-2",
+        className
+      )}
+    >
       <ComboboxPrimitive.Input
-        render={<InputGroupInput disabled={disabled} />}
+        disabled={disabled}
+        className="min-w-0 flex-1 bg-transparent text-[13px] leading-[20px] outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed"
         {...props}
       />
-      <InputGroupAddon align="inline-end" className="pr-0">
-        {showTrigger && (
-          <ComboboxTrigger
-            className="inline-flex shrink-0 items-center justify-center text-muted-foreground group-has-data-[slot=combobox-clear]/input-group:hidden [&_svg:not([class*='size-'])]:size-4"
-            disabled={disabled}
-          />
-        )}
-        {showClear && <ComboboxClear disabled={disabled} />}
-      </InputGroupAddon>
+      {showClear && <ComboboxClear disabled={disabled} />}
+      {showTrigger && (
+        <ComboboxTrigger
+          className="inline-flex shrink-0 items-center justify-center text-muted-foreground group-has-data-[slot=combobox-clear]:hidden"
+          disabled={disabled}
+        />
+      )}
       {children}
-    </InputGroup>
+    </div>
   )
 }
 
@@ -138,7 +139,7 @@ function ComboboxItem({
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none data-highlighted:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex h-7 w-full cursor-default items-center gap-2 rounded-sm py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none data-highlighted:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -172,7 +173,7 @@ function ComboboxLabel({
   return (
     <ComboboxPrimitive.GroupLabel
       data-slot="combobox-label"
-      className={cn("px-2 py-1.5 text-[12px] text-muted-foreground", className)}
+      className={cn("px-1.5 py-1 text-[11px] font-semibold text-muted-foreground", className)}
       {...props}
     />
   )

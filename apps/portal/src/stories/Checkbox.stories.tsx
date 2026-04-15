@@ -1,54 +1,68 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Checkbox } from "dbui/components/ui/checkbox"
+import { ComponentMeta } from "./components/ComponentMeta"
+import manifest from "../../../../specs/components/checkbox.manifest.json"
 
 const meta: Meta = {
   title: "Controls/Checkbox",
-  argTypes: {
-    disabled: { control: "boolean" },
-    showLabel: { control: "boolean", name: "Show Label" },
-    label: { control: "text", if: { arg: "showLabel" } },
-  },
-  args: {
-    disabled: false,
-    showLabel: true,
-    label: "Accept terms and conditions",
-  },
+  parameters: { layout: "padded" },
 }
 
 export default meta
 
-export const Playground: StoryObj = {
-  render: (args: any) => (
-    <div className="flex items-center gap-2">
-      <Checkbox id="cb" disabled={args.disabled} />
-      {args.showLabel && <label className="text-[13px] leading-[20px] font-normal" htmlFor="cb">{args.label}</label>}
-    </div>
-  ),
+const label: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: 0.5,
+  color: "#8C8C8C",
+  marginBottom: 8,
 }
 
-export const States: StoryObj = {
+export const Playground: StoryObj = {
   render: () => (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-2">
-        <Checkbox id="s1" />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s1">Unchecked</label>
-      </div>
-      <div className="flex items-center gap-2">
-        <Checkbox id="s2" defaultChecked />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s2">Checked</label>
-      </div>
-      <div className="flex items-center gap-2">
-        <Checkbox id="s3" disabled />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s3">Disabled</label>
-      </div>
-      <div className="flex items-center gap-2">
-        <Checkbox id="s4" defaultChecked disabled />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s4">Checked + Disabled</label>
-      </div>
-      <div className="flex items-center gap-2">
-        <Checkbox id="s5" indeterminate />
-        <label className="text-[13px] leading-[20px] font-normal" htmlFor="s5">Indeterminate</label>
-      </div>
+    <div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Checkbox</h2>
+
+      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
+        <thead>
+          <tr>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 120 }}>State</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Unchecked</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Checkbox id="cb-unchecked" />
+                <label htmlFor="cb-unchecked" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Accept terms</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Checked</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Checkbox id="cb-checked" defaultChecked />
+                <label htmlFor="cb-checked" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Accept terms</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Indeterminate</td>
+            <td style={{ padding: "14px 24px 14px 0" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Checkbox id="cb-indeterminate" indeterminate />
+                <label htmlFor="cb-indeterminate" style={{ fontSize: 13, lineHeight: "20px", fontWeight: 400 }}>Select all</label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ComponentMeta manifest={manifest} />
     </div>
   ),
 }

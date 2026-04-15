@@ -2,6 +2,16 @@
   "$component": "AlertDialog",
   "$figmaId": "882:4236",
   "$figmaUrl": "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=882-4236",
+  "guidelines": [
+    "Use for destructive or irreversible actions that need explicit confirmation",
+    "Confirm button should use Destructive variant for dangerous actions",
+    "Description should clearly state the consequence"
+  ],
+  "constraints": [
+    "Must have both Cancel and Confirm actions",
+    "Cannot be dismissed by clicking overlay — only via buttons",
+    "Don't use for informational dialogs — use Dialog instead"
+  ],
   "variants": {},
   "props": {},
   "code": "alert-dialog.tsx"
