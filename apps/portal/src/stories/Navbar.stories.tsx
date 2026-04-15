@@ -7,7 +7,7 @@ import { Plus } from "@/components/icons/Plus"
 import { useState } from "react"
 
 const meta: Meta = {
-  title: "Compositions/Navbar",
+  title: "Content/Navbar",
   parameters: {
     layout: "padded",
     docs: {
