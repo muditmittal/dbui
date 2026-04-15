@@ -10,38 +10,42 @@ const meta: Meta = {
 
 export default meta
 
-const label: React.CSSProperties = {
-  fontSize: 11,
-  fontWeight: 600,
-  textTransform: "uppercase",
-  letterSpacing: 0.5,
-  color: "#8C8C8C",
-  marginBottom: 8,
-}
-
 export const Playground: StoryObj = {
   render: () => (
     <div>
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Progress</h2>
 
-      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
-        <thead>
-          <tr>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Value</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Preview</th>
-          </tr>
-        </thead>
-        <tbody>
-          {[0, 33, 66, 100].map((value) => (
-            <tr key={value}>
-              <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>{value}%</td>
-              <td style={{ padding: "14px 24px 14px 0" }}>
-                <div className="w-[260px]"><Progress value={value} /></div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="flex flex-col gap-8 w-[400px]">
+        {/* Full composition matching Figma: Title + % + bar + status */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between">
+            <span className="text-[13px] font-semibold text-foreground">Uploading data</span>
+            <span className="text-[13px] text-foreground">50%</span>
+          </div>
+          <Progress value={50} />
+          <span className="text-[12px] leading-[16px] text-muted-foreground">Processing...</span>
+        </div>
+
+        {/* Completed */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between">
+            <span className="text-[13px] font-semibold text-foreground">Import complete</span>
+            <span className="text-[13px] text-foreground">100%</span>
+          </div>
+          <Progress value={100} />
+          <span className="text-[12px] leading-[16px] text-muted-foreground">Done</span>
+        </div>
+
+        {/* Just started */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between">
+            <span className="text-[13px] font-semibold text-foreground">Indexing tables</span>
+            <span className="text-[13px] text-foreground">12%</span>
+          </div>
+          <Progress value={12} />
+          <span className="text-[12px] leading-[16px] text-muted-foreground">Scanning catalog...</span>
+        </div>
+      </div>
 
       <ComponentMeta manifest={manifest} />
     </div>
