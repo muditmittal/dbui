@@ -24,26 +24,10 @@ export const Playground: StoryObj = {
     <div>
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Input</h2>
 
-      {/* Sizes */}
-      <div style={{ marginBottom: 24 }}>
-        <div style={{ ...label }}>Sizes</div>
-        <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
-          <div style={{ width: 240 }}>
-            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 4 }}>Default</div>
-            <Input placeholder="Placeholder" />
-          </div>
-          <div style={{ width: 240 }}>
-            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 4 }}>Small</div>
-            <Input size="sm" placeholder="Placeholder" />
-          </div>
-        </div>
-      </div>
-
-      {/* Validation */}
       <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Validation</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>State</th>
             <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
           </tr>
         </thead>

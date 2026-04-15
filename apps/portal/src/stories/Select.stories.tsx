@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "dbui/components/ui/select"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator } from "dbui/components/ui/select"
 import { ComponentMeta } from "./components/ComponentMeta"
 import manifest from "../../../../specs/components/select.manifest.json"
 
@@ -10,7 +10,7 @@ const meta: Meta = {
 
 export default meta
 
-const label: React.CSSProperties = {
+const sectionLabel: React.CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
   textTransform: "uppercase",
@@ -24,71 +24,62 @@ export const Playground: StoryObj = {
     <div>
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Select</h2>
 
-      <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
-        <thead>
-          <tr>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Type</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Default</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Small</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Default</td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
-              <div style={{ width: 200 }}>
-                <Select defaultValue="notebook">
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="notebook">Notebook</SelectItem>
-                    <SelectItem value="query">Query</SelectItem>
-                    <SelectItem value="dashboard">Dashboard</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
-              <div style={{ width: 200 }}>
-                <Select defaultValue="notebook">
-                  <SelectTrigger size="sm"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="notebook">Notebook</SelectItem>
-                    <SelectItem value="query">Query</SelectItem>
-                    <SelectItem value="dashboard">Dashboard</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Ghost</td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
-              <div style={{ width: 200 }}>
-                <Select defaultValue="notebook">
-                  <SelectTrigger variant="ghost"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="notebook">Notebook</SelectItem>
-                    <SelectItem value="query">Query</SelectItem>
-                    <SelectItem value="dashboard">Dashboard</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
-              <div style={{ width: 200 }}>
-                <Select defaultValue="notebook">
-                  <SelectTrigger variant="ghost" size="sm"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="notebook">Notebook</SelectItem>
-                    <SelectItem value="query">Query</SelectItem>
-                    <SelectItem value="dashboard">Dashboard</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+        {/* Default */}
+        <div>
+          <div style={sectionLabel}>Default</div>
+          <div style={{ width: 240 }}>
+            <Select defaultValue="notebook">
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="notebook">Notebook</SelectItem>
+                <SelectItem value="query">Query</SelectItem>
+                <SelectItem value="dashboard">Dashboard</SelectItem>
+                <SelectItem value="pipeline">Pipeline</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Ghost */}
+        <div>
+          <div style={sectionLabel}>Ghost</div>
+          <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>No border by default, gains border on hover</div>
+          <Select defaultValue="notebook">
+            <SelectTrigger variant="ghost"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="notebook">Notebook</SelectItem>
+              <SelectItem value="query">Query</SelectItem>
+              <SelectItem value="dashboard">Dashboard</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Grouped */}
+        <div>
+          <div style={sectionLabel}>Grouped Options</div>
+          <div style={{ width: 240 }}>
+            <Select defaultValue="notebook">
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Workspace</SelectLabel>
+                  <SelectItem value="notebook">Notebook</SelectItem>
+                  <SelectItem value="query">Query</SelectItem>
+                  <SelectItem value="dashboard">Dashboard</SelectItem>
+                </SelectGroup>
+                <SelectSeparator />
+                <SelectGroup>
+                  <SelectLabel>Data Engineering</SelectLabel>
+                  <SelectItem value="pipeline">Pipeline</SelectItem>
+                  <SelectItem value="job">Job</SelectItem>
+                  <SelectItem value="workflow">Workflow</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
 
       <ComponentMeta manifest={manifest} />
     </div>

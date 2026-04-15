@@ -27,28 +27,36 @@ export const Playground: StoryObj = {
       <table style={{ borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>Size</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Off</th>
-            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>On</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0", width: 100 }}>State</th>
+            <th style={{ ...label, textAlign: "left", padding: "0 24px 12px 0" }}>Example</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Default</td>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Off</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Switch />
-            </td>
-            <td style={{ padding: "14px 24px 14px 0" }}>
-              <Switch defaultChecked />
+              <div className="flex items-center gap-2">
+                <Switch />
+                <span className="text-[13px] text-foreground">Notifications</span>
+              </div>
             </td>
           </tr>
           <tr>
-            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Small</td>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>On</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Switch size="sm" />
+              <div className="flex items-center gap-2">
+                <Switch defaultChecked />
+                <span className="text-[13px] text-foreground">Auto-save</span>
+              </div>
             </td>
+          </tr>
+          <tr>
+            <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Disabled</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Switch size="sm" defaultChecked />
+              <div className="flex items-center gap-2">
+                <Switch disabled />
+                <span className="text-[13px] text-muted-foreground">Managed by admin</span>
+              </div>
             </td>
           </tr>
         </tbody>

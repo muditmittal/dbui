@@ -78,13 +78,33 @@ const sectionLabel: React.CSSProperties = {
   marginBottom: 8,
 }
 
+/* ── Single Select with clear ── */
+
+function SingleSelect() {
+  return (
+    <div className="w-[280px]">
+      <Combobox>
+        <ComboboxInput placeholder="Search..." showClear />
+        <ComboboxContent>
+          <ComboboxList>
+            {tables.map((t) => (
+              <ComboboxItem key={t.value} value={t.value}>{t.label}</ComboboxItem>
+            ))}
+            <ComboboxEmpty>No results found</ComboboxEmpty>
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+    </div>
+  )
+}
+
 /* ── Single Select with grouped options ── */
 
 function SingleSelectGrouped() {
   return (
     <div className="w-[280px]">
       <Combobox>
-        <ComboboxInput placeholder="Search tables..." />
+        <ComboboxInput placeholder="Search tables..." showClear />
         <ComboboxContent>
           <ComboboxList>
             <ComboboxGroup>
@@ -115,46 +135,6 @@ function SingleSelectGrouped() {
   )
 }
 
-/* ── Single Select simple ── */
-
-function SingleSelectSimple() {
-  return (
-    <div className="w-[280px]">
-      <Combobox>
-        <ComboboxInput placeholder="Search..." />
-        <ComboboxContent>
-          <ComboboxList>
-            {tables.map((t) => (
-              <ComboboxItem key={t.value} value={t.value}>{t.label}</ComboboxItem>
-            ))}
-            <ComboboxEmpty>No results found</ComboboxEmpty>
-          </ComboboxList>
-        </ComboboxContent>
-      </Combobox>
-    </div>
-  )
-}
-
-/* ── Single Select Small ── */
-
-function SingleSelectSmall() {
-  return (
-    <div className="w-[240px]">
-      <Combobox>
-        <ComboboxInput placeholder="Search..." inputSize="sm" />
-        <ComboboxContent>
-          <ComboboxList>
-            {databases.map((d) => (
-              <ComboboxItem key={d.value} value={d.value}>{d.label}</ComboboxItem>
-            ))}
-            <ComboboxEmpty>No results found</ComboboxEmpty>
-          </ComboboxList>
-        </ComboboxContent>
-      </Combobox>
-    </div>
-  )
-}
-
 /* ── Multi Select with comma display ── */
 
 function MultiSelectComma() {
@@ -165,7 +145,12 @@ function MultiSelectComma() {
   return (
     <div className="w-[320px]">
       <Combobox multiple value={selected} onValueChange={setSelected}>
-        <ComboboxInput placeholder="Select tags..." value={selectedLabels} readOnly />
+        <ComboboxInput
+          placeholder="Select tags..."
+          value={selectedLabels}
+          readOnly
+          showClear={selected.length > 0}
+        />
         <ComboboxContent>
           <ComboboxList>
             {tags.map((t) => (
@@ -190,7 +175,7 @@ function MultiSelectChips() {
     <div className="w-[320px]">
       <Combobox multiple defaultValue={["pii", "production"]}>
         <ComboboxChips ref={anchor}>
-          {(chip: any) => (
+          {(chip: { value: string; label: string }) => (
             <ComboboxChip key={chip.value} value={chip.value}>
               {chip.label}
             </ComboboxChip>
@@ -221,43 +206,29 @@ export const Playground: StoryObj = {
         {/* Single Select */}
         <div>
           <div style={sectionLabel}>Single Select</div>
-          <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
-            <div>
-              <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Default</div>
-              <SingleSelectSimple />
-            </div>
-            <div>
-              <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Small</div>
-              <SingleSelectSmall />
-            </div>
-          </div>
+          <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Search + select one option, with clear action</div>
+          <SingleSelect />
         </div>
 
         {/* Grouped Options */}
         <div>
-          <div style={sectionLabel}>Grouped Options + Search</div>
-          <div>
-            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Groups with separators, scrollable list</div>
-            <SingleSelectGrouped />
-          </div>
+          <div style={sectionLabel}>Grouped Options</div>
+          <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Groups with separators, scrollable list</div>
+          <SingleSelectGrouped />
         </div>
 
         {/* Multi Select — comma display */}
         <div>
           <div style={sectionLabel}>Multi Select</div>
-          <div>
-            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Trigger shows comma-separated selected values</div>
-            <MultiSelectComma />
-          </div>
+          <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Trigger shows comma-separated values, clear to reset</div>
+          <MultiSelectComma />
         </div>
 
         {/* Multi Select — chips */}
         <div>
           <div style={sectionLabel}>Multi Select (Chips)</div>
-          <div>
-            <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Selected items as removable chips — use for tagging</div>
-            <MultiSelectChips />
-          </div>
+          <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Selected items as removable chips — for tagging workflows</div>
+          <MultiSelectChips />
         </div>
       </div>
 
