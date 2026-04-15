@@ -33,8 +33,8 @@ export const Playground: StoryObj = {
           <div className="w-[240px]">
             <InputGroup>
               <InputGroupInput placeholder="Search" />
-              <InputGroupAddon align="inline-end" className="border-l border-input ml-0 mr-[-1px] pr-0 pl-0">
-                <InputGroupButton size="icon-sm" variant="ghost" aria-label="Filter">
+              <InputGroupAddon align="inline-end" className="border-l border-input !pr-0.5 !mr-0 has-[>button]:!mr-0">
+                <InputGroupButton size="icon-xs" variant="ghost" aria-label="Filter">
                   <Sliders />
                 </InputGroupButton>
               </InputGroupAddon>
@@ -49,8 +49,8 @@ export const Playground: StoryObj = {
           <div className="w-[240px]">
             <InputGroup>
               <InputGroupInput placeholder="Search" />
-              <InputGroupAddon align="inline-end" className="border-l border-input ml-0 mr-[-1px] pr-0 pl-0">
-                <InputGroupButton variant="ghost" className="px-3">Browse</InputGroupButton>
+              <InputGroupAddon align="inline-end" className="border-l border-input !pr-0.5 !mr-0 has-[>button]:!mr-0">
+                <InputGroupButton size="xs" variant="ghost" className="px-3">Browse</InputGroupButton>
               </InputGroupAddon>
             </InputGroup>
           </div>
