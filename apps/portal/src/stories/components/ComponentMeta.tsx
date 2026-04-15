@@ -56,27 +56,30 @@ export function ComponentMeta({ manifest }: { manifest: ManifestData }) {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(manifest.variants!).map(([prop, data]) => (
+              {Object.entries(manifest.variants!).map(([prop, data]) => {
+                const figmaValues = Array.isArray(data) ? data : (Array.isArray(data?.figma) ? data.figma : typeof data?.figma === 'string' ? [data.figma] : [])
+                const codeValues = Array.isArray(data) ? [] : (Array.isArray(data?.code) ? data.code : typeof data?.code === 'string' ? [data.code] : [])
+                return (
                 <tr key={prop}>
                   <td style={tdStyle}>
                     <span style={{ fontWeight: 600 }}>{prop}</span>
                   </td>
                   <td style={tdStyle}>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                      {data.figma?.map(v => (
+                      {figmaValues.map((v: string) => (
                         <span key={v} style={tagStyle}>{v}</span>
                       ))}
                     </div>
                   </td>
                   <td style={tdStyle}>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                      {data.code?.map(v => (
+                      {codeValues.map((v: string) => (
                         <span key={v} style={{ ...tagStyle, background: "#EEF4FB", color: "#2272B4" }}>{v}</span>
                       ))}
                     </div>
                   </td>
                 </tr>
-              ))}
+              )})}
             </tbody>
           </table>
         </div>
