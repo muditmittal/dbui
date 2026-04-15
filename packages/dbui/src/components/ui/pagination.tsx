@@ -2,7 +2,9 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { ChevronLeft } from "../icons/ChevronLeft"
+import { ChevronRight } from "../icons/ChevronRight"
+import { Overflow } from "../icons/Overflow"
 
 /**
  * @standard Pagination
@@ -83,7 +85,7 @@ function PaginationPrevious({
       className={cn("pl-1.5!", className)}
       {...props}
     >
-      <ChevronLeftIcon data-icon="inline-start" />
+      <ChevronLeft data-icon="inline-start" />
       <span className="hidden sm:block">{text}</span>
     </PaginationLink>
   )
@@ -102,7 +104,7 @@ function PaginationNext({
       {...props}
     >
       <span className="hidden sm:block">{text}</span>
-      <ChevronRightIcon data-icon="inline-end" />
+      <ChevronRight data-icon="inline-end" />
     </PaginationLink>
   )
 }
@@ -121,7 +123,7 @@ function PaginationEllipsis({
       )}
       {...props}
     >
-      <MoreHorizontalIcon
+      <Overflow
       />
       <span className="sr-only">More pages</span>
     </span>

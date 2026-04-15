@@ -7,7 +7,8 @@ import useEmblaCarousel, {
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { ChevronLeft } from "../icons/ChevronLeft"
+import { ChevronRight } from "../icons/ChevronRight"
 
 /** @standard Carousel (deprioritized P2 — no DuBois equivalent) */
 
@@ -197,7 +198,7 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <ChevronLeftIcon />
+      <ChevronLeft />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -227,7 +228,7 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <ChevronRightIcon />
+      <ChevronRight />
       <span className="sr-only">Next slide</span>
     </Button>
   )

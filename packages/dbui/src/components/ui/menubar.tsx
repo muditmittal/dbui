@@ -22,7 +22,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./dropdown-menu"
-import { CheckIcon } from "lucide-react"
+import { Check } from "../icons/Check"
 
 /** @standard Menubar (excluded — maps to DropdownMenu) */
 
@@ -169,7 +169,7 @@ function MenubarRadioItem({
         data-slot="menubar-radio-item-indicator"
       >
         <MenuPrimitive.RadioItemIndicator>
-          <CheckIcon className="size-4" />
+          <Check className="size-4" />
         </MenuPrimitive.RadioItemIndicator>
       </span>
       {children}

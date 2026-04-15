@@ -23,7 +23,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./tooltip"
-import { PanelLeftIcon } from "lucide-react"
+import { SidebarOpen } from "../icons/SidebarOpen"
 
 /** @standard Sidebar (composition — not in DuBois) */
 
@@ -273,7 +273,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <SidebarOpen />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

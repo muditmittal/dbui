@@ -14,6 +14,14 @@
 4. ALWAYS import from `dbui/components/ui/{component}`. NEVER import from @radix-ui, @base-ui, or shadcn directly.
 5. If a DBUI component doesn't exist for what you need, compose from existing DBUI primitives. If that's not possible, flag it — don't build a one-off.
 
+## TRIGGER PATTERN (Base UI)
+
+Base UI components use `render` prop to replace the default element:
+  <DialogTrigger render={<Button variant="outline" />}>Open</DialogTrigger>
+  <DropdownMenuTrigger render={<Button variant="outline" />}>Actions</DropdownMenuTrigger>
+  <PopoverTrigger render={<Button />}>Info</PopoverTrigger>
+Do NOT use `asChild` — that is a Radix pattern and is ignored by Base UI.
+
 ## COMPONENT INDEX
 
 ### When to use what
@@ -23,7 +31,7 @@
 | Trigger an action | `Button` | raw `<button>` |
 | Toggle a state on/off | `Toggle` (with icon) or `Switch` (settings) | checkbox for on/off |
 | Switch between views | `Tabs` (content panels) or `SegmentControl` (toolbar filters) | radio group |
-| Choose one from a list | `Select` (<15 options) or `Combobox` (>15, needs search) | native `<select>` |
+| Choose one from a list | `Select` (≤10 options) or `Combobox` (>10 or needs search) | native `<select>` |
 | Choose multiple | `Combobox` (multi mode) or checkboxes in a `DropdownMenu` | multi-select HTML |
 | Multi-value tags | `TypeaheadCombobox` (ComboboxChips) | custom chip input |
 | Confirm destructive action | `AlertDialog` | `Dialog` with red button |
@@ -173,7 +181,7 @@ Every Databricks page uses the Platform Shell. Content goes inside the white sur
 
 ```tsx
 <Dialog>
-  <DialogTrigger asChild><Button>Create Connection</Button></DialogTrigger>
+  <DialogTrigger render={<Button />}>Create Connection</DialogTrigger>
   <DialogContent>
     <DialogHeader>
       <DialogTitle>New Connection</DialogTitle>
@@ -205,12 +213,12 @@ Every Databricks page uses the Platform Shell. Content goes inside the white sur
 </Dialog>
 ```
 
-### Recipe: Dropdown menu with all features
+### Recipe: Dropdown menu
 
 ```tsx
 <DropdownMenu>
-  <DropdownMenuTrigger asChild>
-    <Button variant="outline">Actions<ButtonChevron /></Button>
+  <DropdownMenuTrigger render={<Button variant="outline" />}>
+    Actions<ButtonChevron />
   </DropdownMenuTrigger>
   <DropdownMenuContent align="start">
     {/* Icon items */}
@@ -252,14 +260,12 @@ When adding a feature that starts with a menu item:
 ```tsx
 <Dialog>
   <DropdownMenu>
-    <DropdownMenuTrigger asChild><Button variant="outline">Options</Button></DropdownMenuTrigger>
+    <DropdownMenuTrigger render={<Button variant="outline" />}>Options</DropdownMenuTrigger>
     <DropdownMenuContent>
       <DropdownMenuItem>Existing action</DropdownMenuItem>
-      <DialogTrigger asChild>
-        <DropdownMenuItem>
-          <DropdownMenuItemIcon><Plus /></DropdownMenuItemIcon>
-          New Connection...
-        </DropdownMenuItem>
+      <DialogTrigger render={<DropdownMenuItem />}>
+        <DropdownMenuItemIcon><Plus /></DropdownMenuItemIcon>
+        New Connection...
       </DialogTrigger>
     </DropdownMenuContent>
   </DropdownMenu>
@@ -269,38 +275,51 @@ When adding a feature that starts with a menu item:
 </Dialog>
 ```
 
-### Recipe: Detail page with sidebar
+### Recipe: Form field with validation
 
 ```tsx
-<div className="flex gap-6 px-6 py-4">
-  {/* Main content */}
-  <div className="flex-1 min-w-0 flex flex-col gap-4">
-    <Card>
-      <CardHeader><CardTitle>Overview</CardTitle></CardHeader>
-      <CardContent>...</CardContent>
-    </Card>
-    <Card>
-      <CardHeader><CardTitle>History</CardTitle></CardHeader>
-      <CardContent><Table>...</Table></CardContent>
-    </Card>
-  </div>
+{/* Default field */}
+<div className="flex flex-col gap-1.5">
+  <Label htmlFor="name">Name</Label>
+  <Input id="name" placeholder="Enter name" />
+  <span className="text-[12px] text-muted-foreground">Helper text goes here.</span>
+</div>
 
-  {/* Detail sidebar */}
-  <aside className="w-[320px] shrink-0 flex flex-col gap-6">
-    <KeyValuePair>
-      <KeyValueRow><KeyValueKey>Owner</KeyValueKey><KeyValueValue>user@databricks.com</KeyValueValue></KeyValueRow>
-      <KeyValueRow><KeyValueKey>Created</KeyValueKey><KeyValueValue>2026-04-15</KeyValueValue></KeyValueRow>
-      <KeyValueRow><KeyValueKey>Type</KeyValueKey><KeyValueValue><Badge variant="outline">Table</Badge></KeyValueValue></KeyValueRow>
-    </KeyValuePair>
-    <Separator />
-    <div className="flex flex-col gap-2">
-      <Label>Tags</Label>
-      <div className="flex flex-wrap gap-1">
-        <Tag><TagLabel>env</TagLabel><TagValue>prod</TagValue><TagRemove /></Tag>
-        <Tag><TagLabel>team</TagLabel><TagValue>data-eng</TagValue><TagRemove /></Tag>
-      </div>
-    </div>
-  </aside>
+{/* Error state — error message replaces helper text */}
+<div className="flex flex-col gap-1.5">
+  <Label htmlFor="name">Name</Label>
+  <Input id="name" aria-invalid="true" />
+  <span className="text-[12px] text-destructive">Name is required.</span>
+</div>
+```
+Rule: Error message replaces helper text — never stack both.
+
+### Recipe: Loading and empty states
+
+```tsx
+{/* Table loading — skeleton rows */}
+<Table>
+  <TableHeader>
+    <TableRow><TableHead>Name</TableHead><TableHead>Status</TableHead></TableRow>
+  </TableHeader>
+  <TableBody>
+    {[1, 2, 3].map(i => (
+      <TableRow key={i}>
+        <TableCell><Skeleton className="h-4 w-[180px]" /></TableCell>
+        <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+
+{/* Empty state — when search/filter returns nothing */}
+<Empty title="No results found" description="Try adjusting your filters or search terms.">
+  <Button variant="outline">Clear filters</Button>
+</Empty>
+
+{/* Page-level loading */}
+<div className="flex items-center justify-center py-12">
+  <Spinner />
 </div>
 ```
 
@@ -420,7 +439,7 @@ grep "use:action delete" packages/dbui/src/components/icons/          # by actio
 - For simple confirmations, use AlertDialog (can't be dismissed by overlay click)
 
 ### Forms
-- Select for <15 options. Combobox for 15+.
+- Select for ≤10 options. Combobox for >10 or when search is needed.
 - Label uses Bold style (13px Semibold). Helper text uses Hint (12px Regular muted).
 - Error message replaces helper text, never stacks below it.
 - Validation is border-only — no ring shadows on inputs.
@@ -464,3 +483,14 @@ grep "use:action delete" packages/dbui/src/components/icons/          # by actio
 ## TOKEN FILE
 
 Import `dbui/tokens/globals.css` in your root CSS. This provides all semantic color, radius, spacing, and shadow tokens. Token values are documented in the component files and the Storybook at dbuidesign.vercel.app.
+
+## KNOWN GAPS
+
+These components are planned but not yet available:
+- Tree — tree view for catalog/file browsing (P1, in progress)
+- DatePicker — calendar + popover + range modes (P1, complex)
+- Stepper — multi-step wizard (P1, compose from Tabs + custom state as interim)
+- Banner — full-width system notification bar
+- CodeBlock — syntax-highlighted code display
+- Chart — uses Vega, not part of DBUI
+- Virtualized lists — for 1000+ items in Select/Combobox (use react-window)

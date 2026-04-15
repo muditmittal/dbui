@@ -5,13 +5,15 @@ import { Combobox as ComboboxPrimitive } from "@base-ui/react"
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
+import { ChevronDown } from "../icons/ChevronDown"
+import { Close } from "../icons/Close"
+import { Check } from "../icons/Check"
 
 /**
  * @standard Combobox
  * @guideline Use when the list has 10+ options and users need search
  * @guideline Popup left-aligns with trigger and matches trigger width
- * @constraint Under 5 options, use Select instead
+ * @constraint 5 or fewer options, use Select instead
  * @constraint Chevron icon has no independent hover state
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=811-976
  */
@@ -34,7 +36,7 @@ function ComboboxTrigger({
       {...props}
     >
       {children}
-      <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+      <ChevronDown className="pointer-events-none size-4 text-muted-foreground" />
     </ComboboxPrimitive.Trigger>
   )
 }
@@ -46,7 +48,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
       className={cn("inline-flex shrink-0 items-center justify-center text-muted-foreground hover:text-foreground [&_svg]:size-3.5", className)}
       {...props}
     >
-      <XIcon className="pointer-events-none" />
+      <Close className="pointer-events-none" />
     </ComboboxPrimitive.Clear>
   )
 }
@@ -158,7 +160,7 @@ function ComboboxItem({
           <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />
         }
       >
-        <CheckIcon className="pointer-events-none" />
+        <Check className="pointer-events-none" />
       </ComboboxPrimitive.ItemIndicator>
     </ComboboxPrimitive.Item>
   )
@@ -259,7 +261,7 @@ function ComboboxChip({
           className="-ml-0.5 inline-flex items-center justify-center opacity-50 hover:opacity-100 [&_svg]:size-3"
           data-slot="combobox-chip-remove"
         >
-          <XIcon className="pointer-events-none" />
+          <Close className="pointer-events-none" />
         </ComboboxPrimitive.ChipRemove>
       )}
     </ComboboxPrimitive.Chip>

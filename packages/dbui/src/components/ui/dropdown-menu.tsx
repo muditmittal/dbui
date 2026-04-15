@@ -5,7 +5,9 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 
 import { cn } from "../../lib/utils"
 import { Checkbox } from "./checkbox"
-import { ChevronRightIcon, CheckIcon } from "lucide-react"
+import { Input } from "./input"
+import { ChevronRight } from "../icons/ChevronRight"
+import { Check } from "../icons/Check"
 
 /**
  * @standard Dropdown Menu
@@ -139,7 +141,7 @@ function DropdownMenuSubTrigger({
       {...props}
     >
       {children}
-      <ChevronRightIcon className="ml-auto" />
+      <ChevronRight className="ml-auto" />
     </MenuPrimitive.SubmenuTrigger>
   )
 }
@@ -227,7 +229,7 @@ function DropdownMenuRadioItem({
         data-slot="dropdown-menu-radio-item-indicator"
       >
         <MenuPrimitive.RadioItemIndicator>
-          <CheckIcon className="size-4" />
+          <Check className="size-4" />
         </MenuPrimitive.RadioItemIndicator>
       </span>
       {children}
@@ -345,15 +347,11 @@ function DropdownMenuItemBadge({
 function DropdownMenuSearch({
   className,
   ...props
-}: React.ComponentProps<"input">) {
+}: React.ComponentProps<typeof Input>) {
   return (
     <div className="p-1" data-slot="dropdown-menu-search">
-      <input
-        type="text"
-        className={cn(
-          "flex h-8 w-full rounded-sm border border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring",
-          className
-        )}
+      <Input
+        className={cn("w-full", className)}
         {...props}
       />
     </div>

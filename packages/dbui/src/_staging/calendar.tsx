@@ -10,7 +10,9 @@ import {
 
 import { cn } from "../../lib/utils"
 import { Button, buttonVariants } from "./button"
-import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
+import { ChevronLeft } from "../icons/ChevronLeft"
+import { ChevronRight } from "../icons/ChevronRight"
+import { ChevronDown } from "../icons/ChevronDown"
 
 /** @standard Calendar (planned P1 — complex: Calendar + Popover + range modes) */
 
@@ -149,18 +151,18 @@ function Calendar({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
             return (
-              <ChevronLeftIcon className={cn("size-4", className)} {...props} />
+              <ChevronLeft className={cn("size-4", className)} {...props} />
             )
           }
 
           if (orientation === "right") {
             return (
-              <ChevronRightIcon className={cn("size-4", className)} {...props} />
+              <ChevronRight className={cn("size-4", className)} {...props} />
             )
           }
 
           return (
-            <ChevronDownIcon className={cn("size-4", className)} {...props} />
+            <ChevronDown className={cn("size-4", className)} {...props} />
           )
         },
         DayButton: ({ ...props }) => (

@@ -16,6 +16,25 @@ Import the token stylesheet in your root CSS:
 @import "dbui/tokens/globals.css";
 ```
 
+## Tailwind CSS v4
+
+DBUI requires Tailwind CSS v4 with the `@tailwindcss/postcss` plugin. In your `postcss.config.js`:
+
+```js
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+}
+```
+
+In your root CSS file:
+
+```css
+@import "tailwindcss";
+@import "dbui/tokens/globals.css";
+```
+
 ## Usage
 
 ```tsx

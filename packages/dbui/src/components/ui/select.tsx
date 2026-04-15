@@ -4,13 +4,15 @@ import * as React from "react"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 
 import { cn } from "../../lib/utils"
-import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
+import { ChevronDown } from "../icons/ChevronDown"
+import { Check } from "../icons/Check"
+import { ChevronUp } from "../icons/ChevronUp"
 
 /**
  * @standard Select
  * @guideline Default to Outline; use Ghost inside toolbars
  * @guideline Popup left-aligns with trigger and matches trigger width
- * @constraint Over 15 options, switch to Combobox
+ * @constraint Over 10 options, switch to Combobox
  * @constraint Ghost variant gains border on hover only
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=732-601
  */
@@ -63,7 +65,7 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+          <ChevronDown className="pointer-events-none size-4 text-muted-foreground" />
         }
       />
     </SelectPrimitive.Trigger>
@@ -141,7 +143,7 @@ function SelectItem({
           <span className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center" />
         }
       >
-        <CheckIcon className="pointer-events-none" />
+        <Check className="pointer-events-none" />
       </SelectPrimitive.ItemIndicator>
       <SelectPrimitive.ItemText className="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
         {children}
@@ -176,7 +178,7 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <ChevronUpIcon
+      <ChevronUp
       />
     </SelectPrimitive.ScrollUpArrow>
   )
@@ -195,7 +197,7 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <ChevronDownIcon
+      <ChevronDown
       />
     </SelectPrimitive.ScrollDownArrow>
   )

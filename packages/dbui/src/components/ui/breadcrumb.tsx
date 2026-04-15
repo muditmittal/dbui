@@ -3,7 +3,8 @@ import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 
 import { cn } from "../../lib/utils"
-import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { ChevronRight } from "../icons/ChevronRight"
+import { Overflow } from "../icons/Overflow"
 
 /**
  * @standard Breadcrumb
@@ -95,7 +96,7 @@ function BreadcrumbSeparator({
       {...props}
     >
       {children ?? (
-        <ChevronRightIcon />
+        <ChevronRight />
       )}
     </li>
   )
@@ -116,7 +117,7 @@ function BreadcrumbEllipsis({
       )}
       {...props}
     >
-      <MoreHorizontalIcon
+      <Overflow
       />
       <span className="sr-only">More</span>
     </span>

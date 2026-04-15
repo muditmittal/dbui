@@ -5,7 +5,7 @@ import { Dialog as SheetPrimitive } from "@base-ui/react/dialog"
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import { XIcon } from "lucide-react"
+import { Close } from "../icons/Close"
 
 /** @standard Sheet (excluded — maps to Drawer) */
 
@@ -72,7 +72,7 @@ function SheetContent({
               />
             }
           >
-            <XIcon
+            <Close
             />
             <span className="sr-only">Close</span>
           </SheetPrimitive.Close>
