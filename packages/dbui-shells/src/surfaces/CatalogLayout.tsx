@@ -256,8 +256,8 @@ function CatalogLanding({
  *
  * Usage inside Shell:
  * ```tsx
- * import { Shell } from "dbui-shell/shell"
- * import { CatalogLayout } from "dbui-shell/catalog"
+ * import { Shell } from "dbui-shells/shell"
+ * import { CatalogLayout } from "dbui-shells/catalog"
  *
  * <Shell defaultActive="catalog">
  *   <CatalogLayout sections={treeSections} items={catalogItems} />

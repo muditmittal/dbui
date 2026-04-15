@@ -35,7 +35,7 @@ const config: StorybookConfig = {
     config.module.rules = config.module.rules || []
     config.module.rules.push({
       test: /\.tsx?$/,
-      exclude: /node_modules/,
+      exclude: /node_modules\/(?!dbui|dbui-shells)/,
       resourceQuery: { not: [/raw/] },
       use: [
         {

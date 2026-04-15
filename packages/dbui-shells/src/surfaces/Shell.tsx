@@ -5,23 +5,7 @@ import { WorkspaceNav } from "../components/WorkspaceNav"
 /**
  * Shell — the Databricks product chrome.
  * Provides: platform header + sidebar nav + content surface.
- *
- * Usage:
- * ```tsx
- * import { Shell } from "dbui-shell/shell"
- *
- * <Shell defaultActive="catalog">
- *   {/* Your page content renders inside the white surface */}
- *   <Breadcrumb>...</Breadcrumb>
- *   <h1>Page Title</h1>
- *   <Table>...</Table>
- * </Shell>
- * ```
- *
- * Customize the sidebar by passing `sidebar` prop:
- * ```tsx
- * <Shell sidebar={<MyCustomNav />}>...</Shell>
- * ```
+ * Pass children for page content. Pass sidebar prop to customize nav.
  */
 export function Shell({
   children,

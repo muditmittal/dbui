@@ -5440,9 +5440,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"dbui-shell@npm:*, dbui-shell@workspace:packages/dbui-shell":
+"dbui-shells@npm:*, dbui-shells@workspace:packages/dbui-shells":
   version: 0.0.0-use.local
-  resolution: "dbui-shell@workspace:packages/dbui-shell"
+  resolution: "dbui-shells@workspace:packages/dbui-shells"
   dependencies:
     dbui: "workspace:*"
   peerDependencies:
@@ -10316,7 +10316,7 @@ __metadata:
     css-loader: "npm:^7.1.4"
     date-fns: "npm:^4.1.0"
     dbui: "npm:*"
-    dbui-shell: "npm:*"
+    dbui-shells: "npm:*"
     embla-carousel-react: "npm:^8.6.0"
     eslint: "npm:^9"
     eslint-config-next: "npm:16.1.6"

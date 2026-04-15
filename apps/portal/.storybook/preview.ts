@@ -24,6 +24,7 @@ const preview: Preview = {
           "Overlays",
           "Compositions",
           "Foundations",
+          "Surfaces",
         ],
       },
     },

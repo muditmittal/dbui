@@ -1,5 +1,5 @@
 {
-  "name": "dbui-shell",
+  "name": "dbui-shells",
   "version": "0.1.0",
   "description": "DBUI Shell — composable page surfaces for Databricks UI",
   "main": "./src/index.ts",

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Shell } from "dbui-shell/shell"
+import { Shell } from "dbui-shells/shell"
 import { Button } from "dbui/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "dbui/components/ui/breadcrumb"
@@ -8,16 +8,15 @@ import { Copy } from "@/components/icons/Copy"
 import { Overflow } from "@/components/icons/Overflow"
 
 const meta: Meta = {
-  title: "Compositions/Platform Shell",
+  title: "Surfaces/Shell",
   parameters: { layout: "fullscreen" },
 }
 
 export default meta
 
-export const FullShell: StoryObj = {
+export const Playground: StoryObj = {
   render: () => (
     <Shell defaultActive="catalog">
-      {/* Breadcrumb */}
       <div className="px-6 pt-4">
         <Breadcrumb>
           <BreadcrumbList>
@@ -29,8 +28,6 @@ export const FullShell: StoryObj = {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-
-      {/* Page title + actions */}
       <div className="flex items-center justify-between px-6 py-3">
         <div className="flex items-center gap-2">
           <span className="text-[22px] font-semibold leading-[28px] text-foreground" style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif" }}>my_catalog</span>
@@ -44,8 +41,6 @@ export const FullShell: StoryObj = {
           <Button>Create</Button>
         </div>
       </div>
-
-      {/* Tabs */}
       <div className="px-6">
         <Tabs defaultValue="schemas">
           <TabsList>
@@ -55,7 +50,6 @@ export const FullShell: StoryObj = {
           </TabsList>
         </Tabs>
       </div>
-
       <div className="px-6 py-6" />
     </Shell>
   ),

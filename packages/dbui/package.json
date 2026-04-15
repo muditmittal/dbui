@@ -15,21 +15,31 @@
     "README.md"
   ],
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./components/ui/*": {
-      "import": "./dist/components/ui/*.js",
-      "types": "./dist/components/ui/*.d.ts"
-    },
+    ".": "./src/index.ts",
+    "./components/ui/*": "./src/components/ui/*.tsx",
     "./components/icons/*": "./src/components/icons/*.tsx",
-    "./lib/*": {
-      "import": "./dist/lib/*.js",
-      "types": "./dist/lib/*.d.ts"
-    },
+    "./lib/*": "./src/lib/*",
     "./tokens/*": "./src/tokens/*",
     "./llms.txt": "./llms.txt"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./components/ui/*": {
+        "import": "./dist/components/ui/*.js",
+        "types": "./dist/components/ui/*.d.ts"
+      },
+      "./components/icons/*": "./src/components/icons/*.tsx",
+      "./lib/*": {
+        "import": "./dist/lib/*.js",
+        "types": "./dist/lib/*.d.ts"
+      },
+      "./tokens/*": "./src/tokens/*",
+      "./llms.txt": "./llms.txt"
+    }
   },
   "scripts": {
     "build": "tsup",

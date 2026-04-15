@@ -1,21 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react"
-import { Shell } from "dbui-shell/shell"
-import { CatalogLayout, type TreeNode, type CatalogSection, type CatalogItem } from "dbui-shell/catalog"
+import type { CatalogSection, CatalogItem } from "dbui-shells/catalog"
 import { Data } from "@/components/icons/Data"
 import { Folder } from "@/components/icons/Folder"
 import { Table } from "@/components/icons/Table"
 import { Cloud } from "@/components/icons/Cloud"
 
-const meta: Meta = {
-  title: "Compositions/Catalog Explorer",
-  parameters: { layout: "fullscreen" },
-}
-
-export default meta
-
-// ─── Sample tree data (matches the screenshot) ───
-
-const treeSections: CatalogSection[] = [
+export const treeSections: CatalogSection[] = [
   {
     label: "My organization",
     nodes: [
@@ -31,11 +20,7 @@ const treeSections: CatalogSection[] = [
             children: [
               { id: "customer_purchase_orders", label: "customer_purchase_orders", icon: Folder },
               { id: "gold", label: "gold", icon: Folder },
-              {
-                id: "operations",
-                label: "operations",
-                icon: Folder,
-              },
+              { id: "operations", label: "operations", icon: Folder },
               { id: "revenue", label: "revenue", icon: Folder },
               { id: "silver", label: "silver", icon: Folder },
               { id: "transactions", label: "transactions", icon: Folder },
@@ -65,9 +50,7 @@ const treeSections: CatalogSection[] = [
   },
 ]
 
-// ─── Sample table data ───
-
-const catalogItems: CatalogItem[] = [
+export const catalogItems: CatalogItem[] = [
   { name: "my_catalog", subtitle: "My default", icon: Data, reason: "Default for new items", type: "Catalog" },
   { name: "my_volume", subtitle: "My default", icon: Cloud, reason: "Default for file uploads", type: "Volume" },
   { name: "main", subtitle: "Workspace default", icon: Data, reason: "Shared in workspace", type: "Catalog" },
@@ -79,15 +62,3 @@ const catalogItems: CatalogItem[] = [
   { name: "cancelled_orders", subtitle: "sales.customer_purchase_orders", icon: Table, reason: "Viewed 1 time", type: "Table" },
   { name: "order_payment_discrepancies_mv", subtitle: "demand_forecasting.customer_purchase_orders", icon: Table, reason: "Viewed 1 time", type: "Table" },
 ]
-
-export const Default: StoryObj = {
-  render: () => (
-    <Shell defaultActive="catalog">
-      <CatalogLayout
-        sections={treeSections}
-        items={catalogItems}
-        title="Catalog"
-      />
-    </Shell>
-  ),
-}
