@@ -1,7 +1,21 @@
-y# DBUI Design System — Agent Rules
+# DBUI Design System — Agent Rules
 
 > These rules govern all AI-assisted work in this repo, especially Figma MCP integration.
 > Read `research/DESIGN-SYSTEM-DECISIONS.md` for full rationale behind each decision.
+
+## 0. ABSOLUTE RULE — Use DBUI Components, Never Raw HTML
+
+**EVERY piece of UI in this repo MUST be built with DBUI components from `packages/dbui/src/components/ui/`.** This includes stories, compositions, demos, and any preview code.
+
+- NEVER use raw `<button>`, `<input>`, `<div className="...">` to recreate what a DBUI component already does
+- NEVER use vanilla shadcn or third-party components when a DBUI equivalent exists
+- If you need a checkbox, use `<Checkbox>`. If you need a menu item, use `<DropdownMenuItem>`. If you need an input, use `<Input>`.
+- If a DBUI component doesn't exist for what you need, flag it — don't build a one-off
+- The ENTIRE POINT of this project is to validate that DBUI components work. Using raw HTML defeats the purpose.
+
+**Violations of this rule invalidate the work.** It doesn't matter if raw HTML "looks right" — if it doesn't use DBUI components, it proves nothing.
+
+---
 
 ## Project Overview
 
