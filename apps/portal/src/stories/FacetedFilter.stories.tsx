@@ -1,12 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import React, { useState, useRef } from "react"
 import { Popover } from "@base-ui/react/popover"
-import {
-  DropdownMenuCheckboxItem,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
-} from "dbui/components/ui/dropdown-menu"
 import { Input } from "dbui/components/ui/input"
+import { Checkbox } from "dbui/components/ui/checkbox"
 import { Switch } from "dbui/components/ui/switch"
 import { Sliders } from "@/components/icons/Sliders"
 import { Search } from "@/components/icons/Search"
@@ -206,14 +202,16 @@ function FacetedFilter() {
                         }
 
                         return (
-                          <DropdownMenuCheckboxItem
+                          <label
                             key={value}
-                            checked={checked}
-                            closeOnClick={false}
-                            onCheckedChange={() => toggleValue(activeFacet, fullValue)}
+                            className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
                           >
+                            <Checkbox
+                              checked={checked}
+                              onCheckedChange={() => toggleValue(activeFacet, fullValue)}
+                            />
                             {value}
-                          </DropdownMenuCheckboxItem>
+                          </label>
                         )
                       })}
                       {filteredValues.length === 0 && (
