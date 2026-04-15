@@ -36,7 +36,7 @@ export const Playground: StoryObj = {
     <div>
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Workspace Nav</h2>
 
-      <div className="w-[180px] border-r border-border bg-background">
+      <div className="w-[180px] bg-background">
         {/* New button */}
         <div className="px-2 py-2">
           <Button variant="outline" className="w-full justify-start gap-2 text-primary">

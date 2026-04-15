@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const BarStackedPercentage = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M2.75 1C2.33579 1 2 1.33579 2 1.75V14.25C2 14.6642 2.33579 15 2.75 15H13.25C13.6642 15 14 14.6642 14 14.25V1.75C14 1.33579 13.6642 1 13.25 1H2.75ZM9 8.5V13.5H7V8.5H9ZM9 7V2.5H7V7H9ZM12.5 13.5H10.5V11.75H12.5V13.5ZM10.5 2.5V10.25H12.5V2.5H10.5ZM5.5 2.5H3.5V10.25H5.5V2.5ZM5.5 13.5V11.75H3.5V13.5H5.5Z" fill="currentColor"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M2.75 1C2.33579 1 2 1.33579 2 1.75V14.25C2 14.6642 2.33579 15 2.75 15H13.25C13.6642 15 14 14.6642 14 14.25V1.75C14 1.33579 13.6642 1 13.25 1H2.75ZM9 8.5V13.5H7V8.5H9ZM9 7V2.5H7V7H9ZM12.5 13.5H10.5V11.75H12.5V13.5ZM10.5 2.5V10.25H12.5V2.5H10.5ZM5.5 2.5H3.5V10.25H5.5V2.5ZM5.5 13.5V11.75H3.5V13.5H5.5Z" fill="currentColor"/>
 </svg>
   )
 )

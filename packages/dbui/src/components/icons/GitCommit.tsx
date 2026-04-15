@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const GitCommit = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M8 5.5C6.61929 5.5 5.5 6.61929 5.5 8C5.5 9.38071 6.61929 10.5 8 10.5C9.38071 10.5 10.5 9.38071 10.5 8C10.5 6.61929 9.38071 5.5 8 5.5ZM4.0702 7.25C4.42125 5.39935 6.04721 4 8 4C9.95279 4 11.5787 5.39935 11.9298 7.25H16V8.75H11.9298C11.5787 10.6006 9.95279 12 8 12C6.04721 12 4.42125 10.6006 4.0702 8.75H0V7.25H4.0702Z" fill="currentColor"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M8 5.5C6.61929 5.5 5.5 6.61929 5.5 8C5.5 9.38071 6.61929 10.5 8 10.5C9.38071 10.5 10.5 9.38071 10.5 8C10.5 6.61929 9.38071 5.5 8 5.5ZM4.0702 7.25C4.42125 5.39935 6.04721 4 8 4C9.95279 4 11.5787 5.39935 11.9298 7.25H16V8.75H11.9298C11.5787 10.6006 9.95279 12 8 12C6.04721 12 4.42125 10.6006 4.0702 8.75H0V7.25H4.0702Z" fill="currentColor"/>
     </svg>
   )
 )

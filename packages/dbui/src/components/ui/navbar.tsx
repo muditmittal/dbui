@@ -114,7 +114,7 @@ function NavbarItem({
       className={cn(
         "flex h-7 w-full items-center gap-2 rounded-sm px-2 text-[13px] leading-[20px] font-normal text-foreground text-left",
         "hover:bg-hover",
-        active && "bg-accent text-primary font-semibold",
+        active && "bg-accent text-primary font-semibold [&_[data-slot=navbar-item-icon]]:text-primary",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}
@@ -134,7 +134,7 @@ function NavbarItemIcon({
     <span
       data-slot="navbar-item-icon"
       className={cn(
-        "pointer-events-none shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "pointer-events-none flex shrink-0 items-center text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
