@@ -123,33 +123,20 @@ export const Playground: StoryObj = {
           </DropdownMenu>
         </div>
 
-        {/* 3. Checkbox multi-select with icons */}
+        {/* 3. Checkbox multi-select */}
         <div>
           <div style={sectionLabel}>Checkbox Select</div>
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline">Filter Assets</Button>} />
             <DropdownMenuContent align="start" className="min-w-[220px]">
-              <DropdownMenuLabel>Asset Type</DropdownMenuLabel>
-              <DropdownMenuCheckboxItem defaultChecked >
-                <DropdownMenuItemIcon><Table /></DropdownMenuItemIcon>
-                Tables
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem >
-                <DropdownMenuItemIcon><Notebook /></DropdownMenuItemIcon>
-                Notebooks
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem defaultChecked >
-                <DropdownMenuItemIcon><Dashboard /></DropdownMenuItemIcon>
-                Dashboards
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem >
-                <DropdownMenuItemIcon><Pipeline /></DropdownMenuItemIcon>
-                Pipelines
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem >
-                <DropdownMenuItemIcon><Query /></DropdownMenuItemIcon>
-                Queries
-              </DropdownMenuCheckboxItem>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Asset Type</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem defaultChecked>Tables</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Notebooks</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem defaultChecked>Dashboards</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Pipelines</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Queries</DropdownMenuCheckboxItem>
+              </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -160,13 +147,15 @@ export const Playground: StoryObj = {
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline">Sort by</Button>} />
             <DropdownMenuContent align="start" className="min-w-[220px]">
-              <DropdownMenuLabel>Sort Order</DropdownMenuLabel>
-              <DropdownMenuRadioGroup defaultValue="modified">
-                <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="modified">Last Modified</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="created">Date Created</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="size">Size</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Sort Order</DropdownMenuLabel>
+                <DropdownMenuRadioGroup defaultValue="modified">
+                  <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="modified">Last Modified</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="created">Date Created</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="size">Size</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
