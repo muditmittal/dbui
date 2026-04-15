@@ -34,7 +34,7 @@ function SearchFilter() {
       />
       <button
         aria-label="Filter"
-        className="flex size-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-background shadow-xs text-muted-foreground hover:text-foreground hover:border-primary focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
+        className="flex size-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-background shadow-xs text-muted-foreground transition-colors hover:bg-hover hover:text-foreground active:bg-press focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
       >
         <Sliders />
       </button>
@@ -50,7 +50,7 @@ function SearchBrowse() {
         className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
       />
       <button
-        className="flex h-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-background px-3 shadow-xs text-[13px] text-foreground hover:border-primary focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input"
+        className="flex h-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-background px-3 shadow-xs text-[13px] text-foreground transition-colors hover:bg-hover active:bg-press focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input"
       >
         Browse
       </button>
