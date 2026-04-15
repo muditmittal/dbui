@@ -4,6 +4,7 @@ import * as React from "react"
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 
 import { cn } from "../../lib/utils"
+import { Checkbox } from "./checkbox"
 import { ChevronRightIcon, CheckIcon } from "lucide-react"
 
 function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
@@ -175,15 +176,11 @@ function DropdownMenuCheckboxItem({
       checked={checked}
       {...props}
     >
-      <span
-        className="pointer-events-none flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input bg-background data-[checked]:border-primary data-[checked]:bg-primary data-[checked]:text-primary-foreground"
-        data-slot="dropdown-menu-checkbox-item-indicator"
-        data-checked={checked || undefined}
-      >
-        <MenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon className="size-4" />
-        </MenuPrimitive.CheckboxItemIndicator>
-      </span>
+      <Checkbox
+        checked={checked}
+        className="pointer-events-none"
+        tabIndex={-1}
+      />
       {children}
     </MenuPrimitive.CheckboxItem>
   )
