@@ -1,16 +1,39 @@
 {
   "name": "dbui",
   "version": "0.1.0",
-  "private": true,
-  "description": "DBUI Design System — shadcn reskinned with Databricks DuBois tokens",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src/components/icons",
+    "src/tokens",
+    "llms.txt",
+    "README.md"
+  ],
   "exports": {
-    "./components/*": "./src/components/*.tsx",
-    "./components/ui/*": "./src/components/ui/*.tsx",
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./components/ui/*": {
+      "import": "./dist/components/ui/*.js",
+      "types": "./dist/components/ui/*.d.ts"
+    },
     "./components/icons/*": "./src/components/icons/*.tsx",
-    "./lib/*": "./src/lib/*",
-    "./tokens/*": "./src/tokens/*"
+    "./lib/*": {
+      "import": "./dist/lib/*.js",
+      "types": "./dist/lib/*.d.ts"
+    },
+    "./tokens/*": "./src/tokens/*",
+    "./llms.txt": "./llms.txt"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
@@ -20,8 +43,6 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
     "react-resizable-panels": "^4.7.3",
     "recharts": "^2.15.4",
     "sonner": "^2.0.7",
@@ -30,6 +51,10 @@
   },
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18"
+    "react-dom": ">=18",
+    "tailwindcss": ">=4"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1"
   }
 }
