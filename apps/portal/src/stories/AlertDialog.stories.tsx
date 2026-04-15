@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogDescription,
@@ -7,6 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "dbui/components/ui/alert-dialog"
+import { Button } from "dbui/components/ui/button"
 import { ComponentMeta } from "./components/ComponentMeta"
 import manifest from "../../../../specs/components/alert-dialog.manifest.json"
 
@@ -22,19 +26,21 @@ export const Playground: StoryObj = {
     <div>
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>AlertDialog</h2>
 
-      {/* Static structure preview — no trigger needed */}
-      <div className="w-[440px] rounded-lg border border-border bg-background p-6 shadow-lg">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This will permanently delete the workspace and all associated resources. This action cannot be undone.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter className="mt-4">
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-        </AlertDialogFooter>
-      </div>
+      <AlertDialog>
+        <AlertDialogTrigger render={<Button variant="destructive">Delete Workspace</Button>} />
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete the workspace and all associated resources. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <ComponentMeta manifest={manifest} />
     </div>
