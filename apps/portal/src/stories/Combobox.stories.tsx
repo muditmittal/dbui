@@ -176,11 +176,14 @@ function MultiSelectChips() {
     <div className="w-[320px]">
       <Combobox multiple value={selected} onValueChange={setSelected}>
         <ComboboxChips ref={anchor}>
-          {(chip: { value: string; label: string }) => (
-            <ComboboxChip key={chip.value} value={chip.value}>
-              {chip.label}
-            </ComboboxChip>
-          )}
+          {selected.map((value) => {
+            const label = tags.find(t => t.value === value)?.label || value
+            return (
+              <ComboboxChip key={value} value={value}>
+                {label}
+              </ComboboxChip>
+            )
+          })}
           <ComboboxChipsInput placeholder="Add tags..." />
         </ComboboxChips>
         <ComboboxContent anchor={anchor}>

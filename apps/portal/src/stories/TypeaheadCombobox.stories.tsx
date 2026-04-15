@@ -17,7 +17,20 @@ import {
 import { ComponentMeta } from "./components/ComponentMeta"
 import manifest from "../../../../specs/components/typeahead-combobox.manifest.json"
 
-/* ── Data ── */
+const allTags = [
+  { value: "pii", label: "PII" },
+  { value: "gdpr", label: "GDPR" },
+  { value: "production", label: "Production" },
+  { value: "staging", label: "Staging" },
+  { value: "deprecated", label: "Deprecated" },
+  { value: "tested", label: "Tested" },
+  { value: "ml-ready", label: "ML Ready" },
+  { value: "aggregated", label: "Aggregated" },
+  { value: "real-time", label: "Real-time" },
+  { value: "sensitive", label: "Sensitive" },
+  { value: "archived", label: "Archived" },
+  { value: "verified", label: "Verified" },
+]
 
 const recentUsers = [
   { value: "alice", label: "Alice Chen" },
@@ -37,20 +50,7 @@ const teamMembers = [
   { value: "leo", label: "Leo Garcia" },
 ]
 
-const allTags = [
-  { value: "pii", label: "PII" },
-  { value: "gdpr", label: "GDPR" },
-  { value: "production", label: "Production" },
-  { value: "staging", label: "Staging" },
-  { value: "deprecated", label: "Deprecated" },
-  { value: "tested", label: "Tested" },
-  { value: "ml-ready", label: "ML Ready" },
-  { value: "aggregated", label: "Aggregated" },
-  { value: "real-time", label: "Real-time" },
-  { value: "sensitive", label: "Sensitive" },
-  { value: "archived", label: "Archived" },
-  { value: "verified", label: "Verified" },
-]
+const allUsers = [...recentUsers, ...teamMembers]
 
 const meta: Meta = {
   title: "Controls/TypeaheadCombobox",
@@ -68,18 +68,17 @@ const sectionLabel: React.CSSProperties = {
   marginBottom: 8,
 }
 
-/* ── Empty multi-select ── */
-
 function EmptyMultiSelect() {
+  const [selected, setSelected] = React.useState<string[]>([])
   const anchor = useComboboxAnchor()
   return (
-    <Combobox multiple>
+    <Combobox multiple value={selected} onValueChange={setSelected}>
       <ComboboxChips ref={anchor}>
-        {(chip: any) => (
-          <ComboboxChip key={chip.value} value={chip.value}>
-            {chip.label}
+        {selected.map((value) => (
+          <ComboboxChip key={value} value={value}>
+            {allTags.find(t => t.value === value)?.label || value}
           </ComboboxChip>
-        )}
+        ))}
         <ComboboxChipsInput placeholder="Add tags..." />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
@@ -96,19 +95,17 @@ function EmptyMultiSelect() {
   )
 }
 
-/* ── Pre-selected chips ── */
-
 function PreSelectedMultiSelect() {
   const [selected, setSelected] = React.useState<string[]>(["pii", "production", "tested"])
   const anchor = useComboboxAnchor()
   return (
     <Combobox multiple value={selected} onValueChange={setSelected}>
       <ComboboxChips ref={anchor}>
-        {(chip: any) => (
-          <ComboboxChip key={chip.value} value={chip.value}>
-            {chip.label}
+        {selected.map((value) => (
+          <ComboboxChip key={value} value={value}>
+            {allTags.find(t => t.value === value)?.label || value}
           </ComboboxChip>
-        )}
+        ))}
         <ComboboxChipsInput placeholder="Add more..." />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
@@ -125,19 +122,17 @@ function PreSelectedMultiSelect() {
   )
 }
 
-/* ── Grouped multi-select (users) ── */
-
 function GroupedMultiSelect() {
   const [selected, setSelected] = React.useState<string[]>(["alice"])
   const anchor = useComboboxAnchor()
   return (
     <Combobox multiple value={selected} onValueChange={setSelected}>
       <ComboboxChips ref={anchor}>
-        {(chip: any) => (
-          <ComboboxChip key={chip.value} value={chip.value}>
-            {chip.label}
+        {selected.map((value) => (
+          <ComboboxChip key={value} value={value}>
+            {allUsers.find(u => u.value === value)?.label || value}
           </ComboboxChip>
-        )}
+        ))}
         <ComboboxChipsInput placeholder="Add people..." />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
@@ -172,7 +167,6 @@ export const Playground: StoryObj = {
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Typeahead Combobox</h2>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-        {/* Empty */}
         <div>
           <div style={sectionLabel}>Empty</div>
           <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Type to search and select multiple values</div>
@@ -181,7 +175,6 @@ export const Playground: StoryObj = {
           </div>
         </div>
 
-        {/* With chips */}
         <div>
           <div style={sectionLabel}>With Selections</div>
           <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Selected items appear as removable chips</div>
@@ -190,7 +183,6 @@ export const Playground: StoryObj = {
           </div>
         </div>
 
-        {/* Grouped */}
         <div>
           <div style={sectionLabel}>Grouped Options</div>
           <div style={{ fontSize: 12, color: "#6F6F6F", marginBottom: 8 }}>Groups with separators, scrollable list</div>

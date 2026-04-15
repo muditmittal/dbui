@@ -247,8 +247,7 @@ function ComboboxChip({
       {children}
       {showRemove && (
         <ComboboxPrimitive.ChipRemove
-          render={<Button variant="ghost" size="icon-sm" />}
-          className="-ml-1 opacity-50 hover:opacity-100"
+          className="-ml-0.5 inline-flex items-center justify-center opacity-50 hover:opacity-100 [&_svg]:size-3"
           data-slot="combobox-chip-remove"
         >
           <XIcon className="pointer-events-none" />
