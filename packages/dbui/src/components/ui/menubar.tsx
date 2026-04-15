@@ -5,6 +5,8 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { Menubar as MenubarPrimitive } from "@base-ui/react/menubar"
 
 import { cn } from "../../lib/utils"
+import { Checkbox } from "./checkbox"
+import { Input } from "./input"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -120,18 +122,17 @@ function MenubarCheckboxItem({
       data-slot="menubar-checkbox-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-1.5 rounded-sm py-1 pr-1.5 pl-7 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-1.5 pr-1.5 text-[13px] outline-hidden select-none focus:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
       {...props}
     >
-      <span className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center [&_svg:not([class*='size-'])]:size-4">
-        <MenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon
-          />
-        </MenuPrimitive.CheckboxItemIndicator>
-      </span>
+      <Checkbox
+        checked={checked}
+        className="pointer-events-none"
+        tabIndex={-1}
+      />
       {children}
     </MenuPrimitive.CheckboxItem>
   )
@@ -156,15 +157,17 @@ function MenubarRadioItem({
       data-slot="menubar-radio-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-1.5 rounded-sm py-1 pr-1.5 pl-7 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-7 pr-1.5 text-[13px] outline-hidden select-none focus:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
-      <span className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center [&_svg:not([class*='size-'])]:size-4">
+      <span
+        className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center"
+        data-slot="menubar-radio-item-indicator"
+      >
         <MenuPrimitive.RadioItemIndicator>
-          <CheckIcon
-          />
+          <CheckIcon className="size-4" />
         </MenuPrimitive.RadioItemIndicator>
       </span>
       {children}
@@ -184,7 +187,7 @@ function MenubarLabel({
       data-slot="menubar-label"
       data-inset={inset}
       className={cn(
-        "px-1.5 py-1 text-[13px] font-semibold data-inset:pl-7",
+        "px-1.5 py-1 text-[12px] leading-[16px] text-muted-foreground data-inset:pl-7",
         className
       )}
       {...props}
@@ -260,6 +263,166 @@ function MenubarSubContent({
   )
 }
 
+/**
+ * MenubarItemIcon — leading icon inside a menu item.
+ * Maps to Figma .MenuLabel "Show Icon" + "Icon" instance swap.
+ *
+ * Usage: <MenubarItem><MenubarItemIcon><Pencil /></MenubarItemIcon>Edit</MenubarItem>
+ */
+function MenubarItemIcon({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="menubar-item-icon"
+      className={cn(
+        "pointer-events-none shrink-0 text-muted-foreground group-focus/menubar-item:text-foreground [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * MenubarItemDescription — secondary description text below label.
+ * Maps to Figma .MenuLabel Content="With Description".
+ */
+function MenubarItemDescription({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="menubar-item-description"
+      className={cn(
+        "block text-[12px] leading-[16px] text-muted-foreground font-normal group-focus/menubar-item:text-foreground/70",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * MenubarItemBadge — trailing count/badge.
+ * Maps to Figma .MenuTrailing Type="Count".
+ */
+function MenubarItemBadge({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="menubar-item-badge"
+      className={cn(
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-muted px-1.5 text-[12px] font-semibold text-muted-foreground group-focus/menubar-item:bg-accent-foreground/10 group-focus/menubar-item:text-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * MenubarSearch — search input inside menubar dropdown.
+ * Maps to Figma .MenuRow Type="Search".
+ */
+function MenubarSearch({
+  className,
+  ...props
+}: React.ComponentProps<typeof Input>) {
+  return (
+    <div className="p-1" data-slot="menubar-search">
+      <Input
+        type="text"
+        className={cn("w-full", className)}
+        {...props}
+      />
+    </div>
+  )
+}
+
+/**
+ * MenubarEmpty — empty state shown when no results match.
+ * Maps to Figma .MenuRow Type="Empty".
+ */
+function MenubarEmpty({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="menubar-empty"
+      className={cn(
+        "flex items-center justify-center px-2 py-4 text-[13px] text-muted-foreground",
+        className
+      )}
+      {...props}
+    >
+      {children ?? "No results found."}
+    </div>
+  )
+}
+
+/**
+ * MenubarLoading — loading spinner state.
+ * Maps to Figma .MenuRow Type="Loading".
+ */
+function MenubarLoading({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="menubar-loading"
+      className={cn(
+        "flex items-center justify-center gap-2 px-2 py-4 text-[13px] text-muted-foreground",
+        className
+      )}
+      {...props}
+    >
+      <svg
+        className="size-4 animate-spin"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8 1.5A6.5 6.5 0 1 0 14.5 8"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      </svg>
+      {children ?? "Loading..."}
+    </div>
+  )
+}
+
+/**
+ * MenubarFooter — action buttons at bottom of menubar dropdown.
+ * Maps to Figma .MenuRow Type="Footer" (Cancel + Apply pattern).
+ */
+function MenubarFooter({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="menubar-footer"
+      className={cn(
+        "flex items-center justify-end gap-2 border-t border-border p-2",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 export {
   Menubar,
   MenubarPortal,
@@ -277,4 +440,11 @@ export {
   MenubarSub,
   MenubarSubTrigger,
   MenubarSubContent,
+  MenubarItemIcon,
+  MenubarItemDescription,
+  MenubarItemBadge,
+  MenubarSearch,
+  MenubarEmpty,
+  MenubarLoading,
+  MenubarFooter,
 }

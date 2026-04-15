@@ -4,6 +4,8 @@ import * as React from "react"
 import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu"
 
 import { cn } from "../../lib/utils"
+import { Checkbox } from "./checkbox"
+import { Input } from "./input"
 import { ChevronRightIcon, CheckIcon } from "lucide-react"
 
 function ContextMenu({ ...props }: ContextMenuPrimitive.Root.Props) {
@@ -166,18 +168,17 @@ function ContextMenuCheckboxItem({
       data-slot="context-menu-checkbox-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-1.5 rounded-sm py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-1.5 pr-1.5 text-[13px] outline-hidden select-none focus:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
       {...props}
     >
-      <span className="pointer-events-none absolute right-2">
-        <ContextMenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon
-          />
-        </ContextMenuPrimitive.CheckboxItemIndicator>
-      </span>
+      <Checkbox
+        checked={checked}
+        className="pointer-events-none"
+        tabIndex={-1}
+      />
       {children}
     </ContextMenuPrimitive.CheckboxItem>
   )
@@ -207,15 +208,17 @@ function ContextMenuRadioItem({
       data-slot="context-menu-radio-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-1.5 rounded-sm py-1 pr-8 pl-1.5 text-[13px] outline-hidden select-none focus:bg-hover data-inset:pl-7 data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-7 pr-1.5 text-[13px] outline-hidden select-none focus:bg-hover data-disabled:pointer-events-none data-disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
-      <span className="pointer-events-none absolute right-2">
+      <span
+        className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center"
+        data-slot="context-menu-radio-item-indicator"
+      >
         <ContextMenuPrimitive.RadioItemIndicator>
-          <CheckIcon
-          />
+          <CheckIcon className="size-4" />
         </ContextMenuPrimitive.RadioItemIndicator>
       </span>
       {children}
@@ -252,6 +255,162 @@ function ContextMenuShortcut({
   )
 }
 
+/**
+ * ContextMenuItemIcon — leading icon inside a menu item.
+ * Maps to Figma .MenuLabel "Show Icon" + "Icon" instance swap.
+ *
+ * Usage: <ContextMenuItem><ContextMenuItemIcon><Pencil /></ContextMenuItemIcon>Edit</ContextMenuItem>
+ */
+function ContextMenuItemIcon({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="context-menu-item-icon"
+      className={cn(
+        "pointer-events-none shrink-0 text-muted-foreground group-focus/context-menu-item:text-foreground [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * ContextMenuItemDescription — secondary description text below label.
+ * Maps to Figma .MenuLabel Content="With Description".
+ */
+function ContextMenuItemDescription({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="context-menu-item-description"
+      className={cn(
+        "block text-[12px] leading-[16px] text-muted-foreground font-normal group-focus/context-menu-item:text-foreground/70",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * ContextMenuItemBadge — trailing count/badge.
+ * Maps to Figma .MenuTrailing Type="Count".
+ */
+function ContextMenuItemBadge({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
+  return (
+    <span
+      data-slot="context-menu-item-badge"
+      className={cn(
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-muted px-1.5 text-[12px] font-semibold text-muted-foreground group-focus/context-menu-item:bg-accent-foreground/10 group-focus/context-menu-item:text-foreground",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * ContextMenuSearch — search input inside context menu.
+ * Maps to Figma .MenuRow Type="Search".
+ */
+function ContextMenuSearch({
+  className,
+  ...props
+}: React.ComponentProps<typeof Input>) {
+  return (
+    <div className="p-1" data-slot="context-menu-search">
+      <Input className={cn(className)} {...props} />
+    </div>
+  )
+}
+
+/**
+ * ContextMenuEmpty — empty state shown when no results match.
+ * Maps to Figma .MenuRow Type="Empty".
+ */
+function ContextMenuEmpty({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="context-menu-empty"
+      className={cn(
+        "flex items-center justify-center px-2 py-4 text-[13px] text-muted-foreground",
+        className
+      )}
+      {...props}
+    >
+      {children ?? "No results found."}
+    </div>
+  )
+}
+
+/**
+ * ContextMenuLoading — loading spinner state.
+ * Maps to Figma .MenuRow Type="Loading".
+ */
+function ContextMenuLoading({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="context-menu-loading"
+      className={cn(
+        "flex items-center justify-center gap-2 px-2 py-4 text-[13px] text-muted-foreground",
+        className
+      )}
+      {...props}
+    >
+      <svg
+        className="size-4 animate-spin"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8 1.5A6.5 6.5 0 1 0 14.5 8"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      </svg>
+      {children ?? "Loading..."}
+    </div>
+  )
+}
+
+/**
+ * ContextMenuFooter — action buttons at bottom of context menu.
+ * Maps to Figma .MenuRow Type="Footer" (Cancel + Apply pattern).
+ */
+function ContextMenuFooter({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="context-menu-footer"
+      className={cn(
+        "flex items-center justify-end gap-2 border-t border-border p-2",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 export {
   ContextMenu,
   ContextMenuTrigger,
@@ -268,4 +427,11 @@ export {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuRadioGroup,
+  ContextMenuItemIcon,
+  ContextMenuItemDescription,
+  ContextMenuItemBadge,
+  ContextMenuSearch,
+  ContextMenuEmpty,
+  ContextMenuLoading,
+  ContextMenuFooter,
 }
