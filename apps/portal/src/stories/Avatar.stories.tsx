@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Avatar, AvatarImage, AvatarFallback, AvatarGroup, AvatarGroupCount } from "dbui/components/ui/avatar"
+import { User } from "@/components/icons/User"
 import { ComponentMeta } from "./components/ComponentMeta"
 import manifest from "../../../../specs/components/avatar.manifest.json"
 
@@ -40,13 +41,13 @@ export const Playground: StoryObj = {
           <tr>
             <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Initials fallback</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Avatar size="default"><AvatarFallback>MM</AvatarFallback></Avatar>
+              <Avatar><AvatarFallback>MM</AvatarFallback></Avatar>
             </td>
           </tr>
           <tr>
             <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", ...rowLabel }}>Icon fallback</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Avatar size="default" type="icon"><AvatarFallback>?</AvatarFallback></Avatar>
+              <Avatar><AvatarFallback><User className="size-4" /></AvatarFallback></Avatar>
             </td>
           </tr>
           <tr>
