@@ -100,6 +100,7 @@ import { Circle } from "../components/icons/Circle"
 import { CircleOff } from "../components/icons/CircleOff"
 import { CircleOffLarge } from "../components/icons/CircleOffLarge"
 import { CircleOutline } from "../components/icons/CircleOutline"
+import { CircleSmall } from "../components/icons/CircleSmall"
 import { CircleOutlineLarge } from "../components/icons/CircleOutlineLarge"
 import { Clipboard } from "../components/icons/Clipboard"
 import { Clock } from "../components/icons/Clock"
@@ -136,6 +137,7 @@ import { Danger } from "../components/icons/Danger"
 import { DangerFill } from "../components/icons/DangerFill"
 import { DangerSmall } from "../components/icons/DangerSmall"
 import { Dash } from "../components/icons/Dash"
+import { Databricks } from "../components/icons/Databricks"
 import { Dashboard } from "../components/icons/Dashboard"
 import { DashboardCode } from "../components/icons/DashboardCode"
 import { Data } from "../components/icons/Data"
@@ -149,6 +151,7 @@ import { Dollar } from "../components/icons/Dollar"
 import { DomainCirclesThree } from "../components/icons/DomainCirclesThree"
 import { Domains } from "../components/icons/Domains"
 import { DotsCircle } from "../components/icons/DotsCircle"
+import { DotsCircleSmall } from "../components/icons/DotsCircleSmall"
 import { Download } from "../components/icons/Download"
 import { Drag } from "../components/icons/Drag"
 import { ERD } from "../components/icons/ERD"
@@ -331,6 +334,7 @@ import { Rocket } from "../components/icons/Rocket"
 import { Rows } from "../components/icons/Rows"
 import { Run } from "../components/icons/Run"
 import { Running } from "../components/icons/Running"
+import { RunningSmall } from "../components/icons/RunningSmall"
 import { Save } from "../components/icons/Save"
 import { SaveClock } from "../components/icons/SaveClock"
 import { Schema } from "../components/icons/Schema"
@@ -350,6 +354,7 @@ import { SidebarCollapse } from "../components/icons/SidebarCollapse"
 import { SidebarExpand } from "../components/icons/SidebarExpand"
 import { SidebarOpen } from "../components/icons/SidebarOpen"
 import { SidebarSync } from "../components/icons/SidebarSync"
+import { Slash } from "../components/icons/Slash"
 import { SlashSquare } from "../components/icons/SlashSquare"
 import { Sliders } from "../components/icons/Sliders"
 import { SortAscending } from "../components/icons/SortAscending"
@@ -855,6 +860,10 @@ figma.connect(CircleOutlineLarge, "https://www.figma.com/design/OftbSQf85jOPln9R
   example: () => <CircleOutlineLarge />,
 })
 
+figma.connect(CircleSmall, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3175-4176", {
+  example: () => <CircleSmall />,
+})
+
 figma.connect(Clipboard, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=35-4897", {
   example: () => <Clipboard />,
 })
@@ -995,6 +1004,10 @@ figma.connect(Dash, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id
   example: () => <Dash />,
 })
 
+figma.connect(Databricks, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3179-15557", {
+  example: () => <Databricks />,
+})
+
 figma.connect(Dashboard, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=35-4907", {
   example: () => <Dashboard />,
 })
@@ -1045,6 +1058,10 @@ figma.connect(Domains, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node
 
 figma.connect(DotsCircle, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=35-5000", {
   example: () => <DotsCircle />,
+})
+
+figma.connect(DotsCircleSmall, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3175-4182", {
+  example: () => <DotsCircleSmall />,
 })
 
 figma.connect(Download, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=35-4909", {
@@ -1775,6 +1792,10 @@ figma.connect(Running, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node
   example: () => <Running />,
 })
 
+figma.connect(RunningSmall, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3174-4107", {
+  example: () => <RunningSmall />,
+})
+
 figma.connect(Save, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=35-5092", {
   example: () => <Save />,
 })
@@ -1849,6 +1870,10 @@ figma.connect(SidebarOpen, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?
 
 figma.connect(SidebarSync, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=361-42", {
   example: () => <SidebarSync />,
+})
+
+figma.connect(Slash, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3388-4489", {
+  example: () => <Slash />,
 })
 
 figma.connect(SlashSquare, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=35-4755", {
