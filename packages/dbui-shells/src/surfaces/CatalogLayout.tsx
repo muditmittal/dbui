@@ -118,66 +118,81 @@ function CatalogTree({
   onUnfocus?: () => void
   filter?: React.ReactNode
 }) {
-  const focusedNode = focusPath.length > 0 ? focusPath[focusPath.length - 1] : null
+  const currentRoot = focusPath.length > 0 ? focusPath[focusPath.length - 1] : null
+  const defaultIcon = <Data />
 
   return (
     <aside className="flex w-[280px] shrink-0 flex-col border-r border-border">
-      {/* Header — static or root switcher */}
-      <div className="flex items-center justify-between px-2 py-2">
-        {focusedNode ? (
-          <div className="flex items-center gap-1 min-w-0 flex-1">
-            {/* Back button */}
-            <button
-              onClick={onUnfocus}
-              className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground"
-              aria-label="Go back"
-            >
-              <ChevronLeft className="size-4" />
-            </button>
-            {/* Root switcher dropdown */}
-            <Popover.Root>
-              <Popover.Trigger
-                render={
-                  <button className="flex items-center gap-1 min-w-0 rounded-sm bg-muted px-2 py-1 text-[13px] text-foreground hover:bg-hover">
-                    <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{focusedNode.icon}</span>
-                    <span className="truncate">{focusedNode.label}</span>
-                  </button>
-                }
-              />
-              <Popover.Portal>
-                <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                  <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
-                    {/* Breadcrumb path */}
+      {/* Header — h-10, px-2, gap-2 — always shows root switcher chip */}
+      <div className="flex h-10 items-center gap-2 px-2">
+        {/* Back button — only when focused deeper than root */}
+        {currentRoot && (
+          <button
+            onClick={onUnfocus}
+            className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground"
+            aria-label="Go back"
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+        )}
+
+        {/* Root switcher chip — Figma: bg-muted, rounded-sm, py-1 px-1 pr-2, gap-1 */}
+        <Popover.Root>
+          <Popover.Trigger
+            render={
+              <button className="flex items-center gap-1 min-w-0 rounded-sm bg-muted py-1 pl-1 pr-2 text-[13px] text-foreground hover:bg-primary hover:text-primary-foreground [&:hover_span]:text-primary-foreground transition-colors">
+                <span className="flex shrink-0 items-center gap-0.5 text-muted-foreground [&_svg]:size-4">
+                  <span className="text-[11px] font-mono text-muted-foreground">./</span>
+                  {currentRoot?.icon ?? defaultIcon}
+                </span>
+                <span className="truncate max-w-[140px]">{currentRoot?.label ?? "Catalog"}</span>
+              </button>
+            }
+          />
+          <Popover.Portal>
+            <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
+              <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
+                {focusPath.length > 0 ? (
+                  <>
                     {focusPath.map((entry, i) => (
                       <button
                         key={entry.id}
                         className={`flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] hover:bg-hover ${
-                          i === focusPath.length - 1 ? "bg-active text-foreground" : "text-foreground"
-                        }`}
+                          i === focusPath.length - 1 ? "bg-active" : ""
+                        } text-foreground`}
                         onClick={() => {
-                          if (i === 0 && onUnfocus) onUnfocus()
-                          else if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
+                          if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
                         }}
                       >
                         <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{entry.icon}</span>
                         {entry.label}
                       </button>
                     ))}
-                  </Popover.Popup>
-                </Popover.Positioner>
-              </Popover.Portal>
-            </Popover.Root>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2 px-2">
-            <span className="text-[13px] font-semibold text-foreground">Catalog</span>
-            <span className="inline-block size-2 rounded-full bg-success" />
-          </div>
-        )}
-        <div className="flex items-center gap-1 shrink-0">
-          <Button variant="ghost" size="icon-sm" aria-label="Add"><Plus /></Button>
-          <Button variant="ghost" size="icon-sm" aria-label="More"><Overflow /></Button>
-        </div>
+                    <div className="my-1 h-px bg-border" />
+                    <button
+                      className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
+                      onClick={onUnfocus}
+                    >
+                      Show all catalogs
+                    </button>
+                  </>
+                ) : (
+                  <div className="py-2 px-3 text-[13px] text-muted-foreground">
+                    Focus on a node to see the path here
+                  </div>
+                )}
+              </Popover.Popup>
+            </Popover.Positioner>
+          </Popover.Portal>
+        </Popover.Root>
+
+        {/* Spacer */}
+        <span className="flex-1" />
+
+        {/* Header actions — status dot + add + overflow, 24×24 icon buttons */}
+        <span className="inline-block size-2 shrink-0 rounded-full bg-success" />
+        <Button variant="ghost" size="icon-sm" aria-label="Add"><Plus /></Button>
+        <Button variant="ghost" size="icon-sm" aria-label="More"><Overflow /></Button>
       </div>
 
       {/* Filter slot */}
