@@ -1,5 +1,5 @@
 {
-  "name": "@muditmittal/dbui",
+  "name": "dbui",
   "version": "0.1.0",
   "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
   "license": "MIT",
