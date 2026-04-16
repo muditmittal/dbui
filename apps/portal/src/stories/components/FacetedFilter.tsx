@@ -189,34 +189,66 @@ export function FacetedFilter({
         </Popover.Root>
       </div>
 
-      {/* Filter chips row — one chip per facet, grouped */}
+      {/* Filter chips row — one chip per facet, click text to edit */}
       {Object.keys(selected).length > 0 && (
         <div className="flex flex-wrap items-center gap-1 pt-2">
           {Object.entries(selected).map(([facet, values]) => {
             const arr = Array.from(values)
             const first = arr[0]
             const extra = arr.length - 1
+            const facetValues = facets[facet]?.values || []
             return (
-              <span
-                key={facet}
-                className="inline-flex max-w-[200px] items-center gap-1 rounded-sm bg-active px-1.5 py-0.5 text-[12px]"
-              >
-                <span className="text-muted-foreground shrink-0">{facet}:</span>
-                <span className="truncate text-foreground">{first}</span>
-                {extra > 0 && <span className="shrink-0 text-muted-foreground">+{extra}</span>}
-                <button
-                  className="ml-0.5 shrink-0 rounded-sm p-0.5 text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press [&_svg]:size-3"
-                  onClick={() => {
-                    setSelected((prev) => {
-                      const next = { ...prev }
-                      delete next[facet]
-                      return next
-                    })
-                  }}
-                >
-                  <Close />
-                </button>
-              </span>
+              <Popover.Root key={facet}>
+                <span className="inline-flex max-w-[200px] items-center gap-1 rounded-sm bg-active px-1.5 py-0.5 text-[12px]">
+                  <Popover.Trigger
+                    render={
+                      <button className="inline-flex items-center gap-1 min-w-0 hover:underline cursor-pointer">
+                        <span className="text-muted-foreground shrink-0">{facet}:</span>
+                        <span className="truncate text-foreground">{first}</span>
+                        {extra > 0 && <span className="shrink-0 text-muted-foreground">+{extra}</span>}
+                      </button>
+                    }
+                  />
+                  <button
+                    className="ml-0.5 shrink-0 rounded-sm p-0.5 text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press [&_svg]:size-3"
+                    onClick={() => {
+                      setSelected((prev) => {
+                        const next = { ...prev }
+                        delete next[facet]
+                        return next
+                      })
+                    }}
+                  >
+                    <Close />
+                  </button>
+                </span>
+                <Popover.Portal>
+                  <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
+                    <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden">
+                      <div className="p-1">
+                        <div className="px-1.5 py-1 text-[12px] text-muted-foreground">{facet}</div>
+                      </div>
+                      <div className="max-h-[220px] overflow-y-auto p-1 pt-0" role="group">
+                        {facetValues.map((value) => {
+                          const checked = isChecked(facet, value)
+                          return (
+                            <label
+                              key={value}
+                              className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
+                            >
+                              <Checkbox
+                                checked={checked}
+                                onCheckedChange={() => toggleValue(facet, value)}
+                              />
+                              {value}
+                            </label>
+                          )
+                        })}
+                      </div>
+                    </Popover.Popup>
+                  </Popover.Positioner>
+                </Popover.Portal>
+              </Popover.Root>
             )
           })}
           <button className="text-[12px] text-primary hover:underline whitespace-nowrap" onClick={resetAll}>Reset</button>
