@@ -349,9 +349,9 @@ type TreeNode = {
   icon?: React.ReactNode
   /** Alternate icon when expanded (File Tree: FolderOpen) */
   iconExpanded?: React.ReactNode
-  /** Whether this node can be selected. Default: true for nodes with no `leaf` flag. */
+  /** Whether this node can be selected. Default: true. Consumer decides. */
   selectable?: boolean
-  /** Whether this is a leaf node (no expand chevron, not selectable by default). E.g., columns. */
+  /** Whether this is a leaf node (no expand chevron). E.g., columns, files. */
   leaf?: boolean
   /** Child nodes */
   children?: TreeNode[]
@@ -382,8 +382,8 @@ function TreeNodeRenderer({
   depth: number
 }) {
   const hasChildren = node.children && node.children.length > 0
-  const isLeaf = node.leaf ?? !hasChildren
-  const isSelectable = node.selectable ?? !isLeaf
+  const isLeaf = node.leaf ?? false
+  const isSelectable = node.selectable ?? true
   const isExpandable = !isLeaf
 
   return (

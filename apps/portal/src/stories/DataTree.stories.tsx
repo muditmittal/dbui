@@ -27,10 +27,11 @@ const meta: Meta = {
 export default meta
 
 // ─── Data Tree — structured data ───
-// Node behavior is auto-computed:
-//   - Nodes with children → expandable + selectable
-//   - Leaf nodes (leaf: true) → not expandable, not selectable (columns)
-//   - Nodes with no children and no leaf flag → expandable (shows "No items")
+// Node behavior:
+//   - leaf: true → no chevron (not expandable). Selectable by default — set selectable: false to override.
+//   - children: [] → expandable (shows "No items" when expanded). Selectable.
+//   - children: [...] → expandable. Selectable.
+//   - selectable: false → grey hover, no selection highlight. Consumer decides.
 
 const dataSections: TreeSectionData[] = [
   {
@@ -45,25 +46,25 @@ const dataSections: TreeSectionData[] = [
               {
                 id: "cancelled_orders", label: "cancelled_orders", icon: <Table />,
                 children: [
-                  { id: "co_order_id", label: "order_id", icon: <Hash />, leaf: true },
-                  { id: "co_customer_id", label: "customer_id", icon: <Hash />, leaf: true },
-                  { id: "co_amount", label: "amount_usd", icon: <Numbers />, leaf: true },
+                  { id: "co_order_id", label: "order_id", icon: <Hash />, leaf: true, selectable: false },
+                  { id: "co_customer_id", label: "customer_id", icon: <Hash />, leaf: true, selectable: false },
+                  { id: "co_amount", label: "amount_usd", icon: <Numbers />, leaf: true, selectable: false },
                 ],
               },
               {
                 id: "customer_order_details", label: "customer_order_details", icon: <Table />, defaultExpanded: true,
                 children: [
-                  { id: "cod_order_id", label: "order_id", icon: <Hash />, leaf: true },
-                  { id: "cod_customer_id", label: "customer_id", icon: <Hash />, leaf: true },
-                  { id: "cod_subtotal", label: "order_subtotal_usd", icon: <Numbers />, leaf: true },
-                  { id: "cod_tax", label: "order_tax_usd", icon: <Numbers />, leaf: true },
-                  { id: "cod_discount", label: "order_discount_usd", icon: <Decimal />, leaf: true },
-                  { id: "cod_received", label: "order_received_date", icon: <CalendarClock />, leaf: true },
-                  { id: "cod_shipped", label: "order_shipped_date", icon: <CalendarClock />, leaf: true },
-                  { id: "cod_shipping", label: "shipping_address", icon: <Letters />, leaf: true },
-                  { id: "cod_billing", label: "billing_address", icon: <Letters />, leaf: true },
-                  { id: "cod_payment", label: "payment_method", icon: <Letters />, leaf: true },
-                  { id: "cod_gift", label: "is_gift", icon: <Binary />, leaf: true },
+                  { id: "cod_order_id", label: "order_id", icon: <Hash />, leaf: true, selectable: false },
+                  { id: "cod_customer_id", label: "customer_id", icon: <Hash />, leaf: true, selectable: false },
+                  { id: "cod_subtotal", label: "order_subtotal_usd", icon: <Numbers />, leaf: true, selectable: false },
+                  { id: "cod_tax", label: "order_tax_usd", icon: <Numbers />, leaf: true, selectable: false },
+                  { id: "cod_discount", label: "order_discount_usd", icon: <Decimal />, leaf: true, selectable: false },
+                  { id: "cod_received", label: "order_received_date", icon: <CalendarClock />, leaf: true, selectable: false },
+                  { id: "cod_shipped", label: "order_shipped_date", icon: <CalendarClock />, leaf: true, selectable: false },
+                  { id: "cod_shipping", label: "shipping_address", icon: <Letters />, leaf: true, selectable: false },
+                  { id: "cod_billing", label: "billing_address", icon: <Letters />, leaf: true, selectable: false },
+                  { id: "cod_payment", label: "payment_method", icon: <Letters />, leaf: true, selectable: false },
+                  { id: "cod_gift", label: "is_gift", icon: <Binary />, leaf: true, selectable: false },
                 ],
               },
               { id: "customer_feedback", label: "customer_feedback", icon: <Table />, children: [] },
