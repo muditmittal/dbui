@@ -11,7 +11,7 @@ import { Copy } from "@/components/icons/Copy"
 import { Overflow } from "@/components/icons/Overflow"
 
 const meta: Meta = {
-  title: "Welcome",
+  title: "Home",
   parameters: { layout: "centered" },
 }
 
@@ -134,7 +134,7 @@ function LivePreview() {
   )
 }
 
-export const Home: StoryObj = {
+export const Default: StoryObj = {
   render: () => (
     <div style={{
       fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",

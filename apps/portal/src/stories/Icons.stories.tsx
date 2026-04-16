@@ -4,7 +4,7 @@ import { iconClassifications } from "../../../../packages/dbui/src/components/ic
 import { iconDescriptions } from "../../../../packages/dbui/src/components/icons/descriptions"
 
 const meta: Meta = {
-  title: "Foundations/Icons",
+  title: "Icons",
   parameters: { layout: "padded" },
 }
 
@@ -158,6 +158,6 @@ function IconGrid() {
   )
 }
 
-export const Browser: StoryObj = {
+export const Default: StoryObj = {
   render: () => <IconGrid />,
 }
