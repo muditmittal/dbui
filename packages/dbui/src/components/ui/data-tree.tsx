@@ -192,7 +192,7 @@ function TreeItem({
               className="absolute border-l border-border pointer-events-none z-10"
               style={{
                 left: `${12 + depth * 8}px`,
-                top: -14,
+                top: -10,
                 bottom: 14,
               }}
             />
