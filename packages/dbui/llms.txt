@@ -13,6 +13,7 @@
 3. ALWAYS use semantic tokens (bg-primary, text-foreground, border-border). NEVER hardcode hex colors.
 4. ALWAYS import from `dbui/components/ui/{component}`. NEVER import from @radix-ui, @base-ui, or shadcn directly.
 5. If a DBUI component doesn't exist for what you need, compose from existing DBUI primitives. If that's not possible, flag it — don't build a one-off.
+6. When populating Tree components with entity icons, ALWAYS read `dbui/components/icons/entity-icons.ts` first. It maps every Databricks entity type (catalog, schema, table, view, volume, notebook, folder, etc.) to its correct icon. NEVER guess icon names.
 
 ## TRIGGER PATTERN (Base UI)
 
