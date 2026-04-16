@@ -44,12 +44,13 @@ function CatalogTree({
         </div>
       </div>
 
-      {/* Search */}
-      <div className="px-3 pb-2">
-        <div className="relative">
+      {/* Search + Filter */}
+      <div className="flex items-center gap-1 px-3 pb-2">
+        <div className="relative flex-1">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <Input placeholder="Search" className="pl-8 h-8" />
         </div>
+        <Button variant="ghost" size="icon-sm" aria-label="Filter"><Gear /></Button>
       </div>
 
       {/* Tree — uses DBUI DataTreeView */}
