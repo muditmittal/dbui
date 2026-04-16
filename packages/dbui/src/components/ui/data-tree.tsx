@@ -180,17 +180,21 @@ function TreeItem({
         )}
       </button>
 
-      {/* Children with trail line — show empty state if no children */}
+      {/* Children with trail line — line starts from parent chevron, overlaps above */}
       {isExpanded && (
         <div
           data-slot="tree-item-children"
-          className={cn(showTrailLine && "relative")}
+          className="relative"
         >
-          {/* Vertical trail line */}
+          {/* Vertical trail line — starts from parent chevron center, runs behind child rows */}
           {showTrailLine && (
             <div
-              className="absolute top-0 bottom-2 border-l border-border"
-              style={{ left: `${12 + depth * 8}px` }}
+              className="absolute border-l border-border pointer-events-none"
+              style={{
+                left: `${8 + (depth + 1) * 8}px`,
+                top: -14,
+                bottom: 14,
+              }}
             />
           )}
           {children || (
