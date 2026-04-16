@@ -17,16 +17,17 @@ import { ChevronDown } from "../icons/ChevronDown"
 // ─── Context for tracking last-expanded node ───
 
 type TreeContextValue = {
-  lastExpandedId: string | null
-  pushExpanded: (id: string) => void
-  popExpanded: (id: string) => void
+  highlightedId: string | null
+  setHighlighted: (id: string | null) => void
 }
 
 const TreeContext = React.createContext<TreeContextValue>({
-  lastExpandedId: null,
-  pushExpanded: () => {},
-  popExpanded: () => {},
+  highlightedId: null,
+  setHighlighted: () => {},
 })
+
+// Parent ID context — each TreeItem tells its children "I am your parent"
+const TreeParentContext = React.createContext<string | null>(null)
 
 // ─── Tree Root ───
 
@@ -34,22 +35,10 @@ function Tree({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const stackRef = React.useRef<string[]>([])
-  const [lastExpandedId, setLastExpandedId] = React.useState<string | null>(null)
-
-  const pushExpanded = React.useCallback((id: string) => {
-    stackRef.current = stackRef.current.filter(x => x !== id)
-    stackRef.current.push(id)
-    setLastExpandedId(id)
-  }, [])
-
-  const popExpanded = React.useCallback((id: string) => {
-    stackRef.current = stackRef.current.filter(x => x !== id)
-    setLastExpandedId(stackRef.current[stackRef.current.length - 1] ?? null)
-  }, [])
+  const [highlightedId, setHighlighted] = React.useState<string | null>(null)
 
   return (
-    <TreeContext.Provider value={{ lastExpandedId, pushExpanded, popExpanded }}>
+    <TreeContext.Provider value={{ highlightedId, setHighlighted }}>
       <div
         data-slot="tree"
         role="tree"
@@ -135,17 +124,17 @@ function TreeItem({
   const hasChildren = expandable || React.Children.count(children) > 0
   const isExpandable = hasChildren
 
-  // Stable ID for tracking last-expanded
   const idRef = React.useRef(`tree-item-${++treeItemCounter}`)
-  const { lastExpandedId, pushExpanded, popExpanded } = React.useContext(TreeContext)
-  const isLastExpanded = lastExpandedId === idRef.current
+  const { highlightedId, setHighlighted } = React.useContext(TreeContext)
+  const parentId = React.useContext(TreeParentContext)
+  const isHighlighted = highlightedId === idRef.current
 
   const handleClick = () => {
     if (isExpandable) {
       const next = !isExpanded
       setInternalExpanded(next)
-      if (next) pushExpanded(idRef.current)
-      else popExpanded(idRef.current)
+      // Expand: highlight this node. Collapse: highlight parent.
+      setHighlighted(next ? idRef.current : parentId)
       onToggle?.(next)
     }
     onSelect?.()
@@ -215,33 +204,35 @@ function TreeItem({
 
       {/* Children with trail line */}
       {isExpanded && (
-        <div
-          data-slot="tree-item-children"
-          className="relative overflow-visible"
-        >
-          {/* Trail line — darker for last-expanded, lighter for others */}
-          {showTrailLine && (
-            <div
-              className={cn(
-                "absolute border-l pointer-events-none z-10 transition-colors",
-                isLastExpanded ? "border-foreground" : "border-border"
-              )}
-              style={{
-                left: `${12 + depth * 8}px`,
-                top: -10,
-                bottom: 14,
-              }}
-            />
-          )}
-          {children || (
-            <div
-              className="flex h-7 items-center text-[12px] text-muted-foreground italic"
-              style={{ paddingLeft: `${24 + (depth + 1) * 8}px` }}
-            >
-              No items
-            </div>
-          )}
-        </div>
+        <TreeParentContext.Provider value={idRef.current}>
+          <div
+            data-slot="tree-item-children"
+            className="relative overflow-visible"
+          >
+            {/* Trail line — dark for highlighted node, light for others */}
+            {showTrailLine && (
+              <div
+                className={cn(
+                  "absolute border-l pointer-events-none z-10 transition-colors",
+                  isHighlighted ? "border-foreground" : "border-border"
+                )}
+                style={{
+                  left: `${12 + depth * 8}px`,
+                  top: -10,
+                  bottom: 14,
+                }}
+              />
+            )}
+            {children || (
+              <div
+                className="flex h-7 items-center text-[12px] text-muted-foreground italic"
+                style={{ paddingLeft: `${24 + (depth + 1) * 8}px` }}
+              >
+                No items
+              </div>
+            )}
+          </div>
+        </TreeParentContext.Provider>
       )}
     </>
   )
