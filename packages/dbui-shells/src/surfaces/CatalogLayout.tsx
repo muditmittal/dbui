@@ -30,6 +30,9 @@ import { ArrowsConnect } from "dbui/components/icons/ArrowsConnect"
 import { Share } from "dbui/components/icons/Share"
 import { Globe } from "dbui/components/icons/Globe"
 import { Check } from "dbui/components/icons/Check"
+import { UserGroup } from "dbui/components/icons/UserGroup"
+import { Toggle } from "dbui/components/ui/toggle"
+import { ButtonChevron } from "dbui/components/ui/button"
 
 // ─── Types ───
 
@@ -398,19 +401,22 @@ function CatalogTree({
 function CatalogLanding({
   title = "Catalog",
   items = [],
-  tabs = ["Suggested", "Recents", "Favorites"],
+  filters = ["Suggested", "Recents", "Favorites"],
   actions,
 }: {
   title?: string
   items?: CatalogItem[]
-  tabs?: string[]
+  filters?: string[]
   actions?: React.ReactNode
 }) {
+  const [activeFilter, setActiveFilter] = useState(filters[0])
+
   return (
     <div className="flex-1 min-w-0 overflow-y-auto">
+      {/* Title row */}
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-2">
-          <Data className="size-5 text-muted-foreground" />
+          <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-5"><Data /></span>
           <h1 className="text-[22px] font-semibold leading-[28px] text-foreground" style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif" }}>
             {title}
           </h1>
@@ -419,23 +425,31 @@ function CatalogLanding({
           {actions ?? (
             <>
               <Button variant="outline">Govern</Button>
-              <Button variant="outline">Connect</Button>
-              <Button variant="outline">Share</Button>
-              <Button>Create</Button>
+              <Button variant="outline">Connect<ButtonChevron /></Button>
+              <Button variant="outline"><span className="flex items-center text-muted-foreground [&_svg]:size-4"><UserGroup /></span>Share<ButtonChevron /></Button>
+              <Button>Create<ButtonChevron /></Button>
             </>
           )}
         </div>
       </div>
-      <div className="px-6">
-        <Tabs defaultValue={tabs[0]?.toLowerCase()}>
-          <TabsList>
-            {tabs.map((tab) => (
-              <TabsTrigger key={tab} value={tab.toLowerCase()}>{tab}</TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+
+      {/* Filter toggles */}
+      <div className="flex items-center gap-1 px-6 pb-4">
+        {filters.map((filter) => (
+          <Toggle
+            key={filter}
+            variant="pill"
+            size="sm"
+            pressed={activeFilter === filter}
+            onPressedChange={() => setActiveFilter(filter)}
+          >
+            {filter}
+          </Toggle>
+        ))}
       </div>
-      <div className="px-6 pt-2">
+
+      {/* Results table */}
+      <div className="px-6">
         <Table>
           <TableHeader>
             <TableRow>
@@ -448,13 +462,15 @@ function CatalogLanding({
             {items.map((item, i) => (
               <TableRow key={i} className="cursor-pointer">
                 <TableCell>
-                  <TableCellTitle>
-                    <TableCellIcon>{item.icon ?? <Data />}</TableCellIcon>
-                    <TableCellTitleContent>
-                      <span className="font-semibold text-foreground">{item.name}</span>
-                      {item.subtitle && <TableCellMeta>{item.subtitle}</TableCellMeta>}
-                    </TableCellTitleContent>
-                  </TableCellTitle>
+                  <div className="flex items-center gap-2">
+                    <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+                      {item.icon ?? <Data />}
+                    </span>
+                    <div className="flex flex-col">
+                      <span className="text-[13px] text-foreground">{item.name}</span>
+                      {item.subtitle && <span className="text-[12px] leading-[16px] text-muted-foreground">{item.subtitle}</span>}
+                    </div>
+                  </div>
                 </TableCell>
                 <TableCell className="text-muted-foreground">{item.reason}</TableCell>
                 <TableCell className="text-muted-foreground">{item.type}</TableCell>
