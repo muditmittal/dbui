@@ -32,55 +32,45 @@ function DataTreeExample() {
     <div className="w-[260px]">
       <Tree>
         <TreeSection label="My organization">
-          {/* Catalog → Schema → Schema → Table → Columns */}
-          <TreeItem icon={<Catalog />} label="my_catalog" defaultExpanded depth={0} onSelect={() => setSelected("my_catalog")} selected={selected === "my_catalog"}>
-            <TreeItem icon={<Database />} label="main" defaultExpanded depth={1} onSelect={() => setSelected("main")} selected={selected === "main"}>
-              <TreeItem icon={<Database />} label="customer_purchase_orders" defaultExpanded depth={2} onSelect={() => setSelected("customer_purchase_orders")} selected={selected === "customer_purchase_orders"}>
-                <TreeItem icon={<Table />} label="cancelled_orders" depth={3} onSelect={() => setSelected("cancelled_orders")} selected={selected === "cancelled_orders"}>
-                  {/* Columns shown when table is expanded */}
-                  <TreeItem icon={<Hash />} label="order_id" depth={4} />
-                  <TreeItem icon={<Hash />} label="customer_id" depth={4} />
-                  <TreeItem icon={<Numbers />} label="amount_usd" depth={4} />
-                </TreeItem>
-                <TreeItem icon={<Table />} label="customer_order_details" defaultExpanded depth={3} onSelect={() => setSelected("customer_order_details")} selected={selected === "customer_order_details"}>
-                  <TreeItem icon={<Hash />} label="order_id" depth={4} />
-                  <TreeItem icon={<Hash />} label="customer_id" depth={4} />
-                  <TreeItem icon={<Numbers />} label="order_subtotal_usd" depth={4} />
-                  <TreeItem icon={<Numbers />} label="order_tax_usd" depth={4} />
-                  <TreeItem icon={<Decimal />} label="order_discount_usd" depth={4} />
-                  <TreeItem icon={<CalendarClock />} label="order_received_date" depth={4} />
-                  <TreeItem icon={<CalendarClock />} label="order_shipped_date" depth={4} />
-                  <TreeItem icon={<Letters />} label="shipping_address" depth={4} />
-                  <TreeItem icon={<Letters />} label="billing_address" depth={4} />
-                  <TreeItem icon={<Letters />} label="payment_method" depth={4} />
-                  <TreeItem icon={<Binary />} label="is_gift" depth={4} />
-                </TreeItem>
-                <TreeItem icon={<Table />} label="customer_feedback" depth={3}>{/* expands to show columns */}</TreeItem>
-                <TreeItem icon={<Table />} label="discount_usage" depth={3}>{/* expands to show columns */}</TreeItem>
+          {/* Catalog (depth 1) → Schema (depth 2) → Table (depth 3) → Column (depth 4) */}
+          <TreeItem icon={<Catalog />} label="my_catalog" defaultExpanded depth={1} onSelect={() => setSelected("my_catalog")} selected={selected === "my_catalog"}>
+            <TreeItem icon={<Database />} label="main" defaultExpanded depth={2} onSelect={() => setSelected("main")} selected={selected === "main"}>
+              <TreeItem icon={<Table />} label="cancelled_orders" depth={3} onSelect={() => setSelected("cancelled_orders")} selected={selected === "cancelled_orders"}>
+                <TreeItem icon={<Hash />} label="order_id" depth={4} />
+                <TreeItem icon={<Hash />} label="customer_id" depth={4} />
+                <TreeItem icon={<Numbers />} label="amount_usd" depth={4} />
               </TreeItem>
-              {/* Empty schemas — expand to show "No items" */}
-              <TreeItem icon={<Database />} label="gold" depth={2}>{/* empty → shows "No items" */}</TreeItem>
-              <TreeItem icon={<Database />} label="operations" depth={2}>{/* empty */}</TreeItem>
-              <TreeItem icon={<Database />} label="revenue" depth={2}>{/* empty */}</TreeItem>
-              <TreeItem icon={<Database />} label="silver" depth={2}>{/* empty */}</TreeItem>
-              <TreeItem icon={<Database />} label="transactions" depth={2}>{/* empty */}</TreeItem>
+              <TreeItem icon={<Table />} label="customer_order_details" defaultExpanded depth={3} onSelect={() => setSelected("customer_order_details")} selected={selected === "customer_order_details"}>
+                <TreeItem icon={<Hash />} label="order_id" depth={4} />
+                <TreeItem icon={<Hash />} label="customer_id" depth={4} />
+                <TreeItem icon={<Numbers />} label="order_subtotal_usd" depth={4} />
+                <TreeItem icon={<Numbers />} label="order_tax_usd" depth={4} />
+                <TreeItem icon={<Decimal />} label="order_discount_usd" depth={4} />
+                <TreeItem icon={<CalendarClock />} label="order_received_date" depth={4} />
+                <TreeItem icon={<CalendarClock />} label="order_shipped_date" depth={4} />
+                <TreeItem icon={<Letters />} label="shipping_address" depth={4} />
+                <TreeItem icon={<Letters />} label="billing_address" depth={4} />
+                <TreeItem icon={<Letters />} label="payment_method" depth={4} />
+                <TreeItem icon={<Binary />} label="is_gift" depth={4} />
+              </TreeItem>
+              <TreeItem icon={<Table />} label="customer_feedback" depth={3}>{/* empty */}</TreeItem>
+              <TreeItem icon={<Table />} label="discount_usage" depth={3}>{/* empty */}</TreeItem>
             </TreeItem>
-            <TreeItem icon={<Database />} label="system" depth={1}>{/* empty */}</TreeItem>
+            <TreeItem icon={<Database />} label="system" depth={2}>{/* empty */}</TreeItem>
           </TreeItem>
-          {/* Other catalogs — all expandable */}
-          <TreeItem icon={<Catalog />} label="customers" depth={0}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="dbt_catalog" depth={0}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="demand_forecasting" depth={0}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="snowflake_catalog" depth={0}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="customers" depth={1}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="dbt_catalog" depth={1}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="demand_forecasting" depth={1}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="snowflake_catalog" depth={1}>{/* empty */}</TreeItem>
         </TreeSection>
 
         <TreeSection label="Delta shared">
-          <TreeItem icon={<Catalog />} label="samples" depth={0}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="european_gas_and_power" depth={0}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="samples" depth={1}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="european_gas_and_power" depth={1}>{/* empty */}</TreeItem>
         </TreeSection>
 
         <TreeSection label="Legacy">
-          <TreeItem icon={<Catalog />} label="hive_metastore" depth={0}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="hive_metastore" depth={1}>{/* empty */}</TreeItem>
         </TreeSection>
       </Tree>
     </div>
