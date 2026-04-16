@@ -16,6 +16,14 @@ import { Numbers } from "@/components/icons/Numbers"
 import { CalendarClock } from "@/components/icons/CalendarClock"
 import { Binary } from "@/components/icons/Binary"
 import { Decimal } from "@/components/icons/Decimal"
+import { TableView } from "@/components/icons/TableView"
+import { TableStream } from "@/components/icons/TableStream"
+import { TableGlasses } from "@/components/icons/TableGlasses"
+import { TableMeasure } from "@/components/icons/TableMeasure"
+import { Models } from "@/components/icons/Models"
+import { Cloud } from "@/components/icons/Cloud"
+import { Function } from "@/components/icons/Function"
+import { Layer } from "@/components/icons/Layer"
 import { ComponentMeta } from "./components/ComponentMeta"
 import componentSource from "dbui/components/ui/data-tree?raw"
 
@@ -72,6 +80,20 @@ const dataSections: TreeSectionData[] = [
             ],
           },
           { id: "system", label: "system", icon: <Database />, children: [] },
+          {
+            id: "showcase", label: "showcase", icon: <Database />, defaultExpanded: true,
+            children: [
+              { id: "orders", label: "orders", icon: <Table />, children: [] },
+              { id: "orders_view", label: "orders_view", icon: <TableView />, children: [] },
+              { id: "orders_stream", label: "orders_stream", icon: <TableStream />, children: [] },
+              { id: "orders_online", label: "orders_online", icon: <TableGlasses />, children: [] },
+              { id: "revenue_metrics", label: "revenue_metrics", icon: <TableMeasure />, children: [] },
+              { id: "customer_features", label: "customer_features", icon: <Layer />, children: [] },
+              { id: "fraud_model", label: "fraud_model", icon: <Models />, leaf: true },
+              { id: "raw_data", label: "raw_data", icon: <Cloud />, leaf: true },
+              { id: "clean_address", label: "clean_address", icon: <Function />, leaf: true },
+            ],
+          },
         ],
       },
       { id: "main_catalog", label: "main", icon: <CatalogHome />, children: [] },
