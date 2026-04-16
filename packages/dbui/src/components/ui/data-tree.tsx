@@ -159,11 +159,11 @@ function TreeItem({
           )}
         </span>
 
-        {/* Icon */}
+        {/* Icon — foreground when selected/expanded, muted otherwise */}
         {activeIcon && (
           <span className={cn(
             "flex shrink-0 items-center [&_svg]:size-4",
-            selected || isExpanded ? "text-primary" : "text-muted-foreground"
+            selected || isExpanded ? "text-foreground" : "text-muted-foreground"
           )}>
             {activeIcon}
           </span>
@@ -180,18 +180,18 @@ function TreeItem({
         )}
       </button>
 
-      {/* Children with trail line — line starts from parent chevron, overlaps above */}
+      {/* Children with trail line */}
       {isExpanded && (
         <div
           data-slot="tree-item-children"
-          className="relative"
+          className="relative overflow-visible"
         >
-          {/* Vertical trail line — starts from parent chevron center, runs behind child rows */}
+          {/* Trail line — aligned to parent chevron center, on top of fills (z-10) */}
           {showTrailLine && (
             <div
-              className="absolute border-l border-border pointer-events-none"
+              className="absolute border-l border-border pointer-events-none z-10"
               style={{
-                left: `${8 + (depth + 1) * 8}px`,
+                left: `${4 + (16 + depth * 8) / 2}px`,
                 top: -14,
                 bottom: 14,
               }}
