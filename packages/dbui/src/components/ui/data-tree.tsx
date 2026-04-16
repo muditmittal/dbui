@@ -130,6 +130,7 @@ let treeItemCounter = 0
 
 function TreeItem({
   className,
+  nodeId: nodeIdProp,
   icon,
   iconExpanded,
   label,
@@ -146,12 +147,13 @@ function TreeItem({
   children,
   ...props
 }: Omit<React.ComponentProps<"button">, "onSelect"> & {
+  /** Stable ID for callbacks (onFocusNode, onSelect). Falls back to internal counter. */
+  nodeId?: string
   icon?: React.ReactNode
   iconExpanded?: React.ReactNode
   label: string
   trailing?: React.ReactNode
   selected?: boolean
-  /** Whether this node can be selected. False for columns, section headers. Default: true */
   selectable?: boolean
   defaultExpanded?: boolean
   expanded?: boolean
@@ -168,7 +170,7 @@ function TreeItem({
   ).length
   const isExpandable = expandable || childCount > 0
 
-  const idRef = React.useRef(`tree-item-${++treeItemCounter}`)
+  const idRef = React.useRef(nodeIdProp ?? `tree-item-${++treeItemCounter}`)
   const { highlightedId, setHighlighted, selectedId, setSelected: setTreeSelected, onFocusNode, onNodeMenu } = React.useContext(TreeContext)
   const parentId = React.useContext(TreeParentContext)
   const isHighlighted = highlightedId === idRef.current
@@ -426,6 +428,7 @@ function TreeNodeRenderer({
 
   return (
     <TreeItem
+      nodeId={node.id}
       icon={node.icon}
       iconExpanded={node.iconExpanded}
       label={node.label}

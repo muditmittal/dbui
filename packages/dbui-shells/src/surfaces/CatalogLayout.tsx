@@ -205,14 +205,16 @@ function CatalogTree({
         {/* Spacer */}
         <span className="flex-1" />
 
-        {/* Header actions — status dot + add + overflow, 24×24 icon buttons */}
-        <span className="inline-block size-2 shrink-0 rounded-full bg-success" />
-        <Button variant="ghost" size="icon-sm" aria-label="Add"><Plus /></Button>
-        <Button variant="ghost" size="icon-sm" aria-label="More"><Overflow /></Button>
+        {/* Header actions — status + add + overflow */}
+        <Button variant="ghost" size="icon-md" aria-label="Status">
+          <span className="inline-block size-2 rounded-full bg-success" />
+        </Button>
+        <Button variant="ghost" size="icon-md" aria-label="Add"><Plus /></Button>
+        <Button variant="ghost" size="icon-md" aria-label="More"><Overflow /></Button>
       </div>
 
-      {/* Filter slot */}
-      {filter && <div className="px-3 pb-2">{filter}</div>}
+      {/* Filter slot — px-2 aligns with root switcher */}
+      {filter && <div className="px-2 pb-2">{filter}</div>}
 
       {/* Tree */}
       <div className="flex-1 overflow-y-auto px-1 pb-4">
