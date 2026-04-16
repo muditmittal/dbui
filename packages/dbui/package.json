@@ -1,5 +1,5 @@
 {
-  "name": "dbui",
+  "name": "@muditmittal/dbui",
   "version": "0.1.0",
   "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
   "license": "MIT",
@@ -22,7 +22,13 @@
     "./tokens/*": "./src/tokens/*",
     "./llms.txt": "./llms.txt"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muditmittal/dbui.git",
+    "directory": "packages/dbui"
+  },
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
     "exports": {
       ".": {
         "import": "./dist/index.js",

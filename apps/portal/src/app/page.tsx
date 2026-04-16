@@ -83,10 +83,20 @@ export default function Home() {
 
           <div className="space-y-6">
             <div>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>0. Configure GitHub Packages registry</p>
+              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
+                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
+{`# Add to your project's .npmrc
+@muditmittal:registry=https://npm.pkg.github.com`}
+                </code>
+              </div>
+            </div>
+
+            <div>
               <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>1. Install the package</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block" style={{ fontFamily: mono, color: t.textMuted }}>
-                  yarn add dbui@github:muditmittal/dbui
+                  npm install @muditmittal/dbui --registry https://npm.pkg.github.com
                 </code>
               </div>
             </div>
@@ -95,7 +105,7 @@ export default function Home() {
               <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>2. Import tokens in your global CSS</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`@import "dbui/tokens/globals.css";`}
+{`@import "@muditmittal/dbui/tokens/globals.css";`}
                 </code>
               </div>
             </div>
@@ -104,9 +114,9 @@ export default function Home() {
               <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>3. Use components</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`import { Button } from "dbui/components/ui/button"
-import { Input } from "dbui/components/ui/input"
-import { Search } from "dbui/components/icons/Search"
+{`import { Button, ButtonIcon } from "@muditmittal/dbui/components/ui/button"
+import { Input } from "@muditmittal/dbui/components/ui/input"
+import { Search } from "@muditmittal/dbui/components/icons/Search"
 
 <Button variant="outline">
   <ButtonIcon><Search /></ButtonIcon>
@@ -121,7 +131,7 @@ import { Search } from "dbui/components/icons/Search"
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
 {`# Copy llms.txt into your AI tool's context
-cat node_modules/dbui/llms.txt | pbcopy`}
+cat node_modules/@muditmittal/dbui/llms.txt | pbcopy`}
                 </code>
               </div>
             </div>
