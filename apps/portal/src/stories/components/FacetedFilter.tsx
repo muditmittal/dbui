@@ -64,31 +64,8 @@ export function FacetedFilter({
 
   return (
     <div className={className}>
+      {/* Search + Filter button row */}
       <div className="group/ig flex items-center rounded-sm border border-transparent focus-within:border-primary focus-within:shadow-xs">
-        {/* Chips */}
-        {selectedChips.length > 0 && (
-          <div className="flex items-center gap-1 pl-2">
-            {selectedChips.slice(0, 2).map((chip) => (
-              <span
-                key={`${chip.facet}:${chip.value}`}
-                className="inline-flex items-center gap-0.5 rounded-sm bg-accent px-1.5 py-0.5 text-[12px] text-primary whitespace-nowrap"
-              >
-                {chip.facet}: {chip.value}
-                <button
-                  className="ml-0.5 text-primary/60 hover:text-primary [&_svg]:size-3"
-                  onClick={() => toggleValue(chip.facet, chip.value)}
-                >
-                  <Close />
-                </button>
-              </span>
-            ))}
-            {selectedChips.length > 2 && (
-              <span className="text-[12px] text-muted-foreground whitespace-nowrap">+{selectedChips.length - 2}</span>
-            )}
-            <button className="text-[12px] text-primary hover:underline whitespace-nowrap" onClick={resetAll}>Reset</button>
-          </div>
-        )}
-        {/* Input */}
         <input
           placeholder="Search"
           className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
@@ -206,6 +183,27 @@ export function FacetedFilter({
           </Popover.Portal>
         </Popover.Root>
       </div>
+
+      {/* Filter chips row — below the input, pushes tree down */}
+      {selectedChips.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1 pt-2">
+          {selectedChips.map((chip) => (
+            <span
+              key={`${chip.facet}:${chip.value}`}
+              className="inline-flex items-center gap-0.5 rounded-sm bg-accent px-1.5 py-0.5 text-[12px] text-primary whitespace-nowrap"
+            >
+              {chip.facet}: {chip.value}
+              <button
+                className="ml-0.5 text-primary/60 hover:text-primary [&_svg]:size-3"
+                onClick={() => toggleValue(chip.facet, chip.value)}
+              >
+                <Close />
+              </button>
+            </span>
+          ))}
+          <button className="text-[12px] text-primary hover:underline whitespace-nowrap" onClick={resetAll}>Reset</button>
+        </div>
+      )}
     </div>
   )
 }
