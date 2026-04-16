@@ -135,11 +135,52 @@ function TreeItem({
     if (isExpandable) {
       const next = !isExpanded
       setInternalExpanded(next)
-      // Expand: highlight this node. Collapse: highlight parent.
       setHighlighted(next ? idRef.current : parentId)
       onToggle?.(next)
     }
     onSelect?.()
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    const target = e.currentTarget as HTMLElement
+    const tree = target.closest('[data-slot="tree"]')
+    if (!tree) return
+
+    const items = Array.from(tree.querySelectorAll<HTMLElement>('[data-slot="tree-item"]'))
+    const index = items.indexOf(target)
+
+    switch (e.key) {
+      case "ArrowDown": {
+        e.preventDefault()
+        const next = items[index + 1]
+        if (next) { next.focus(); next.click() }
+        break
+      }
+      case "ArrowUp": {
+        e.preventDefault()
+        const prev = items[index - 1]
+        if (prev) { prev.focus(); prev.click() }
+        break
+      }
+      case "ArrowRight": {
+        e.preventDefault()
+        if (isExpandable && !isExpanded) {
+          setInternalExpanded(true)
+          setHighlighted(idRef.current)
+          onToggle?.(true)
+        }
+        break
+      }
+      case "ArrowLeft": {
+        e.preventDefault()
+        if (isExpandable && isExpanded) {
+          setInternalExpanded(false)
+          setHighlighted(parentId)
+          onToggle?.(false)
+        }
+        break
+      }
+    }
   }
 
   const activeIcon = isExpanded && iconExpanded ? iconExpanded : icon
@@ -161,6 +202,7 @@ function TreeItem({
           className
         )}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
         {...props}
       >
         {/* Chevron area — grows by 8px per depth level */}
