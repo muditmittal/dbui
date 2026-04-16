@@ -173,8 +173,8 @@ function TreeItem({
         )}
       </button>
 
-      {/* Children with trail line */}
-      {isExpanded && children && (
+      {/* Children with trail line — show empty state if no children */}
+      {isExpanded && (
         <div
           data-slot="tree-item-children"
           className={cn(showTrailLine && "relative")}
@@ -186,7 +186,14 @@ function TreeItem({
               style={{ left: `${12 + depth * 16}px` }}
             />
           )}
-          {children}
+          {children || (
+            <div
+              className="flex h-7 items-center text-[12px] text-muted-foreground italic"
+              style={{ paddingLeft: `${20 + (depth + 1) * 16}px` }}
+            >
+              No items
+            </div>
+          )}
         </div>
       )}
     </>
