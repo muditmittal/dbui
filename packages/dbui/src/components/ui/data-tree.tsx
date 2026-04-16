@@ -126,18 +126,11 @@ function TreeItem({
   const { lastExpandedId, setLastExpanded } = React.useContext(TreeContext)
   const isLastExpanded = lastExpandedId === idRef.current
 
-  // Register as last-expanded on mount if defaultExpanded, or on user expand
-  React.useEffect(() => {
-    if (defaultExpanded && isExpandable) {
-      setLastExpanded(idRef.current)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const handleClick = () => {
     if (isExpandable) {
       const next = !isExpanded
       setInternalExpanded(next)
+      // Only user-initiated expands set the dark trail line
       if (next) setLastExpanded(idRef.current)
       onToggle?.(next)
     }
@@ -217,7 +210,7 @@ function TreeItem({
             <div
               className={cn(
                 "absolute border-l pointer-events-none z-10 transition-colors",
-                isLastExpanded ? "border-input" : "border-border"
+                isLastExpanded ? "border-foreground" : "border-border"
               )}
               style={{
                 left: `${12 + depth * 8}px`,
