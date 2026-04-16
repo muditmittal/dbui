@@ -1,5 +1,5 @@
 export { Shell } from "./surfaces/Shell"
-export { CatalogLayout, CatalogTree, CatalogLanding, TreeItem, TreeSection } from "./surfaces/CatalogLayout"
-export type { TreeNode, CatalogSection, CatalogItem } from "./surfaces/CatalogLayout"
+export { CatalogLayout, CatalogTree, CatalogLanding } from "./surfaces/CatalogLayout"
+export type { CatalogSection, CatalogItem } from "./surfaces/CatalogLayout"
 export { PlatformHeader } from "./components/PlatformHeader"
 export { WorkspaceNav } from "./components/WorkspaceNav"
