@@ -4,11 +4,32 @@ import { Button } from "dbui/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCellTitle, TableCellIcon, TableCellTitleContent, TableCellMeta } from "dbui/components/ui/table"
 import { DataTreeView, type TreeSectionData, type TreeNode } from "dbui/components/ui/data-tree"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuGroup, DropdownMenuItemIcon, DropdownMenuItemDescription, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "dbui/components/ui/dropdown-menu"
+import { Input } from "dbui/components/ui/input"
+import { Badge } from "dbui/components/ui/badge"
 import { ChevronDown } from "dbui/components/icons/ChevronDown"
 import { ChevronLeft } from "dbui/components/icons/ChevronLeft"
 import { Data } from "dbui/components/icons/Data"
 import { Plus } from "dbui/components/icons/Plus"
 import { Overflow } from "dbui/components/icons/Overflow"
+import { Catalog } from "dbui/components/icons/Catalog"
+import { Database } from "dbui/components/icons/Database"
+import { Table as TableIcon } from "dbui/components/icons/Table"
+import { TableView } from "dbui/components/icons/TableView"
+import { Models } from "dbui/components/icons/Models"
+import { Function } from "dbui/components/icons/Function"
+import { FolderCloud } from "dbui/components/icons/FolderCloud"
+import { Key } from "dbui/components/icons/Key"
+import { Shield } from "dbui/components/icons/Shield"
+import { Tag } from "dbui/components/icons/Tag"
+import { Search } from "dbui/components/icons/Search"
+import { PlusSquare } from "dbui/components/icons/PlusSquare"
+import { Ingestion } from "dbui/components/icons/Ingestion"
+import { CloudUpload } from "dbui/components/icons/CloudUpload"
+import { ArrowsConnect } from "dbui/components/icons/ArrowsConnect"
+import { Share } from "dbui/components/icons/Share"
+import { Globe } from "dbui/components/icons/Globe"
+import { Check } from "dbui/components/icons/Check"
 
 // ─── Types ───
 
@@ -205,12 +226,155 @@ function CatalogTree({
         {/* Spacer */}
         <span className="flex-1" />
 
-        {/* Header actions — status + add + overflow */}
-        <Button variant="ghost" size="icon-md" aria-label="Status">
-          <span className="inline-block size-2 rounded-full bg-success" />
-        </Button>
-        <Button variant="ghost" size="icon-md" aria-label="Add"><Plus /></Button>
-        <Button variant="ghost" size="icon-md" aria-label="More"><Overflow /></Button>
+        {/* ── Warehouse picker (status dot) ── */}
+        <DropdownMenu>
+          <DropdownMenuTrigger render={
+            <Button variant="ghost" size="icon-md" aria-label="Warehouse">
+              <span className="inline-block size-2 rounded-full bg-success" />
+            </Button>
+          } />
+          <DropdownMenuContent align="end" className="w-[280px]">
+            <div className="p-1">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Input placeholder="Search" className="pl-8 h-8" />
+              </div>
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Check className="size-4" />
+                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="flex-1">Shared SQL Warehouse</span>
+                <Badge variant="outline">Serverless</Badge>
+                <span className="text-[12px] text-muted-foreground">M</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <span className="size-4" />
+                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="flex-1">ML Data</span>
+                <Badge variant="outline">Serverless</Badge>
+                <span className="text-[12px] text-muted-foreground">S</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <span className="size-4" />
+                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="flex-1">Pro warehouse 1</span>
+                <span className="text-[12px] text-muted-foreground">M</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <span className="size-4" />
+                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="flex-1">Pro warehouse 2</span>
+                <span className="text-[12px] text-muted-foreground">S</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* ── Create/Add menu (plus) ── */}
+        <DropdownMenu>
+          <DropdownMenuTrigger render={
+            <Button variant="ghost" size="icon-md" aria-label="Add"><Plus /></Button>
+          } />
+          <DropdownMenuContent align="end" className="w-[240px]">
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Plus /></DropdownMenuItemIcon>
+              Add data
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><PlusSquare /></DropdownMenuItemIcon>
+              Create table here
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Catalog /></DropdownMenuItemIcon>
+              Catalog
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Database /></DropdownMenuItemIcon>
+              Schema
+            </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <DropdownMenuItemIcon><TableIcon /></DropdownMenuItemIcon>
+                Table
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Managed table</DropdownMenuItem>
+                <DropdownMenuItem>External table</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <DropdownMenuItemIcon><TableView /></DropdownMenuItemIcon>
+                View
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>View</DropdownMenuItem>
+                <DropdownMenuItem>Materialized view</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><FolderCloud /></DropdownMenuItemIcon>
+              Volume
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Models /></DropdownMenuItemIcon>
+              Model
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Function /></DropdownMenuItemIcon>
+              Function
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Key /></DropdownMenuItemIcon>
+              Credential
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Globe /></DropdownMenuItemIcon>
+              External location
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><Ingestion /></DropdownMenuItemIcon>
+              Ingest via partner
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownMenuItemIcon><CloudUpload /></DropdownMenuItemIcon>
+              Upload to volume
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* ── Overflow menu (governance) ── */}
+        <DropdownMenu>
+          <DropdownMenuTrigger render={
+            <Button variant="ghost" size="icon-md" aria-label="More"><Overflow /></Button>
+          } />
+          <DropdownMenuContent align="end" className="w-[220px]">
+            <DropdownMenuItem>
+              <div>
+                Governance hub
+                <DropdownMenuItemDescription>Tags, Policies, Rules</DropdownMenuItemDescription>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Delta sharing</DropdownMenuItem>
+            <DropdownMenuItem>Clean rooms</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>External locations</DropdownMenuItem>
+            <DropdownMenuItem>Credentials</DropdownMenuItem>
+            <DropdownMenuItem>Connections</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Browse DBFS</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Filter slot — px-2 aligns with root switcher */}
