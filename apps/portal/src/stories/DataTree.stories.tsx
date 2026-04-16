@@ -53,24 +53,24 @@ function DataTreeExample() {
                 <TreeItem icon={<Letters />} label="payment_method" depth={4} />
                 <TreeItem icon={<Binary />} label="is_gift" depth={4} />
               </TreeItem>
-              <TreeItem icon={<Table />} label="customer_feedback" depth={3}>{/* empty */}</TreeItem>
-              <TreeItem icon={<Table />} label="discount_usage" depth={3}>{/* empty */}</TreeItem>
+              <TreeItem icon={<Table />} label="customer_feedback" depth={3} expandable />
+              <TreeItem icon={<Table />} label="discount_usage" depth={3} expandable />
             </TreeItem>
-            <TreeItem icon={<Database />} label="system" depth={2}>{/* empty */}</TreeItem>
+            <TreeItem icon={<Database />} label="system" depth={2} expandable />
           </TreeItem>
-          <TreeItem icon={<Catalog />} label="customers" depth={1}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="dbt_catalog" depth={1}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="demand_forecasting" depth={1}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="snowflake_catalog" depth={1}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="customers" depth={1} expandable />
+          <TreeItem icon={<Catalog />} label="dbt_catalog" depth={1} expandable />
+          <TreeItem icon={<Catalog />} label="demand_forecasting" depth={1} expandable />
+          <TreeItem icon={<Catalog />} label="snowflake_catalog" depth={1} expandable />
         </TreeSection>
 
         <TreeSection label="Delta shared">
-          <TreeItem icon={<Catalog />} label="samples" depth={1}>{/* empty */}</TreeItem>
-          <TreeItem icon={<Catalog />} label="european_gas_and_power" depth={1}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="samples" depth={1} expandable />
+          <TreeItem icon={<Catalog />} label="european_gas_and_power" depth={1} expandable />
         </TreeSection>
 
         <TreeSection label="Legacy">
-          <TreeItem icon={<Catalog />} label="hive_metastore" depth={1}>{/* empty */}</TreeItem>
+          <TreeItem icon={<Catalog />} label="hive_metastore" depth={1} expandable />
         </TreeSection>
       </Tree>
     </div>
@@ -97,7 +97,7 @@ function FileTreeExample() {
             <TreeItem icon={<Table />} label="customers.csv" depth={2} />
             <TreeItem icon={<Table />} label="orders.csv" depth={2} />
           </TreeItem>
-          <TreeItem icon={<Folder />} iconExpanded={<FolderOpen />} label="configs" depth={1}>{/* empty folder */}</TreeItem>
+          <TreeItem icon={<Folder />} iconExpanded={<FolderOpen />} label="configs" depth={1} expandable />
           <TreeItem icon={<Notebook />} label="README.md" depth={1} onSelect={() => setSelected("readme")} selected={selected === "readme"} />
         </TreeItem>
       </Tree>

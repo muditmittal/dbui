@@ -121,8 +121,10 @@ function TreeItem({
 }) {
   const [internalExpanded, setInternalExpanded] = React.useState(defaultExpanded)
   const isExpanded = controlledExpanded ?? internalExpanded
-  const hasChildren = expandable || React.Children.count(children) > 0
-  const isExpandable = hasChildren
+  const childCount = React.Children.toArray(children).filter(
+    (child) => React.isValidElement(child)
+  ).length
+  const isExpandable = expandable || childCount > 0
 
   const idRef = React.useRef(`tree-item-${++treeItemCounter}`)
   const { highlightedId, setHighlighted } = React.useContext(TreeContext)
@@ -223,9 +225,9 @@ function TreeItem({
                 }}
               />
             )}
-            {children || (
+            {childCount > 0 ? children : (
               <div
-                className="flex h-7 items-center text-[12px] text-muted-foreground italic"
+                className="flex h-7 items-center text-[13px] text-muted-foreground"
                 style={{ paddingLeft: `${24 + (depth + 1) * 8}px` }}
               >
                 No items
