@@ -33,7 +33,9 @@ export const dataEntityIcons = {
   view: "TableView",
   /** Materialized view (precomputed, auto-refreshed) */
   materializedView: "TableLightning",
-  /** Sync / Streaming table (real-time, Lakeflow) */
+  /** Streaming table (real-time, Lakeflow) */
+  streamingTable: "TableStream",
+  /** Sync table (materialized, auto-refreshed) */
   syncTable: "TableLightning",
   /** Feature table (Feature Store, ML features) */
   featureTable: "TableModel",

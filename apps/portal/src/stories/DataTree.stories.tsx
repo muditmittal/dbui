@@ -24,6 +24,7 @@ import { Models } from "@/components/icons/Models"
 import { FolderCloud } from "@/components/icons/FolderCloud"
 import { Function } from "@/components/icons/Function"
 import { TableModel } from "@/components/icons/TableModel"
+import { TableStream } from "@/components/icons/TableStream"
 import { TableLightning } from "@/components/icons/TableLightning"
 import { TableGlobe } from "@/components/icons/TableGlobe"
 import { ComponentMeta } from "./components/ComponentMeta"
@@ -87,7 +88,8 @@ const dataSections: TreeSectionData[] = [
             children: [
               { id: "orders", label: "orders", icon: <Table />, children: [] },
               { id: "orders_view", label: "orders_view", icon: <TableView />, children: [] },
-              { id: "orders_stream", label: "orders_stream", icon: <TableLightning />, children: [] },
+              { id: "orders_stream", label: "orders_stream", icon: <TableStream />, children: [] },
+              { id: "orders_sync", label: "orders_sync", icon: <TableLightning />, children: [] },
               { id: "orders_online", label: "orders_online", icon: <TableGlobe />, children: [] },
               { id: "revenue_metrics", label: "revenue_metrics", icon: <TableMeasure />, children: [] },
               { id: "customer_features", label: "customer_features", icon: <TableModel />, children: [] },
