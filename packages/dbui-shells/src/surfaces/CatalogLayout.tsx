@@ -462,12 +462,12 @@ function CatalogLanding({
             {items.map((item, i) => (
               <TableRow key={i} className="cursor-pointer">
                 <TableCell>
-                  <div className="flex items-center gap-2">
-                    <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+                  <div className="flex items-start gap-2">
+                    <span className="flex shrink-0 items-center text-muted-foreground mt-0.5 [&_svg]:size-4">
                       {item.icon ?? <Data />}
                     </span>
                     <div className="flex flex-col">
-                      <span className="text-[13px] text-foreground">{item.name}</span>
+                      <span className="text-[13px] leading-[20px] text-foreground">{item.name}</span>
                       {item.subtitle && <span className="text-[12px] leading-[16px] text-muted-foreground">{item.subtitle}</span>}
                     </div>
                   </div>
