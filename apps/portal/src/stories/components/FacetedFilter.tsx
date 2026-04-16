@@ -112,7 +112,7 @@ export function FacetedFilter({
             }
           />
           <Popover.Portal>
-            <Popover.Positioner side="bottom" sideOffset={4} align="end" className="z-50">
+            <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
               <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden">
 
                 {/* Root: facet categories */}
