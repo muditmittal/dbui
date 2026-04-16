@@ -33,19 +33,19 @@ export const dataEntityIcons = {
   view: "TableView",
   /** Materialized view (precomputed, auto-refreshed) */
   materializedView: "TableLightning",
-  /** Streaming table (real-time, Lakeflow) */
-  streamingTable: "TableStream",
+  /** Sync / Streaming table (real-time, Lakeflow) */
+  syncTable: "TableLightning",
   /** Feature table (Feature Store, ML features) */
-  featureTable: "Layer",
+  featureTable: "TableModel",
   /** Metric view (AI/BI KPI, measure, aggregation) */
   metricView: "TableMeasure",
   /** Online table (serving, low-latency) */
-  onlineTable: "TableGlasses",
+  onlineTable: "TableGlobe",
 
   /** ML model (model registry) */
   model: "Models",
   /** Volume (managed storage) */
-  volume: "Cloud",
+  volume: "FolderCloud",
   /** Volume folder (cloud storage subdirectory) */
   volumeFolder: "FolderCloud",
   /** UDF / SQL function */

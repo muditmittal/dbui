@@ -21,9 +21,11 @@ import { TableStream } from "@/components/icons/TableStream"
 import { TableGlasses } from "@/components/icons/TableGlasses"
 import { TableMeasure } from "@/components/icons/TableMeasure"
 import { Models } from "@/components/icons/Models"
-import { Cloud } from "@/components/icons/Cloud"
+import { FolderCloud } from "@/components/icons/FolderCloud"
 import { Function } from "@/components/icons/Function"
-import { Layer } from "@/components/icons/Layer"
+import { TableModel } from "@/components/icons/TableModel"
+import { TableLightning } from "@/components/icons/TableLightning"
+import { TableGlobe } from "@/components/icons/TableGlobe"
 import { ComponentMeta } from "./components/ComponentMeta"
 import componentSource from "dbui/components/ui/data-tree?raw"
 
@@ -85,12 +87,12 @@ const dataSections: TreeSectionData[] = [
             children: [
               { id: "orders", label: "orders", icon: <Table />, children: [] },
               { id: "orders_view", label: "orders_view", icon: <TableView />, children: [] },
-              { id: "orders_stream", label: "orders_stream", icon: <TableStream />, children: [] },
-              { id: "orders_online", label: "orders_online", icon: <TableGlasses />, children: [] },
+              { id: "orders_stream", label: "orders_stream", icon: <TableLightning />, children: [] },
+              { id: "orders_online", label: "orders_online", icon: <TableGlobe />, children: [] },
               { id: "revenue_metrics", label: "revenue_metrics", icon: <TableMeasure />, children: [] },
-              { id: "customer_features", label: "customer_features", icon: <Layer />, children: [] },
+              { id: "customer_features", label: "customer_features", icon: <TableModel />, children: [] },
               { id: "fraud_model", label: "fraud_model", icon: <Models />, leaf: true },
-              { id: "raw_data", label: "raw_data", icon: <Cloud />, leaf: true },
+              { id: "raw_data", label: "raw_data", icon: <FolderCloud />, leaf: true },
               { id: "clean_address", label: "clean_address", icon: <Function />, leaf: true },
             ],
           },
