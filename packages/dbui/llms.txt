@@ -1,5 +1,5 @@
 # DBUI Design System — LLM Context File
-# Version: 2.0.0 | Updated: 2026-04-15
+# Version: 3.0.0 | Updated: 2026-04-16
 # Source: packages/dbui/ in github.com/muditmittal/dbui
 #
 # This file tells an LLM everything it needs to build UI with DBUI components.
@@ -14,6 +14,7 @@
 4. ALWAYS import from `dbui/components/ui/{component}`. NEVER import from @radix-ui, @base-ui, or shadcn directly.
 5. If a DBUI component doesn't exist for what you need, compose from existing DBUI primitives. If that's not possible, flag it — don't build a one-off.
 6. When populating Tree components with entity icons, ALWAYS read `dbui/components/icons/entity-icons.ts` first. It maps every Databricks entity type (catalog, schema, table, view, volume, notebook, folder, etc.) to its correct icon. NEVER guess icon names.
+7. For hierarchical data (catalogs, files, schemas), ALWAYS use the Tree component — NEVER fake it with nested NavbarItems or manual indentation.
 
 ## TRIGGER PATTERN (Base UI)
 
@@ -45,6 +46,7 @@ Do NOT use `asChild` — that is a Radix pattern and is ignored by Base UI.
 | Transient feedback | `toast()` via sonner | Alert for temporary messages |
 | Loading placeholder | `Skeleton` (known shape) or `Spinner` (indeterminate) | custom loading div |
 | Navigate product areas | `Navbar` + `NavbarItem` (sidebar) | custom nav links |
+| Browse hierarchical data | `DataTreeView` (catalogs) or `FileTreeView` (files) | nested NavbarItems |
 | Show hierarchical path | `Breadcrumb` | slash-separated text |
 | Paginate data | `Pagination` | custom page buttons |
 | Display structured data | `Table` with typed cells | raw HTML table |
@@ -88,6 +90,7 @@ dbui/components/ui/breadcrumb      → Breadcrumb, BreadcrumbList, BreadcrumbIte
 dbui/components/ui/pagination      → Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext
 dbui/components/ui/accordion       → Accordion, AccordionItem, AccordionTrigger, AccordionContent
 dbui/components/ui/navbar          → Navbar, NavbarSection, NavbarSectionHeader, NavbarItem, NavbarItemIcon
+dbui/components/ui/data-tree       → Tree, TreeSection, TreeItem, TreeItemTag, DataTreeView, FileTreeView, TreeNodeRenderer
 dbui/components/ui/separator       → Separator
 dbui/components/ui/skeleton        → Skeleton
 dbui/components/ui/spinner         → Spinner
@@ -98,12 +101,152 @@ dbui/components/ui/key-value-pair  → KeyValuePair, KeyValueRow, KeyValueKey, K
 dbui/components/ui/input-group     → InputGroup, InputGroupInput, InputGroupButton, InputGroupAddon
 dbui/components/ui/editor-tabs     → EditorTabs, EditorTab
 dbui/components/icons/{Name}       → 451 icons, 16×16 default. See icon search section below.
+dbui/components/icons/entity-icons → dataEntityIcons, fileEntityIcons, columnTypeIcons (icon mappings)
 dbui/tokens/globals.css            → All design tokens (import in root CSS)
 ```
 
+### Key props for stateful components
+
+| Component | Key props |
+|-----------|-----------|
+| Tabs | `defaultValue`, `value`, `onValueChange` |
+| Select | `defaultValue`, `value`, `onValueChange` |
+| Combobox | `value`, `onValueChange`, `multiple` |
+| Dialog | `open`, `onOpenChange`, `defaultOpen` |
+| AlertDialog | `open`, `onOpenChange` |
+| DropdownMenu | `open`, `onOpenChange` |
+| Popover | `open`, `onOpenChange` |
+| Accordion | `type="single"` or `type="multiple"`, `defaultValue`, `collapsible` |
+| Toggle | `pressed`, `onPressedChange`, `defaultPressed` |
+| Switch | `checked`, `onCheckedChange` |
+| Checkbox | `checked`, `onCheckedChange`, `indeterminate` |
+| Tree | `defaultSelectedId`, `onSelect`, `onFocusNode`, `onNodeMenu` |
+| DataTreeView | `sections` (TreeSectionData[]), `onSelect`, `onFocusNode` |
+| Badge | `variant`: `"fill"` (default) or `"outline"` |
+| Status | `status`: `"success"`, `"warning"`, `"error"`, `"info"`, `"neutral"` |
+| Progress | `value` (0-100) |
+
+## TREE COMPONENT
+
+The Tree is the primary navigation component for hierarchical data in Databricks (catalogs, files, schemas). It is NOT the same as Navbar — use Navbar for flat product-area navigation, Tree for browsable hierarchies.
+
+### Data Tree (catalog browsing)
+
+Use `DataTreeView` for the data-driven API. Pass `sections` with `TreeSectionData[]`:
+
+```tsx
+import { DataTreeView, type TreeSectionData } from "dbui/components/ui/data-tree"
+import { dataEntityIcons, columnTypeIcons } from "dbui/components/icons/entity-icons"
+
+const sections: TreeSectionData[] = [
+  {
+    label: "My organization",
+    defaultExpanded: true,
+    nodes: [
+      {
+        id: "cat-main", label: "main",
+        icon: dataEntityIcons.catalogWorkspace,  // CatalogHome icon
+        children: [
+          {
+            id: "schema-default", label: "default",
+            icon: dataEntityIcons.schema,          // Database icon
+            children: [
+              { id: "tbl-users", label: "users", icon: dataEntityIcons.table, leaf: false,
+                children: [
+                  { id: "col-id", label: "id", icon: columnTypeIcons.id, leaf: true, selectable: false },
+                  { id: "col-name", label: "name", icon: columnTypeIcons.string, leaf: true, selectable: false },
+                ]
+              },
+              { id: "view-active", label: "active_users", icon: dataEntityIcons.view },
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  { label: "Shared", nodes: [...] },
+  { label: "Legacy", nodes: [...] }
+]
+
+<DataTreeView
+  sections={sections}
+  onSelect={(id) => navigate(id)}
+  onFocusNode={(id, label, icon) => setRoot({ id, label, icon })}
+  onNodeMenu={(id, label) => openContextMenu(id)}
+/>
+```
+
+### TreeNode shape
+
+```ts
+type TreeNode = {
+  id: string              // stable ID for callbacks
+  label: string           // display text
+  icon?: ReactNode        // from entity-icons.ts — NEVER guess
+  iconExpanded?: ReactNode // alternate icon when expanded (e.g., FolderOpen)
+  selectable?: boolean    // default true — set false for columns, section headers
+  leaf?: boolean          // default false — true hides chevron (columns, files)
+  children?: TreeNode[]   // nested nodes
+  trailing?: ReactNode    // trailing content (tags, badges)
+  defaultExpanded?: boolean
+}
+```
+
+### File Tree (workspace files)
+
+```tsx
+import { FileTreeView } from "dbui/components/ui/data-tree"
+import { fileEntityIcons } from "dbui/components/icons/entity-icons"
+
+const nodes = [
+  { id: "f1", label: "src", icon: fileEntityIcons.folder, iconExpanded: fileEntityIcons.folderOpen,
+    children: [
+      { id: "f2", label: "main.py", icon: fileEntityIcons.notebook, leaf: true },
+      { id: "f3", label: "utils.py", icon: fileEntityIcons.file, leaf: true },
+    ]
+  }
+]
+
+<FileTreeView nodes={nodes} onSelect={(id) => openFile(id)} />
+```
+
+### Tree behavior rules (matches Figma spec)
+
+- **Indentation:** 8px per depth level (via chevron area width, NOT paddingLeft)
+- **Selection:** `bg-active` (#F0F8FF) on selectable rows. Non-selectable rows (columns): `hover:bg-muted` only.
+- **Icons:** `text-foreground` when selected or expanded, `text-muted-foreground` otherwise
+- **Chevrons:** collapsed = `text-input` (subtle), expanded = `text-muted-foreground` (bolder)
+- **Trail lines:** dark `border-foreground` on last-expanded node, light `border-border` on others
+- **Keyboard:** ArrowUp/Down move focus, ArrowRight expands, ArrowLeft collapses
+- **Hover actions:** Target (focus/set-as-root) + Overflow (menu) appear on hover for selectable+expandable nodes
+- **Empty state:** "No items" in `text-muted-foreground` when expandable node has no children
+- **Max depth:** 6 levels — beyond that, use "set as root" (onFocusNode callback) to flatten
+
+### Entity icon reference (from entity-icons.ts)
+
+| Entity | Icon key | Icon component |
+|--------|----------|----------------|
+| Catalog (personal) | `catalogPersonal` | CatalogUserHome |
+| Catalog (workspace) | `catalogWorkspace` | CatalogHome |
+| Catalog (standard) | `catalog` | Catalog |
+| Catalog (shared) | `catalogShared` | CatalogShared |
+| Catalog (system) | `catalogSystem` | CatalogGear |
+| Schema | `schema` | Database |
+| Table | `table` | Table |
+| View | `view` | TableView |
+| Streaming table | `streamingTable` | TableStream |
+| Model | `model` | Models |
+| Volume | `volume` | FolderCloud |
+| Function | `function` | Function |
+| Column (ID/key) | `id` | Hash |
+| Column (integer) | `integer` | Numbers |
+| Column (string) | `string` | Letters |
+| Column (boolean) | `boolean` | Binary |
+| Column (timestamp) | `timestamp` | CalendarClock |
+
 ## COMPOSITION RECIPES
 
-### Recipe: Full product page
+### Recipe: Full product page (Platform Shell)
 
 Every Databricks page uses the Platform Shell. Content goes inside the white surface.
 
@@ -126,6 +269,193 @@ Every Databricks page uses the Platform Shell. Content goes inside the white sur
     <main className="flex-1 min-w-0 min-h-0 overflow-y-auto bg-background border border-border rounded-lg">
       {/* Breadcrumb → Title row → Tabs → Content */}
     </main>
+  </div>
+</div>
+```
+
+### Recipe: Detail page with sidebar (Catalog Explorer, Table details, etc.)
+
+The most common Databricks page: tree nav on left, main content center, metadata sidebar right.
+
+```tsx
+<div className="flex flex-1 min-h-0">
+  {/* Left: Tree navigation — 260px, scrolls independently */}
+  <aside className="w-[260px] shrink-0 overflow-y-auto border-r border-border">
+    {/* Tree header: root switcher + action buttons */}
+    <div className="flex items-center justify-between px-2 py-2">
+      <button className="flex items-center gap-1.5 rounded-sm px-2 py-1 text-[13px] font-semibold hover:bg-hover">
+        <Data className="size-4 text-muted-foreground" />
+        Catalog
+      </button>
+      <div className="flex items-center gap-1">
+        <Button size="icon-md" variant="ghost" aria-label="Create"><Plus /></Button>
+        <Button size="icon-md" variant="ghost" aria-label="Refresh"><Refresh /></Button>
+        <Button size="icon-md" variant="ghost" aria-label="More"><Overflow /></Button>
+      </div>
+    </div>
+    {/* Search + filter */}
+    <div className="px-2 pb-2">
+      <InputGroup>
+        <InputGroupAddon><Search /></InputGroupAddon>
+        <InputGroupInput placeholder="Search..." />
+        <InputGroupButton><Sliders /></InputGroupButton>
+      </InputGroup>
+    </div>
+    {/* Data tree */}
+    <DataTreeView sections={sections} onSelect={handleSelect} onFocusNode={handleFocus} />
+  </aside>
+
+  {/* Center: Main content — scrolls independently */}
+  <main className="flex-1 min-w-0 overflow-y-auto">
+    {/* Breadcrumb */}
+    <div className="px-6 pt-4">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem><BreadcrumbLink>Catalog</BreadcrumbLink></BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem><BreadcrumbLink>main</BreadcrumbLink></BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem><BreadcrumbPage>users</BreadcrumbPage></BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    </div>
+
+    {/* Title row: icon + name + actions */}
+    <div className="flex items-center justify-between px-6 py-3">
+      <div className="flex items-center gap-2">
+        <TableIcon className="size-5 text-muted-foreground" />
+        <h1 className="text-[22px] font-semibold">table_name</h1>
+        <Badge variant="outline"><CertifiedFill className="size-3 text-success" />Certified</Badge>
+      </div>
+      <div className="flex items-center gap-2">
+        <Button variant="outline">Open in a dashboard</Button>
+        <Button variant="outline"><ButtonIcon><Share /></ButtonIcon>Share<ButtonChevron /></Button>
+        <Button>Create<ButtonChevron /></Button>
+      </div>
+    </div>
+
+    {/* Tabs */}
+    <div className="px-6">
+      <Tabs defaultValue="overview">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="explore">Explore Data</TabsTrigger>
+          <TabsTrigger value="details">Details</TabsTrigger>
+          <TabsTrigger value="permissions">Permissions</TabsTrigger>
+          <TabsTrigger value="history">History</TabsTrigger>
+          <TabsTrigger value="lineage">Lineage</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview">
+          {/* Tab content here */}
+        </TabsContent>
+      </Tabs>
+    </div>
+  </main>
+
+  {/* Right: Metadata sidebar — 280px, scrolls independently */}
+  <aside className="w-[280px] shrink-0 overflow-y-auto border-l border-border px-4 py-4">
+    {/* Section: About this table */}
+    <h3 className="text-[13px] font-semibold mb-3">About this table</h3>
+    <KeyValuePair>
+      <KeyValueRow><KeyValueKey>Owner</KeyValueKey><KeyValueValue>Jocelyn Hickcox</KeyValueValue></KeyValueRow>
+      <KeyValueRow><KeyValueKey>Data source</KeyValueKey><KeyValueValue><Badge>Delta</Badge></KeyValueValue></KeyValueRow>
+      <KeyValueRow><KeyValueKey>Last updated</KeyValueKey><KeyValueValue>11 hours ago</KeyValueValue></KeyValueRow>
+      <KeyValueRow><KeyValueKey>Size</KeyValueKey><KeyValueValue>2.4GiB, 21 files</KeyValueValue></KeyValueRow>
+    </KeyValuePair>
+    <Button variant="link" className="mt-2">All details</Button>
+
+    <Separator className="my-4" />
+
+    {/* Section: Quality */}
+    <h3 className="text-[13px] font-semibold mb-3">Quality</h3>
+    <div className="flex items-center gap-2">
+      <Status status="success" />
+      <span className="text-[13px]">Healthy</span>
+      <span className="text-[12px] text-muted-foreground">since 8 hours</span>
+    </div>
+
+    <Separator className="my-4" />
+
+    {/* Section: Tags */}
+    <h3 className="text-[13px] font-semibold mb-3">Tags</h3>
+    <div className="flex flex-wrap gap-1">
+      <Badge variant="outline">system.certified</Badge>
+      <Badge variant="outline">Domain: Agriculture</Badge>
+      <Badge variant="outline">EMEA</Badge>
+    </div>
+
+    <Separator className="my-4" />
+
+    {/* Section: Insights — linked entities */}
+    <h3 className="text-[13px] font-semibold mb-3">Insights</h3>
+    <div className="flex flex-col gap-3">
+      <div>
+        <span className="text-[12px] text-muted-foreground">Top users</span>
+        <div className="flex flex-col gap-1 mt-1">
+          <div className="flex items-center gap-2 text-[13px]">
+            <Avatar className="size-5"><AvatarFallback>PW</AvatarFallback></Avatar>
+            Peter Wang
+          </div>
+        </div>
+      </div>
+      <div>
+        <span className="text-[12px] text-muted-foreground">Top joins</span>
+        <div className="flex flex-col gap-1 mt-1">
+          <a className="flex items-center gap-1.5 text-[13px] text-primary hover:underline">
+            <TableIcon className="size-4 text-muted-foreground" />customer_lifetime_value
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+```
+
+### Recipe: Columns table with types and tags
+
+```tsx
+<div className="px-6 py-4">
+  <div className="flex items-center justify-between mb-3">
+    <h2 className="text-[18px] font-semibold">Columns</h2>
+    <Input placeholder="Filter columns" className="w-[200px]" />
+  </div>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Column</TableHead>
+        <TableHead>Type</TableHead>
+        <TableHead>Comment</TableHead>
+        <TableHead>Tags</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[13px]">user_id</span>
+            <Badge variant="outline" className="text-[11px]">PK</Badge>
+          </div>
+        </TableCell>
+        <TableCell className="text-muted-foreground">bigint</TableCell>
+        <TableCell className="text-muted-foreground">Primary key for users table</TableCell>
+        <TableCell>
+          <div className="flex gap-1">
+            <Badge variant="outline">PII</Badge>
+          </div>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+  <div className="flex items-center justify-between mt-3">
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem><PaginationPrevious /></PaginationItem>
+        <PaginationItem><PaginationLink isActive>1</PaginationLink></PaginationItem>
+        <PaginationItem><PaginationLink>2</PaginationLink></PaginationItem>
+        <PaginationItem><PaginationNext /></PaginationItem>
+      </PaginationContent>
+    </Pagination>
+    <span className="text-[12px] text-muted-foreground">10 / page</span>
   </div>
 </div>
 ```
@@ -222,7 +552,6 @@ Every Databricks page uses the Platform Shell. Content goes inside the white sur
     Actions<ButtonChevron />
   </DropdownMenuTrigger>
   <DropdownMenuContent align="start">
-    {/* Icon items */}
     <DropdownMenuItem>
       <DropdownMenuItemIcon><Pencil /></DropdownMenuItemIcon>
       Edit
@@ -233,7 +562,6 @@ Every Databricks page uses the Platform Shell. Content goes inside the white sur
       Duplicate
     </DropdownMenuItem>
 
-    {/* Grouped section */}
     <DropdownMenuSeparator />
     <DropdownMenuGroup>
       <DropdownMenuLabel>Move to</DropdownMenuLabel>
@@ -251,12 +579,7 @@ Every Databricks page uses the Platform Shell. Content goes inside the white sur
 </DropdownMenu>
 ```
 
-### Recipe: Adding a new menu item to an existing menu
-
-When adding a feature that starts with a menu item:
-1. Find the existing `<DropdownMenuContent>` in the target component
-2. Add a `<DropdownMenuItem>` with appropriate icon from DBUI icons
-3. If the item opens a dialog/drawer, wrap the menu in the overlay's root and use the item as trigger:
+### Recipe: Menu item that opens a dialog
 
 ```tsx
 <Dialog>
@@ -270,9 +593,7 @@ When adding a feature that starts with a menu item:
       </DialogTrigger>
     </DropdownMenuContent>
   </DropdownMenu>
-  <DialogContent>
-    {/* Dialog content here */}
-  </DialogContent>
+  <DialogContent>{/* Dialog content here */}</DialogContent>
 </Dialog>
 ```
 
@@ -324,6 +645,67 @@ Rule: Error message replaces helper text — never stack both.
 </div>
 ```
 
+### Recipe: Metadata sidebar section
+
+Reusable pattern for the right-hand inspector panel on detail pages.
+
+```tsx
+{/* Section with key-value pairs */}
+<div>
+  <h3 className="text-[13px] font-semibold mb-3">About this table</h3>
+  <KeyValuePair>
+    <KeyValueRow>
+      <KeyValueKey>Owner</KeyValueKey>
+      <KeyValueValue>Jocelyn Hickcox</KeyValueValue>
+    </KeyValueRow>
+    <KeyValueRow>
+      <KeyValueKey>Data source</KeyValueKey>
+      <KeyValueValue><Badge>Delta</Badge></KeyValueValue>
+    </KeyValueRow>
+  </KeyValuePair>
+</div>
+<Separator className="my-4" />
+
+{/* Section with status indicator */}
+<div>
+  <h3 className="text-[13px] font-semibold mb-3">Quality</h3>
+  <div className="flex items-center gap-2">
+    <Status status="success" />
+    <span className="text-[13px]">Healthy</span>
+    <span className="text-[12px] text-muted-foreground">since 8 hours</span>
+  </div>
+</div>
+<Separator className="my-4" />
+
+{/* Section with tags */}
+<div>
+  <h3 className="text-[13px] font-semibold mb-3">Tags</h3>
+  <div className="flex flex-wrap gap-1">
+    <Badge variant="outline">system.certified</Badge>
+    <Badge variant="outline">Domain: Agriculture</Badge>
+  </div>
+</div>
+```
+
+### Recipe: Badge with icon (certified, status, source type)
+
+```tsx
+{/* Certified badge — green icon + text */}
+<Badge variant="outline">
+  <CertifiedFill className="size-3 text-success" />
+  Certified
+</Badge>
+
+{/* Data source badge — filled */}
+<Badge>Delta</Badge>
+
+{/* Tag badges — outline, wrapping */}
+<div className="flex flex-wrap gap-1">
+  <Badge variant="outline">system.certified</Badge>
+  <Badge variant="outline">EMEA</Badge>
+</div>
+```
+
 ## NESTED COMPONENT MAPPING
 
 These are the inner components that compose larger ones. Know these to assemble correctly.
@@ -349,28 +731,34 @@ Sizes: sm (24px), md (32px), icon-sm (24px square), icon-md (32px square)
   <DropdownMenuItemBadge>3</...>                        ← optional trailing count
 </DropdownMenuItem>
 ```
-Menu row types: Item, CheckboxItem, RadioItem, SubTrigger, Label (section header), Separator, Search, Empty, Loading, Footer
 
 ### Alert anatomy
 ```
 <Alert variant="warning">
-  <AlertIcon><WarningFill /></AlertIcon>    ← required (provides severity beyond color)
+  <AlertIcon><WarningFill /></AlertIcon>
   <AlertContent>
-    <AlertTitle>Title</AlertTitle>          ← required
+    <AlertTitle>Title</AlertTitle>
     <AlertDescription>Details</AlertDescription>
-    <AlertAction><Button>Fix</Button></AlertAction>  ← optional (stacked layout)
   </AlertContent>
-  <AlertAction><Button>Fix</Button></AlertAction>    ← optional (inline layout)
-  <AlertClose />                                      ← optional (omit for critical)
+  <AlertClose />
 </Alert>
 ```
 
 ### Table cell types
 ```
 <TableCell>Plain text</TableCell>
-<TableCell><TableCellTitle><TableCellIcon>{icon}</TableCellIcon><TableCellTitleContent><span>Name</span><TableCellMeta>metadata</TableCellMeta></TableCellTitleContent></TableCellTitle></TableCell>
+<TableCell><TableCellTitle><TableCellIcon>{icon}</TableCellIcon><TableCellTitleContent><span>Name</span><TableCellMeta>meta</TableCellMeta></TableCellTitleContent></TableCellTitle></TableCell>
 <TableCell><TableCellStatus><TableCellIcon><Status /></TableCellIcon>Running</TableCellStatus></TableCell>
-<TableCell><TableCellUser><Avatar /><span>user@example.com</span></TableCellUser></TableCell>
+```
+
+### Tree node (data-driven)
+```
+{ id: "unique-id", label: "Display name", icon: <IconComponent />,
+  selectable: true,   // can be selected (default true)
+  leaf: false,         // no children possible (hides chevron)
+  children: [...],     // nested nodes
+  trailing: <Badge />, // optional trailing content
+  defaultExpanded: false }
 ```
 
 ### Form field pattern
@@ -386,7 +774,7 @@ Spacing: Label → Input = gap-1.5 (6px). Field → Field = gap-4 (16px).
 ### Nav item pattern
 ```
 <NavbarItem active={isActive} onClick={handleClick}>
-  <NavbarItemIcon><Data /></NavbarItemIcon>    ← required — sidebar is icon-first
+  <NavbarItemIcon><Data /></NavbarItemIcon>
   Catalog
 </NavbarItem>
 ```
@@ -396,7 +784,7 @@ Spacing: Label → Input = gap-1.5 (6px). Field → Field = gap-4 (16px).
 451 icons with semantic tags. Each icon has: `/** use:<category> <concept> | <synonyms> */`
 
 **Categories:**
-- `use:object` — Databricks product concepts (nav items, table cells, cards)
+- `use:object` — Databricks product concepts (nav items, table cells, cards, tree nodes)
 - `use:action` — Verbs (buttons, toolbar actions, menu items)
 - `use:indicator` — Status/state (badges, alerts, status cells)
 - `use:component` — Control chrome only (chevrons, checks, close — don't use outside their control)
@@ -426,6 +814,8 @@ grep "use:action delete" packages/dbui/src/components/icons/          # by actio
 - Ghost buttons: prefer icon-only. Ghost + icon + label competes with Outline.
 - Menu triggers: outline or secondary, never primary. The chevron is the affordance.
 - Max one Primary button per visible area.
+- Icon-only buttons (`size="icon-md"`) use `text-muted-foreground` automatically.
+- Icons inside buttons (via `<ButtonIcon>`) are `text-muted-foreground` automatically.
 
 ### Menus
 - Popup left-aligns with trigger (`align="start"`)
@@ -446,14 +836,31 @@ grep "use:action delete" packages/dbui/src/components/icons/          # by actio
 - Validation is border-only — no ring shadows on inputs.
 
 ### Navigation
+- **Navbar** = flat product-area navigation (Catalog, SQL Editor, Compute, etc.)
+- **Tree** = hierarchical browsable data (catalogs → schemas → tables, folders → files)
 - Every NavbarItem MUST have an icon (sidebar is icon-first)
 - Active item: bg-accent + text-accent-foreground + font-semibold
 - Section headers: 12px Regular muted-foreground with collapse chevron
+
+### Trees
+- Every tree node MUST have an icon — use entity-icons.ts mappings
+- Leaf nodes (columns, files): `leaf: true` hides the chevron
+- Non-selectable nodes (columns, section headers): `selectable: false` uses grey hover, no selection highlight
+- Use `DataTreeView` for sectioned data (My organization / Shared / Legacy)
+- Use `FileTreeView` for flat file trees (no sections)
+- Tree search: filter nodes recursively by label match, preserving parent chain
 
 ### Tables
 - Sort indicator visible on sortable columns even when unsorted
 - Row hover: bg-muted/50
 - Header: font-semibold. Body: font-normal.
+
+### Detail pages
+- Three-column layout: tree nav (260px) | main content (flex-1) | metadata sidebar (280px)
+- Each column scrolls independently
+- Metadata sidebar sections separated by `<Separator className="my-4" />`
+- Section headers: 13px Semibold, mb-3
+- Linked entities (top joins, references): `text-primary hover:underline` with entity icon
 
 ### Layout
 - Page padding: px-6 py-4 inside content surface
@@ -488,10 +895,9 @@ Import `dbui/tokens/globals.css` in your root CSS. This provides all semantic co
 ## KNOWN GAPS
 
 These components are planned but not yet available:
-- Tree — tree view for catalog/file browsing (P1, in progress)
 - DatePicker — calendar + popover + range modes (P1, complex)
-- Stepper — multi-step wizard (P1, compose from Tabs + custom state as interim)
+- Stepper — multi-step wizard (compose from Tabs + custom state as interim)
 - Banner — full-width system notification bar
-- CodeBlock — syntax-highlighted code display
+- CodeBlock — syntax-highlighted code display (use `<div className="rounded-md bg-code-background p-4 font-mono text-[13px]">` as interim)
 - Chart — uses Vega, not part of DBUI
 - Virtualized lists — for 1000+ items in Select/Combobox (use react-window)
