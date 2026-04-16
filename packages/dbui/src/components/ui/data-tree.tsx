@@ -125,6 +125,7 @@ function TreeItem({
   label,
   trailing,
   selected = false,
+  selectable = true,
   defaultExpanded = false,
   expanded: controlledExpanded,
   expandable = false,
@@ -140,6 +141,8 @@ function TreeItem({
   label: string
   trailing?: React.ReactNode
   selected?: boolean
+  /** Whether this node can be selected. False for columns, section headers. Default: true */
+  selectable?: boolean
   defaultExpanded?: boolean
   expanded?: boolean
   expandable?: boolean
@@ -169,9 +172,10 @@ function TreeItem({
       setHighlighted(next ? idRef.current : parentId)
       onToggle?.(next)
     }
-    // Always select on click
-    setTreeSelected(idRef.current)
-    onSelect?.()
+    if (selectable) {
+      setTreeSelected(idRef.current)
+      onSelect?.()
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -229,8 +233,8 @@ function TreeItem({
         aria-expanded={isExpandable ? isExpanded : undefined}
         className={cn(
           "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 text-[13px] leading-[20px] text-left transition-colors",
-          "hover:bg-hover",
-          isSelected && "bg-active",
+          selectable ? "hover:bg-hover" : "hover:bg-muted",
+          isSelected && selectable && "bg-active",
           "text-foreground",
           className
         )}

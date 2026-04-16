@@ -37,22 +37,22 @@ function DataTreeExample() {
           <TreeItem icon={<CatalogUserHome />} label="my_catalog" defaultExpanded depth={1}>
             <TreeItem icon={<Database />} label="main" defaultExpanded depth={2}>
               <TreeItem icon={<Table />} label="cancelled_orders" depth={3}>
-                <TreeItem icon={<Hash />} label="order_id" depth={4} />
-                <TreeItem icon={<Hash />} label="customer_id" depth={4} />
-                <TreeItem icon={<Numbers />} label="amount_usd" depth={4} />
+                <TreeItem icon={<Hash />} label="order_id" depth={4} selectable={false} />
+                <TreeItem icon={<Hash />} label="customer_id" depth={4} selectable={false} />
+                <TreeItem icon={<Numbers />} label="amount_usd" depth={4} selectable={false} />
               </TreeItem>
               <TreeItem icon={<Table />} label="customer_order_details" defaultExpanded depth={3}>
-                <TreeItem icon={<Hash />} label="order_id" depth={4} />
-                <TreeItem icon={<Hash />} label="customer_id" depth={4} />
-                <TreeItem icon={<Numbers />} label="order_subtotal_usd" depth={4} />
-                <TreeItem icon={<Numbers />} label="order_tax_usd" depth={4} />
-                <TreeItem icon={<Decimal />} label="order_discount_usd" depth={4} />
-                <TreeItem icon={<CalendarClock />} label="order_received_date" depth={4} />
-                <TreeItem icon={<CalendarClock />} label="order_shipped_date" depth={4} />
-                <TreeItem icon={<Letters />} label="shipping_address" depth={4} />
-                <TreeItem icon={<Letters />} label="billing_address" depth={4} />
-                <TreeItem icon={<Letters />} label="payment_method" depth={4} />
-                <TreeItem icon={<Binary />} label="is_gift" depth={4} />
+                <TreeItem icon={<Hash />} label="order_id" depth={4} selectable={false} />
+                <TreeItem icon={<Hash />} label="customer_id" depth={4} selectable={false} />
+                <TreeItem icon={<Numbers />} label="order_subtotal_usd" depth={4} selectable={false} />
+                <TreeItem icon={<Numbers />} label="order_tax_usd" depth={4} selectable={false} />
+                <TreeItem icon={<Decimal />} label="order_discount_usd" depth={4} selectable={false} />
+                <TreeItem icon={<CalendarClock />} label="order_received_date" depth={4} selectable={false} />
+                <TreeItem icon={<CalendarClock />} label="order_shipped_date" depth={4} selectable={false} />
+                <TreeItem icon={<Letters />} label="shipping_address" depth={4} selectable={false} />
+                <TreeItem icon={<Letters />} label="billing_address" depth={4} selectable={false} />
+                <TreeItem icon={<Letters />} label="payment_method" depth={4} selectable={false} />
+                <TreeItem icon={<Binary />} label="is_gift" depth={4} selectable={false} />
               </TreeItem>
               <TreeItem icon={<Table />} label="customer_feedback" depth={3} expandable />
               <TreeItem icon={<Table />} label="discount_usage" depth={3} expandable />
