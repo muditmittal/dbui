@@ -189,23 +189,36 @@ export function FacetedFilter({
         </Popover.Root>
       </div>
 
-      {/* Filter chips row — below the input, pushes tree down */}
-      {selectedChips.length > 0 && (
+      {/* Filter chips row — one chip per facet, grouped */}
+      {Object.keys(selected).length > 0 && (
         <div className="flex flex-wrap items-center gap-1 pt-2">
-          {selectedChips.map((chip) => (
-            <span
-              key={`${chip.facet}:${chip.value}`}
-              className="inline-flex items-center gap-0.5 rounded-sm bg-accent px-1.5 py-0.5 text-[12px] text-primary whitespace-nowrap"
-            >
-              {chip.facet}: {chip.value}
-              <button
-                className="ml-0.5 text-primary/60 hover:text-primary [&_svg]:size-3"
-                onClick={() => toggleValue(chip.facet, chip.value)}
+          {Object.entries(selected).map(([facet, values]) => {
+            const arr = Array.from(values)
+            const first = arr[0]
+            const extra = arr.length - 1
+            return (
+              <span
+                key={facet}
+                className="inline-flex max-w-[200px] items-center gap-1 rounded-sm bg-active px-1.5 py-0.5 text-[12px]"
               >
-                <Close />
-              </button>
-            </span>
-          ))}
+                <span className="text-muted-foreground shrink-0">{facet}:</span>
+                <span className="truncate text-foreground">{first}</span>
+                {extra > 0 && <span className="shrink-0 text-muted-foreground">+{extra}</span>}
+                <button
+                  className="ml-0.5 shrink-0 rounded-sm p-0.5 text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press [&_svg]:size-3"
+                  onClick={() => {
+                    setSelected((prev) => {
+                      const next = { ...prev }
+                      delete next[facet]
+                      return next
+                    })
+                  }}
+                >
+                  <Close />
+                </button>
+              </span>
+            )
+          })}
           <button className="text-[12px] text-primary hover:underline whitespace-nowrap" onClick={resetAll}>Reset</button>
         </div>
       )}
