@@ -147,14 +147,19 @@ export function FacetedFilter({
 
                         if (hasNested) {
                           return (
-                            <button
-                              key={value}
-                              className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover cursor-default"
-                              onClick={() => setActiveNested(value)}
-                            >
+                            <div key={value} className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover cursor-default">
+                              <Checkbox
+                                checked={checked}
+                                onCheckedChange={() => toggleValue(activeFacet, value)}
+                              />
                               <span className="flex-1 text-left">{value}</span>
-                              <span className="text-muted-foreground [&_svg]:size-4"><ChevronRight /></span>
-                            </button>
+                              <button
+                                className="text-muted-foreground [&_svg]:size-4"
+                                onClick={() => setActiveNested(value)}
+                              >
+                                <ChevronRight />
+                              </button>
+                            </div>
                           )
                         }
 
