@@ -14,15 +14,15 @@ import { ChevronDown } from "../icons/ChevronDown"
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3211-5106
  */
 
-// ─── DataTree Root ───
+// ─── Tree Root ───
 
-function DataTree({
+function Tree({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="data-tree"
+      data-slot="tree"
       role="tree"
       className={cn("flex flex-col", className)}
       {...props}
@@ -30,57 +30,10 @@ function DataTree({
   )
 }
 
-// ─── DataTreeHeader — "Focused folder" type ───
-// The top bar showing current context: back button + root switcher + actions.
-// Figma: h-10, px-2, gap-2. Contains back chevron, icon+label chip, spacer, action icons.
+// ─── TreeSection — collapsible group header (Data Tree variant) ───
+// Figma: h-7, chevron + 12px Regular muted-foreground label.
 
-function DataTreeHeader({
-  className,
-  children,
-  icon,
-  onBack,
-  actions,
-  status,
-  ...props
-}: React.ComponentProps<"div"> & {
-  icon?: React.ReactNode
-  onBack?: () => void
-  actions?: React.ReactNode
-  status?: React.ReactNode
-}) {
-  return (
-    <div
-      data-slot="data-tree-header"
-      className={cn("flex h-10 items-center gap-2 px-2", className)}
-      {...props}
-    >
-      {onBack && (
-        <button
-          onClick={onBack}
-          className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground"
-          aria-label="Go back"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      )}
-      <div className="flex items-center gap-1 rounded-sm bg-muted px-2 py-1">
-        {icon && <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{icon}</span>}
-        <span className="truncate text-[13px] leading-[20px] text-foreground">{children}</span>
-      </div>
-      {status}
-      <span className="flex-1" />
-      {actions && <div className="flex items-center gap-1 shrink-0">{actions}</div>}
-    </div>
-  )
-}
-
-// ─── DataTreeSection — "Header" type ───
-// Collapsible group with a section title label.
-// Figma: h-7, px-1, gap-1. Chevron + 12px Regular muted-foreground label.
-
-function DataTreeSection({
+function TreeSection({
   className,
   label,
   defaultExpanded = true,
@@ -94,7 +47,7 @@ function DataTreeSection({
 
   return (
     <div
-      data-slot="data-tree-section"
+      data-slot="tree-section"
       className={cn("flex flex-col", className)}
       {...props}
     >
@@ -114,44 +67,68 @@ function DataTreeSection({
   )
 }
 
-// ─── DataTreeItem — "Open folder" and "File" types ───
-// A single tree node: chevron (if expandable) + icon + label + optional trailing.
-// Figma: h-7, px-1, gap-1. Depth via paddingLeft (4 + depth * 16).
-// States: default (transparent), hover (bg-hover 8%), selected (bg-accent).
+// ─── TreeItem — folder or file node ───
+// Self-manages expand state internally. Can also be controlled via expanded/onToggle.
+// Trail lines: a vertical border-left on the children container shows indent guides.
 
-function DataTreeItem({
+function TreeItem({
   className,
   icon,
+  iconExpanded,
   label,
   trailing,
   selected = false,
-  expanded,
+  defaultExpanded = false,
+  expanded: controlledExpanded,
   expandable = false,
   depth = 0,
+  showTrailLine = true,
   onToggle,
-  onClick,
+  onSelect,
   children,
   ...props
-}: Omit<React.ComponentProps<"button">, "onClick"> & {
+}: Omit<React.ComponentProps<"button">, "onSelect"> & {
   icon?: React.ReactNode
+  /** Alternate icon shown when expanded (e.g., FolderOpen for File Tree) */
+  iconExpanded?: React.ReactNode
   label: string
   trailing?: React.ReactNode
   selected?: boolean
+  defaultExpanded?: boolean
+  /** Controlled expanded state — overrides internal state */
   expanded?: boolean
   expandable?: boolean
   depth?: number
-  onToggle?: () => void
-  onClick?: () => void
+  /** Show vertical trail line connecting children to parent (default: true) */
+  showTrailLine?: boolean
+  onToggle?: (expanded: boolean) => void
+  onSelect?: () => void
 }) {
+  const [internalExpanded, setInternalExpanded] = React.useState(defaultExpanded)
+  const isExpanded = controlledExpanded ?? internalExpanded
+  const hasChildren = expandable || React.Children.count(children) > 0
+  const isExpandable = hasChildren
+
+  const handleClick = () => {
+    if (isExpandable) {
+      const next = !isExpanded
+      setInternalExpanded(next)
+      onToggle?.(next)
+    }
+    onSelect?.()
+  }
+
+  const activeIcon = isExpanded && iconExpanded ? iconExpanded : icon
+
   return (
     <>
       <button
-        data-slot="data-tree-item"
+        data-slot="tree-item"
         data-selected={selected || undefined}
-        data-expanded={expanded || undefined}
+        data-expanded={isExpanded || undefined}
         role="treeitem"
         aria-selected={selected}
-        aria-expanded={expandable ? expanded : undefined}
+        aria-expanded={isExpandable ? isExpanded : undefined}
         className={cn(
           "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 text-[13px] leading-[20px] text-left transition-colors",
           "hover:bg-hover",
@@ -160,16 +137,13 @@ function DataTreeItem({
           className
         )}
         style={{ paddingLeft: `${4 + depth * 16}px` }}
-        onClick={(e) => {
-          if (expandable && onToggle) onToggle()
-          onClick?.()
-        }}
+        onClick={handleClick}
         {...props}
       >
         {/* Chevron */}
-        {expandable ? (
+        {isExpandable ? (
           <span className="flex size-4 shrink-0 items-center justify-center text-muted-foreground">
-            {expanded
+            {isExpanded
               ? <ChevronDown className="size-3" />
               : <ChevronRight className="size-3" />
             }
@@ -179,19 +153,19 @@ function DataTreeItem({
         )}
 
         {/* Icon */}
-        {icon && (
+        {activeIcon && (
           <span className={cn(
             "flex shrink-0 items-center [&_svg]:size-4",
             selected ? "text-accent-foreground" : "text-muted-foreground"
           )}>
-            {icon}
+            {activeIcon}
           </span>
         )}
 
         {/* Label */}
         <span className="flex-1 truncate">{label}</span>
 
-        {/* Trailing content (tag, badges, action icons) — visible on hover or always */}
+        {/* Trailing content — visible on hover */}
         {trailing && (
           <span className="flex shrink-0 items-center gap-1 text-muted-foreground opacity-0 group-hover/tree-item:opacity-100 transition-opacity">
             {trailing}
@@ -199,21 +173,35 @@ function DataTreeItem({
         )}
       </button>
 
-      {/* Nested children rendered at next depth level */}
-      {expanded && children}
+      {/* Children with trail line */}
+      {isExpanded && children && (
+        <div
+          data-slot="tree-item-children"
+          className={cn(showTrailLine && "relative")}
+        >
+          {/* Vertical trail line */}
+          {showTrailLine && (
+            <div
+              className="absolute top-0 bottom-2 border-l border-border"
+              style={{ left: `${12 + depth * 16}px` }}
+            />
+          )}
+          {children}
+        </div>
+      )}
     </>
   )
 }
 
-// ─── DataTreeItemTag — trailing tag (branch name, type indicator) ───
+// ─── TreeItemTag — optional trailing tag/pill ───
 
-function DataTreeItemTag({
+function TreeItemTag({
   className,
   ...props
 }: React.ComponentProps<"span">) {
   return (
     <span
-      data-slot="data-tree-item-tag"
+      data-slot="tree-item-tag"
       className={cn(
         "inline-flex items-center gap-1 rounded bg-muted px-1.5 text-[12px] leading-[16px] text-muted-foreground",
         className
@@ -224,9 +212,8 @@ function DataTreeItemTag({
 }
 
 export {
-  DataTree,
-  DataTreeHeader,
-  DataTreeSection,
-  DataTreeItem,
-  DataTreeItemTag,
+  Tree,
+  TreeSection,
+  TreeItem,
+  TreeItemTag,
 }
