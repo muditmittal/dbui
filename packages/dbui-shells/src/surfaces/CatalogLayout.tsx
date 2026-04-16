@@ -104,6 +104,7 @@ function CatalogTree({
   allSections,
   focusedNodeId,
   focusPath,
+  goToItems,
   onSelect,
   onFocusNode,
   onUnfocus,
@@ -113,6 +114,7 @@ function CatalogTree({
   allSections: TreeSectionData[]
   focusedNodeId: string | null
   focusPath: BreadcrumbEntry[]
+  goToItems?: BreadcrumbEntry[]
   onSelect?: (id: string) => void
   onFocusNode?: (id: string, label: string, icon?: React.ReactNode) => void
   onUnfocus?: () => void
@@ -152,35 +154,49 @@ function CatalogTree({
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
               <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
+                {/* Path — default shows "Catalog" as root; when focused shows indented breadcrumb */}
                 {focusPath.length > 0 ? (
-                  <>
-                    {focusPath.map((entry, i) => (
+                  focusPath.map((entry, i) => {
+                    const isCurrent = i === focusPath.length - 1
+                    return (
                       <button
                         key={entry.id}
-                        className={`flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] hover:bg-hover ${
-                          i === focusPath.length - 1 ? "bg-active" : ""
-                        } text-foreground`}
+                        className={`flex w-full min-h-7 items-center gap-2 rounded-sm py-1 text-[13px] hover:bg-hover text-foreground ${isCurrent ? "bg-active" : ""}`}
+                        style={{ paddingLeft: `${6 + i * 12}px` }}
                         onClick={() => {
-                          if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
+                          if (i === 0 && focusPath.length === 1 && onUnfocus) onUnfocus()
+                          else if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
                         }}
                       >
                         <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{entry.icon}</span>
-                        {entry.label}
+                        <span className="truncate">{entry.label}</span>
                       </button>
-                    ))}
-                    <div className="my-1 h-px bg-border" />
-                    <button
-                      className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
-                      onClick={onUnfocus}
-                    >
-                      Show all catalogs
-                    </button>
-                  </>
+                    )
+                  })
                 ) : (
-                  <div className="py-2 px-3 text-[13px] text-muted-foreground">
-                    Focus on a node to see the path here
-                  </div>
+                  <button
+                    className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] bg-active text-foreground hover:bg-hover"
+                  >
+                    <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{defaultIcon}</span>
+                    Catalog
+                  </button>
                 )}
+
+                {/* Go to section */}
+                <div className="my-1 h-px bg-border" />
+                <div className="px-1.5 py-1 text-[12px] text-muted-foreground">Go to</div>
+                {(goToItems ?? []).map((item) => (
+                  <button
+                    key={item.id}
+                    className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
+                    onClick={() => {
+                      if (onFocusNode) onFocusNode(item.id, item.label, item.icon)
+                    }}
+                  >
+                    <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{item.icon}</span>
+                    {item.label}
+                  </button>
+                ))}
               </Popover.Popup>
             </Popover.Positioner>
           </Popover.Portal>
@@ -296,6 +312,7 @@ export function CatalogLayout({
   tabs,
   actions,
   filter,
+  goToItems,
   onTreeSelect,
   onTreeSearch,
   children,
@@ -306,6 +323,8 @@ export function CatalogLayout({
   tabs?: string[]
   actions?: React.ReactNode
   filter?: React.ReactNode
+  /** Quick-jump items shown in root switcher dropdown under "Go to" */
+  goToItems?: { id: string; label: string; icon?: React.ReactNode }[]
   onTreeSelect?: (id: string) => void
   onTreeSearch?: (query: string) => void
   children?: React.ReactNode
@@ -361,6 +380,7 @@ export function CatalogLayout({
         allSections={sections}
         focusedNodeId={focusedNodeId}
         focusPath={focusPath}
+        goToItems={goToItems}
         onSelect={onTreeSelect}
         onFocusNode={handleFocus}
         onUnfocus={handleUnfocus}

@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Shell } from "dbui-shells/shell"
 import { CatalogLayout } from "dbui-shells/catalog"
+import React from "react"
 import { FacetedFilter } from "../components/FacetedFilter"
 import { treeSections, catalogItems } from "./catalog-data"
+import { CatalogUserHome } from "@/components/icons/CatalogUserHome"
 
 const meta: Meta = {
   title: "Surfaces/Catalog Explorer",
@@ -30,6 +32,10 @@ export const Playground: StoryObj = {
         items={catalogItems}
         title="Catalog"
         filter={<FacetedFilter facets={catalogFacets} />}
+        goToItems={[
+          { id: "for_you", label: "For you", icon: React.createElement(CatalogUserHome) },
+          { id: "my_catalog", label: "my_catalog", icon: React.createElement(CatalogUserHome) },
+        ]}
       />
     </Shell>
   ),
