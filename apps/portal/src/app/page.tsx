@@ -68,6 +68,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─── Get Started ─── */}
+      <section className="py-24 px-8" style={{ borderTop: `1px solid ${t.border}` }}>
+        <div className="max-w-[800px] mx-auto">
+          <p className="text-[11px] tracking-[0.2em] uppercase mb-4" style={{ fontFamily: mono, color: t.textSubtle }}>
+            Get started
+          </p>
+          <h2 className="text-[34px] leading-[1.1] mb-4" style={{ fontFamily: serif }}>
+            <em>Install in one command.</em>
+          </h2>
+          <p className="text-[19px] mb-12 max-w-[520px] leading-[1.5]" style={{ fontFamily: serif, color: t.textMuted }}>
+            Add DBUI to any React project. All 46 components, 451 icons, and 162 design tokens — ready to use.
+          </p>
+
+          <div className="space-y-6">
+            <div>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>1. Install the package</p>
+              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
+                <code className="text-[14px] block" style={{ fontFamily: mono, color: t.textMuted }}>
+                  yarn add dbui@github:muditmittal/dbui
+                </code>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>2. Import tokens in your global CSS</p>
+              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
+                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
+{`@import "dbui/tokens/globals.css";`}
+                </code>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>3. Use components</p>
+              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
+                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
+{`import { Button } from "dbui/components/ui/button"
+import { Input } from "dbui/components/ui/input"
+import { Search } from "dbui/components/icons/Search"
+
+<Button variant="outline">
+  <ButtonIcon><Search /></ButtonIcon>
+  Search catalogs
+</Button>`}
+                </code>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>4. Feed your LLM the intelligence layer</p>
+              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
+                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
+{`# Copy llms.txt into your AI tool's context
+cat node_modules/dbui/llms.txt | pbcopy`}
+                </code>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-[13px] mt-8" style={{ fontFamily: mono, color: t.textSubtle }}>
+            Feedback? Open an issue at{" "}
+            <a href="https://github.com/muditmittal/dbui/issues" style={{ color: t.primary }}>github.com/muditmittal/dbui</a>
+          </p>
+        </div>
+      </section>
+
       {/* ─── Mapping Preview ─── */}
       <section className="py-24 px-8" style={{ borderTop: `1px solid ${t.border}` }}>
         <div className="max-w-[800px] mx-auto">
