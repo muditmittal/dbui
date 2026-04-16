@@ -16,9 +16,12 @@ export type FacetData = Record<string, {
 export function FacetedFilter({
   facets,
   className,
+  onSearch,
 }: {
   facets: FacetData
   className?: string
+  /** Called when the search input value changes */
+  onSearch?: (query: string) => void
 }) {
   const [open, setOpen] = useState(false)
   const [activeFacet, setActiveFacet] = useState<string | null>(null)
@@ -68,6 +71,7 @@ export function FacetedFilter({
       <div className="group/ig flex items-center rounded-sm border border-transparent focus-within:border-primary focus-within:shadow-xs">
         <input
           placeholder="Search"
+          onChange={(e) => onSearch?.(e.target.value)}
           className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
         />
         {/* Filter button */}

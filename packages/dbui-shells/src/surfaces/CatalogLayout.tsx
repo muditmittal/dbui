@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import { Button } from "dbui/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCellTitle, TableCellIcon, TableCellTitleContent, TableCellMeta } from "dbui/components/ui/table"
@@ -142,6 +142,47 @@ function CatalogLanding({
   )
 }
 
+// ─── Tree filtering ───
+
+type TreeNodeData = {
+  id: string
+  label: string
+  icon?: React.ReactNode
+  iconExpanded?: React.ReactNode
+  selectable?: boolean
+  leaf?: boolean
+  children?: TreeNodeData[]
+  trailing?: React.ReactNode
+  defaultExpanded?: boolean
+}
+
+function filterTreeNodes(nodes: TreeNodeData[], query: string): TreeNodeData[] {
+  if (!query) return nodes
+  const q = query.toLowerCase()
+  return nodes.reduce<TreeNodeData[]>((acc, node) => {
+    const labelMatch = node.label.toLowerCase().includes(q)
+    const filteredChildren = node.children ? filterTreeNodes(node.children, query) : undefined
+    const hasMatchingChildren = filteredChildren && filteredChildren.length > 0
+
+    if (labelMatch || hasMatchingChildren) {
+      acc.push({
+        ...node,
+        children: hasMatchingChildren ? filteredChildren : node.children,
+        defaultExpanded: hasMatchingChildren ? true : node.defaultExpanded,
+      })
+    }
+    return acc
+  }, [])
+}
+
+function filterSections(sections: TreeSectionData[], query: string): TreeSectionData[] {
+  if (!query) return sections
+  return sections.map((section) => ({
+    ...section,
+    nodes: filterTreeNodes(section.nodes, query),
+  })).filter((section) => section.nodes.length > 0)
+}
+
 // ─── Catalog Layout ───
 
 /**
@@ -156,6 +197,7 @@ export function CatalogLayout({
   actions,
   filter,
   onTreeSelect,
+  onTreeSearch,
   children,
 }: {
   sections: TreeSectionData[]
@@ -166,11 +208,30 @@ export function CatalogLayout({
   /** Search/filter component above the tree */
   filter?: React.ReactNode
   onTreeSelect?: (id: string) => void
+  /** Called with search query from the filter component */
+  onTreeSearch?: (query: string) => void
   children?: React.ReactNode
 }) {
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const filteredSections = useMemo(
+    () => filterSections(sections, searchQuery),
+    [sections, searchQuery]
+  )
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    onTreeSearch?.(query)
+  }
+
+  // Clone the filter element to inject onSearch
+  const filterWithSearch = filter && React.isValidElement(filter)
+    ? React.cloneElement(filter as React.ReactElement<any>, { onSearch: handleSearch })
+    : filter
+
   return (
     <div className="flex h-full">
-      <CatalogTree sections={sections} onSelect={onTreeSelect} filter={filter} />
+      <CatalogTree sections={filteredSections} onSelect={onTreeSelect} filter={filterWithSearch} />
       {children ?? (
         <CatalogLanding title={title} items={items} tabs={tabs} actions={actions} />
       )}
