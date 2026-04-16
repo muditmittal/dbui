@@ -16,7 +16,6 @@ import { Numbers } from "@/components/icons/Numbers"
 import { CalendarClock } from "@/components/icons/CalendarClock"
 import { Binary } from "@/components/icons/Binary"
 import { Decimal } from "@/components/icons/Decimal"
-import { useState } from "react"
 import { ComponentMeta } from "./components/ComponentMeta"
 import componentSource from "dbui/components/ui/data-tree?raw"
 
@@ -30,21 +29,19 @@ export default meta
 // ─── Data Tree variant ───
 
 function DataTreeExample() {
-  const [selected, setSelected] = useState("customer_purchase_orders")
-
   return (
     <div className="w-[260px]">
       <Tree>
         <TreeSection label="My organization">
           {/* Catalog (depth 1) → Schema (depth 2) → Table (depth 3) → Column (depth 4) */}
-          <TreeItem icon={<CatalogUserHome />} label="my_catalog" defaultExpanded depth={1} onSelect={() => setSelected("my_catalog")} selected={selected === "my_catalog"}>
-            <TreeItem icon={<Database />} label="main" defaultExpanded depth={2} onSelect={() => setSelected("main")} selected={selected === "main"}>
-              <TreeItem icon={<Table />} label="cancelled_orders" depth={3} onSelect={() => setSelected("cancelled_orders")} selected={selected === "cancelled_orders"}>
+          <TreeItem icon={<CatalogUserHome />} label="my_catalog" defaultExpanded depth={1}>
+            <TreeItem icon={<Database />} label="main" defaultExpanded depth={2}>
+              <TreeItem icon={<Table />} label="cancelled_orders" depth={3}>
                 <TreeItem icon={<Hash />} label="order_id" depth={4} />
                 <TreeItem icon={<Hash />} label="customer_id" depth={4} />
                 <TreeItem icon={<Numbers />} label="amount_usd" depth={4} />
               </TreeItem>
-              <TreeItem icon={<Table />} label="customer_order_details" defaultExpanded depth={3} onSelect={() => setSelected("customer_order_details")} selected={selected === "customer_order_details"}>
+              <TreeItem icon={<Table />} label="customer_order_details" defaultExpanded depth={3}>
                 <TreeItem icon={<Hash />} label="order_id" depth={4} />
                 <TreeItem icon={<Hash />} label="customer_id" depth={4} />
                 <TreeItem icon={<Numbers />} label="order_subtotal_usd" depth={4} />
@@ -87,23 +84,21 @@ function DataTreeExample() {
 // Folders use FolderOpen icon when expanded.
 
 function FileTreeExample() {
-  const [selected, setSelected] = useState("notebook_1")
-
   return (
     <div className="w-[260px]">
       <Tree>
         <TreeItem icon={<Folder />} iconExpanded={<FolderOpen />} label="my_project" defaultExpanded depth={0}>
           <TreeItem icon={<Folder />} iconExpanded={<FolderOpen />} label="src" defaultExpanded depth={1}>
-            <TreeItem icon={<Notebook />} label="notebook_1.py" depth={2} onSelect={() => setSelected("notebook_1")} selected={selected === "notebook_1"} />
-            <TreeItem icon={<Notebook />} label="notebook_2.py" depth={2} onSelect={() => setSelected("notebook_2")} selected={selected === "notebook_2"} />
-            <TreeItem icon={<Notebook />} label="utils.py" depth={2} onSelect={() => setSelected("utils")} selected={selected === "utils"} />
+            <TreeItem icon={<Notebook />} label="notebook_1.py" depth={2} />
+            <TreeItem icon={<Notebook />} label="notebook_2.py" depth={2} />
+            <TreeItem icon={<Notebook />} label="utils.py" depth={2} />
           </TreeItem>
           <TreeItem icon={<Folder />} iconExpanded={<FolderOpen />} label="data" depth={1}>
             <TreeItem icon={<Table />} label="customers.csv" depth={2} />
             <TreeItem icon={<Table />} label="orders.csv" depth={2} />
           </TreeItem>
           <TreeItem icon={<Folder />} iconExpanded={<FolderOpen />} label="configs" depth={1} expandable />
-          <TreeItem icon={<Notebook />} label="README.md" depth={1} onSelect={() => setSelected("readme")} selected={selected === "readme"} />
+          <TreeItem icon={<Notebook />} label="README.md" depth={1} />
         </TreeItem>
       </Tree>
     </div>

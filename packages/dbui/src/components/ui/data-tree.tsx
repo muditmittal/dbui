@@ -19,11 +19,15 @@ import { ChevronDown } from "../icons/ChevronDown"
 type TreeContextValue = {
   highlightedId: string | null
   setHighlighted: (id: string | null) => void
+  selectedId: string | null
+  setSelected: (id: string | null) => void
 }
 
 const TreeContext = React.createContext<TreeContextValue>({
   highlightedId: null,
   setHighlighted: () => {},
+  selectedId: null,
+  setSelected: () => {},
 })
 
 // Parent ID context — each TreeItem tells its children "I am your parent"
@@ -33,12 +37,23 @@ const TreeParentContext = React.createContext<string | null>(null)
 
 function Tree({
   className,
+  defaultSelectedId,
+  onSelect: onSelectProp,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & {
+  defaultSelectedId?: string
+  onSelect?: (id: string) => void
+}) {
   const [highlightedId, setHighlighted] = React.useState<string | null>(null)
+  const [selectedId, setSelectedInternal] = React.useState<string | null>(defaultSelectedId ?? null)
+
+  const setSelected = React.useCallback((id: string | null) => {
+    setSelectedInternal(id)
+    if (id) onSelectProp?.(id)
+  }, [onSelectProp])
 
   return (
-    <TreeContext.Provider value={{ highlightedId, setHighlighted }}>
+    <TreeContext.Provider value={{ highlightedId, setHighlighted, selectedId, setSelected }}>
       <div
         data-slot="tree"
         role="tree"
@@ -141,9 +156,11 @@ function TreeItem({
   const isExpandable = expandable || childCount > 0
 
   const idRef = React.useRef(`tree-item-${++treeItemCounter}`)
-  const { highlightedId, setHighlighted } = React.useContext(TreeContext)
+  const { highlightedId, setHighlighted, selectedId, setSelected: setTreeSelected } = React.useContext(TreeContext)
   const parentId = React.useContext(TreeParentContext)
   const isHighlighted = highlightedId === idRef.current
+  // Use context selection if available, fall back to prop
+  const isSelected = selected !== undefined ? selected : selectedId === idRef.current
 
   const handleClick = () => {
     if (isExpandable) {
@@ -152,6 +169,8 @@ function TreeItem({
       setHighlighted(next ? idRef.current : parentId)
       onToggle?.(next)
     }
+    // Always select on click
+    setTreeSelected(idRef.current)
     onSelect?.()
   }
 
@@ -206,12 +225,12 @@ function TreeItem({
         data-selected={selected || undefined}
         data-expanded={isExpanded || undefined}
         role="treeitem"
-        aria-selected={selected}
+        aria-selected={isSelected}
         aria-expanded={isExpandable ? isExpanded : undefined}
         className={cn(
           "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 text-[13px] leading-[20px] text-left transition-colors",
           "hover:bg-hover",
-          selected && "bg-active",
+          isSelected && "bg-active",
           "text-foreground",
           className
         )}
@@ -243,7 +262,7 @@ function TreeItem({
         {activeIcon && (
           <span className={cn(
             "flex shrink-0 items-center [&_svg]:size-4",
-            selected || isExpanded ? "text-foreground" : "text-muted-foreground"
+            isSelected || isExpanded ? "text-foreground" : "text-muted-foreground"
           )}>
             {activeIcon}
           </span>
