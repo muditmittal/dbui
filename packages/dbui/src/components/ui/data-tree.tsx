@@ -70,7 +70,21 @@ function TreeSection({
       {...props}
     >
       <button
+        data-slot="tree-item"
+        data-section
         onClick={() => setExpanded(!expanded)}
+        onKeyDown={(e) => {
+          const tree = e.currentTarget.closest('[data-slot="tree"]')
+          if (!tree) return
+          const items = Array.from(tree.querySelectorAll<HTMLElement>('[data-slot="tree-item"]'))
+          const index = items.indexOf(e.currentTarget)
+          switch (e.key) {
+            case "ArrowDown": { e.preventDefault(); items[index + 1]?.focus(); break }
+            case "ArrowUp": { e.preventDefault(); items[index - 1]?.focus(); break }
+            case "ArrowRight": { e.preventDefault(); if (!expanded) setExpanded(true); break }
+            case "ArrowLeft": { e.preventDefault(); if (expanded) setExpanded(false); break }
+          }
+        }}
         className="flex h-7 items-center gap-1 px-1 text-[12px] leading-[16px] text-muted-foreground hover:text-foreground"
         aria-expanded={expanded}
       >
