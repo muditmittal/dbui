@@ -132,8 +132,8 @@ function TreeItem({
         className={cn(
           "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 text-[13px] leading-[20px] text-left transition-colors",
           "hover:bg-hover",
-          selected && "bg-accent text-accent-foreground",
-          !selected && "text-foreground",
+          selected && "bg-accent",
+          "text-foreground",
           className
         )}
         style={{ paddingLeft: `${4 + depth * 16}px` }}
@@ -157,10 +157,8 @@ function TreeItem({
 
         {/* Icon */}
         {activeIcon && (
-          <span className={cn(
-            "flex shrink-0 items-center [&_svg]:size-4",
-            selected ? "text-accent-foreground" : "text-muted-foreground"
-          )}>
+          <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+
             {activeIcon}
           </span>
         )}
