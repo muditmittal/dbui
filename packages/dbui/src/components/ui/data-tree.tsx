@@ -211,7 +211,7 @@ function TreeItem({
         className={cn(
           "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 text-[13px] leading-[20px] text-left transition-colors",
           "hover:bg-hover",
-          selected && "bg-accent",
+          selected && "bg-active",
           "text-foreground",
           className
         )}
