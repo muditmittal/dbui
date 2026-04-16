@@ -9,9 +9,6 @@
     "./catalog": "./src/surfaces/CatalogLayout.tsx",
     "./components/*": "./src/components/*.tsx"
   },
-  "dependencies": {
-    "dbui": "*"
-  },
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"
