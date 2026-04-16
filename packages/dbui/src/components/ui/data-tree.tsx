@@ -228,7 +228,7 @@ function TreeItem({
             {childCount > 0 ? children : (
               <div
                 className="flex h-7 items-center text-[13px] text-muted-foreground"
-                style={{ paddingLeft: `${24 + (depth + 1) * 8}px` }}
+                style={{ paddingLeft: `${44 + (depth + 1) * 8}px` }}
               >
                 No items
               </div>
