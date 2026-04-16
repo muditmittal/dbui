@@ -186,12 +186,12 @@ function TreeItem({
           data-slot="tree-item-children"
           className="relative overflow-visible"
         >
-          {/* Trail line — aligned to parent chevron center, on top of fills (z-10) */}
+          {/* Trail line — aligned to parent's chevron center, on top of fills */}
           {showTrailLine && (
             <div
               className="absolute border-l border-border pointer-events-none z-10"
               style={{
-                left: `${4 + (16 + depth * 8) / 2}px`,
+                left: `${12 + depth * 8}px`,
                 top: -14,
                 bottom: 14,
               }}
