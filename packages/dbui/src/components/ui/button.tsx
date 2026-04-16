@@ -90,7 +90,7 @@ function ButtonIcon({
     <span
       data-slot="button-icon"
       className={cn(
-        "pointer-events-none shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "pointer-events-none shrink-0 text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
