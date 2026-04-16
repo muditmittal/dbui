@@ -14,24 +14,39 @@ import { ChevronDown } from "../icons/ChevronDown"
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3211-5106
  */
 
+// ─── Context for tracking last-expanded node ───
+
+type TreeContextValue = {
+  lastExpandedId: string | null
+  setLastExpanded: (id: string) => void
+}
+
+const TreeContext = React.createContext<TreeContextValue>({
+  lastExpandedId: null,
+  setLastExpanded: () => {},
+})
+
 // ─── Tree Root ───
 
 function Tree({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [lastExpandedId, setLastExpanded] = React.useState<string | null>(null)
+
   return (
-    <div
-      data-slot="tree"
-      role="tree"
-      className={cn("flex flex-col", className)}
-      {...props}
-    />
+    <TreeContext.Provider value={{ lastExpandedId, setLastExpanded }}>
+      <div
+        data-slot="tree"
+        role="tree"
+        className={cn("flex flex-col", className)}
+        {...props}
+      />
+    </TreeContext.Provider>
   )
 }
 
 // ─── TreeSection — collapsible group header (Data Tree variant) ───
-// Figma: h-7, chevron + 12px Regular muted-foreground label.
 
 function TreeSection({
   className,
@@ -68,8 +83,8 @@ function TreeSection({
 }
 
 // ─── TreeItem — folder or file node ───
-// Self-manages expand state internally. Can also be controlled via expanded/onToggle.
-// Trail lines: a vertical border-left on the children container shows indent guides.
+
+let treeItemCounter = 0
 
 function TreeItem({
   className,
@@ -89,17 +104,14 @@ function TreeItem({
   ...props
 }: Omit<React.ComponentProps<"button">, "onSelect"> & {
   icon?: React.ReactNode
-  /** Alternate icon shown when expanded (e.g., FolderOpen for File Tree) */
   iconExpanded?: React.ReactNode
   label: string
   trailing?: React.ReactNode
   selected?: boolean
   defaultExpanded?: boolean
-  /** Controlled expanded state — overrides internal state */
   expanded?: boolean
   expandable?: boolean
   depth?: number
-  /** Show vertical trail line connecting children to parent (default: true) */
   showTrailLine?: boolean
   onToggle?: (expanded: boolean) => void
   onSelect?: () => void
@@ -109,10 +121,24 @@ function TreeItem({
   const hasChildren = expandable || React.Children.count(children) > 0
   const isExpandable = hasChildren
 
+  // Stable ID for tracking last-expanded
+  const idRef = React.useRef(`tree-item-${++treeItemCounter}`)
+  const { lastExpandedId, setLastExpanded } = React.useContext(TreeContext)
+  const isLastExpanded = lastExpandedId === idRef.current
+
+  // Register as last-expanded on mount if defaultExpanded, or on user expand
+  React.useEffect(() => {
+    if (defaultExpanded && isExpandable) {
+      setLastExpanded(idRef.current)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleClick = () => {
     if (isExpandable) {
       const next = !isExpanded
       setInternalExpanded(next)
+      if (next) setLastExpanded(idRef.current)
       onToggle?.(next)
     }
     onSelect?.()
@@ -139,7 +165,7 @@ function TreeItem({
         onClick={handleClick}
         {...props}
       >
-        {/* Chevron area — grows by 8px per depth level. Trail lines live here. */}
+        {/* Chevron area — grows by 8px per depth level */}
         <span
           className="flex shrink-0 items-center justify-end"
           style={{ width: `${16 + depth * 8}px` }}
@@ -186,10 +212,13 @@ function TreeItem({
           data-slot="tree-item-children"
           className="relative overflow-visible"
         >
-          {/* Trail line — aligned to parent's chevron center, on top of fills */}
+          {/* Trail line — darker for last-expanded, lighter for others */}
           {showTrailLine && (
             <div
-              className="absolute border-l border-border pointer-events-none z-10"
+              className={cn(
+                "absolute border-l pointer-events-none z-10 transition-colors",
+                isLastExpanded ? "border-input" : "border-border"
+              )}
               style={{
                 left: `${12 + depth * 8}px`,
                 top: -10,
