@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tree, TreeSection, TreeItem } from "dbui/components/ui/data-tree"
 import { Catalog } from "@/components/icons/Catalog"
+import { CatalogUserHome } from "@/components/icons/CatalogUserHome"
+import { CatalogHome } from "@/components/icons/CatalogHome"
+import { CatalogShared } from "@/components/icons/CatalogShared"
+import { CatalogGear } from "@/components/icons/CatalogGear"
 import { Database } from "@/components/icons/Database"
 import { Table } from "@/components/icons/Table"
 import { Folder } from "@/components/icons/Folder"
@@ -33,7 +37,7 @@ function DataTreeExample() {
       <Tree>
         <TreeSection label="My organization">
           {/* Catalog (depth 1) → Schema (depth 2) → Table (depth 3) → Column (depth 4) */}
-          <TreeItem icon={<Catalog />} label="my_catalog" defaultExpanded depth={1} onSelect={() => setSelected("my_catalog")} selected={selected === "my_catalog"}>
+          <TreeItem icon={<CatalogUserHome />} label="my_catalog" defaultExpanded depth={1} onSelect={() => setSelected("my_catalog")} selected={selected === "my_catalog"}>
             <TreeItem icon={<Database />} label="main" defaultExpanded depth={2} onSelect={() => setSelected("main")} selected={selected === "main"}>
               <TreeItem icon={<Table />} label="cancelled_orders" depth={3} onSelect={() => setSelected("cancelled_orders")} selected={selected === "cancelled_orders"}>
                 <TreeItem icon={<Hash />} label="order_id" depth={4} />
@@ -58,6 +62,7 @@ function DataTreeExample() {
             </TreeItem>
             <TreeItem icon={<Database />} label="system" depth={2} expandable />
           </TreeItem>
+          <TreeItem icon={<CatalogHome />} label="main" depth={1} expandable />
           <TreeItem icon={<Catalog />} label="customers" depth={1} expandable />
           <TreeItem icon={<Catalog />} label="dbt_catalog" depth={1} expandable />
           <TreeItem icon={<Catalog />} label="demand_forecasting" depth={1} expandable />
@@ -65,12 +70,12 @@ function DataTreeExample() {
         </TreeSection>
 
         <TreeSection label="Delta shared">
-          <TreeItem icon={<Catalog />} label="samples" depth={1} expandable />
-          <TreeItem icon={<Catalog />} label="european_gas_and_power" depth={1} expandable />
+          <TreeItem icon={<CatalogShared />} label="samples" depth={1} expandable />
+          <TreeItem icon={<CatalogShared />} label="european_gas_and_power" depth={1} expandable />
         </TreeSection>
 
         <TreeSection label="Legacy">
-          <TreeItem icon={<Catalog />} label="hive_metastore" depth={1} expandable />
+          <TreeItem icon={<CatalogGear />} label="hive_metastore" depth={1} expandable />
         </TreeSection>
       </Tree>
     </div>
