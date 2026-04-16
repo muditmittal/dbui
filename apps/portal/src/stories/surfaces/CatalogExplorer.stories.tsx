@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Shell } from "dbui-shells/shell"
-import { CatalogLayout, CatalogTree, CatalogLanding } from "dbui-shells/catalog"
+import { CatalogLayout } from "dbui-shells/catalog"
+import { FacetedFilter } from "../components/FacetedFilter"
 import { treeSections, catalogItems } from "./catalog-data"
 
 const meta: Meta = {
@@ -10,7 +11,17 @@ const meta: Meta = {
 
 export default meta
 
-/** Full assembled catalog explorer inside the platform shell */
+const catalogFacets = {
+  "Type": { values: ["Table", "View", "Materialized View", "Streaming Table", "Volume", "Model", "Function"] },
+  "Tag": {
+    values: ["billing", "production", "cost_center", "marketing", "finance", "env"],
+    nested: {
+      "env": ["dev", "staging", "production", "sandbox"],
+    },
+  },
+  "Owner": { values: ["me", "my_team", "all"] },
+}
+
 export const Playground: StoryObj = {
   render: () => (
     <Shell defaultActive="catalog">
@@ -18,6 +29,7 @@ export const Playground: StoryObj = {
         sections={treeSections}
         items={catalogItems}
         title="Catalog"
+        filter={<FacetedFilter facets={catalogFacets} />}
       />
     </Shell>
   ),

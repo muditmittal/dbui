@@ -1,15 +1,12 @@
 import React, { useState } from "react"
-import { Input } from "dbui/components/ui/input"
 import { Button } from "dbui/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCellTitle, TableCellIcon, TableCellTitleContent, TableCellMeta } from "dbui/components/ui/table"
 import { DataTreeView, type TreeSectionData } from "dbui/components/ui/data-tree"
-import { Search } from "dbui/components/icons/Search"
 import { ChevronDown } from "dbui/components/icons/ChevronDown"
 import { Data } from "dbui/components/icons/Data"
 import { Plus } from "dbui/components/icons/Plus"
 import { Overflow } from "dbui/components/icons/Overflow"
-import { Gear } from "dbui/components/icons/Gear"
 
 // ─── Types ───
 
@@ -26,9 +23,12 @@ export type CatalogItem = {
 function CatalogTree({
   sections,
   onSelect,
+  filter,
 }: {
   sections: TreeSectionData[]
   onSelect?: (id: string) => void
+  /** Slot for search/filter component above the tree (e.g., FacetedFilter) */
+  filter?: React.ReactNode
 }) {
   return (
     <aside className="flex w-[280px] shrink-0 flex-col border-r border-border">
@@ -40,20 +40,14 @@ function CatalogTree({
         </div>
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="icon-sm" aria-label="Add"><Plus /></Button>
-          <Button variant="ghost" size="icon-sm" aria-label="Settings"><Gear /></Button>
+          <Button variant="ghost" size="icon-sm" aria-label="More"><Overflow /></Button>
         </div>
       </div>
 
-      {/* Search + Filter */}
-      <div className="flex items-center gap-1 px-3 pb-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <Input placeholder="Search" className="pl-8 h-8" />
-        </div>
-        <Button variant="ghost" size="icon-sm" aria-label="Filter"><Gear /></Button>
-      </div>
+      {/* Filter slot */}
+      {filter && <div className="px-3 pb-2">{filter}</div>}
 
-      {/* Tree — uses DBUI DataTreeView */}
+      {/* Tree */}
       <div className="flex-1 overflow-y-auto px-1 pb-4">
         <DataTreeView sections={sections} onSelect={onSelect} />
       </div>
@@ -160,6 +154,7 @@ export function CatalogLayout({
   title = "Catalog",
   tabs,
   actions,
+  filter,
   onTreeSelect,
   children,
 }: {
@@ -168,12 +163,14 @@ export function CatalogLayout({
   title?: string
   tabs?: string[]
   actions?: React.ReactNode
+  /** Search/filter component above the tree */
+  filter?: React.ReactNode
   onTreeSelect?: (id: string) => void
   children?: React.ReactNode
 }) {
   return (
     <div className="flex h-full">
-      <CatalogTree sections={sections} onSelect={onTreeSelect} />
+      <CatalogTree sections={sections} onSelect={onTreeSelect} filter={filter} />
       {children ?? (
         <CatalogLanding title={title} items={items} tabs={tabs} actions={actions} />
       )}
