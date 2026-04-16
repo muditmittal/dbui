@@ -163,7 +163,7 @@ function CatalogTree({
         <Popover.Root>
           <Popover.Trigger
             render={
-              <button className="flex items-center gap-1 min-w-0 rounded-sm bg-muted py-1 pl-1 pr-2 text-[13px] text-foreground hover:bg-primary hover:text-primary-foreground [&:hover_span]:text-primary-foreground transition-colors">
+              <button className="flex items-center gap-1 min-w-0 rounded-sm bg-muted py-1 pl-1 pr-2 text-[13px] text-foreground hover:bg-hover active:bg-press transition-colors">
                 <span className="flex shrink-0 items-center gap-0.5 text-muted-foreground [&_svg]:size-4">
                   <span className="text-[11px] font-mono text-muted-foreground">./</span>
                   {currentRoot?.icon ?? defaultIcon}
