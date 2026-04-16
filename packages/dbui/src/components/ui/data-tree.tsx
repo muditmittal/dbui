@@ -157,8 +157,10 @@ function TreeItem({
 
         {/* Icon */}
         {activeIcon && (
-          <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
-
+          <span className={cn(
+            "flex shrink-0 items-center [&_svg]:size-4",
+            selected || isExpanded ? "text-primary" : "text-muted-foreground"
+          )}>
             {activeIcon}
           </span>
         )}
