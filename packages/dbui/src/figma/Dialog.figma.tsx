@@ -1,44 +1,24 @@
 import figma from "@figma/code-connect"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "../components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose, DialogTrigger } from "../components/ui/dialog"
 import { Button } from "../components/ui/button"
 
 figma.connect(
   Dialog,
   "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=882-2798",
   {
-    props: {
-      size: figma.nestedProps(".DialogBody", {
-        size: figma.enum("Size", {
-          "Normal · 640px": "normal",
-          "Wide · 880px": "wide",
-          "Extrawide · 1200px": "extrawide",
-        }),
-      }),
-    },
-    example: ({ size }) => (
+    example: () => (
       <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">Open Dialog</Button>
+        <DialogTrigger render={<Button variant="outline" />}>
+          Open Dialog
         </DialogTrigger>
-        <DialogContent size={size?.size}>
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Dialog title</DialogTitle>
             <DialogDescription>Optional description.</DialogDescription>
           </DialogHeader>
-          <div>{/* content */}</div>
+          {/* content */}
           <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
+            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
             <Button>Apply</Button>
           </DialogFooter>
         </DialogContent>
