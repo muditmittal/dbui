@@ -91,8 +91,8 @@ export const buttonVariants = cva(
       size: {
         sm: "h-6 gap-1 px-2",
         md: "h-8 gap-1 px-3",
-        "icon-sm": "size-6",
-        "icon-md": "size-8",
+        "icon-sm": "size-6 text-muted-foreground",
+        "icon-md": "size-8 text-muted-foreground",
       },
     },
     defaultVariants: {
