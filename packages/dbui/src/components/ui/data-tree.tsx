@@ -337,9 +337,140 @@ function TreeItemTag({
   )
 }
 
+// ─── Data-driven API ───
+
+/**
+ * TreeNode — a node in a tree data structure.
+ * The tree renderer auto-computes depth, expandable, selectable from this shape.
+ */
+type TreeNode = {
+  id: string
+  label: string
+  icon?: React.ReactNode
+  /** Alternate icon when expanded (File Tree: FolderOpen) */
+  iconExpanded?: React.ReactNode
+  /** Whether this node can be selected. Default: true for nodes with no `leaf` flag. */
+  selectable?: boolean
+  /** Whether this is a leaf node (no expand chevron, not selectable by default). E.g., columns. */
+  leaf?: boolean
+  /** Child nodes */
+  children?: TreeNode[]
+  /** Trailing content */
+  trailing?: React.ReactNode
+  /** Start expanded */
+  defaultExpanded?: boolean
+}
+
+/**
+ * TreeSection data for grouped trees (Data Tree "My organization", "Delta shared", etc.)
+ */
+type TreeSectionData = {
+  label: string
+  defaultExpanded?: boolean
+  nodes: TreeNode[]
+}
+
+/**
+ * Recursively renders TreeNode data as TreeItem components.
+ * Auto-computes: depth, expandable (has children), selectable (not leaf), icons.
+ */
+function TreeNodeRenderer({
+  node,
+  depth,
+}: {
+  node: TreeNode
+  depth: number
+}) {
+  const hasChildren = node.children && node.children.length > 0
+  const isLeaf = node.leaf ?? !hasChildren
+  const isSelectable = node.selectable ?? !isLeaf
+  const isExpandable = !isLeaf
+
+  return (
+    <TreeItem
+      icon={node.icon}
+      iconExpanded={node.iconExpanded}
+      label={node.label}
+      depth={depth}
+      selectable={isSelectable}
+      expandable={isExpandable}
+      defaultExpanded={node.defaultExpanded}
+      trailing={node.trailing}
+    >
+      {hasChildren && node.children!.map((child) => (
+        <TreeNodeRenderer key={child.id} node={child} depth={depth + 1} />
+      ))}
+    </TreeItem>
+  )
+}
+
+/**
+ * DataTreeView — renders a complete Data Tree from structured data.
+ * Handles sections, auto depth, and node type behavior.
+ *
+ * Usage:
+ * ```tsx
+ * <DataTreeView sections={[
+ *   { label: "My organization", nodes: [
+ *     { id: "cat1", label: "my_catalog", icon: <Catalog />, children: [...] }
+ *   ]}
+ * ]} />
+ * ```
+ */
+function DataTreeView({
+  sections,
+  className,
+  onSelect,
+}: {
+  sections: TreeSectionData[]
+  className?: string
+  onSelect?: (id: string) => void
+}) {
+  return (
+    <Tree className={className} onSelect={onSelect}>
+      {sections.map((section, i) => (
+        <TreeSection key={i} label={section.label} defaultExpanded={section.defaultExpanded ?? true}>
+          {section.nodes.map((node) => (
+            <TreeNodeRenderer key={node.id} node={node} depth={1} />
+          ))}
+        </TreeSection>
+      ))}
+    </Tree>
+  )
+}
+
+/**
+ * FileTreeView — renders a complete File Tree from structured data.
+ * No sections, starts at depth 0.
+ */
+function FileTreeView({
+  nodes,
+  className,
+  onSelect,
+}: {
+  nodes: TreeNode[]
+  className?: string
+  onSelect?: (id: string) => void
+}) {
+  return (
+    <Tree className={className} onSelect={onSelect}>
+      {nodes.map((node) => (
+        <TreeNodeRenderer key={node.id} node={node} depth={0} />
+      ))}
+    </Tree>
+  )
+}
+
 export {
+  // Primitives (manual composition)
   Tree,
   TreeSection,
   TreeItem,
   TreeItemTag,
+  // Data-driven renderers
+  DataTreeView,
+  FileTreeView,
+  TreeNodeRenderer,
 }
+
+export type { TreeNode, TreeSectionData }
