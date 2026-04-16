@@ -26,7 +26,7 @@ figma.connect(Textarea, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?nod
     <Textarea
       placeholder="Placeholder"
       disabled={disabled}
-      aria-invalid={ariaInvalid || undefined}
+      aria-invalid={ariaInvalid}
     />
   ),
 })

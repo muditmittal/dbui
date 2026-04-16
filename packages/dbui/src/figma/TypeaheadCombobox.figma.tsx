@@ -30,7 +30,7 @@ figma.connect(Combobox, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?nod
         <ComboboxChipsInput
           placeholder="Search..."
           disabled={disabled}
-          aria-invalid={ariaInvalid || undefined}
+          aria-invalid={ariaInvalid}
         />
       </ComboboxChips>
       <ComboboxContent>
