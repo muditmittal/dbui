@@ -136,24 +136,28 @@ function TreeItem({
           "text-foreground",
           className
         )}
-        style={{ paddingLeft: `${4 + depth * 16}px` }}
         onClick={handleClick}
         {...props}
       >
-        {/* Chevron — collapsed: text-input (muted), expanded: text-muted-foreground (bolder) */}
-        {isExpandable ? (
-          <span className={cn(
-            "flex size-4 shrink-0 items-center justify-center",
-            isExpanded ? "text-muted-foreground" : "text-input"
-          )}>
-            {isExpanded
-              ? <ChevronDown className="size-3" />
-              : <ChevronRight className="size-3" />
-            }
-          </span>
-        ) : (
-          <span className="w-4 shrink-0" />
-        )}
+        {/* Chevron area — grows by 8px per depth level. Trail lines live here. */}
+        <span
+          className="flex shrink-0 items-center justify-end"
+          style={{ width: `${16 + depth * 8}px` }}
+        >
+          {isExpandable ? (
+            <span className={cn(
+              "flex size-4 items-center justify-center",
+              isExpanded ? "text-muted-foreground" : "text-input"
+            )}>
+              {isExpanded
+                ? <ChevronDown className="size-3" />
+                : <ChevronRight className="size-3" />
+              }
+            </span>
+          ) : (
+            <span className="w-4" />
+          )}
+        </span>
 
         {/* Icon */}
         {activeIcon && (
@@ -186,13 +190,13 @@ function TreeItem({
           {showTrailLine && (
             <div
               className="absolute top-0 bottom-2 border-l border-border"
-              style={{ left: `${12 + depth * 16}px` }}
+              style={{ left: `${12 + depth * 8}px` }}
             />
           )}
           {children || (
             <div
               className="flex h-7 items-center text-[12px] text-muted-foreground italic"
-              style={{ paddingLeft: `${20 + (depth + 1) * 16}px` }}
+              style={{ paddingLeft: `${24 + (depth + 1) * 8}px` }}
             >
               No items
             </div>
