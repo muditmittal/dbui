@@ -140,9 +140,12 @@ function TreeItem({
         onClick={handleClick}
         {...props}
       >
-        {/* Chevron */}
+        {/* Chevron — collapsed: text-input (muted), expanded: text-muted-foreground (bolder) */}
         {isExpandable ? (
-          <span className="flex size-4 shrink-0 items-center justify-center text-muted-foreground">
+          <span className={cn(
+            "flex size-4 shrink-0 items-center justify-center",
+            isExpanded ? "text-muted-foreground" : "text-input"
+          )}>
             {isExpanded
               ? <ChevronDown className="size-3" />
               : <ChevronRight className="size-3" />
