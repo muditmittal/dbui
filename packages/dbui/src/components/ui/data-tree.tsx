@@ -4,6 +4,8 @@ import * as React from "react"
 import { cn } from "../../lib/utils"
 import { ChevronRight } from "../icons/ChevronRight"
 import { ChevronDown } from "../icons/ChevronDown"
+import { Target } from "../icons/Target"
+import { Overflow } from "../icons/Overflow"
 
 /**
  * @standard Tree
@@ -21,6 +23,8 @@ type TreeContextValue = {
   setHighlighted: (id: string | null) => void
   selectedId: string | null
   setSelected: (id: string | null) => void
+  onFocusNode?: (id: string, label: string, icon?: React.ReactNode) => void
+  onNodeMenu?: (id: string, label: string) => void
 }
 
 const TreeContext = React.createContext<TreeContextValue>({
@@ -39,10 +43,16 @@ function Tree({
   className,
   defaultSelectedId,
   onSelect: onSelectProp,
+  onFocusNode,
+  onNodeMenu,
   ...props
 }: React.ComponentProps<"div"> & {
   defaultSelectedId?: string
   onSelect?: (id: string) => void
+  /** Called when user clicks "Focus" on a node — sets it as tree root */
+  onFocusNode?: (id: string, label: string, icon?: React.ReactNode) => void
+  /** Called when user clicks the overflow menu on a node */
+  onNodeMenu?: (id: string, label: string) => void
 }) {
   const [highlightedId, setHighlighted] = React.useState<string | null>(null)
   const [selectedId, setSelectedInternal] = React.useState<string | null>(defaultSelectedId ?? null)
@@ -53,7 +63,7 @@ function Tree({
   }, [onSelectProp])
 
   return (
-    <TreeContext.Provider value={{ highlightedId, setHighlighted, selectedId, setSelected }}>
+    <TreeContext.Provider value={{ highlightedId, setHighlighted, selectedId, setSelected, onFocusNode, onNodeMenu }}>
       <div
         data-slot="tree"
         role="tree"
@@ -159,7 +169,7 @@ function TreeItem({
   const isExpandable = expandable || childCount > 0
 
   const idRef = React.useRef(`tree-item-${++treeItemCounter}`)
-  const { highlightedId, setHighlighted, selectedId, setSelected: setTreeSelected } = React.useContext(TreeContext)
+  const { highlightedId, setHighlighted, selectedId, setSelected: setTreeSelected, onFocusNode, onNodeMenu } = React.useContext(TreeContext)
   const parentId = React.useContext(TreeParentContext)
   const isHighlighted = highlightedId === idRef.current
   // Use context selection if available, fall back to prop
@@ -275,10 +285,38 @@ function TreeItem({
         {/* Label */}
         <span className="flex-1 truncate">{label}</span>
 
-        {/* Trailing content — visible on hover */}
-        {trailing && (
+        {/* Hover actions — Focus + Overflow, visible on hover */}
+        {trailing ? (
           <span className="flex shrink-0 items-center gap-1 text-muted-foreground opacity-0 group-hover/tree-item:opacity-100 transition-opacity">
             {trailing}
+          </span>
+        ) : selectable && (
+          <span className="flex shrink-0 items-center gap-0 opacity-0 group-hover/tree-item:opacity-100 transition-opacity">
+            {isExpandable && onFocusNode && (
+              <button
+                className="flex size-6 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press [&_svg]:size-4"
+                aria-label="Focus here"
+                title="Focus here"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onFocusNode(idRef.current, label, activeIcon)
+                }}
+              >
+                <Target />
+              </button>
+            )}
+            {onNodeMenu && (
+              <button
+                className="flex size-6 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press [&_svg]:size-4"
+                aria-label="More options"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onNodeMenu(idRef.current, label)
+                }}
+              >
+                <Overflow />
+              </button>
+            )}
           </span>
         )}
       </button>
@@ -421,13 +459,17 @@ function DataTreeView({
   sections,
   className,
   onSelect,
+  onFocusNode,
+  onNodeMenu,
 }: {
   sections: TreeSectionData[]
   className?: string
   onSelect?: (id: string) => void
+  onFocusNode?: (id: string, label: string, icon?: React.ReactNode) => void
+  onNodeMenu?: (id: string, label: string) => void
 }) {
   return (
-    <Tree className={className} onSelect={onSelect}>
+    <Tree className={className} onSelect={onSelect} onFocusNode={onFocusNode} onNodeMenu={onNodeMenu}>
       {sections.map((section, i) => (
         <TreeSection key={i} label={section.label} defaultExpanded={section.defaultExpanded ?? true}>
           {section.nodes.map((node) => (
@@ -447,13 +489,17 @@ function FileTreeView({
   nodes,
   className,
   onSelect,
+  onFocusNode,
+  onNodeMenu,
 }: {
   nodes: TreeNode[]
   className?: string
   onSelect?: (id: string) => void
+  onFocusNode?: (id: string, label: string, icon?: React.ReactNode) => void
+  onNodeMenu?: (id: string, label: string) => void
 }) {
   return (
-    <Tree className={className} onSelect={onSelect}>
+    <Tree className={className} onSelect={onSelect} onFocusNode={onFocusNode} onNodeMenu={onNodeMenu}>
       {nodes.map((node) => (
         <TreeNodeRenderer key={node.id} node={node} depth={0} />
       ))}
