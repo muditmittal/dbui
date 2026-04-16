@@ -2,8 +2,13 @@
   "codeConnect": {
     "include": [
       "packages/dbui/src/figma/*.figma.tsx",
+      "packages/dbui/src/components/ui/*.tsx",
       "packages/dbui/src/components/icons/*.tsx"
     ],
+    "paths": {
+      "../components/ui/*": ["packages/dbui/src/components/ui/*"],
+      "../components/icons/*": ["packages/dbui/src/components/icons/*"]
+    },
     "parser": "react"
   }
 }
