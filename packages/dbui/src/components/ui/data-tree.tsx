@@ -18,12 +18,14 @@ import { ChevronDown } from "../icons/ChevronDown"
 
 type TreeContextValue = {
   lastExpandedId: string | null
-  setLastExpanded: (id: string) => void
+  pushExpanded: (id: string) => void
+  popExpanded: (id: string) => void
 }
 
 const TreeContext = React.createContext<TreeContextValue>({
   lastExpandedId: null,
-  setLastExpanded: () => {},
+  pushExpanded: () => {},
+  popExpanded: () => {},
 })
 
 // ─── Tree Root ───
@@ -32,10 +34,22 @@ function Tree({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [lastExpandedId, setLastExpanded] = React.useState<string | null>(null)
+  const stackRef = React.useRef<string[]>([])
+  const [lastExpandedId, setLastExpandedId] = React.useState<string | null>(null)
+
+  const pushExpanded = React.useCallback((id: string) => {
+    stackRef.current = stackRef.current.filter(x => x !== id)
+    stackRef.current.push(id)
+    setLastExpandedId(id)
+  }, [])
+
+  const popExpanded = React.useCallback((id: string) => {
+    stackRef.current = stackRef.current.filter(x => x !== id)
+    setLastExpandedId(stackRef.current[stackRef.current.length - 1] ?? null)
+  }, [])
 
   return (
-    <TreeContext.Provider value={{ lastExpandedId, setLastExpanded }}>
+    <TreeContext.Provider value={{ lastExpandedId, pushExpanded, popExpanded }}>
       <div
         data-slot="tree"
         role="tree"
@@ -123,15 +137,15 @@ function TreeItem({
 
   // Stable ID for tracking last-expanded
   const idRef = React.useRef(`tree-item-${++treeItemCounter}`)
-  const { lastExpandedId, setLastExpanded } = React.useContext(TreeContext)
+  const { lastExpandedId, pushExpanded, popExpanded } = React.useContext(TreeContext)
   const isLastExpanded = lastExpandedId === idRef.current
 
   const handleClick = () => {
     if (isExpandable) {
       const next = !isExpanded
       setInternalExpanded(next)
-      // Only user-initiated expands set the dark trail line
-      if (next) setLastExpanded(idRef.current)
+      if (next) pushExpanded(idRef.current)
+      else popExpanded(idRef.current)
       onToggle?.(next)
     }
     onSelect?.()
