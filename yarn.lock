@@ -5444,14 +5444,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dbui-shells@workspace:packages/dbui-shells"
   dependencies:
-    dbui: "workspace:*"
+    dbui: "npm:*"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
   languageName: unknown
   linkType: soft
 
-"dbui@npm:*, dbui@workspace:*, dbui@workspace:packages/dbui":
+"dbui@npm:*, dbui@workspace:packages/dbui":
   version: 0.0.0-use.local
   resolution: "dbui@workspace:packages/dbui"
   dependencies:

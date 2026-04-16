@@ -10,7 +10,7 @@
     "./components/*": "./src/components/*.tsx"
   },
   "dependencies": {
-    "dbui": "workspace:*"
+    "dbui": "*"
   },
   "peerDependencies": {
     "react": ">=18",
