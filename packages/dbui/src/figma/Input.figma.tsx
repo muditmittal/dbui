@@ -35,7 +35,7 @@ figma.connect(Input, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-i
       size={size}
       placeholder="Placeholder"
       disabled={disabled}
-      aria-invalid={ariaInvalid || undefined}
+      aria-invalid={ariaInvalid}
     />
   ),
 })

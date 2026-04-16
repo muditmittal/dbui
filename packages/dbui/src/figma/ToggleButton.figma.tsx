@@ -29,16 +29,15 @@ figma.connect(Toggle, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
       Selected: true,
       Disabled: false,
     }),
-    label: figma.string("Label"),
   },
-  example: ({ variant, size, disabled, defaultPressed, label }) => (
+  example: ({ variant, size, disabled, defaultPressed }) => (
     <Toggle
       variant={variant}
       size={size}
       disabled={disabled}
       defaultPressed={defaultPressed}
     >
-      {label}
+      Label
     </Toggle>
   ),
 })

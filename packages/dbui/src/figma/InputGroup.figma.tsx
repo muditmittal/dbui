@@ -13,11 +13,7 @@ figma.connect(InputGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/D
     <InputGroup>
       <InputGroupControl placeholder="Search..." />
       <InputGroupAddon align="inline-end">
-        {type === "browse" ? (
-          <Button variant="ghost" size="sm">Browse</Button>
-        ) : (
-          <>{/* SlidersIcon */}</>
-        )}
+        <Button variant="ghost" size="sm">{type}</Button>
       </InputGroupAddon>
     </InputGroup>
   ),

@@ -23,7 +23,7 @@ figma.connect(DropdownMenuItem, FIGMA_URL, {
   example: ({ disabled, label, shortcut }) => (
     <DropdownMenuItem disabled={disabled}>
       {label}
-      {shortcut && <DropdownMenuShortcut>{shortcut}</DropdownMenuShortcut>}
+      <DropdownMenuShortcut>{shortcut}</DropdownMenuShortcut>
     </DropdownMenuItem>
   ),
 })

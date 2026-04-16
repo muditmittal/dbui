@@ -3,10 +3,6 @@ import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDe
 
 figma.connect(RadioTileGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1021-3727", {
   props: {
-    selected: figma.enum("Selected", {
-      "False": false,
-      "True": true,
-    }),
     disabled: figma.enum("State", {
       "Default": false,
       "Hover": false,
@@ -15,9 +11,9 @@ figma.connect(RadioTileGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEh
       "Disabled": true,
     }),
   },
-  example: ({ selected, disabled }) => (
-    <RadioTileGroup defaultValue={selected ? "option-1" : undefined}>
-      <RadioTile value="option-1" disabled={disabled || undefined}>
+  example: ({ disabled }) => (
+    <RadioTileGroup defaultValue="option-1">
+      <RadioTile value="option-1" disabled={disabled}>
         <RadioTileHeader>
           <RadioTileTitle>Label</RadioTileTitle>
         </RadioTileHeader>

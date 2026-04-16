@@ -36,7 +36,7 @@ figma.connect(Select, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
         variant={variant}
         size={size}
         disabled={disabled}
-        aria-invalid={ariaInvalid || undefined}
+        aria-invalid={ariaInvalid}
       >
         <SelectValue placeholder="Select..." />
       </SelectTrigger>

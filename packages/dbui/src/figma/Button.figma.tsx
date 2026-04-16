@@ -26,15 +26,14 @@ figma.connect(Button, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
       Disabled: true,
       Loading: false,
     }),
-    label: figma.string("Label"),
   },
-  example: ({ variant, size, disabled, label }) => (
+  example: ({ variant, size, disabled }) => (
     <Button
       variant={variant}
       size={size}
       disabled={disabled}
     >
-      {label}
+      Label
     </Button>
   ),
 })

@@ -29,7 +29,7 @@ figma.connect(
         <DialogTrigger asChild>
           <Button variant="outline">Open Dialog</Button>
         </DialogTrigger>
-        <DialogContent size={size?.size !== "normal" ? size?.size : undefined}>
+        <DialogContent size={size?.size}>
           <DialogHeader>
             <DialogTitle>Dialog title</DialogTitle>
             <DialogDescription>Optional description.</DialogDescription>
