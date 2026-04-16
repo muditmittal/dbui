@@ -153,13 +153,13 @@ function TreeItem({
       case "ArrowDown": {
         e.preventDefault()
         const next = items[index + 1]
-        if (next) { next.focus(); next.click() }
+        if (next) next.focus()
         break
       }
       case "ArrowUp": {
         e.preventDefault()
         const prev = items[index - 1]
-        if (prev) { prev.focus(); prev.click() }
+        if (prev) prev.focus()
         break
       }
       case "ArrowRight": {
