@@ -226,6 +226,9 @@ function CatalogTree({
         {/* Spacer */}
         <span className="flex-1" />
 
+        {/* Header actions — 4px gap between buttons */}
+        <div className="flex items-center gap-1 shrink-0">
+
         {/* ── Warehouse picker (status dot) ── */}
         <DropdownMenu>
           <DropdownMenuTrigger render={
@@ -233,7 +236,7 @@ function CatalogTree({
               <span className="inline-block size-2 rounded-full bg-success" />
             </Button>
           } />
-          <DropdownMenuContent align="end" className="w-[280px]">
+          <DropdownMenuContent align="start" className="w-[280px]">
             <div className="p-1">
               <div className="relative">
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
@@ -280,7 +283,7 @@ function CatalogTree({
           <DropdownMenuTrigger render={
             <Button variant="ghost" size="icon-md" aria-label="Add"><Plus /></Button>
           } />
-          <DropdownMenuContent align="end" className="w-[240px]">
+          <DropdownMenuContent align="start" className="w-[240px] max-h-none">
             <DropdownMenuItem>
               <DropdownMenuItemIcon><Plus /></DropdownMenuItemIcon>
               Add data
@@ -357,7 +360,7 @@ function CatalogTree({
           <DropdownMenuTrigger render={
             <Button variant="ghost" size="icon-md" aria-label="More"><Overflow /></Button>
           } />
-          <DropdownMenuContent align="end" className="w-[220px]">
+          <DropdownMenuContent align="start" className="w-[220px]">
             <DropdownMenuItem>
               <div>
                 Governance hub
@@ -375,6 +378,8 @@ function CatalogTree({
             <DropdownMenuItem>Browse DBFS</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        </div>{/* end header actions */}
       </div>
 
       {/* Filter slot — px-2 aligns with root switcher */}
