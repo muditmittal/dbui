@@ -121,11 +121,14 @@ import { Search } from "@muditmittal/dbui/components/icons/Search"
             </div>
 
             <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>4. Feed your LLM the intelligence layer</p>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>4. Enable AI-assisted development</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`# Copy llms.txt into your AI tool's context
-cat node_modules/@muditmittal/dbui/llms.txt | pbcopy`}
+{`# Copy CLAUDE.md to your project root (one-time)
+cp node_modules/@muditmittal/dbui/CLAUDE.md .
+
+# That's it — Claude now knows to use only DBUI components.
+# Give it a screenshot and it builds with the right components.`}
                 </code>
               </div>
             </div>

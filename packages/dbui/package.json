@@ -11,8 +11,8 @@
     "dist",
     "src",
     "llms.txt",
-    "README.md",
-    ".claude"
+    "CLAUDE.md",
+    "README.md"
   ],
   "exports": {
     ".": "./src/index.ts",

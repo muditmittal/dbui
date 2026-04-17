@@ -21,24 +21,19 @@ DBUI requires Tailwind CSS v4. In your root CSS file:
 @import "@muditmittal/dbui/tokens/globals.css";
 ```
 
-## Claude Code Integration
+## AI-Assisted Development
 
-DBUI ships with a Claude Code skill that ensures your AI assistant uses ONLY DBUI components — no raw HTML, no random shadcn, no guessed tokens.
+DBUI ships with a `CLAUDE.md` that teaches Claude (and other LLMs) to use ONLY DBUI components.
 
 **Setup (one-time):**
 
 ```bash
-# Copy the skill into your project
-cp -r node_modules/@muditmittal/dbui/.claude/skills/dbui-consumer .claude/skills/dbui
+cp node_modules/@muditmittal/dbui/CLAUDE.md .
 ```
 
-**Use:**
+That's it. Every conversation with Claude in your project will now follow DBUI rules — correct components, semantic tokens, proper icons. No special commands needed, just chat normally.
 
-```
-/dbui Build a form with email input, password input, and submit button
-```
-
-Claude will generate code using exclusively DBUI components, semantic tokens, and correct icon imports. The skill loads the full component API reference and enforces 7 rules that prevent common mistakes.
+Give Claude a screenshot and it will generate code using exclusively DBUI components.
 
 ## Usage
 
