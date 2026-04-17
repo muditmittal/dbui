@@ -2,8 +2,8 @@
   "button": {
     "figmaCode": {
       "Variant": {
-        "figma": ["Primary", "Outline", "Secondary", "Ghost", "Link", "Destructive", "Danger"],
-        "code": ["default", "outline", "secondary", "ghost", "link", "destructive", "danger"]
+        "figma": ["Outline", "Primary", "Ghost", "Secondary", "Danger", "Destructive", "Link"],
+        "code": ["outline", "default", "ghost", "secondary", "danger", "destructive", "link"]
       },
       "Size": {
         "figma": ["Default", "Small"],
@@ -51,16 +51,16 @@
   "toggle": {
     "figmaCode": {
       "Variant": {
-        "figma": ["Default", "Outline", "Filter", "Icon", "Pill"],
-        "code": ["default", "outline", "filter", "icon", "pill"]
+        "figma": ["Default", "Filter", "Icon", "Pill"],
+        "code": ["default", "filter", "icon", "pill"]
       },
       "Size": {
         "figma": ["Default", "Small"],
         "code": ["md", "sm", "icon-md", "icon-sm"]
       },
       "State": {
-        "figma": ["Default", "Hover", "Press", "Selected", "Disabled"],
-        "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "aria-pressed/data-state=on (CSS)", "disabled (prop)"]
+        "figma": ["Default", "Hover", "Disabled", "Press", "Selected"],
+        "code": ["default (CSS)", "hover (CSS)", "disabled (prop)", "active (CSS)", "aria-pressed/data-state=on (CSS)"]
       }
     },
     "production": [
@@ -139,7 +139,11 @@
     "figmaCode": {
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
-        "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid"]
+        "code": ["default (CSS)", "CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid"]
+      },
+      "Text": {
+        "figma": ["TEXT"],
+        "code": ["placeholder / value string"]
       }
     },
     "production": [
@@ -159,6 +163,10 @@
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
         "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid"]
+      },
+      "Show Icon": {
+        "figma": ["true", "false"],
+        "code": ["(icon prefix shown)", "(no icon)"]
       }
     },
     "production": [
@@ -175,6 +183,10 @@
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
         "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "focus-visible (CSS)", "disabled (prop)", "aria-invalid"]
+      },
+      "Show Clear": {
+        "figma": ["true", "false"],
+        "code": ["showClear={true}", "showClear={false}"]
       }
     },
     "production": [
@@ -187,6 +199,10 @@
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
         "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "focus-visible (CSS)", "disabled (prop)", "aria-invalid"]
+      },
+      "Show Clear": {
+        "figma": ["true", "false"],
+        "code": ["showClear={true}", "showClear={false}"]
       }
     },
     "production": [
@@ -241,13 +257,21 @@
   },
   "radio-tile": {
     "figmaCode": {
+      "State": {
+        "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
+        "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
+      },
       "Selected": {
         "figma": ["False", "True"],
         "code": ["data-checked (Base UI Radio)"]
       },
-      "State": {
-        "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
-        "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop"]
+      "Icon": {
+        "figma": ["true", "false"],
+        "code": ["(icon slot shown)", "(no icon)"]
+      },
+      "Text": {
+        "figma": ["true", "false"],
+        "code": ["(description text shown)", "(no description)"]
       }
     },
     "production": [
@@ -304,7 +328,7 @@
   },
   "avatar": {
     "figmaCode": {
-      "Type": {
+      "Size": {
         "figma": ["Initials", "Icon"],
         "code": ["type='initials'", "type='icon'"]
       }
@@ -471,6 +495,14 @@
       "Value": {
         "figma": ["True", "False"],
         "code": ["<TagValue>present</TagValue>", "omit TagValue"]
+      },
+      "Closable": {
+        "figma": ["true", "false"],
+        "code": ["<TagRemove /> (shown)", "(no remove)"]
+      },
+      "Icon": {
+        "figma": ["true", "false"],
+        "code": ["(icon slot shown)", "(no icon)"]
       }
     },
     "production": [
@@ -487,6 +519,10 @@
       "Layout": {
         "figma": ["Inline", "Stacked"],
         "code": ["inline (AlertAction inside AlertContent)", "stacked (AlertAction outside AlertContent)"]
+      },
+      "Removable": {
+        "figma": ["true", "false"],
+        "code": ["<AlertClose /> (shown)", "(no close button)"]
       }
     },
     "production": [
@@ -545,6 +581,10 @@
       "Type": {
         "figma": ["Success", "Info", "Warning", "Error"],
         "code": ["toast.success()", "toast.info()", "toast.warning()", "toast.error()"]
+      },
+      "Removable": {
+        "figma": ["true", "false"],
+        "code": ["dismissible (default)", "not dismissible"]
       }
     },
     "production": [
