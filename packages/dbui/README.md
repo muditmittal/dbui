@@ -5,59 +5,56 @@ Databricks component library built on [shadcn/ui](https://ui.shadcn.com), reskin
 ## Install
 
 ```bash
-npm install dbui
+# Components + icons + tokens
+yarn add @muditmittal/dbui
+
+# Or with page shells (Catalog Explorer, Platform Shell)
+yarn add @muditmittal/dbui-shells
 ```
 
 ## Setup
 
-Import the token stylesheet in your root CSS:
-
-```css
-@import "dbui/tokens/globals.css";
-```
-
-## Tailwind CSS v4
-
-DBUI requires Tailwind CSS v4 with the `@tailwindcss/postcss` plugin. In your `postcss.config.js`:
-
-```js
-module.exports = {
-  plugins: {
-    '@tailwindcss/postcss': {},
-  },
-}
-```
-
-In your root CSS file:
+DBUI requires Tailwind CSS v4. In your root CSS file:
 
 ```css
 @import "tailwindcss";
-@import "dbui/tokens/globals.css";
+@import "@muditmittal/dbui/tokens/globals.css";
 ```
 
 ## Usage
 
 ```tsx
-import { Button } from "dbui/components/ui/button"
-import { Input } from "dbui/components/ui/input"
-import { Dialog, DialogTrigger, DialogContent } from "dbui/components/ui/dialog"
-import { Plus } from "dbui/components/icons/Plus"
+import { Button, ButtonIcon } from "@muditmittal/dbui/components/ui/button"
+import { Input } from "@muditmittal/dbui/components/ui/input"
+import { Dialog, DialogTrigger, DialogContent } from "@muditmittal/dbui/components/ui/dialog"
+import { Search } from "@muditmittal/dbui/components/icons/Search"
 ```
 
 ## What's included
 
-- **46 components** — Buttons, inputs, selects, dialogs, menus, tables, and more
-- **451 icons** — Full Databricks DuBois icon set
+- **46 components** — Buttons, inputs, selects, dialogs, menus, tables, trees, and more
+- **456 icons** — Full Databricks DuBois icon set
 - **162 design tokens** — Colors, radius, spacing, shadows, typography
 - **Dark mode** — All tokens support light and dark modes
+- **Page shells** — Platform Shell, Catalog Explorer (via `@muditmittal/dbui-shells`)
 
 ## LLM Context
 
-For AI-assisted development, load `dbui/llms.txt` — it contains component selection guides, composition recipes, and mandatory rules.
+For AI-assisted development, feed `llms.txt` into your AI tool:
+
+```bash
+cat node_modules/@muditmittal/dbui/llms.txt | pbcopy
+```
+
+It contains component selection guides, composition recipes, entity icon mappings, and mandatory rules.
 
 ## Storybook
 
 Browse all components at [dbuidesign.vercel.app](https://dbuidesign.vercel.app)
+
+## Feedback
+
+Open an issue at [github.com/muditmittal/dbui](https://github.com/muditmittal/dbui/issues)
 
 ## Stack
 
