@@ -83,20 +83,14 @@ export default function Home() {
 
           <div className="space-y-6">
             <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>0. Configure GitHub Packages registry</p>
-              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
-                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`# Add to your project's .npmrc
-@muditmittal:registry=https://npm.pkg.github.com`}
-                </code>
-              </div>
-            </div>
-
-            <div>
               <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>1. Install the package</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
-                <code className="text-[14px] block" style={{ fontFamily: mono, color: t.textMuted }}>
-                  npm install @muditmittal/dbui --registry https://npm.pkg.github.com
+                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
+{`# Components + icons + tokens
+yarn add @muditmittal/dbui
+
+# Or with page shells (Catalog Explorer, Platform Shell)
+yarn add @muditmittal/dbui-shells`}
                 </code>
               </div>
             </div>
