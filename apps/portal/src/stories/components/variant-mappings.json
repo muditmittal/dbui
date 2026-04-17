@@ -16,7 +16,7 @@
     },
     "production": [
       { "variant": "Primary", "dbui": "<Button variant=\"default\">", "dubois": "<Button type=\"primary\">", "codeBlock": "import { Button } from \"@databricks/design-system\"\n\n<Button type=\"primary\">Label</Button>" },
-      { "variant": "Outline", "dbui": "<Button variant=\"outline\">", "dubois": "<Button>", "codeBlock": "import { Button } from \"@databricks/design-system\"\n\n<Button>Label</Button>" },
+      { "variant": "Outline", "dbui": "<Button variant=\"outline\">", "dubois": "<Button>", "codeBlock": "import { Button } from \"@databricks/design-system\"\n\n{/* Default (secondary) — no type prop */}\n<Button>Label</Button>" },
       { "variant": "Secondary", "dbui": "<Button variant=\"secondary\">", "dubois": null },
       { "variant": "Ghost", "dbui": "<Button variant=\"ghost\">", "dubois": "<Button type=\"tertiary\">", "codeBlock": "import { Button } from \"@databricks/design-system\"\n\n<Button type=\"tertiary\">Label</Button>" },
       { "variant": "Link", "dbui": "<Button variant=\"link\">", "dubois": "<Button type=\"link\">", "codeBlock": "import { Button } from \"@databricks/design-system\"\n\n<Button type=\"link\">Label</Button>" },
@@ -64,7 +64,7 @@
       }
     },
     "production": [
-      { "variant": "Default", "dbui": "<Toggle variant=\"default\">", "dubois": "<ToggleButton>", "codeBlock": "import { ToggleButton } from \"@databricks/design-system\"\n\n<ToggleButton>Label</ToggleButton>" },
+      { "variant": "Default", "dbui": "<Toggle variant=\"default\">", "dubois": "<ToggleButton>", "codeBlock": "import { ToggleButton } from \"@databricks/design-system\"\n\n<ToggleButton size=\"middle\">Label</ToggleButton>" },
       { "variant": "Outline", "dbui": "<Toggle variant=\"outline\">", "dubois": null },
       { "variant": "Filter", "dbui": "<Toggle variant=\"filter\">", "dubois": null },
       { "variant": "Pill", "dbui": "<Toggle variant=\"pill\">", "dubois": null }
@@ -82,8 +82,8 @@
       }
     },
     "production": [
-      { "variant": "Slider", "dbui": "<SegmentControl variant=\"slider\">", "dubois": "<SegmentedControlGroup>", "codeBlock": "import { SegmentedControlGroup, SegmentedControlButton } from \"@databricks/design-system\"\n\n<SegmentedControlGroup>\n  <SegmentedControlButton value=\"a\">Tab A</SegmentedControlButton>\n</SegmentedControlGroup>" },
-      { "variant": "Outline", "dbui": "<SegmentControl variant=\"outline\">", "dubois": "<SegmentedControlGroup>", "codeBlock": "import { SegmentedControlGroup, SegmentedControlButton } from \"@databricks/design-system\"\n\n<SegmentedControlGroup>\n  <SegmentedControlButton value=\"a\">Tab A</SegmentedControlButton>\n</SegmentedControlGroup>" }
+      { "variant": "Slider", "dbui": "<SegmentControl variant=\"slider\">", "dubois": "<SegmentedControlGroup>", "codeBlock": "import { SegmentedControlGroup, SegmentedControlButton } from \"@databricks/design-system\"\n\n<SegmentedControlGroup size=\"middle\">\n  <SegmentedControlButton value=\"a\">Tab A</SegmentedControlButton>\n</SegmentedControlGroup>" },
+      { "variant": "Outline", "dbui": "<SegmentControl variant=\"outline\">", "dubois": "<SegmentedControlGroup>", "codeBlock": "import { SegmentedControlGroup, SegmentedControlButton } from \"@databricks/design-system\"\n\n<SegmentedControlGroup size=\"middle\">\n  <SegmentedControlButton value=\"a\">Tab A</SegmentedControlButton>\n</SegmentedControlGroup>" }
     ]
   },
   "split-button": {
@@ -98,8 +98,8 @@
       }
     },
     "production": [
-      { "variant": "Primary", "dbui": "<SplitButton>\\n  <Button variant=\"default\">Label</Button>\\n  <SplitButtonSeparator />\\n  <Button variant=\"default\" size=\"icon-md\"><ChevronDown /></Button>\\n</SplitButton>", "dubois": "<SplitButton type=\"primary\">", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n<SplitButton type=\"primary\">Label</SplitButton>" },
-      { "variant": "Outline", "dbui": "<SplitButton>\\n  <Button variant=\"outline\">Label</Button>\\n  <SplitButtonSeparator />\\n  <Button variant=\"outline\" size=\"icon-md\"><ChevronDown /></Button>\\n</SplitButton>", "dubois": "<SplitButton>", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n<SplitButton>Label</SplitButton>" }
+      { "variant": "Primary", "dbui": "<SplitButton>\\n  <Button variant=\"default\">Label</Button>\\n  <SplitButtonSeparator />\\n  <Button variant=\"default\" size=\"icon-md\"><ChevronDown /></Button>\\n</SplitButton>", "dubois": "<SplitButton type=\"primary\">", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n<SplitButton type=\"primary\" size=\"middle\">Label</SplitButton>" },
+      { "variant": "Outline", "dbui": "<SplitButton>\\n  <Button variant=\"outline\">Label</Button>\\n  <SplitButtonSeparator />\\n  <Button variant=\"outline\" size=\"icon-md\"><ChevronDown /></Button>\\n</SplitButton>", "dubois": "<SplitButton>", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n{/* Default type — no type prop */}\n<SplitButton size=\"middle\">Label</SplitButton>" }
     ]
   },
   "input": {
@@ -114,7 +114,7 @@
       }
     },
     "production": [
-      { "variant": "Input", "dbui": "<Input>", "dubois": "<Input>", "codeBlock": "import { Input } from \"@databricks/design-system\"\n\n<Input placeholder=\"Enter value\" />" },
+      { "variant": "Input", "dbui": "<Input>", "dubois": "<Input>", "codeBlock": "import { Input } from \"@databricks/design-system\"\n\n<Input size=\"middle\" placeholder=\"Enter value\" />" },
       { "variant": "Warning state", "dbui": "<Input validation=\"warning\">", "dubois": null },
       { "variant": "Success state", "dbui": "<Input validation=\"success\">", "dubois": null }
     ]
@@ -170,7 +170,7 @@
       }
     },
     "production": [
-      { "variant": "Default", "dbui": "<Select>", "dubois": "<DialogCombobox>", "codeBlock": "import { DialogCombobox, DialogComboboxTrigger, DialogComboboxContent, DialogComboboxOptionList, DialogComboboxOption } from \"@databricks/design-system\"\n\n<DialogCombobox>\n  <DialogComboboxTrigger />\n  <DialogComboboxContent>\n    <DialogComboboxOptionList>\n      <DialogComboboxOption value=\"a\">Option A</DialogComboboxOption>\n    </DialogComboboxOptionList>\n  </DialogComboboxContent>\n</DialogCombobox>" },
+      { "variant": "Default", "dbui": "<Select>", "dubois": "<DialogCombobox>", "codeBlock": "import { DialogCombobox, DialogComboboxTrigger, DialogComboboxContent, DialogComboboxOptionList, DialogComboboxOptionListSelectItem } from \"@databricks/design-system\"\n\n<DialogCombobox label=\"Field\" value={[selected]}>\n  <DialogComboboxTrigger />\n  <DialogComboboxContent>\n    <DialogComboboxOptionList>\n      <DialogComboboxOptionListSelectItem value=\"a\">Option A</DialogComboboxOptionListSelectItem>\n    </DialogComboboxOptionList>\n  </DialogComboboxContent>\n</DialogCombobox>" },
       { "variant": "Ghost", "dbui": "<Select variant=\"ghost\">", "dubois": null }
     ]
   },
@@ -190,8 +190,8 @@
       }
     },
     "production": [
-      { "variant": "Combobox", "dbui": "<Combobox>", "dubois": "<DialogCombobox>", "codeBlock": "import { DialogCombobox, DialogComboboxTrigger, DialogComboboxContent, DialogComboboxOptionList, DialogComboboxOption } from \"@databricks/design-system\"\n\n<DialogCombobox>\n  <DialogComboboxTrigger allowClear />\n  <DialogComboboxContent>\n    <DialogComboboxOptionList>\n      <DialogComboboxOption value=\"a\">Option A</DialogComboboxOption>\n    </DialogComboboxOptionList>\n  </DialogComboboxContent>\n</DialogCombobox>" },
-      { "variant": "Typeahead Combobox", "dbui": "<ComboboxChips>", "dubois": "<TypeaheadCombobox>", "codeBlock": "import { TypeaheadCombobox } from \"@databricks/design-system\"\n\n<TypeaheadCombobox />" }
+      { "variant": "Combobox", "dbui": "<Combobox>", "dubois": "<DialogCombobox>", "codeBlock": "import { DialogCombobox, DialogComboboxTrigger, DialogComboboxContent, DialogComboboxOptionList, DialogComboboxOptionListSelectItem } from \"@databricks/design-system\"\n\n<DialogCombobox label=\"Field\" value={[selected]} multiSelect>\n  <DialogComboboxTrigger allowClear />\n  <DialogComboboxContent>\n    <DialogComboboxOptionList>\n      <DialogComboboxOptionListSelectItem value=\"a\">Option A</DialogComboboxOptionListSelectItem>\n    </DialogComboboxOptionList>\n  </DialogComboboxContent>\n</DialogCombobox>" },
+      { "variant": "Typeahead Combobox", "dbui": "<ComboboxChips>", "dubois": "<TypeaheadCombobox>", "codeBlock": "import { TypeaheadCombobox } from \"@databricks/design-system\"\n\n<TypeaheadCombobox>\n  <TypeaheadCombobox.Controls />\n  <TypeaheadCombobox.CheckboxItem value=\"a\">Option A</TypeaheadCombobox.CheckboxItem>\n  <TypeaheadCombobox.Footer />\n</TypeaheadCombobox>" }
     ]
   },
   "typeahead-combobox": {
@@ -206,7 +206,7 @@
       }
     },
     "production": [
-      { "variant": "TypeaheadCombobox", "dbui": "<Combobox multiple>\\n  <ComboboxChips>\\n    <ComboboxChip>Tag</ComboboxChip>\\n    <ComboboxChipsInput />\\n  </ComboboxChips>\\n</Combobox>", "dubois": "<TypeaheadCombobox>", "codeBlock": "import { TypeaheadCombobox } from \"@databricks/design-system\"\n\n<TypeaheadCombobox />" }
+      { "variant": "TypeaheadCombobox", "dbui": "<Combobox multiple>\\n  <ComboboxChips>\\n    <ComboboxChip>Tag</ComboboxChip>\\n    <ComboboxChipsInput />\\n  </ComboboxChips>\\n</Combobox>", "dubois": "<TypeaheadCombobox>", "codeBlock": "import { TypeaheadCombobox } from \"@databricks/design-system\"\n\n<TypeaheadCombobox>\n  <TypeaheadCombobox.Controls />\n  <TypeaheadCombobox.CheckboxItem value=\"a\">Option A</TypeaheadCombobox.CheckboxItem>\n  <TypeaheadCombobox.CountBadge />\n  <TypeaheadCombobox.Footer />\n</TypeaheadCombobox>" }
     ]
   },
   "dropdown-menu": {
@@ -217,10 +217,10 @@
       }
     },
     "production": [
-      { "variant": "DropdownMenu", "dbui": "<DropdownMenu>", "dubois": "<DropdownMenu>", "codeBlock": "import { DropdownMenu } from \"@databricks/design-system\"\n\n<DropdownMenu.Trigger><Button>Menu</Button></DropdownMenu.Trigger>\n<DropdownMenu.Content>\n  <DropdownMenu.Item>Item</DropdownMenu.Item>\n</DropdownMenu.Content>" },
+      { "variant": "DropdownMenu", "dbui": "<DropdownMenu>", "dubois": "<DropdownMenu>", "codeBlock": "import { DropdownMenu } from \"@databricks/design-system\"\n\n<DropdownMenu.Root>\n  <DropdownMenu.Trigger><Button>Menu</Button></DropdownMenu.Trigger>\n  <DropdownMenu.Content>\n    <DropdownMenu.Item>Item</DropdownMenu.Item>\n    <DropdownMenu.Separator />\n  </DropdownMenu.Content>\n</DropdownMenu.Root>" },
       { "variant": "CheckboxItem", "dbui": "<DropdownMenuCheckboxItem>", "dubois": "<DropdownMenu.CheckboxItem>" },
       { "variant": "RadioItem", "dbui": "<DropdownMenuRadioItem>", "dubois": "<DropdownMenu.RadioItem>" },
-      { "variant": "Submenu", "dbui": "<DropdownMenuSub>", "dubois": "<DropdownMenu.SubMenu>" }
+      { "variant": "Submenu", "dbui": "<DropdownMenuSub>", "dubois": "<DropdownMenu.SubTrigger> + <DropdownMenu.SubContent>" }
     ]
   },
   "checkbox": {
@@ -235,9 +235,9 @@
       }
     },
     "production": [
-      { "variant": "Unchecked", "dbui": "<Checkbox>", "dubois": "<Checkbox>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox />" },
-      { "variant": "Checked", "dbui": "<Checkbox defaultChecked>", "dubois": "<Checkbox isChecked>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked />" },
-      { "variant": "Indeterminate", "dbui": "<Checkbox indeterminate>", "dubois": "<Checkbox isChecked={null}>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked={null} />" }
+      { "variant": "Unchecked", "dbui": "<Checkbox>", "dubois": "<Checkbox>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked={false} onChange={fn} />" },
+      { "variant": "Checked", "dbui": "<Checkbox defaultChecked>", "dubois": "<Checkbox isChecked>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked onChange={fn} />" },
+      { "variant": "Indeterminate", "dbui": "<Checkbox indeterminate>", "dubois": "<Checkbox isChecked={null}>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked={null} onChange={fn} />" }
     ]
   },
   "radio-group": {
@@ -252,7 +252,7 @@
       }
     },
     "production": [
-      { "variant": "Radio", "dbui": "<RadioGroupItem>", "dubois": "<Radio>", "codeBlock": "import { Radio } from \"@databricks/design-system\"\n\n<Radio.Group>\n  <Radio value=\"a\">Option A</Radio>\n</Radio.Group>" }
+      { "variant": "Radio", "dbui": "<RadioGroupItem>", "dubois": "<Radio>", "codeBlock": "import { Radio } from \"@databricks/design-system\"\n\n<Radio.Group layout=\"vertical\">\n  <Radio value=\"a\">Option A</Radio>\n  <Radio value=\"b\">Option B</Radio>\n</Radio.Group>" }
     ]
   },
   "radio-tile": {
@@ -275,7 +275,7 @@
       }
     },
     "production": [
-      { "variant": "Radio Tile", "dbui": "<RadioTileGroup>\\n  <RadioTile value=\"a\" title=\"Option A\" description=\"Description\" />\\n</RadioTileGroup>", "dubois": "<RadioCardGroup>\\n  <RadioCard value=\"a\">Option A</RadioCard>\\n</RadioCardGroup>", "codeBlock": "import { RadioCardGroup, RadioCard } from \"@databricks/design-system\"" }
+      { "variant": "Radio Tile", "dbui": "<RadioTileGroup>\\n  <RadioTile value=\"a\" title=\"Option A\" description=\"Description\" />\\n</RadioTileGroup>", "dubois": "<RadioTile>", "codeBlock": "import { RadioTile } from \"@databricks/design-system\"\n\n<RadioTile value=\"a\">Option A</RadioTile>" }
     ]
   },
   "switch": {
@@ -294,7 +294,7 @@
       }
     },
     "production": [
-      { "variant": "Default", "dbui": "<Switch>", "dubois": "<Switch>", "codeBlock": "import { Switch } from \"@databricks/design-system\"\n\n<Switch />" },
+      { "variant": "Default", "dbui": "<Switch>", "dubois": "<Switch>", "codeBlock": "import { Switch } from \"@databricks/design-system\"\n\n<Switch checked={checked} onChange={fn} />" },
       { "variant": "Small", "dbui": "<Switch size=\"sm\">", "dubois": null }
     ]
   },
@@ -306,13 +306,13 @@
       }
     },
     "production": [
-      { "variant": "Slider", "dbui": "<Slider>", "dubois": "<Slider>", "codeBlock": "import { Slider } from \"@databricks/design-system\"\n\n<Slider />" }
+      { "variant": "Slider", "dbui": "<Slider>", "dubois": "<Slider>", "codeBlock": "import { Slider } from \"@databricks/design-system\"\n\n<Slider.Root defaultValue={[50]}>\n  <Slider.Track>\n    <Slider.Range />\n  </Slider.Track>\n  <Slider.Thumb />\n</Slider.Root>" }
     ]
   },
   "label": {
     "figmaCode": {},
     "production": [
-      { "variant": "Label", "dbui": "<Label htmlFor=\"id\">Field name</Label>", "dubois": "<Label>", "codeBlock": "import { Label } from \"@databricks/design-system\"\n\n<Label>Field name</Label>" }
+      { "variant": "Label", "dbui": "<Label htmlFor=\"id\">Field name</Label>", "dubois": "<Label>", "codeBlock": "import { Label } from \"@databricks/design-system\"\n\n<Label required htmlFor=\"field-id\" infoPopoverProps={{ content: 'Help' }}>\n  Field name\n</Label>" }
     ]
   },
   "accordion": {
@@ -323,7 +323,7 @@
       }
     },
     "production": [
-      { "variant": "Accordion", "dbui": "<Accordion>", "dubois": "<Accordion>", "codeBlock": "import { Accordion } from \"@databricks/design-system\"\n\n<Accordion dangerouslySetAntdProps={{ items: [...] }} />" }
+      { "variant": "Accordion", "dbui": "<Accordion>", "dubois": "<Accordion>", "codeBlock": "import { Accordion } from \"@databricks/design-system\"\n\n<Accordion deEmphasized>\n  {/* Accordion panel content */}\n</Accordion>" }
     ]
   },
   "avatar": {
@@ -334,8 +334,8 @@
       }
     },
     "production": [
-      { "variant": "Initials", "dbui": "<Avatar>", "dubois": "<Avatar type=\"user\">", "codeBlock": "import { Avatar } from \"@databricks/design-system\"\n\n<Avatar type=\"user\" name=\"John Doe\" />" },
-      { "variant": "Icon", "dbui": "<Avatar icon>", "dubois": "<Avatar type=\"entity\">", "codeBlock": "import { Avatar } from \"@databricks/design-system\"\n\n<Avatar type=\"entity\" />" }
+      { "variant": "Initials", "dbui": "<Avatar>", "dubois": "<Avatar type=\"user\">", "codeBlock": "import { Avatar, AvatarGroup } from \"@databricks/design-system\"\n\n{/* size: 'xxs'|'xs'|'sm'|'md'|'lg'|'xl', background: 'indigo'|'teal'|'pink'|'purple'|'brown' */}\n<Avatar type=\"user\" size=\"md\" background=\"indigo\" />" },
+      { "variant": "Icon", "dbui": "<Avatar icon>", "dubois": "<Avatar type=\"entity\">", "codeBlock": "import { Avatar } from \"@databricks/design-system\"\n\n<Avatar type=\"entity\" size=\"md\" />" }
     ]
   },
   "badge": {
@@ -358,7 +358,7 @@
       }
     },
     "production": [
-      { "variant": "Breadcrumb", "dbui": "<Breadcrumb>", "dubois": "<Breadcrumb>", "codeBlock": "import { Breadcrumb } from \"@databricks/design-system\"\n\n<Breadcrumb>\n  <Breadcrumb.Item>Home</Breadcrumb.Item>\n  <Breadcrumb.Item>Page</Breadcrumb.Item>\n</Breadcrumb>" }
+      { "variant": "Breadcrumb", "dbui": "<Breadcrumb>", "dubois": "<Breadcrumb>", "codeBlock": "import { Breadcrumb } from \"@databricks/design-system\"\n\n<Breadcrumb>\n  <Breadcrumb.Item href=\"/\">Home</Breadcrumb.Item>\n  <Breadcrumb.Item>Current Page</Breadcrumb.Item>\n</Breadcrumb>" }
     ]
   },
   "card": {
@@ -369,10 +369,10 @@
       }
     },
     "production": [
-      { "variant": "Post", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"" },
-      { "variant": "Asset Preview", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"" },
-      { "variant": "Source", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"" },
-      { "variant": "Asset Result", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"" }
+      { "variant": "Post", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"\n\n<Card onClick={fn} disableHover={false}>\n  Content\n</Card>" },
+      { "variant": "Asset Preview", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"\n\n<Card href=\"/asset\">Preview</Card>" },
+      { "variant": "Source", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"\n\n<Card>Source</Card>" },
+      { "variant": "Asset Result", "dbui": "<Card>", "dubois": "<Card>", "codeBlock": "import { Card } from \"@databricks/design-system\"\n\n<Card>Result</Card>" }
     ]
   },
   "editor-tabs": {
@@ -394,7 +394,7 @@
       }
     },
     "production": [
-      { "variant": "Empty", "dbui": "<Empty>", "dubois": "<Empty>", "codeBlock": "import { Empty } from \"@databricks/design-system\"\n\n<Empty title=\"No data\" description=\"Nothing here yet\" />" }
+      { "variant": "Empty", "dbui": "<Empty>", "dubois": "<Empty>", "codeBlock": "import { Empty } from \"@databricks/design-system\"\n\n<Empty title=\"No data\" description=\"Nothing here yet\" button={<Button>Create</Button>} />" }
     ]
   },
   "key-value-pair": {
@@ -417,7 +417,7 @@
       }
     },
     "production": [
-      { "variant": "Pagination", "dbui": "<Pagination>", "dubois": "<Pagination>", "codeBlock": "import { Pagination } from \"@databricks/design-system\"\n\n<Pagination currentPageIndex={0} numPages={10} onPageChange={fn} />" }
+      { "variant": "Pagination", "dbui": "<Pagination>", "dubois": "<Pagination>", "codeBlock": "import { Pagination } from \"@databricks/design-system\"\n\n{/* Wraps AntD Pagination */}\n<Pagination currentPageIndex={0} numPages={10} onChange={fn} />" }
     ]
   },
   "progress": {
@@ -428,7 +428,7 @@
       }
     },
     "production": [
-      { "variant": "Progress", "dbui": "<Progress>", "dubois": "<Progress>", "codeBlock": "import { Progress } from \"@databricks/design-system\"\n\n<Progress percent={60} />" }
+      { "variant": "Progress", "dbui": "<Progress>", "dubois": "<Progress>", "codeBlock": "import { Progress } from \"@databricks/design-system\"\n\n<Progress.Root value={60}>\n  <Progress.Indicator />\n</Progress.Root>" }
     ]
   },
   "separator": {
@@ -450,7 +450,7 @@
       }
     },
     "production": [
-      { "variant": "Skeleton", "dbui": "<Skeleton>", "dubois": "<Skeleton>", "codeBlock": "import { Skeleton } from \"@databricks/design-system\"\n\n<Skeleton />" }
+      { "variant": "Skeleton", "dbui": "<Skeleton>", "dubois": "<Skeleton>", "codeBlock": "import { GenericSkeleton, ParagraphSkeleton, TitleSkeleton, TableSkeleton } from \"@databricks/design-system\"\n\n<GenericSkeleton loadingDescription=\"Loading content\" />\n<ParagraphSkeleton />\n<TitleSkeleton />" }
     ]
   },
   "spinner": {
@@ -461,7 +461,7 @@
       }
     },
     "production": [
-      { "variant": "Spinner", "dbui": "<Spinner>", "dubois": "<Spinner>", "codeBlock": "import { Spinner } from \"@databricks/design-system\"\n\n<Spinner />" }
+      { "variant": "Spinner", "dbui": "<Spinner>", "dubois": "<Spinner>", "codeBlock": "import { Spinner } from \"@databricks/design-system\"\n\n{/* size: 'small' | 'default' | 'large' */}\n<Spinner size=\"default\" label=\"Loading...\" />" }
     ]
   },
   "status": {
@@ -476,7 +476,7 @@
       }
     },
     "production": [
-      { "variant": "Status", "dbui": "<Status>", "dubois": "<ResourceStatusIndicator>", "codeBlock": "import { ResourceStatusIndicator } from \"@databricks/design-system\"" }
+      { "variant": "Status", "dbui": "<Status>", "dubois": "<ResourceStatusIndicator>", "codeBlock": "import { ResourceStatusIndicator } from \"@databricks/design-system\"\n\n{/* DuBois only supports 3 statuses: online, disconnected, offline */}\n<ResourceStatusIndicator status=\"online\" />" }
     ]
   },
   "tabs": {
@@ -487,7 +487,7 @@
       }
     },
     "production": [
-      { "variant": "Tabs", "dbui": "<Tabs>", "dubois": "<Tabs>", "codeBlock": "import { Tabs } from \"@databricks/design-system\"\n\n<Tabs>\n  <Tabs.TabPane tab=\"Tab 1\" key=\"1\">Content</Tabs.TabPane>\n</Tabs>" }
+      { "variant": "Tabs", "dbui": "<Tabs>", "dubois": "<Tabs>", "codeBlock": "import { Tabs } from \"@databricks/design-system\"\n\n<Tabs.Root defaultValue=\"1\">\n  <Tabs.List>\n    <Tabs.Trigger value=\"1\">Tab 1</Tabs.Trigger>\n  </Tabs.List>\n  <Tabs.Content value=\"1\">Content</Tabs.Content>\n</Tabs.Root>" }
     ]
   },
   "tag": {
@@ -506,8 +506,8 @@
       }
     },
     "production": [
-      { "variant": "Closable", "dbui": "<Tag><TagLabel>Label</TagLabel><TagRemove /></Tag>", "dubois": "<Tag closable>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag closable>Label</Tag>" },
-      { "variant": "Static", "dbui": "<Tag><TagLabel>Label</TagLabel></Tag>", "dubois": "<Tag>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag>Label</Tag>" }
+      { "variant": "Closable", "dbui": "<Tag><TagLabel>Label</TagLabel><TagRemove /></Tag>", "dubois": "<Tag closable>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag closable onClose={fn} color=\"default\">Label</Tag>" },
+      { "variant": "Static", "dbui": "<Tag><TagLabel>Label</TagLabel></Tag>", "dubois": "<Tag>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag color=\"default\">Label</Tag>" }
     ]
   },
   "alert": {
@@ -526,10 +526,10 @@
       }
     },
     "production": [
-      { "variant": "Info", "dbui": "<Alert variant=\"info\">", "dubois": "<Alert type=\"info\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"info\" message=\"Info message\" />" },
-      { "variant": "Warning", "dbui": "<Alert variant=\"warning\">", "dubois": "<Alert type=\"warning\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"warning\" message=\"Warning\" />" },
-      { "variant": "Danger", "dbui": "<Alert variant=\"danger\">", "dubois": "<Alert type=\"error\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"error\" message=\"Error\" />" },
-      { "variant": "Success", "dbui": "<Alert variant=\"success\">", "dubois": null }
+      { "variant": "Info", "dbui": "<Alert variant=\"info\">", "dubois": "<Alert type=\"info\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"info\" message=\"Info message\" description=\"Details\" closable />" },
+      { "variant": "Warning", "dbui": "<Alert variant=\"warning\">", "dubois": "<Alert type=\"warning\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"warning\" message=\"Warning\" description=\"Details\" />" },
+      { "variant": "Danger", "dbui": "<Alert variant=\"danger\">", "dubois": "<Alert type=\"error\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"error\" message=\"Error occurred\" description=\"Details\" />" },
+      { "variant": "Success", "dbui": "<Alert variant=\"success\">", "dubois": null, "codeBlock": null }
     ]
   },
   "alert-dialog": {
@@ -540,7 +540,7 @@
       }
     },
     "production": [
-      { "variant": "Alert Dialog", "dbui": "<AlertDialog>", "dubois": "<Modal> (confirm pattern)", "codeBlock": "import { Modal } from \"@databricks/design-system\"\n\n<Modal title=\"Confirm\" visible onOk={onConfirm} onCancel={onClose}>\n  Are you sure?\n</Modal>" }
+      { "variant": "Alert Dialog", "dbui": "<AlertDialog>", "dubois": "<Modal> (confirm pattern)", "codeBlock": "import { Modal } from \"@databricks/design-system\"\n\n<Modal title=\"Confirm\" size=\"normal\" visible confirmLoading={loading} onOk={onConfirm} onCancel={onClose}>\n  Are you sure?\n</Modal>" }
     ]
   },
   "dialog": {
@@ -551,7 +551,7 @@
       }
     },
     "production": [
-      { "variant": "Dialog", "dbui": "<Dialog>", "dubois": "<Modal>", "codeBlock": "import { Modal } from \"@databricks/design-system\"\n\n<Modal title=\"Title\" visible onCancel={onClose}>\n  Content\n</Modal>" }
+      { "variant": "Dialog", "dbui": "<Dialog>", "dubois": "<Modal>", "codeBlock": "import { Modal } from \"@databricks/design-system\"\n\n{/* size: 'normal' | 'wide' | 'extraWide' */}\n<Modal title=\"Title\" size=\"normal\" visible onOk={onOk} onCancel={onClose}>\n  Content\n</Modal>" }
     ]
   },
   "drawer": {
@@ -562,7 +562,7 @@
       }
     },
     "production": [
-      { "variant": "Drawer", "dbui": "<Drawer>", "dubois": "<Drawer>", "codeBlock": "import { Drawer } from \"@databricks/design-system\"\n\n<Drawer title=\"Title\" visible onClose={onClose}>\n  Content\n</Drawer>" }
+      { "variant": "Drawer", "dbui": "<Drawer>", "dubois": "<Drawer>", "codeBlock": "import { Drawer } from \"@databricks/design-system\"\n\n{/* size: 'default' | 'small' */}\n<Drawer.Root>\n  <Drawer.Trigger><Button>Open</Button></Drawer.Trigger>\n  <Drawer.Content size=\"default\">\n    Content\n  </Drawer.Content>\n</Drawer.Root>" }
     ]
   },
   "popover": {
@@ -573,7 +573,7 @@
       }
     },
     "production": [
-      { "variant": "Popover", "dbui": "<Popover>", "dubois": "<Popover>", "codeBlock": "import { Popover } from \"@databricks/design-system\"\n\n<Popover content={<div>Content</div>}>\n  <Button>Trigger</Button>\n</Popover>" }
+      { "variant": "Popover", "dbui": "<Popover>", "dubois": "<Popover>", "codeBlock": "import { Popover } from \"@databricks/design-system\"\n\n<Popover.Root>\n  <Popover.Trigger><Button>Trigger</Button></Popover.Trigger>\n  <Popover.Content>Content</Popover.Content>\n</Popover.Root>" }
     ]
   },
   "sonner": {
@@ -588,10 +588,10 @@
       }
     },
     "production": [
-      { "variant": "Success", "dbui": "toast.success()", "dubois": "<Notification type=\"success\">", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\nNotification.success({ message: \"Done\" })" },
-      { "variant": "Info", "dbui": "toast.info()", "dubois": "<Notification type=\"info\">", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\nNotification.info({ message: \"Info\" })" },
-      { "variant": "Warning", "dbui": "toast.warning()", "dubois": "<Notification type=\"warning\">", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\nNotification.warning({ message: \"Warning\" })" },
-      { "variant": "Error", "dbui": "toast.error()", "dubois": "<Notification type=\"error\">", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\nNotification.error({ message: \"Error\" })" }
+      { "variant": "Success", "dbui": "toast.success()", "dubois": "<Notification>", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\n{/* Radix Toast compound — not imperative */}\n<Notification.Provider>\n  <Notification.Root>\n    <Notification.Title>Done</Notification.Title>\n    <Notification.Description>Operation succeeded</Notification.Description>\n    <Notification.Close />\n  </Notification.Root>\n  <Notification.Viewport />\n</Notification.Provider>" },
+      { "variant": "Info", "dbui": "toast.info()", "dubois": "<Notification>", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\n<Notification.Root>\n  <Notification.Title>Info</Notification.Title>\n  <Notification.Close />\n</Notification.Root>" },
+      { "variant": "Warning", "dbui": "toast.warning()", "dubois": "<Notification>", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\n<Notification.Root>\n  <Notification.Title>Warning</Notification.Title>\n  <Notification.Close />\n</Notification.Root>" },
+      { "variant": "Error", "dbui": "toast.error()", "dubois": "<Notification>", "codeBlock": "import { Notification } from \"@databricks/design-system\"\n\n<Notification.Root>\n  <Notification.Title>Error</Notification.Title>\n  <Notification.Close />\n</Notification.Root>" }
     ]
   },
   "tooltip": {
@@ -602,7 +602,7 @@
       }
     },
     "production": [
-      { "variant": "Tooltip", "dbui": "<Tooltip>", "dubois": "<Tooltip>", "codeBlock": "import { Tooltip } from \"@databricks/design-system\"\n\n<Tooltip title=\"Help text\">\n  <Button>Hover me</Button>\n</Tooltip>" }
+      { "variant": "Tooltip", "dbui": "<Tooltip>", "dubois": "<Tooltip>", "codeBlock": "import { Tooltip } from \"@databricks/design-system\"\n\n<Tooltip.Provider>\n  <Tooltip.Root>\n    <Tooltip.Trigger><Button>Hover me</Button></Tooltip.Trigger>\n    <Tooltip.Content>Help text</Tooltip.Content>\n  </Tooltip.Root>\n</Tooltip.Provider>" }
     ]
   },
   "hover-card": {
@@ -613,7 +613,7 @@
       }
     },
     "production": [
-      { "variant": "HoverCard", "dbui": "<HoverCard>", "dubois": "<HoverCard>", "codeBlock": "import { HoverCard } from \"@databricks/design-system\"\n\n<HoverCard content={<div>Preview</div>}>\n  <span>Hover me</span>\n</HoverCard>" }
+      { "variant": "HoverCard", "dbui": "<HoverCard>", "dubois": "<HoverCard>", "codeBlock": "import { HoverCard } from \"@databricks/design-system\"\n\n{/* Radix-based: defaultOpen, open, onOpenChange, openDelay, closeDelay, side, align */}\n<HoverCard defaultOpen={false} openDelay={700} closeDelay={300}>\n  <HoverCard.Trigger><span>Hover me</span></HoverCard.Trigger>\n  <HoverCard.Content>Preview</HoverCard.Content>\n</HoverCard>" }
     ]
   },
   "navbar": {
@@ -635,7 +635,7 @@
       }
     },
     "production": [
-      { "variant": "Table", "dbui": "<Table>", "dubois": "<TableUI>", "codeBlock": "import { Table } from \"@databricks/design-system\"\n\n<Table columns={columns} dataSource={data} />" }
+      { "variant": "Table", "dbui": "<Table>", "dubois": "<TableUI>", "codeBlock": "import { Table, TableRow, TableCell, TableHeader } from \"@databricks/design-system\"\n\n{/* size: 'default' | 'small' */}\n<Table size=\"default\">\n  <TableHeader>\n    <TableCell>Name</TableCell>\n  </TableHeader>\n  <TableRow>\n    <TableCell>Value</TableCell>\n  </TableRow>\n</Table>" }
     ]
   }
 }
