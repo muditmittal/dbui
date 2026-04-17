@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Toggle } from "../components/ui/toggle"
+import { Toggle, FilterToggle } from "../components/ui/toggle"
 
 // ToggleButton — 4 variants × 2 sizes × 5 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=478-613
@@ -31,13 +31,19 @@ figma.connect(Toggle, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
     }),
   },
   example: ({ variant, size, disabled, defaultPressed }) => (
-    <Toggle
-      variant={variant}
-      size={size}
-      disabled={disabled}
-      defaultPressed={defaultPressed}
-    >
-      Label
-    </Toggle>
+    variant === "filter" ? (
+      <FilterToggle size={size} disabled={disabled} defaultPressed={defaultPressed}>
+        Label
+      </FilterToggle>
+    ) : (
+      <Toggle
+        variant={variant}
+        size={size}
+        disabled={disabled}
+        defaultPressed={defaultPressed}
+      >
+        Label
+      </Toggle>
+    )
   ),
 })

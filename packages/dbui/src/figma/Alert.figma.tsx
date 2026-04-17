@@ -1,5 +1,6 @@
 import figma from "@figma/code-connect"
-import { Alert, AlertTitle, AlertDescription } from "../components/ui/alert"
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertClose } from "../components/ui/alert"
+import { InfoFill } from "../components/icons/InfoFill"
 
 figma.connect(
   Alert,
@@ -7,7 +8,7 @@ figma.connect(
   {
     props: {
       variant: figma.enum("Variant", {
-        Danger: "destructive",
+        Danger: "danger",
         Warning: "warning",
         Info: "info",
         Success: "success",
@@ -15,8 +16,12 @@ figma.connect(
     },
     example: ({ variant }) => (
       <Alert variant={variant}>
-        <AlertTitle>Heading</AlertTitle>
-        <AlertDescription>Description text goes here.</AlertDescription>
+        <AlertIcon><InfoFill /></AlertIcon>
+        <AlertContent>
+          <AlertTitle>Alert title</AlertTitle>
+          <AlertDescription>Alert description</AlertDescription>
+        </AlertContent>
+        <AlertClose />
       </Alert>
     ),
   }
