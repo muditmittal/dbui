@@ -1,7 +1,7 @@
 {
-  "name": "dbui",
+  "name": "dbui-src",
   "version": "0.2.0",
-  "description": "DBUI Design System \u2014 Databricks component library built on shadcn/ui with DuBois design tokens",
+  "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

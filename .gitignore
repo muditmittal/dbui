@@ -8,3 +8,26 @@ dist
 .yarn/install-state.gz
 *.tsbuildinfo
 storybook-static
+
+# Internal-only package files (not distributed)
+packages/dbui/src/figma/
+packages/dbui/src/_staging/
+packages/dbui/src/rules/
+packages/dbui/.claude/
+packages/dbui/tsup.config.ts
+packages/dbui/design-tokens.json
+
+# Monorepo-only (not distributed to consumers)
+apps/
+research/
+specs/
+scripts/
+docs/
+figma.config.json
+vercel.json
+ARCHITECTURE.md
+CLAUDE.md
+CLAUDE-dbui-consumer.md
+audit-*.md
+audit-*.tsx
+.claude/

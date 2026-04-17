@@ -5395,15 +5395,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"db-design-system@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "db-design-system@workspace:."
-  dependencies:
-    "@figma/code-connect": "npm:^1.4.2"
-    concurrently: "npm:^9.2.1"
-  languageName: unknown
-  linkType: soft
-
 "dbui-legacy@workspace:apps/dbui":
   version: 0.0.0-use.local
   resolution: "dbui-legacy@workspace:apps/dbui"
@@ -5440,20 +5431,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"dbui-shells@npm:*, dbui-shells@workspace:packages/dbui-shells":
+"dbui-shells@npm:0.1.0, dbui-shells@workspace:packages/dbui-shells":
   version: 0.0.0-use.local
   resolution: "dbui-shells@workspace:packages/dbui-shells"
-  dependencies:
-    dbui: "npm:*"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
   languageName: unknown
   linkType: soft
 
-"dbui@npm:*, dbui@workspace:packages/dbui":
+"dbui-src@workspace:packages/dbui":
   version: 0.0.0-use.local
-  resolution: "dbui@workspace:packages/dbui"
+  resolution: "dbui-src@workspace:packages/dbui"
   dependencies:
     "@base-ui/react": "npm:^1.3.0"
     class-variance-authority: "npm:^0.7.1"
@@ -5461,6 +5450,25 @@ __metadata:
     sonner: "npm:^2.0.7"
     tailwind-merge: "npm:^3.5.0"
     tsup: "npm:^8.5.1"
+    vaul: "npm:^1.1.2"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+    tailwindcss: ">=4"
+  languageName: unknown
+  linkType: soft
+
+"dbui@npm:0.2.0, dbui@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "dbui@workspace:."
+  dependencies:
+    "@base-ui/react": "npm:^1.3.0"
+    "@figma/code-connect": "npm:^1.4.2"
+    class-variance-authority: "npm:^0.7.1"
+    clsx: "npm:^2.1.1"
+    concurrently: "npm:^9.2.1"
+    sonner: "npm:^2.0.7"
+    tailwind-merge: "npm:^3.5.0"
     vaul: "npm:^1.1.2"
   peerDependencies:
     react: ">=18"
@@ -10315,8 +10323,8 @@ __metadata:
     cmdk: "npm:^1.1.1"
     css-loader: "npm:^7.1.4"
     date-fns: "npm:^4.1.0"
-    dbui: "npm:*"
-    dbui-shells: "npm:*"
+    dbui: "npm:0.2.0"
+    dbui-shells: "npm:0.1.0"
     embla-carousel-react: "npm:^8.6.0"
     eslint: "npm:^9"
     eslint-config-next: "npm:16.1.6"
