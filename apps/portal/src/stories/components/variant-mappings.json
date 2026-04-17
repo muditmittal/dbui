@@ -185,7 +185,12 @@
     "production": []
   },
   "dropdown-menu": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Variant": {
+        "figma": ["Default", "Destructive"],
+        "code": ["default", "destructive"]
+      }
+    },
     "production": [
       { "variant": "DropdownMenu", "dbui": "<DropdownMenu>", "dubois": "<DropdownMenu>", "codeBlock": "import { DropdownMenu } from \"@databricks/design-system\"\n\n<DropdownMenu.Trigger>\n  <Button>Menu</Button>\n</DropdownMenu.Trigger>\n<DropdownMenu.Content>\n  <DropdownMenu.Item>Item</DropdownMenu.Item>\n</DropdownMenu.Content>" }
     ]
@@ -269,7 +274,12 @@
     ]
   },
   "accordion": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Type": {
+        "figma": ["single", "multiple"],
+        "code": ["type='single' collapsible", "type='multiple'"]
+      }
+    },
     "production": [
       { "variant": "Accordion", "dbui": "<Accordion>", "dubois": "<Accordion>", "codeBlock": "import { Accordion } from \"@databricks/design-system\"\n\n<Accordion dangerouslySetAntdProps={{ items: [...] }} />" }
     ]
@@ -278,7 +288,7 @@
     "figmaCode": {
       "Type": {
         "figma": ["Initials", "Icon"],
-        "code": []
+        "code": ["type='initials'", "type='icon'"]
       }
     },
     "production": [
@@ -290,7 +300,7 @@
     "figmaCode": {
       "Variant": {
         "figma": ["Fill", "Outline"],
-        "code": []
+        "code": ["variant='fill'", "variant='outline'"]
       }
     },
     "production": [
@@ -299,7 +309,12 @@
     ]
   },
   "breadcrumb": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Structure": {
+        "figma": ["BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage"],
+        "code": ["BreadcrumbList > BreadcrumbItem > BreadcrumbLink | BreadcrumbPage"]
+      }
+    },
     "production": [
       { "variant": "Breadcrumb", "dbui": "<Breadcrumb>", "dubois": "<Breadcrumb>", "codeBlock": "import { Breadcrumb } from \"@databricks/design-system\"\n\n<Breadcrumb>\n  <Breadcrumb.Item>Home</Breadcrumb.Item>\n  <Breadcrumb.Item>Page</Breadcrumb.Item>\n</Breadcrumb>" }
     ]
@@ -308,7 +323,7 @@
     "figmaCode": {
       "Type": {
         "figma": ["Post", "Asset Preview", "Source", "Asset Result"],
-        "code": []
+        "code": ["type='post'", "type='asset-preview'", "type='source'", "type='asset-result'"]
       }
     },
     "production": [
@@ -319,50 +334,90 @@
     ]
   },
   "editor-tabs": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Selected": {
+        "figma": ["False", "True"],
+        "code": ["data-state='inactive'", "data-state='active'"]
+      }
+    },
     "production": [
       { "variant": "Editor Tabs", "dbui": "<EditorTabs>", "dubois": null }
     ]
   },
   "empty": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Slots": {
+        "figma": ["Title, Description, Action"],
+        "code": ["title prop, description prop, children (action)"]
+      }
+    },
     "production": [
       { "variant": "Empty", "dbui": "<Empty>", "dubois": "<Empty>", "codeBlock": "import { Empty } from \"@databricks/design-system\"\n\n<Empty title=\"No data\" description=\"Nothing here yet\" />" }
     ]
   },
   "key-value-pair": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Layout": {
+        "figma": ["Horizontal", "Vertical"],
+        "code": ["layout='horizontal'", "layout='vertical'"]
+      }
+    },
     "production": [
       { "variant": "Horizontal", "dbui": "<KeyValuePair layout=\"horizontal\">", "dubois": null },
       { "variant": "Vertical", "dbui": "<KeyValuePair layout=\"vertical\">", "dubois": null }
     ]
   },
   "pagination": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Structure": {
+        "figma": ["Previous, Pages, Next"],
+        "code": ["PaginationPrevious, PaginationLink, PaginationNext"]
+      }
+    },
     "production": [
       { "variant": "Pagination", "dbui": "<Pagination>", "dubois": "<Pagination>", "codeBlock": "import { Pagination } from \"@databricks/design-system\"\n\n<Pagination currentPageIndex={0} numPages={10} onPageChange={fn} />" }
     ]
   },
   "progress": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Props": {
+        "figma": ["Value (0-100)"],
+        "code": ["value={0-100}"]
+      }
+    },
     "production": [
       { "variant": "Progress", "dbui": "<Progress>", "dubois": "<Progress>", "codeBlock": "import { Progress } from \"@databricks/design-system\"\n\n<Progress percent={60} />" }
     ]
   },
   "separator": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Orientation": {
+        "figma": ["Horizontal", "Vertical"],
+        "code": ["orientation='horizontal'", "orientation='vertical'"]
+      }
+    },
     "production": [
       { "variant": "Separator", "dbui": "<Separator>", "dubois": null }
     ]
   },
   "skeleton": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Shape": {
+        "figma": ["Rectangle"],
+        "code": ["className='h-4 w-[200px]'"]
+      }
+    },
     "production": [
       { "variant": "Skeleton", "dbui": "<Skeleton>", "dubois": "<Skeleton>", "codeBlock": "import { Skeleton } from \"@databricks/design-system\"\n\n<Skeleton />" }
     ]
   },
   "spinner": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Size": {
+        "figma": ["Default"],
+        "code": ["className='size-6'"]
+      }
+    },
     "production": [
       { "variant": "Spinner", "dbui": "<Spinner>", "dubois": "<Spinner>", "codeBlock": "import { Spinner } from \"@databricks/design-system\"\n\n<Spinner />" }
     ]
@@ -371,11 +426,11 @@
     "figmaCode": {
       "Size": {
         "figma": ["sm", "md"],
-        "code": []
+        "code": ["size='sm'", "size='md'"]
       },
       "Status": {
         "figma": ["Online", "Ready", "Offline", "Pending", "Running", "Syncing", "Canceled", "Stopped", "Info", "Success", "Warning", "Error"],
-        "code": []
+        "code": ["online", "ready", "offline", "pending", "running", "syncing", "canceled", "stopped", "info", "success", "warning", "error"]
       }
     },
     "production": [
@@ -383,7 +438,12 @@
     ]
   },
   "tabs": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Variant": {
+        "figma": ["Default", "Pill (internal)"],
+        "code": ["default", "pill"]
+      }
+    },
     "production": [
       { "variant": "Tabs", "dbui": "<Tabs>", "dubois": "<Tabs>", "codeBlock": "import { Tabs } from \"@databricks/design-system\"\n\n<Tabs>\n  <Tabs.TabPane tab=\"Tab 1\" key=\"1\">Content</Tabs.TabPane>\n</Tabs>" }
     ]
@@ -392,7 +452,7 @@
     "figmaCode": {
       "Value": {
         "figma": ["True", "False"],
-        "code": []
+        "code": ["<TagValue>present</TagValue>", "omit TagValue"]
       }
     },
     "production": [
@@ -404,11 +464,11 @@
     "figmaCode": {
       "Variant": {
         "figma": ["Danger", "Warning", "Info", "Success"],
-        "code": []
+        "code": ["variant='danger'", "variant='warning'", "variant='info'", "variant='success'"]
       },
       "Layout": {
         "figma": ["Inline", "Stacked"],
-        "code": []
+        "code": ["inline (AlertAction inside AlertContent)", "stacked (AlertAction outside AlertContent)"]
       }
     },
     "production": [
@@ -419,19 +479,34 @@
     ]
   },
   "alert-dialog": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Structure": {
+        "figma": ["Title, Description, Cancel, Action"],
+        "code": ["AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction"]
+      }
+    },
     "production": [
       { "variant": "Alert Dialog", "dbui": "<AlertDialog>", "dubois": "<Modal> (confirm pattern)", "codeBlock": "import { Modal } from \"@databricks/design-system\"\n\n<Modal title=\"Confirm\" visible onOk={onConfirm} onCancel={onClose}>\n  Are you sure?\n</Modal>" }
     ]
   },
   "dialog": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Size": {
+        "figma": ["Normal · 640px", "Wide · 880px", "Extrawide · 1200px"],
+        "code": ["default (640px)", "wide (880px)", "extrawide (1200px)"]
+      }
+    },
     "production": [
       { "variant": "Dialog", "dbui": "<Dialog>", "dubois": "<Modal>", "codeBlock": "import { Modal } from \"@databricks/design-system\"\n\n<Modal title=\"Title\" visible onCancel={onClose}>\n  Content\n</Modal>" }
     ]
   },
   "drawer": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Direction": {
+        "figma": ["Right"],
+        "code": ["direction='right' (default)", "direction='left'", "direction='bottom'"]
+      }
+    },
     "production": [
       { "variant": "Drawer", "dbui": "<Drawer>", "dubois": "<Drawer>", "codeBlock": "import { Drawer } from \"@databricks/design-system\"\n\n<Drawer title=\"Title\" visible onClose={onClose}>\n  Content\n</Drawer>" }
     ]
@@ -440,7 +515,7 @@
     "figmaCode": {
       "Arrow": {
         "figma": ["Top", "Right", "Bottom", "Left"],
-        "code": []
+        "code": ["side='top'", "side='right'", "side='bottom'", "side='left'"]
       }
     },
     "production": [
@@ -451,7 +526,7 @@
     "figmaCode": {
       "Type": {
         "figma": ["Success", "Info", "Warning", "Error"],
-        "code": []
+        "code": ["toast.success()", "toast.info()", "toast.warning()", "toast.error()"]
       }
     },
     "production": [
@@ -465,7 +540,7 @@
     "figmaCode": {
       "Arrow": {
         "figma": ["Bottom", "Left", "Right", "Top"],
-        "code": []
+        "code": ["side='bottom'", "side='left'", "side='right'", "side='top'"]
       }
     },
     "production": [
@@ -473,19 +548,34 @@
     ]
   },
   "hover-card": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Structure": {
+        "figma": ["Trigger, Content"],
+        "code": ["HoverCardTrigger, HoverCardContent"]
+      }
+    },
     "production": [
       { "variant": "HoverCard", "dbui": "<HoverCard>", "dubois": "<HoverCard>", "codeBlock": "import { HoverCard } from \"@databricks/design-system\"\n\n<HoverCard content={<div>Preview</div>}>\n  <span>Hover me</span>\n</HoverCard>" }
     ]
   },
   "navbar": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Structure": {
+        "figma": ["Section, Item, Icon"],
+        "code": ["NavbarSection, NavbarItem, NavbarItemIcon"]
+      }
+    },
     "production": [
       { "variant": "Navbar", "dbui": "<Navbar>", "dubois": null }
     ]
   },
   "table": {
-    "figmaCode": {},
+    "figmaCode": {
+      "Cell Types": {
+        "figma": ["Plain, Title, Status, User"],
+        "code": ["TableCell, TableCellTitle, TableCellStatus, TableCellUser"]
+      }
+    },
     "production": [
       { "variant": "Table", "dbui": "<Table>", "dubois": "<TableUI>", "codeBlock": "import { Table } from \"@databricks/design-system\"\n\n<Table columns={columns} dataSource={data} />" }
     ]
