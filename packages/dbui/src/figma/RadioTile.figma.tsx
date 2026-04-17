@@ -10,14 +10,21 @@ figma.connect(RadioTileGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEh
       "Focus": false,
       "Disabled": true,
     }),
+    defaultSelected: figma.enum("Selected", {
+      "False": false,
+      "True": true,
+    }),
+    showIcon: figma.boolean("Icon"),
+    showText: figma.boolean("Text"),
   },
-  example: ({ disabled }) => (
-    <RadioTileGroup defaultValue="option-1">
+  example: ({ disabled, defaultSelected, showIcon, showText }) => (
+    <RadioTileGroup defaultValue={defaultSelected ? "option-1" : undefined}>
       <RadioTile value="option-1" disabled={disabled}>
         <RadioTileHeader>
+          {showIcon && <>{/* icon */}</>}
           <RadioTileTitle>Label</RadioTileTitle>
         </RadioTileHeader>
-        <RadioTileDescription>Description</RadioTileDescription>
+        {showText && <RadioTileDescription>Description</RadioTileDescription>}
       </RadioTile>
     </RadioTileGroup>
   ),

@@ -5,6 +5,7 @@ import { Textarea } from "../components/ui/textarea"
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=724-658
 figma.connect(Textarea, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=724-658", {
   props: {
+    text: figma.string("Text"),
     disabled: figma.enum("State", {
       Default: false,
       Hover: false,

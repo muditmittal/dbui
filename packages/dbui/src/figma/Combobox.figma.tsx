@@ -5,6 +5,10 @@ import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem } 
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=811-976
 figma.connect(Combobox, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=811-976", {
   props: {
+    size: figma.enum("Size", {
+      Default: "default",
+      Small: "sm",
+    }),
     disabled: figma.enum("State", {
       Default: false,
       Hover: false,
@@ -13,11 +17,23 @@ figma.connect(Combobox, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?nod
       Disabled: true,
       Danger: false,
     }),
+    ariaInvalid: figma.enum("State", {
+      Default: false,
+      Hover: false,
+      Press: false,
+      Focus: false,
+      Disabled: false,
+      Danger: true,
+    }),
     showClear: figma.boolean("Show Clear"),
+    text: figma.string("Text"),
+    showLabel: figma.boolean("Show Label"),
+    label: figma.string("Label"),
+    showBadge: figma.boolean("Show Badge"),
   },
-  example: ({ disabled, showClear }) => (
+  example: ({ size, disabled, showClear }) => (
     <Combobox>
-      <ComboboxInput placeholder="Search..." showClear={showClear} disabled={disabled} />
+      <ComboboxInput placeholder="Search..." size={size} showClear={showClear} disabled={disabled} />
       <ComboboxContent>
         <ComboboxList>
           <ComboboxItem value="option-1">Option 1</ComboboxItem>

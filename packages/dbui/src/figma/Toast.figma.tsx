@@ -12,10 +12,11 @@ figma.connect(
         Warning: "warning",
         Error: "error",
       }),
+      removable: figma.boolean("Removable"),
     },
-    example: ({ type }) => {
+    example: ({ type, removable }) => {
       // @ts-expect-error — toast is called imperatively, not rendered as JSX
-      toast[type]("Your message here")
+      toast[type]("Your message here", { dismissible: removable })
     },
     imports: ['import { toast } from "sonner"'],
   }

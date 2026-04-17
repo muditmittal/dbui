@@ -8,8 +8,12 @@ figma.connect(InputGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/D
       "Browse": "browse",
       "Filter": "filter",
     }),
+    active: figma.enum("Active", {
+      "False": false,
+      "True": true,
+    }),
   },
-  example: ({ type }) => (
+  example: ({ type, active }) => (
     <InputGroup>
       <InputGroupControl placeholder="Search..." />
       <InputGroupAddon align="inline-end">

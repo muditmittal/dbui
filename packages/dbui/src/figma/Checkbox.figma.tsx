@@ -21,13 +21,23 @@ figma.connect(Checkbox, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?nod
       Press: false,
       Focus: false,
       Disabled: true,
+      Danger: false,
+    }),
+    ariaInvalid: figma.enum("State", {
+      Default: false,
+      Hover: false,
+      Press: false,
+      Focus: false,
+      Disabled: false,
+      Danger: true,
     }),
   },
-  example: ({ defaultChecked, indeterminate, disabled }) => (
+  example: ({ defaultChecked, indeterminate, disabled, ariaInvalid }) => (
     <Checkbox
       defaultChecked={defaultChecked}
       indeterminate={indeterminate}
       disabled={disabled}
+      aria-invalid={ariaInvalid}
     />
   ),
 })

@@ -3,7 +3,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "../components/ui/avatar"
 
 figma.connect(Avatar, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1084-1542", {
   props: {
-    type: figma.enum("Type", {
+    type: figma.enum("Size", {
       "Initials": "initials",
       "Icon": "icon",
     }),

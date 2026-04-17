@@ -13,15 +13,20 @@ figma.connect(
         Info: "info",
         Success: "success",
       }),
+      layout: figma.enum("Layout", {
+        Inline: "inline",
+        Stacked: "stacked",
+      }),
+      removable: figma.boolean("Removable"),
     },
-    example: ({ variant }) => (
-      <Alert variant={variant}>
+    example: ({ variant, layout, removable }) => (
+      <Alert variant={variant} layout={layout}>
         <AlertIcon><InfoFill /></AlertIcon>
         <AlertContent>
           <AlertTitle>Alert title</AlertTitle>
           <AlertDescription>Alert description</AlertDescription>
         </AlertContent>
-        <AlertClose />
+        {removable && <AlertClose />}
       </Alert>
     ),
   }

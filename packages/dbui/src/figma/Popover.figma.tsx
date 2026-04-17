@@ -10,12 +10,20 @@ figma.connect(
   Popover,
   "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1060-3832",
   {
-    example: () => (
+    props: {
+      side: figma.enum("Arrow", {
+        Top: "bottom",
+        Right: "left",
+        Bottom: "top",
+        Left: "right",
+      }),
+    },
+    example: ({ side }) => (
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline">Open Popover</Button>
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent side={side}>
           <p>Popover content goes here.</p>
         </PopoverContent>
       </Popover>

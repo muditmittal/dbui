@@ -5,6 +5,10 @@ import { Switch } from "../components/ui/switch"
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=717-650
 figma.connect(Switch, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=717-650", {
   props: {
+    size: figma.enum("Size", {
+      Default: "default",
+      Small: "sm",
+    }),
     defaultChecked: figma.enum("On", {
       false: false,
       true: true,
@@ -17,7 +21,7 @@ figma.connect(Switch, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
       Disabled: true,
     }),
   },
-  example: ({ defaultChecked, disabled }) => (
-    <Switch defaultChecked={defaultChecked} disabled={disabled} />
+  example: ({ size, defaultChecked, disabled }) => (
+    <Switch size={size} defaultChecked={defaultChecked} disabled={disabled} />
   ),
 })

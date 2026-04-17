@@ -13,6 +13,7 @@ figma.connect(Select, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
       Default: "default",
       Small: "sm",
     }),
+    showIcon: figma.boolean("Show Icon"),
     disabled: figma.enum("State", {
       Default: false,
       Hover: false,

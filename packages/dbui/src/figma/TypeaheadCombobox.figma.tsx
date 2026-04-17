@@ -5,6 +5,7 @@ import { Combobox, ComboboxChips, ComboboxChip, ComboboxChipsInput, ComboboxCont
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=842-889
 figma.connect(Combobox, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=842-889", {
   props: {
+    showClear: figma.boolean("Show Clear"),
     disabled: figma.enum("State", {
       Default: false,
       Hover: false,
