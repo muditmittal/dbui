@@ -39,13 +39,20 @@
         "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "focus-visible (CSS)", "disabled (prop)"]
       }
     },
-    "production": []
+    "production": [
+      { "variant": "Primary", "dbui": "<Button size=\"icon-md\" variant=\"default\">", "dubois": "<Button icon={<Icon />} type=\"primary\">" },
+      { "variant": "Outline", "dbui": "<Button size=\"icon-md\" variant=\"outline\">", "dubois": "<Button icon={<Icon />}>" },
+      { "variant": "Ghost", "dbui": "<Button size=\"icon-md\" variant=\"ghost\">", "dubois": "<Button icon={<Icon />} type=\"tertiary\">" },
+      { "variant": "Secondary", "dbui": "<Button size=\"icon-md\" variant=\"secondary\">", "dubois": null },
+      { "variant": "Destructive", "dbui": "<Button size=\"icon-md\" variant=\"destructive\">", "dubois": "<Button icon={<Icon />} danger type=\"primary\">" },
+      { "variant": "Danger", "dbui": "<Button size=\"icon-md\" variant=\"danger\">", "dubois": "<Button icon={<Icon />} danger>" }
+    ]
   },
   "toggle": {
     "figmaCode": {
       "Variant": {
-        "figma": ["Default", "Filter", "Icon", "Pill"],
-        "code": ["default", "filter", "icon", "pill"]
+        "figma": ["Default", "Outline", "Filter", "Icon", "Pill"],
+        "code": ["default", "outline", "filter", "icon", "pill"]
       },
       "Size": {
         "figma": ["Default", "Small"],
@@ -83,7 +90,7 @@
     "figmaCode": {
       "Variant": {
         "figma": ["Primary", "Outline"],
-        "code": ["default", "outline"]
+        "code": ["default (on child Button)", "outline (on child Button)"]
       },
       "Size": {
         "figma": ["Default", "Small"],
@@ -91,8 +98,8 @@
       }
     },
     "production": [
-      { "variant": "Primary", "dbui": "<SplitButton variant=\"default\">", "dubois": "<SplitButton type=\"primary\">", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n<SplitButton type=\"primary\">Label</SplitButton>" },
-      { "variant": "Outline", "dbui": "<SplitButton variant=\"outline\">", "dubois": "<SplitButton>", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n<SplitButton>Label</SplitButton>" }
+      { "variant": "Primary", "dbui": "<SplitButton>\\n  <Button variant=\"default\">Label</Button>\\n  <SplitButtonSeparator />\\n  <Button variant=\"default\" size=\"icon-md\"><ChevronDown /></Button>\\n</SplitButton>", "dubois": "<SplitButton type=\"primary\">", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n<SplitButton type=\"primary\">Label</SplitButton>" },
+      { "variant": "Outline", "dbui": "<SplitButton>\\n  <Button variant=\"outline\">Label</Button>\\n  <SplitButtonSeparator />\\n  <Button variant=\"outline\" size=\"icon-md\"><ChevronDown /></Button>\\n</SplitButton>", "dubois": "<SplitButton>", "codeBlock": "import { SplitButton } from \"@databricks/design-system\"\n\n<SplitButton>Label</SplitButton>" }
     ]
   },
   "input": {
@@ -103,7 +110,7 @@
       },
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger", "Warning", "Success"],
-        "code": ["CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid", "validation='warning'", "validation='success'"]
+        "code": ["default (CSS)", "CSS hover", "CSS active", "focus-visible", "disabled prop", "aria-invalid", "validation='warning'", "validation='success'"]
       }
     },
     "production": [
@@ -116,16 +123,16 @@
     "figmaCode": {
       "Type": {
         "figma": ["Browse", "Filter"],
-        "code": "Composition — InputGroup + addons"
+        "code": ["Composition — InputGroup + addons"]
       },
       "Active": {
         "figma": ["False", "True"],
-        "code": "CSS focus-within states"
+        "code": ["CSS focus-within states"]
       }
     },
     "production": [
-      { "variant": "Browse", "dbui": "<InputGroup variant=\"browse\">", "dubois": null },
-      { "variant": "Filter", "dbui": "<InputGroup variant=\"filter\">", "dubois": null }
+      { "variant": "Browse", "dbui": "<InputGroup>\\n  <InputGroupInput placeholder=\"Browse...\" />\\n  <InputGroupButton>Browse</InputGroupButton>\\n</InputGroup>", "dubois": null },
+      { "variant": "Filter", "dbui": "<InputGroup>\\n  <InputGroupAddon><Search /></InputGroupAddon>\\n  <InputGroupInput placeholder=\"Filter...\" />\\n  <InputGroupButton><Sliders /></InputGroupButton>\\n</InputGroup>", "dubois": null }
     ]
   },
   "textarea": {
@@ -167,7 +174,7 @@
       },
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
-        "code": ["CSS", "CSS", "CSS", "focus-visible", "disabled", "aria-invalid"]
+        "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "focus-visible (CSS)", "disabled (prop)", "aria-invalid"]
       }
     },
     "production": [
@@ -179,10 +186,12 @@
     "figmaCode": {
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled", "Danger"],
-        "code": ["CSS", "CSS", "CSS", "focus-visible", "disabled", "aria-invalid"]
+        "code": ["default (CSS)", "hover (CSS)", "active (CSS)", "focus-visible (CSS)", "disabled (prop)", "aria-invalid"]
       }
     },
-    "production": []
+    "production": [
+      { "variant": "TypeaheadCombobox", "dbui": "<Combobox multiple>\\n  <ComboboxChips>\\n    <ComboboxChip>Tag</ComboboxChip>\\n    <ComboboxChipsInput />\\n  </ComboboxChips>\\n</Combobox>", "dubois": "<TypeaheadCombobox>", "codeBlock": "import { TypeaheadCombobox } from \"@databricks/design-system\"\n\n<TypeaheadCombobox />" }
+    ]
   },
   "dropdown-menu": {
     "figmaCode": {
@@ -192,7 +201,10 @@
       }
     },
     "production": [
-      { "variant": "DropdownMenu", "dbui": "<DropdownMenu>", "dubois": "<DropdownMenu>", "codeBlock": "import { DropdownMenu } from \"@databricks/design-system\"\n\n<DropdownMenu.Trigger>\n  <Button>Menu</Button>\n</DropdownMenu.Trigger>\n<DropdownMenu.Content>\n  <DropdownMenu.Item>Item</DropdownMenu.Item>\n</DropdownMenu.Content>" }
+      { "variant": "DropdownMenu", "dbui": "<DropdownMenu>", "dubois": "<DropdownMenu>", "codeBlock": "import { DropdownMenu } from \"@databricks/design-system\"\n\n<DropdownMenu.Trigger><Button>Menu</Button></DropdownMenu.Trigger>\n<DropdownMenu.Content>\n  <DropdownMenu.Item>Item</DropdownMenu.Item>\n</DropdownMenu.Content>" },
+      { "variant": "CheckboxItem", "dbui": "<DropdownMenuCheckboxItem>", "dubois": "<DropdownMenu.CheckboxItem>" },
+      { "variant": "RadioItem", "dbui": "<DropdownMenuRadioItem>", "dubois": "<DropdownMenu.RadioItem>" },
+      { "variant": "Submenu", "dbui": "<DropdownMenuSub>", "dubois": "<DropdownMenu.SubMenu>" }
     ]
   },
   "checkbox": {
@@ -208,15 +220,15 @@
     },
     "production": [
       { "variant": "Unchecked", "dbui": "<Checkbox>", "dubois": "<Checkbox>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox />" },
-      { "variant": "Checked", "dbui": "<Checkbox checked>", "dubois": "<Checkbox isChecked>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked />" },
-      { "variant": "Indeterminate", "dbui": "<Checkbox checked=\"indeterminate\">", "dubois": "<Checkbox isChecked={null}>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked={null} />" }
+      { "variant": "Checked", "dbui": "<Checkbox defaultChecked>", "dubois": "<Checkbox isChecked>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked />" },
+      { "variant": "Indeterminate", "dbui": "<Checkbox indeterminate>", "dubois": "<Checkbox isChecked={null}>", "codeBlock": "import { Checkbox } from \"@databricks/design-system\"\n\n<Checkbox isChecked={null} />" }
     ]
   },
   "radio-group": {
     "figmaCode": {
       "Selected": {
         "figma": ["False", "True"],
-        "code": "data-checked attribute (Base UI)"
+        "code": ["data-checked attribute (Base UI)"]
       },
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
@@ -231,7 +243,7 @@
     "figmaCode": {
       "Selected": {
         "figma": ["False", "True"],
-        "code": "data-checked (Base UI Radio)"
+        "code": ["data-checked (Base UI Radio)"]
       },
       "State": {
         "figma": ["Default", "Hover", "Press", "Focus", "Disabled"],
@@ -239,14 +251,14 @@
       }
     },
     "production": [
-      { "variant": "Radio Tile", "dbui": "<RadioTile>", "dubois": "<RadioTile>", "codeBlock": "import { RadioTile } from \"@databricks/design-system\"\n\n<RadioTile value=\"a\">Option A</RadioTile>" }
+      { "variant": "Radio Tile", "dbui": "<RadioTileGroup>\\n  <RadioTile value=\"a\" title=\"Option A\" description=\"Description\" />\\n</RadioTileGroup>", "dubois": "<RadioCardGroup>\\n  <RadioCard value=\"a\">Option A</RadioCard>\\n</RadioCardGroup>", "codeBlock": "import { RadioCardGroup, RadioCard } from \"@databricks/design-system\"" }
     ]
   },
   "switch": {
     "figmaCode": {
       "On": {
         "figma": ["false", "true"],
-        "code": "defaultChecked / checked prop"
+        "code": ["defaultChecked / checked prop"]
       },
       "Size": {
         "figma": ["Default", "Small"],
@@ -271,6 +283,12 @@
     },
     "production": [
       { "variant": "Slider", "dbui": "<Slider>", "dubois": "<Slider>", "codeBlock": "import { Slider } from \"@databricks/design-system\"\n\n<Slider />" }
+    ]
+  },
+  "label": {
+    "figmaCode": {},
+    "production": [
+      { "variant": "Label", "dbui": "<Label htmlFor=\"id\">Field name</Label>", "dubois": "<Label>", "codeBlock": "import { Label } from \"@databricks/design-system\"\n\n<Label>Field name</Label>" }
     ]
   },
   "accordion": {
@@ -456,8 +474,8 @@
       }
     },
     "production": [
-      { "variant": "Closable", "dbui": "<Tag removable>", "dubois": "<Tag closable>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag closable>Label</Tag>" },
-      { "variant": "Static", "dbui": "<Tag>", "dubois": "<Tag>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag>Label</Tag>" }
+      { "variant": "Closable", "dbui": "<Tag><TagLabel>Label</TagLabel><TagRemove /></Tag>", "dubois": "<Tag closable>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag closable>Label</Tag>" },
+      { "variant": "Static", "dbui": "<Tag><TagLabel>Label</TagLabel></Tag>", "dubois": "<Tag>", "codeBlock": "import { Tag } from \"@databricks/design-system\"\n\n<Tag>Label</Tag>" }
     ]
   },
   "alert": {
@@ -474,7 +492,7 @@
     "production": [
       { "variant": "Info", "dbui": "<Alert variant=\"info\">", "dubois": "<Alert type=\"info\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"info\" message=\"Info message\" />" },
       { "variant": "Warning", "dbui": "<Alert variant=\"warning\">", "dubois": "<Alert type=\"warning\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"warning\" message=\"Warning\" />" },
-      { "variant": "Danger", "dbui": "<Alert variant=\"destructive\">", "dubois": "<Alert type=\"error\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"error\" message=\"Error\" />" },
+      { "variant": "Danger", "dbui": "<Alert variant=\"danger\">", "dubois": "<Alert type=\"error\">", "codeBlock": "import { Alert } from \"@databricks/design-system\"\n\n<Alert type=\"error\" message=\"Error\" />" },
       { "variant": "Success", "dbui": "<Alert variant=\"success\">", "dubois": null }
     ]
   },
