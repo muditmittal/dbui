@@ -21,6 +21,25 @@ DBUI requires Tailwind CSS v4. In your root CSS file:
 @import "@muditmittal/dbui/tokens/globals.css";
 ```
 
+## Claude Code Integration
+
+DBUI ships with a Claude Code skill that ensures your AI assistant uses ONLY DBUI components — no raw HTML, no random shadcn, no guessed tokens.
+
+**Setup (one-time):**
+
+```bash
+# Copy the skill into your project
+cp -r node_modules/@muditmittal/dbui/.claude/skills/dbui-consumer .claude/skills/dbui
+```
+
+**Use:**
+
+```
+/dbui Build a form with email input, password input, and submit button
+```
+
+Claude will generate code using exclusively DBUI components, semantic tokens, and correct icon imports. The skill loads the full component API reference and enforces 7 rules that prevent common mistakes.
+
 ## Usage
 
 ```tsx
@@ -37,16 +56,16 @@ import { Search } from "@muditmittal/dbui/components/icons/Search"
 - **162 design tokens** — Colors, radius, spacing, shadows, typography
 - **Dark mode** — All tokens support light and dark modes
 - **Page shells** — Platform Shell, Catalog Explorer (via `@muditmittal/dbui-shells`)
+- **Claude Code skill** — Enforced component-only code generation
+- **LLM context file** — `llms.txt` with component API, composition recipes, and decision tables
 
-## LLM Context
+## LLM Context (manual)
 
-For AI-assisted development, feed `llms.txt` into your AI tool:
+If you're not using Claude Code, feed `llms.txt` into your AI tool:
 
 ```bash
 cat node_modules/@muditmittal/dbui/llms.txt | pbcopy
 ```
-
-It contains component selection guides, composition recipes, entity icon mappings, and mandatory rules.
 
 ## Storybook
 
