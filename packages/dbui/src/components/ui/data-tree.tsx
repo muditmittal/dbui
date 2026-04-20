@@ -46,7 +46,7 @@ function Tree({
   onFocusNode,
   onNodeMenu,
   ...props
-}: React.ComponentProps<"div"> & {
+}: Omit<React.ComponentProps<"div">, "onSelect"> & {
   defaultSelectedId?: string
   onSelect?: (id: string) => void
   /** Called when user clicks "Focus" on a node — sets it as tree root */

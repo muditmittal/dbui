@@ -3,10 +3,12 @@
 import * as React from "react"
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle"
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group"
-import { type VariantProps } from "class-variance-authority"
-
 import { cn } from "../../lib/utils"
-import { toggleVariants } from "./toggle"
+
+type SegmentControlVariantProps = {
+  variant?: "default" | "outline" | null
+  size?: "sm" | "md" | null
+}
 
 /**
  * @standard Segment Control
@@ -38,10 +40,8 @@ import { toggleVariants } from "./toggle"
  * Default is single selection (segment control pattern).
  */
 const SegmentControlContext = React.createContext<
-  VariantProps<typeof toggleVariants> & {
+  SegmentControlVariantProps & {
     orientation?: "horizontal" | "vertical"
-    registerItem?: (value: string, el: HTMLButtonElement | null) => void
-    activeValue?: string
   }
 >({
   size: "md",
@@ -57,7 +57,7 @@ function SegmentControl({
   children,
   ...props
 }: ToggleGroupPrimitive.Props &
-  VariantProps<typeof toggleVariants> & {
+  SegmentControlVariantProps & {
     orientation?: "horizontal" | "vertical"
   }) {
   return (
@@ -96,7 +96,7 @@ function SegmentControlItem({
   size = "md",
   onPressedChange,
   ...props
-}: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
+}: TogglePrimitive.Props & SegmentControlVariantProps) {
   const context = React.useContext(SegmentControlContext)
   const resolvedSize = context.size || size
   const resolvedVariant = context.variant || variant

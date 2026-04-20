@@ -9,9 +9,8 @@
 import * as React from "react"
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle"
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group"
-import { type VariantProps } from "class-variance-authority"
-
 import { cn } from "../../lib/utils"
+import { type VariantProps } from "class-variance-authority"
 import { toggleVariants } from "./toggle"
 
 /** @standard Toggle Group (excluded — no product use) */
@@ -60,7 +59,7 @@ function ToggleGroup({
       data-orientation={orientation}
       className={cn(
         "group/toggle-group inline-flex items-center rounded-sm bg-accent p-0.5",
-        variant === "outline" && "border border-input",
+        (variant as string) === "outline" && "border border-input",
         orientation === "vertical" && "flex-col items-stretch",
         className
       )}
