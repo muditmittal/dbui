@@ -3,14 +3,12 @@ import { forwardRef } from "react"
 /** use:action blockquote | quote, citation, callout */
 const Blockquote = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M16 2H0V3.5H16V2Z" fill="currentColor"/>
-<path d="M16 5.5H8V7H16V5.5Z" fill="currentColor"/>
-<path d="M16 9H8V10.5H16V9Z" fill="currentColor"/>
-<path d="M0 12.5V14H16V12.5H0Z" fill="currentColor"/>
-<path d="M1.5 7.25C1.5 7.11193 1.61193 7 1.75 7H2.5V5.5H1.75C0.783502 5.5 0 6.2835 0 7.25V9.75C0 10.1642 0.335786 10.5 0.75 10.5H2.25C2.66421 10.5 3 10.1642 3 9.75V8.25C3 7.83579 2.66421 7.5 2.25 7.5H1.5V7.25Z" fill="currentColor"/>
-<path d="M5.5 7.5H6.25C6.66421 7.5 7 7.83579 7 8.25V9.75C7 10.1642 6.66421 10.5 6.25 10.5H4.75C4.33579 10.5 4 10.1642 4 9.75V7.25C4 6.2835 4.7835 5.5 5.75 5.5H6.5V7H5.75C5.61193 7 5.5 7.11193 5.5 7.25V7.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M16 2H0v1.5h16zM16 5.5H8V7h8zM16 9H8v1.5h8zM0 12.5V14h16v-1.5zM1.5 7.25A.25.25 0 0 1 1.75 7h.75V5.5h-.75A1.75 1.75 0 0 0 0 7.25v2.5c0 .414.336.75.75.75h1.5A.75.75 0 0 0 3 9.75v-1.5a.75.75 0 0 0-.75-.75H1.5zM5.5 7.5h.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-.75.75h-1.5A.75.75 0 0 1 4 9.75v-2.5c0-.966.784-1.75 1.75-1.75h.75V7h-.75a.25.25 0 0 0-.25.25z"
+      />
+    </svg>
   )
 )
 Blockquote.displayName = "Blockquote"

@@ -3,8 +3,11 @@ import { forwardRef } from "react"
 /** use:object Group | IAM | team, people, members */
 const UserGroupFill = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M8 1C6.20507 1 4.75 2.45507 4.75 4.25C4.75 6.04493 6.20507 7.5 8 7.5C9.79493 7.5 11.25 6.04493 11.25 4.25C11.25 2.45507 9.79493 1 8 1Z" fill="currentColor"/><path d="M8 9C5.23352 9 2.7666 10.2847 1.16438 12.2872C1.05797 12.4202 1 12.5855 1 12.7558V14.25C1 14.6642 1.33579 15 1.75 15H14.25C14.6642 15 15 14.6642 15 14.25V12.7558C15 12.5855 14.942 12.4202 14.8356 12.2872C13.2334 10.2847 10.7665 9 8 9Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M2.25 3.75a2.75 2.75 0 1 1 5.5 0 2.75 2.75 0 0 1-5.5 0M9.502 14H.75a.75.75 0 0 1-.75-.75V11a.75.75 0 0 1 .164-.469C1.298 9.115 3.077 8 5.125 8c1.76 0 3.32.822 4.443 1.952A5.55 5.55 0 0 1 11.75 9.5c1.642 0 3.094.745 4.041 1.73a.75.75 0 0 1 .209.52v1.5a.75.75 0 0 1-.75.75zM11.75 3.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5"
+      />
     </svg>
   )
 )

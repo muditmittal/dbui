@@ -3,8 +3,12 @@ import { forwardRef } from "react"
 /** use:action share | distribute, send to */
 const Share = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M3.96967 5.03033L7.46967 1.53033L8 1L8.53033 1.53033L12.0303 5.03033L10.9697 6.09099L8.75 3.87132V11.0607H7.25V3.87132L5.03033 6.09099L3.96967 5.03033ZM2.5 13.5607V7.06066H1V14.3107C1 14.7249 1.33579 15.0607 1.75 15.0607H14.25C14.6642 15.0607 15 14.7249 15 14.3107V7.06066H13.5V13.5607H2.5Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M3.97 5.03 8 1l4.03 4.03-1.06 1.061-2.22-2.22v7.19h-1.5V3.87l-2.22 2.22z" />
+      <path
+      fill="currentColor"
+      d="M2.5 13.56v-6.5H1v7.25c0 .415.336.75.75.75h12.5a.75.75 0 0 0 .75-.75V7.06h-1.5v6.5z"
+      />
     </svg>
   )
 )

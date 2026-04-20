@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:object User | IAM | person, profile */
 const User = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M8 1C6.20507 1 4.75 2.45507 4.75 4.25C4.75 6.04493 6.20507 7.5 8 7.5C9.79493 7.5 11.25 6.04493 11.25 4.25C11.25 2.45507 9.79493 1 8 1ZM8 9C5.23352 9 2.7666 10.2847 1.16438 12.2872C1.05797 12.4202 1 12.5855 1 12.7558V14.25C1 14.6642 1.33579 15 1.75 15H14.25C14.6642 15 15 14.6642 15 14.25V12.7558C15 12.5855 14.942 12.4202 14.8356 12.2872C13.2334 10.2847 10.7665 9 8 9Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 1a3.25 3.25 0 1 0 0 6.5A3.25 3.25 0 0 0 8 1M6.25 4.25a1.75 1.75 0 1 1 3.5 0 1.75 1.75 0 0 1-3.5 0M8 9a8.74 8.74 0 0 0-6.836 3.287.75.75 0 0 0-.164.469v1.494c0 .414.336.75.75.75h12.5a.75.75 0 0 0 .75-.75v-1.494a.75.75 0 0 0-.164-.469A8.74 8.74 0 0 0 8 9m-5.5 4.5v-.474A7.23 7.23 0 0 1 8 10.5c2.2 0 4.17.978 5.5 2.526v.474z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

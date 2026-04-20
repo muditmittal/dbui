@@ -3,8 +3,11 @@ import { forwardRef } from "react"
 /** use:action heading 3 | subsection heading */
 const H3 = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1 8V3H2.5V7.25H6V3H7.5V8V13H6V8.75H2.5V13H1V8ZM9 5.75C9 4.23122 10.2312 3 11.75 3H12.125C13.7128 3 15 4.28718 15 5.875C15 6.71686 14.6382 7.47421 14.0615 8C14.6382 8.5258 15 9.28314 15 10.125C15 11.7128 13.7128 13 12.125 13H11.75C10.2312 13 9 11.7688 9 10.25V10H10.5V10.25C10.5 10.9404 11.0596 11.5 11.75 11.5H12.125C12.8844 11.5 13.5 10.8844 13.5 10.125C13.5 9.36561 12.8844 8.75 12.125 8.75H11V7.25H12.125C12.8844 7.25 13.5 6.63439 13.5 5.875C13.5 5.11561 12.8844 4.5 12.125 4.5H11.75C11.0596 4.5 10.5 5.05964 10.5 5.75V6H9V5.75Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M1 3h1.5v4.25H6V3h1.5v10H6V8.75H2.5V13H1zM9 5.75A2.75 2.75 0 0 1 11.75 3h.375a2.875 2.875 0 0 1 1.937 5 2.875 2.875 0 0 1-1.937 5h-.375A2.75 2.75 0 0 1 9 10.25V10h1.5v.25c0 .69.56 1.25 1.25 1.25h.375a1.375 1.375 0 1 0 0-2.75H11v-1.5h1.125a1.375 1.375 0 1 0 0-2.75h-.375c-.69 0-1.25.56-1.25 1.25V6H9z"
+      />
     </svg>
   )
 )

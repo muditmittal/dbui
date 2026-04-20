@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:object Bundle | Workspace | DAB, suitcase, work */
 const Briefcase = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M6.75 2.5C6.61193 2.5 6.5 2.61193 6.5 2.75V4H9.5V2.75C9.5 2.61193 9.38807 2.5 9.25 2.5H6.75ZM1.75 4H5V2.75C5 1.7835 5.7835 1 6.75 1H9.25C10.2165 1 11 1.7835 11 2.75V4H14.25C14.6642 4 15 4.33579 15 4.75V14.25C15 14.6642 14.6642 15 14.25 15H1.75C1.33579 15 1 14.6642 1 14.25V4.75C1 4.33579 1.33579 4 1.75 4ZM2.5 8.1731V13.5H13.5V8.17312C11.9629 9.3114 10.0598 9.98525 8.00001 9.98525C5.94017 9.98525 4.03705 9.31139 2.5 8.1731ZM2.5 6.19533C3.90483 7.61043 5.84974 8.48525 8.00001 8.48525C10.1503 8.48525 12.0952 7.61043 13.5 6.19535V5.5H2.5V6.19533Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1.75 4H5V2.75C5 1.784 5.784 1 6.75 1h2.5c.966 0 1.75.784 1.75 1.75V4h3.25a.75.75 0 0 1 .75.75v9.5a.75.75 0 0 1-.75.75H1.75a.75.75 0 0 1-.75-.75v-9.5A.75.75 0 0 1 1.75 4m5-1.5a.25.25 0 0 0-.25.25V4h3V2.75a.25.25 0 0 0-.25-.25zM2.5 8.173V13.5h11V8.173A9.2 9.2 0 0 1 8 9.985a9.2 9.2 0 0 1-5.5-1.812m0-1.978A7.72 7.72 0 0 0 8 8.485c2.15 0 4.095-.875 5.5-2.29V5.5h-11z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Briefcase.displayName = "Briefcase"

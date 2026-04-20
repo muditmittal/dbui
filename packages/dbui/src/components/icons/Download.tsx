@@ -3,9 +3,12 @@ import { forwardRef } from "react"
 /** use:action download | export, save file, fetch */
 const Download = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M1 13.5L15 13.5L15 15L1 15L1 13.5ZM8.53033 10.5303L12.5303 6.53033L11.4697 5.46967L8.75 8.18934L8.75 1L7.25 1L7.25 8.18934L4.53033 5.46967L3.46967 6.53033L7.46967 10.5303L8 11.0607L8.53033 10.5303Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M1 13.5h14V15H1zM12.53 6.53l-1.06-1.06-2.72 2.72V1h-1.5v7.19L4.53 5.47 3.47 6.53 8 11.06z"
+      />
+    </svg>
   )
 )
 Download.displayName = "Download"

@@ -3,8 +3,14 @@ import { forwardRef } from "react"
 /** use:action unlock | unsecure, open access, remove restriction */
 const LockUnlocked = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M3.5 7.5H4H4.75H11.25H12H12.5V14.5H3.5V7.5ZM13.25 6H12H10.5H9H5.5V4C5.5 2.61929 6.61929 1.5 8 1.5C9.38071 1.5 10.5 2.61929 10.5 4V4.5H12V4C12 1.79086 10.2091 0 8 0C5.79086 0 4 1.79086 4 4V6H2.75C2.33579 6 2 6.33579 2 6.75V15.25C2 15.6642 2.33579 16 2.75 16H13.25C13.6642 16 14 15.6642 14 15.25V6.75C14 6.33579 13.6642 6 13.25 6ZM10 11.75V10.25H6V11.75H10Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M10 11.75v-1.5H6v1.5z" />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M13.25 6H5.5V4a2.5 2.5 0 0 1 5 0v.5H12V4a4 4 0 0 0-8 0v2H2.75a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h10.5a.75.75 0 0 0 .75-.75v-8.5a.75.75 0 0 0-.75-.75M3.5 7.5h9v7h-9z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

@@ -3,11 +3,19 @@ import { forwardRef } from "react"
 /** use:indicator expired | timed out, schedule off, no schedule */
 const ClockOff = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M8 0C12.4183 0 16 3.58172 16 8C16 8.31422 15.9796 8.62394 15.9443 8.92871C15.8189 8.76801 15.683 8.61269 15.5352 8.46484C15.2158 8.1455 14.8639 7.87895 14.4902 7.66406C14.3154 4.23037 11.4772 1.5 8 1.5C4.41015 1.5 1.5 4.41015 1.5 8C1.5 11.4772 4.23037 14.3154 7.66406 14.4902C7.87895 14.8639 8.1455 15.2158 8.46484 15.5352C8.61269 15.683 8.76801 15.8189 8.92871 15.9443C8.62394 15.9796 8.31422 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0Z" fill="currentColor"/>
-<path d="M8.75 8C8.75 8.19891 8.67093 8.38962 8.53027 8.53027L6.53027 10.5303L5.46973 9.46973L7.25 7.68945V3H8.75V8Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8ZM12 10.9395L10.875 9.81445L9.81445 10.875L10.9395 12L9.81445 13.125L10.875 14.1855L12 13.0605L13.125 14.1855L14.1855 13.125L13.0605 12L14.1855 10.875L13.125 9.81445L12 10.9395Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M8 0a8 8 0 0 1 7.944 8.929 5.005 5.005 0 0 0-1.454-1.265A6.5 6.5 0 0 0 1.5 8a6.5 6.5 0 0 0 6.164 6.49 5 5 0 0 0 1.265 1.454A8 8 0 1 1 8 0"
+      />
+      <path fill="currentColor" d="M8.75 8a.75.75 0 0 1-.22.53l-2 2-1.06-1.06 1.78-1.78V3h1.5z" />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 2.94-1.125-1.126-1.06 1.061L10.94 12l-1.126 1.125 1.061 1.06L12 13.06l1.125 1.125 1.06-1.06L13.06 12l1.125-1.125-1.06-1.06z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 ClockOff.displayName = "ClockOff"

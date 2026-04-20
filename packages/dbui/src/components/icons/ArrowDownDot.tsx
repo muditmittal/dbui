@@ -3,10 +3,12 @@ import { forwardRef } from "react"
 /** use:indicator download point | download target, destination */
 const ArrowDownDot = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M7.99999 15C8.82842 15 9.49999 14.3284 9.49999 13.5C9.49999 12.6716 8.82842 12 7.99999 12C7.17157 12 6.49999 12.6716 6.49999 13.5C6.49999 14.3284 7.17157 15 7.99999 15Z" fill="currentColor"/>
-<path d="M3.46967 6.53033L8 11.0607L12.5303 6.53033L11.4697 5.46967L8.75 8.18934V1H7.25V8.18934L4.53032 5.46967L3.46967 6.53033Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M8 15a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M3.47 6.53 8 11.06l4.53-4.53-1.06-1.06-2.72 2.72V1h-1.5v7.19L4.53 5.47z"
+      />
+    </svg>
   )
 )
 ArrowDownDot.displayName = "ArrowDownDot"

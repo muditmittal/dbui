@@ -3,9 +3,17 @@ import { forwardRef } from "react"
 /** use:object Pipeline folder | Lakeflow | DLT directory */
 const FolderSolidPipeline = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M0.75 2C0.335786 2 0 2.33579 0 2.75V13.25C0 13.6642 0.335786 14 0.75 14H8.91646L8.90507 13.9737C7.82617 13.8077 7 12.8754 7 11.75V9.25C7 8.00736 8.00736 7 9.25 7H10.5C12.5611 7 14.3293 8.24611 15.0949 10.0263C15.4259 10.0772 15.7331 10.2003 16 10.3789V4.75C16 4.33579 15.6642 4 15.25 4H7.81066L6.61612 2.80546C6.10039 2.28973 5.40092 2 4.67157 2H0.75Z" fill="currentColor"/>
-      <path fillRule="evenodd" clipRule="evenodd" d="M9.25 8.5C8.83579 8.5 8.5 8.83579 8.5 9.25V11.75C8.5 12.1642 8.83579 12.5 9.25 12.5H10.0354C10.2781 14.1961 11.7368 15.5 13.5 15.5H14.75C15.1642 15.5 15.5 15.1642 15.5 14.75V12.25C15.5 11.8358 15.1642 11.5 14.75 11.5H13.9646C13.7219 9.80385 12.2632 8.5 10.5 8.5H9.25ZM10 11V10H10.5C11.6046 10 12.5 10.8954 12.5 12C12.5 12.5523 12.9477 13 13.5 13H14V14H13.5C12.3954 14 11.5 13.1046 11.5 12C11.5 11.4477 11.0523 11 10.5 11H10Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M.75 2a.75.75 0 0 0-.75.75v10.5c0 .414.336.75.75.75h8.166l-.01-.026A2.25 2.25 0 0 1 7 11.75v-2.5A2.25 2.25 0 0 1 9.25 7h1.25a5 5 0 0 1 4.595 3.026c.33.051.638.174.905.353V4.75a.75.75 0 0 0-.75-.75H7.81L6.617 2.805A2.75 2.75 0 0 0 4.672 2z"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M9.25 8.5a.75.75 0 0 0-.75.75v2.5c0 .414.336.75.75.75h.785a3.5 3.5 0 0 0 3.465 3h1.25a.75.75 0 0 0 .75-.75v-2.5a.75.75 0 0 0-.75-.75h-.785a3.5 3.5 0 0 0-3.465-3zM10 11v-1h.5a2 2 0 0 1 2 2 1 1 0 0 0 1 1h.5v1h-.5a2 2 0 0 1-2-2 1 1 0 0 0-1-1z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

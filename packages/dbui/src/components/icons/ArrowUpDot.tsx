@@ -3,10 +3,12 @@ import { forwardRef } from "react"
 /** use:indicator upload point | upload target, destination */
 const ArrowUpDot = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M8 1C7.17157 1 6.5 1.67157 6.5 2.5C6.5 3.32843 7.17157 4 8 4C8.82842 4 9.5 3.32843 9.5 2.5C9.5 1.67157 8.82842 1 8 1Z" fill="currentColor"/>
-<path d="M12.5303 9.46967L8 4.93934L3.46967 9.46967L4.53033 10.5303L7.25 7.81066V15H8.75V7.81066L11.4697 10.5303L12.5303 9.46967Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M8 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M12.53 9.47 8 4.94 3.47 9.47l1.06 1.06 2.72-2.72V15h1.5V7.81l2.72 2.72z"
+      />
+    </svg>
   )
 )
 ArrowUpDot.displayName = "ArrowUpDot"

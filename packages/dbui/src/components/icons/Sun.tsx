@@ -3,8 +3,21 @@ import { forwardRef } from "react"
 /** use:action light mode | day mode, light theme */
 const Sun = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M8.75 16H7.25V13H8.75V16Z" fill="currentColor"/><path d="M4.99512 12.0654L2.87402 14.1875L1.81348 13.127L3.93457 11.0049L4.99512 12.0654Z" fill="currentColor"/><path d="M14.1875 13.127L13.127 14.1875L11.0059 12.0654L12.0664 11.0049L14.1875 13.127Z" fill="currentColor"/><path fillRule="evenodd" clipRule="evenodd" d="M8 4.25C10.0711 4.25 11.75 5.92893 11.75 8C11.75 10.0711 10.0711 11.75 8 11.75C5.92893 11.75 4.25 10.0711 4.25 8C4.25 5.92893 5.92893 4.25 8 4.25ZM8 5.75C6.75736 5.75 5.75 6.75736 5.75 8C5.75 9.24264 6.75736 10.25 8 10.25C9.24264 10.25 10.25 9.24264 10.25 8C10.25 6.75736 9.24264 5.75 8 5.75Z" fill="currentColor"/><path d="M3 8.75H0V7.25H3V8.75Z" fill="currentColor"/><path d="M16 8.75H13V7.25H16V8.75Z" fill="currentColor"/><path d="M4.99512 3.93457L3.93457 4.99512L1.81348 2.87305L2.87402 1.8125L4.99512 3.93457Z" fill="currentColor"/><path d="M14.1875 2.87305L12.0664 4.99512L11.0059 3.93457L13.127 1.8125L14.1875 2.87305Z" fill="currentColor"/><path d="M8.75 3H7.25V0H8.75V3Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M8.75 16h-1.5v-3h1.5zM4.995 12.065l-2.121 2.123-1.06-1.061 2.12-2.122zM14.188 13.127l-1.061 1.06-2.121-2.122 1.06-1.06z"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 4.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5m0 1.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      d="M3 8.75H0v-1.5h3zM16 8.75h-3v-1.5h3zM4.995 3.935l-1.06 1.06-2.122-2.122 1.061-1.06zM14.188 2.873l-2.122 2.122-1.06-1.06 2.121-2.122zM8.75 3h-1.5V0h1.5z"
+      />
     </svg>
   )
 )

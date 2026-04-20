@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:indicator Streaming | real-time, live data, event stream */
 const Stream = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1.52054 7.47946C1.78571 4.133 4.58537 1.5 8 1.5C10.9586 1.5 13.4556 3.47673 14.2422 6.18155L14.1517 6.09099C12.6872 4.62652 10.3128 4.62652 8.84835 6.09099L6.09099 8.84835C5.21231 9.72703 3.78769 9.72703 2.90901 8.84835L1.53033 7.46967L1.52054 7.47946ZM1.75779 9.81845C2.5444 12.5233 5.04135 14.5 8 14.5C11.4146 14.5 14.2143 11.867 14.4795 8.52054L14.4697 8.53033L13.091 7.15165C12.2123 6.27297 10.7877 6.27297 9.90901 7.15165L7.15165 9.90901C5.68718 11.3735 3.31282 11.3735 1.84835 9.90901L1.75779 9.81845ZM8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1.52 7.48a6.5 6.5 0 0 1 12.722-1.298l-.09-.091a3.75 3.75 0 0 0-5.304 0L6.091 8.848a2.25 2.25 0 0 1-3.182 0L1.53 7.47zm.238 2.338A6.5 6.5 0 0 0 14.48 8.52l-.01.01-1.379-1.378a2.25 2.25 0 0 0-3.182 0L7.152 9.909a3.75 3.75 0 0 1-5.304 0z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

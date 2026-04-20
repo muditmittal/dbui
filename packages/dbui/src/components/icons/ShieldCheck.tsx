@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:object Governed | Unity Catalog | secured, verified, compliant */
 const ShieldCheck = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M2 1.75C2 1.33579 2.33579 1 2.75 1H13.25C13.6642 1 14 1.33579 14 1.75V9.21472C14 11.206 12.9697 13.0556 11.2765 14.1037L8.39477 15.8877C8.15289 16.0374 7.84711 16.0374 7.60523 15.8877L4.72346 14.1037C3.03031 13.0556 2 11.206 2 9.21472V1.75ZM3.5 2.5V9.21472C3.5 10.6866 4.26153 12.0536 5.51299 12.8283L8 14.3679L10.487 12.8283C11.7385 12.0536 12.5 10.6866 12.5 9.21472V2.5H3.5ZM9.71967 5.46967L10.7803 6.53033L7.25 10.0607L5.21967 8.03033L6.28033 6.96967L7.25 7.93934L9.71967 5.46967Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M2 1.75A.75.75 0 0 1 2.75 1h10.5a.75.75 0 0 1 .75.75v7.465a5.75 5.75 0 0 1-2.723 4.889l-2.882 1.784a.75.75 0 0 1-.79 0l-2.882-1.784A5.75 5.75 0 0 1 2 9.214zm1.5.75v6.715a4.25 4.25 0 0 0 2.013 3.613L8 14.368l2.487-1.54A4.25 4.25 0 0 0 12.5 9.215V2.5zm6.22 2.97 1.06 1.06-3.53 3.53-2.03-2.03 1.06-1.06.97.97z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

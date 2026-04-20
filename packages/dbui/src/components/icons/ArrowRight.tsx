@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:action expand | forward, next, proceed */
 const ArrowRight = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M15.0607 8.03033L8.03034 15.0607L6.96968 14L12.1893 8.78033L1.00001 8.78033L1.00001 7.28033L12.1893 7.28033L6.96968 2.06066L8.03034 1L15.0607 8.03033Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="m15.06 8.03-7.03 7.03L6.97 14l5.22-5.22H1v-1.5h11.19L6.97 2.06 8.03 1z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 ArrowRight.displayName = "ArrowRight"

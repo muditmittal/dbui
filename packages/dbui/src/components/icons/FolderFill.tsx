@@ -3,9 +3,12 @@ import { forwardRef } from "react"
 /** use:object Folder | Workspace | directory, container */
 const FolderFill = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M0.75 2C0.335786 2 0 2.33579 0 2.75V13.25C0 13.6642 0.335786 14 0.75 14H15.25C15.6642 14 16 13.6642 16 13.25V4.75C16 4.33579 15.6642 4 15.25 4H7.81066L6.61612 2.80546C6.10039 2.28973 5.40092 2 4.67157 2H0.75Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M.75 2a.75.75 0 0 0-.75.75v10.5c0 .414.336.75.75.75h14.5a.75.75 0 0 0 .75-.75v-8.5a.75.75 0 0 0-.75-.75H7.81L6.617 2.805A2.75 2.75 0 0 0 4.672 2z"
+      />
+    </svg>
   )
 )
 FolderFill.displayName = "FolderFill"

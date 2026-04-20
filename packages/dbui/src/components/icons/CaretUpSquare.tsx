@@ -3,9 +3,18 @@ import { forwardRef } from "react"
 /** use:action collapse | close dropdown, caret up */
 const CaretUpSquare = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M1.75 1C1.33579 1 1 1.33579 1 1.75L1 14.25C1 14.6642 1.33579 15 1.75 15L14.25 15C14.6642 15 15 14.6642 15 14.25L15 1.75C15 1.33579 14.6642 1 14.25 1L1.75 1ZM2.5 13.5L2.5 2.5L13.5 2.5L13.5 13.5L2.5 13.5ZM8.00003 5.75C8.22992 5.75 8.44711 5.85543 8.58932 6.03606L10.7544 8.78606C10.9321 9.01175 10.9652 9.31911 10.8398 9.57752C10.7144 9.83593 10.4523 10 10.1651 10L5.83497 10C5.54772 10 5.2857 9.83593 5.16026 9.57752C5.03482 9.31911 5.06799 9.01175 5.24568 8.78606L7.41075 6.03606C7.55295 5.85543 7.77014 5.75 8.00003 5.75Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M8 5.75a.75.75 0 0 1 .59.286l2.164 2.75A.75.75 0 0 1 10.165 10h-4.33a.75.75 0 0 1-.59-1.214l2.166-2.75A.75.75 0 0 1 8 5.75"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1.75 1a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h12.5a.75.75 0 0 0 .75-.75V1.75a.75.75 0 0 0-.75-.75zm.75 12.5v-11h11v11z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 CaretUpSquare.displayName = "CaretUpSquare"

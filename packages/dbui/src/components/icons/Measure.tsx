@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:object Metric | AI/BI | measure, KPI, metric definition */
 const Measure = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M10.2197 0.71967C10.5126 0.426777 10.9874 0.426777 11.2803 0.71967L15.2803 4.71967C15.421 4.86032 15.5 5.05109 15.5 5.25C15.5 5.44891 15.421 5.63968 15.2803 5.78033L5.78033 15.2803C5.63968 15.421 5.44891 15.5 5.25 15.5C5.05109 15.5 4.86032 15.421 4.71967 15.2803L0.71967 11.2803C0.426777 10.9874 0.426777 10.5126 0.71967 10.2197L10.2197 0.71967ZM10.75 2.31066L2.31066 10.75L5.25 13.6893L6.56434 12.375L5.09467 10.9053L6.15533 9.84467L7.625 11.3143L8.93934 10L7.46967 8.53033L8.53033 7.46967L10 8.93934L11.3143 7.625L9.84467 6.15533L10.9053 5.09467L12.375 6.56434L13.6893 5.25L10.75 2.31066Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M10.22.72a.75.75 0 0 1 1.06 0l4 4a.75.75 0 0 1 0 1.06l-9.5 9.5a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 0-1.06zm.53 1.59-8.44 8.44 2.94 2.94 1.314-1.315-1.47-1.47 1.061-1.06 1.47 1.47L8.939 10 7.47 8.53 8.53 7.47 10 8.94l1.314-1.315-1.47-1.47 1.061-1.06 1.47 1.47 1.314-1.315z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

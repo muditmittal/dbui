@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:action single column | field, attribute */
 const Column = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M6.5 9V6H9.5V9H6.5ZM9.5 10.5V13.5H6.5V10.5H9.5ZM11 9.75V5.25V0.75C11 0.335787 10.6642 0 10.25 0H5.75C5.33579 0 5 0.335787 5 0.75V5.25V9.75V14.25C5 14.6642 5.33579 15 5.75 15H10.25C10.6642 15 11 14.6642 11 14.25V9.75ZM6.5 4.5V1.5H9.5V4.5H6.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M6.5 9V6h3v3zm3 1.5v3h-3v-3zm1.5-.75v-9a.75.75 0 0 0-.75-.75h-4.5A.75.75 0 0 0 5 .75v13.5c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75zM6.5 4.5v-3h3v3z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Column.displayName = "Column"

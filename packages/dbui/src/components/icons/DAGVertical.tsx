@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:object DAG | Lakeflow | vertical DAG, data flow */
 const DAGVertical = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M4.5 2.75C4.5 2.33579 4.83579 2 5.25 2H10.75C11.1642 2 11.5 2.33579 11.5 2.75V6.25C11.5 6.66421 11.1642 7 10.75 7H10.1859L12.7573 9H15.25C15.6642 9 16 9.33579 16 9.75V13.25C16 13.6642 15.6642 14 15.25 14H9.75C9.33579 14 9 13.6642 9 13.25V9.75C9 9.33579 9.33579 9 9.75 9H10.3141L8 7.20015L5.6859 9H6.25C6.66421 9 7 9.33579 7 9.75V13.25C7 13.6642 6.66421 14 6.25 14H0.75C0.335786 14 0 13.6642 0 13.25V9.75C0 9.33579 0.335786 9 0.75 9H3.24267L5.8141 7H5.25C4.83579 7 4.5 6.66421 4.5 6.25V2.75ZM6 3.5V5.5H10V3.5H6ZM1.5 10.5V12.5H5.5V10.5H1.5ZM10.5 10.5V12.5H14.5V10.5H10.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M4.5 2.75A.75.75 0 0 1 5.25 2h5.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75h-.564l2.571 2h2.493a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75h-5.5a.75.75 0 0 1-.75-.75v-3.5A.75.75 0 0 1 9.75 9h.564L8 7.2 5.686 9h.564a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1-.75-.75v-3.5A.75.75 0 0 1 .75 9h2.493l2.571-2H5.25a.75.75 0 0 1-.75-.75zM6 3.5v2h4v-2zm-4.5 7v2h4v-2zm9 0v2h4v-2z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 DAGVertical.displayName = "DAGVertical"

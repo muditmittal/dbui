@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:object Genie assistant | AI/BI | assistant, genie */
 const SparkleFill = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M13.6674 6.57511C15.0426 7.02737 15.0426 8.97268 13.6674 9.42494L11.1945 10.2382C10.742 10.3871 10.3871 10.742 10.2382 11.1945L9.42494 13.6674C8.97268 15.0426 7.02737 15.0426 6.57511 13.6674L5.76182 11.1945C5.61299 10.742 5.25806 10.3871 4.80553 10.2382L2.33264 9.42494C0.95748 8.97268 0.957478 7.02737 2.33264 6.57511L4.80553 5.76182C5.25806 5.61299 5.61299 5.25806 5.76182 4.80553L6.57511 2.33264C7.02737 0.957479 8.97267 0.957478 9.42494 2.33264L10.2382 4.80553C10.3871 5.25806 10.742 5.61299 11.1945 5.76182L13.6674 6.57511Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M13.667 6.575c1.376.452 1.376 2.398 0 2.85l-2.472.813a1.5 1.5 0 0 0-.957.957l-.813 2.472c-.452 1.376-2.398 1.376-2.85 0l-.813-2.472a1.5 1.5 0 0 0-.956-.957l-2.473-.813c-1.376-.452-1.376-2.398 0-2.85l2.473-.813a1.5 1.5 0 0 0 .956-.956l.813-2.473c.452-1.376 2.398-1.376 2.85 0l.813 2.473a1.5 1.5 0 0 0 .957.956z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

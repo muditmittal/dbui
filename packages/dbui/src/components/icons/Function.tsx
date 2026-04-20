@@ -3,8 +3,20 @@ import { forwardRef } from "react"
 /** use:object Function | Unity Catalog | UDF, formula, fx */
 const Function = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M10 2.98804C9.22507 2.08395 7.74715 2.49574 7.55139 3.67029L7.16312 5.99994L9.16859 5.99994C10.325 5.99994 11.3578 6.72338 11.753 7.81015L11.8262 8.01146L14.0607 5.94884L15.0782 7.05104L12.382 9.53981L12.7956 10.6771C12.9752 11.1711 13.4447 11.4999 13.9703 11.4999H15.0694V12.9999H13.9703C12.8139 12.9999 11.7811 12.2765 11.3859 11.1897L11.187 10.6429L8.57815 13.051L7.56073 11.9488L10.6312 9.11452L10.3433 8.32276C10.1637 7.82878 9.69422 7.49994 9.16859 7.49994L6.91312 7.49994L6.06708 12.5762C5.66198 15.0068 2.60362 15.8589 1 13.988L2.13889 13.0119C2.91382 13.9159 4.39173 13.5041 4.58749 12.3296L5.39243 7.49994L3.06944 7.49994L3.06944 5.99994L5.64243 5.99994L6.0718 3.4237C6.4769 0.993112 9.53526 0.140955 11.1389 2.01185L10 2.98804Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#FunctionIcon_svg__a)">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M9.93 2.988c-.774-.904-2.252-.492-2.448.682L7.094 6h2.005a2.75 2.75 0 0 1 2.585 1.81l.073.202 2.234-2.063 1.018 1.102-2.696 2.489.413 1.137c.18.494.65.823 1.175.823H15V13h-1.1a2.75 2.75 0 0 1-2.585-1.81l-.198-.547-2.61 2.408-1.017-1.102 3.07-2.834-.287-.792A1.25 1.25 0 0 0 9.099 7.5H6.844l-.846 5.076c-.405 2.43-3.464 3.283-5.067 1.412l1.139-.976c.774.904 2.252.492 2.448-.682l.805-4.83H3V6h2.573l.43-2.576C6.407.994 9.465.14 11.07 2.012z"
+      clipRule="evenodd"
+      />
+      </g>
+      <defs>
+      <clipPath>
+      <path fill="#fff" d="M16 0H0v16h16z" />
+      </clipPath>
+      </defs>
     </svg>
   )
 )

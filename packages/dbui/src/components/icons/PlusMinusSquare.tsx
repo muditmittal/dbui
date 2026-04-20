@@ -3,10 +3,14 @@ import { forwardRef } from "react"
 /** use:action increment/decrement | plus minus, counter, stepper */
 const PlusMinusSquare = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M7.25 4.25V6H5.5V7.5H7.25V9.25H8.75V7.5H10.5V6H8.75V4.25H7.25Z" fill="currentColor"/>
-      <path d="M10.5 10.5H5.5V12H10.5V10.5Z" fill="currentColor"/>
-      <path fillRule="evenodd" clipRule="evenodd" d="M1.75 1C1.33579 1 1 1.33579 1 1.75V14.25C1 14.6642 1.33579 15 1.75 15H14.25C14.6642 15 15 14.6642 15 14.25V1.75C15 1.33579 14.6642 1 14.25 1H1.75ZM2.5 13.5V2.5H13.5V13.5H2.5Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M7.25 4.25V6H5.5v1.5h1.75v1.75h1.5V7.5h1.75V6H8.75V4.25zM10.5 10.5h-5V12h5z" />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1.75 1a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h12.5a.75.75 0 0 0 .75-.75V1.75a.75.75 0 0 0-.75-.75zm.75 12.5v-11h11v11z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

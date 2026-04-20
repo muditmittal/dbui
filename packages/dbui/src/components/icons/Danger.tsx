@@ -3,11 +3,15 @@ import { forwardRef } from "react"
 /** use:indicator failure | error, critical, alert */
 const Danger = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M7.24783 10.7478C7.24783 11.1621 7.58362 11.4978 7.99783 11.4978C8.41204 11.4978 8.74783 11.1621 8.74783 10.7478C8.74783 10.3336 8.41205 9.99785 7.99783 9.99785C7.58362 9.99785 7.24783 10.3336 7.24783 10.7478Z" fill="currentColor"/>
-<path d="M8.74783 4.99785L8.74783 8.99785H7.24783L7.24783 4.99785H8.74783Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M11.5334 15.776L15.776 11.5334C15.9167 11.3927 15.9957 11.202 15.9957 11.003V4.99264C15.9957 4.79373 15.9167 4.60296 15.776 4.46231L11.5334 0.21967C11.3927 0.0790186 11.202 0 11.003 0L4.99264 0C4.79373 0 4.60296 0.079017 4.46231 0.219669L0.219669 4.46231C0.0790175 4.60296 0 4.79373 0 4.99264L0 11.003C0 11.202 0.0790169 11.3927 0.219669 11.5334L4.46231 15.776C4.60296 15.9167 4.79373 15.9957 4.99264 15.9957L11.003 15.9957C11.202 15.9957 11.3927 15.9167 11.5334 15.776ZM14.4957 5.3033V10.6924L10.6924 14.4957H5.3033L1.5 10.6924L1.5 5.3033L5.3033 1.5L10.6924 1.5L14.4957 5.3033Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M7.248 10.748a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0M8.748 4.998v4h-1.5v-4z" />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="m11.533 15.776 4.243-4.243a.75.75 0 0 0 .22-.53v-6.01a.75.75 0 0 0-.22-.53L11.533.22a.75.75 0 0 0-.53-.22h-6.01a.75.75 0 0 0-.53.22L.22 4.462a.75.75 0 0 0-.22.53v6.011c0 .199.079.39.22.53l4.242 4.243c.141.14.332.22.53.22h6.011a.75.75 0 0 0 .53-.22m2.963-10.473v5.39l-3.804 3.803H5.303L1.5 10.692V5.303L5.303 1.5h5.39z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Danger.displayName = "Danger"

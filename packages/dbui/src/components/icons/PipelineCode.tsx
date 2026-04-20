@@ -3,10 +3,11 @@ import { forwardRef } from "react"
 /** use:object Pipeline Code | Lakeflow | DLT source code */
 const PipelineCode = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M10.5303 11.0605L8.56055 13.0303L10.5303 15L9.46973 16.0605L6.43945 13.0303L9.46973 10L10.5303 11.0605Z" fill="currentColor"/>
-      <path d="M16.0605 13.0303L13.0303 16.0605L11.9697 15L13.9395 13.0303L11.9697 11.0605L13.0303 10L16.0605 13.0303Z" fill="currentColor"/>
-      <path fillRule="evenodd" clipRule="evenodd" d="M5 1C8.17564 1 10.75 3.57436 10.75 6.75V9H9.25V6.75C9.25 4.57195 7.61157 2.77677 5.5 2.5293V5.32324C6.22276 5.53845 6.75 6.20732 6.75 7V9.25C6.75 9.56242 6.78367 9.86696 6.84766 10.1602L5.65234 11.3643C5.39335 10.7097 5.25 9.99668 5.25 9.25V7C5.25 6.86193 5.13807 6.75 5 6.75H1.75C1.33579 6.75 1 6.41421 1 6V1.75C1 1.33579 1.33579 1 1.75 1H5ZM2.5 5.25H4V2.5H2.5V5.25Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="m10.53 11.06-1.97 1.97L10.53 15l-1.06 1.06-3.03-3.03L9.47 10zM16.06 13.03l-3.03 3.03L11.97 15l1.97-1.97-1.97-1.97L13.03 10zM5 1a5.75 5.75 0 0 1 5.75 5.75V9h-1.5V6.75A4.25 4.25 0 0 0 5.5 2.53v2.793A1.75 1.75 0 0 1 6.75 7v2.25q.001.47.098.91l-1.196 1.204A5.7 5.7 0 0 1 5.25 9.25V7A.25.25 0 0 0 5 6.75H1.75A.75.75 0 0 1 1 6V1.75A.75.75 0 0 1 1.75 1zM2.5 5.25H4V2.5H2.5z"
+      />
     </svg>
   )
 )

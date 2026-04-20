@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:action paste | clipboard, buffer, copy to clipboard */
 const Clipboard = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M5.5 0C5.08579 0 4.75 0.335786 4.75 0.75V1H2.75C2.33579 1 2 1.33579 2 1.75V14.25C2 14.6642 2.33579 15 2.75 15H13.25C13.6642 15 14 14.6642 14 14.25V1.75C14 1.33579 13.6642 1 13.25 1H11.25V0.75C11.25 0.335786 10.9142 0 10.5 0H5.5ZM11.25 2.5V3.25C11.25 3.66421 10.9142 4 10.5 4H5.5C5.08579 4 4.75 3.66421 4.75 3.25V2.5H3.5V13.5H12.5V2.5H11.25ZM6.25 2.5V1.5H9.75V2.5H6.25Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M5.5 0a.75.75 0 0 0-.75.75V1h-2a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h10.5a.75.75 0 0 0 .75-.75V1.75a.75.75 0 0 0-.75-.75h-2V.75A.75.75 0 0 0 10.5 0zm5.75 2.5v.75a.75.75 0 0 1-.75.75h-5a.75.75 0 0 1-.75-.75V2.5H3.5v11h9v-11zm-5 0v-1h3.5v1z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Clipboard.displayName = "Clipboard"

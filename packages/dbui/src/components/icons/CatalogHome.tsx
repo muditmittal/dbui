@@ -3,10 +3,20 @@ import { forwardRef } from "react"
 /** use:object Home Catalog | Unity Catalog | default catalog, primary */
 const CatalogHome = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M14 6.5V0.75C14 0.335786 13.6642 0 13.25 0H4.5C3.11929 0 2 1.11929 2 2.5V13.25C2 14.7688 3.23122 16 4.75 16H6.5V14.5H4.75C4.05964 14.5 3.5 13.9404 3.5 13.25V4.79198C3.80623 4.92578 4.14445 5 4.5 5H12.5V6.5H14ZM4.5 3.5C3.94772 3.5 3.5 3.05228 3.5 2.5C3.5 1.94772 3.94772 1.5 4.5 1.5H12.5V3.5H4.5Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M12.4573 7.90553C12.1877 7.69816 11.8123 7.69816 11.5427 7.90553L8.29272 10.4055C8.10815 10.5475 8 10.7671 8 11V15.25C8 15.6642 8.33579 16 8.75 16H15.25C15.6642 16 16 15.6642 16 15.25V11C16 10.7671 15.8918 10.5475 15.7073 10.4055L12.4573 7.90553ZM9.5 14.5V11.3693L12 9.44622L14.5 11.3693V14.5H12.75V12H11.25V14.5H9.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M14 6.5V.75a.75.75 0 0 0-.75-.75H4.5A2.5 2.5 0 0 0 2 2.5v10.75A2.75 2.75 0 0 0 4.75 16H6.5v-1.5H4.75c-.69 0-1.25-.56-1.25-1.25V4.792c.306.134.644.208 1 .208h8v1.5zm-9.5-3a1 1 0 0 1 0-2h8v2z"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M12.457 7.906a.75.75 0 0 0-.914 0l-3.25 2.5A.75.75 0 0 0 8 11v4.25c0 .414.336.75.75.75h6.5a.75.75 0 0 0 .75-.75V11a.75.75 0 0 0-.293-.594zM9.5 14.5v-3.13L12 9.445l2.5 1.923V14.5h-1.75V12h-1.5v2.5z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 CatalogHome.displayName = "CatalogHome"

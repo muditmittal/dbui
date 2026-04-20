@@ -3,10 +3,12 @@ import { forwardRef } from "react"
 /** use:object JSON | Data Type | curly braces, code syntax */
 const BracketsCurly = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M5.5 2C3.98122 2 2.75 3.23122 2.75 4.75V5.75C2.75 6.44036 2.19035 7 1.5 7H1V9H1.5C2.19036 9 2.75 9.55964 2.75 10.25V11.25C2.75 12.7688 3.98122 14 5.5 14H6V12.5H5.5C4.80964 12.5 4.25 11.9404 4.25 11.25V10.25C4.25 9.31992 3.78827 8.49769 3.08154 8C3.78827 7.50232 4.25 6.68008 4.25 5.75V4.75C4.25 4.05964 4.80964 3.5 5.5 3.5H6V2H5.5Z" fill="currentColor"/>
-<path d="M13.25 4.75C13.25 3.23122 12.0188 2 10.5 2H10V3.5H10.5C11.1904 3.5 11.75 4.05964 11.75 4.75V5.75C11.75 6.68008 12.2117 7.50232 12.9185 8C12.2117 8.49768 11.75 9.31992 11.75 10.25V11.25C11.75 11.9404 11.1904 12.5 10.5 12.5H10V14H10.5C12.0188 14 13.25 12.7688 13.25 11.25V10.25C13.25 9.55964 13.8096 9 14.5 9H15L15 7H14.5C13.8096 7 13.25 6.44036 13.25 5.75V4.75Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M5.5 2a2.75 2.75 0 0 0-2.75 2.75v1C2.75 6.44 2.19 7 1.5 7H1v2h.5c.69 0 1.25.56 1.25 1.25v1A2.75 2.75 0 0 0 5.5 14H6v-1.5h-.5c-.69 0-1.25-.56-1.25-1.25v-1c0-.93-.462-1.752-1.168-2.25A2.75 2.75 0 0 0 4.25 5.75v-1c0-.69.56-1.25 1.25-1.25H6V2zM13.25 4.75A2.75 2.75 0 0 0 10.5 2H10v1.5h.5c.69 0 1.25.56 1.25 1.25v1c0 .93.462 1.752 1.168 2.25a2.75 2.75 0 0 0-1.168 2.25v1c0 .69-.56 1.25-1.25 1.25H10V14h.5a2.75 2.75 0 0 0 2.75-2.75v-1c0-.69.56-1.25 1.25-1.25h.5V7h-.5c-.69 0-1.25-.56-1.25-1.25z"
+      />
+    </svg>
   )
 )
 BracketsCurly.displayName = "BracketsCurly"

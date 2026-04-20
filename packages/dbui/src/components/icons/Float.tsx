@@ -3,11 +3,12 @@ import { forwardRef } from "react"
 /** use:object Float | Data Type | floating point, decimal number */
 const Float = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M0 5.25C1.24264 5.25 2.25 4.24264 2.25 3H3.75V11.5H6V13H0V11.5H2.25V6.00027C1.62325 6.47104 0.844204 6.75 0 6.75V5.25Z" fill="currentColor"/>
-<path d="M10 5.75C10 4.23122 11.2312 3 12.75 3H13.1392C14.7192 3 16 4.28082 16 5.86079C16 6.82442 15.5149 7.72331 14.7093 8.25219L12.5151 9.69284C11.9021 10.0953 11.5251 10.7702 11.5012 11.5H16V13H10V11.5737C10 10.3105 10.6359 9.13223 11.6918 8.43895L13.8861 6.9983C14.2692 6.74673 14.5 6.31916 14.5 5.86079C14.5 5.10924 13.8908 4.5 13.1392 4.5H12.75C12.0596 4.5 11.5 5.05964 11.5 5.75V6H10V5.75Z" fill="currentColor"/>
-<path d="M8 13C8.55229 13 9 12.5523 9 12C9 11.4477 8.55229 11 8 11C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M0 5.25A2.25 2.25 0 0 0 2.25 3h1.5v8.5H6V13H0v-1.5h2.25V6c-.627.471-1.406.75-2.25.75zM10 5.75A2.75 2.75 0 0 1 12.75 3h.39a2.86 2.86 0 0 1 1.57 5.252l-2.195 1.44a2.25 2.25 0 0 0-1.014 1.808H16V13h-6v-1.426a3.75 3.75 0 0 1 1.692-3.135l2.194-1.44A1.36 1.36 0 0 0 13.14 4.5h-.389c-.69 0-1.25.56-1.25 1.25V6H10zM8 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
+      />
+    </svg>
   )
 )
 Float.displayName = "Float"

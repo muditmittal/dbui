@@ -3,11 +3,18 @@ import { forwardRef } from "react"
 /** use:indicator valid code | syntax ok, code verified */
 const BracketsCheck = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M6 2.5H5.5C4.80964 2.5 4.25 3.05964 4.25 3.75V4.75C4.25 5.68137 3.78554 6.50253 3.07715 7C3.78554 7.49747 4.25 8.31863 4.25 9.25V10.25C4.25 10.9404 4.80964 11.5 5.5 11.5H6V13H5.5C3.98122 13 2.75 11.7688 2.75 10.25V9.25C2.75 8.55964 2.19036 8 1.5 8H1V6H1.5C2.19036 6 2.75 5.44036 2.75 4.75V3.75C2.75 2.23122 3.98122 1 5.5 1H6V2.5Z" fill="currentColor"/>
-<path d="M10.5 1C12.0188 1 13.25 2.23122 13.25 3.75V4.75C13.25 5.44035 13.8097 5.99999 14.5 6H15V7.69141C14.3204 7.2173 13.5233 6.90133 12.6611 6.79297C12.102 6.28992 11.75 5.56142 11.75 4.75V3.75C11.75 3.05965 11.1904 2.5 10.5 2.5H10V1H10.5Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M12 8C14.2091 8 16 9.79086 16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8ZM11.5 12.1895L10.5303 11.2197L9.46973 12.2803L11.5 14.3105L14.7803 11.0303L13.7197 9.96973L11.5 12.1895Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M6 2.5h-.5c-.69 0-1.25.56-1.25 1.25v1c0 .931-.464 1.753-1.173 2.25A2.74 2.74 0 0 1 4.25 9.25v1c0 .69.56 1.25 1.25 1.25H6V13h-.5a2.75 2.75 0 0 1-2.75-2.75v-1C2.75 8.56 2.19 8 1.5 8H1V6h.5c.69 0 1.25-.56 1.25-1.25v-1A2.75 2.75 0 0 1 5.5 1H6zM10.5 1a2.75 2.75 0 0 1 2.75 2.75v1c0 .69.56 1.25 1.25 1.25h.5v1.691a5.2 5.2 0 0 0-2.339-.898 2.74 2.74 0 0 1-.911-2.043v-1c0-.69-.56-1.25-1.25-1.25H10V1z"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m-.5 4.19-.97-.97-1.06 1.06 2.03 2.03 3.28-3.28-1.06-1.06z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 BracketsCheck.displayName = "BracketsCheck"

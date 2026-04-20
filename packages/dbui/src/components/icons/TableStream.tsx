@@ -3,10 +3,21 @@ import { forwardRef } from "react"
 /** use:object Streaming Table | Lakeflow | real-time table, live data */
 const TableStream = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1.75 1C1.33579 1 1 1.33579 1 1.75V14.25C1 14.6642 1.33579 15 1.75 15H6.5V7H9.5V8H11V7H13.5V8H15V1.75C15 1.33579 14.6642 1 14.25 1H1.75ZM5 7V13.5H2.5V7H5ZM13.5 5.5V2.5H2.5V5.5H13.5Z" fill="currentColor"/>
-      <path d="M9.02387 10.9205C9.5085 10.3147 10.4345 10.3292 10.9 10.9498C11.9538 12.3549 14.0502 12.3876 15.1473 11.0161L15.5856 10.4683L14.4143 9.53128L13.976 10.0791C13.4914 10.6849 12.5654 10.6704 12.1 10.0498C11.0462 8.64474 8.94974 8.61199 7.85257 9.98345L7.41431 10.5313L8.58561 11.4683L9.02387 10.9205Z" fill="currentColor"/>
-      <path d="M9.02387 13.9205C9.5085 13.3147 10.4345 13.3292 10.9 13.9498C11.9538 15.3549 14.0502 15.3876 15.1473 14.0161L15.5856 13.4683L14.4143 12.5313L13.976 13.0791C13.4914 13.6849 12.5654 13.6704 12.1 13.0498C11.0462 11.6447 8.94974 11.612 7.85257 12.9834L7.41431 13.5313L8.58561 14.4683L9.02387 13.9205Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1.75 1a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75H6.5V7h3v1H11V7h2.5v1H15V1.75a.75.75 0 0 0-.75-.75zM5 7v6.5H2.5V7zm8.5-1.5v-3h-11v3z"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      d="M9.024 10.92a1.187 1.187 0 0 1 1.876.03 2.687 2.687 0 0 0 4.247.066l.439-.548-1.172-.937-.438.548a1.187 1.187 0 0 1-1.876-.03 2.687 2.687 0 0 0-4.247-.066l-.439.548 1.172.937z"
+      />
+      <path
+      fill="currentColor"
+      d="M9.024 13.92a1.187 1.187 0 0 1 1.876.03 2.687 2.687 0 0 0 4.247.066l.439-.548-1.172-.937-.438.548a1.187 1.187 0 0 1-1.876-.03 2.687 2.687 0 0 0-4.247-.066l-.439.548 1.172.937z"
+      />
     </svg>
   )
 )

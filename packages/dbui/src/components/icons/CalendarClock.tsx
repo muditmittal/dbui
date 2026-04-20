@@ -3,11 +3,21 @@ import { forwardRef } from "react"
 /** use:object Timestamp | Data Type | scheduled time, deadline, timed event */
 const CalendarClock = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M4.5 0V2H1.75C1.33579 2 1 2.33579 1 2.75V14.25C1 14.6642 1.33579 15 1.75 15H6V13.5H2.5V7H15V2.75C15 2.33579 14.6642 2 14.25 2H11.5V0H10V2H6V0H4.5ZM13.5 5.5V3.5H2.5V5.5H13.5Z" fill="currentColor"/>
-<path d="M10.25 10.5V12C10.25 12.1989 10.329 12.3897 10.4697 12.5303L11.4697 13.5303L12.5303 12.4697L11.75 11.6893V10.5H10.25Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M7 12C7 9.79086 8.79086 8 11 8C13.2091 8 15 9.79086 15 12C15 14.2091 13.2091 16 11 16C8.79086 16 7 14.2091 7 12ZM11 9.5C9.61929 9.5 8.5 10.6193 8.5 12C8.5 13.3807 9.61929 14.5 11 14.5C12.3807 14.5 13.5 13.3807 13.5 12C13.5 10.6193 12.3807 9.5 11 9.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M4.5 0v2H1.75a.75.75 0 0 0-.75.75v11.5c0 .414.336.75.75.75H6v-1.5H2.5V7H15V2.75a.75.75 0 0 0-.75-.75H11.5V0H10v2H6V0zm9 5.5v-2h-11v2z"
+      clipRule="evenodd"
+      />
+      <path fill="currentColor" d="M10.25 10.5V12c0 .199.079.39.22.53l1 1 1.06-1.06-.78-.78V10.5z" />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M7 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0m4-2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 CalendarClock.displayName = "CalendarClock"

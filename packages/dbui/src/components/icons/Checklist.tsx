@@ -3,9 +3,12 @@ import { forwardRef } from "react"
 /** use:indicator list | task, to do, requirements */
 const Checklist = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M5.5 2L6.56066 3.06066L3.56066 6.06066L3.03033 6.59099L2.5 6.06066L1 4.56066L2.06066 3.5L3.03033 4.46967L5.5 2ZM15.0303 4.53033H8.03033V3.03033H15.0303V4.53033ZM1.03033 14.5303V13.0303L15.0303 13.0303V14.5303L1.03033 14.5303ZM8.03033 9.53033H15.0303V8.03033H8.03033V9.53033ZM6.56066 8.06066L5.5 7L3.03033 9.46967L2.06066 8.5L1 9.56066L2.5 11.0607L3.03033 11.591L3.56066 11.0607L6.56066 8.06066Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="m5.5 2 1.06 1.06-3.53 3.531L1 4.561 2.06 3.5l.97.97zM15.03 4.53h-7v-1.5h7zM1.03 14.53v-1.5h14v1.5zM8.03 9.53h7v-1.5h-7zM6.56 8.06 5.5 7 3.03 9.47l-.97-.97L1 9.56l2.03 2.031z"
+      />
+    </svg>
   )
 )
 Checklist.displayName = "Checklist"

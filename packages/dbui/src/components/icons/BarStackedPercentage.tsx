@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:object Percentage bar chart | AI/BI | 100% stacked, proportional */
 const BarStackedPercentage = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M2.75 1C2.33579 1 2 1.33579 2 1.75V14.25C2 14.6642 2.33579 15 2.75 15H13.25C13.6642 15 14 14.6642 14 14.25V1.75C14 1.33579 13.6642 1 13.25 1H2.75ZM9 8.5V13.5H7V8.5H9ZM9 7V2.5H7V7H9ZM12.5 13.5H10.5V11.75H12.5V13.5ZM10.5 2.5V10.25H12.5V2.5H10.5ZM5.5 2.5H3.5V10.25H5.5V2.5ZM5.5 13.5V11.75H3.5V13.5H5.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M2.75 1a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h10.5a.75.75 0 0 0 .75-.75V1.75a.75.75 0 0 0-.75-.75zM9 8.5v5H7v-5zM9 7V2.5H7V7zm3.5 6.5h-2v-1.75h2zm-2-11v7.75h2V2.5zm-5 0h-2v7.75h2zm0 11v-1.75h-2v1.75z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 BarStackedPercentage.displayName = "BarStackedPercentage"

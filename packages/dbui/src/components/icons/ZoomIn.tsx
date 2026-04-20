@@ -3,8 +3,14 @@ import { forwardRef } from "react"
 /** use:action zoom in | magnify, enlarge */
 const ZoomIn = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M2.5 8C2.5 4.96243 4.96243 2.5 8 2.5C11.0376 2.5 13.5 4.96243 13.5 8C13.5 11.0376 11.0376 13.5 8 13.5C4.96243 13.5 2.5 11.0376 2.5 8ZM8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15C9.66229 15 11.1892 14.4206 12.3899 13.4527L14.9398 16.0031L16.0006 14.9425L13.4508 12.3923C14.4198 11.1912 15 9.66336 15 8C15 4.13401 11.866 1 8 1ZM8.75 7.25L11 7.25V8.75L8.75 8.75L8.75 11H7.25L7.25 8.75L5 8.75L5 7.25L7.25 7.25L7.25 5H8.75L8.75 7.25Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M8.75 7.25H11v1.5H8.75V11h-1.5V8.75H5v-1.5h2.25V5h1.5z" />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 1a7 7 0 1 0 4.39 12.453l2.55 2.55 1.06-1.06-2.55-2.55A7 7 0 0 0 8 1M2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

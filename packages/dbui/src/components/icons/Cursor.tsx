@@ -3,9 +3,21 @@ import { forwardRef } from "react"
 /** use:action cursor | pointer, selection, select */
 const Cursor = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M0.219692 0.219692C0.429987 0.00939599 0.744676 -0.0567742 1.02186 0.0510182L14.5219 5.30102C14.818 5.41617 15.0094 5.7054 14.9997 6.02296C14.99 6.34053 14.7812 6.61751 14.4786 6.71434L8.59659 8.59658L6.71434 14.4786C6.61751 14.7812 6.34053 14.99 6.02296 14.9997C5.7054 15.0094 5.41617 14.818 5.30102 14.5219L0.0510183 1.02186C-0.0567744 0.744676 0.00939617 0.429987 0.219692 0.219692ZM2.06683 2.06683L5.93129 12.004L7.28571 7.77144C7.35959 7.54053 7.54054 7.35959 7.77144 7.2857L12.004 5.93128L2.06683 2.06683Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#CursorIcon_svg__a)">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1.22 1.22a.75.75 0 0 1 .802-.169l13.5 5.25a.75.75 0 0 1-.043 1.413L9.597 9.597l-1.883 5.882a.75.75 0 0 1-1.413.043l-5.25-13.5a.75.75 0 0 1 .169-.802m1.847 1.847 3.864 9.937 1.355-4.233a.75.75 0 0 1 .485-.485l4.233-1.355z"
+      clipRule="evenodd"
+      />
+      </g>
+      <defs>
+      <clipPath>
+      <path fill="#fff" d="M16 0H0v16h16z" />
+      </clipPath>
+      </defs>
+    </svg>
   )
 )
 Cursor.displayName = "Cursor"

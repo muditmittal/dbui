@@ -3,9 +3,18 @@ import { forwardRef } from "react"
 /** use:object Partner Connect | Platform | connect, integrate, link */
 const Connect = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M6.18934 4.5L4.5 6.18934L2.81066 4.5L4.5 2.81066L6.18934 4.5ZM7.78033 3.96967L5.03033 1.21967C4.88968 1.07902 4.69891 1 4.5 1C4.30109 1 4.11032 1.07902 3.96967 1.21967L1.21967 3.96967C1.07902 4.11032 1 4.30109 1 4.5C1 4.69891 1.07902 4.88968 1.21967 5.03033L3.96967 7.78033C4.11032 7.92098 4.30109 8 4.5 8C4.69891 8 4.88968 7.92098 5.03033 7.78033L7.78033 5.03033C8.07322 4.73743 8.07322 4.26256 7.78033 3.96967ZM11.75 10C12.7165 10 13.5 10.7835 13.5 11.75C13.5 12.7165 12.7165 13.5 11.75 13.5C10.7835 13.5 10 12.7165 10 11.75C10 10.7835 10.7835 10 11.75 10ZM15 11.75C15 9.95509 13.5449 8.50001 11.75 8.50001C9.95507 8.50001 8.5 9.95509 8.5 11.75C8.5 13.5449 9.95507 15 11.75 15C13.5449 15 15 13.5449 15 11.75ZM14.25 1H9V2.5H13.5V7H15V1.75C15 1.33579 14.6642 1 14.25 1ZM1 9V14.25C1 14.6642 1.33579 15 1.75 15H7V13.5H2.5V9H1Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M7.78 3.97 5.03 1.22a.75.75 0 0 0-1.06 0L1.22 3.97a.75.75 0 0 0 0 1.06l2.75 2.75a.75.75 0 0 0 1.06 0l2.75-2.75a.75.75 0 0 0 0-1.06m-1.59.53L4.5 6.19 2.81 4.5 4.5 2.81zM15 11.75a3.25 3.25 0 1 0-6.5 0 3.25 3.25 0 0 0 6.5 0M11.75 10a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      d="M14.25 1H9v1.5h4.5V7H15V1.75a.75.75 0 0 0-.75-.75M1 9v5.25c0 .414.336.75.75.75H7v-1.5H2.5V9z"
+      />
+    </svg>
   )
 )
 Connect.displayName = "Connect"

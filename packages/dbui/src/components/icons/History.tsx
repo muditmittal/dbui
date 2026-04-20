@@ -3,13 +3,14 @@ import { forwardRef } from "react"
 /** use:action log | recent, activity, audit */
 const History = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <g clipPath="url(#clip0_35_5006)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M3.50647 7.73071L4.46967 6.76752L5.53033 7.82818L3.32843 10.0301L2.7981 10.5604L2.26777 10.0301L-0.0303345 7.73198L1.03033 6.67132L2.00861 7.6496C2.19117 3.9464 5.2515 1 9 1C12.866 1 16 4.13401 16 8C16 11.866 12.866 15 9 15C7.06721 15 5.31618 14.2157 4.05025 12.9497L5.11091 11.8891C6.10703 12.8852 7.48101 13.5 9 13.5C12.0376 13.5 14.5 11.0376 14.5 8C14.5 4.96243 12.0376 2.5 9 2.5C6.05272 2.5 3.64689 4.81823 3.50647 7.73071ZM8.25 8V4H9.75V7.68934L11.5303 9.46967L10.4697 10.5303L8.46967 8.53033C8.32901 8.38968 8.25 8.19891 8.25 8Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="currentColor" clipPath="url(#HistoryIcon_svg__a)">
+      <path d="m3.507 7.73.963-.962 1.06 1.06-2.732 2.732L-.03 7.732l1.06-1.06.979.978a7 7 0 1 1 2.041 5.3l1.061-1.06a5.5 5.5 0 1 0-1.604-4.158" />
+      <path d="M8.25 8V4h1.5v3.69l1.78 1.78-1.06 1.06-2-2A.75.75 0 0 1 8.25 8" />
       </g>
       <defs>
-      <clipPath id="clip0_35_5006">
-      <rect width={size} height={size} fill="white"/>
+      <clipPath>
+      <path fill="#fff" d="M0 0h16v16H0z" />
       </clipPath>
       </defs>
     </svg>

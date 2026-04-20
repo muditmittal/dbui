@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:object Glossary | Unity Catalog | documentation, manual, guide, reference */
 const Book = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M2.75 1C2.33579 1 2 1.33579 2 1.75V10.25V15.25C2 15.6642 2.33579 16 2.75 16H13.25C13.6642 16 14 15.6642 14 15.25V1.75C14 1.33579 13.6642 1 13.25 1H8.25H2.75ZM7.5 2.5H3.5V8.55459L4.9955 7.19504C5.28156 6.93499 5.71844 6.93499 6.0045 7.19504L7.5 8.55459V2.5ZM3.5 10.5818L5.5 8.7636L7.7455 10.805C7.96516 11.0046 8.28193 11.056 8.55342 10.9359C8.8249 10.8158 9 10.5469 9 10.25V2.5H12.5V14.5H3.5V10.5818Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M2.75 1a.75.75 0 0 0-.75.75v13.5c0 .414.336.75.75.75h10.5a.75.75 0 0 0 .75-.75V1.75a.75.75 0 0 0-.75-.75zM7.5 2.5h-4v6.055l1.495-1.36a.75.75 0 0 1 1.01 0L7.5 8.555zm-4 8.082 2-1.818 2.246 2.041A.75.75 0 0 0 9 10.25V2.5h3.5v12h-9z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Book.displayName = "Book"

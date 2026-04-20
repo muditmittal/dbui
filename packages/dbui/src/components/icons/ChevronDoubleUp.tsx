@@ -3,9 +3,10 @@ import { forwardRef } from "react"
 /** use:action collapse all | fold all, minimize all */
 const ChevronDoubleUp = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M5.0561 8.04688L8.00003 5.10961L10.944 8.04688L12.0034 6.98502L8.52976 3.51922L8.00003 2.99069L7.4703 3.51922L3.99665 6.98502L5.0561 8.04688ZM5.0561 12.0078L8.00003 9.07052L10.944 12.0078L12.0034 10.9459L8.52976 7.48013L8.00003 6.9516L7.4703 7.48013L3.99665 10.9459L5.0561 12.0078Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M5.056 8.047 8 5.11l2.944 2.937 1.06-1.062L8 2.991 3.997 6.985z" />
+      <path fill="currentColor" d="M5.056 12.008 8 9.07l2.944 2.937 1.06-1.062L8 6.952l-4.003 3.994z" />
+    </svg>
   )
 )
 ChevronDoubleUp.displayName = "ChevronDoubleUp"

@@ -3,13 +3,18 @@ import { forwardRef } from "react"
 /** use:action click | select, tap, interact */
 const CursorClick = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M5.21973 5.21973C5.43121 5.00824 5.74829 4.94261 6.02637 5.05273L15.5264 8.81445C15.8262 8.9332 16.0165 9.23075 15.999 9.55273C15.9815 9.87471 15.7601 10.1497 15.4492 10.2354L11.3594 11.3594L10.2354 15.4492C10.1497 15.7601 9.87471 15.9815 9.55273 15.999C9.23075 16.0165 8.9332 15.8262 8.81445 15.5264L5.05273 6.02637C4.94261 5.74829 5.00824 5.43121 5.21973 5.21973ZM9.38379 12.8877L10.0273 10.5508L10.0586 10.458C10.1471 10.2483 10.3279 10.0888 10.5508 10.0273L12.8877 9.38379L7.08496 7.08496L9.38379 12.8877Z" fill="currentColor"/>
-<path d="M3.51562 7.83691L0.744141 8.98535L0.169922 7.59961L2.94141 6.45117L3.51562 7.83691Z" fill="currentColor"/>
-<path d="M3.51855 4.15625L2.94531 5.54199L0.173828 4.39258L0.74707 3.00684L3.51855 4.15625Z" fill="currentColor"/>
-<path d="M5.54492 2.94141L4.15918 3.51562L3.01172 0.744141L4.39746 0.169922L5.54492 2.94141Z" fill="currentColor"/>
-<path d="M8.98926 0.740234L7.84082 3.51172L6.45508 2.9375L7.60254 0.166016L8.98926 0.740234Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M5.22 5.22a.75.75 0 0 1 .806-.167l9.5 3.761a.75.75 0 0 1-.077 1.421l-4.09 1.124-1.124 4.09a.75.75 0 0 1-1.42.077l-3.762-9.5a.75.75 0 0 1 .167-.806m4.164 7.668.643-2.337.032-.093a.75.75 0 0 1 .492-.43l2.337-.644-5.803-2.299z"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      d="M3.516 7.837.744 8.985.17 7.6 2.94 6.45zM3.519 4.156l-.574 1.386-2.771-1.15.573-1.385zM5.545 2.941l-1.386.575L3.012.744 4.397.17zM8.99.74 7.84 3.512l-1.385-.574L7.603.166z"
+      />
+    </svg>
   )
 )
 CursorClick.displayName = "CursorClick"

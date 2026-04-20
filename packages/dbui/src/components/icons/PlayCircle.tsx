@@ -3,8 +3,17 @@ import { forwardRef } from "react"
 /** use:action run | execute, start, play */
 const PlayCircle = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8ZM8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0ZM11.25 8C11.25 8.26795 11.107 8.51555 10.875 8.64952L7.125 10.8146C6.89295 10.9486 6.60705 10.9486 6.375 10.8146C6.14295 10.6806 6 10.433 6 10.1651V5.83494C6 5.56699 6.14295 5.31939 6.375 5.18542C6.60705 5.05144 6.89295 5.05144 7.125 5.18542L10.875 7.35048C11.107 7.48446 11.25 7.73205 11.25 8Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M11.25 8a.75.75 0 0 1-.375.65l-3.75 2.165A.75.75 0 0 1 6 10.165v-4.33a.75.75 0 0 1 1.125-.65l3.75 2.165a.75.75 0 0 1 .375.65"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1.5 8a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

@@ -3,8 +3,19 @@ import { forwardRef } from "react"
 /** use:object User profile | IAM | avatar, account, identity */
 const UserCircle = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0ZM5.5 6C5.5 4.61929 6.61929 3.5 8 3.5C9.38071 3.5 10.5 4.61929 10.5 6C10.5 7.38071 9.38071 8.5 8 8.5C6.61929 8.5 5.5 7.38071 5.5 6ZM3.5 12.2621C4.60363 11.1726 6.22115 10.5 8 10.5C9.77885 10.5 11.3964 11.1726 12.5 12.2621C11.3964 13.3517 9.77885 14.0243 8 14.0243C6.22115 14.0243 4.60363 13.3517 3.5 12.2621Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M5.25 6.75a2.75 2.75 0 1 1 5.5 0 2.75 2.75 0 0 1-5.5 0M8 5.5A1.25 1.25 0 1 0 8 8a1.25 1.25 0 0 0 0-2.5"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 0 0-4.773 10.912A8.73 8.73 0 0 1 8 11c1.76 0 3.4.52 4.773 1.412A6.5 6.5 0 0 0 8 1.5m3.568 11.934A7.23 7.23 0 0 0 8 12.5a7.23 7.23 0 0 0-3.568.934A6.47 6.47 0 0 0 8 14.5a6.47 6.47 0 0 0 3.568-1.066"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

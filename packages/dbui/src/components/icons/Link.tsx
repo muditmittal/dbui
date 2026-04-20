@@ -3,8 +3,12 @@ import { forwardRef } from "react"
 /** use:action copy link | hyperlink, URL, chain link */
 const Link = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M4 4H7V5.5H4C2.61929 5.5 1.5 6.61929 1.5 8C1.5 9.38071 2.61929 10.5 4 10.5H7V12H4C1.79086 12 0 10.2091 0 8C0 5.79086 1.79086 4 4 4ZM12 10.5H9V12H12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4H9V5.5H12C13.3807 5.5 14.5 6.61929 14.5 8C14.5 9.38071 13.3807 10.5 12 10.5ZM4 8.75001H12V7.25001H4V8.75001Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M4 4h3v1.5H4a2.5 2.5 0 0 0 0 5h3V12H4a4 4 0 0 1 0-8M12 10.5H9V12h3a4 4 0 0 0 0-8H9v1.5h3a2.5 2.5 0 0 1 0 5"
+      />
+      <path fill="currentColor" d="M4 8.75h8v-1.5H4z" />
     </svg>
   )
 )

@@ -3,15 +3,19 @@ import { forwardRef } from "react"
 /** use:action sort Z-A | alphabetical descending */
 const SortLetterHorizontalDescending = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <g clipPath="url(#clip0_35_4794)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M4.30762 9C4.61448 9.00041 4.8905 9.18754 5.00391 9.47266L7.59668 16H5.98242L5.74414 15.4004H2.85547L2.61523 16H1L3.61035 9.47168C3.72433 9.1866 4.0006 8.99966 4.30762 9ZM3.45508 13.9004H5.14844L4.30469 11.7754L3.45508 13.9004Z" fill="currentColor"/>
-      <path d="M13.25 9C13.5321 9 13.79 9.15878 13.918 9.41016C14.0458 9.66148 14.0224 9.96332 13.8564 10.1914L10.7227 14.5H14V16H9.25C8.9681 16 8.71012 15.8419 8.58203 15.5908C8.45402 15.3394 8.47763 15.0368 8.64355 14.8086L11.7773 10.5H8.5V9H13.25Z" fill="currentColor"/>
-      <path d="M6.03027 1.03027L3.81055 3.25H10V4.75H3.81055L6.03027 6.96973L4.96973 8.03027L0.939453 4L4.96973 -0.0302734L6.03027 1.03027Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="currentColor" clipPath="url(#SortLetterHorizontalDescendingIcon_svg__a)">
+      <path d="M.94 4 4.97-.03l1.06 1.06-2.22 2.22H10v1.5H3.81l2.22 2.22-1.06 1.06z" />
+      <path
+      fillRule="evenodd"
+      d="M4.307 9a.75.75 0 0 1 .697.473L7.596 16H5.982l-.238-.6H2.855l-.24.6H1l2.61-6.528A.75.75 0 0 1 4.307 9m-.852 4.9h1.693l-.844-2.124z"
+      clipRule="evenodd"
+      />
+      <path d="M11.777 10.5H8.5V9h4.75a.75.75 0 0 1 .607 1.191L10.723 14.5H14V16H9.25a.75.75 0 0 1-.607-1.191z" />
       </g>
       <defs>
-      <clipPath id="clip0_35_4794">
-      <rect width={size} height={size} fill="white"/>
+      <clipPath>
+      <path fill="#fff" d="M0 0h16v16H0z" />
       </clipPath>
       </defs>
     </svg>

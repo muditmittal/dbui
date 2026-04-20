@@ -3,9 +3,18 @@ import { forwardRef } from "react"
 /** use:indicator offline | disconnected, no cloud, unavailable */
 const CloudOff = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M13.9697 14.5303L2.46967 3.03033L1.46967 4.03033L3.09756 5.65822C1.3101 6.16068 0 7.80213 0 9.75C0 11.9526 1.67511 13.7633 3.8214 13.9786C3.87864 13.9926 3.93845 14 4 14H4.25H11.4393L12.9697 15.5303L13.9697 14.5303ZM4.80015 3.23949C5.64428 2.4695 6.76717 2 8 2C10.5504 2 12.6314 4.01005 12.7451 6.5324C14.5822 6.7747 16 8.34677 16 10.25C16 11.3974 15.4847 12.4244 14.6729 13.1123L13.6062 12.0455C14.1492 11.6347 14.5 10.9833 14.5 10.25C14.5 9.00736 13.4926 8 12.25 8H12C11.5858 8 11.25 7.66421 11.25 7.25V6.75C11.25 4.95507 9.79493 3.5 8 3.5C7.18178 3.5 6.43393 3.80253 5.86245 4.30179L4.80015 3.23949ZM4.07651 7.00536C4.18018 6.99893 4.2783 6.97152 4.36653 6.92719L9.93934 12.5H4.25H4.11472C4.09435 12.4969 4.0737 12.4945 4.0528 12.4931C2.62643 12.3924 1.5 11.2024 1.5 9.75C1.5 8.28952 2.63892 7.09448 4.07651 7.00536Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M13.97 14.53 2.47 3.03l-1 1 1.628 1.628a4.252 4.252 0 0 0 .723 8.32A.8.8 0 0 0 4 14h7.44l1.53 1.53zM4.077 7.005a.75.75 0 0 0 .29-.078L9.939 12.5H4.115l-.062-.007a2.75 2.75 0 0 1 .024-5.488"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      d="M4.8 3.24a4.75 4.75 0 0 1 7.945 3.293 3.75 3.75 0 0 1 1.928 6.58l-1.067-1.067A2.25 2.25 0 0 0 12.25 8H12a.75.75 0 0 1-.75-.75v-.5a3.25 3.25 0 0 0-5.388-2.448z"
+      />
+    </svg>
   )
 )
 CloudOff.displayName = "CloudOff"

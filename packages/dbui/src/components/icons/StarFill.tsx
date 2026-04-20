@@ -3,8 +3,11 @@ import { forwardRef } from "react"
 /** use:action favorited | starred, bookmarked */
 const StarFill = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M7.99519 0C8.32011 0 8.60807 0.20922 8.70848 0.518237L10.1678 5.00963L14.8903 5.00963C15.2153 5.00963 15.5032 5.21885 15.6036 5.52786C15.704 5.83688 15.5941 6.17541 15.3312 6.36639L11.5106 9.14222L12.9699 13.6336C13.0703 13.9426 12.9603 14.2812 12.6975 14.4721C12.4346 14.6631 12.0787 14.6631 11.8158 14.4721L7.99519 11.6963L4.17458 14.4721C3.91172 14.6631 3.55577 14.6631 3.2929 14.4721C3.03004 14.2812 2.92005 13.9426 3.02045 13.6336L4.47979 9.14222L0.659188 6.36639C0.396322 6.17541 0.286329 5.83688 0.386734 5.52786C0.48714 5.21885 0.775107 5.00963 1.10003 5.00963L5.82255 5.00963L7.28189 0.518237C7.3823 0.20922 7.67027 0 7.99519 0Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M7.995 0a.75.75 0 0 1 .714.518l1.459 4.492h4.723a.75.75 0 0 1 .44 1.356l-3.82 2.776 1.459 4.492a.75.75 0 0 1-1.154.838l-3.82-2.776-3.821 2.776a.75.75 0 0 1-1.154-.838L4.48 9.142.66 6.366A.75.75 0 0 1 1.1 5.01h4.723L7.282.518A.75.75 0 0 1 7.995 0"
+      />
     </svg>
   )
 )

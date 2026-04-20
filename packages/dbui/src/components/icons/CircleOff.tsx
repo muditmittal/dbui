@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:indicator offline | inactive, stopped, terminated, down */
 const CircleOff = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M11.6673 5.39152L13.0294 4.02941L11.9688 2.96875L2.96875 11.9688L4.02941 13.0294L5.39152 11.6673C6.12734 12.1916 7.02765 12.5 8 12.5C10.4853 12.5 12.5 10.4853 12.5 8C12.5 7.02765 12.1916 6.12734 11.6673 5.39152ZM10.584 6.47487L6.47487 10.584C6.92176 10.8483 7.44316 11 8 11C9.65685 11 11 9.65685 11 8C11 7.44316 10.8483 6.92176 10.584 6.47487ZM8 3.5C8.40265 3.5 8.79295 3.55288 9.16432 3.65208L7.81052 5.00589C6.3046 5.09974 5.09974 6.3046 5.00589 7.81052L3.65208 9.16432C3.55288 8.79295 3.5 8.40265 3.5 8C3.5 5.51472 5.51472 3.5 8 3.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="m11.667 5.392 1.362-1.363-1.06-1.06-9 9 1.06 1.06 1.363-1.362a4.5 4.5 0 0 0 6.276-6.276m-1.083 1.083-4.11 4.109a3 3 0 0 0 4.11-4.11M8 3.5q.606.002 1.164.152L7.811 5.006A3 3 0 0 0 5.006 7.81L3.652 9.164A4.5 4.5 0 0 1 8 3.5"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 CircleOff.displayName = "CircleOff"

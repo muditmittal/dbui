@@ -3,9 +3,15 @@ import { forwardRef } from "react"
 /** use:action run all | execute all, batch run */
 const PlayDouble = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M2.37109 3.85253C2.60062 3.71821 2.88413 3.7158 3.11621 3.8457L9.36621 7.3457C9.60306 7.47833 9.75 7.72853 9.75 7.99999C9.75 8.27145 9.60306 8.52165 9.36621 8.65429L3.11621 12.1543C2.88413 12.2842 2.60062 12.2818 2.37109 12.1475C2.14144 12.0128 2 11.7662 2 11.5V4.49999L2.00684 4.40136C2.03697 4.17404 2.17014 3.97032 2.37109 3.85253Z" fill="currentColor"/>
-      <path d="M14.6357 7.35741C14.8614 7.49291 14.9999 7.73676 15 7.99999C14.9999 8.2633 14.8615 8.50807 14.6357 8.64355L8.80273 12.1435L8.03125 10.8574L12.792 7.99999L7.86426 5.04394L8.63574 3.75683L14.6357 7.35741Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M2.371 3.853a.75.75 0 0 1 .745-.007l6.25 3.5a.75.75 0 0 1 0 1.308l-6.25 3.5A.75.75 0 0 1 2 11.5v-7l.007-.099a.75.75 0 0 1 .364-.548"
+      />
+      <path
+      fill="currentColor"
+      d="M14.636 7.357a.75.75 0 0 1 0 1.287l-5.833 3.5-.772-1.287L12.792 8 7.864 5.044l.772-1.287z"
+      />
     </svg>
   )
 )

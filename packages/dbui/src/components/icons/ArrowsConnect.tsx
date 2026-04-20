@@ -3,12 +3,18 @@ import { forwardRef } from "react"
 /** use:object Connection | Unity Catalog | linked, joined, related */
 const ArrowsConnect = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M5 9H3.5V7.55957L2.86621 8.19434C2.63188 8.42867 2.5001 8.74674 2.5 9.07812V15H1V9.07812C1.0001 8.34892 1.29003 7.64942 1.80566 7.13379L2.43945 6.5H1V5H5V9Z" fill="currentColor"/>
-<path d="M10.7803 10.2197L9.71973 11.2803L8.75 10.3105V15H7.25V10.3105L6.28027 11.2803L5.21973 10.2197L8 7.43945L10.7803 10.2197Z" fill="currentColor"/>
-<path d="M15 6.5H13.5605L14.1943 7.13379C14.71 7.64942 14.9999 8.34892 15 9.07812V15H13.5V9.07812C13.4999 8.74674 13.3681 8.42867 13.1338 8.19434L12.5 7.55957V9H11V5H15V6.5Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M8 0C9.51878 0 10.75 1.23122 10.75 2.75C10.75 4.26878 9.51878 5.5 8 5.5C6.48122 5.5 5.25 4.26878 5.25 2.75C5.25 1.23122 6.48122 0 8 0ZM8 1.5C7.30964 1.5 6.75 2.05964 6.75 2.75C6.75 3.44036 7.30964 4 8 4C8.69036 4 9.25 3.44036 9.25 2.75C9.25 2.05964 8.69036 1.5 8 1.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M5 9H3.5V7.56l-.634.634a1.25 1.25 0 0 0-.366.884V15H1V9.078c0-.73.29-1.429.806-1.944l.633-.634H1V5h4zM10.78 10.22l-1.06 1.06-.97-.97V15h-1.5v-4.69l-.97.97-1.06-1.06L8 7.44zM15 6.5h-1.44l.634.634A2.75 2.75 0 0 1 15 9.078V15h-1.5V9.078c0-.331-.132-.65-.366-.884L12.5 7.56V9H11V5h4z"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 0a2.75 2.75 0 1 1 0 5.5A2.75 2.75 0 0 1 8 0m0 1.5A1.25 1.25 0 1 0 8 4a1.25 1.25 0 0 0 0-2.5"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 ArrowsConnect.displayName = "ArrowsConnect"

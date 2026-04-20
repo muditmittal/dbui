@@ -3,9 +3,19 @@ import { forwardRef } from "react"
 /** use:object Pipeline notebook | Lakeflow | DLT notebook */
 const NotebookPipeline = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M3 1.75C3 1.33579 3.33579 1 3.75 1H14.25C14.6642 1 15 1.33579 15 1.75V8H13.5V2.5H7.5V13.5H9.5V15H3.75C3.33579 15 3 14.6642 3 14.25V12.5H1V11H3V8.75H1V7.25H3V5H1V3.5H3V1.75ZM4.5 2.5V13.5H6V2.5H4.5Z" fill="currentColor"/>
-      <path fillRule="evenodd" clipRule="evenodd" d="M9.25 8.5C8.83579 8.5 8.5 8.83579 8.5 9.25V11.75C8.5 12.1642 8.83579 12.5 9.25 12.5H10.0354C10.2781 14.1961 11.7368 15.5 13.5 15.5H14.75C15.1642 15.5 15.5 15.1642 15.5 14.75V12.25C15.5 11.8358 15.1642 11.5 14.75 11.5H13.9646C13.7219 9.80385 12.2632 8.5 10.5 8.5H9.25ZM10 11V10H10.5C11.6046 10 12.5 10.8954 12.5 12C12.5 12.5523 12.9477 13 13.5 13H14V14H13.5C12.3954 14 11.5 13.1046 11.5 12C11.5 11.4477 11.0523 11 10.5 11H10Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M3 1.75A.75.75 0 0 1 3.75 1h10.5a.75.75 0 0 1 .75.75V8h-1.5V2.5h-6v11h2V15H3.75a.75.75 0 0 1-.75-.75V12.5H1V11h2V8.75H1v-1.5h2V5H1V3.5h2zm1.5.75v11H6v-11z"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M9.25 8.5a.75.75 0 0 0-.75.75v2.5c0 .414.336.75.75.75h.785a3.5 3.5 0 0 0 3.465 3h1.25a.75.75 0 0 0 .75-.75v-2.5a.75.75 0 0 0-.75-.75h-.785a3.5 3.5 0 0 0-3.465-3zM10 11v-1h.5a2 2 0 0 1 2 2 1 1 0 0 0 1 1h.5v1h-.5a2 2 0 0 1-2-2 1 1 0 0 0-1-1z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

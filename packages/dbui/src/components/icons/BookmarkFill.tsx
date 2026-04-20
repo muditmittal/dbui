@@ -3,9 +3,12 @@ import { forwardRef } from "react"
 /** use:action bookmarked | saved, favorited, flagged */
 const BookmarkFill = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M2.75 0C2.33579 0 2 0.335786 2 0.75V15.25C2 15.5533 2.18273 15.8268 2.46299 15.9429C2.74324 16.059 3.06583 15.9948 3.28033 15.7803L8 11.0607L12.7197 15.7803C12.9342 15.9948 13.2568 16.059 13.537 15.9429C13.8173 15.8268 14 15.5533 14 15.25V0.75C14 0.335786 13.6642 0 13.25 0H2.75Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M2.75 0A.75.75 0 0 0 2 .75v14.5a.75.75 0 0 0 1.28.53L8 11.06l4.72 4.72a.75.75 0 0 0 1.28-.53V.75a.75.75 0 0 0-.75-.75z"
+      />
+    </svg>
   )
 )
 BookmarkFill.displayName = "BookmarkFill"

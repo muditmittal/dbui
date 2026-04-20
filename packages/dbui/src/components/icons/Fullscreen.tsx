@@ -3,9 +3,12 @@ import { forwardRef } from "react"
 /** use:action expand window | maximize, presentation mode */
 const Fullscreen = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M6 1H1.75C1.33579 1 1 1.33579 1 1.75V6H2.5V2.5H6V1ZM10 2.5V1H14.25C14.6642 1 15 1.33579 15 1.75V6H13.5V2.5H10ZM10 13.5H13.5V10H15V14.25C15 14.6642 14.6642 15 14.25 15H10V13.5ZM2.5 10V13.5H6V15H1.75C1.33579 15 1 14.6642 1 14.25V10H2.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M6 1H1.75a.75.75 0 0 0-.75.75V6h1.5V2.5H6zM10 2.5V1h4.25a.75.75 0 0 1 .75.75V6h-1.5V2.5zM10 13.5h3.5V10H15v4.25a.75.75 0 0 1-.75.75H10zM2.5 10v3.5H6V15H1.75a.75.75 0 0 1-.75-.75V10z"
+      />
+    </svg>
   )
 )
 Fullscreen.displayName = "Fullscreen"

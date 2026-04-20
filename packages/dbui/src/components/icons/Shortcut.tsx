@@ -3,9 +3,12 @@ import { forwardRef } from "react"
 /** use:action shortcut | keyboard shortcuts, hotkey, key binding */
 const Shortcut = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M14.25 14H9V12.5H13.5L13.5 2.5L3.5 2.5L3.5 6H2V1.75C2 1.33579 2.33579 1 2.75 1H14.25C14.6642 1 15 1.33579 15 1.75L15 13.25C15 13.6642 14.6642 14 14.25 14Z" fill="currentColor"/>
-      <path d="M2 8H7V13H5.5V10.128C4.62611 10.4369 4 11.2703 4 12.25C4 13.4926 5.00736 14.5 6.25 14.5V16C4.17893 16 2.5 14.3211 2.5 12.25C2.5 11.1635 2.96209 10.1849 3.70047 9.5H2V8Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M14.25 14H9v-1.5h4.5v-10h-10V6H2V1.75A.75.75 0 0 1 2.75 1h11.5a.75.75 0 0 1 .75.75v11.5a.75.75 0 0 1-.75.75"
+      />
+      <path fill="currentColor" d="M2 8h5v5H5.5v-2.872a2.251 2.251 0 0 0 .75 4.372V16A3.75 3.75 0 0 1 3.7 9.5H2z" />
     </svg>
   )
 )

@@ -3,11 +3,15 @@ import { forwardRef } from "react"
 /** use:object Decimal | Data Type | floating point, precision number */
 const Decimal = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M3 10C3 11.6569 4.34315 13 6 13C7.65685 13 9 11.6569 9 10V6C9 4.34315 7.65685 3 6 3C4.34315 3 3 4.34315 3 6V10ZM6 11.5C5.17157 11.5 4.5 10.8284 4.5 10V6C4.5 5.17157 5.17157 4.5 6 4.5C6.82843 4.5 7.5 5.17157 7.5 6L7.5 10C7.5 10.8284 6.82843 11.5 6 11.5Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M10 10C10 11.6569 11.3431 13 13 13C14.6569 13 16 11.6569 16 10V6C16 4.34315 14.6569 3 13 3C11.3431 3 10 4.34315 10 6V10ZM13 11.5C12.1716 11.5 11.5 10.8284 11.5 10V6C11.5 5.17157 12.1716 4.5 13 4.5C13.8284 4.5 14.5 5.17157 14.5 6V10C14.5 10.8284 13.8284 11.5 13 11.5Z" fill="currentColor"/>
-<path d="M1 13C1.55228 13 2 12.5523 2 12C2 11.4477 1.55228 11 1 11C0.447715 11 0 11.4477 0 12C0 12.5523 0.447715 13 1 13Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M3 10a3 3 0 1 0 6 0V6a3 3 0 0 0-6 0zm3 1.5A1.5 1.5 0 0 1 4.5 10V6a1.5 1.5 0 1 1 3 0v4A1.5 1.5 0 0 1 6 11.5M10 10a3 3 0 1 0 6 0V6a3 3 0 1 0-6 0zm3 1.5a1.5 1.5 0 0 1-1.5-1.5V6a1.5 1.5 0 0 1 3 0v4a1.5 1.5 0 0 1-1.5 1.5"
+      clipRule="evenodd"
+      />
+      <path fill="currentColor" d="M1 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+    </svg>
   )
 )
 Decimal.displayName = "Decimal"

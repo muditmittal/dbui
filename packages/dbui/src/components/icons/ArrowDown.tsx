@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:action move down | descend, collapse, drop */
 const ArrowDown = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M8.03034 15.0605L1.00001 8.03022L2.06067 6.96956L7.28034 12.1892L7.28034 0.999887L8.78034 0.999887L8.78034 12.1892L14 6.96955L15.0607 8.03021L8.03034 15.0605Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8.03 15.06 1 8.03l1.06-1.06 5.22 5.22V1h1.5v11.19L14 6.97l1.06 1.06z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 ArrowDown.displayName = "ArrowDown"

@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:action grid view | tile view, card layout, gallery */
 const Grid = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1.75 1C1.33579 1 1 1.33579 1 1.75V6.25C1 6.66421 1.33579 7 1.75 7H6.25C6.66421 7 7 6.66421 7 6.25V1.75C7 1.33579 6.66421 1 6.25 1H1.75ZM2.5 5.5V2.5H5.5V5.5H2.5ZM1.75 9C1.33579 9 1 9.33579 1 9.75V14.25C1 14.6642 1.33579 15 1.75 15H6.25C6.66421 15 7 14.6642 7 14.25V9.75C7 9.33579 6.66421 9 6.25 9H1.75ZM2.5 13.5V10.5H5.5V13.5H2.5ZM9 1.75C9 1.33579 9.33579 1 9.75 1H14.25C14.6642 1 15 1.33579 15 1.75V6.24C15 6.65421 14.6642 6.99 14.25 6.99H9.75C9.33579 6.99 9 6.65421 9 6.24V1.75ZM10.5 2.5V5.49H13.5V2.5H10.5ZM9.75 9C9.33579 9 9 9.33579 9 9.75V14.25C9 14.6642 9.33579 15 9.75 15H14.25C14.6642 15 15 14.6642 15 14.25V9.75C15 9.33579 14.6642 9 14.25 9H9.75ZM10.5 13.5V10.5H13.5V13.5H10.5Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1.75 1a.75.75 0 0 0-.75.75v4.5c0 .414.336.75.75.75h4.5A.75.75 0 0 0 7 6.25v-4.5A.75.75 0 0 0 6.25 1zm.75 4.5v-3h3v3zM1.75 9a.75.75 0 0 0-.75.75v4.5c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-4.5A.75.75 0 0 0 6.25 9zm.75 4.5v-3h3v3zM9 1.75A.75.75 0 0 1 9.75 1h4.5a.75.75 0 0 1 .75.75v4.49a.75.75 0 0 1-.75.75h-4.5A.75.75 0 0 1 9 6.24zm1.5.75v2.99h3V2.5zM9.75 9a.75.75 0 0 0-.75.75v4.5c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-4.5a.75.75 0 0 0-.75-.75zm.75 4.5v-3h3v3z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

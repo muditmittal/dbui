@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:component Folder | Workspace | directory, container */
 const Folder = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M0 2.75C0 2.33579 0.335786 2 0.75 2H4.67157C5.40092 2 6.10039 2.28973 6.61612 2.80546L7.81066 4H15.25C15.6642 4 16 4.33579 16 4.75V13.25C16 13.6642 15.6642 14 15.25 14H0.75C0.335786 14 0 13.6642 0 13.25V2.75ZM1.5 3.5V12.5H14.5V5.5H7.5C7.30109 5.5 7.11032 5.42098 6.96967 5.28033L5.55546 3.86612C5.32104 3.6317 5.00309 3.5 4.67157 3.5H1.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M0 2.75A.75.75 0 0 1 .75 2h3.922c.729 0 1.428.29 1.944.805L7.811 4h7.439a.75.75 0 0 1 .75.75v8.5a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1-.75-.75zm1.5.75v9h13v-7h-7a.75.75 0 0 1-.53-.22L5.555 3.866a1.25 1.25 0 0 0-.883-.366z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Folder.displayName = "Folder"

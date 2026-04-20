@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:object Notification | Platform | bell, alert, notify */
 const Notification = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M8 1C5.23858 1 3 3.23858 3 6V7.99038C3 8.66364 2.80071 9.32185 2.42725 9.88204L1.12596 11.834C0.972535 12.0641 0.958231 12.36 1.08875 12.6039C1.21926 12.8478 1.4734 13 1.75 13H5.25V13.25C5.25 14.7688 6.48122 16 8 16C9.51878 16 10.75 14.7688 10.75 13.25V13H14.25C14.5266 13 14.7807 12.8478 14.9113 12.6039C15.0418 12.36 15.0275 12.0641 14.874 11.834L13.5728 9.88204C13.1993 9.32185 13 8.66364 13 7.99038V6C13 3.23858 10.7614 1 8 1ZM9.25 13H6.75V13.25C6.75 13.9404 7.30964 14.5 8 14.5C8.69036 14.5 9.25 13.9404 9.25 13.25V13ZM4.5 6C4.5 4.067 6.067 2.5 8 2.5C9.933 2.5 11.5 4.067 11.5 6V7.99038C11.5 8.95978 11.7869 9.9075 12.3247 10.7141L12.8486 11.5H3.15139L3.67533 10.7141C4.21306 9.9075 4.5 8.95978 4.5 7.99038V6Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 1a5 5 0 0 0-5 5v1.99c0 .674-.2 1.332-.573 1.892l-1.301 1.952A.75.75 0 0 0 1.75 13h3.5v.25a2.75 2.75 0 1 0 5.5 0V13h3.5a.75.75 0 0 0 .624-1.166l-1.301-1.952A3.4 3.4 0 0 1 13 7.99V6a5 5 0 0 0-5-5m1.25 12h-2.5v.25a1.25 1.25 0 1 0 2.5 0zM4.5 6a3.5 3.5 0 1 1 7 0v1.99c0 .97.287 1.918.825 2.724l.524.786H3.15l.524-.786A4.9 4.9 0 0 0 4.5 7.99z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

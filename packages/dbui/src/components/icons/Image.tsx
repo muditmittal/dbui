@@ -3,8 +3,19 @@ import { forwardRef } from "react"
 /** use:object Image | Workspace | picture, photo, graphic, visual, media */
 const Image = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1 1.75C1 1.33579 1.33579 1 1.75 1H14.25C14.6642 1 15 1.33579 15 1.75V14.2424C15 14.6566 14.6642 14.9924 14.25 14.9924H5.03783L5.02924 15.0009L5.02072 14.9924H1.75C1.33579 14.9924 1 14.6566 1 14.2424V1.75ZM13.5 13.4924H6.54401L10.9991 9.0556L13.4698 11.5249L13.5 11.4947V13.4924ZM13.5 2.5V9.43433L11.5302 7.4657C11.2377 7.17339 10.7638 7.17297 10.4708 7.46477L4.41831 13.4924H2.5V2.5H13.5ZM5.5 6.24726C5.5 5.83398 5.83536 5.49817 6.25 5.49817C6.66464 5.49817 7 5.83398 7 6.24726C7 6.66054 6.66464 6.99635 6.25 6.99635C5.83536 6.99635 5.5 6.66054 5.5 6.24726ZM6.25 3.99817C5.00779 3.99817 4 5.00469 4 6.24726C4 7.48983 5.00779 8.49635 6.25 8.49635C7.49221 8.49635 8.5 7.48983 8.5 6.24726C8.5 5.00469 7.49221 3.99817 6.25 3.99817Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M6.25 3.998a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5m-.75 2.25a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1 1.75A.75.75 0 0 1 1.75 1h12.5a.75.75 0 0 1 .75.75v12.492a.75.75 0 0 1-.75.75H5.038l-.009.009-.008-.009H1.75a.75.75 0 0 1-.75-.75zm12.5 11.742H6.544l4.455-4.436 2.47 2.469.031-.03zm0-10.992v6.934l-1.97-1.968a.75.75 0 0 0-1.06-.001l-6.052 6.027H2.5V2.5z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

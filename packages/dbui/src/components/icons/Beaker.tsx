@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:object Experiment | AI | flask, lab, test, training */
 const Beaker = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M5.75004 1C5.33583 1 5.00004 1.33579 5.00004 1.75V7.83872C5.00004 8.21845 4.82743 8.57759 4.53091 8.81481L1.8518 10.9581C1.31341 11.3888 1 12.0409 1 12.7304C1 13.9839 2.01615 15 3.26963 15H12.7304C13.9839 15 15 13.9839 15 12.7304C15 12.0409 14.6866 11.3888 14.1482 10.9581L11.4692 8.81487C11.1727 8.57765 11 8.21851 11 7.83878V1.75C11 1.33579 10.6643 1 10.25 1H5.75004ZM6.50004 7.83872V2.5H9.50004V7.83878C9.50004 8.4447 9.69981 9.0268 10.0585 9.5H5.94156C6.30025 9.02679 6.50004 8.44467 6.50004 7.83872ZM4.20059 11L2.78885 12.1294C2.60628 12.2754 2.5 12.4966 2.5 12.7304C2.5 13.1554 2.84457 13.5 3.26963 13.5H12.7304C13.1554 13.5 13.5 13.1554 13.5 12.7304C13.5 12.4966 13.3937 12.2754 13.2112 12.1294L11.7994 11H4.20059Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M5.75 1a.75.75 0 0 0-.75.75v6.089c0 .38-.173.739-.47.976l-2.678 2.143A2.27 2.27 0 0 0 3.27 15h9.46a2.27 2.27 0 0 0 1.418-4.042L11.47 8.815A1.25 1.25 0 0 1 11 7.839V1.75a.75.75 0 0 0-.75-.75zm.75 6.839V2.5h3v5.339c0 .606.2 1.188.559 1.661H5.942A2.75 2.75 0 0 0 6.5 7.839M4.2 11 2.79 12.13a.77.77 0 0 0 .48 1.37h9.461a.77.77 0 0 0 .481-1.37L11.8 11z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Beaker.displayName = "Beaker"

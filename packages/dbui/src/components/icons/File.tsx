@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:component File | Workspace | text, doc, code */
 const File = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M2 1.75C2 1.33579 2.33579 1 2.75 1H8.75C8.94891 1 9.13968 1.07902 9.28033 1.21967L13.7803 5.71967C13.921 5.86032 14 6.05109 14 6.25V15.25C14 15.6642 13.6642 16 13.25 16H2.75C2.33579 16 2 15.6642 2 15.25V1.75ZM3.5 2.5V14.5H12.5V7H8.75C8.33579 7 8 6.66421 8 6.25V2.5H3.5ZM9.5 3.56066L11.4393 5.5H9.5V3.56066Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M2 1.75A.75.75 0 0 1 2.75 1h6a.75.75 0 0 1 .53.22l4.5 4.5c.141.14.22.331.22.53v9a.75.75 0 0 1-.75.75H2.75a.75.75 0 0 1-.75-.75zm1.5.75v12h9V7H8.75A.75.75 0 0 1 8 6.25V2.5zm6 1.06 1.94 1.94H9.5z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 File.displayName = "File"

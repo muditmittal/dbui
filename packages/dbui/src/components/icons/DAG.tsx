@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:object Lineage | Unity Catalog | DAG, data flow, dependency graph */
 const DAG = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M9 1.75C9 1.33579 9.33579 1 9.75 1L15.25 1C15.6642 1 16 1.33579 16 1.75L16 5.25C16 5.66421 15.6642 6 15.25 6L9.75 6C9.33579 6 9 5.66421 9 5.25V4.25H6.5C5.80964 4.25 5.25 4.80964 5.25 5.5L7.25 5.5C7.66421 5.5 8 5.83579 8 6.25L8 9.75C8 10.1642 7.66421 10.5 7.25 10.5H5.25C5.25 11.1904 5.80964 11.75 6.5 11.75H9V10.75C9 10.3358 9.33579 10 9.75 10L15.25 10C15.6642 10 16 10.3358 16 10.75L16 14.25C16 14.6642 15.6642 15 15.25 15L9.75 15C9.33579 15 9 14.6642 9 14.25V13.25H6.5C4.98122 13.25 3.75 12.0188 3.75 10.5H1.75C1.33579 10.5 1 10.1642 1 9.75L1 6.25C1 5.83579 1.33579 5.5 1.75 5.5L3.75 5.5C3.75 3.98122 4.98122 2.75 6.5 2.75L9 2.75V1.75ZM10.5 2.5V4.5L14.5 4.5V2.5L10.5 2.5ZM2.5 9V7L6.5 7V9L2.5 9ZM10.5 13.5L10.5 11.5L14.5 11.5L14.5 13.5L10.5 13.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M8 1.75A.75.75 0 0 1 8.75 1h5.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75h-5.5A.75.75 0 0 1 8 5.25v-1H5.5c-.69 0-1.25.56-1.25 1.25h2a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75h-2c0 .69.56 1.25 1.25 1.25H8v-1a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75h-5.5a.75.75 0 0 1-.75-.75v-1H5.5a2.75 2.75 0 0 1-2.75-2.75h-2A.75.75 0 0 1 0 9.75v-3.5a.75.75 0 0 1 .75-.75h2A2.75 2.75 0 0 1 5.5 2.75H8zm1.5.75v2h4v-2zM1.5 9V7h4v2zm8 4.5v-2h4v2z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 DAG.displayName = "DAG"

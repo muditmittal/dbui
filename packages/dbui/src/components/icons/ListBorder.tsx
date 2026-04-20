@@ -3,8 +3,17 @@ import { forwardRef } from "react"
 /** use:action bordered list | list box, contained list */
 const ListBorder = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1 1.75C1 1.33579 1.33579 1 1.75 1H14.25C14.6642 1 15 1.33579 15 1.75V14.25C15 14.6642 14.6642 15 14.25 15H1.75C1.33579 15 1 14.6642 1 14.25V1.75ZM2.5 2.5V13.5H13.5V2.5H2.5ZM12 8.75H7V7.25H12V8.75ZM7 5.5H12V4H7V5.5ZM12 12H7V10.5H12V12ZM4.75 5.5C5.16421 5.5 5.5 5.16421 5.5 4.75C5.5 4.33579 5.16421 4 4.75 4C4.33579 4 4 4.33579 4 4.75C4 5.16421 4.33579 5.5 4.75 5.5ZM5.5 8C5.5 8.41421 5.16421 8.75 4.75 8.75C4.33579 8.75 4 8.41421 4 8C4 7.58579 4.33579 7.25 4.75 7.25C5.16421 7.25 5.5 7.58579 5.5 8ZM4.75 12C5.16421 12 5.5 11.6642 5.5 11.25C5.5 10.8358 5.16421 10.5 4.75 10.5C4.33579 10.5 4 10.8358 4 11.25C4 11.6642 4.33579 12 4.75 12Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M12 8.75H7v-1.5h5zM7 5.5h5V4H7zM12 12H7v-1.5h5zM4.75 5.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M5.5 8A.75.75 0 1 1 4 8a.75.75 0 0 1 1.5 0M4.75 12a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1 1.75A.75.75 0 0 1 1.75 1h12.5a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75H1.75a.75.75 0 0 1-.75-.75zm1.5.75v11h11v-11z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

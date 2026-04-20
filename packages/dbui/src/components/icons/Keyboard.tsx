@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:action keyboard shortcuts | hotkeys, key bindings */
 const Keyboard = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M0.75 2C0.335786 2 0 2.33579 0 2.75V13.25C0 13.6642 0.335786 14 0.75 14H15.25C15.6642 14 16 13.6642 16 13.25V2.75C16 2.33579 15.6642 2 15.25 2H0.75ZM1.5 12.5V3.5H14.5V12.5H1.5ZM4.25 4.5H2.75V6H4.25V4.5ZM5.75 4.5V6H7.25V4.5H5.75ZM8.75 4.5V6H10.25V4.5H8.75ZM11.75 4.5V6H13.25V4.5H11.75ZM10.25 7.25H8.75V8.75H10.25V7.25ZM11.75 8.75V7.25H13.25V8.75H11.75ZM7.25 8.75V7.25H5.75V8.75H7.25ZM4.25 8.75V7.25H2.75V8.75H4.25ZM11 10H5V11.5H11V10Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M.75 2a.75.75 0 0 0-.75.75v10.5c0 .414.336.75.75.75h14.5a.75.75 0 0 0 .75-.75V2.75a.75.75 0 0 0-.75-.75zm.75 10.5v-9h13v9zm2.75-8h-1.5V6h1.5zm1.5 0V6h1.5V4.5zm3 0V6h1.5V4.5zm3 0V6h1.5V4.5zm-1.5 2.75h-1.5v1.5h1.5zm1.5 1.5v-1.5h1.5v1.5zm-4.5 0v-1.5h-1.5v1.5zm-3 0v-1.5h-1.5v1.5zM11 10H5v1.5h6z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

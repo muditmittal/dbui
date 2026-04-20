@@ -3,9 +3,20 @@ import { forwardRef } from "react"
 /** use:object Image File | Workspace | photo, picture, media */
 const FileImage = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M2 1.75C2 1.33579 2.33579 1 2.75 1H8.75C8.94891 1 9.13968 1.07902 9.28033 1.21967L13.7803 5.71967C13.921 5.86032 14 6.05109 14 6.25V10H12.5V7H8.75C8.33579 7 8 6.66421 8 6.25V2.5H3.5V16H2V1.75ZM9.5 3.56066L11.4393 5.5H9.5V3.56066ZM10.466 10.0008C10.2555 10.0103 10.0587 10.108 9.92383 10.2699L6.17383 14.7699C5.98753 14.9934 5.94737 15.3046 6.07081 15.5681C6.19424 15.8317 6.45899 16 6.75 16H13.25C13.6642 16 14 15.6642 14 15.25V13.5C14 13.3011 13.921 13.1103 13.7803 12.9697L11.0303 10.2197C10.8813 10.0707 10.6765 9.99122 10.466 10.0008ZM12.5 13.8107V14.5H8.35128L10.5504 11.8611L12.5 13.8107ZM5.75 9.5C5.75 9.08579 6.08579 8.75 6.5 8.75C6.91421 8.75 7.25 9.08579 7.25 9.5C7.25 9.91421 6.91421 10.25 6.5 10.25C6.08579 10.25 5.75 9.91421 5.75 9.5ZM6.5 7.25C5.25736 7.25 4.25 8.25736 4.25 9.5C4.25 10.7426 5.25736 11.75 6.5 11.75C7.74264 11.75 8.75 10.7426 8.75 9.5C8.75 8.25736 7.74264 7.25 6.5 7.25Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M2 1.75A.75.75 0 0 1 2.75 1h6a.75.75 0 0 1 .53.22l4.5 4.5c.141.14.22.331.22.53V10h-1.5V7H8.75A.75.75 0 0 1 8 6.25V2.5H3.5V16H2zm7.5 1.81 1.94 1.94H9.5z"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M10.466 10a.75.75 0 0 0-.542.27l-3.75 4.5A.75.75 0 0 0 6.75 16h6.5a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.22-.53l-2.75-2.75a.75.75 0 0 0-.564-.22m2.034 3.81v.69H8.351l2.2-2.639zM6.5 7.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5M5.75 9.5a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 FileImage.displayName = "FileImage"

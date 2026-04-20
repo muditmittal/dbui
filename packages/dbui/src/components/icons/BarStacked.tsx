@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:object Stacked bar chart | AI/BI | cumulative bar, layered */
 const BarStacked = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M6.25 1C5.83579 1 5.5 1.33579 5.5 1.75V7H2.75C2.33579 7 2 7.33579 2 7.75V14.25C2 14.6642 2.33579 15 2.75 15H13.25C13.6642 15 14 14.6642 14 14.25V4.75C14 4.33579 13.6642 4 13.25 4H10.5V1.75C10.5 1.33579 10.1642 1 9.75 1H6.25ZM9 8.5V13.5H7V8.5H9ZM9 7V2.5H7V7H9ZM12.5 13.5H10.5V11.75H12.5V13.5ZM10.5 5.5V10.25H12.5V5.5H10.5ZM5.5 10.25V8.5H3.5V10.25H5.5ZM5.5 13.5V11.75H3.5V13.5H5.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M6.25 1a.75.75 0 0 0-.75.75V7H2.75a.75.75 0 0 0-.75.75v6.5c0 .414.336.75.75.75h10.5a.75.75 0 0 0 .75-.75v-9.5a.75.75 0 0 0-.75-.75H10.5V1.75A.75.75 0 0 0 9.75 1zM9 8.5v5H7v-5zM9 7V2.5H7V7zm3.5 6.5h-2v-1.75h2zm-2-8v4.75h2V5.5zm-5 4.75V8.5h-2v1.75zm0 3.25v-1.75h-2v1.75z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 BarStacked.displayName = "BarStacked"

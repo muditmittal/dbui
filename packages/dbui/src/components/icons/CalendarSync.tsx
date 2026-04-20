@@ -3,11 +3,22 @@ import { forwardRef } from "react"
 /** use:action synced schedule | synchronized, auto-refresh */
 const CalendarSync = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path d="M11.5 13.75H10.5742C10.9872 14.211 11.5842 14.4999 12.25 14.5C13.2971 14.4999 14.1787 13.7838 14.4287 12.8135L15.8818 13.1865C15.4656 14.8037 13.9983 15.9999 12.25 16C11.1627 15.9999 10.1839 15.535 9.5 14.7969V15.75H8V12.25H11.5V13.75Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M6 2H10V0H11.5V2H14.25C14.6642 2 15 2.33579 15 2.75V7H2.5V13.5H6.5V15H1.75C1.33579 15 1 14.6642 1 14.25V2.75C1 2.33579 1.33579 2 1.75 2H4.5V0H6V2ZM2.5 5.5H13.5V3.5H2.5V5.5Z" fill="currentColor"/>
-<path d="M11.75 8C12.837 8.00007 13.8161 8.46435 14.5 9.20215V8.25H16V11.75H12.5V10.25H13.4258C13.0128 9.78902 12.4158 9.50007 11.75 9.5C10.7029 9.5001 9.82127 10.2162 9.57129 11.1865L8.11816 10.8135C8.53442 9.19633 10.0017 8.0001 11.75 8Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M11.5 13.75h-.926a2.251 2.251 0 0 0 3.855-.937l1.453.373A3.75 3.75 0 0 1 12.25 16a3.74 3.74 0 0 1-2.75-1.203v.953H8v-3.5h3.5z"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M6 2h4V0h1.5v2h2.75a.75.75 0 0 1 .75.75V7H2.5v6.5h4V15H1.75a.75.75 0 0 1-.75-.75V2.75A.75.75 0 0 1 1.75 2H4.5V0H6zM2.5 5.5h11v-2h-11z"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      d="M11.75 8c1.087 0 2.066.464 2.75 1.202V8.25H16v3.5h-3.5v-1.5h.926a2.251 2.251 0 0 0-3.855.937l-1.453-.373A3.75 3.75 0 0 1 11.75 8"
+      />
+    </svg>
   )
 )
 CalendarSync.displayName = "CalendarSync"

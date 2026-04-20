@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:action mention | tag user, @, email, handle */
 const At = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M2.5 8C2.5 4.96243 4.96243 2.5 8 2.5C11.0376 2.5 13.5 4.96243 13.5 8L13.4981 9.08008C13.4972 9.61698 13.0616 10.0517 12.525 10.0517C11.9875 10.0517 11.5517 9.616 11.5517 9.0785V4.98276H10.0517V5.17718C9.4552 4.74538 8.73273 4.5 8 4.5C6.21969 4.5 4.5 5.94859 4.5 8C4.5 10.0514 6.21969 11.5 8 11.5C8.91672 11.5 9.81735 11.1159 10.4754 10.4632C10.92 11.12 11.6721 11.5517 12.525 11.5517C13.8892 11.5517 14.9957 10.4468 14.9981 9.08276L15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15C9.42638 15 10.7552 14.5726 11.8626 13.8387L11.0339 12.5883C10.1646 13.1644 9.12265 13.5 8 13.5C4.96243 13.5 2.5 11.0376 2.5 8ZM6 8C6 6.84695 6.9764 6 8 6C9.0236 6 10 6.84695 10 8C10 9.15305 9.0236 10 8 10C6.9764 10 6 9.15305 6 8Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M2.5 8a5.5 5.5 0 1 1 11 0l-.002 1.08a.973.973 0 0 1-1.946-.002V4.984h-1.5v.194A3.52 3.52 0 0 0 8 4.5C6.22 4.5 4.5 5.949 4.5 8s1.72 3.5 3.5 3.5c.917 0 1.817-.384 2.475-1.037a2.473 2.473 0 0 0 4.523-1.38L15 8a7 7 0 1 0-3.137 5.839l-.83-1.25A5.5 5.5 0 0 1 2.5 8M6 8c0-1.153.976-2 2-2s2 .847 2 2-.976 2-2 2-2-.847-2-2"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 At.displayName = "At"

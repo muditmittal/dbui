@@ -3,9 +3,18 @@ import { forwardRef } from "react"
 /** use:object Code File | Workspace | script, source code */
 const FileCode = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width="16" height="17" viewBox="0 0 16 17" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M2 1.75C2 1.33579 2.33579 1 2.75 1H8.75C8.94891 1 9.13968 1.07902 9.28033 1.21967L13.7803 5.71967C13.921 5.86032 14 6.05109 14 6.25V10H12.5V7H8.75C8.33579 7 8 6.66421 8 6.25V2.5H3.5V16H2V1.75ZM9.5 3.56066L11.4393 5.5H9.5V3.56066ZM7.46966 9.96967L4.96967 12.4697L4.43934 13L4.96967 13.5303L7.46966 16.0303L8.53032 14.9697L6.56066 13L8.53032 11.0303L7.46966 9.96967ZM13.5303 12.4697L11.0303 9.96967L9.96966 11.0303L11.9393 13L9.96966 14.9697L11.0303 16.0303L13.5303 13.5303L14.0607 13L13.5303 12.4697Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M2 1.75A.75.75 0 0 1 2.75 1h6a.75.75 0 0 1 .53.22l4.5 4.5c.141.14.22.331.22.53V10h-1.5V7H8.75A.75.75 0 0 1 8 6.25V2.5H3.5V16H2zm7.5 1.81 1.94 1.94H9.5z"
+      clipRule="evenodd"
+      />
+      <path
+      fill="currentColor"
+      d="M7.47 9.97 4.44 13l3.03 3.03 1.06-1.06L6.56 13l1.97-1.97zM11.03 9.97l-1.06 1.06L11.94 13l-1.97 1.97 1.06 1.06L14.06 13z"
+      />
+    </svg>
   )
 )
 FileCode.displayName = "FileCode"

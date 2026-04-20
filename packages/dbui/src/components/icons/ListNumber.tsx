@@ -3,11 +3,11 @@ import { forwardRef } from "react"
 /** use:action numbered list | ordered list, ol, steps */
 const ListNumber = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M4.75977 8C5.99679 8 7 9.00321 7 10.2402C6.99984 11.1361 6.466 11.9459 5.64258 12.2988L4.21191 12.9111C3.93922 13.028 3.7278 13.2411 3.6084 13.5H7V15H2V13.9912C2.00012 12.9214 2.63779 11.9547 3.62109 11.5332L5.05176 10.9199C5.3236 10.8034 5.49984 10.536 5.5 10.2402C5.5 9.83164 5.16836 9.5 4.75977 9.5H4.38867C3.89792 9.50012 3.50012 9.89792 3.5 10.3887H2C2.00012 9.0695 3.0695 8.00012 4.38867 8H4.75977Z" fill="currentColor"/>
-      <path d="M14 12.75H9V11.25H14V12.75Z" fill="currentColor"/>
-      <path d="M5.25 5.5H7V7H2V5.5H3.75V2.59473C3.30836 2.85059 2.79713 3 2.25 3H2V1.5H2.25C3.07843 1.5 3.75 0.828427 3.75 0H5.25V5.5Z" fill="currentColor"/>
-      <path d="M14 4.75H9V3.25H14V4.75Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M4.76 8a2.24 2.24 0 0 1 .883 4.299l-1.431.612c-.273.117-.484.33-.604.589H7V15H2v-1.009c0-1.07.638-2.036 1.621-2.458l1.43-.613A.74.74 0 0 0 4.76 9.5h-.371a.89.89 0 0 0-.889.889H2C2 9.069 3.07 8 4.389 8zM14 12.75H9v-1.5h5zM5.25 5.5H7V7H2V5.5h1.75V2.595A3 3 0 0 1 2.25 3H2V1.5h.25A1.5 1.5 0 0 0 3.75 0h1.5zM14 4.75H9v-1.5h5z"
+      />
     </svg>
   )
 )

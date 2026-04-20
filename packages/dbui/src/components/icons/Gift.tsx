@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:action What's New | Platform | new feature, release, announcement */
 const Gift = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M3 3.25C3 2.00736 4.00736 1 5.25 1C6.36548 1 7.35908 1.52183 8 2.3347C8.64092 1.52183 9.63452 1 10.75 1C11.9926 1 13 2.00736 13 3.25C13 3.51298 12.9549 3.76542 12.872 4H14.25C14.6642 4 15 4.33579 15 4.75V7.75C15 8.16421 14.6642 8.5 14.25 8.5H14V14.25C14 14.6642 13.6642 15 13.25 15H2.75C2.33579 15 2 14.6642 2 14.25V8.5H1.75C1.33579 8.5 1 8.16421 1 7.75V4.75C1 4.33579 1.33579 4 1.75 4H3.12803C3.04512 3.76542 3 3.51298 3 3.25ZM5.25 4H7.18699C6.96497 3.13739 6.18192 2.5 5.25 2.5C4.83579 2.5 4.5 2.83579 4.5 3.25C4.5 3.66421 4.83579 4 5.25 4ZM7.25 5.5H2.5V7H7.25V5.5ZM7.25 8.5H3.5V13.5H7.25L7.25 8.5ZM8.75 13.5L8.75 8.5H12.5V13.5H8.75ZM8.75 7V5.5H13.5V7H8.75ZM8.81301 4H10.75C11.1642 4 11.5 3.66421 11.5 3.25C11.5 2.83579 11.1642 2.5 10.75 2.5C9.81808 2.5 9.03503 3.13739 8.81301 4Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M3 3.25A2.25 2.25 0 0 1 5.25 1C6.365 1 7.36 1.522 8 2.335A3.5 3.5 0 0 1 10.75 1a2.25 2.25 0 0 1 2.122 3h1.378a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-.75.75H14v5.75a.75.75 0 0 1-.75.75H2.75a.75.75 0 0 1-.75-.75V8.5h-.25A.75.75 0 0 1 1 7.75v-3A.75.75 0 0 1 1.75 4h1.378A2.3 2.3 0 0 1 3 3.25M5.25 4h1.937A2 2 0 0 0 5.25 2.5a.75.75 0 0 0 0 1.5m2 1.5H2.5V7h4.75zm0 3H3.5v5h3.75zm1.5 5v-5h3.75v5zm0-6.5V5.5h4.75V7zm.063-3h1.937a.75.75 0 0 0 0-1.5A2 2 0 0 0 8.813 4"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

@@ -3,19 +3,21 @@ import { forwardRef } from "react"
 /** use:action more | options, ellipsis */
 const DotsCircle = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<g clipPath="url(#clip0_35_5000)">
-<path d="M6 8C6 8.41421 5.66421 8.75 5.25 8.75C4.83579 8.75 4.5 8.41421 4.5 8C4.5 7.58579 4.83579 7.25 5.25 7.25C5.66421 7.25 6 7.58579 6 8Z" fill="currentColor"/>
-<path d="M8 8.75C8.41421 8.75 8.75 8.41421 8.75 8C8.75 7.58579 8.41421 7.25 8 7.25C7.58579 7.25 7.25 7.58579 7.25 8C7.25 8.41421 7.58579 8.75 8 8.75Z" fill="currentColor"/>
-<path d="M10.75 8.75C11.1642 8.75 11.5 8.41421 11.5 8C11.5 7.58579 11.1642 7.25 10.75 7.25C10.3358 7.25 10 7.58579 10 8C10 8.41421 10.3358 8.75 10.75 8.75Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0ZM1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5899 1.5 14.5 4.41015 14.5 8C14.5 11.5899 11.5899 14.5 8 14.5C4.41015 14.5 1.5 11.5899 1.5 8Z" fill="currentColor"/>
-</g>
-<defs>
-<clipPath id="clip0_35_5000">
-<rect width={size} height={size} fill="white"/>
-</clipPath>
-</defs>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="currentColor" clipPath="url(#DotsCircleIcon_svg__a)">
+      <path d="M6 8a.75.75 0 1 1-1.5 0A.75.75 0 0 1 6 8M8 8.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M10.75 8.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" />
+      <path
+      fillRule="evenodd"
+      d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1.5 8a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0"
+      clipRule="evenodd"
+      />
+      </g>
+      <defs>
+      <clipPath>
+      <path fill="#fff" d="M0 0h16v16H0z" />
+      </clipPath>
+      </defs>
+    </svg>
   )
 )
 DotsCircle.displayName = "DotsCircle"

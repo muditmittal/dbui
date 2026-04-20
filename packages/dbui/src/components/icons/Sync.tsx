@@ -3,8 +3,11 @@ import { forwardRef } from "react"
 /** use:action sync | refresh, synchronize */
 const Sync = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M7.99998 13.5C6.5173 13.5 5.17298 12.9143 4.18318 11.9601L4.17424 11.9514L3.67385 11.5H4.99998V10L0.999996 10V14L2.5 14V12.4612L3.15129 13.0488C4.40854 14.2565 6.11821 15 7.99998 15C11.866 15 15 11.866 15 8H13.5C13.5 11.0376 11.0375 13.5 7.99998 13.5ZM15 6H11L11 4.5H12.3262L11.8258 4.04855L11.8168 4.03994C10.827 3.0857 9.4827 2.5 8.00002 2.5C4.96245 2.5 2.50002 4.96243 2.50002 8H1.00002C1.00002 4.13401 4.13403 1 8.00002 1C9.88179 1 11.5915 1.74352 12.8487 2.95121L13.5 3.53879V2H15V6Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M8 2.5a5.48 5.48 0 0 1 3.817 1.54l.009.009.5.451H11V6h4V2h-1.5v1.539l-.651-.588A7 7 0 0 0 1 8h1.5A5.5 5.5 0 0 1 8 2.5M1 10h4v1.5H3.674l.5.451.01.01A5.5 5.5 0 0 0 13.5 8h1.499a7 7 0 0 1-11.849 5.048L2.5 12.46V14H1z"
+      />
     </svg>
   )
 )

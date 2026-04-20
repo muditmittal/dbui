@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:action edit | edit, write, modify, rename, compose */
 const Pencil = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M12.0732 2.57322C12.1709 2.47559 12.3291 2.47559 12.4268 2.57322L13.5126 3.65901C13.6102 3.75664 13.6102 3.91493 13.5126 4.01256L12 5.52513L10.5607 4.08579L12.0732 2.57322ZM9.5 5.14645L2.5 12.1464V13.5858H3.93934L10.9393 6.58579L9.5 5.14645ZM13.4874 1.51256C12.804 0.829146 11.696 0.829145 11.0126 1.51256L1.21967 11.3055C1.07902 11.4461 1 11.6369 1 11.8358V14.3358C1 14.75 1.33579 15.0858 1.75 15.0858H4.25C4.44891 15.0858 4.63968 15.0068 4.78033 14.8661L14.5732 5.07322C15.2566 4.38981 15.2566 3.28177 14.5732 2.59835L13.4874 1.51256Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M13.487 1.513a1.75 1.75 0 0 0-2.474 0L1.22 11.306a.75.75 0 0 0-.22.53v2.5c0 .414.336.75.75.75h2.5a.75.75 0 0 0 .53-.22l9.793-9.793a1.75 1.75 0 0 0 0-2.475zm-1.414 1.06a.25.25 0 0 1 .354 0l1.086 1.086a.25.25 0 0 1 0 .354L12 5.525l-1.44-1.44zM9.5 5.146l-7 7v1.44h1.44l7-7z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

@@ -3,10 +3,15 @@ import { forwardRef } from "react"
 /** use:action branch merged | repos, git, approved, PR merged */
 const BranchCheck = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M3.75 1C5.26878 1 6.5 2.23122 6.5 3.75C6.5 5.0084 5.65373 6.06578 4.5 6.39258V9.60645C5.65386 9.93316 6.5 10.9915 6.5 12.25C6.5 13.7688 5.26878 15 3.75 15C2.23122 15 1 13.7688 1 12.25C1 10.9915 1.84614 9.93316 3 9.60645V6.39258C1.84627 6.06578 1 5.0084 1 3.75C1 2.23122 2.23122 1 3.75 1ZM3.75 11C3.05964 11 2.5 11.5596 2.5 12.25C2.5 12.9404 3.05964 13.5 3.75 13.5C4.44036 13.5 5 12.9404 5 12.25C5 11.5596 4.44036 11 3.75 11ZM3.75 2.5C3.05964 2.5 2.5 3.05964 2.5 3.75C2.5 4.44036 3.05964 5 3.75 5C4.44036 5 5 4.44036 5 3.75C5 3.05964 4.44036 2.5 3.75 2.5Z" fill="currentColor"/>
-<path d="M15.0303 5.53027L9.5 11.0605L6.46973 8.03027L7.53027 6.96973L9.5 8.93945L13.9697 4.46973L15.0303 5.53027Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M3.75 1a2.748 2.748 0 0 1 .75 5.393v3.213A2.749 2.749 0 0 1 3.75 15 2.75 2.75 0 0 1 3 9.606V6.393A2.748 2.748 0 0 1 3.75 1m0 10a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m0-8.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
+      clipRule="evenodd"
+      />
+      <path fill="currentColor" d="M15.03 5.53 9.5 11.06 6.47 8.03l1.06-1.06L9.5 8.94l4.47-4.47z" />
+    </svg>
   )
 )
 BranchCheck.displayName = "BranchCheck"

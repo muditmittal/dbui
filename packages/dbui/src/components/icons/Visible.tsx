@@ -3,8 +3,16 @@ import { forwardRef } from "react"
 /** use:action show | visible, eye, reveal, view */
 const Visible = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <g clipPath="url(#clip0_35_4848)"><path fillRule="evenodd" clipRule="evenodd" d="M8.00004 12.5206C5.03307 12.5206 2.50268 10.6436 1.53507 8.0103C2.50269 5.37708 5.03307 3.5 8.00002 3.5C10.967 3.5 13.4974 5.3771 14.465 8.01035C13.4974 10.6436 10.967 12.5206 8.00004 12.5206ZM8.00002 2C4.27842 2 1.12492 4.42395 0.0284448 7.77721C-0.0210778 7.92866 -0.0210783 8.09194 0.0284433 8.24339C1.1249 11.5967 4.27842 14.0206 8.00004 14.0206C11.7216 14.0206 14.8751 11.5967 15.9716 8.24345C16.0211 8.092 16.0211 7.92871 15.9716 7.77726C14.8752 4.42399 11.7216 2 8.00002 2ZM6.5 8C6.5 7.17157 7.17157 6.5 8 6.5C8.82843 6.5 9.5 7.17157 9.5 8C9.5 8.82843 8.82843 9.5 8 9.5C7.17157 9.5 6.5 8.82843 6.5 8ZM8 5C6.34315 5 5 6.34315 5 8C5 9.65685 6.34315 11 8 11C9.65685 11 11 9.65685 11 8C11 6.34315 9.65685 5 8 5Z" fill="currentColor"/></g><defs><clipPath id="clip0_35_4848"><rect width={size} height={size} fill="white"/></clipPath></defs>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="currentColor" fillRule="evenodd" clipPath="url(#VisibleIcon_svg__a)" clipRule="evenodd">
+      <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6M6.5 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0" />
+      <path d="M8 2A8.39 8.39 0 0 0 .028 7.777a.75.75 0 0 0 0 .466 8.389 8.389 0 0 0 15.944 0 .75.75 0 0 0 0-.466A8.39 8.39 0 0 0 8 2m0 10.52a6.89 6.89 0 0 1-6.465-4.51 6.888 6.888 0 0 1 12.93 0A6.89 6.89 0 0 1 8 12.52" />
+      </g>
+      <defs>
+      <clipPath>
+      <path fill="#fff" d="M0 0h16v16H0z" />
+      </clipPath>
+      </defs>
     </svg>
   )
 )

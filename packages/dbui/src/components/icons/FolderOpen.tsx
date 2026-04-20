@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:action Opened folder | expanded directory, browse contents */
 const FolderOpen = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M0 2.75C0 2.33579 0.335786 2 0.75 2H4.67157C5.40092 2 6.10039 2.28973 6.61612 2.80546L7.81066 4H13.25C13.6642 4 14 4.33579 14 4.75V7H15.25C15.5147 7 15.7598 7.13953 15.8949 7.36715C16.03 7.59477 16.0352 7.87676 15.9084 8.10914L12.9084 13.6091C12.777 13.8501 12.5245 14 12.25 14H0.75C0.562792 14 0.391604 13.9314 0.260196 13.818C0.231022 13.7928 0.203686 13.7653 0.178492 13.7357C0.0671729 13.6048 0 13.4353 0 13.25V2.75ZM1.5 10.3088L3.09158 7.39086C3.223 7.14992 3.47554 7 3.75 7H12.5V5.5H7.5C7.30109 5.5 7.11032 5.42098 6.96967 5.28033L5.55546 3.86612C5.32104 3.6317 5.00309 3.5 4.67157 3.5H1.5V10.3088Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M0 2.75A.75.75 0 0 1 .75 2h3.922c.729 0 1.428.29 1.944.805L7.811 4h5.439a.75.75 0 0 1 .75.75V7h1.25a.75.75 0 0 1 .658 1.11l-3 5.5a.75.75 0 0 1-.658.39H.75a.747.747 0 0 1-.75-.75zm1.5 7.559L3.092 7.39A.75.75 0 0 1 3.75 7h8.75V5.5h-5a.75.75 0 0 1-.53-.22L5.555 3.866a1.25 1.25 0 0 0-.883-.366H1.5z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 FolderOpen.displayName = "FolderOpen"

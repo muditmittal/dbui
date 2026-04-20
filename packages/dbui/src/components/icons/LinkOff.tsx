@@ -3,8 +3,12 @@ import { forwardRef } from "react"
 /** use:action unlink | disconnect, remove link, detach */
 const LinkOff = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M14.0352 11.4443C15.2114 10.7478 16 9.46598 16 8C16 5.79087 14.2091 4 12 4H9V5.5H12C13.3807 5.5 14.5 6.61929 14.5 8C14.5 9.05687 13.8442 9.96056 12.9173 10.3263L14.0352 11.4443ZM14.0001 13.5304L2.46967 2L1.46967 3L2.68934 4.21967C1.12392 4.76233 0 6.24992 0 8C0 10.2091 1.79086 12 4 12H7V10.5H4C2.61929 10.5 1.5 9.38072 1.5 8C1.5 6.62935 2.60303 5.51633 3.96985 5.50018L5.71968 7.25H4V8.75H7.21968L13.0001 14.5304L14.0001 13.5304ZM9.84099 7.25L11.341 8.75H12V7.25H9.84099Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M14.035 11.444A4 4 0 0 0 12 4H9v1.5h3a2.5 2.5 0 0 1 .917 4.826zM14 13.53 2.47 2l-1 1 1.22 1.22A4.002 4.002 0 0 0 4 12h3v-1.5H4a2.5 2.5 0 0 1-.03-5l1.75 1.75H4v1.5h3.22L13 14.53z"
+      />
+      <path fill="currentColor" d="m9.841 7.25 1.5 1.5H12v-1.5z" />
     </svg>
   )
 )

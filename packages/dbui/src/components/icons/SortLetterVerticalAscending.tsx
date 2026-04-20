@@ -3,17 +3,20 @@ import { forwardRef } from "react"
 /** use:action sort A-Z vertical | alphabetical ascending */
 const SortLetterVerticalAscending = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <g clipPath="url(#clip0_35_4796)">
-<path d="M6.25 8C6.53209 8 6.78996 8.15878 6.91797 8.41016C7.04583 8.66149 7.02231 8.96334 6.85645 9.19141L3.72266 13.5H7V15H2.25C1.96791 15 1.71004 14.8412 1.58203 14.5898C1.45415 14.3386 1.47768 14.0366 1.64355 13.8086L4.77734 9.5H1.5V8H6.25Z" fill="currentColor"/>
-<path d="M16.0303 4.96973L14.9697 6.03027L12.75 3.81055V10H11.25V3.81055L9.03027 6.03027L7.96973 4.96973L12 0.939454L16.0303 4.96973Z" fill="currentColor"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M4.30762 4.73908e-07C4.61448 0.000401933 4.8905 0.187541 5.00391 0.472657L7.59668 7H5.98242L5.74414 6.40039H2.85547L2.61523 7H1L3.61035 0.47168C3.72433 0.186596 4.00059 -0.000343507 4.30762 4.73908e-07ZM3.45508 4.90039H5.14844L4.30469 2.77637L3.45508 4.90039Z" fill="currentColor"/>
-</g>
-<defs>
-<clipPath id="clip0_35_4796">
-<rect width={size} height={size} fill="white"/>
-</clipPath>
-</defs>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="currentColor" clipPath="url(#SortLetterVerticalAscendingIcon_svg__a)">
+      <path
+      fillRule="evenodd"
+      d="M4.307 0a.75.75 0 0 1 .697.473L7.596 7H5.982l-.238-.6H2.855l-.24.6H1L3.61.472A.75.75 0 0 1 4.307 0m-.852 4.9h1.693l-.844-2.124z"
+      clipRule="evenodd"
+      />
+      <path d="M4.777 9.5H1.5V8h4.75a.75.75 0 0 1 .607 1.191L3.723 13.5H7V15H2.25a.75.75 0 0 1-.607-1.191zM12 .94l4.03 4.03-1.06 1.06-2.22-2.22V10h-1.5V3.81L9.03 6.03 7.97 4.97z" />
+      </g>
+      <defs>
+      <clipPath>
+      <path fill="#fff" d="M0 0h16v16H0z" />
+      </clipPath>
+      </defs>
     </svg>
   )
 )

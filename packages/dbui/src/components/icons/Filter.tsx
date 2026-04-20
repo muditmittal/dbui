@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:action filter | funnel, refine, narrow */
 const Filter = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M1 1.75C1 1.33579 1.33579 1 1.75 1H14.25C14.6642 1 15 1.33579 15 1.75V4C15 4.19891 14.921 4.38968 14.7803 4.53033L10 9.31066V14.25C10 14.6642 9.66421 15 9.25 15H6.75C6.33579 15 6 14.6642 6 14.25V9.31066L1.21967 4.53033C1.07902 4.38968 1 4.19891 1 4V1.75ZM2.5 2.5V3.68934L7.28033 8.46967C7.42098 8.61032 7.5 8.80109 7.5 9V13.5H8.5V9C8.5 8.80109 8.57902 8.61032 8.71967 8.46967L13.5 3.68934V2.5H2.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1 1.75A.75.75 0 0 1 1.75 1h12.5a.75.75 0 0 1 .75.75V4a.75.75 0 0 1-.22.53L10 9.31v4.94a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1-.75-.75V9.31L1.22 4.53A.75.75 0 0 1 1 4zm1.5.75v1.19l4.78 4.78c.141.14.22.331.22.53v4.5h1V9a.75.75 0 0 1 .22-.53l4.78-4.78V2.5z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Filter.displayName = "Filter"

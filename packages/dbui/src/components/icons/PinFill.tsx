@@ -3,8 +3,11 @@ import { forwardRef } from "react"
 /** use:action pinned | anchored, stuck, kept visible */
 const PinFill = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M5 0.75C5 0.335786 5.33579 0 5.75 0H10.25C10.6642 0 11 0.335786 11 0.75V4.75736C11 5.3541 11.2371 5.92639 11.659 6.34835L13.7803 8.46967C13.921 8.61032 14 8.80109 14 9V11.25C14 11.6642 13.6642 12 13.25 12H8.75V16H7.25V12H2.75C2.33579 12 2 11.6642 2 11.25V9C2 8.80109 2.07902 8.61032 2.21967 8.46967L4.34099 6.34835C4.76295 5.92639 5 5.3541 5 4.75736V0.75Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M5 .75A.75.75 0 0 1 5.75 0h4.5a.75.75 0 0 1 .75.75v4.007c0 .597.237 1.17.659 1.591L13.78 8.47c.141.14.22.331.22.53v2.25a.75.75 0 0 1-.75.75h-4.5v4h-1.5v-4h-4.5a.75.75 0 0 1-.75-.75V9a.75.75 0 0 1 .22-.53L4.34 6.348A2.25 2.25 0 0 0 5 4.758z"
+      />
     </svg>
   )
 )

@@ -3,15 +3,11 @@ import { forwardRef } from "react"
 /** use:action conditional logic | if-else, branching, decision */
 const Flow = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <g clipPath="url(#clip0_35_4808)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M10.9697 5.96973L12.1893 4.75006H8.82843C8.49691 4.75006 8.17896 4.88175 7.94454 5.11617L5.40901 7.65171C5.2828 7.77792 5.14852 7.8942 5.00738 8.00006C5.14852 8.10592 5.2828 8.2222 5.40901 8.34841L7.94454 10.8839C8.17896 11.1184 8.49691 11.2501 8.82843 11.2501H12.1893L10.9697 10.0304L12.0303 8.96973L15.0607 12.0001L12.0303 15.0304L10.9697 13.9697L12.1893 12.7501H8.82843C8.09908 12.7501 7.39961 12.4603 6.88388 11.9446L4.34835 9.40907C3.92639 8.98711 3.3541 8.75006 2.75736 8.75006H0V7.25006H2.75736C3.3541 7.25006 3.92639 7.01301 4.34835 6.59105L6.88388 4.05551C7.39961 3.53979 8.09908 3.25006 8.82843 3.25006H12.1893L10.9697 2.03039L12.0303 0.969727L15.0607 4.00006L12.0303 7.03039L10.9697 5.96973Z" fill="currentColor"/>
-      </g>
-      <defs>
-      <clipPath id="clip0_35_4808">
-      <rect width={size} height={size} fill="white" transform="matrix(1 0 0 -1 0 16)"/>
-      </clipPath>
-      </defs>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="m4.94 8.018.732.732H3.75a2 2 0 1 0 0 4H9V12a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-.75H3.75a3.5 3.5 0 1 1 0-7h1.957zM10.5 14.5h3v-2h-3zM5 0a1 1 0 0 1 1 1v.75h5.25a3.5 3.5 0 0 1 0 7H9.025l1.035 1.036L9 10.846 6.172 8.019 9 5.189l1.06 1.061-1 1h2.19a2 2 0 0 0 0-4H6V4a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1zM1.5 3.5h3v-2h-3z"
+      />
     </svg>
   )
 )

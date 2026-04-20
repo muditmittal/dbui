@@ -3,9 +3,14 @@ import { forwardRef } from "react"
 /** use:component date | schedule, date picker */
 const Calendar = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M4.5 0V2H1.75C1.33579 2 1 2.33579 1 2.75V14.25C1 14.6642 1.33579 15 1.75 15H14.25C14.6642 15 15 14.6642 15 14.25V2.75C15 2.33579 14.6642 2 14.25 2H11.5V0H10V2H6V0H4.5ZM10 3.5H11.5H13.5V5.5H2.5V3.5H4.5H6H10ZM2.5 7V13.5H13.5V7H2.5Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M4.5 0v2H1.75a.75.75 0 0 0-.75.75v11.5c0 .414.336.75.75.75h12.5a.75.75 0 0 0 .75-.75V2.75a.75.75 0 0 0-.75-.75H11.5V0H10v2H6V0zm9 3.5v2h-11v-2zM2.5 7v6.5h11V7z"
+      clipRule="evenodd"
+      />
+    </svg>
   )
 )
 Calendar.displayName = "Calendar"

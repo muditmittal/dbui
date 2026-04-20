@@ -3,8 +3,14 @@ import { forwardRef } from "react"
 /** use:action sidebar closed | panel hidden, sidebar off */
 const SidebarClosed = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M13 1C14.6569 1 16 2.34315 16 4V12L15.9961 12.1543C15.9158 13.7394 14.6051 15 13 15H3L2.8457 14.9961C1.31166 14.9184 0.0816253 13.6883 0.00390625 12.1543L0 12V4C1.28853e-07 2.34315 1.34315 1 3 1H13ZM3 2.5C2.17157 2.5 1.5 3.17157 1.5 4V12C1.5 12.8284 2.17157 13.5 3 13.5H4.5V2.5H3ZM6 13.5H13C13.8284 13.5 14.5 12.8284 14.5 12V4C14.5 3.17157 13.8284 2.5 13 2.5H6V13.5Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="currentColor" d="M3.75 4.25A.75.75 0 0 1 4.5 5v6A.75.75 0 0 1 3 11V5a.75.75 0 0 1 .75-.75" />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M13 1a3 3 0 0 1 3 3v8l-.004.154A3 3 0 0 1 13 15H3l-.154-.004a3 3 0 0 1-2.842-2.842L0 12V4a3 3 0 0 1 3-3zM3 2.5A1.5 1.5 0 0 0 1.5 4v8A1.5 1.5 0 0 0 3 13.5h10a1.5 1.5 0 0 0 1.5-1.5V4A1.5 1.5 0 0 0 13 2.5z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

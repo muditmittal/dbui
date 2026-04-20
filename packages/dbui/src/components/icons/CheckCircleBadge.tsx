@@ -3,11 +3,16 @@ import { forwardRef } from "react"
 /** use:indicator active | online, healthy */
 const CheckCircleBadge = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-<path fillRule="evenodd" clipRule="evenodd" d="M10.4697 5.46967L11.5303 6.53033L7 11.0607L4.46967 8.53033L5.53033 7.46967L7 8.93934L10.4697 5.46967Z" fill="currentColor"/>
-<path d="M16 12.5C16 14.433 14.433 16 12.5 16C10.567 16 9 14.433 9 12.5C9 10.567 10.567 9 12.5 9C14.433 9 16 10.567 16 12.5Z" fill="currentColor"/>
-<path d="M1.5 8C1.5 4.41015 4.41015 1.5 8 1.5C11.5617 1.5 14.4544 4.36476 14.4995 7.91581C15.0402 8.15198 15.531 8.481 15.9519 8.88272C15.9837 8.59285 16 8.29833 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16C8.29833 16 8.59285 15.9837 8.88272 15.9519C8.481 15.531 8.15198 15.0402 7.91581 14.4995C4.36476 14.4544 1.5 11.5617 1.5 8Z" fill="currentColor"/>
-</svg>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="m10.47 5.47 1.06 1.06L7 11.06 4.47 8.53l1.06-1.06L7 8.94zM16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0"
+      />
+      <path
+      fill="currentColor"
+      d="M1.5 8a6.5 6.5 0 0 1 13-.084c.54.236 1.031.565 1.452.967Q16 8.448 16 8a8 8 0 1 0-7.117 7.952 5 5 0 0 1-.967-1.453A6.5 6.5 0 0 1 1.5 8"
+      />
+    </svg>
   )
 )
 CheckCircleBadge.displayName = "CheckCircleBadge"

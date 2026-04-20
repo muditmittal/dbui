@@ -3,8 +3,17 @@ import { forwardRef } from "react"
 /** use:action marquee select | area select, box select, lasso */
 const ZoomMarqueeSelection = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path d="M1 1.75V4H2.5L2.5 2.5L4 2.5V1H1.75C1.33579 1 1 1.33579 1 1.75Z" fill="currentColor"/><path d="M14.25 1H12V2.5L13.5 2.5V4L15 4V1.75C15 1.33579 14.6642 1 14.25 1Z" fill="currentColor"/><path d="M4 15H1.75C1.55109 15 1.36032 14.921 1.21967 14.7803C1.07902 14.6397 1 14.4489 1 14.25V12H2.5L2.5 13.5H4L4 15Z" fill="currentColor"/><path d="M6 2.5L10 2.5V1H6V2.5Z" fill="currentColor"/><path d="M1 10V5.99999H2.5L2.5 10L1 10Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      d="M1 1.75V4h1.5V2.5H4V1H1.75a.75.75 0 0 0-.75.75M14.25 1H12v1.5h1.5V4H15V1.75a.75.75 0 0 0-.75-.75M4 15H1.75a.75.75 0 0 1-.75-.75V12h1.5v1.5H4zM6 2.5h4V1H6zM1 10V6h1.5v4z"
+      />
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M4.053 9.27a5.217 5.217 0 1 1 9.397 3.122l1.69 1.69-1.062 1.06-1.688-1.69A5.217 5.217 0 0 1 4.053 9.27M9.27 5.555a3.717 3.717 0 1 0 0 7.434 3.717 3.717 0 0 0 0-7.434"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:object Environment | Platform | green, nature, sustainable */
 const Leaf = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M5 6C5 7.51878 6.23122 8.75 7.75 8.75H10.1454C10.4421 9.48296 11.1607 10 12 10C13.1046 10 14 9.10457 14 8C14 6.89543 13.1046 6 12 6C11.1607 6 10.4421 6.51704 10.1454 7.25H7.75C7.05964 7.25 6.5 6.69036 6.5 6L6.5 2L5 2L5 6ZM11.5 8C11.5 7.72386 11.7239 7.5 12 7.5C12.2761 7.5 12.5 7.72386 12.5 8C12.5 8.27614 12.2761 8.5 12 8.5C11.7239 8.5 11.5 8.27614 11.5 8Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M5 6a2.75 2.75 0 0 0 2.75 2.75h2.395a2 2 0 1 0 0-1.5H7.75C7.06 7.25 6.5 6.69 6.5 6V2H5zm6.5 2a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

@@ -3,8 +3,13 @@ import { forwardRef } from "react"
 /** use:action training | education, academy, learning */
 const School = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M16 7C16 7 16 7 16 7C16 6.73382 15.8589 6.48758 15.6293 6.35297L8.37927 2.10298C8.14505 1.96567 7.85492 1.96567 7.6207 2.10298L0.37071 6.35298C0.141079 6.48759 0 6.73383 0 7C0 7.26618 0.14108 7.51242 0.37071 7.64703L3 9.18834V12C3 12.2778 3.15356 12.5329 3.39909 12.6628L7.64909 14.9128C7.8686 15.0291 8.13141 15.0291 8.35092 14.9128L12.6009 12.6628C12.8464 12.5329 13 12.2778 13 12V9.18832L14.5 8.309V12H16V7ZM8.37928 11.897L11.5 10.0676V11.5484L8 13.4014L4.5 11.5484V10.0676L7.6207 11.897C7.85492 12.0343 8.14505 12.0343 8.37928 11.897ZM7.99999 3.61937L2.23303 7L7.99999 10.3806L13.767 6.99999L7.99999 3.61937Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M16 7a.75.75 0 0 0-.37-.647l-7.25-4.25a.75.75 0 0 0-.76 0L.37 6.353a.75.75 0 0 0 0 1.294L3 9.188V12a.75.75 0 0 0 .4.663l4.25 2.25a.75.75 0 0 0 .7 0l4.25-2.25A.75.75 0 0 0 13 12V9.188l1.5-.879V12H16zm-7.62 4.897 3.12-1.83v1.481L8 13.401l-3.5-1.853v-1.48l3.12 1.829a.75.75 0 0 0 .76 0M8 3.619 2.233 7 8 10.38 13.767 7z"
+      clipRule="evenodd"
+      />
     </svg>
   )
 )

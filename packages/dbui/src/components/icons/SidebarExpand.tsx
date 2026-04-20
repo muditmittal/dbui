@@ -3,8 +3,14 @@ import { forwardRef } from "react"
 /** use:action show panel | expand sidebar, open sidebar */
 const SidebarExpand = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
-    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M1.75 1C1.33579 1 1 1.33579 1 1.75V14.25C1 14.6642 1.33579 15 1.75 15H15V13.5H5.5V2.5H15V1H1.75ZM4 2.5H2.5V13.5H4L4 2.5ZM11.1893 8.75L9.96967 9.96967L11.0303 11.0303L13.5303 8.53033L14.0607 8L13.5303 7.46967L11.0303 4.96967L9.96967 6.03033L11.1893 7.25H7V8.75H11.1893Z" fill="currentColor"/>
+    <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M1.75 1a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75H15v-1.5H5.5v-11H15V1zM4 2.5H2.5v11H4z"
+      clipRule="evenodd"
+      />
+      <path fill="currentColor" d="M11.19 8.75 9.97 9.97l1.06 1.06L14.06 8l-3.03-3.03-1.06 1.06 1.22 1.22H7v1.5z" />
     </svg>
   )
 )
