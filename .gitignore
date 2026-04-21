@@ -17,3 +17,4 @@ packages/dbui/design-tokens.json
 apps/
 figma.config.json
 .claude/
+apps/portal/node_modules/
