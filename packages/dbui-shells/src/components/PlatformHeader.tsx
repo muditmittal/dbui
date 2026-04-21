@@ -84,7 +84,7 @@ export function PlatformHeader({
   onGenieToggle?: () => void
 }) {
   return (
-    <header className="flex h-12 shrink-0 items-center gap-4 px-3 bg-muted">
+    <header className="flex h-12 shrink-0 items-center px-3 bg-muted" style={{ gap: 40 }}>
       {/* Left — fixed, never shrinks */}
       <div className="flex items-center gap-1 shrink-0">
         <Button variant="ghost" size="icon-md" aria-label="Toggle sidebar" onClick={onSidebarToggle}>
@@ -94,12 +94,16 @@ export function PlatformHeader({
         <DatabricksLogo className="ml-1 h-8 w-auto" />
       </div>
 
-      {/* Search — grows to fill, shrinks FIRST (flex-shrink:3) */}
-      <div className="min-w-[120px] max-w-[60vw] flex-1 overflow-hidden" style={{ flexShrink: 3 }}>
-        <div className="flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] text-muted-foreground shadow-xs overflow-hidden">
-          <Search className="size-4 shrink-0" />
-          <span className="min-w-0 truncate">Search data, notebooks, recents, and more...</span>
-          <span className="shrink-0 text-[12px] text-muted-foreground">⌘ + P</span>
+      {/* Search — real input, grows to fill, shrinks first, max 640px */}
+      <div className="flex-1 overflow-hidden" style={{ flexShrink: 3, minWidth: 120, maxWidth: 640 }}>
+        <div className="flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 shadow-xs">
+          <Search className="size-4 shrink-0 text-muted-foreground" />
+          <input
+            className="flex-1 min-w-0 bg-transparent text-[13px] text-foreground placeholder:text-muted-foreground outline-none"
+            placeholder="Search data, notebooks, recents, and more..."
+            readOnly
+          />
+          <kbd className="shrink-0 text-[12px] text-muted-foreground">⌘ + P</kbd>
         </div>
       </div>
 
