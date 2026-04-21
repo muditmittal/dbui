@@ -111,16 +111,16 @@ cp ~/dbui/packages/dbui/CLAUDE.md ./
               <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>Start building</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`import { Shell } from "dbui-shells/surfaces/Shell"
+{`import { Base } from "dbui-shells"
 import { Button, ButtonIcon } from "dbui/components/ui/button"
 import { Search } from "dbui/components/icons/Search"
 
-<Shell defaultActive="catalog">
+<Base defaultActive="catalog">
   <Button variant="outline">
     <ButtonIcon><Search /></ButtonIcon>
     Search catalogs
   </Button>
-</Shell>`}
+</Base>`}
                 </code>
               </div>
             </div>

@@ -59,7 +59,7 @@ Once configured, all `dbui/...` and `dbui-shells/...` imports will resolve. You 
 2. **DBUI icons only.** Never install lucide, heroicons, or any icon package. All 451 icons are in `dbui/components/icons/`.
 3. **Semantic tokens only.** Never hardcode hex colors or pixel values. Use `bg-primary`, `text-foreground`, `rounded-sm`, etc.
 4. **Base UI `render` prop.** Not Radix `asChild`. Example: `<DialogTrigger render={<Button />}>Open</DialogTrigger>`
-5. **Shell first.** Every page starts with `<Shell>`. Never build header/nav/chrome from scratch.
+5. **Shell first.** Every page starts with `<Base>`. Never build header/nav/chrome from scratch.
 6. **Tree for hierarchies.** Never fake trees with nested divs or NavbarItems. Use `<DataTreeView>` or `<FileTreeView>`.
 
 ## Where to look
@@ -77,11 +77,11 @@ Once configured, all `dbui/...` and `dbui-shells/...` imports will resolve. You 
 ## Every page starts with the Base Shell
 
 ```tsx
-import { Shell } from "dbui-shells/surfaces/Shell"
+import { Base } from "dbui-shells"
 
-<Shell defaultActive="catalog">
+<Base defaultActive="catalog">
   {/* Your page content goes here */}
-</Shell>
+</Base>
 ```
 
 The Shell provides:
@@ -219,12 +219,12 @@ Scan your output for these violations:
 - Nested `<div>` faking a tree → replace with `DataTreeView`
 - `text-sm` → replace with `text-[13px]` (Databricks base is 13px, not 14px)
 - `font-medium` → replace with `font-semibold` (Databricks uses 600, not 500)
-- No `<Shell>` wrapper → add it, every page needs it
+- No `<Base>` wrapper → add it, every page needs it
 
 ## Import pattern
 
 ```tsx
-import { Shell } from "dbui-shells/surfaces/Shell"
+import { Base } from "dbui-shells"
 import { Button, ButtonIcon, ButtonChevron } from "dbui/components/ui/button"
 import { DataTreeView } from "dbui/components/ui/data-tree"
 import { Search } from "dbui/components/icons/Search"

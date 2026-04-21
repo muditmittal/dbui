@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Shell } from "dbui-shells/shell"
+import { Base } from "dbui-shells/shell"
 import { CatalogLayout } from "dbui-shells/catalog"
 import React from "react"
 import { FacetedFilter } from "../components/FacetedFilter"
@@ -26,7 +26,7 @@ const catalogFacets = {
 
 export const Playground: StoryObj = {
   render: () => (
-    <Shell defaultActive="catalog">
+    <Base defaultActive="catalog">
       <CatalogLayout
         sections={treeSections}
         items={catalogItems}
@@ -37,6 +37,6 @@ export const Playground: StoryObj = {
           { id: "my_catalog", label: "my_catalog", icon: React.createElement(CatalogUserHome) },
         ]}
       />
-    </Shell>
+    </Base>
   ),
 }

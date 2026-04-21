@@ -1,5 +1,6 @@
-export { Shell } from "./surfaces/Shell"
+export { Base } from "./Base"
 export { CatalogLayout, CatalogTree, CatalogLanding } from "./surfaces/CatalogLayout"
 export type { CatalogSection, CatalogItem } from "./surfaces/CatalogLayout"
 export { PlatformHeader } from "./components/PlatformHeader"
 export { WorkspaceNav } from "./components/WorkspaceNav"
+export { AssistantPanel } from "./components/AssistantPanel"

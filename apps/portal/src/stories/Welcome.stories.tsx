@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react"
-import { Shell } from "dbui-shells/shell"
+import { Base } from "dbui-shells/shell"
 
 const meta: Meta = {
   title: "Home",
@@ -127,11 +127,11 @@ function LivePreview() {
           transform: "scale(0.58)",
           transformOrigin: "top left",
         }}>
-          <Shell defaultActive="catalog">
+          <Base defaultActive="catalog">
             <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
               Content goes here — every product page starts with this shell.
             </div>
-          </Shell>
+          </Base>
         </div>
       </div>
     </div>
@@ -161,12 +161,12 @@ cp ~/dbui/packages/dbui/CLAUDE.md ./
   },
   {
     label: "Every page starts with the Base Shell",
-    code: `import { Shell } from "dbui-shells/surfaces/Shell"
+    code: `import { Base } from "dbui-shells"
 
-<Shell defaultActive="catalog">
+<Base defaultActive="catalog">
   <YourPageContent />
-</Shell>`,
-    copyText: `import { Shell } from "dbui-shells/surfaces/Shell"`,
+</Base>`,
+    copyText: `import { Base } from "dbui-shells"`,
     note: "Platform header, sidebar nav, content surface, and Genie assistant panel — all included.",
   },
   {
@@ -214,8 +214,8 @@ export const Default: StoryObj = {
            Do not ask the user to do manual steps. Configure everything yourself.
 
         4. Once setup is complete, every page must start with:
-           import { Shell } from "dbui-shells/surfaces/Shell"
-           <Shell defaultActive="catalog"><YourContent /></Shell>
+           import { Base } from "dbui-shells"
+           <Base defaultActive="catalog"><YourContent /></Base>
 
         5. To update DBUI: cd ~/dbui && git pull
       */}
