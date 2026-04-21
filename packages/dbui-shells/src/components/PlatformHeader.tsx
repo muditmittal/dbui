@@ -94,18 +94,16 @@ export function PlatformHeader({
         <DatabricksLogo className="ml-1 h-8 w-auto" />
       </div>
 
-      {/* Search — real input, grows to fill, shrinks first, max 640px */}
-      <div className="flex-1 overflow-hidden" style={{ flexShrink: 3, minWidth: 120, maxWidth: 640 }}>
-        <div className="flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 shadow-xs">
-          <Search className="size-4 shrink-0 text-muted-foreground" />
-          <input
-            className="flex-1 min-w-0 bg-transparent text-[13px] text-foreground placeholder:text-muted-foreground outline-none"
-            placeholder="Search data, notebooks, recents, and more..."
-            readOnly
-          />
-          <kbd className="shrink-0 text-[12px] text-muted-foreground">⌘ + P</kbd>
-        </div>
-      </div>
+      {/* Search — clickable trigger styled as input, grows to fill, shrinks first, max 640px */}
+      <button
+        className="flex-1 flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors"
+        style={{ flexShrink: 3, minWidth: 120, maxWidth: 640 }}
+        onClick={() => {/* Open command palette */}}
+      >
+        <Search className="size-4 shrink-0 text-muted-foreground" />
+        <span className="flex-1 min-w-0 truncate text-left text-muted-foreground">Search data, notebooks, recents, and more...</span>
+        <kbd className="shrink-0 text-[12px] text-muted-foreground">⌘ + P</kbd>
+      </button>
 
       {/* Right — switcher shrinks FIRST (flex-shrink:3), actions never shrink */}
       {/* min-w: 56px switcher + 4px gap + 32+32+24 actions + 8px gaps = ~160px */}
