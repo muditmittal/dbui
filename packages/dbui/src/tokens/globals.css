@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./tw-animate.css";
 /* shadcn/tailwind.css — inlined because the npm package exports a virtual path
    that doesn't resolve during Vercel production builds */
 @theme inline {
