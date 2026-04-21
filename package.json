@@ -1,5 +1,6 @@
 {
   "name": "dbui",
+  "private": true,
   "version": "0.2.0",
   "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
   "license": "MIT",
@@ -40,7 +41,7 @@
   },
   "packageManager": "yarn@4.13.0",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "@figma/code-connect": "^1.4.2",
