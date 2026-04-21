@@ -116,7 +116,7 @@ function SegmentControlItem({
 
         // ── Default (slider) variant items: rounded pills, no border ──
         !isOutline && [
-          "rounded-sm border border-transparent text-muted-foreground",
+          "rounded-sm border text-muted-foreground",
           "hover:text-foreground",
           "aria-pressed:bg-background aria-pressed:shadow-xs aria-pressed:text-foreground",
           "data-[state=on]:bg-background data-[state=on]:shadow-xs data-[state=on]:text-foreground",

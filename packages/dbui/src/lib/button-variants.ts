@@ -27,7 +27,7 @@ import { cva } from "./cva"
 export const buttonVariants = cva(
   [
     "group/button inline-flex shrink-0 items-center justify-center",
-    "rounded-sm border border-transparent",
+    "rounded-sm border",
     "text-[13px] leading-[20px] font-normal whitespace-nowrap",
     "transition-all outline-none select-none",
     "disabled:pointer-events-none",
@@ -38,7 +38,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: [
-          "shadow-xs bg-primary text-primary-foreground",
+          "shadow-xs border-transparent bg-primary text-primary-foreground",
           "hover:bg-primary-hover",
           "active:bg-primary-press",
           "focus-visible:shadow-focus focus-visible:overflow-clip",
@@ -52,21 +52,21 @@ export const buttonVariants = cva(
           "disabled:border-disabled disabled:text-disabled-foreground disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
         secondary: [
-          "shadow-xs bg-muted text-secondary-foreground",
+          "shadow-xs border-transparent bg-muted text-secondary-foreground",
           "hover:bg-hover hover:text-accent-foreground",
           "active:bg-press active:text-primary-press",
           "focus-visible:border-2 focus-visible:border-ring",
           "disabled:bg-transparent disabled:text-disabled-foreground disabled:shadow-none",
         ].join(" "),
         ghost: [
-          "text-foreground",
+          "border-transparent text-foreground",
           "hover:bg-hover hover:text-primary-hover",
           "active:bg-press active:text-primary-press",
           "focus-visible:border-2 focus-visible:border-ring",
           "disabled:text-disabled-foreground",
         ].join(" "),
         link: [
-          "text-primary underline-offset-4",
+          "border-transparent text-primary underline-offset-4",
           "!h-auto !rounded-none !px-0 !shadow-none",
           "hover:underline hover:text-primary-hover",
           "active:underline active:text-primary-press",
@@ -74,7 +74,7 @@ export const buttonVariants = cva(
           "disabled:text-disabled-foreground disabled:bg-transparent",
         ].join(" "),
         destructive: [
-          "shadow-xs bg-destructive text-destructive-foreground",
+          "shadow-xs border-transparent bg-destructive text-destructive-foreground",
           "hover:bg-destructive-hover",
           "active:bg-destructive-press",
           "focus-visible:shadow-focus focus-visible:overflow-clip",

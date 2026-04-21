@@ -28,7 +28,7 @@ import { cn } from "../../lib/utils"
 const toggleVariants = cva(
   [
     "group/toggle inline-flex items-center justify-center gap-1",
-    "rounded-sm border border-transparent",
+    "rounded-sm border",
     "text-[13px] leading-[20px] font-normal whitespace-nowrap",
     "transition-all outline-none select-none",
     "text-foreground",
@@ -44,7 +44,7 @@ const toggleVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-transparent",
+        default: "border-transparent bg-transparent",
         filter:
           "border-input shadow-xs hover:border-primary disabled:border-disabled disabled:shadow-none aria-pressed:border-primary data-[state=on]:border-primary",
         pill: [
@@ -54,7 +54,7 @@ const toggleVariants = cva(
           "data-[state=on]:bg-active data-[state=on]:text-primary-press data-[state=on]:border-primary data-[state=on]:shadow-none",
           "disabled:border-disabled disabled:shadow-none",
         ].join(" "),
-        icon: "bg-transparent",
+        icon: "border-transparent bg-transparent",
       },
       size: {
         sm: "h-6 min-w-6 px-2",
