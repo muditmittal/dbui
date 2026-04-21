@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button, ButtonChevron } from "dbui/components/ui/button"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuItemIcon, DropdownMenuItemDescription, DropdownMenuSeparator, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "dbui/components/ui/dropdown-menu"
 import { Input } from "dbui/components/ui/input"
@@ -10,6 +10,7 @@ import { App } from "dbui/components/icons/App"
 import { GenieCode } from "dbui/components/icons/GenieCode"
 import { ChevronDown } from "dbui/components/icons/ChevronDown"
 import { DatabricksLogo } from "dbui/components/icons/DatabricksLogo"
+import { SearchPopup } from "./SearchPopup"
 
 /* Product icons — 32×32 brand marks for the App Switcher menu */
 function ProductLakehouse() {
@@ -83,7 +84,10 @@ export function PlatformHeader({
   onSidebarToggle?: () => void
   onGenieToggle?: () => void
 }) {
+  const [searchOpen, setSearchOpen] = useState(false)
+
   return (
+    <>
     <header className="flex h-12 shrink-0 items-center px-3 bg-muted" style={{ gap: 40 }}>
       {/* Left — fixed, never shrinks */}
       <div className="flex items-center gap-1 shrink-0">
@@ -98,7 +102,7 @@ export function PlatformHeader({
       <button
         className="flex-1 flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors"
         style={{ flexShrink: 3, minWidth: 120, maxWidth: 640 }}
-        onClick={() => {/* Open command palette */}}
+        onClick={() => setSearchOpen(true)}
       >
         <Search className="size-4 shrink-0 text-muted-foreground" />
         <span className="flex-1 min-w-0 truncate text-left text-muted-foreground">Search data, notebooks, recents, and more...</span>
@@ -231,5 +235,7 @@ export function PlatformHeader({
         </div>
       </div>
     </header>
+    {searchOpen && <SearchPopup onClose={() => setSearchOpen(false)} />}
+    </>
   )
 }
