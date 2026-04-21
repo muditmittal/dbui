@@ -5,8 +5,9 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    "./shell": "./src/surfaces/Shell.tsx",
-    "./catalog": "./src/surfaces/CatalogLayout.tsx",
+    ".": "./src/index.ts",
+    "./shell": "./src/Base.tsx",
+    "./catalog": "./src/CatalogExplorer.tsx",
     "./components/*": "./src/components/*.tsx"
   },
   "peerDependencies": {
