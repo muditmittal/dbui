@@ -4,20 +4,32 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
-/** @standard Page Header (planned P1 — Title + breadcrumb + actions) */
+/**
+ * @standard Page Header
+ * @guideline Use at top of every content surface — breadcrumb + title bar + tabs
+ * @constraint One per content surface
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3247-5956
+ */
 
 /**
- * PageHeader — top bar of a content page inside the platform shell.
- * Maps to Figma .PageTitle + .PageActions composition.
+ * PageHeader — vertical stack: breadcrumb row, title bar, tabs.
+ * Figma: Page Header — px-4 py-2, gap-2 (8px between sections).
  *
  * Usage:
  *   <PageHeader>
- *     <PageHeaderBack onClick={goBack} />
- *     <PageHeaderTitle>My Table</PageHeaderTitle>
- *     <PageHeaderActions>
- *       <Button variant="ghost" size="icon-md"><Pencil /></Button>
- *       <Button>Save</Button>
- *     </PageHeaderActions>
+ *     <Breadcrumb>...</Breadcrumb>
+ *     <PageHeaderTitleBar>
+ *       <PageHeaderTitle>
+ *         <PageHeaderBack onClick={goBack} />
+ *         <Notebook className="size-5 text-muted-foreground" />
+ *         <h1>Page Title</h1>
+ *       </PageHeaderTitle>
+ *       <PageHeaderActions>
+ *         <Button variant="outline">Label</Button>
+ *         <Button>Create</Button>
+ *       </PageHeaderActions>
+ *     </PageHeaderTitleBar>
+ *     <Tabs>...</Tabs>
  *   </PageHeader>
  */
 function PageHeader({
@@ -28,7 +40,27 @@ function PageHeader({
     <div
       data-slot="page-header"
       className={cn(
-        "flex items-center gap-2 px-4 py-3",
+        "flex flex-col gap-2 px-4 py-2",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * PageHeaderTitleBar — horizontal row: title left + actions right.
+ * Figma: .TitleBar — flex justify-between.
+ */
+function PageHeaderTitleBar({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="page-header-title-bar"
+      className={cn(
+        "flex items-center justify-between",
         className
       )}
       {...props}
@@ -78,18 +110,19 @@ function PageHeaderBack({
 }
 
 /**
- * PageHeaderTitle — page title text.
- * Maps to Figma .PageTitle "Page Title" text node (Title 2: 22px/28px semibold).
+ * PageHeaderTitle — left side of title bar: icon + title + copy/star buttons.
+ * Figma: .PageTitle — flex gap-2 items-center.
  */
 function PageHeaderTitle({
   className,
   ...props
-}: React.ComponentProps<"h1">) {
+}: React.ComponentProps<"div">) {
   return (
-    <h1
+    <div
       data-slot="page-header-title"
       className={cn(
-        "flex-1 truncate text-[22px] leading-[28px] font-semibold text-foreground",
+        "flex items-center gap-2",
+        "[&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -118,4 +151,4 @@ function PageHeaderActions({
   )
 }
 
-export { PageHeader, PageHeaderBack, PageHeaderTitle, PageHeaderActions }
+export { PageHeader, PageHeaderTitleBar, PageHeaderBack, PageHeaderTitle, PageHeaderActions }

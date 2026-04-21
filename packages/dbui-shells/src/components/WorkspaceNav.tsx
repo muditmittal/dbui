@@ -88,9 +88,9 @@ export function WorkspaceNav({
   }
 
   return (
-    <nav className="w-[180px] shrink-0 overflow-y-auto">
+    <nav className="w-[180px] shrink-0 overflow-y-auto px-3">
       {/* New button */}
-      <button className="flex h-10 w-full items-center gap-2 rounded-lg border border-[#FDE2E8] bg-[#F5ECEE] pl-3 pr-4 text-[13px] font-medium text-[#11171C]">
+      <button className="flex h-10 w-full items-center gap-2 border border-[#FDE2E8] bg-[#F5ECEE] pl-3 pr-4 text-[13px] font-medium text-[#11171C]" style={{ borderRadius: 6 }}>
         <Plus className="size-4 text-[#E65B77]" />
         New
       </button>

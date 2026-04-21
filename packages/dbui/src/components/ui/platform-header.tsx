@@ -4,7 +4,10 @@ import * as React from "react"
 
 import { cn } from "../../lib/utils"
 
-/** @standard Platform Header (composition) */
+/**
+ * @standard Platform Header
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3225-4233
+ */
 
 /**
  * PlatformHeader — the 48px top bar of the Databricks platform shell.
