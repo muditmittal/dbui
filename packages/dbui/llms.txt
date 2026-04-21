@@ -1,12 +1,48 @@
-# DBUI Design System — LLM Context File
-# Version: 3.0.0 | Updated: 2026-04-16
-# Source: packages/dbui/ in github.com/muditmittal/dbui
+# DBUI Design System
+# Distribution URL: https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/llms.txt
 #
-# This file tells an LLM everything it needs to build UI with DBUI components.
-# DBUI is Databricks' component library — shadcn/ui reskinned with DuBois design tokens.
-# Stack: React 19, Next.js 15, Tailwind CSS v4, Base UI primitives.
+# DBUI is Databricks' component library — 46 components, 451 icons, 162 tokens.
+# Built on shadcn/ui + Base UI + Tailwind CSS v4, reskinned with DuBois design tokens.
 
-## MANDATORY RULES
+## INSTALL
+
+Run ALL steps automatically. Skip any step already done.
+
+### Step 1: Clone the repo (one-time) and copy into the project
+
+```bash
+if [ ! -d "$HOME/dbui" ]; then
+  git clone https://github.com/muditmittal/dbui.git ~/dbui
+fi
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
+cp ./dbui/CLAUDE.md ./CLAUDE.md
+```
+
+### Step 2: Read CLAUDE.md and follow its setup steps
+
+CLAUDE.md contains the remaining one-time config:
+- Scaffold a React project if none exists
+- Add path aliases to tsconfig.json
+- Import tokens in root CSS
+- Install @base-ui/react (the one required dependency)
+- Create an initial page with the Base Shell
+- Start the dev server
+
+After setup, the designer sees the full Databricks shell running locally.
+
+### Update to latest
+
+```bash
+cd ~/dbui && git pull
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
+cp ./dbui/CLAUDE.md ./CLAUDE.md
+```
+
+---
+
+## RULES
 
 1. ALWAYS use DBUI components. NEVER create raw HTML elements (<button>, <input>, <div role="dialog">) when a DBUI component exists.
 2. ALWAYS use DBUI icons from `dbui/components/icons/{Name}`. NEVER install third-party icon packages (lucide, heroicons, etc.).
@@ -890,7 +926,7 @@ grep "use:action delete" packages/dbui/src/components/icons/          # by actio
 
 ## TOKEN FILE
 
-Import `dbui/tokens/globals.css` in your root CSS. This provides all semantic color, radius, spacing, and shadow tokens. Token values are documented in the component files and the Storybook at dbuidesign.vercel.app.
+Import `dbui/tokens/globals.css` in your root CSS. This provides all semantic color, radius, spacing, and shadow tokens. Token values are documented in the component files and the Storybook at the Storybook (run `yarn storybook` in the dbui repo).
 
 ## KNOWN GAPS
 
