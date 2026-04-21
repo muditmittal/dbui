@@ -230,7 +230,7 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
       className={cn(
-        "flex min-h-8 flex-wrap items-center gap-1 rounded-sm border border-input bg-transparent bg-clip-padding px-2 py-1 text-[13px] shadow-xs transition-colors focus-within:border-ring has-aria-invalid:border-destructive has-data-[slot=combobox-chip]:px-2 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
+        "flex min-h-8 flex-wrap items-center gap-1 rounded-sm border border-input bg-transparent bg-clip-padding px-3 py-1 text-[13px] shadow-xs transition-colors focus-within:border-ring has-aria-invalid:border-destructive has-data-[slot=combobox-chip]:px-1.5 has-data-[slot=combobox-chip]:py-0.5 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
         className
       )}
       {...props}
@@ -258,7 +258,7 @@ function ComboboxChip({
       {children}
       {showRemove && (
         <ComboboxPrimitive.ChipRemove
-          className="-ml-0.5 inline-flex items-center justify-center opacity-50 hover:opacity-100 [&_svg]:size-3"
+          className="inline-flex items-center justify-center opacity-50 hover:opacity-100 [&_svg]:size-3"
           data-slot="combobox-chip-remove"
         >
           <Close className="pointer-events-none" />
