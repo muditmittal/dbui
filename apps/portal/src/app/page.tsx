@@ -78,69 +78,59 @@ export default function Home() {
             <em>Install in one command.</em>
           </h2>
           <p className="text-[19px] mb-12 max-w-[520px] leading-[1.5]" style={{ fontFamily: serif, color: t.textMuted }}>
-            Clone the repo and drop one file into your project. Claude does the rest.
+            Install once, reference from every project. Update with one command.
           </p>
 
           <div className="space-y-6">
             <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>1. Clone the repo</p>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>First time — install once</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`git clone https://github.com/muditmittal/dbui.git
-cd dbui && yarn install`}
+{`# Clone to a shared location (one-time)
+git clone https://github.com/muditmittal/dbui.git ~/dbui
+cd ~/dbui && yarn install`}
                 </code>
               </div>
             </div>
 
             <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>2. Copy CLAUDE.md into your project</p>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>For each new project</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`# Copy the AI rules file to your project root
-cp packages/dbui/CLAUDE.md /path/to/your/project/
+{`# Copy AI rules into your project root
+cp ~/dbui/packages/dbui/CLAUDE.md ./
 
-# That's it — Claude now knows every DBUI component,
-# token, and pattern. Drop a screenshot and it builds
-# with the right components automatically.`}
+# Add path aliases to your tsconfig or bundler:
+#   "dbui/*"        → "~/dbui/packages/dbui/src/*"
+#   "dbui-shells/*" → "~/dbui/packages/dbui-shells/src/*"`}
                 </code>
               </div>
             </div>
 
             <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>3. Every page starts with the Base Shell</p>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>Start building</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
 {`import { Shell } from "dbui-shells/surfaces/Shell"
+import { Button, ButtonIcon } from "dbui/components/ui/button"
+import { Search } from "dbui/components/icons/Search"
 
-// Platform header, sidebar nav, content surface — all included
 <Shell defaultActive="catalog">
-  <YourPageContent />
+  <Button variant="outline">
+    <ButtonIcon><Search /></ButtonIcon>
+    Search catalogs
+  </Button>
 </Shell>`}
                 </code>
               </div>
             </div>
 
             <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>4. Build with DBUI components</p>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>Update to latest</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`import { Button, ButtonIcon } from "dbui/components/ui/button"
-import { Search } from "dbui/components/icons/Search"
-
-<Button variant="outline">
-  <ButtonIcon><Search /></ButtonIcon>
-  Search catalogs
-</Button>`}
-                </code>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>5. Preview in Storybook</p>
-              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
-                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`# See all components, shells, and compositions
-yarn workspace portal storybook`}
+{`cd ~/dbui && git pull && yarn install
+# All projects pick up changes immediately.`}
                 </code>
               </div>
             </div>
