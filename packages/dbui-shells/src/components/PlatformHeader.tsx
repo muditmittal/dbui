@@ -100,7 +100,7 @@ export function PlatformHeader({
       {/* Search — clickable trigger styled as input, grows to fill, shrinks first, max 640px */}
       <div className="relative flex-1 h-8" style={{ flexShrink: 3, minWidth: 400, maxWidth: 640 }}>
         <button
-          className={`w-full flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors ${searchOpen ? 'invisible' : ''}`}
+          className={`w-full flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors ${searchOpen ? 'opacity-0 pointer-events-none' : ''}`}
           onClick={() => setSearchOpen(true)}
         >
           <Search className="size-4 shrink-0 text-muted-foreground" />
