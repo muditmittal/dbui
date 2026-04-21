@@ -78,8 +78,39 @@ export default function Home() {
             <em>Install in one command.</em>
           </h2>
           <p className="text-[19px] mb-12 max-w-[520px] leading-[1.5]" style={{ fontFamily: serif, color: t.textMuted }}>
-            Install once, reference from every project. Update with one command.
+            Give one URL to your AI assistant. It handles the rest.
           </p>
+
+          {/* LLM Setup URL */}
+          <div className="mb-12 rounded-xl p-6" style={{
+            background: `linear-gradient(135deg, rgba(66,153,224,0.06) 0%, rgba(202,66,224,0.06) 50%, rgba(255,95,70,0.06) 100%)`,
+            border: `1px solid rgba(66,153,224,0.2)`,
+          }}>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[15px] font-semibold">Give this URL to your LLM</span>
+              <span className="text-[11px] rounded px-1.5 py-0.5" style={{ background: t.surface, color: t.textSubtle }}>1-shot install or update</span>
+            </div>
+            <p className="text-[13px] mb-3 leading-[20px]" style={{ color: t.textMuted }}>
+              Copy and paste into Claude, Cursor, or any AI assistant. It reads the instructions, installs DBUI, and starts building — no manual steps.
+            </p>
+            <div className="rounded-md px-4 py-3 flex items-center justify-between" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
+              <code className="text-[14px]" style={{ fontFamily: mono, color: t.primary }}>
+                https://dbuidesign.vercel.app/llms-full.txt
+              </code>
+              <button
+                className="text-[12px] px-3 py-1 rounded"
+                style={{ fontFamily: mono, background: t.border, color: t.textMuted }}
+                onClick={() => {navigator.clipboard.writeText("https://dbuidesign.vercel.app/llms-full.txt")}}
+              >
+                Copy
+              </button>
+            </div>
+            <p className="text-[12px] mt-2" style={{ color: t.textSubtle }}>
+              Works for first-time install and updates. Contains setup + component rules + full API.
+            </p>
+          </div>
+
+          <h3 className="text-[15px] font-semibold mb-4" style={{ color: t.textSubtle }}>Or set up manually:</h3>
 
           <div className="space-y-6">
             <div>

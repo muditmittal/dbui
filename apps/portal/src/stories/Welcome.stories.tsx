@@ -248,10 +248,34 @@ export const Default: StoryObj = {
       {/* Live Base Shell preview */}
       <LivePreview />
 
+      {/* LLM Setup URL */}
+      <div style={{
+        marginBottom: 40,
+        background: "linear-gradient(135deg, rgba(66,153,224,0.06) 0%, rgba(202,66,224,0.06) 50%, rgba(255,95,70,0.06) 100%)",
+        border: "1px solid rgba(66,153,224,0.2)",
+        borderRadius: 12,
+        padding: "24px 28px",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+          <span style={{ fontSize: 14, fontWeight: 600 }}>Give this URL to your LLM</span>
+          <span style={{ fontSize: 11, color: "#6F6F6F", background: "#F0F0F0", borderRadius: 4, padding: "2px 6px" }}>1-shot install or update</span>
+        </div>
+        <p style={{ fontSize: 13, color: "#6F6F6F", margin: "0 0 12px 0", lineHeight: "20px" }}>
+          Copy this URL and paste it into Claude, Cursor, or any AI assistant. It will read the instructions and set up DBUI in your project automatically — no manual steps needed.
+        </p>
+        <CodeBlock
+          code="https://dbuidesign.vercel.app/llms-full.txt"
+          copyText="https://dbuidesign.vercel.app/llms-full.txt"
+        />
+        <div style={{ fontSize: 12, color: "#8C8C8C", marginTop: 8 }}>
+          Works for both first-time install and updates. Contains setup instructions + all component rules + full API reference.
+        </div>
+      </div>
+
       {/* Install */}
       <div style={{ marginBottom: 40 }}>
         <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 18, fontWeight: 600, margin: "0 0 16px 0" }}>
-          Getting Started
+          Getting Started (manual)
         </h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {steps.map((step) => (
