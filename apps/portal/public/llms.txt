@@ -10,81 +10,92 @@ DBUI is the Databricks component library — 46 components, 451 icons, 162 desig
 
 ---
 
-## First-time install
+## Install
 
-Run these steps automatically inside the target project directory.
+Run ALL steps automatically. Check before each step — skip if already done.
 
-### 1. Clone the DBUI repo (if not already present)
+### Step 0: Ensure a React project exists
+
+```bash
+# Skip if package.json already exists
+if [ ! -f "package.json" ]; then
+  npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-eslint --no-import-alias
+fi
+```
+
+### Step 1: Clone the repo and copy packages into the project
 
 ```bash
 if [ ! -d "$HOME/dbui" ]; then
   git clone https://github.com/muditmittal/dbui.git ~/dbui
-  cd ~/dbui && yarn install
 fi
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 ```
 
-### 2. Copy the AI rules file
+### Step 2: Copy the AI rules file
 
 ```bash
-cp ~/dbui/packages/dbui/CLAUDE.md ./CLAUDE.md
+cp ./dbui/CLAUDE.md ./CLAUDE.md
 ```
 
-This teaches Claude to use ONLY DBUI components — correct imports, semantic tokens, proper icons. Read this file for the full rules.
+Read CLAUDE.md — it teaches the LLM every component, token, and pattern.
 
-### 3. Set up path aliases
+### Step 3: Configure the project (skip parts already done)
 
-Add to the project's `tsconfig.json`:
-
+Add path aliases to `tsconfig.json` (skip if `dbui/*` already exists):
 ```json
 {
   "compilerOptions": {
     "paths": {
-      "dbui/*": ["~/dbui/packages/dbui/src/*"],
-      "dbui-shells/*": ["~/dbui/packages/dbui-shells/src/*"]
+      "dbui/*": ["./dbui/src/*"],
+      "dbui-shells/*": ["./dbui-shells/src/*"]
     }
   }
 }
 ```
 
-If using webpack/vite/next, also add resolve aliases in the bundler config pointing to the same paths.
-
-### 4. Import CSS tokens
-
-In the project's root CSS file:
-
+Import tokens in root CSS (skip if already imported):
 ```css
 @import "tailwindcss";
-@import "dbui/tokens/globals.css";
+@import "./dbui/src/tokens/globals.css";
 ```
 
-### 5. Install peer dependencies
-
+Install peer deps (skip already-installed):
 ```bash
-npm install react react-dom @base-ui/react class-variance-authority clsx tailwindcss
+npm install @base-ui/react class-variance-authority clsx
 ```
 
-### 6. Start building — every page starts with Base
+### Step 4: Create initial page and start dev server
+
+If no page renders the Base Shell yet, create one (e.g., app/page.tsx for Next.js):
 
 ```tsx
 import { Base } from "dbui-shells"
 
-<Base defaultActive="catalog">
-  <YourPageContent />
-</Base>
+export default function Home() {
+  return (
+    <Base defaultActive="catalog">
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+        <p style={{ fontSize: 13, color: "#6F6F6F" }}>DBUI is installed. Start building here.</p>
+      </div>
+    </Base>
+  )
+}
 ```
 
-The Base shell provides: Platform Header, sidebar nav, content surface, and Genie assistant panel.
+Then: `npm run dev`
 
 ---
 
 ## Update an existing install
 
 ```bash
-cd ~/dbui && git pull && yarn install
-cp ~/dbui/packages/dbui/CLAUDE.md ./CLAUDE.md
+cd ~/dbui && git pull
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
+cp ./dbui/CLAUDE.md ./CLAUDE.md
 ```
-
-All projects referencing ~/dbui pick up component changes immediately. Re-copy CLAUDE.md in case rules changed.
 
 ---
 

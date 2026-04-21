@@ -1,55 +1,58 @@
 # DBUI — AI Rules
 
-> When you open a new project and see this file, follow the setup instructions first, then build with DBUI.
+> When you open a project and see this file, DBUI is already installed. The `dbui/` and `dbui-shells/` folders contain all components, icons, and tokens. Start building immediately.
 
-## First-Time Project Setup (do this automatically)
+## First-Time Setup (LLM does this automatically — skip any step already done)
 
-If this project does NOT yet have DBUI configured (no `dbui` path alias in tsconfig, no globals.css import), run these steps:
+Check each condition before acting. Do not recreate anything that already exists.
 
-1. **Check if the DBUI repo exists locally:**
+1. **If no `package.json` exists**, scaffold a React project first:
    ```bash
-   ls ~/dbui/packages/dbui/src/components/ui/button.tsx
-   ```
-   If it doesn't exist, clone it:
-   ```bash
-   git clone https://github.com/muditmittal/dbui.git ~/dbui
-   cd ~/dbui && yarn install
+   npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-eslint --no-import-alias
    ```
 
-2. **Add path aliases** to this project's `tsconfig.json`:
+2. **If `tsconfig.json` doesn't have `dbui/*` paths**, add them:
    ```json
    {
      "compilerOptions": {
        "paths": {
-         "dbui/*": ["../../../dbui/packages/dbui/src/*"],
-         "dbui-shells/*": ["../../../dbui/packages/dbui-shells/src/*"]
+         "dbui/*": ["./dbui/src/*"],
+         "dbui-shells/*": ["./dbui-shells/src/*"]
        }
      }
    }
    ```
-   Adjust the relative path based on this project's location relative to `~/dbui`. If using webpack/vite/next, also add resolve aliases in the bundler config:
-   ```js
-   // next.config.ts or webpack config
-   resolve: {
-     alias: {
-       "dbui": path.resolve(os.homedir(), "dbui/packages/dbui/src"),
-       "dbui-shells": path.resolve(os.homedir(), "dbui/packages/dbui-shells/src"),
-     }
+   If using webpack/vite, also add equivalent resolve aliases in bundler config.
+
+3. **If root CSS doesn't import DBUI tokens**, add:
+   ```css
+   @import "tailwindcss";
+   @import "./dbui/src/tokens/globals.css";
+   ```
+
+4. **Install missing peer dependencies:**
+   ```bash
+   npm install @base-ui/react class-variance-authority clsx
+   ```
+
+5. **If no page renders the Base Shell yet**, create one (e.g., `app/page.tsx`):
+   ```tsx
+   import { Base } from "dbui-shells"
+
+   export default function Home() {
+     return (
+       <Base defaultActive="catalog">
+         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+           <p style={{ fontSize: 13, color: "#6F6F6F" }}>DBUI is installed. Start building here.</p>
+         </div>
+       </Base>
+     )
    }
    ```
 
-3. **Import tokens** in the project's root CSS file:
-   ```css
-   @import "tailwindcss";
-   @import "dbui/tokens/globals.css";
-   ```
+6. **Start the dev server:** `npm run dev`
 
-4. **Install peer dependencies** if not already present:
-   ```bash
-   npm install react react-dom @base-ui/react class-variance-authority clsx tailwindcss
-   ```
-
-Once configured, all `dbui/...` and `dbui-shells/...` imports will resolve. You only need to do this once per project.
+After setup, the designer should see the full Databricks shell running locally.
 
 ---
 
@@ -66,13 +69,13 @@ Once configured, all `dbui/...` and `dbui-shells/...` imports will resolve. You 
 
 | When you need to... | Read this file |
 |---------------------|----------------|
-| Find the right component | `~/dbui/packages/dbui/llms.txt` → "When to use what" table |
-| Compose a page layout | `~/dbui/packages/dbui/llms.txt` → "COMPOSITION RECIPES" |
-| Find an icon by concept | `~/dbui/icon-index.csv` — canonical 449-icon index |
-| Get entity icons for trees | `~/dbui/packages/dbui/src/components/icons/entity-icons.ts` |
-| Check component props | `~/dbui/packages/dbui/llms.txt` → "Key props for stateful components" |
-| See token values | `~/dbui/packages/dbui/src/tokens/globals.css` |
-| Browse all components | Run `cd ~/dbui && yarn workspace portal storybook` |
+| Find the right component | `./dbui/llms.txt` → "When to use what" table |
+| Compose a page layout | `./dbui/llms.txt` → "COMPOSITION RECIPES" |
+| Find an icon by concept | `./dbui/docs/icon-index.md` — canonical 449-icon index |
+| Get entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` |
+| Check component props | `./dbui/llms.txt` → "Key props for stateful components" |
+| See token values | `./dbui/src/tokens/globals.css` |
+| Browse all components | https://dbuidesign.vercel.app |
 
 ## Every page starts with the Base Shell
 
@@ -234,7 +237,7 @@ import { dataEntityIcons } from "dbui/components/icons/entity-icons"
 CSS setup (one-time in root stylesheet):
 ```css
 @import "tailwindcss";
-@import "dbui/tokens/globals.css";
+@import "./dbui/src/tokens/globals.css";
 ```
 
 ## Updating DBUI
@@ -242,5 +245,5 @@ CSS setup (one-time in root stylesheet):
 To get the latest components, tokens, and icons:
 ```bash
 cd ~/dbui && git pull
+cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 ```
-All projects referencing `~/dbui` pick up changes immediately.

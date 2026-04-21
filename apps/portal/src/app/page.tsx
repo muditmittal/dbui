@@ -91,7 +91,7 @@ export default function Home() {
               <span className="text-[11px] rounded px-1.5 py-0.5" style={{ background: t.surface, color: t.textSubtle }}>1-shot install or update</span>
             </div>
             <p className="text-[13px] mb-3 leading-[20px]" style={{ color: t.textMuted }}>
-              Copy and paste into Claude, Cursor, or any AI assistant. It reads the instructions, installs DBUI, and starts building — no manual steps.
+              Paste into Claude, Cursor, or any AI assistant. It clones the repo, copies the packages, and configures your project automatically.
             </p>
             <div className="rounded-md px-4 py-3 flex items-center justify-between" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
               <code className="text-[14px]" style={{ fontFamily: mono, color: t.primary }}>
@@ -114,54 +114,25 @@ export default function Home() {
 
           <div className="space-y-6">
             <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>First time — install once</p>
+              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>Clone + copy (2 commands)</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`# Clone to a shared location (one-time)
-git clone https://github.com/muditmittal/dbui.git ~/dbui
-cd ~/dbui && yarn install`}
+{`git clone https://github.com/muditmittal/dbui.git ~/dbui
+cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells && cp ./dbui/CLAUDE.md ./CLAUDE.md`}
                 </code>
               </div>
-            </div>
-
-            <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>For each new project</p>
-              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
-                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`# Copy AI rules into your project root
-cp ~/dbui/packages/dbui/CLAUDE.md ./
-
-# Add path aliases to your tsconfig or bundler:
-#   "dbui/*"        → "~/dbui/packages/dbui/src/*"
-#   "dbui-shells/*" → "~/dbui/packages/dbui-shells/src/*"`}
-                </code>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>Start building</p>
-              <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
-                <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`import { Base } from "dbui-shells"
-import { Button, ButtonIcon } from "dbui/components/ui/button"
-import { Search } from "dbui/components/icons/Search"
-
-<Base defaultActive="catalog">
-  <Button variant="outline">
-    <ButtonIcon><Search /></ButtonIcon>
-    Search catalogs
-  </Button>
-</Base>`}
-                </code>
-              </div>
+              <p className="text-[12px] mt-2" style={{ color: t.textSubtle }}>
+                Your LLM reads CLAUDE.md and handles path aliases, CSS tokens, peer deps, and dev server automatically.
+              </p>
             </div>
 
             <div>
               <p className="text-[11px] tracking-wide uppercase mb-2" style={{ fontFamily: mono, color: t.textSubtle }}>Update to latest</p>
               <div className="rounded-md px-4 py-3" style={{ background: t.surface, border: `1px solid ${t.border}` }}>
                 <code className="text-[14px] block whitespace-pre" style={{ fontFamily: mono, color: t.textMuted }}>
-{`cd ~/dbui && git pull && yarn install
-# All projects pick up changes immediately.`}
+{`cd ~/dbui && git pull
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells`}
                 </code>
               </div>
             </div>
