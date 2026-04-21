@@ -3,6 +3,5 @@
   "buildCommand": "cd apps/portal && npx storybook build -o ../../storybook-static",
   "outputDirectory": "storybook-static",
   "installCommand": "yarn install",
-  "framework": null,
-  "nodeVersion": "20.x"
+  "framework": null
 }
