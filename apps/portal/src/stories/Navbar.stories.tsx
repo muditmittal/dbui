@@ -5,7 +5,9 @@ import { Home } from "@/components/icons/Home"
 import { Gear } from "@/components/icons/Gear"
 import { Plus } from "@/components/icons/Plus"
 import { useState } from "react"
+import { ComponentMeta } from "./components/ComponentMeta"
 import { ProductionMap } from "./components/ProductionMap"
+import componentSource from "dbui/components/ui/navbar?raw"
 
 const meta: Meta = {
   title: "Content/Navbar",
@@ -55,6 +57,7 @@ export const Default: StoryObj = {
             </NavbarSection>
           </Navbar>
         </div>
+        <ComponentMeta source={componentSource} componentKey="navbar" />
         <ProductionMap componentKey="navbar" />
       </>
     )

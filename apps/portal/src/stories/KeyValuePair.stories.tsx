@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { KeyValuePair, KeyValueRow, KeyValueKey, KeyValueValue, KeyValueValueEnd } from "dbui/components/ui/key-value-pair"
+import { ComponentMeta } from "./components/ComponentMeta"
 import { ProductionMap } from "./components/ProductionMap"
+import componentSource from "dbui/components/ui/key-value-pair?raw"
 
 const meta: Meta = {
   title: "Content/KeyValuePair",
@@ -40,6 +42,7 @@ export const Playground: StoryObj = {
           }
         </KeyValueRow>
       </KeyValuePair>
+      <ComponentMeta source={componentSource} componentKey="key-value-pair" />
       <ProductionMap componentKey="key-value-pair" />
     </>
   ),
