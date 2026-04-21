@@ -22,8 +22,7 @@
 DBUI is a shadcn-based component library reskinned with Databricks DuBois design tokens. It bridges Figma ↔ Code via Code Connect and is documented at a portal site.
 
 - **Figma file:** `OftbSQf85jOPln9RhSEhVv` (DBUI-Design-System)
-- **Portal:** dbuidesign.vercel.app
-- **Architecture:** Yarn monorepo — see `ARCHITECTURE.md`
+- **Architecture:** Two packages — `packages/dbui` (components/icons/tokens) + `packages/dbui-shells` (page shells)
 
 ### Shell-First Rule
 

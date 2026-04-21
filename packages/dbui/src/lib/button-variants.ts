@@ -1,4 +1,4 @@
-import { cva } from "class-variance-authority"
+import { cva } from "./cva"
 
 /**
  * Shared button variant styles for DBUI.

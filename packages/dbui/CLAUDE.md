@@ -30,9 +30,9 @@ Check each condition before acting. Do not recreate anything that already exists
    @import "./dbui/src/tokens/globals.css";
    ```
 
-4. **Install missing peer dependencies:**
+4. **Install the one required dependency:**
    ```bash
-   npm install @base-ui/react class-variance-authority clsx
+   npm install @base-ui/react
    ```
 
 5. **If no page renders the Base Shell yet**, create one (e.g., `app/page.tsx`):

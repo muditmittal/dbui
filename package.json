@@ -15,12 +15,7 @@
     "./llms.txt": "./packages/dbui/llms.txt"
   },
   "dependencies": {
-    "@base-ui/react": "^1.3.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "sonner": "^2.0.7",
-    "tailwind-merge": "^3.5.0",
-    "vaul": "^1.1.2"
+    "@base-ui/react": "^1.3.0"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -28,23 +23,11 @@
     "tailwindcss": ">=4"
   },
   "workspaces": [
-    "apps/*",
     "packages/*"
   ],
-  "scripts": {
-    "dev": "yarn workspace portal dev",
-    "dev:dbui": "yarn workspace dbui dev",
-    "build": "yarn workspace portal build",
-    "build:dbui": "yarn workspace dbui build",
-    "lint": "yarn workspace portal lint",
-    "preview": "concurrently -n portal,storybook -c blue,magenta \"yarn dev\" \"yarn workspace portal storybook\""
-  },
+  "scripts": {},
   "packageManager": "yarn@4.13.0",
-  "engines": {
-    "node": "20.x"
-  },
   "devDependencies": {
-    "@figma/code-connect": "^1.4.2",
-    "concurrently": "^9.2.1"
+    "@figma/code-connect": "^1.4.2"
   }
 }
