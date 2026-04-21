@@ -32,7 +32,7 @@ export const Playground: StoryObj = {
       </Accordion>
 
 
-      <ComponentMeta source={componentSource} />
+      <ComponentMeta source={componentSource} componentKey="accordion" />
 
       <ProductionMap componentKey="accordion" />
     </div>

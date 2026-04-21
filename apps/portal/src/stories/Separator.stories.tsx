@@ -57,7 +57,7 @@ export const Playground: StoryObj = {
       </table>
 
 
-      <ComponentMeta source={componentSource} />
+      <ComponentMeta source={componentSource} componentKey="separator" />
 
       <ProductionMap componentKey="separator" />
     </div>

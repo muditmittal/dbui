@@ -169,7 +169,7 @@ export const Playground: StoryObj = {
         </div>
       </div>
 
-      <ComponentMeta source={componentSource} />
+      <ComponentMeta source={componentSource} componentKey="data-tree" />
     </div>
   ),
 }

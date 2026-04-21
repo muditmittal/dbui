@@ -42,7 +42,7 @@ export const Playground: StoryObj = {
       </div>
 
 
-      <ComponentMeta source={componentSource} />
+      <ComponentMeta source={componentSource} componentKey="pagination" />
 
       <ProductionMap componentKey="pagination" />
     </div>

@@ -44,7 +44,7 @@ export const Playground: StoryObj = {
       </AlertDialog>
 
 
-      <ComponentMeta source={componentSource} />
+      <ComponentMeta source={componentSource} componentKey="alert-dialog" />
 
       <ProductionMap componentKey="alert-dialog" />
     </div>

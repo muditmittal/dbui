@@ -29,7 +29,7 @@ export const Playground: StoryObj = {
       </Breadcrumb>
 
 
-      <ComponentMeta source={componentSource} />
+      <ComponentMeta source={componentSource} componentKey="breadcrumb" />
 
       <ProductionMap componentKey="breadcrumb" />
     </div>
