@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../components/**/*.tsx";
+@source "../../../../apps/portal/src/**/*.tsx";
 /* shadcn/tailwind.css — inlined because the npm package exports a virtual path
    that doesn't resolve during Vercel production builds */
 @theme inline {
