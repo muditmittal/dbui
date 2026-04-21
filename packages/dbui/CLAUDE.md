@@ -1,35 +1,102 @@
 # DBUI — AI Rules
 
-> Copy this file to your project root. Claude will follow these rules automatically.
+> When you open a new project and see this file, follow the setup instructions first, then build with DBUI.
+
+## First-Time Project Setup (do this automatically)
+
+If this project does NOT yet have DBUI configured (no `dbui` path alias in tsconfig, no globals.css import), run these steps:
+
+1. **Check if the DBUI repo exists locally:**
+   ```bash
+   ls ~/dbui/packages/dbui/src/components/ui/button.tsx
+   ```
+   If it doesn't exist, clone it:
+   ```bash
+   git clone https://github.com/muditmittal/dbui.git ~/dbui
+   cd ~/dbui && yarn install
+   ```
+
+2. **Add path aliases** to this project's `tsconfig.json`:
+   ```json
+   {
+     "compilerOptions": {
+       "paths": {
+         "dbui/*": ["../../../dbui/packages/dbui/src/*"],
+         "dbui-shells/*": ["../../../dbui/packages/dbui-shells/src/*"]
+       }
+     }
+   }
+   ```
+   Adjust the relative path based on this project's location relative to `~/dbui`. If using webpack/vite/next, also add resolve aliases in the bundler config:
+   ```js
+   // next.config.ts or webpack config
+   resolve: {
+     alias: {
+       "dbui": path.resolve(os.homedir(), "dbui/packages/dbui/src"),
+       "dbui-shells": path.resolve(os.homedir(), "dbui/packages/dbui-shells/src"),
+     }
+   }
+   ```
+
+3. **Import tokens** in the project's root CSS file:
+   ```css
+   @import "tailwindcss";
+   @import "dbui/tokens/globals.css";
+   ```
+
+4. **Install peer dependencies** if not already present:
+   ```bash
+   npm install react react-dom @base-ui/react class-variance-authority clsx tailwindcss
+   ```
+
+Once configured, all `dbui/...` and `dbui-shells/...` imports will resolve. You only need to do this once per project.
+
+---
 
 ## Rules
 
 1. **DBUI components only.** Never use raw `<button>`, `<input>`, `<div role="dialog">`. If it exists in DBUI, use it.
-2. **DBUI icons only.** Never install lucide, heroicons, or any icon package. All 456 icons are in `@muditmittal/dbui/components/icons/`.
+2. **DBUI icons only.** Never install lucide, heroicons, or any icon package. All 451 icons are in `dbui/components/icons/`.
 3. **Semantic tokens only.** Never hardcode hex colors or pixel values. Use `bg-primary`, `text-foreground`, `rounded-sm`, etc.
 4. **Base UI `render` prop.** Not Radix `asChild`. Example: `<DialogTrigger render={<Button />}>Open</DialogTrigger>`
-5. **Tree for hierarchies.** Never fake trees with nested divs or NavbarItems. Use `<DataTreeView>` or `<FileTreeView>`.
+5. **Shell first.** Every page starts with `<Shell>`. Never build header/nav/chrome from scratch.
+6. **Tree for hierarchies.** Never fake trees with nested divs or NavbarItems. Use `<DataTreeView>` or `<FileTreeView>`.
 
 ## Where to look
 
 | When you need to... | Read this file |
 |---------------------|----------------|
-| Find the right component | `node_modules/@muditmittal/dbui/llms.txt` → "When to use what" table |
-| Compose a page layout | `node_modules/@muditmittal/dbui/llms.txt` → "COMPOSITION RECIPES" |
-| Find an icon by concept | `grep "use:object concept" node_modules/@muditmittal/dbui/src/components/icons/` |
-| Get entity icons for trees | `node_modules/@muditmittal/dbui/src/components/icons/entity-icons.ts` |
-| Check component props | `node_modules/@muditmittal/dbui/llms.txt` → "Key props for stateful components" |
-| See token values | `node_modules/@muditmittal/dbui/src/tokens/globals.css` |
+| Find the right component | `~/dbui/packages/dbui/llms.txt` → "When to use what" table |
+| Compose a page layout | `~/dbui/packages/dbui/llms.txt` → "COMPOSITION RECIPES" |
+| Find an icon by concept | `~/dbui/icon-index.csv` — canonical 449-icon index |
+| Get entity icons for trees | `~/dbui/packages/dbui/src/components/icons/entity-icons.ts` |
+| Check component props | `~/dbui/packages/dbui/llms.txt` → "Key props for stateful components" |
+| See token values | `~/dbui/packages/dbui/src/tokens/globals.css` |
+| Browse all components | Run `cd ~/dbui && yarn workspace portal storybook` |
+
+## Every page starts with the Base Shell
+
+```tsx
+import { Shell } from "dbui-shells/surfaces/Shell"
+
+<Shell defaultActive="catalog">
+  {/* Your page content goes here */}
+</Shell>
+```
+
+The Shell provides:
+- **Platform Header** (48px) — sidebar toggle, search, workspace switcher, Genie Code, app switcher, profile menu
+- **Platform Nav** (180px sidebar) — collapsible, with all nav items grouped by category
+- **Content Surface** — white rounded panel where your page lives
+- **Assistant Panel** — Genie Code side panel, toggled from header
 
 ## Databricks page anatomy
-
-Every Databricks product page follows this structure. Use it as your starting point.
 
 ```
 ┌─────────────────────────────────────────────────────┐
 │ Platform Header (48px, bg-muted)                    │
 ├────────┬────────────────────────────────────────────┤
-│Sidebar │ Content surface (bg-background, rounded-lg)│
+│Sidebar │ Content surface (bg-background, rounded-md)│
 │180px   │                                            │
 │bg-muted│ ┌─ Breadcrumb ──────────────────────────┐  │
 │        │ │ Catalog > main > users                │  │
@@ -102,16 +169,16 @@ These are the #1 mistakes from our audit. Internalize them.
 **Menu item consistency — if one has an icon, ALL must:**
 ```tsx
 <DropdownMenuContent align="start">
-  <DropdownMenuItem><DropdownMenuItemIcon><Pencil /></...>Edit</DropdownMenuItem>
-  <DropdownMenuItem><DropdownMenuItemIcon><Copy /></...>Duplicate</DropdownMenuItem>
+  <DropdownMenuItem><DropdownMenuItemIcon><Pencil /></DropdownMenuItemIcon>Edit</DropdownMenuItem>
+  <DropdownMenuItem><DropdownMenuItemIcon><Copy /></DropdownMenuItemIcon>Duplicate</DropdownMenuItem>
   <DropdownMenuSeparator />
-  <DropdownMenuItem variant="destructive"><DropdownMenuItemIcon><Trash /></...>Delete</DropdownMenuItem>
+  <DropdownMenuItem variant="destructive"><DropdownMenuItemIcon><Trash /></DropdownMenuItemIcon>Delete</DropdownMenuItem>
 </DropdownMenuContent>
 ```
 
 **Tree nodes always need entity icons — never guess:**
 ```tsx
-import { dataEntityIcons } from "@muditmittal/dbui/components/icons/entity-icons"
+import { dataEntityIcons } from "dbui/components/icons/entity-icons"
 
 const nodes = [
   { id: "cat1", label: "main", icon: dataEntityIcons.catalogWorkspace, children: [
@@ -145,25 +212,35 @@ const nodes = [
 ## Before you commit
 
 Scan your output for these violations:
-- `from "lucide-react"` → replace with `from "@muditmittal/dbui/components/icons/..."`
+- `from "lucide-react"` → replace with `from "dbui/components/icons/..."`
 - `bg-[#` or `text-[#` → replace with semantic token
 - `<button` or `<input` (lowercase) → replace with DBUI component
 - `asChild` → replace with `render={<Component />}`
 - Nested `<div>` faking a tree → replace with `DataTreeView`
 - `text-sm` → replace with `text-[13px]` (Databricks base is 13px, not 14px)
 - `font-medium` → replace with `font-semibold` (Databricks uses 600, not 500)
+- No `<Shell>` wrapper → add it, every page needs it
 
 ## Import pattern
 
 ```tsx
-import { Button, ButtonIcon, ButtonChevron } from "@muditmittal/dbui/components/ui/button"
-import { DataTreeView } from "@muditmittal/dbui/components/ui/data-tree"
-import { Search } from "@muditmittal/dbui/components/icons/Search"
-import { dataEntityIcons } from "@muditmittal/dbui/components/icons/entity-icons"
+import { Shell } from "dbui-shells/surfaces/Shell"
+import { Button, ButtonIcon, ButtonChevron } from "dbui/components/ui/button"
+import { DataTreeView } from "dbui/components/ui/data-tree"
+import { Search } from "dbui/components/icons/Search"
+import { dataEntityIcons } from "dbui/components/icons/entity-icons"
 ```
 
 CSS setup (one-time in root stylesheet):
 ```css
 @import "tailwindcss";
-@import "@muditmittal/dbui/tokens/globals.css";
+@import "dbui/tokens/globals.css";
 ```
+
+## Updating DBUI
+
+To get the latest components, tokens, and icons:
+```bash
+cd ~/dbui && git pull
+```
+All projects referencing `~/dbui` pick up changes immediately.
