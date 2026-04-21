@@ -23,9 +23,12 @@
     "tailwindcss": ">=4"
   },
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "storybook": "yarn workspace portal storybook"
+  },
   "packageManager": "yarn@4.13.0",
   "devDependencies": {
     "@figma/code-connect": "^1.4.2"
