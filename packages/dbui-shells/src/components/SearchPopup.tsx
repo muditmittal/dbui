@@ -41,7 +41,7 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
       <div className="fixed inset-0 z-40" onClick={onClose} />
       {/* Popup anchored to search input width */}
       <div
-        className="absolute left-0 right-0 top-full z-50 mt-1 bg-background border border-border rounded-md shadow-lg overflow-hidden"
+        className="absolute left-0 right-0 top-0 z-50 bg-background border border-border rounded-md shadow-lg overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input */}

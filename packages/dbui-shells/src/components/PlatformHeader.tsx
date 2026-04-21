@@ -99,14 +99,16 @@ export function PlatformHeader({
 
       {/* Search — clickable trigger styled as input, grows to fill, shrinks first, max 640px */}
       <div className="relative flex-1" style={{ flexShrink: 3, minWidth: 400, maxWidth: 640 }}>
-        <button
-          className="w-full flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors"
-          onClick={() => setSearchOpen(true)}
-        >
-          <Search className="size-4 shrink-0 text-muted-foreground" />
-          <span className="flex-1 min-w-0 truncate text-left text-muted-foreground">Search data, notebooks, recents, and more...</span>
-          <kbd className="shrink-0 text-[12px] text-muted-foreground">⌘ + P</kbd>
-        </button>
+        {!searchOpen && (
+          <button
+            className="w-full flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors"
+            onClick={() => setSearchOpen(true)}
+          >
+            <Search className="size-4 shrink-0 text-muted-foreground" />
+            <span className="flex-1 min-w-0 truncate text-left text-muted-foreground">Search data, notebooks, recents, and more...</span>
+            <kbd className="shrink-0 text-[12px] text-muted-foreground">⌘ + P</kbd>
+          </button>
+        )}
         {searchOpen && <SearchPopup onClose={() => setSearchOpen(false)} />}
       </div>
 
