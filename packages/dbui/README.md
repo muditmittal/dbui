@@ -1,75 +1,55 @@
 # DBUI
 
-Databricks component library built on [shadcn/ui](https://ui.shadcn.com), reskinned with DuBois design tokens.
+Databricks component library — 46 components, 451 icons, 162 design tokens. Built on shadcn/ui + Base UI + Tailwind CSS v4, reskinned with DuBois design tokens.
 
 ## Install
 
-```bash
-# Components + icons + tokens
-yarn add @muditmittal/dbui
+Give this URL to your LLM (Claude, Cursor, etc.):
 
-# Or with page shells (Catalog Explorer, Platform Shell)
-yarn add @muditmittal/dbui-shells
+```
+https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/llms.txt
 ```
 
-## Setup
+It will clone the repo, copy `dbui/` and `dbui-shells/` into your project, configure everything, and start the dev server. You'll see the Databricks Base Shell running locally.
 
-DBUI requires Tailwind CSS v4. In your root CSS file:
-
-```css
-@import "tailwindcss";
-@import "@muditmittal/dbui/tokens/globals.css";
-```
-
-## AI-Assisted Development
-
-DBUI ships with a `CLAUDE.md` that teaches Claude (and other LLMs) to use ONLY DBUI components.
-
-**Setup (one-time):**
+### Manual install
 
 ```bash
-cp node_modules/@muditmittal/dbui/CLAUDE.md .
+git clone https://github.com/muditmittal/dbui.git ~/dbui
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
+cp ./dbui/CLAUDE.md ./CLAUDE.md
+npm install @base-ui/react
 ```
 
-That's it. Every conversation with Claude in your project will now follow DBUI rules — correct components, semantic tokens, proper icons. No special commands needed, just chat normally.
+Then read `CLAUDE.md` for path alias and CSS token setup.
 
-Give Claude a screenshot and it will generate code using exclusively DBUI components.
+### Update
 
-## Usage
-
-```tsx
-import { Button, ButtonIcon } from "@muditmittal/dbui/components/ui/button"
-import { Input } from "@muditmittal/dbui/components/ui/input"
-import { Dialog, DialogTrigger, DialogContent } from "@muditmittal/dbui/components/ui/dialog"
-import { Search } from "@muditmittal/dbui/components/icons/Search"
+```bash
+cd ~/dbui && git pull
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 ```
 
 ## What's included
 
 - **46 components** — Buttons, inputs, selects, dialogs, menus, tables, trees, and more
-- **456 icons** — Full Databricks DuBois icon set
+- **451 icons** — Full Databricks DuBois icon set
 - **162 design tokens** — Colors, radius, spacing, shadows, typography
 - **Dark mode** — All tokens support light and dark modes
-- **Page shells** — Platform Shell, Catalog Explorer (via `@muditmittal/dbui-shells`)
-- **Claude Code skill** — Enforced component-only code generation
-- **LLM context file** — `llms.txt` with component API, composition recipes, and decision tables
-
-## LLM Context (manual)
-
-If you're not using Claude Code, feed `llms.txt` into your AI tool:
-
-```bash
-cat node_modules/@muditmittal/dbui/llms.txt | pbcopy
-```
+- **Page shells** — Base Shell, Catalog Explorer (via `dbui-shells`)
+- **Figma Code Connect** — 55 component mappings
+- **AI rules** — CLAUDE.md enforces component-only code generation
 
 ## Storybook
 
-Browse all components at [dbuidesign.vercel.app](https://dbuidesign.vercel.app)
+Browse all components locally:
+
+```bash
+cd ~/dbui && yarn install && yarn storybook
+```
 
 ## Feedback
 
-Open an issue at [github.com/muditmittal/dbui](https://github.com/muditmittal/dbui/issues)
-
-## Stack
-
-React 19 · Next.js 15 · Tailwind CSS v4 · Base UI · CVA
+Open an issue at [github.com/muditmittal/dbui/issues](https://github.com/muditmittal/dbui/issues)
