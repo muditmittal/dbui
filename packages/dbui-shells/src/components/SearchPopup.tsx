@@ -36,11 +36,12 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
   const [activeFilter, setActiveFilter] = useState<string | null>(null)
 
   return (
-    <div className="fixed inset-0 z-50" onClick={onClose}>
-      {/* No backdrop dimming — transparent overlay just catches clicks */}
+    <>
+      {/* Transparent overlay to catch outside clicks */}
+      <div className="fixed inset-0 z-40" onClick={onClose} />
+      {/* Popup anchored to search input width */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 bg-background border border-border rounded-md shadow-lg overflow-hidden"
-        style={{ top: 4, width: "100%", minWidth: 400, maxWidth: 640 }}
+        className="absolute left-0 right-0 top-full z-50 mt-1 bg-background border border-border rounded-md shadow-lg overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input */}
@@ -114,6 +115,6 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
