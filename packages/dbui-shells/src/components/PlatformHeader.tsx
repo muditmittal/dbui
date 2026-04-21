@@ -101,7 +101,7 @@ export function PlatformHeader({
       {/* Search — clickable trigger styled as input, grows to fill, shrinks first, max 640px */}
       <button
         className="flex-1 flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors"
-        style={{ flexShrink: 3, minWidth: 120, maxWidth: 640 }}
+        style={{ flexShrink: 3, minWidth: 400, maxWidth: 640 }}
         onClick={() => setSearchOpen(true)}
       >
         <Search className="size-4 shrink-0 text-muted-foreground" />
