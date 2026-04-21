@@ -1,7 +1,7 @@
 {
   "codeConnect": {
     "include": [
-      "packages/dbui/src/figma/*.figma.tsx",
+      "figma/*.figma.tsx",
       "packages/dbui/src/components/ui/*.tsx",
       "packages/dbui/src/components/icons/*.tsx"
     ],
