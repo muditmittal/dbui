@@ -17,7 +17,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
   return (
     <div className="flex w-[360px] shrink-0 flex-col border border-border bg-background rounded-md" style={{ marginLeft: 4 }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-2 h-10">
+      <div className="flex items-center justify-between pl-2 pr-1 h-10">
         <div className="flex items-center gap-1">
           <span className="text-[13px] font-semibold text-foreground">Genie Code</span>
         </div>

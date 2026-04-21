@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Base } from "dbui-shells/shell"
 import { CatalogLayout } from "dbui-shells/catalog"
 import React from "react"
-import { FacetedFilter } from "../components/FacetedFilter"
+import { FacetedFilter } from "dbui-shells/components/FacetedFilter"
 import { treeSections, catalogItems } from "./catalog-data"
 import { CatalogUserHome } from "@/components/icons/CatalogUserHome"
 

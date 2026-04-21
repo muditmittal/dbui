@@ -22,7 +22,7 @@ const config: StorybookConfig = {
         ...config.resolve.alias,
         "dbui": path.resolve(__dirname, "../../../packages/dbui/src"),
         "dbui-shells/shell": path.resolve(__dirname, "../../../packages/dbui-shells/src/Base.tsx"),
-        "dbui-shells/catalog": path.resolve(__dirname, "../../../packages/dbui-shells/src/surfaces/CatalogLayout.tsx"),
+        "dbui-shells/catalog": path.resolve(__dirname, "../../../packages/dbui-shells/src/CatalogExplorer.tsx"),
         "dbui-shells/components": path.resolve(__dirname, "../../../packages/dbui-shells/src/components"),
         "dbui-shells": path.resolve(__dirname, "../../../packages/dbui-shells/src"),
         "@/components/icons": path.resolve(__dirname, "../../../packages/dbui/src/components/icons"),

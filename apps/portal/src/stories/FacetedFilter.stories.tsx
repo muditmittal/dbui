@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { FacetedFilter } from "./components/FacetedFilter"
+import { FacetedFilter } from "dbui-shells/components/FacetedFilter"
 
 const meta: Meta = {
   title: "Compositions/Faceted Filter",
