@@ -200,6 +200,40 @@ export const Default: StoryObj = {
       {/* Live Base Shell preview */}
       <LivePreview />
 
+      {/* Navigation buttons */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 40 }}>
+        {[
+          { label: "Tokens", path: "/?path=/story/tokens--default" },
+          { label: "Icons", path: "/?path=/story/icons--default" },
+          { label: "Components", path: "/?path=/story/actions-button--playground" },
+          { label: "Shells", path: "/?path=/story/surfaces-shell--playground" },
+          { label: "GitHub", path: "https://github.com/muditmittal/dbui", external: true },
+        ].map((item) => (
+          <a
+            key={item.label}
+            href={item.path}
+            target={item.external ? "_blank" : "_self"}
+            rel={item.external ? "noopener" : undefined}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+              padding: "6px 14px",
+              fontSize: 13,
+              fontWeight: 500,
+              color: item.external ? "#6F6F6F" : "#2272B4",
+              background: item.external ? "transparent" : "#F0F8FF",
+              border: `1px solid ${item.external ? "#EBEBEB" : "#D7EDFE"}`,
+              borderRadius: 6,
+              textDecoration: "none",
+              transition: "all 0.15s",
+            }}
+          >
+            {item.label}{item.external ? " ↗" : ""}
+          </a>
+        ))}
+      </div>
+
       {/* LLM Setup URL */}
       <div style={{
         marginBottom: 40,
@@ -238,39 +272,6 @@ export const Default: StoryObj = {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Stats */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 40 }}>
-        {[
-          { number: "46", label: "Components" },
-          { number: "451", label: "Icons" },
-          { number: "162", label: "Tokens" },
-          { number: "8", label: "Text Styles" },
-        ].map((stat) => (
-          <div key={stat.label} style={{ background: "#F7F7F7", borderRadius: 8, padding: 16 }}>
-            <div style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 28, fontWeight: 600, color: "#2272B4", lineHeight: 1 }}>{stat.number}</div>
-            <div style={{ fontSize: 12, color: "#6F6F6F", marginTop: 4 }}>{stat.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Sections */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 40 }}>
-        {[
-          { title: "Actions", desc: "Buttons, icon buttons, split buttons, toggles, and segment controls.", list: "Button · IconButton · SplitButton · Toggle · SegmentControl" },
-          { title: "Controls", desc: "Form inputs, selects, comboboxes, checkboxes, radios, switches, and sliders.", list: "Input · Select · Combobox · Checkbox · Radio · Switch · Slider" },
-          { title: "Content", desc: "Data display components: tables, tags, badges, avatars, status indicators.", list: "Table · Tag · Badge · Avatar · Status · Card · Tabs" },
-          { title: "Overlays", desc: "Popovers, dialogs, drawers, dropdown menus, tooltips, and toasts.", list: "Dialog · DropdownMenu · Tooltip · Popover · Drawer · Toast" },
-          { title: "Shells", desc: "Base Shell with Platform Header, sidebar nav, content surface, and Assistant Panel.", list: "Shell · PlatformHeader · PlatformNav · AssistantPanel" },
-          { title: "Foundations", desc: "Design tokens (colors, radius, spacing, shadows) and the full icon set.", list: "Tokens · Icons (451) · Typography" },
-        ].map((section) => (
-          <div key={section.title} style={{ border: "1px solid #EBEBEB", borderRadius: 8, padding: 20 }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 6px 0" }}>{section.title}</h3>
-            <p style={{ fontSize: 13, lineHeight: "20px", color: "#6F6F6F", margin: 0 }}>{section.desc}</p>
-            <div style={{ fontSize: 12, color: "#8C8C8C", marginTop: 8 }}>{section.list}</div>
-          </div>
-        ))}
       </div>
 
       {/* Footer */}
