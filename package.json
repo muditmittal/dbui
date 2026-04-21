@@ -27,7 +27,7 @@
     "packages/*"
   ],
   "scripts": {
-    "storybook": "yarn workspace portal storybook"
+    "storybook": "yarn workspace storybook storybook"
   },
   "packageManager": "yarn@4.13.0",
   "devDependencies": {
