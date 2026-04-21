@@ -115,12 +115,12 @@ export function PlatformHeader({
       {/* Right — switcher shrinks SECOND (flex-shrink:1), actions never shrink */}
       <div className="flex items-center gap-1" style={{ flexShrink: 1, minWidth: 160 }}>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger render={
             <button className="flex items-center gap-1 min-w-[56px] min-h-8 rounded-sm px-2 text-[13px] text-foreground hover:bg-hover active:bg-press transition-colors overflow-hidden">
               <span className="min-w-0 truncate">{warehouseLabel}</span>
               <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
             </button>
-          </DropdownMenuTrigger>
+          } />
           <DropdownMenuContent align="end" style={{ width: 340, borderRadius: 8 }}>
             {/* Search */}
             <div className="px-2 pb-2">
@@ -170,11 +170,11 @@ export function PlatformHeader({
             </svg>
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger render={
               <Button variant="ghost" size="icon-md" aria-label="Apps">
                 <App />
               </Button>
-            </DropdownMenuTrigger>
+            } />
             <DropdownMenuContent align="end" style={{ width: 320, padding: 12, gap: 12, borderRadius: 4 }}>
               {[
                 { icon: <ProductLakehouse />, title: "Lakehouse", desc: "Analytics & AI on large-scale data" },
@@ -200,13 +200,13 @@ export function PlatformHeader({
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger render={
               <Button variant="ghost" size="icon-md" aria-label="Profile menu">
                 <span className="flex size-6 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground">
                   {avatarInitial}
                 </span>
               </Button>
-            </DropdownMenuTrigger>
+            } />
             <DropdownMenuContent align="end" style={{ width: 280 }}>
               {/* User info */}
               <div className="px-3 py-2">
