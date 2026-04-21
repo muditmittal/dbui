@@ -1,27 +1,27 @@
 import React, { useState } from "react"
 import { Navbar, NavbarSection, NavbarSectionHeader, NavbarItem, NavbarItemIcon } from "dbui/components/ui/navbar"
-import { Plus } from "dbui/components/icons/Plus"
-import { Clock } from "dbui/components/icons/Clock"
-import { Folder } from "dbui/components/icons/Folder"
-import { Data } from "dbui/components/icons/Data"
-import { Workflows } from "dbui/components/icons/Workflows"
-import { Cloud } from "dbui/components/icons/Cloud"
-import { Storefront } from "dbui/components/icons/Storefront"
-import { QueryEditor } from "dbui/components/icons/QueryEditor"
-import { Query } from "dbui/components/icons/Query"
-import { Dashboard } from "dbui/components/icons/Dashboard"
-import { SparkleRectangle } from "dbui/components/icons/SparkleRectangle"
-import { Notification } from "dbui/components/icons/Notification"
-import { History } from "dbui/components/icons/History"
-import { CloudDatabase } from "dbui/components/icons/CloudDatabase"
-import { Checklist } from "dbui/components/icons/Checklist"
-import { Ingestion } from "dbui/components/icons/Ingestion"
-import { Pipeline } from "dbui/components/icons/Pipeline"
-import { Robot } from "dbui/components/icons/Robot"
-import { Beaker } from "dbui/components/icons/Beaker"
-import { Layer } from "dbui/components/icons/Layer"
-import { Models } from "dbui/components/icons/Models"
-import { CloudModel } from "dbui/components/icons/CloudModel"
+import { Plus } from "@/components/icons/Plus"
+import { Clock } from "@/components/icons/Clock"
+import { Folder } from "@/components/icons/Folder"
+import { Data } from "@/components/icons/Data"
+import { Workflows } from "@/components/icons/Workflows"
+import { Cloud } from "@/components/icons/Cloud"
+import { Storefront } from "@/components/icons/Storefront"
+import { QueryEditor } from "@/components/icons/QueryEditor"
+import { Query } from "@/components/icons/Query"
+import { Dashboard } from "@/components/icons/Dashboard"
+import { SparkleRectangle } from "@/components/icons/SparkleRectangle"
+import { Notification } from "@/components/icons/Notification"
+import { History } from "@/components/icons/History"
+import { CloudDatabase } from "@/components/icons/CloudDatabase"
+import { Checklist } from "@/components/icons/Checklist"
+import { Ingestion } from "@/components/icons/Ingestion"
+import { Pipeline } from "@/components/icons/Pipeline"
+import { Robot } from "@/components/icons/Robot"
+import { Beaker } from "@/components/icons/Beaker"
+import { Layer } from "@/components/icons/Layer"
+import { Models } from "@/components/icons/Models"
+import { CloudModel } from "@/components/icons/CloudModel"
 
 type NavDef = { id: string; label: string; icon: React.ComponentType<any> }
 
@@ -58,29 +58,13 @@ const mlItems: NavDef[] = [
   { id: "serving", label: "Serving", icon: CloudModel },
 ]
 
-/**
- * WorkspaceNav — the default Databricks sidebar with all product nav items.
- * Customizable: pass `defaultActive` to highlight a different nav item.
- * Pass `onNavigate` to handle route changes.
- */
-export function WorkspaceNav({
-  defaultActive = "catalog",
-  onNavigate,
-}: {
-  defaultActive?: string
-  onNavigate?: (id: string) => void
-}) {
+export function PlatformNav({ defaultActive = "catalog" }: { defaultActive?: string }) {
   const [active, setActive] = useState(defaultActive)
-
-  const handleClick = (id: string) => {
-    setActive(id)
-    onNavigate?.(id)
-  }
 
   const renderItem = (item: NavDef) => {
     const Icon = item.icon
     return (
-      <NavbarItem key={item.id} active={active === item.id} onClick={() => handleClick(item.id)}>
+      <NavbarItem key={item.id} active={active === item.id} onClick={() => setActive(item.id)}>
         <NavbarItemIcon><Icon /></NavbarItemIcon>
         {item.label}
       </NavbarItem>
@@ -88,9 +72,9 @@ export function WorkspaceNav({
   }
 
   return (
-    <nav className="w-[180px] shrink-0 overflow-y-auto px-3">
-      {/* New button */}
-      <button className="flex h-10 w-full items-center gap-2 border border-[#FDE2E8] bg-[#F5ECEE] pl-3 pr-4 text-[13px] font-medium text-[#11171C]" style={{ borderRadius: 6 }}>
+    <nav className="w-[180px] shrink-0 overflow-y-auto">
+      {/* New button — Figma: #FFF5F7 base + 4% black overlay, border #FDE2E8, radius 8, pad 10/12/10/16, gap 8, plus icon #E65B77 */}
+      <button className="flex h-10 w-full items-center gap-2 rounded-lg border border-[#FDE2E8] bg-[#F5ECEE] pl-3 pr-4 text-[13px] font-medium text-[#11171C]">
         <Plus className="size-4 text-[#E65B77]" />
         New
       </button>

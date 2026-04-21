@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { PlatformHeader } from "./components/PlatformHeader"
-import { WorkspaceNav } from "./components/WorkspaceNav"
+import { PlatformNav } from "./components/PlatformNav"
 import { AssistantPanel } from "./components/AssistantPanel"
 
 /**
@@ -31,7 +31,7 @@ export function Base({
   children: React.ReactNode
   /** Which nav item is active */
   defaultActive?: string
-  /** Custom sidebar content — replaces default WorkspaceNav */
+  /** Custom sidebar content — replaces default PlatformNav */
   sidebar?: React.ReactNode
   /** Start with sidebar collapsed */
   sidebarCollapsed?: boolean
@@ -60,7 +60,7 @@ export function Base({
       <div className="flex flex-1 min-h-0 pb-2 pr-2">
         {/* Sidebar — collapsible */}
         {!isCollapsed && (
-          sidebar ?? <WorkspaceNav defaultActive={defaultActive} onNavigate={onNavigate} />
+          sidebar ?? <PlatformNav defaultActive={defaultActive} onNavigate={onNavigate} />
         )}
 
         {/* Content surface — no gap when nav open, 8px when collapsed */}
