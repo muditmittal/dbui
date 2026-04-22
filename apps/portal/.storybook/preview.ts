@@ -17,7 +17,7 @@ const preview: Preview = {
       storySort: {
         method: "alphabetical",
         order: [
-          "Home",
+          "DBUI",
           "Icons",
           "Tokens",
           "Actions",
