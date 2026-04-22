@@ -249,8 +249,9 @@ export const Default: StoryObj = {
       {/* LLM Setup URL */}
       <div style={{
         marginBottom: 40,
-        background: "linear-gradient(135deg, rgba(66,153,224,0.06) 0%, rgba(202,66,224,0.06) 50%, rgba(255,95,70,0.06) 100%)",
-        border: "1px solid rgba(66,153,224,0.2)",
+        background: "transparent",
+        border: "2px solid transparent",
+        borderImage: "linear-gradient(90deg, #4299E0 24%, #CA42E0 47%, #FF5F46 76%) 1",
         borderRadius: 12,
         padding: "24px 28px",
       }}>
