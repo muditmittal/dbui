@@ -120,7 +120,7 @@ function LivePreview() {
       </div>
 
       {/* Scaled-down Base Shell */}
-      <div style={{ width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
+      <div style={{ width: "100%", height: 458, overflow: "hidden" }}>
         <div style={{
           width: 1440,
           height: 810,
