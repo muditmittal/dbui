@@ -204,11 +204,8 @@ export const Default: StoryObj = {
         </p>
       </div>
 
-      {/* Live Base Shell preview */}
-      <LivePreview />
-
       {/* Navigation buttons */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 40 }}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
         {[
           { label: "Tokens", storyId: "tokens--default" },
           { label: "Icons", storyId: "icons--default" },
@@ -245,6 +242,9 @@ export const Default: StoryObj = {
           </button>
         ))}
       </div>
+
+      {/* Live Base Shell preview */}
+      <LivePreview />
 
       {/* Getting Started */}
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 18, fontWeight: 600, margin: "0 0 16px 0" }}>
