@@ -84,10 +84,22 @@ function CodeBlock({ code, copyText }: { code: string; copyText?: string }) {
 /** Live Base Shell rendered scaled inside browser chrome.
  *  Uses CSS zoom (not transform) so portals/dropdowns scale with the shell. */
 function LivePreview() {
-  const ZOOM = 0.56
+  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [zoom, setZoom] = React.useState(0.56)
+
+  React.useEffect(() => {
+    const update = () => {
+      if (containerRef.current) {
+        setZoom(containerRef.current.offsetWidth / 1440)
+      }
+    }
+    update()
+    window.addEventListener("resize", update)
+    return () => window.removeEventListener("resize", update)
+  }, [])
   return (
-    <div style={{
-      width: "min(80vw, 1000px)",
+    <div ref={containerRef} style={{
+      width: "80vw",
       margin: "0 auto 40px",
       position: "relative",
       left: "50%",
@@ -125,8 +137,8 @@ function LivePreview() {
         </div>
       </div>
 
-      {/* Scaled Base Shell — zoom scales layout + portals together */}
-      <div style={{ zoom: ZOOM, width: "100%", height: 810 }}>
+      {/* Scaled Base Shell — zoom = container width / 1440, maintains 1440×960 ratio */}
+      <div style={{ zoom, width: 1440, height: 960 }}>
         <Base defaultActive="catalog">
           <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
             Content goes here — every product page starts with this shell.
