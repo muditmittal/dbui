@@ -70,7 +70,7 @@ const config: StorybookConfig = {
           loader: "postcss-loader",
           options: {
             postcssOptions: {
-              plugins: [["@tailwindcss/postcss", {}]],
+              plugins: [require("@tailwindcss/postcss")({ base: path.resolve(__dirname, "../../..") })],
             },
           },
         },
