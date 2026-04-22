@@ -120,11 +120,11 @@ function LivePreview() {
       </div>
 
       {/* Scaled-down Base Shell */}
-      <div style={{ width: 835, height: 452, overflow: "hidden" }}>
+      <div style={{ width: "100%", aspectRatio: "16/9", overflow: "hidden" }}>
         <div style={{
           width: 1440,
-          height: 820,
-          transform: "scale(0.58)",
+          height: 810,
+          transform: "scale(0.565)",
           transformOrigin: "top left",
         }}>
           <Base defaultActive="catalog">
