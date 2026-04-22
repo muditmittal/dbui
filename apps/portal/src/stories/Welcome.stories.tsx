@@ -82,7 +82,7 @@ function CodeBlock({ code, copyText }: { code: string; copyText?: string }) {
 }
 
 /** Live Base Shell rendered scaled inside browser chrome.
- *  Uses CSS zoom (not transform) so portals/dropdowns scale with the shell. */
+ *  CSS zoom scales layout dimensions naturally — no explicit height needed. */
 function LivePreview() {
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [zoom, setZoom] = React.useState(0.56)
@@ -97,6 +97,7 @@ function LivePreview() {
     window.addEventListener("resize", update)
     return () => window.removeEventListener("resize", update)
   }, [])
+
   return (
     <div ref={containerRef} style={{
       width: "80vw",
@@ -137,16 +138,18 @@ function LivePreview() {
         </div>
       </div>
 
-      {/* Scaled Base Shell — transform:scale shrinks the 1440×960 content, aspect-ratio sizes the wrapper */}
-      <div style={{ aspectRatio: "1440 / 960", width: "100%", overflow: "hidden", position: "relative" }}>
-        <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", width: 1440, height: 960, position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-          <div style={{ height: "100%", pointerEvents: "auto" }} onClickCapture={(e) => e.stopPropagation()} onMouseDownCapture={(e) => e.preventDefault()}>
-            <Base defaultActive="catalog">
-              <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
-                Content goes here — every product page starts with this shell.
-              </div>
-            </Base>
-          </div>
+      {/* Scaled Base Shell:
+           width:1440 + aspect-ratio 1440:960 → pre-zoom height = 960 (derived, not set).
+           zoom scales layout to containerWidth × containerWidth*960/1440.
+           [&>div]:!h-full overrides Base's h-screen to fill the derived height. */}
+      <style>{`#hero-shell > div { height: 100% !important; }`}</style>
+      <div style={{ zoom, width: 1440, aspectRatio: "1440 / 960", overflow: "hidden", pointerEvents: "none" }}>
+        <div id="hero-shell" style={{ height: "100%", pointerEvents: "auto" }} onClickCapture={(e) => e.stopPropagation()} onMouseDownCapture={(e) => e.preventDefault()}>
+          <Base defaultActive="catalog">
+            <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
+              Content goes here — every product page starts with this shell.
+            </div>
+          </Base>
         </div>
       </div>
     </div>
@@ -196,8 +199,8 @@ export const Default: StoryObj = {
       <div style={{ marginBottom: 32 }}>
         <img src={require("./components/dbui-logo.svg")} alt="DBUI" style={{ height: 64, marginBottom: 8 }} />
         <p style={{ fontSize: 15, lineHeight: "24px", color: "#6F6F6F", margin: 0 }}>
-          Modular Databricks components in Figma and code — built on shadcn/ui with DuBois tokens.
-          Drop into any project for fast prototyping, then hand off to production with pixel-perfect parity.
+          Databricks UI components paired in Figma and in code — built on top of shadcn.
+          Build prototypes with LLMs, then hand off to production with built-in features.
         </p>
       </div>
 
