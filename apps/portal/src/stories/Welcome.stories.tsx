@@ -208,10 +208,8 @@ export const Default: StoryObj = {
             onClick={() => {
               if (item.href) {
                 window.open(item.href, "_blank")
-              } else if (item.storyId) {
-                window.top?.postMessage(JSON.stringify({ key: "storybook-channel", event: { type: "setCurrentStory", args: [{ storyId: item.storyId }] } }), "*")
-                // Fallback: navigate parent
-                if (window.top) window.top.location.hash = `/story/${item.storyId}`
+              } else if (item.storyId && window.top) {
+                window.top.location.search = `?path=/story/${item.storyId}`
               }
             }}
             style={{
