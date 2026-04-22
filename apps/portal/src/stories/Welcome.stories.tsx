@@ -137,14 +137,16 @@ function LivePreview() {
         </div>
       </div>
 
-      {/* Scaled Base Shell — zoom = container width / 1440, maintains 1440×960 ratio */}
-      <div style={{ zoom, width: 1440, height: 960, pointerEvents: "none" }}>
-        <div style={{ pointerEvents: "auto" }} onClickCapture={(e) => e.stopPropagation()} onMouseDownCapture={(e) => e.preventDefault()}>
-          <Base defaultActive="catalog">
-            <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
-              Content goes here — every product page starts with this shell.
-            </div>
-          </Base>
+      {/* Scaled Base Shell — aspect-ratio locks the container, zoom scales content inside */}
+      <div style={{ aspectRatio: "1440 / 960", width: "100%", overflow: "hidden", position: "relative" }}>
+        <div style={{ zoom, width: 1440, height: 960, pointerEvents: "none", transformOrigin: "top left" }}>
+          <div style={{ height: "100%", pointerEvents: "auto" }} onClickCapture={(e) => e.stopPropagation()} onMouseDownCapture={(e) => e.preventDefault()}>
+            <Base defaultActive="catalog">
+              <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
+                Content goes here — every product page starts with this shell.
+              </div>
+            </Base>
+          </div>
         </div>
       </div>
     </div>
