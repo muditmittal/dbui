@@ -81,15 +81,19 @@ function CodeBlock({ code, copyText }: { code: string; copyText?: string }) {
   )
 }
 
-/** Live Base Shell rendered at 0.55 scale inside browser chrome */
+/** Live Base Shell rendered scaled inside browser chrome.
+ *  Uses CSS zoom (not transform) so portals/dropdowns scale with the shell. */
 function LivePreview() {
+  const ZOOM = 0.56
   return (
     <div style={{
+      width: "80vw",
+      maxWidth: 1000,
+      margin: "0 auto 40px",
       border: "1px solid #CBCBCB",
       borderRadius: 12,
       overflow: "hidden",
       boxShadow: "0 8px 40px rgba(0,0,0,0.08), 0 2px 16px rgba(0,0,0,0.04)",
-      marginBottom: 40,
     }}>
       {/* Browser toolbar */}
       <div style={{
@@ -119,20 +123,13 @@ function LivePreview() {
         </div>
       </div>
 
-      {/* Scaled-down Base Shell */}
-      <div style={{ width: "100%", height: 458, overflow: "hidden" }}>
-        <div style={{
-          width: 1440,
-          height: 810,
-          transform: "scale(0.565)",
-          transformOrigin: "top left",
-        }}>
-          <Base defaultActive="catalog">
-            <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
-              Content goes here — every product page starts with this shell.
-            </div>
-          </Base>
-        </div>
+      {/* Scaled Base Shell — zoom scales layout + portals together */}
+      <div style={{ zoom: ZOOM, width: "100%", height: 810 }}>
+        <Base defaultActive="catalog">
+          <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
+            Content goes here — every product page starts with this shell.
+          </div>
+        </Base>
       </div>
     </div>
   )
