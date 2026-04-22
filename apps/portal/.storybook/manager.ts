@@ -5,4 +5,10 @@ addons.setConfig({
     showRoots: true,
     collapsedRoots: [],
   },
+  initialActive: "canvas",
 })
+
+// Redirect bare URL to the DBUI landing page
+if (window.location.search === "" || window.location.search === "?") {
+  window.location.search = "?path=/story/dbui--default"
+}
