@@ -201,6 +201,7 @@ export const Default: StoryObj = {
           { label: "Icons", storyId: "icons--default" },
           { label: "Components", storyId: "actions-button--playground" },
           { label: "Shells", storyId: "shells-base--playground" },
+          { label: "Figma", href: "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv" },
           { label: "GitHub", href: "https://github.com/muditmittal/dbui" },
         ].map((item) => (
           <button
@@ -272,13 +273,6 @@ export const Default: StoryObj = {
         </div>
       </div>
 
-      {/* Footer */}
-      <div style={{ borderTop: "1px solid #EBEBEB", paddingTop: 24, fontSize: 12, color: "#8C8C8C", display: "flex", gap: 24 }}>
-        <span>DBUI v0.1.0</span>
-        <span>13px / 20px base · SF Pro Text</span>
-        <a href="https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv" target="_blank" rel="noopener" style={{ color: "#2272B4", textDecoration: "none" }}>Figma Source ↗</a>
-        <a href="https://github.com/muditmittal/dbui" target="_blank" rel="noopener" style={{ color: "#2272B4", textDecoration: "none" }}>GitHub ↗</a>
-      </div>
     </div>
   ),
 }
