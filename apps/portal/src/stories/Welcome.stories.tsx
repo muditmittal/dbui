@@ -144,7 +144,14 @@ function LivePreview() {
            [&>div]:!h-full overrides Base's h-screen to fill the derived height. */}
       <style>{`#hero-shell > div { height: 100% !important; }`}</style>
       <div style={{ zoom, width: 1440, aspectRatio: "1440 / 960", overflow: "hidden", pointerEvents: "none" }}>
-        <div id="hero-shell" style={{ height: "100%", pointerEvents: "auto" }} onClickCapture={(e) => e.stopPropagation()} onMouseDownCapture={(e) => e.preventDefault()}>
+        <div
+          id="hero-shell"
+          style={{ height: "100%", pointerEvents: "auto" }}
+          onClickCapture={(e) => { e.preventDefault(); e.stopPropagation() }}
+          onMouseDownCapture={(e) => { e.preventDefault(); e.stopPropagation() }}
+          onPointerDownCapture={(e) => { e.preventDefault(); e.stopPropagation() }}
+          onKeyDownCapture={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation() } }}
+        >
           <Base defaultActive="catalog">
             <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
               Content goes here — every product page starts with this shell.
