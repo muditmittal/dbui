@@ -184,16 +184,7 @@ export const Default: StoryObj = {
 
       {/* Header */}
       <div style={{ marginBottom: 32 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-          <img src={require("./components/dbui-logo.svg")} alt="DBUI" style={{ height: 64 }} />
-          <h1 style={{
-            fontFamily: "'SF Pro Display', -apple-system, sans-serif",
-            fontSize: 32, fontWeight: 600, lineHeight: "40px",
-            margin: 0,
-          }}>
-            Design System
-          </h1>
-        </div>
+        <img src={require("./components/dbui-logo.svg")} alt="DBUI" style={{ height: 64, marginBottom: 8 }} />
         <p style={{ fontSize: 15, lineHeight: "24px", color: "#6F6F6F", margin: 0 }}>
           Modular Databricks components in Figma and code — built on shadcn/ui with DuBois tokens.
           Drop into any project for fast prototyping, then hand off to production with pixel-perfect parity.
