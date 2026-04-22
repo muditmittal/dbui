@@ -197,17 +197,23 @@ export const Default: StoryObj = {
       {/* Navigation buttons */}
       <div style={{ display: "flex", gap: 8, marginBottom: 40 }}>
         {[
-          { label: "Tokens", path: "/?path=/story/tokens--default" },
-          { label: "Icons", path: "/?path=/story/icons--default" },
-          { label: "Components", path: "/?path=/story/actions-button--playground" },
-          { label: "Shells", path: "/?path=/story/surfaces-shell--playground" },
-          { label: "GitHub", path: "https://github.com/muditmittal/dbui", external: true },
+          { label: "Tokens", storyId: "tokens--default" },
+          { label: "Icons", storyId: "icons--default" },
+          { label: "Components", storyId: "actions-button--playground" },
+          { label: "Shells", storyId: "surfaces-shell--playground" },
+          { label: "GitHub", href: "https://github.com/muditmittal/dbui" },
         ].map((item) => (
-          <a
+          <button
             key={item.label}
-            href={item.path}
-            target={item.external ? "_blank" : "_self"}
-            rel={item.external ? "noopener" : undefined}
+            onClick={() => {
+              if (item.href) {
+                window.open(item.href, "_blank")
+              } else if (item.storyId) {
+                window.top?.postMessage(JSON.stringify({ key: "storybook-channel", event: { type: "setCurrentStory", args: [{ storyId: item.storyId }] } }), "*")
+                // Fallback: navigate parent
+                if (window.top) window.top.location.hash = `/story/${item.storyId}`
+              }
+            }}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -215,16 +221,16 @@ export const Default: StoryObj = {
               padding: "6px 14px",
               fontSize: 13,
               fontWeight: 500,
-              color: item.external ? "#6F6F6F" : "#2272B4",
-              background: item.external ? "transparent" : "#F0F8FF",
-              border: `1px solid ${item.external ? "#EBEBEB" : "#D7EDFE"}`,
+              color: item.href ? "#6F6F6F" : "#2272B4",
+              background: item.href ? "transparent" : "#F0F8FF",
+              border: `1px solid ${item.href ? "#EBEBEB" : "#D7EDFE"}`,
               borderRadius: 6,
-              textDecoration: "none",
-              transition: "all 0.15s",
+              cursor: "pointer",
+              fontFamily: "inherit",
             }}
           >
-            {item.label}{item.external ? " ↗" : ""}
-          </a>
+            {item.label}{item.href ? " ↗" : ""}
+          </button>
         ))}
       </div>
 
