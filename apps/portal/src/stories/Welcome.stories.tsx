@@ -153,27 +153,22 @@ function LivePreview() {
 
 const steps = [
   {
-    label: "That's it. Give the URL above to your LLM.",
-    code: `# Your LLM will automatically:
-# 1. Scaffold a React project (if needed)
-# 2. Clone the DBUI repo and copy packages in
-# 3. Configure path aliases, tokens, and deps
-# 4. Create a page with the Base Shell
-# 5. Start the dev server
-
-# Or do it manually in 2 commands:
-git clone https://github.com/muditmittal/dbui.git ~/dbui
-cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells && cp ./dbui/CLAUDE.md ./CLAUDE.md`,
+    label: "Install",
+    code: `git clone https://github.com/muditmittal/dbui.git ~/dbui
+cp -r ~/dbui/packages/dbui ./dbui
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
+cp ./dbui/CLAUDE.md ./CLAUDE.md`,
     copyText: `git clone https://github.com/muditmittal/dbui.git ~/dbui && cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells && cp ./dbui/CLAUDE.md ./CLAUDE.md`,
-    note: "The LLM reads CLAUDE.md and handles everything — path aliases, CSS tokens, peer deps, initial page, and dev server. You see the Base Shell running locally within a minute.",
+    note: "Clone once, then copy dbui and dbui-shells into your project. CLAUDE.md tells your AI editor how to configure everything.",
   },
   {
-    label: "Update to latest",
+    label: "Update",
     code: `cd ~/dbui && git pull
 cp -r ~/dbui/packages/dbui ./dbui
-cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
-    copyText: `cd ~/dbui && git pull && cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
-    note: "Pull latest, re-copy. That's it.",
+cp -r ~/dbui/packages/dbui-shells ./dbui-shells
+cp ./dbui/CLAUDE.md ./CLAUDE.md`,
+    copyText: `cd ~/dbui && git pull && cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells && cp ./dbui/CLAUDE.md ./CLAUDE.md`,
+    note: "Pull latest, re-copy both folders and CLAUDE.md.",
   },
 ]
 
@@ -246,9 +241,14 @@ export const Default: StoryObj = {
         ))}
       </div>
 
+      {/* Getting Started */}
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 18, fontWeight: 600, margin: "0 0 16px 0" }}>
+        Getting Started
+      </h2>
+
       {/* LLM Setup URL */}
       <div style={{
-        marginBottom: 40,
+        marginBottom: 16,
         background: "transparent",
         border: "2px solid transparent",
         borderRadius: 8,
@@ -273,11 +273,11 @@ export const Default: StoryObj = {
         </div>
       </div>
 
-      {/* Install */}
+      {/* Manual install */}
       <div style={{ marginBottom: 40 }}>
-        <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 18, fontWeight: 600, margin: "0 0 16px 0" }}>
-          Getting Started
-        </h2>
+        <h3 style={{ fontSize: 14, fontWeight: 600, color: "#6F6F6F", margin: "0 0 12px 0" }}>
+          Install manually
+        </h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {steps.map((step) => (
             <div key={step.label} style={{ border: "1px solid #EBEBEB", borderRadius: 8, padding: "16px 20px" }}>
