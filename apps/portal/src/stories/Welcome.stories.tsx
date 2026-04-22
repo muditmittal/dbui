@@ -200,7 +200,7 @@ export const Default: StoryObj = {
           { label: "Tokens", storyId: "tokens--default" },
           { label: "Icons", storyId: "icons--default" },
           { label: "Components", storyId: "actions-button--playground" },
-          { label: "Shells", storyId: "surfaces-shell--playground" },
+          { label: "Shells", storyId: "shells-base--playground" },
           { label: "GitHub", href: "https://github.com/muditmittal/dbui" },
         ].map((item) => (
           <button
@@ -241,18 +241,17 @@ export const Default: StoryObj = {
         padding: "24px 28px",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-          <span style={{ fontSize: 14, fontWeight: 600 }}>Give this URL to your LLM</span>
-          <span style={{ fontSize: 11, color: "#6F6F6F", background: "#F0F0F0", borderRadius: 4, padding: "2px 6px" }}>1-shot install or update</span>
+          <span style={{ fontSize: 14, fontWeight: 600 }}>Set up with one URL</span>
         </div>
         <p style={{ fontSize: 13, color: "#6F6F6F", margin: "0 0 12px 0", lineHeight: "20px" }}>
-          Paste this URL into Claude, Cursor, or any AI assistant. It will clone the repo, copy the packages, and configure your project automatically.
+          Paste into Claude, Cursor, or any AI coding tool. It installs DBUI, configures your project, and spins up the Base Shell — no manual steps.
         </p>
         <CodeBlock
           code="https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/llms.txt"
           copyText="https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/llms.txt"
         />
         <div style={{ fontSize: 12, color: "#8C8C8C", marginTop: 8 }}>
-          Works for both first-time install and updates. Contains setup instructions + all component rules + full API reference.
+          Works for fresh installs and updates. Includes setup, component rules, and usage patterns.
         </div>
       </div>
 
