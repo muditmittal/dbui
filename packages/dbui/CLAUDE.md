@@ -1,58 +1,101 @@
 # DBUI — AI Rules
 
-> When you open a project and see this file, DBUI is already installed. The `dbui/` and `dbui-shells/` folders contain all components, icons, and tokens. Start building immediately.
+> When you open a project and see this file, DBUI has been copied in. The `dbui/` and `dbui-shells/` folders contain all components, icons, and tokens. Follow the steps below, then start building.
 
-## First-Time Setup (LLM does this automatically — skip any step already done)
+## First-Time Setup — keep it LEAN
 
-Check each condition before acting. Do not recreate anything that already exists.
+Check each condition before acting. Skip anything already done. Do not recreate anything that exists.
 
-1. **If no `package.json` exists**, scaffold a React project first:
-   ```bash
-   npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-eslint --no-import-alias
-   ```
+### 0. Prerequisite — a minimal React + Tailwind v4 project
 
-2. **If `tsconfig.json` doesn't have `dbui/*` paths**, add them:
-   ```json
-   {
-     "compilerOptions": {
-       "paths": {
-         "dbui/*": ["./dbui/src/*"],
-         "dbui-shells/*": ["./dbui-shells/src/*"]
-       }
-     }
-   }
-   ```
-   If using webpack/vite, also add equivalent resolve aliases in bundler config.
+DBUI is UI code only. Do NOT scaffold a framework on behalf of the user.
 
-3. **If root CSS doesn't import DBUI tokens**, add:
-   ```css
-   @import "tailwindcss";
-   @import "./dbui/src/tokens/globals.css";
-   ```
+- **If `package.json` already exists** → skip to step 1.
+- **If there is no `package.json`** → STOP and ask the user. Suggest this one-liner, do not run heavier templates:
+  ```bash
+  npm create vite@latest . -- --template react-ts
+  npm install tailwindcss @tailwindcss/vite
+  ```
+  Only the user should decide whether to bootstrap. Never pick a framework for them.
 
-4. **Install the one required dependency:**
-   ```bash
-   npm install @base-ui/react
-   ```
+**DO NOT install any of these — they have nothing to do with DBUI and bloat the project:**
 
-5. **If no page renders the Base Shell yet**, create one (e.g., `app/page.tsx`):
-   ```tsx
-   import { Base } from "dbui-shells"
+- Heavyweight starters: `next-forge`, `create-t3-app`, `create-next-app --example …`, any Vercel template that auto-adds vendors
+- Security/auth: **Arcjet**, Clerk, Auth0, NextAuth, Descope, Supabase Auth
+- Databases / ORMs: Prisma, Drizzle, Convex, Supabase, Neon, Turso
+- State / data libs: Redux, Zustand, Jotai, React Query, SWR, Apollo
+- AI SDKs: Vercel AI SDK, LangChain, OpenAI SDK
+- Icon packs: lucide-react, @heroicons/react, react-icons (DBUI already has 451 icons)
+- UI libs: shadcn/ui CLI, Radix, Mantine, Chakra, MUI (DBUI replaces these)
 
-   export default function Home() {
-     return (
-       <Base defaultActive="catalog">
-         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-           <p style={{ fontSize: 13, color: "#6F6F6F" }}>DBUI is installed. Start building here.</p>
-         </div>
-       </Base>
-     )
-   }
-   ```
+If the user explicitly asks for one of these later, fine — but never add them proactively.
 
-6. **Start the dev server:** `npm run dev`
+### 1. Add path aliases
 
-After setup, the designer should see the full Databricks shell running locally.
+If `tsconfig.json` doesn't already map `dbui/*` and `dbui-shells/*`, add:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "dbui/*": ["./dbui/src/*"],
+      "dbui-shells/*": ["./dbui-shells/src/*"]
+    }
+  }
+}
+```
+
+If using Vite or Webpack, add the equivalent `resolve.alias` entries so the bundler resolves them too.
+
+### 2. Import DBUI tokens in root CSS
+
+```css
+@import "tailwindcss";
+@import "./dbui/src/tokens/globals.css";
+```
+
+### 3. Install the required deps — exactly these four, nothing else
+
+```bash
+npm install @base-ui/react class-variance-authority clsx tailwind-merge
+```
+
+That is the entire core. Tailwind v4 is a peer (already installed in step 0).
+
+### 4. Install optional peer deps ONLY when a specific component is imported
+
+Do not pre-install these. Add each one only when the user actually uses that component:
+
+| Component(s) | Extra package |
+|---|---|
+| `Sonner` / `toast()` | `sonner next-themes` |
+| `Drawer` | `vaul` |
+| `Resizable` / `ResizablePanel` | `react-resizable-panels` |
+| `Chart` / `chart.tsx` | `recharts` |
+
+### 5. Create the first page
+
+```tsx
+import { Base } from "dbui-shells"
+
+export default function Home() {
+  return (
+    <Base defaultActive="catalog">
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+        <p style={{ fontSize: 13, color: "#6F6F6F" }}>DBUI is installed. Start building here.</p>
+      </div>
+    </Base>
+  )
+}
+```
+
+### 6. Start the dev server
+
+```bash
+npm run dev
+```
+
+After setup the user should see the full Databricks shell running locally. If a step fails, surface the error — do NOT swap DBUI for a different library or pull in a different starter.
 
 ---
 

@@ -4,11 +4,32 @@
 # DBUI is Databricks' component library — 46 components, 451 icons, 162 tokens.
 # Built on shadcn/ui + Base UI + Tailwind CSS v4, reskinned with DuBois design tokens.
 
-## INSTALL
+## INSTALL — keep it LEAN
 
-Run ALL steps automatically. Skip any step already done.
+DBUI is UI code only. Do NOT pick a framework for the user. Do NOT install anything outside the list below.
 
-### Step 1: Clone the repo (one-time) and copy into the project
+### Prerequisite: a minimal React + Tailwind v4 project
+
+- If the project already has `package.json` with React and Tailwind v4, continue to Step 1.
+- If there is no `package.json`, STOP and ask the user. Suggest this minimal bootstrap, do NOT run it for them:
+  ```bash
+  npm create vite@latest . -- --template react-ts
+  npm install tailwindcss @tailwindcss/vite
+  ```
+
+### DO NOT install any of these. They are not DBUI dependencies.
+
+Heavyweight starters: `next-forge`, `create-t3-app`, `create-next-app --example …`, any Vercel template that auto-adds vendors.
+Security / auth: **Arcjet**, Clerk, Auth0, NextAuth, Descope, Supabase Auth.
+Databases / ORMs: Prisma, Drizzle, Convex, Supabase, Neon, Turso.
+State / data libs: Redux, Zustand, Jotai, React Query, SWR, Apollo.
+AI SDKs: Vercel AI SDK, LangChain, OpenAI SDK.
+Icon packs: lucide-react, @heroicons/react, react-icons — DBUI already has 451 icons.
+UI libs: shadcn CLI, Radix, Mantine, Chakra, MUI — DBUI replaces these.
+
+If the user explicitly asks for one of the above later, fine. Never add any of them proactively.
+
+### Step 1: Copy DBUI into the project
 
 ```bash
 if [ ! -d "$HOME/dbui" ]; then
@@ -19,17 +40,66 @@ cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 cp ./dbui/CLAUDE.md ./CLAUDE.md
 ```
 
-### Step 2: Read CLAUDE.md and follow its setup steps
+### Step 2: Add path aliases to `tsconfig.json`
 
-CLAUDE.md contains the remaining one-time config:
-- Scaffold a React project if none exists
-- Add path aliases to tsconfig.json
-- Import tokens in root CSS
-- Install @base-ui/react (the one required dependency)
-- Create an initial page with the Base Shell
-- Start the dev server
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "dbui/*": ["./dbui/src/*"],
+      "dbui-shells/*": ["./dbui-shells/src/*"]
+    }
+  }
+}
+```
 
-After setup, the designer sees the full Databricks shell running locally.
+Vite/Webpack projects: mirror these in `resolve.alias`.
+
+### Step 3: Import DBUI tokens in root CSS
+
+```css
+@import "tailwindcss";
+@import "./dbui/src/tokens/globals.css";
+```
+
+### Step 4: Install required deps — these four, nothing else
+
+```bash
+npm install @base-ui/react class-variance-authority clsx tailwind-merge
+```
+
+### Step 5: Install optional peer deps ONLY when needed
+
+Add each one only when the user imports the matching component:
+
+| Component(s) | Extra package |
+|---|---|
+| `Sonner` / `toast()` | `sonner next-themes` |
+| `Drawer` | `vaul` |
+| `Resizable` / `ResizablePanel` | `react-resizable-panels` |
+| `Chart` / `chart.tsx` | `recharts` |
+
+### Step 6: Create the first page with the Base Shell
+
+```tsx
+import { Base } from "dbui-shells"
+
+export default function Home() {
+  return (
+    <Base defaultActive="catalog">
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+        <p style={{ fontSize: 13, color: "#6F6F6F" }}>DBUI is installed. Start building here.</p>
+      </div>
+    </Base>
+  )
+}
+```
+
+### Step 7: Start the dev server
+
+```bash
+npm run dev
+```
 
 ### Update to latest
 
