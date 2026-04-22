@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Base } from "dbui-shells/shell"
 
 const meta: Meta = {
-  title: "DBUI",
+  title: "dbui",
   parameters: { layout: "centered" },
 }
 
