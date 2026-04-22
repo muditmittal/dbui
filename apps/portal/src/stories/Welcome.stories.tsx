@@ -87,9 +87,11 @@ function LivePreview() {
   const ZOOM = 0.56
   return (
     <div style={{
-      width: "80vw",
-      maxWidth: 1000,
+      width: "min(80vw, 1000px)",
       margin: "0 auto 40px",
+      position: "relative",
+      left: "50%",
+      transform: "translateX(-50%)",
       border: "1px solid #CBCBCB",
       borderRadius: 12,
       overflow: "hidden",
