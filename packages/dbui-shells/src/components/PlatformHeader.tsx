@@ -87,7 +87,7 @@ export function PlatformHeader({
   const [searchOpen, setSearchOpen] = useState(false)
 
   return (
-    <header className="flex h-12 shrink-0 items-center px-3 bg-muted" style={{ gap: 40 }}>
+    <header className="flex h-12 shrink-0 items-center px-3 bg-muted">
       {/* Left — fixed, never shrinks */}
       <div className="flex items-center gap-1 shrink-0">
         <Button variant="ghost" size="icon-md" aria-label="Toggle sidebar" onClick={onSidebarToggle}>
@@ -97,8 +97,9 @@ export function PlatformHeader({
         <DatabricksLogo className="ml-1 h-8 w-auto" />
       </div>
 
-      {/* Search — clickable trigger styled as input, grows to fill, shrinks first, max 640px */}
-      <div className="relative flex-1 h-8" style={{ flexShrink: 3, minWidth: 400, maxWidth: 640 }}>
+      {/* Center wrapper — fills available space, search centered inside with 40px margins */}
+      <div className="flex-1 flex items-center justify-center min-w-0 px-10">
+      <div className="relative w-full h-8" style={{ maxWidth: 640 }}>
         <button
           className={`w-full flex items-center gap-2 rounded-sm border border-input bg-background px-3 h-8 text-[13px] shadow-xs overflow-hidden cursor-pointer hover:border-primary active:border-primary-press transition-colors ${searchOpen ? 'opacity-0 pointer-events-none' : ''}`}
           onClick={() => setSearchOpen(true)}
@@ -109,11 +110,12 @@ export function PlatformHeader({
         </button>
         {searchOpen && <SearchPopup onClose={() => setSearchOpen(false)} />}
       </div>
+      </div>
 
       {/* Right — switcher shrinks FIRST (flex-shrink:3), actions never shrink */}
       {/* min-w: 56px switcher + 4px gap + 32+32+24 actions + 8px gaps = ~160px */}
       {/* Right — switcher shrinks SECOND (flex-shrink:1), actions never shrink */}
-      <div className="flex items-center gap-1" style={{ flexShrink: 1, minWidth: 160 }}>
+      <div className="flex items-center gap-1 shrink-0">
         <DropdownMenu>
           <DropdownMenuTrigger render={
             <button className="flex items-center gap-1 min-w-[56px] min-h-8 rounded-sm px-2 text-[13px] text-foreground hover:bg-hover active:bg-press transition-colors overflow-hidden">
