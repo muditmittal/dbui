@@ -251,8 +251,10 @@ export const Default: StoryObj = {
         marginBottom: 40,
         background: "transparent",
         border: "2px solid transparent",
-        borderImage: "linear-gradient(90deg, #4299E0 24%, #CA42E0 47%, #FF5F46 76%) 1",
-        borderRadius: 12,
+        borderRadius: 8,
+        backgroundImage: "linear-gradient(#fff, #fff), linear-gradient(90deg, #4299E0 24%, #CA42E0 47%, #FF5F46 76%)",
+        backgroundOrigin: "border-box",
+        backgroundClip: "padding-box, border-box",
         padding: "24px 28px",
       }}>
         <div style={{ marginBottom: 4 }}>
