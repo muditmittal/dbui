@@ -240,18 +240,19 @@ export const Default: StoryObj = {
         borderRadius: 12,
         padding: "24px 28px",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-          <span style={{ fontSize: 14, fontWeight: 600 }}>Set up with one URL</span>
+        <div style={{ marginBottom: 4 }}>
+          <span style={{ fontSize: 14, fontWeight: 600 }}>Setup using </span>
+          <span style={{ fontSize: 14, fontWeight: 600, fontFamily: mono, background: "#F0F8FF", padding: "1px 6px", borderRadius: 4, color: "#2272B4" }}>isaac</span>
         </div>
         <p style={{ fontSize: 13, color: "#6F6F6F", margin: "0 0 12px 0", lineHeight: "20px" }}>
-          Paste into Claude, Cursor, or any AI coding tool. It installs DBUI, configures your project, and spins up the Base Shell — no manual steps.
+          Installs dbui and dbui-shells on any AI editor. Start your project with Base Shell.
         </p>
         <CodeBlock
           code="https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/llms.txt"
           copyText="https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/llms.txt"
         />
         <div style={{ fontSize: 12, color: "#8C8C8C", marginTop: 8 }}>
-          Works for fresh installs and updates. Includes setup, component rules, and usage patterns.
+          Use this for new install or updates. Covers setup, components, rules.
         </div>
       </div>
 
