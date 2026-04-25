@@ -101,7 +101,7 @@ function LivePreview() {
   return (
     <div ref={containerRef} style={{
       width: "80vw",
-      margin: "0 auto 40px",
+      marginBottom: 40,
       position: "relative",
       left: "50%",
       transform: "translateX(-50%)",
