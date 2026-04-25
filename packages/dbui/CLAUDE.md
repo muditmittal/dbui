@@ -110,15 +110,21 @@ After setup the user should see the full Databricks shell running locally. If a 
 
 ## Where to look
 
+**Read these BEFORE writing any UI.** They're the discovery layer; the JSDoc on each component is the rules layer.
+
 | When you need to... | Read this file |
 |---------------------|----------------|
-| Find the right component | `./dbui/llms.txt` → "When to use what" table |
-| Compose a page layout | `./dbui/llms.txt` → "COMPOSITION RECIPES" |
-| Find an icon by concept | `./dbui/docs/icon-index.md` — canonical 449-icon index |
-| Get entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` |
-| Check component props | `./dbui/llms.txt` → "Key props for stateful components" |
+| Pick the right component | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms) |
+| Find the right icon | `./dbui/docs/icon-index.md` — searchable icon index (449 icons) |
+| Write any user-facing copy | `./dbui/docs/brandvoice.md` — vocabulary, tone, microcopy templates |
+| Pick a page-level layout / shell | `./dbui/composition.md` — five named shells with regions, scaling, scroll, primary action |
+| Apply cross-cutting layout/spacing rules | `./dbui/docs/component-rules.md` — spacing rhythm, page padding, icon selection, button rules |
+| Read full guidelines/constraints for a specific component | `./dbui/src/components/ui/<name>.tsx` — `@guideline` and `@constraint` JSDoc at the top of the file |
+| Get entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` — never guess these |
 | See token values | `./dbui/src/tokens/globals.css` |
-| Browse all components | https://dbuidesign.vercel.app |
+| Browse all components live | https://dbuidesign.vercel.app |
+
+**Single source of truth:** per-component rules live ONLY in the component's JSDoc. The indexes above point you to the right component; the JSDoc tells you how to use it. If something feels duplicated, the JSDoc wins.
 
 ## Every page starts with the Base Shell
 
@@ -245,27 +251,34 @@ const nodes = [
 </div>
 ```
 
-## Typography (Databricks uses 13px base, not 14px or 16px)
+## Typography reminder
 
-| Use | Class |
-|-----|-------|
-| Body text, input values | `text-[13px] leading-[20px]` |
-| Labels, emphasis | `text-[13px] leading-[20px] font-semibold` |
-| Captions, helper text | `text-[12px] leading-[16px] text-muted-foreground` |
-| Page titles | `text-[22px] font-semibold` |
-| Section headings | `text-[18px] font-semibold` |
+Databricks base is **13px**, not 14px or 16px. Body: `text-[13px] leading-[20px]`. Labels: same + `font-semibold`. Captions: `text-[12px] leading-[16px] text-muted-foreground`. Page title: `text-[22px] font-semibold`. Section heading: `text-[18px] font-semibold`.
+
+Full type system → `./dbui/docs/component-rules.md`.
 
 ## Before you commit
 
 Scan your output for these violations:
-- `from "lucide-react"` → replace with `from "dbui/components/icons/..."`
-- `bg-[#` or `text-[#` → replace with semantic token
-- `<button` or `<input` (lowercase) → replace with DBUI component
-- `asChild` → replace with `render={<Component />}`
-- Nested `<div>` faking a tree → replace with `DataTreeView`
-- `text-sm` → replace with `text-[13px]` (Databricks base is 13px, not 14px)
-- `font-medium` → replace with `font-semibold` (Databricks uses 600, not 500)
+
+**Code:**
+- `from "lucide-react"` (or any other icon pkg) → use `from "dbui/components/icons/<Name>"`
+- `bg-[#` or `text-[#` or any hex/rgb/oklch → semantic token (`bg-primary`, `text-foreground`, …)
+- Lowercase `<button`, `<input`, `<select>`, `<dialog>`, `<details>` → DBUI component
+- `asChild` → `render={<Component />}`
+- Nested `<div>` faking a tree → `DataTreeView` or `FileTreeView`
+- `text-sm` → `text-[13px]` (Databricks base is 13px, not 14px)
+- `font-medium` → `font-semibold` (Databricks uses 600, not 500)
 - No `<Base>` wrapper → add it, every page needs it
+- Component picked without checking `docs/component-index.md` → check first; if no match, flag the gap
+
+**Copy:** (run brand-voice checklist from `docs/brandvoice.md`)
+- Emoji in product UI → remove
+- Exclamation marks → remove
+- Banned words: `utilize`, `leverage`, `seamless`, `robust`, `simply`, `just`, `please`, `kindly` → rewrite
+- Title Case in headings → sentence case
+- Generic OK/Yes/No buttons → use the action verb (`Delete`, `Save`, `Cancel`)
+- "Are you sure?" / "Something went wrong" → state the action and the consequence; state the cause and the next step
 
 ## Import pattern
 

@@ -112,7 +112,28 @@ cp ./dbui/CLAUDE.md ./CLAUDE.md
 
 ---
 
-## RULES (non-negotiable)
+## WHERE TO LOOK — read these BEFORE writing any UI
+
+These are the discovery layer. Each component's source file (`dbui/components/ui/<name>.tsx`) is the rules layer — read its `@guideline` and `@constraint` JSDoc when you actually use the component.
+
+| Need | Canonical file |
+|------|---------------|
+| Pick the right component | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms) |
+| Find the right icon | `./dbui/docs/icon-index.md` — searchable 449-icon index |
+| Write any user-facing copy | `./dbui/docs/brandvoice.md` — vocabulary, tone, microcopy templates |
+| Pick a page-level layout / shell | `./dbui/composition.md` — five named shells with regions, scaling, scroll, primary action |
+| Apply cross-cutting layout/spacing rules | `./dbui/docs/component-rules.md` — spacing rhythm, page padding, icon and button rules |
+| Read full guidelines/constraints for a component | `./dbui/src/components/ui/<name>.tsx` — `@guideline` / `@constraint` JSDoc |
+| Get entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` — NEVER guess these |
+| Design token values | `./dbui/src/tokens/globals.css` |
+
+**Single source of truth:** per-component rules live ONLY in the component's JSDoc. Per-icon details live ONLY in `icon-index.md`. Cross-cutting layout rules live ONLY in `component-rules.md`. Shell-level composition lives ONLY in `composition.md`. Voice/tone lives ONLY in `brandvoice.md`. If you ever see a rule duplicated, the more specific source wins (JSDoc > index > llms.txt).
+
+---
+
+## RULES (non-negotiable, cross-cutting)
+
+These are global truths — every component obeys them. Per-component rules are in JSDoc.
 
 1. ALWAYS use DBUI components. NEVER use raw `<button>`, `<input>`, `<div role="dialog">`.
 2. ALWAYS use icons from `dbui/components/icons/{Name}`. NEVER install lucide, heroicons, etc.
@@ -125,133 +146,19 @@ cp ./dbui/CLAUDE.md ./CLAUDE.md
    <DialogTrigger render={<Button />}>Open</DialogTrigger>       // correct
    <DialogTrigger asChild><Button>Open</Button></DialogTrigger>   // WRONG — ignored by Base UI
    ```
+8. Read `brandvoice.md` before writing any user-facing string. No emoji in product UI. No exclamation marks. No "utilize" / "leverage" / "seamless".
 
 ---
 
-## WHERE TO LOOK
+## ONE-LINE REMINDERS
 
-Don't memorize definitions — read the source files when you need them.
+These are facts agents forget most often. Full rules are in the canonical files in WHERE TO LOOK above — don't re-derive from these one-liners, look them up.
 
-| Need | Read this file |
-|------|---------------|
-| Component API / props | `./dbui/src/components/ui/{component}.tsx` — the source is the spec |
-| Available icons | `./dbui/docs/icon-index.md` — searchable 449-icon index |
-| Entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` — NEVER guess, always read this |
-| Design tokens | `./dbui/src/tokens/globals.css` — all CSS custom properties |
-| Composition rules | `./dbui/docs/component-rules.md` — cross-cutting layout/spacing rules |
-| Shell layouts | `./dbui/composition.md` — page-level layout patterns |
-
----
-
-## CHOOSING THE RIGHT COMPONENT
-
-| User intent | Use | Not |
-|-------------|-----|-----|
-| Trigger an action | `Button` | raw `<button>` |
-| Toggle on/off | `Toggle` (icon) or `Switch` (settings) | checkbox for on/off |
-| Switch views | `Tabs` (content panels) or `SegmentControl` (toolbar) | radio group |
-| Pick one from ≤10 | `Select` | native `<select>` |
-| Pick one from >10 or search | `Combobox` | custom autocomplete |
-| Pick multiple | `Combobox` (multi) or checkboxes in `DropdownMenu` | multi-select HTML |
-| Multi-value tag input | `TypeaheadCombobox` | custom chip input |
-| Confirm destructive action | `AlertDialog` | `Dialog` with red button |
-| Focused task/form | `Dialog` | full page navigation |
-| Secondary content panel | `Drawer` (slides from right) | Dialog for detail panels |
-| Context actions | `DropdownMenu` (click) or `ContextMenu` (right-click) | popover with buttons |
-| Info on hover | `Tooltip` (text) or `HoverCard` (rich content) | title attribute |
-| Interactive popup | `Popover` | Tooltip with forms |
-| Persistent message | `Alert` (info/warning/danger/success) | Toast for persistent |
-| Transient feedback | `toast()` via sonner | Alert for temporary |
-| Loading placeholder | `Skeleton` (known shape) or `Spinner` (indeterminate) | custom div |
-| Product navigation | `Navbar` + `NavbarItem` (sidebar) | custom nav links |
-| Browse hierarchy | `DataTreeView` (catalogs) or `FileTreeView` (files) | nested NavbarItems |
-
----
-
-## DOS AND DON'TS
-
-### Buttons
-- Link variant: NO icons (exception: trailing NewWindow for external links)
-- Ghost buttons: prefer icon-only. Ghost + icon + label competes with Outline.
-- Menu triggers: outline or secondary, never primary. Chevron is the affordance.
-- Max one Primary button per visible area.
-- Icon-only buttons (`size="icon-md"`) get `text-muted-foreground` automatically.
-
-### Menus
-- Popup left-aligns with trigger (`align="start"`)
-- If one item has an icon, ALL items in that group must have icons
-- Destructive items: always last, always preceded by separator
-
-### Dialogs
-- Primary action rightmost in footer. Cancel left, confirm right.
-- Non-alert dialogs must have a close button (top-right)
-- Max one dialog open at a time — never stack
-- Simple confirmations → `AlertDialog` (can't dismiss by overlay click)
-
-### Forms
-- Select for ≤10 options. Combobox for >10 or search needed.
-- Error message replaces helper text — never stacks below it.
-- Validation is border-only (no ring shadows on inputs).
-
-### Navigation
-- Every NavbarItem MUST have an icon
-- Active item: `bg-accent text-accent-foreground font-semibold`
-
-### Trees
-- Every node MUST have an icon — read `entity-icons.ts`, never guess
-- Leaf nodes: `leaf: true` hides chevron
-- Use `DataTreeView` for sectioned data, `FileTreeView` for flat files
-
-### Tables
-- Row hover: `bg-muted/50`
-- Header: `font-semibold`. Body: `font-normal`.
-
----
-
-## ICONS — HOW TO FIND THE RIGHT ONE
-
-Always search `./dbui/docs/icon-index.md` before inserting any icon. Never guess.
-
-Categories: `use:object` (product concepts), `use:action` (verbs), `use:indicator` (status), `use:component` (control chrome — don't use outside their control).
-
-**Commonly confused:**
-| Concept | Icon | Why |
-|---------|------|-----|
-| Experiments | Beaker | flask metaphor |
-| Jobs/Lakeflow | Workflows | DAG metaphor |
-| Compute | Cloud | cloud resource |
-| Unity Catalog | Data | data metaphor |
-| Genie | SparkleRectangle | AI sparkle |
-| SQL Warehouses | CloudDatabase | cloud DB |
-| Marketplace | Storefront | shop metaphor |
-
----
-
-## TYPOGRAPHY (Databricks uses 13px base, not 14px)
-
-| Use | Style |
-|-----|-------|
-| Body text, input values | `text-[13px] leading-[20px]` |
-| Labels, emphasis | `text-[13px] leading-[20px] font-semibold` |
-| Captions, helper text | `text-[12px] leading-[16px] text-muted-foreground` |
-| Section headings | `text-[18px] font-semibold` |
-| Page titles | `text-[22px] font-semibold` |
-
-## SPACING
-
-| Gap | Value | Use |
-|-----|-------|-----|
-| gap-1 | 4px | Inside controls (icon↔label in small buttons) |
-| gap-1.5 | 6px | Label to input |
-| gap-2 | 8px | Within a component (icon↔text) |
-| gap-4 | 16px | Between sections, between form fields |
-| gap-6 | 24px | Between major content blocks |
-
-## LAYOUT
-
-- Shell bg: `bg-muted` (grey). Content surface: `bg-background` (white) with `border rounded-lg`.
-- Page padding: `px-6 py-4` inside content surface.
-- Three-column detail page: tree nav (260px) | main (flex-1) | metadata sidebar (280px). Each scrolls independently.
+- **Base font is 13px, not 14px.** Body: `text-[13px] leading-[20px]`. Captions: `text-[12px] leading-[16px]`. Page title: `text-[22px] font-semibold`. Section heading: `text-[18px] font-semibold`. → full table in `docs/component-rules.md`.
+- **Spacing rhythm: 8 / 16 / 24.** Inside a component: `gap-2`. Between form fields and sections: `gap-4`. Between major blocks: `gap-6`. → full table in `docs/component-rules.md`.
+- **Surfaces.** Shell background: `bg-muted`. Content surface: `bg-background border rounded-md`. Page padding inside the surface: `px-6 py-4`. → `docs/component-rules.md` → "Platform Shell".
+- **Three-column detail.** Tree (260px) · main (flex-1) · metadata sidebar (280px). Each scrolls independently. → `composition.md` → "Shell E".
+- **Icons.** Categories are `object` / `action` / `indicator` / `component`. Always search `docs/icon-index.md` before inserting any icon. Never guess. Commonly confused: Experiments → `Beaker`, Jobs → `Workflows`, Compute → `Cloud`, Unity Catalog → `Catalog`, Genie → `SparkleDouble`, SQL Warehouse → `Database`, Marketplace → `Storefront`. → full table in `docs/icon-index.md`.
 
 ## KNOWN GAPS
 
