@@ -34,7 +34,7 @@ const TreeContext = React.createContext<TreeContextValue>({
   setSelected: () => {},
 })
 
-// Parent ID context — each TreeItem tells its children "I am your parent"
+// Parent ID context — each TreeNode tells its children "I am your parent"
 const TreeParentContext = React.createContext<string | null>(null)
 
 // ─── Tree Root ───
@@ -124,11 +124,11 @@ function TreeSection({
   )
 }
 
-// ─── TreeItem — folder or file node ───
+// ─── TreeNode — folder or file node (matches Figma `.TreeNode`) ───
 
-let treeItemCounter = 0
+let treeNodeCounter = 0
 
-function TreeItem({
+function TreeNode({
   className,
   nodeId: nodeIdProp,
   icon,
@@ -170,7 +170,7 @@ function TreeItem({
   ).length
   const isExpandable = expandable || childCount > 0
 
-  const idRef = React.useRef(nodeIdProp ?? `tree-item-${++treeItemCounter}`)
+  const idRef = React.useRef(nodeIdProp ?? `tree-node-${++treeNodeCounter}`)
   const { highlightedId, setHighlighted, selectedId, setSelected: setTreeSelected, onFocusNode, onNodeMenu } = React.useContext(TreeContext)
   const parentId = React.useContext(TreeParentContext)
   const isHighlighted = highlightedId === idRef.current
@@ -359,15 +359,15 @@ function TreeItem({
   )
 }
 
-// ─── TreeItemTag — optional trailing tag/pill ───
+// ─── TreeNodeTag — optional trailing tag/pill ───
 
-function TreeItemTag({
+function TreeNodeTag({
   className,
   ...props
 }: React.ComponentProps<"span">) {
   return (
     <span
-      data-slot="tree-item-tag"
+      data-slot="tree-node-tag"
       className={cn(
         "inline-flex items-center gap-1 rounded bg-muted px-1.5 text-[12px] leading-[16px] text-muted-foreground",
         className
@@ -380,10 +380,13 @@ function TreeItemTag({
 // ─── Data-driven API ───
 
 /**
- * TreeNode — a node in a tree data structure.
+ * TreeNodeData — shape of a node in a tree data structure.
  * The tree renderer auto-computes depth, expandable, selectable from this shape.
+ *
+ * Note: this is the DATA shape, not the rendered component. The visual component
+ * is `TreeNode` (matching Figma `.TreeNode`).
  */
-type TreeNode = {
+type TreeNodeData = {
   id: string
   label: string
   icon?: React.ReactNode
@@ -394,7 +397,7 @@ type TreeNode = {
   /** Whether this is a leaf node (no expand chevron). E.g., columns, files. */
   leaf?: boolean
   /** Child nodes */
-  children?: TreeNode[]
+  children?: TreeNodeData[]
   /** Trailing content */
   trailing?: React.ReactNode
   /** Start expanded */
@@ -407,18 +410,18 @@ type TreeNode = {
 type TreeSectionData = {
   label: string
   defaultExpanded?: boolean
-  nodes: TreeNode[]
+  nodes: TreeNodeData[]
 }
 
 /**
- * Recursively renders TreeNode data as TreeItem components.
+ * Recursively renders TreeNodeData into TreeNode components.
  * Auto-computes: depth, expandable (has children), selectable (not leaf), icons.
  */
 function TreeNodeRenderer({
   node,
   depth,
 }: {
-  node: TreeNode
+  node: TreeNodeData
   depth: number
 }) {
   const hasChildren = node.children && node.children.length > 0
@@ -427,7 +430,7 @@ function TreeNodeRenderer({
   const isExpandable = !isLeaf
 
   return (
-    <TreeItem
+    <TreeNode
       nodeId={node.id}
       icon={node.icon}
       iconExpanded={node.iconExpanded}
@@ -441,7 +444,7 @@ function TreeNodeRenderer({
       {hasChildren && node.children!.map((child) => (
         <TreeNodeRenderer key={child.id} node={child} depth={depth + 1} />
       ))}
-    </TreeItem>
+    </TreeNode>
   )
 }
 
@@ -495,7 +498,7 @@ function FileTreeView({
   onFocusNode,
   onNodeMenu,
 }: {
-  nodes: TreeNode[]
+  nodes: TreeNodeData[]
   className?: string
   onSelect?: (id: string) => void
   onFocusNode?: (id: string, label: string, icon?: React.ReactNode) => void
@@ -511,15 +514,15 @@ function FileTreeView({
 }
 
 export {
-  // Primitives (manual composition)
+  // Primitives (manual composition) — names match Figma `.TreeNode` / `.TreeNodeTag`
   Tree,
   TreeSection,
-  TreeItem,
-  TreeItemTag,
+  TreeNode,
+  TreeNodeTag,
   // Data-driven renderers
   DataTreeView,
   FileTreeView,
   TreeNodeRenderer,
 }
 
-export type { TreeNode, TreeSectionData }
+export type { TreeNodeData, TreeSectionData }

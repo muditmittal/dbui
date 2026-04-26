@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { KeyValuePair, KeyValueRow, KeyValueKey, KeyValueValue, KeyValueValueEnd } from "dbui/components/ui/key-value-pair"
+import { KeyValuePair, KeyValueItem, KeyValueKey, KeyValueValue, KeyValueValueEnd } from "dbui/components/ui/key-value-pair"
 import { ComponentMeta } from "./components/ComponentMeta"
 import { ProductionMap } from "./components/ProductionMap"
 import componentSource from "dbui/components/ui/key-value-pair?raw"
@@ -20,27 +20,27 @@ export const Playground: StoryObj = {
   render: (args: any) => (
     <>
       <KeyValuePair layout={args.layout}>
-        <KeyValueRow layout={args.layout}>
+        <KeyValueItem layout={args.layout}>
           <KeyValueKey layout={args.layout}>Owner</KeyValueKey>
           {args.layout === "flexible"
             ? <KeyValueValueEnd>mudit@databricks.com</KeyValueValueEnd>
             : <KeyValueValue>mudit@databricks.com</KeyValueValue>
           }
-        </KeyValueRow>
-        <KeyValueRow layout={args.layout}>
+        </KeyValueItem>
+        <KeyValueItem layout={args.layout}>
           <KeyValueKey layout={args.layout}>Created</KeyValueKey>
           {args.layout === "flexible"
             ? <KeyValueValueEnd>2026-04-14</KeyValueValueEnd>
             : <KeyValueValue>2026-04-14</KeyValueValue>
           }
-        </KeyValueRow>
-        <KeyValueRow layout={args.layout}>
+        </KeyValueItem>
+        <KeyValueItem layout={args.layout}>
           <KeyValueKey layout={args.layout}>Type</KeyValueKey>
           {args.layout === "flexible"
             ? <KeyValueValueEnd>Managed Table</KeyValueValueEnd>
             : <KeyValueValue>Managed Table</KeyValueValue>
           }
-        </KeyValueRow>
+        </KeyValueItem>
       </KeyValuePair>
       <ComponentMeta source={componentSource} componentKey="key-value-pair" />
       <ProductionMap componentKey="key-value-pair" />

@@ -102,15 +102,19 @@ function AlertDialogFooter({
   )
 }
 
-function AlertDialogMedia({
+/**
+ * AlertDialogIcon — small inline icon slot in the header (next to the title).
+ * Matches Figma `AlertDialogIcon` (16×16 inside the header, before title+description).
+ */
+function AlertDialogIcon({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="alert-dialog-media"
+      data-slot="alert-dialog-icon"
       className={cn(
-        "mb-2 inline-flex size-10 items-center justify-center rounded-md bg-muted sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6",
+        "shrink-0 inline-flex h-5 items-center justify-center py-0.5 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -188,7 +192,7 @@ export {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogMedia,
+  AlertDialogIcon,
   AlertDialogOverlay,
   AlertDialogPortal,
   AlertDialogTitle,

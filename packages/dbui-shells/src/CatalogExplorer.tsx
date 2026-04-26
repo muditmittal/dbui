@@ -3,7 +3,7 @@ import { Popover } from "@base-ui/react/popover"
 import { Button } from "dbui/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCellTitle, TableCellIcon, TableCellTitleContent, TableCellMeta } from "dbui/components/ui/table"
-import { DataTreeView, type TreeSectionData, type TreeNode } from "dbui/components/ui/data-tree"
+import { DataTreeView, type TreeSectionData, type TreeNodeData } from "dbui/components/ui/data-tree"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuGroup, DropdownMenuItemIcon, DropdownMenuItemDescription, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "dbui/components/ui/dropdown-menu"
 import { Input } from "dbui/components/ui/input"
 import { Badge } from "dbui/components/ui/badge"
@@ -59,7 +59,7 @@ function findNodePath(sections: TreeSectionData[], targetId: string): Breadcrumb
   return null
 }
 
-function findInNode(node: TreeNode, targetId: string, path: BreadcrumbEntry[] = []): BreadcrumbEntry[] | null {
+function findInNode(node: TreeNodeData, targetId: string, path: BreadcrumbEntry[] = []): BreadcrumbEntry[] | null {
   const current = [...path, { id: node.id, label: node.label, icon: node.icon }]
   if (node.id === targetId) return current
   if (node.children) {
@@ -72,7 +72,7 @@ function findInNode(node: TreeNode, targetId: string, path: BreadcrumbEntry[] = 
 }
 
 /** Find a node by ID and return it */
-function findNode(sections: TreeSectionData[], targetId: string): TreeNode | null {
+function findNode(sections: TreeSectionData[], targetId: string): TreeNodeData | null {
   for (const section of sections) {
     for (const node of section.nodes) {
       const found = findNodeById(node, targetId)
@@ -82,7 +82,7 @@ function findNode(sections: TreeSectionData[], targetId: string): TreeNode | nul
   return null
 }
 
-function findNodeById(node: TreeNode, targetId: string): TreeNode | null {
+function findNodeById(node: TreeNodeData, targetId: string): TreeNodeData | null {
   if (node.id === targetId) return node
   if (node.children) {
     for (const child of node.children) {
@@ -95,10 +95,10 @@ function findNodeById(node: TreeNode, targetId: string): TreeNode | null {
 
 // ─── Tree filtering ───
 
-function filterTreeNodes(nodes: TreeNode[], query: string): TreeNode[] {
+function filterTreeNodes(nodes: TreeNodeData[], query: string): TreeNodeData[] {
   if (!query) return nodes
   const q = query.toLowerCase()
-  return nodes.reduce<TreeNode[]>((acc, node) => {
+  return nodes.reduce<TreeNodeData[]>((acc, node) => {
     const labelMatch = node.label.toLowerCase().includes(q)
     const filteredChildren = node.children ? filterTreeNodes(node.children, query) : undefined
     const hasMatchingChildren = filteredChildren && filteredChildren.length > 0

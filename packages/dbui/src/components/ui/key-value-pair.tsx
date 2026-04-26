@@ -53,7 +53,7 @@ function KeyValueTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function KeyValueRow({
+function KeyValueItem({
   className,
   layout = "vertical",
   ...props
@@ -145,7 +145,7 @@ function KeyValueGrid({ className, ...props }: React.ComponentProps<"div">) {
 export {
   KeyValuePair,
   KeyValueTitle,
-  KeyValueRow,
+  KeyValueItem,
   KeyValueKey,
   KeyValueValue,
   KeyValueValueEnd,
