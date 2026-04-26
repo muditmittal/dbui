@@ -14,7 +14,11 @@ packages/dbui/tsup.config.ts
 packages/dbui/design-tokens.json
 
 # Repo-internal (force-add with git add -f)
-apps/
 figma.config.json
 .claude/
+
+# apps/portal build artifacts (the app itself IS tracked)
+apps/portal/.next/
 apps/portal/node_modules/
+apps/portal/storybook-static/
+apps/portal/out/
