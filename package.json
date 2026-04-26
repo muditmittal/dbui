@@ -37,7 +37,9 @@
     "build": "yarn workspace portal build",
     "build:dbui": "yarn workspace dbui build",
     "lint": "yarn workspace portal lint",
-    "preview": "concurrently -n portal,storybook -c blue,magenta \"yarn dev\" \"yarn workspace portal storybook\""
+    "preview": "concurrently -n portal,storybook -c blue,magenta \"yarn dev\" \"yarn workspace portal storybook\"",
+    "design:lint:react": "node scripts/design-lint/react-lint.js",
+    "design:lint:figma": "node scripts/design-lint/figma-lint.js"
   },
   "packageManager": "yarn@4.13.0",
   "engines": {
