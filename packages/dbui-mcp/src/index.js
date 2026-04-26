@@ -24,6 +24,7 @@ import * as resolveIcon from "./tools/resolve-icon.js"
 import * as resolveComponent from "./tools/resolve-component.js"
 import * as resolveToken from "./tools/resolve-token.js"
 import * as lintReactSnippet from "./tools/lint-react-snippet.js"
+import * as checkComposition from "./tools/check-composition.js"
 import * as getRules from "./tools/get-rules.js"
 
 const tools = [
@@ -31,6 +32,7 @@ const tools = [
   resolveComponent,
   resolveToken,
   lintReactSnippet,
+  checkComposition,
   getRules,
 ]
 

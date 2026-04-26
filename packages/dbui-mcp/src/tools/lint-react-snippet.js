@@ -34,12 +34,26 @@ const APPROVED_HEX = new Set([...tokens.colors.light, ...tokens.colors.dark])
 const APPROVED_SPACING = new Set(tokens.spacing.px)
 const TYPE_RAMP = tokens.type.ramp
 
-const COLOR_PREFIXES = new Set(["bg", "border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y", "ring", "ring-offset", "fill", "stroke", "outline", "shadow", "decoration", "from", "to", "via", "placeholder", "divide", "accent", "caret"])
+const COLOR_PREFIXES = new Set(["bg", "border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y", "ring", "ring-offset", "fill", "stroke", "outline", "decoration", "from", "to", "via", "placeholder", "divide", "accent", "caret"])
+// "shadow" is intentionally NOT in COLOR_PREFIXES — handled separately below
 const SPACING_PREFIXES = new Set(["p", "pt", "pr", "pb", "pl", "px", "py", "ps", "pe", "m", "mt", "mr", "mb", "ml", "mx", "my", "ms", "me", "gap", "gap-x", "gap-y", "space-x", "space-y", "top", "right", "bottom", "left", "inset", "inset-x", "inset-y", "w", "h", "min-w", "min-h", "max-w", "max-h", "size"])
 const FONT_SIZE_PREFIXES = new Set(["text"])
 const LEADING_PREFIXES = new Set(["leading"])
+const TRACKING_PREFIXES = new Set(["tracking"])
 const RADIUS_PREFIXES = new Set(["rounded", "rounded-t", "rounded-r", "rounded-b", "rounded-l", "rounded-tl", "rounded-tr", "rounded-bl", "rounded-br"])
+const SHADOW_PREFIXES = new Set(["shadow"])
+const Z_INDEX_PREFIXES = new Set(["z"])
+const OPACITY_PREFIXES = new Set(["opacity"])
+const FONT_FAMILY_PREFIXES = new Set(["font"]) // for font-[...] arbitrary; keyword variants handled separately
 const APPROVED_RADIUS = new Set([0, 4, 8, 12, 16, 24, 999])
+// DBUI standard shadow utilities. Anything else (raw box-shadow strings) is non-token.
+const APPROVED_SHADOWS = new Set(["none", "xs", "sm", "md", "lg", "xl", "2xl", "inner", "focus"])
+// DBUI z-layers. Loosely follows Tailwind defaults + Base UI primitives' z-50 for overlays.
+const APPROVED_Z = new Set([0, 10, 20, 30, 40, 50])
+// DBUI standard font-weights: 400 (normal) and 600 (semibold). Anything else flagged.
+const APPROVED_FONT_WEIGHT_KEYWORDS = new Set(["normal", "semibold"])
+const FONT_WEIGHT_KEYWORDS = new Set(["thin", "extralight", "light", "normal", "medium", "semibold", "bold", "extrabold", "black"])
+const APPROVED_FONT_FAMILY_KEYWORDS = new Set(["sans", "display", "mono"])
 const ARBITRARY_VALUE_RE = /\b([a-z]+(?:-[a-z]+)*)-\[([^\]]+)\]/g
 
 const NON_DBUI_ICON_LIBS = new Set([
@@ -177,13 +191,102 @@ function checkClassName(cls, file, line, col, element, violations) {
         continue
       }
     }
+
+    // ── Shadow arbitrary values (shadow-[...] with raw box-shadow string) ──
+    if (SHADOW_PREFIXES.has(prefix)) {
+      violations.push({
+        line, column: col, level: "error", rule: "no-arbitrary-shadow", element,
+        message: `Custom shadow \`${whole}\` is non-tokenized.`,
+        fix: `Use a DBUI shadow utility: shadow-xs, shadow-sm, shadow-md, shadow-lg, shadow-xl, shadow-2xl, shadow-focus, shadow-inner, or shadow-none.`,
+        source: cls,
+      })
+      continue
+    }
+
+    // ── Z-index arbitrary value ──
+    if (Z_INDEX_PREFIXES.has(prefix)) {
+      const z = parseInt(raw)
+      if (!APPROVED_Z.has(z)) {
+        violations.push({
+          line, column: col, level: "warning", rule: "non-token-z-index", element,
+          message: `\`${whole}\` (z-index ${z}) is not on the DBUI z-scale.`,
+          fix: `Use one of: z-0 (base), z-10 (raised), z-20 (sticky), z-30 (banner), z-40 (drawer), z-50 (overlay/modal/dropdown). If you need a higher layer, add a token in globals.css first.`,
+          source: cls,
+        })
+      }
+      continue
+    }
+
+    // ── Opacity arbitrary value ──
+    if (OPACITY_PREFIXES.has(prefix)) {
+      const opacity = parseFloat(raw)
+      // Tailwind opacity scale: 0, 5, 10, 15, 20, 25, ..., 95, 100
+      const valid = !Number.isNaN(opacity) && opacity >= 0 && opacity <= 100 && opacity % 5 === 0
+      if (!valid) {
+        violations.push({
+          line, column: col, level: "warning", rule: "non-token-opacity", element,
+          message: `\`${whole}\` is an off-scale opacity.`,
+          fix: `Use the Tailwind opacity scale (multiples of 5: opacity-0, opacity-5, ..., opacity-100).`,
+          source: cls,
+        })
+      }
+      continue
+    }
+
+    // ── Tracking (letter-spacing) arbitrary ──
+    if (TRACKING_PREFIXES.has(prefix)) {
+      violations.push({
+        line, column: col, level: "info", rule: "non-token-tracking", element,
+        message: `\`${whole}\` is custom letter-spacing. DBUI generally relies on the type ramp's defaults.`,
+        fix: `Use tracking-tight, tracking-normal, tracking-wide. If you need a specific value, add a token first.`,
+        source: cls,
+      })
+      continue
+    }
+
+    // ── Font family arbitrary (font-["Custom Font"]) ──
+    if (FONT_FAMILY_PREFIXES.has(prefix) && !/^\d+$/.test(raw)) {
+      violations.push({
+        line, column: col, level: "error", rule: "non-token-font-family", element,
+        message: `\`${whole}\` uses a non-DBUI font family.`,
+        fix: `Use font-sans (SF Pro Text), font-display (SF Pro Display), or font-mono (SF Mono).`,
+        source: cls,
+      })
+      continue
+    }
   }
-  // also catch text-sm (DBUI base is 13px, not 14px)
+
+  // ── text-sm: DBUI base is 13px, not 14px ──
   if (/\btext-sm\b/.test(cls)) {
     violations.push({
       line, column: col, level: "warning", rule: "typography-13px", element,
       message: `\`text-sm\` is Tailwind's 14px size, but DBUI's base is 13px.`,
       fix: `Replace with \`text-[13px]\` (DBUI paragraph) or use the explicit \`text-base\` (16px) if a larger size is intended.`,
+      source: cls,
+    })
+  }
+
+  // ── Font weight keywords (font-medium, font-bold, etc. — DBUI only uses normal/semibold) ──
+  for (const w of FONT_WEIGHT_KEYWORDS) {
+    const re = new RegExp(`\\bfont-${w}\\b`)
+    if (re.test(cls) && !APPROVED_FONT_WEIGHT_KEYWORDS.has(w)) {
+      violations.push({
+        line, column: col, level: "warning", rule: "non-token-font-weight", element,
+        message: `\`font-${w}\` is not in the DBUI weight set.`,
+        fix: `DBUI uses font-normal (400) for body text and font-semibold (600) for emphasis. If you need a different weight, add a token to globals.css.`,
+        source: cls,
+      })
+      break // only flag once per className
+    }
+  }
+
+  // ── Shadow keywords (shadow-md, shadow-2xl, etc. — verify against approved set) ──
+  const shadowMatch = cls.match(/\bshadow-([a-z0-9]+)\b/)
+  if (shadowMatch && !APPROVED_SHADOWS.has(shadowMatch[1])) {
+    violations.push({
+      line, column: col, level: "warning", rule: "non-token-shadow", element,
+      message: `\`shadow-${shadowMatch[1]}\` is not a DBUI shadow.`,
+      fix: `Use shadow-xs, shadow-sm, shadow-md, shadow-lg, shadow-xl, shadow-2xl, shadow-focus, shadow-inner, or shadow-none.`,
       source: cls,
     })
   }
