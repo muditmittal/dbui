@@ -1,5 +1,6 @@
 import figma from "@figma/code-connect"
-import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertClose } from "../components/ui/alert"
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertAction, AlertClose } from "../components/ui/alert"
+import { Button } from "../components/ui/button"
 import { InfoFill } from "../components/icons/InfoFill"
 
 figma.connect(
@@ -23,6 +24,9 @@ figma.connect(
           <AlertTitle>Alert title</AlertTitle>
           <AlertDescription>Alert description</AlertDescription>
         </AlertContent>
+        <AlertAction>
+          <Button variant="outline" size="sm">Label</Button>
+        </AlertAction>
         {closeButton}
       </Alert>
     ),
