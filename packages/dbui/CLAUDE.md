@@ -32,7 +32,7 @@ If the user explicitly asks for one of these later, fine — but never add them 
 
 ### 1. Add path aliases
 
-If `tsconfig.json` doesn't already map `dbui/*` and `dbui-shells/*`, add:
+If `tsconfig.json` doesn't already map `dbui/`* and `dbui-shells/*`, add:
 
 ```json
 {
@@ -66,12 +66,14 @@ That is the entire core. Tailwind v4 is a peer (already installed in step 0).
 
 Do not pre-install these. Add each one only when the user actually uses that component:
 
-| Component(s) | Extra package |
-|---|---|
-| `Sonner` / `toast()` | `sonner next-themes` |
-| `Drawer` | `vaul` |
+
+| Component(s)                   | Extra package            |
+| ------------------------------ | ------------------------ |
+| `Sonner` / `toast()`           | `sonner next-themes`     |
+| `Drawer`                       | `vaul`                   |
 | `Resizable` / `ResizablePanel` | `react-resizable-panels` |
-| `Chart` / `chart.tsx` | `recharts` |
+| `Chart` / `chart.tsx`          | `recharts`               |
+
 
 ### 5. Create the first page
 
@@ -112,19 +114,27 @@ After setup the user should see the full Databricks shell running locally. If a 
 
 **Read these BEFORE writing any UI.** They're the discovery layer; the JSDoc on each component is the rules layer.
 
-| When you need to... | Read this file |
-|---------------------|----------------|
-| Pick the right component | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms) |
-| Find the right icon | `./dbui/docs/icon-index.md` — searchable icon index (449 icons) |
-| Write any user-facing copy | `./dbui/docs/brandvoice.md` — vocabulary, tone, microcopy templates |
-| Pick a page-level layout / shell | `./dbui/composition.md` — five named shells with regions, scaling, scroll, primary action |
-| Apply cross-cutting layout/spacing rules | `./dbui/docs/component-rules.md` — spacing rhythm, page padding, icon selection, button rules |
-| Read full guidelines/constraints for a specific component | `./dbui/src/components/ui/<name>.tsx` — `@guideline` and `@constraint` JSDoc at the top of the file |
-| Get entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` — never guess these |
-| See token values | `./dbui/src/tokens/globals.css` |
-| Browse all components live | https://dbuidesign.vercel.app |
 
-**Single source of truth:** per-component rules live ONLY in the component's JSDoc. The indexes above point you to the right component; the JSDoc tells you how to use it. If something feels duplicated, the JSDoc wins.
+| When you need to...                                                  | Read this file                                                                                                         |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Pick the right component                                             | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms, Figma name) |
+| Find the right icon                                                  | `./dbui/docs/icon-index.md` — searchable icon index (449 icons)                                                        |
+| Write any user-facing copy                                           | `./dbui/docs/brandvoice.md` — vocabulary, tone, microcopy templates                                                    |
+| Translate a Figma layer ↔ React (top-level, inner components, slots) | `./dbui/docs/figma-mapping.md` — naming rules + tables + edge cases                                                    |
+| Pick a page-level layout / shell                                     | `./dbui/composition.md` — five named shells with regions, scaling, scroll, primary action                              |
+| Apply cross-cutting layout/spacing rules                             | `./dbui/docs/component-rules.md` — spacing rhythm, page padding, icon selection, button rules                          |
+| Read full guidelines/constraints for a specific component            | `./dbui/src/components/ui/<name>.tsx` — `@guideline` and `@constraint` JSDoc at the top of the file                    |
+| Get entity icons for trees                                           | `./dbui/src/components/icons/entity-icons.ts` — never guess these                                                      |
+| See token values                                                     | `./dbui/src/tokens/globals.css`                                                                                        |
+| Browse all components live                                           | [https://dbuidesign.vercel.app](https://dbuidesign.vercel.app)                                                         |
+
+
+**Single source of truth:** per-component rules live ONLY in the component's JSDoc. The indexes above point you to the right component; the JSDoc tells you how to use it. Figma ↔ React naming lives ONLY in `figma-mapping.md`. If something feels duplicated, the more specific source wins.
+
+**Picking vs translating — don't mix them up:**
+
+- *"Which component do I use for X?"* → `component-index.md`
+- *"What's this Figma layer called in React?" / "Where does this React component live in Figma?"* → `figma-mapping.md`
 
 ## Every page starts with the Base Shell
 
@@ -137,6 +147,7 @@ import { Base } from "dbui-shells"
 ```
 
 The Shell provides:
+
 - **Platform Header** (48px) — sidebar toggle, search, workspace switcher, Genie Code, app switcher, profile menu
 - **Platform Nav** (180px sidebar) — collapsible, with all nav items grouped by category
 - **Content Surface** — white rounded panel where your page lives
@@ -165,6 +176,7 @@ The Shell provides:
 ```
 
 For detail pages (Catalog Explorer, table details), add a tree panel and metadata sidebar:
+
 - **Left (260px):** Tree header + search + `<DataTreeView>`
 - **Center (flex-1):** Breadcrumb → title → tabs → content
 - **Right (280px):** `<KeyValuePair>` sections separated by `<Separator>`
@@ -175,41 +187,45 @@ Each column scrolls independently.
 
 When given a screenshot of Databricks UI to implement:
 
-| You see | Use |
-|---------|-----|
-| Left sidebar with product icons | `Navbar` + `NavbarItem` (every item MUST have an icon) |
-| Expandable tree (catalogs, files) | `DataTreeView` or `FileTreeView` — read entity-icons.ts for correct icons |
-| Tabs below a title | `Tabs` + `TabsList` + `TabsTrigger` |
-| Data table with headers | `Table` + `TableHeader` + `TableBody` |
-| Right sidebar with metadata | `KeyValuePair` + `Separator` sections, 13px semibold headers |
-| Breadcrumb path | `Breadcrumb` + `BreadcrumbList` + `BreadcrumbItem` |
-| Blue filled button | `Button` (variant="default" — this is the primary style) |
-| Bordered button | `Button variant="outline"` |
-| Button with chevron | `Button` + `ButtonChevron` (menu trigger — use outline, never primary) |
-| Button with leading icon | `Button` + `ButtonIcon` wrapper |
-| Green checkmark badge | `<Badge variant="outline"><CertifiedFill className="text-success" />` |
-| Status dot | `Status` (12 statuses: online, running, error, etc.) |
-| Modal/dialog | `Dialog` (task) or `AlertDialog` (confirmation — can't dismiss by clicking outside) |
-| Slide-out panel | `Drawer` |
-| Dropdown with options | `DropdownMenu` — always `align="start"`, destructive items last |
-| Select picker | `Select` (≤10 options) or `Combobox` (>10 or needs search) |
-| Tag/chip | `Tag` (removable, key:value) or `Badge` (read-only label) |
-| Toast notification | `toast.success()` / `toast.error()` from sonner |
-| Loading rows | `Skeleton` inside `TableCell` |
-| Empty state with icon | `Empty` (title + description + optional action button) |
-| Search + filter bar | `InputGroup` + `InputGroupAddon` + `InputGroupButton` |
+
+| You see                           | Use                                                                                 |
+| --------------------------------- | ----------------------------------------------------------------------------------- |
+| Left sidebar with product icons   | `Navbar` + `NavbarItem` (every item MUST have an icon)                              |
+| Expandable tree (catalogs, files) | `DataTreeView` or `FileTreeView` — read entity-icons.ts for correct icons           |
+| Tabs below a title                | `Tabs` + `TabsList` + `TabsTrigger`                                                 |
+| Data table with headers           | `Table` + `TableHeader` + `TableBody`                                               |
+| Right sidebar with metadata       | `KeyValuePair` + `Separator` sections, 13px semibold headers                        |
+| Breadcrumb path                   | `Breadcrumb` + `BreadcrumbList` + `BreadcrumbItem`                                  |
+| Blue filled button                | `Button` (variant="default" — this is the primary style)                            |
+| Bordered button                   | `Button variant="outline"`                                                          |
+| Button with chevron               | `Button` + `ButtonChevron` (menu trigger — use outline, never primary)              |
+| Button with leading icon          | `Button` + `ButtonIcon` wrapper                                                     |
+| Green checkmark badge             | `<Badge variant="outline"><CertifiedFill className="text-success" />`               |
+| Status dot                        | `Status` (12 statuses: online, running, error, etc.)                                |
+| Modal/dialog                      | `Dialog` (task) or `AlertDialog` (confirmation — can't dismiss by clicking outside) |
+| Slide-out panel                   | `Drawer`                                                                            |
+| Dropdown with options             | `DropdownMenu` — always `align="start"`, destructive items last                     |
+| Select picker                     | `Select` (≤10 options) or `Combobox` (>10 or needs search)                          |
+| Tag/chip                          | `Tag` (removable, key:value) or `Badge` (read-only label)                           |
+| Toast notification                | `toast.success()` / `toast.error()` from sonner                                     |
+| Loading rows                      | `Skeleton` inside `TableCell`                                                       |
+| Empty state with icon             | `Empty` (title + description + optional action button)                              |
+| Search + filter bar               | `InputGroup` + `InputGroupAddon` + `InputGroupButton`                               |
+
 
 ## Patterns LLMs get wrong
 
 These are the #1 mistakes from our audit. Internalize them.
 
 **Icon-only buttons use `text-muted-foreground` automatically:**
+
 ```tsx
 // Size icon-md or icon-sm makes the icon muted — don't add the class yourself
 <Button size="icon-md" variant="ghost" aria-label="Search"><Search /></Button>
 ```
 
 **Icons inside label buttons also muted — use ButtonIcon wrapper:**
+
 ```tsx
 <Button variant="outline">
   <ButtonIcon><Share /></ButtonIcon>   {/* ← muted automatically */}
@@ -219,6 +235,7 @@ These are the #1 mistakes from our audit. Internalize them.
 ```
 
 **Menu item consistency — if one has an icon, ALL must:**
+
 ```tsx
 <DropdownMenuContent align="start">
   <DropdownMenuItem><DropdownMenuItemIcon><Pencil /></DropdownMenuItemIcon>Edit</DropdownMenuItem>
@@ -229,6 +246,7 @@ These are the #1 mistakes from our audit. Internalize them.
 ```
 
 **Tree nodes always need entity icons — never guess:**
+
 ```tsx
 import { dataEntityIcons } from "dbui/components/icons/entity-icons"
 
@@ -243,6 +261,7 @@ const nodes = [
 ```
 
 **Form fields — label above, helper below, error replaces helper:**
+
 ```tsx
 <div className="flex flex-col gap-1.5">
   <Label htmlFor="name">Name</Label>
@@ -262,6 +281,7 @@ Full type system → `./dbui/docs/component-rules.md`.
 Scan your output for these violations:
 
 **Code:**
+
 - `from "lucide-react"` (or any other icon pkg) → use `from "dbui/components/icons/<Name>"`
 - `bg-[#` or `text-[#` or any hex/rgb/oklch → semantic token (`bg-primary`, `text-foreground`, …)
 - Lowercase `<button`, `<input`, `<select>`, `<dialog>`, `<details>` → DBUI component
@@ -273,6 +293,7 @@ Scan your output for these violations:
 - Component picked without checking `docs/component-index.md` → check first; if no match, flag the gap
 
 **Copy:** (run brand-voice checklist from `docs/brandvoice.md`)
+
 - Emoji in product UI → remove
 - Exclamation marks → remove
 - Banned words: `utilize`, `leverage`, `seamless`, `robust`, `simply`, `just`, `please`, `kindly` → rewrite
@@ -291,6 +312,7 @@ import { dataEntityIcons } from "dbui/components/icons/entity-icons"
 ```
 
 CSS setup (one-time in root stylesheet):
+
 ```css
 @import "tailwindcss";
 @import "./dbui/src/tokens/globals.css";
@@ -299,7 +321,9 @@ CSS setup (one-time in root stylesheet):
 ## Updating DBUI
 
 To get the latest components, tokens, and icons:
+
 ```bash
 cd ~/dbui && git pull
 cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 ```
+

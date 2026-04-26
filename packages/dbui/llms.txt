@@ -118,16 +118,21 @@ These are the discovery layer. Each component's source file (`dbui/components/ui
 
 | Need | Canonical file |
 |------|---------------|
-| Pick the right component | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms) |
+| Pick the right component | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms, Figma name) |
 | Find the right icon | `./dbui/docs/icon-index.md` — searchable 449-icon index |
 | Write any user-facing copy | `./dbui/docs/brandvoice.md` — vocabulary, tone, microcopy templates |
+| Translate Figma ↔ React (component or inner-component names) | `./dbui/docs/figma-mapping.md` — top-level + inner components + slot encodings + edge cases |
 | Pick a page-level layout / shell | `./dbui/composition.md` — five named shells with regions, scaling, scroll, primary action |
 | Apply cross-cutting layout/spacing rules | `./dbui/docs/component-rules.md` — spacing rhythm, page padding, icon and button rules |
 | Read full guidelines/constraints for a component | `./dbui/src/components/ui/<name>.tsx` — `@guideline` / `@constraint` JSDoc |
 | Get entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` — NEVER guess these |
 | Design token values | `./dbui/src/tokens/globals.css` |
 
-**Single source of truth:** per-component rules live ONLY in the component's JSDoc. Per-icon details live ONLY in `icon-index.md`. Cross-cutting layout rules live ONLY in `component-rules.md`. Shell-level composition lives ONLY in `composition.md`. Voice/tone lives ONLY in `brandvoice.md`. If you ever see a rule duplicated, the more specific source wins (JSDoc > index > llms.txt).
+**Single source of truth:** per-component rules live ONLY in the component's JSDoc. Per-icon details live ONLY in `icon-index.md`. Cross-cutting layout rules live ONLY in `component-rules.md`. Shell-level composition lives ONLY in `composition.md`. Voice/tone lives ONLY in `brandvoice.md`. Figma ↔ React naming lives ONLY in `figma-mapping.md`. If you ever see a rule duplicated, the more specific source wins (JSDoc > index > llms.txt).
+
+**Picking vs translating — don't mix them up:**
+- *"Which component do I use for X?"* → `component-index.md`
+- *"What's this Figma layer called in React?" / "Where does this React component live in Figma?"* → `figma-mapping.md`
 
 ---
 
