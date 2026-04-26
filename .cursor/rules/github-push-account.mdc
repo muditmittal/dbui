@@ -1,0 +1,34 @@
+---
+description: Always push to this repo with the muditmittal personal GitHub account, never the mudit-mittal_data enterprise account
+alwaysApply: true
+---
+
+# GitHub push account
+
+This repo (`github.com/muditmittal/dbui`) belongs to the `muditmittal` personal GitHub account. Pushes from the `mudit-mittal_data` enterprise account fail with HTTP 403 `Permission denied`.
+
+## Before any `git push`
+
+Ensure the active `gh` account is `muditmittal`:
+
+```bash
+gh auth status        # read-only check
+gh auth switch --user muditmittal   # only if active account is something else
+git push origin <branch>
+```
+
+## If a push fails with 403
+
+Symptom:
+```
+remote: Permission to muditmittal/dbui.git denied to mudit-mittal_data.
+fatal: ... The requested URL returned error: 403
+```
+
+Fix: run `gh auth switch --user muditmittal` and retry the push. Do not edit the remote URL, credential helper, or global git config.
+
+## Do NOT
+
+- Do not push with `mudit-mittal_data` (enterprise account — no access to this repo)
+- Do not prompt the user to re-authenticate if both accounts are already listed in `gh auth status`
+- Do not swap to SSH or change `origin` — the HTTPS remote is correct, only the active `gh` identity matters

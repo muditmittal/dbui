@@ -1,0 +1,19 @@
+{
+  "name": "@muditmittal/dbui-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP server exposing DBUI resolver + lint tools so coding agents (Cursor, Claude Code) can self-correct designs and code in real time.",
+  "main": "./src/index.js",
+  "bin": {
+    "dbui-mcp": "./src/index.js"
+  },
+  "scripts": {
+    "build:data": "node scripts/build-data.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.28.0",
+    "ts-morph": "^26.0.0"
+  }
+}

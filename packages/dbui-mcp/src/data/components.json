@@ -1,0 +1,854 @@
+[
+  {
+    "name": "action",
+    "category": null,
+    "useFor": "Triggers something on click",
+    "avoidFor": "Button, SplitButton",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/action"
+  },
+  {
+    "name": "input",
+    "category": null,
+    "useFor": "Captures user data",
+    "avoidFor": "Input, Textarea, Select, Combobox, Checkbox, Switch, Slider",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/input"
+  },
+  {
+    "name": "selection",
+    "category": null,
+    "useFor": "Pick from a small fixed set",
+    "avoidFor": "Tabs, SegmentControl, RadioGroup, RadioTile, ToggleGroup",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/selection"
+  },
+  {
+    "name": "menu",
+    "category": null,
+    "useFor": "Floating list of actions/options",
+    "avoidFor": "DropdownMenu, ContextMenu, Menubar",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/menu"
+  },
+  {
+    "name": "overlay",
+    "category": null,
+    "useFor": "Floats over the page",
+    "avoidFor": "Dialog, AlertDialog, Drawer, Popover, HoverCard, Tooltip, Sonner",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/overlay"
+  },
+  {
+    "name": "feedback",
+    "category": null,
+    "useFor": "Communicates system state",
+    "avoidFor": "Alert, Badge, Status, Spinner, Skeleton, Progress, Empty",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/feedback"
+  },
+  {
+    "name": "display",
+    "category": null,
+    "useFor": "Presents data",
+    "avoidFor": "Table, DataTree, Card, KeyValuePair, Avatar, Tag, Item, Chart, Kbd",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/display"
+  },
+  {
+    "name": "navigation",
+    "category": null,
+    "useFor": "Moves the user across views",
+    "avoidFor": "Navbar, Breadcrumb, Pagination, EditorTabs",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/navigation"
+  },
+  {
+    "name": "layout",
+    "category": null,
+    "useFor": "Structures the surface",
+    "avoidFor": "Accordion, Collapsible, Resizable, ScrollArea, Separator, AspectRatio, Direction, Field, Label, InputGroup",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/layout"
+  },
+  {
+    "name": "chrome",
+    "category": null,
+    "useFor": "Page/app-level scaffolding",
+    "avoidFor": "PageHeader, PlatformHeader",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/chrome"
+  },
+  {
+    "name": "Button",
+    "category": "action",
+    "useFor": "Any click action — primary CTAs, toolbar actions, icon buttons, menu triggers",
+    "avoidFor": "State that persists across clicks → use `Toggle`; on/off settings → `Switch`",
+    "synonyms": [
+      "CTA",
+      "action button",
+      "click button"
+    ],
+    "figma": "Button (label) · Icon Button (icon-only)",
+    "importPath": "@muditmittal/dbui/components/ui/button"
+  },
+  {
+    "name": "SplitButton",
+    "category": "action",
+    "useFor": "A primary action with related alternatives in a dropdown (3–5 alternatives)",
+    "avoidFor": "Unrelated actions → split into separate `Button`s; >5 actions → use `DropdownMenu`",
+    "synonyms": [
+      "combo button",
+      "primary + dropdown",
+      "action with menu"
+    ],
+    "figma": "Split Button",
+    "importPath": "@muditmittal/dbui/components/ui/split-button"
+  },
+  {
+    "name": "Toggle",
+    "category": "action",
+    "useFor": "Buttons that need to remember pressed state (icon toolbar toggles, filter pills)",
+    "avoidFor": "Stateless actions → use `Button`; on/off settings → `Switch`",
+    "synonyms": [
+      "toggle button",
+      "sticky button"
+    ],
+    "figma": "Toggle Button",
+    "importPath": "@muditmittal/dbui/components/ui/toggle"
+  },
+  {
+    "name": "Checkbox",
+    "category": "input",
+    "useFor": "Multi-select within a group, indeterminate parent states, form fields with submit",
+    "avoidFor": "On/off settings that take effect immediately → use `Switch`",
+    "synonyms": [
+      "checkmark",
+      "multiselect"
+    ],
+    "figma": "Checkbox",
+    "importPath": "@muditmittal/dbui/components/ui/checkbox"
+  },
+  {
+    "name": "Combobox",
+    "category": "input",
+    "useFor": "Pick one or many from 10+ options with search",
+    "avoidFor": "Fewer than 10 fixed options → use `Select`",
+    "synonyms": [
+      "typeahead",
+      "autocomplete",
+      "picker",
+      "searchable select"
+    ],
+    "figma": "Combobox · Typeahead Combobox (multi)",
+    "importPath": "@muditmittal/dbui/components/ui/combobox"
+  },
+  {
+    "name": "Input",
+    "category": "input",
+    "useFor": "Single-line text fields, numbers, search, email — md size by default",
+    "avoidFor": "Multi-line → use `Textarea`; >10 options → `Combobox`; search inside a control → `InputGroup`",
+    "synonyms": [
+      "text field",
+      "text input",
+      "textbox"
+    ],
+    "figma": "Input",
+    "importPath": "@muditmittal/dbui/components/ui/input"
+  },
+  {
+    "name": "NativeSelect",
+    "category": "input",
+    "useFor": "Native HTML `<select>` for accessibility-first or environments without JS",
+    "avoidFor": "Anything else — prefer `Select` for visual consistency",
+    "synonyms": [
+      "html select",
+      "native dropdown"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/native-select"
+  },
+  {
+    "name": "Select",
+    "category": "input",
+    "useFor": "Pick one from ≤10 fixed options",
+    "avoidFor": "More than 10 options or needs search → use `Combobox`",
+    "synonyms": [
+      "dropdown",
+      "picker",
+      "single-select"
+    ],
+    "figma": "Select",
+    "importPath": "@muditmittal/dbui/components/ui/select"
+  },
+  {
+    "name": "Slider",
+    "category": "input",
+    "useFor": "Continuous range selection where the rough value matters more than the exact one",
+    "avoidFor": "Exact number entry → pair with `Input`; discrete steps → use `SegmentControl` or `RadioGroup`",
+    "synonyms": [
+      "range",
+      "drag bar",
+      "range slider"
+    ],
+    "figma": "Slider",
+    "importPath": "@muditmittal/dbui/components/ui/slider"
+  },
+  {
+    "name": "Switch",
+    "category": "input",
+    "useFor": "Immediate on/off toggles that take effect without a save action",
+    "avoidFor": "Inside forms requiring submit → use `Checkbox`; multi-select → `Checkbox`",
+    "synonyms": [
+      "on/off",
+      "slider toggle",
+      "switch toggle"
+    ],
+    "figma": "Switch",
+    "importPath": "@muditmittal/dbui/components/ui/switch"
+  },
+  {
+    "name": "Textarea",
+    "category": "input",
+    "useFor": "Multi-line text input that auto-grows (`field-sizing: content`)",
+    "avoidFor": "Single-line input → use `Input`; rich text → flag the gap",
+    "synonyms": [
+      "multiline input",
+      "big text",
+      "textbox multiline"
+    ],
+    "figma": "Textarea",
+    "importPath": "@muditmittal/dbui/components/ui/textarea"
+  },
+  {
+    "name": "RadioGroup",
+    "category": "selection",
+    "useFor": "One-of-many choice for 2–7 options with text labels",
+    "avoidFor": "On/off → use `Switch`; visual tile choices → use `RadioTile`",
+    "synonyms": [
+      "radios",
+      "single-select",
+      "exclusive choice"
+    ],
+    "figma": "Radio Group",
+    "importPath": "@muditmittal/dbui/components/ui/radio-group"
+  },
+  {
+    "name": "RadioTile",
+    "category": "selection",
+    "useFor": "Visual one-of-many with icon + title + description (2–5 options)",
+    "avoidFor": "Plain text labels → use `RadioGroup`; >5 options → use `Select`",
+    "synonyms": [
+      "radio cards",
+      "big radio",
+      "choice tiles"
+    ],
+    "figma": "Radio Tile",
+    "importPath": "@muditmittal/dbui/components/ui/radio-tile"
+  },
+  {
+    "name": "SegmentControl",
+    "category": "selection",
+    "useFor": "Single-value selection in toolbars (2–5 single-word items)",
+    "avoidFor": "Primary view switching → use `Tabs`; >5 items → `Select`",
+    "synonyms": [
+      "segmented buttons",
+      "pill toggle",
+      "segment toggle"
+    ],
+    "figma": "Segment Control",
+    "importPath": "@muditmittal/dbui/components/ui/segment-control"
+  },
+  {
+    "name": "ToggleGroup",
+    "category": "selection",
+    "useFor": "A row of `Toggle`s that act as a single-select or multi-select group",
+    "avoidFor": "Single value → use `SegmentControl` or `RadioGroup`",
+    "synonyms": [
+      "toggle bar",
+      "button group toggle"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/toggle-group"
+  },
+  {
+    "name": "ContextMenu",
+    "category": "menu",
+    "useFor": "Right-click actions on a target",
+    "avoidFor": "Left-click action menus → use `DropdownMenu`",
+    "synonyms": [
+      "right-click menu",
+      "secondary menu"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/context-menu"
+  },
+  {
+    "name": "DropdownMenu",
+    "category": "menu",
+    "useFor": "Click-triggered action menus, kebab/overflow menus, item-level menus",
+    "avoidFor": "Hover-only menus; lists with search → use `Combobox`",
+    "synonyms": [
+      "action menu",
+      "kebab",
+      "overflow",
+      "⋯ menu",
+      "more menu"
+    ],
+    "figma": "Dropdown Menu",
+    "importPath": "@muditmittal/dbui/components/ui/dropdown-menu"
+  },
+  {
+    "name": "Menubar",
+    "category": "menu",
+    "useFor": "App-level menu bar (File / Edit / View / …)",
+    "avoidFor": "Single trigger menus → use `DropdownMenu`",
+    "synonyms": [
+      "app menu",
+      "menu bar"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/menubar"
+  },
+  {
+    "name": "AlertDialog",
+    "category": "overlay",
+    "useFor": "Confirming destructive or irreversible actions",
+    "avoidFor": "Non-destructive confirmations → use `Dialog`",
+    "synonyms": [
+      "confirm modal",
+      "are you sure",
+      "destructive confirm"
+    ],
+    "figma": "Alert Dialog",
+    "importPath": "@muditmittal/dbui/components/ui/alert-dialog"
+  },
+  {
+    "name": "Dialog",
+    "category": "overlay",
+    "useFor": "Focused tasks and forms in an overlay (max one open at a time)",
+    "avoidFor": "Destructive confirmations → use `AlertDialog`; secondary detail panels → use `Drawer`",
+    "synonyms": [
+      "modal",
+      "popup",
+      "overlay",
+      "lightbox"
+    ],
+    "figma": "Dialog",
+    "importPath": "@muditmittal/dbui/components/ui/dialog"
+  },
+  {
+    "name": "Drawer",
+    "category": "overlay",
+    "useFor": "Detail panels, settings, secondary content sliding in from the right",
+    "avoidFor": "Primary workflows → use `Dialog`; in-flow content → use `Card`",
+    "synonyms": [
+      "slide-out",
+      "side panel",
+      "sheet"
+    ],
+    "figma": "Drawer",
+    "importPath": "@muditmittal/dbui/components/ui/drawer"
+  },
+  {
+    "name": "HoverCard",
+    "category": "overlay",
+    "useFor": "Rich preview content on hover (user profiles, link previews)",
+    "avoidFor": "Anything interactive — HoverCard is read-only → use `Popover`",
+    "synonyms": [
+      "rich tooltip",
+      "hover preview",
+      "profile card"
+    ],
+    "figma": "Hover Card",
+    "importPath": "@muditmittal/dbui/components/ui/hover-card"
+  },
+  {
+    "name": "Popover",
+    "category": "overlay",
+    "useFor": "Date pickers, color pickers, mini-forms, rich tooltips with content",
+    "avoidFor": "Plain text → use `Tooltip`; complex content → use `Dialog`",
+    "synonyms": [
+      "floating panel",
+      "picker",
+      "popout"
+    ],
+    "figma": "Popover",
+    "importPath": "@muditmittal/dbui/components/ui/popover"
+  },
+  {
+    "name": "Sonner",
+    "category": "overlay",
+    "useFor": "Transient feedback toasts after an action (save, copy, delete)",
+    "avoidFor": "Critical errors that need user action → use `Alert`; persistent state → `Badge`",
+    "synonyms": [
+      "toast",
+      "toaster",
+      "snackbar",
+      "notification"
+    ],
+    "figma": "Toast",
+    "importPath": "@muditmittal/dbui/components/ui/sonner"
+  },
+  {
+    "name": "Tooltip",
+    "category": "overlay",
+    "useFor": "One-line hover hints, especially on icon-only buttons (`size=\"icon-md\"`)",
+    "avoidFor": "Interactive content → use `Popover`; rich preview → `HoverCard`; >1 line of text → `Popover`",
+    "synonyms": [
+      "hint",
+      "hover hint",
+      "title attribute"
+    ],
+    "figma": "Tooltip",
+    "importPath": "@muditmittal/dbui/components/ui/tooltip"
+  },
+  {
+    "name": "Alert",
+    "category": "feedback",
+    "useFor": "Persistent inline messages tied to page content (info / warning / danger / success)",
+    "avoidFor": "Transient feedback → use `Sonner` (Toast)",
+    "synonyms": [
+      "banner",
+      "info bar",
+      "message bar",
+      "notice"
+    ],
+    "figma": "Alert",
+    "importPath": "@muditmittal/dbui/components/ui/alert"
+  },
+  {
+    "name": "Badge",
+    "category": "feedback",
+    "useFor": "Short status labels and counts (1–2 words)",
+    "avoidFor": "Interactive triggers → use `Button`; status with icon → `Status`",
+    "synonyms": [
+      "label",
+      "count",
+      "status pill",
+      "chip (read-only)"
+    ],
+    "figma": "Badge",
+    "importPath": "@muditmittal/dbui/components/ui/badge"
+  },
+  {
+    "name": "Empty",
+    "category": "feedback",
+    "useFor": "Zero-data states with title, description, primary action",
+    "avoidFor": "While loading → use `Skeleton`; recoverable error → use `Alert`",
+    "synonyms": [
+      "empty state",
+      "blank slate",
+      "zero state"
+    ],
+    "figma": "Empty",
+    "importPath": "@muditmittal/dbui/components/ui/empty"
+  },
+  {
+    "name": "Progress",
+    "category": "feedback",
+    "useFor": "Determinate progress with a known endpoint (percentage or step count)",
+    "avoidFor": "Indeterminate progress → use `Spinner`",
+    "synonyms": [
+      "progress bar",
+      "loading bar"
+    ],
+    "figma": "Progress",
+    "importPath": "@muditmittal/dbui/components/ui/progress"
+  },
+  {
+    "name": "Skeleton",
+    "category": "feedback",
+    "useFor": "Initial-load placeholders that match the shape of the incoming content",
+    "avoidFor": "Loads longer than ~3 s → switch to `Spinner`; data-empty states → `Empty`",
+    "synonyms": [
+      "shimmer",
+      "placeholder",
+      "loading shape"
+    ],
+    "figma": "Skeleton",
+    "importPath": "@muditmittal/dbui/components/ui/skeleton"
+  },
+  {
+    "name": "Spinner",
+    "category": "feedback",
+    "useFor": "Indeterminate loading >1 s",
+    "avoidFor": "Initial page loads → use `Skeleton` first",
+    "synonyms": [
+      "loader",
+      "throbber",
+      "busy indicator"
+    ],
+    "figma": "Spinner",
+    "importPath": "@muditmittal/dbui/components/ui/spinner"
+  },
+  {
+    "name": "Status",
+    "category": "feedback",
+    "useFor": "Status with icon + label (running, error, success, online, …)",
+    "avoidFor": "Plain counts/labels → use `Badge`; interactive → use `Button`",
+    "synonyms": [
+      "status dot",
+      "state indicator",
+      "status pill"
+    ],
+    "figma": "Status",
+    "importPath": "@muditmittal/dbui/components/ui/status"
+  },
+  {
+    "name": "Avatar",
+    "category": "display",
+    "useFor": "User identity (image, fallback initials, default icon)",
+    "avoidFor": "Decorative purposes — Avatar implies a real user entity",
+    "synonyms": [
+      "profile pic",
+      "user image",
+      "initials"
+    ],
+    "figma": "Avatar",
+    "importPath": "@muditmittal/dbui/components/ui/avatar"
+  },
+  {
+    "name": "Card",
+    "category": "display",
+    "useFor": "Bounded content surfaces with elevation (rounded-xl, shadow)",
+    "avoidFor": "Full-width / unbounded content; nesting cards inside cards",
+    "synonyms": [
+      "container",
+      "panel",
+      "surface",
+      "tile"
+    ],
+    "figma": "Card",
+    "importPath": "@muditmittal/dbui/components/ui/card"
+  },
+  {
+    "name": "Chart",
+    "category": "display",
+    "useFor": "Data visualization (recharts wrapper)",
+    "avoidFor": "Static decoration — Chart implies real data",
+    "synonyms": [
+      "graph",
+      "plot",
+      "viz",
+      "dataviz"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/chart"
+  },
+  {
+    "name": "DataTree",
+    "category": "display",
+    "useFor": "Hierarchical data browsing (catalogs, schemas, tables) — every node has a typed icon",
+    "avoidFor": "User-mutable file hierarchies → use file-tree variants of DataTree; flat lists → use `Table`",
+    "synonyms": [
+      "tree",
+      "hierarchy",
+      "catalog tree",
+      "nav tree"
+    ],
+    "figma": "Tree",
+    "importPath": "@muditmittal/dbui/components/ui/data-tree"
+  },
+  {
+    "name": "Item",
+    "category": "display",
+    "useFor": "Generic list-item slot used inside menus, navbars, and command lists",
+    "avoidFor": "Custom one-off list rows — prefer purpose-specific components first",
+    "synonyms": [
+      "list item",
+      "list row"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/item"
+  },
+  {
+    "name": "Kbd",
+    "category": "display",
+    "useFor": "Inline keyboard shortcut markup (`⌘K`, `Ctrl+P`)",
+    "avoidFor": "Modifier indicators in body copy without keys → just text",
+    "synonyms": [
+      "keyboard",
+      "shortcut",
+      "key",
+      "hotkey"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/kbd"
+  },
+  {
+    "name": "KeyValuePair",
+    "category": "display",
+    "useFor": "Metadata in detail sidebars (key uses muted-foreground; value uses foreground)",
+    "avoidFor": "Editable values → use `Field` + `Input`",
+    "synonyms": [
+      "metadata",
+      "definition list",
+      "dl",
+      "properties"
+    ],
+    "figma": "Key Value Pair",
+    "importPath": "@muditmittal/dbui/components/ui/key-value-pair"
+  },
+  {
+    "name": "Table",
+    "category": "display",
+    "useFor": "Structured data with sortable columns, row hover, optional row actions",
+    "avoidFor": "Layout grids → use Tailwind grid/flex; hierarchical data → `DataTree`",
+    "synonyms": [
+      "grid",
+      "datagrid",
+      "datatable"
+    ],
+    "figma": "Table",
+    "importPath": "@muditmittal/dbui/components/ui/table"
+  },
+  {
+    "name": "Tag",
+    "category": "display",
+    "useFor": "Removable filter chips, key:value labels in faceted filters",
+    "avoidFor": "Read-only status → use `Badge`; persistent labels with no remove → `Badge`",
+    "synonyms": [
+      "chip",
+      "pill",
+      "removable label",
+      "filter chip"
+    ],
+    "figma": "Tag",
+    "importPath": "@muditmittal/dbui/components/ui/tag"
+  },
+  {
+    "name": "Breadcrumb",
+    "category": "navigation",
+    "useFor": "Hierarchical path back to root (last item is current page)",
+    "avoidFor": "Non-hierarchical navigation → use `Tabs` or `Navbar`",
+    "synonyms": [
+      "trail",
+      "path",
+      "hierarchy nav"
+    ],
+    "figma": "Breadcrumb",
+    "importPath": "@muditmittal/dbui/components/ui/breadcrumb"
+  },
+  {
+    "name": "EditorTabs",
+    "category": "navigation",
+    "useFor": "Code-editor style closeable tabs with file-type icons",
+    "avoidFor": "General view switching → use `Tabs`",
+    "synonyms": [
+      "code tabs",
+      "file tabs",
+      "editor tab bar"
+    ],
+    "figma": "Editor Tabs",
+    "importPath": "@muditmittal/dbui/components/ui/editor-tabs"
+  },
+  {
+    "name": "Navbar",
+    "category": "navigation",
+    "useFor": "Top-level product navigation (workspace switcher, global actions)",
+    "avoidFor": "Page-level tabs → use `Tabs`; in-page sections → use `Accordion`",
+    "synonyms": [
+      "top nav",
+      "navigation bar",
+      "header nav"
+    ],
+    "figma": "PlatformNav",
+    "importPath": "@muditmittal/dbui/components/ui/navbar"
+  },
+  {
+    "name": "Pagination",
+    "category": "navigation",
+    "useFor": "Paged tables with previous/next, ellipsis for large counts",
+    "avoidFor": "Fewer than 2 pages; infinite scroll",
+    "synonyms": [
+      "pager",
+      "page nav"
+    ],
+    "figma": "Pagination",
+    "importPath": "@muditmittal/dbui/components/ui/pagination"
+  },
+  {
+    "name": "Tabs",
+    "category": "navigation",
+    "useFor": "Switch between sibling content panels of equal importance (2–7 tabs)",
+    "avoidFor": "Unrelated pages → use `Navbar`; closeable per-file → `EditorTabs`; toolbar selection → `SegmentControl`",
+    "synonyms": [
+      "tab bar",
+      "view switcher"
+    ],
+    "figma": "Tabs",
+    "importPath": "@muditmittal/dbui/components/ui/tabs"
+  },
+  {
+    "name": "Accordion",
+    "category": "layout",
+    "useFor": "Settings panels, filter groups, FAQ-style content",
+    "avoidFor": "Primary navigation → use `Tabs`. Don't nest accordions.",
+    "synonyms": [
+      "collapsible sections",
+      "expandable",
+      "disclosure"
+    ],
+    "figma": "Accordion",
+    "importPath": "@muditmittal/dbui/components/ui/accordion"
+  },
+  {
+    "name": "AspectRatio",
+    "category": "layout",
+    "useFor": "Lock image/video proportions inside cards and grids",
+    "avoidFor": "Text-only containers — apply only to media wrappers",
+    "synonyms": [
+      "ratio box",
+      "media frame"
+    ],
+    "figma": "Aspect Ratio",
+    "importPath": "@muditmittal/dbui/components/ui/aspect-ratio"
+  },
+  {
+    "name": "Collapsible",
+    "category": "layout",
+    "useFor": "Single show/hide toggle (one expandable region)",
+    "avoidFor": "Multiple sibling regions → use `Accordion`",
+    "synonyms": [
+      "expandable",
+      "show more",
+      "disclosure"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/collapsible"
+  },
+  {
+    "name": "Direction",
+    "category": "layout",
+    "useFor": "RTL/LTR direction wrapping",
+    "avoidFor": "(utility — wrap as needed)",
+    "synonyms": [
+      "rtl",
+      "ltr",
+      "dir"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/direction"
+  },
+  {
+    "name": "Field",
+    "category": "layout",
+    "useFor": "Form field wrapper that pairs Label + control + helper/error text",
+    "avoidFor": "Free-floating inputs without labels — Inputs should always have a Label",
+    "synonyms": [
+      "form field",
+      "form row"
+    ],
+    "figma": "Form Input",
+    "importPath": "@muditmittal/dbui/components/ui/field"
+  },
+  {
+    "name": "InputGroup",
+    "category": "layout",
+    "useFor": "Attach icons, buttons, or text addons to an `Input` (e.g. search + clear, prefix/suffix)",
+    "avoidFor": "Standalone inputs without addons → use `Input` directly",
+    "synonyms": [
+      "input addon",
+      "addon group",
+      "prefix/suffix input"
+    ],
+    "figma": "Input Group",
+    "importPath": "@muditmittal/dbui/components/ui/input-group"
+  },
+  {
+    "name": "Label",
+    "category": "layout",
+    "useFor": "Form labels (Bold style, 13px Semibold)",
+    "avoidFor": "Sub-labels or helper text — use a span with `text-muted-foreground` instead",
+    "synonyms": [
+      "form label",
+      "field label"
+    ],
+    "figma": "Label",
+    "importPath": "@muditmittal/dbui/components/ui/label"
+  },
+  {
+    "name": "Resizable",
+    "category": "layout",
+    "useFor": "Resizable split panels (e.g. tree rail + detail)",
+    "avoidFor": "Fixed-width panels — only use when the user should resize",
+    "synonyms": [
+      "splitter",
+      "gutter",
+      "resizable panels"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/resizable"
+  },
+  {
+    "name": "ScrollArea",
+    "category": "layout",
+    "useFor": "Overflowing content that needs custom-styled scrollbars",
+    "avoidFor": "Page-level scroll — let the browser handle it",
+    "synonyms": [
+      "scrollbox",
+      "scroll container"
+    ],
+    "figma": "*code-only*",
+    "importPath": "@muditmittal/dbui/components/ui/scroll-area"
+  },
+  {
+    "name": "Separator",
+    "category": "layout",
+    "useFor": "Visual divider between content groups",
+    "avoidFor": "Decorative use — only when grouping is real",
+    "synonyms": [
+      "divider",
+      "hr",
+      "line",
+      "rule"
+    ],
+    "figma": "Separator",
+    "importPath": "@muditmittal/dbui/components/ui/separator"
+  },
+  {
+    "name": "PageHeader",
+    "category": "chrome",
+    "useFor": "Top of every content surface — breadcrumb, title row, tabs",
+    "avoidFor": "Inside cards or sub-sections — only one PageHeader per surface",
+    "synonyms": [
+      "title bar",
+      "page title row"
+    ],
+    "figma": "Page Header",
+    "importPath": "@muditmittal/dbui/components/ui/page-header"
+  },
+  {
+    "name": "PlatformHeader",
+    "category": "chrome",
+    "useFor": "The Databricks 48px top bar (sidebar toggle, search, workspace, Genie, apps, profile)",
+    "avoidFor": "Custom top bars — every product page uses PlatformHeader via `Base` shell",
+    "synonyms": [
+      "top bar",
+      "app header",
+      "platform bar"
+    ],
+    "figma": "Platform Header",
+    "importPath": "@muditmittal/dbui/components/ui/platform-header"
+  },
+  {
+    "name": "ButtonGroup",
+    "category": "chrome",
+    "useFor": "Use `SplitButton`. File kept for back-compat only.",
+    "avoidFor": "",
+    "synonyms": [],
+    "figma": "",
+    "importPath": "@muditmittal/dbui/components/ui/button-group"
+  }
+]
