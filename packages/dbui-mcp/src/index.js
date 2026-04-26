@@ -25,7 +25,10 @@ import * as resolveComponent from "./tools/resolve-component.js"
 import * as resolveToken from "./tools/resolve-token.js"
 import * as lintReactSnippet from "./tools/lint-react-snippet.js"
 import * as checkComposition from "./tools/check-composition.js"
+import * as checkCopy from "./tools/check-copy.js"
 import * as getRules from "./tools/get-rules.js"
+import * as renderReactPreview from "./tools/render-react-preview.js"
+import * as composeFigmaFrame from "./tools/compose-figma-frame.js"
 
 const tools = [
   resolveIcon,
@@ -33,7 +36,10 @@ const tools = [
   resolveToken,
   lintReactSnippet,
   checkComposition,
+  checkCopy,
   getRules,
+  renderReactPreview,
+  composeFigmaFrame,
 ]
 
 const server = new Server(
