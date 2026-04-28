@@ -181,26 +181,23 @@ npm install tailwindcss @tailwindcss/vite`,
     note: "Only when starting from scratch. Creates a minimal React + Tailwind v4 project shell. Skip this entire step if a working project already exists — DBUI installs into any project that has React 18+ and Tailwind v4.",
   },
   {
-    label: "Install DBUI",
-    code: `git clone https://github.com/muditmittal/dbui.git ~/dbui
+    label: "Install or update DBUI",
+    code: `if [ -d ~/dbui/.git ]; then
+  (cd ~/dbui && git pull --ff-only)
+else
+  git clone https://github.com/muditmittal/dbui.git ~/dbui
+fi
 cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
-    copyText: `git clone https://github.com/muditmittal/dbui.git ~/dbui && cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
-    note: "Clone once, then copy dbui and dbui-shells into your project. The pre-built dist/ ships in git — no npm install needed for any DBUI dependency. Works behind corp firewalls.",
+    copyText: `if [ -d ~/dbui/.git ]; then (cd ~/dbui && git pull --ff-only); else git clone https://github.com/muditmittal/dbui.git ~/dbui; fi && cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
+    note: "The same block handles first install AND every future update. It clones if ~/dbui doesn't exist, pulls latest if it does, then copies the synced source into your project. The pre-built dist/ ships in git — no npm install needed. Works behind corp firewalls.",
   },
   {
     label: "Wire up AI rules",
+    optional: "Run once on first install only — do NOT re-run on updates if you customize",
     code: `cp ./dbui/CLAUDE.md ./CLAUDE.md`,
     copyText: `cp ./dbui/CLAUDE.md ./CLAUDE.md`,
     note: "Tells Cursor / Claude Code to use DBUI components instead of raw HTML. If you ALREADY have a CLAUDE.md, do not overwrite — append the contents of ./dbui/CLAUDE.md to your existing file. Without this step, AI assistants won't prioritize DBUI.",
-  },
-  {
-    label: "Update",
-    code: `cd ~/dbui && git pull
-cp -r ~/dbui/packages/dbui ./dbui
-cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
-    copyText: `cd ~/dbui && git pull && cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
-    note: "Pull latest, re-copy both folders. The updated dist/ comes with the pull.",
   },
 ]
 

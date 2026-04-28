@@ -349,14 +349,19 @@ CSS setup (one-time in root stylesheet):
 
 ## Updating DBUI
 
-To get the latest components, tokens, and icons:
+To get the latest components, tokens, and icons, run the **same idempotent sync block** that does the first install:
 
 ```bash
-cd ~/dbui && git pull
+if [ -d ~/dbui/.git ]; then
+  (cd ~/dbui && git pull --ff-only)
+else
+  git clone https://github.com/muditmittal/dbui.git ~/dbui
+fi
 cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells
-cp ./dbui/CLAUDE.md ./CLAUDE.md
 ```
 
-The pre-built `dist/` ships in git, so no rebuild step is needed. No `npm install` either.
+This block is the install path AND the update path — re-run it whenever you want to refresh DBUI. The pre-built `dist/` ships in git, so no rebuild step. No `npm install` either.
+
+**Do NOT auto-copy `./dbui/CLAUDE.md` to the project root** during updates — that would overwrite any customizations the user made. If the user explicitly asks to refresh AI rules, copy it; otherwise leave the root `CLAUDE.md` alone.
 

@@ -49,17 +49,19 @@ If the user explicitly asks for one of the above later, fine. Never add any of t
 
 Five steps. None of them require `npm install`.
 
-### Step 1: Copy DBUI into the project
+### Step 1: Sync DBUI into the project
 
 ```bash
-if [ ! -d "$HOME/dbui" ]; then
+if [ -d ~/dbui/.git ]; then
+  (cd ~/dbui && git pull --ff-only)
+else
   git clone https://github.com/muditmittal/dbui.git ~/dbui
 fi
 cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 ```
 
-The pre-built `./dbui/dist/` ships in git — no build step, no `npm install`.
+This block is **idempotent — run it for first install AND every update.** It clones if `~/dbui` doesn't exist yet, pulls latest if it does, then copies the freshly-synced source into the project. The pre-built `./dbui/dist/` ships in git — no build step, no `npm install`.
 
 ### Step 2: Add path aliases to `tsconfig.json`
 
@@ -113,15 +115,11 @@ export default function Home() {
 
 Then start the dev server (`npm run dev`, `yarn dev`, whatever the project already uses). The full Databricks shell renders. Done.
 
-### Update to latest
+### Updating later
 
-```bash
-cd ~/dbui && git pull
-cp -r ~/dbui/packages/dbui ./dbui
-cp -r ~/dbui/packages/dbui-shells ./dbui-shells
-```
+Re-run **Step 1**. That same block is the update path — it pulls latest when `~/dbui` already exists. No separate update procedure.
 
-The updated `dist/` is already in the pulled repo. No rebuild step.
+Steps 2 (tsconfig aliases), 3 (CSS import), and 4 (AI rules wiring) only need to be set up once. Updates ship through Step 1.
 
 ---
 
