@@ -4,18 +4,32 @@
 # DBUI is Databricks' component library — 46 components, 451 icons, 162 tokens.
 # Built on shadcn/ui + Base UI + Tailwind CSS v4, reskinned with DuBois design tokens.
 
-## INSTALL — keep it LEAN
+## INSTALL
 
-DBUI is UI code only. Do NOT pick a framework for the user. Do NOT install anything outside the list below.
+DBUI ships pre-bundled. Installing it is **clone + copy + tsconfig alias**. Nothing else. **No `npm install` is required for DBUI itself or any of its dependencies** — Base UI, CVA, clsx, tailwind-merge, sonner, vaul are all inlined into `packages/dbui/dist/`.
 
-### Prerequisite: a minimal React + Tailwind v4 project
+This is intentional: many consumer environments (Databricks corp network in particular) firewall `registry.npmjs.org`. The install path below works without any registry access.
 
-- If the project already has `package.json` with React and Tailwind v4, continue to Step 1.
-- If there is no `package.json`, STOP and ask the user. Suggest this minimal bootstrap, do NOT run it for them:
+The install has two parts:
+
+1. **Bootstrap** — a one-time prerequisite to set up React + Tailwind v4. **Skip if you already have a working React project.**
+2. **Add DBUI** — the actual install. Always required.
+
+If DBUI is being added to an existing project, jump directly to ["Add DBUI"](#add-dbui).
+
+---
+
+## Bootstrap (only if starting from scratch)
+
+DBUI is UI code only. Do NOT scaffold a framework on behalf of the user.
+
+- **If `package.json` already exists with React and Tailwind v4** → skip this section, go to ["Add DBUI"](#add-dbui).
+- **If there is no `package.json`** → STOP. Ask the user. If they confirm, suggest:
   ```bash
   npm create vite@latest . -- --template react-ts
   npm install tailwindcss @tailwindcss/vite
   ```
+  This is the only `npm install` in the whole flow. It runs once, creates the project shell, and is never needed again. **If this fails because the registry is firewalled, the user must resolve their network access first** — DBUI cannot scaffold a React project for them.
 
 ### DO NOT install any of these. They are not DBUI dependencies.
 
@@ -29,6 +43,12 @@ UI libs: shadcn CLI, Radix, Mantine, Chakra, MUI — DBUI replaces these.
 
 If the user explicitly asks for one of the above later, fine. Never add any of them proactively.
 
+---
+
+## Add DBUI
+
+Five steps. None of them require `npm install`.
+
 ### Step 1: Copy DBUI into the project
 
 ```bash
@@ -37,23 +57,32 @@ if [ ! -d "$HOME/dbui" ]; then
 fi
 cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells
-cp ./dbui/CLAUDE.md ./CLAUDE.md
 ```
 
+The pre-built `./dbui/dist/` ships in git — no build step, no `npm install`.
+
 ### Step 2: Add path aliases to `tsconfig.json`
+
+Point `dbui/*` at the **pre-built dist**, and `dbui-shells/*` at its source:
 
 ```json
 {
   "compilerOptions": {
     "paths": {
-      "dbui/*": ["./dbui/src/*"],
+      "dbui/*": ["./dbui/dist/*"],
+      "dbui/components/icons/*": ["./dbui/src/components/icons/*"],
+      "dbui/tokens/*": ["./dbui/src/tokens/*"],
       "dbui-shells/*": ["./dbui-shells/src/*"]
     }
   }
 }
 ```
 
-Vite/Webpack projects: mirror these in `resolve.alias`.
+Vite/Webpack projects: mirror the same aliases in `resolve.alias`.
+
+Why icons and tokens stay on `src/`:
+- **Icons** are 451 individual `.tsx` files; we don't pre-bundle them so consumers tree-shake naturally and can read source on hover.
+- **Tokens** are pure CSS (`globals.css`) — no JS to bundle.
 
 ### Step 3: Import DBUI tokens in root CSS
 
@@ -62,24 +91,11 @@ Vite/Webpack projects: mirror these in `resolve.alias`.
 @import "./dbui/src/tokens/globals.css";
 ```
 
-### Step 4: Install required deps — these four, nothing else
+### Step 4: Wire up AI assistant rules ([see "Make AI assistants prioritize DBUI"](#make-ai-assistants-prioritize-dbui))
 
-```bash
-npm install @base-ui/react class-variance-authority clsx tailwind-merge
-```
+Without this, your AI assistant won't know DBUI exists and will keep generating raw `<button>` and `<div>` elements. Critical for adoption.
 
-### Step 5: Install optional peer deps ONLY when needed
-
-Add each one only when the user imports the matching component:
-
-| Component(s) | Extra package |
-|---|---|
-| `Sonner` / `toast()` | `sonner next-themes` |
-| `Drawer` | `vaul` |
-| `Resizable` / `ResizablePanel` | `react-resizable-panels` |
-| `Chart` / `chart.tsx` | `recharts` |
-
-### Step 6: Create the first page with the Base Shell
+### Step 5: Create the first page with the Base Shell
 
 ```tsx
 import { Base } from "dbui-shells"
@@ -95,11 +111,7 @@ export default function Home() {
 }
 ```
 
-### Step 7: Start the dev server
-
-```bash
-npm run dev
-```
+Then start the dev server (`npm run dev`, `yarn dev`, whatever the project already uses). The full Databricks shell renders. Done.
 
 ### Update to latest
 
@@ -107,32 +119,111 @@ npm run dev
 cd ~/dbui && git pull
 cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells
+```
+
+The updated `dist/` is already in the pulled repo. No rebuild step.
+
+---
+
+## Make AI assistants prioritize DBUI
+
+This is the part most consumers miss. Dropping the `dbui/` folder into a project doesn't automatically tell Claude / Cursor / Copilot to use DBUI components instead of generating raw HTML or pulling shadcn. You have to point them at the rules.
+
+### If you DO NOT have a `CLAUDE.md` at the project root
+
+Just copy DBUI's:
+
+```bash
 cp ./dbui/CLAUDE.md ./CLAUDE.md
 ```
+
+Done. Cursor and Claude Code both auto-load `CLAUDE.md` at session start.
+
+### If you ALREADY have a `CLAUDE.md` at the project root
+
+**Do NOT overwrite it.** Append a DBUI section instead. Either:
+
+**Option A — inline** (concise, gets read in full):
+Open your existing `./CLAUDE.md` and append the contents of `./dbui/CLAUDE.md`. Add a heading like `## DBUI — Design System Rules` so the section is named.
+
+**Option B — by reference** (smaller, less guaranteed to be obeyed):
+Append this to your existing `./CLAUDE.md`:
+
+```md
+## DBUI — Design System Rules
+
+This project uses DBUI for all UI. **Read `./dbui/CLAUDE.md` before writing any UI code.** Key rules:
+
+- Always use components from `dbui/components/ui/*`. Never raw `<button>`, `<input>`, `<div role="dialog">`.
+- Always use icons from `dbui/components/icons/{Name}`. Never lucide, heroicons, or any other icon package.
+- Always use semantic tokens (`bg-primary`, `text-foreground`). Never hardcode hex colors.
+- Every page wraps in `<Base>` from `dbui-shells`.
+- Base UI uses `render={<Component />}`, not Radix `asChild`.
+
+Full rules: `./dbui/CLAUDE.md`. Component picker: `./dbui/docs/component-index.md`. Icon picker: `./dbui/docs/icon-index.md`.
+```
+
+Option A is more reliable because the LLM gets the full rule set in context. Option B is enough for most cases and keeps your root CLAUDE.md slim.
+
+### For Cursor specifically (more reliable enforcement)
+
+In addition to (or instead of) the root CLAUDE.md, create `.cursor/rules/dbui.mdc`:
+
+```mdc
+---
+description: DBUI design system rules — use DBUI components, never raw HTML
+globs: ["**/*.tsx", "**/*.jsx"]
+alwaysApply: true
+---
+
+(paste the contents of ./dbui/CLAUDE.md here)
+```
+
+`alwaysApply: true` + a TSX/JSX glob means the rule fires on every UI file, every time. This catches cases where the LLM forgets the root CLAUDE.md mid-session.
+
+### For Claude Code
+
+The root `CLAUDE.md` approach (above) is the default mechanism. No additional config needed — Claude Code reads `./CLAUDE.md` at session start and recursively reads `CLAUDE.md` files in any directory it touches. Since DBUI ships its own `./dbui/CLAUDE.md`, that file is also picked up automatically when Claude Code edits files in or near `./dbui/`.
+
+### For GitHub Copilot / Cody / generic LLMs without CLAUDE.md support
+
+These tools rely on docstrings and code comments. The DBUI rules embedded in `@guideline` and `@constraint` JSDoc on each component still get surfaced via autocomplete. For higher-level prioritization, add a section to your project `README.md`:
+
+> ## UI components
+>
+> This project uses DBUI. Import all UI primitives from `dbui/components/ui/*` and icons from `dbui/components/icons/*`. Never use raw HTML interactive elements. See `./dbui/CLAUDE.md` for rules.
+
+### Will my existing project work after adding DBUI?
+
+Yes, with these prerequisites:
+
+| Requirement | Why |
+|---|---|
+| **React 18+ and react-dom 18+** | DBUI's `package.json` declares them as peerDependencies |
+| **Tailwind v4** (not v3) | DBUI uses v4-only token features (`@import "tailwindcss"`, OKLCH semantic tokens). If you're on v3, migrate first using the [Tailwind v4 upgrade guide](https://tailwindcss.com/docs/upgrade-guide), then add DBUI |
+| **A bundler that supports path aliases** | Vite, Next.js, Webpack, Parcel, Rspack — all fine. Plain `tsc` without a bundler will not work |
+| **No conflicting global CSS resets** | If your project has aggressive resets (e.g. `* { all: revert; }`), DBUI's tokens may be overridden. Reset rules should be scoped, not universal |
+
+DBUI coexists fine with other UI libraries you might already have (Material UI, Chakra, etc.) — it just adds its own components, doesn't try to replace theirs at runtime. New code you write should use DBUI; old code can stay until you migrate it.
 
 ---
 
 ## WHERE TO LOOK — read these BEFORE writing any UI
 
-These are the discovery layer. Each component's source file (`dbui/components/ui/<name>.tsx`) is the rules layer — read its `@guideline` and `@constraint` JSDoc when you actually use the component.
+These are the discovery layer. Each component's source file (`dbui/src/components/ui/<name>.tsx`) is the rules layer — read its `@guideline` and `@constraint` JSDoc when you actually use the component.
 
 | Need | Canonical file |
 |------|---------------|
-| Pick the right component | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms, Figma name) |
+| Pick the right component | `./dbui/docs/component-index.md` — searchable component table (category, when to use, avoid for, synonyms) |
 | Find the right icon | `./dbui/docs/icon-index.md` — searchable 449-icon index |
 | Write any user-facing copy | `./dbui/docs/brandvoice.md` — vocabulary, tone, microcopy templates |
-| Translate Figma ↔ React (component or inner-component names) | `./dbui/docs/figma-mapping.md` — top-level + inner components + slot encodings + edge cases |
 | Pick a page-level layout / shell | `./dbui/composition.md` — five named shells with regions, scaling, scroll, primary action |
 | Apply cross-cutting layout/spacing rules | `./dbui/docs/component-rules.md` — spacing rhythm, page padding, icon and button rules |
 | Read full guidelines/constraints for a component | `./dbui/src/components/ui/<name>.tsx` — `@guideline` / `@constraint` JSDoc |
 | Get entity icons for trees | `./dbui/src/components/icons/entity-icons.ts` — NEVER guess these |
 | Design token values | `./dbui/src/tokens/globals.css` |
 
-**Single source of truth:** per-component rules live ONLY in the component's JSDoc. Per-icon details live ONLY in `icon-index.md`. Cross-cutting layout rules live ONLY in `component-rules.md`. Shell-level composition lives ONLY in `composition.md`. Voice/tone lives ONLY in `brandvoice.md`. Figma ↔ React naming lives ONLY in `figma-mapping.md`. If you ever see a rule duplicated, the more specific source wins (JSDoc > index > llms.txt).
-
-**Picking vs translating — don't mix them up:**
-- *"Which component do I use for X?"* → `component-index.md`
-- *"What's this Figma layer called in React?" / "Where does this React component live in Figma?"* → `figma-mapping.md`
+**Single source of truth:** per-component rules live ONLY in the component's JSDoc. Per-icon details live ONLY in `icon-index.md`. Cross-cutting layout rules live ONLY in `component-rules.md`. Shell-level composition lives ONLY in `composition.md`. Voice/tone lives ONLY in `brandvoice.md`. If you ever see a rule duplicated, the more specific source wins (JSDoc > index > llms.txt).
 
 ---
 
@@ -169,3 +260,5 @@ These are facts agents forget most often. Full rules are in the canonical files 
 
 Not yet available — compose from primitives as interim:
 - DatePicker, Stepper, Banner, CodeBlock, Virtualized lists
+- **Chart** (`recharts` not bundled — non-critical)
+- **Resizable** / **ResizablePanel** (`react-resizable-panels` not bundled — non-critical)

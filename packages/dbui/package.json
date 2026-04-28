@@ -3,9 +3,8 @@
   "version": "0.2.0",
   "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "sideEffects": false,
   "files": [
     "dist",
@@ -17,10 +16,21 @@
     "README.md"
   ],
   "exports": {
-    ".": "./src/index.ts",
-    "./components/ui/*": "./src/components/ui/*.tsx",
+    ".": {
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./components/ui/*": {
+      "import": "./dist/components/ui/*.mjs",
+      "source": "./src/components/ui/*.tsx",
+      "default": "./dist/components/ui/*.mjs"
+    },
     "./components/icons/*": "./src/components/icons/*.tsx",
-    "./lib/*": "./src/lib/*",
+    "./lib/*": {
+      "import": "./dist/lib/*.mjs",
+      "source": "./src/lib/*",
+      "default": "./dist/lib/*.mjs"
+    },
     "./tokens/*": "./src/tokens/*",
     "./llms.txt": "./llms.txt"
   },

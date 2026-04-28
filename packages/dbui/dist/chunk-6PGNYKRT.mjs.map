@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../node_modules/@base-ui/utils/esm/safeReact.js"],"names":[],"mappings":";;;AAGO,IAAM,YAAY,cAAA,CAAA,EAAA,EACpB,KAAA","file":"chunk-6PGNYKRT.mjs","sourcesContent":["import * as React from 'react';\n\n// https://github.com/mui/material-ui/issues/41190#issuecomment-2040873379\nexport const SafeReact = {\n  ...React\n};"]}

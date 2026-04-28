@@ -1,6 +1,5 @@
 "use client"
 
-import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { CheckCircleFill } from "../icons/CheckCircleFill"
 import { InfoFill } from "../icons/InfoFill"
@@ -15,11 +14,13 @@ import { Loading } from "../icons/Loading"
  * @constraint Don't use for critical errors that need user action — use Alert
  * @constraint Max 3 toasts stacked at once
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=968-944
+ *
+ * Theme defaults to "system". If you want app-driven theming, pass a `theme` prop
+ * explicitly (e.g. wired up to your own theme provider). Removed the `next-themes`
+ * dependency to keep DBUI install zero-npm.
  */
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
-
+const Toaster = ({ theme = "system", ...props }: ToasterProps) => {
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}

@@ -2,6 +2,11 @@ node_modules
 .next
 out
 dist
+# Exception: ship the pre-built DBUI dist/ in git so consumers in
+# environments without npm registry access (e.g. Databricks corp network)
+# can clone and use DBUI without running `npm install`.
+!packages/dbui/dist/
+!packages/dbui/dist/**
 .env
 .env.local
 .yarn/cache
@@ -16,6 +21,11 @@ packages/dbui/design-tokens.json
 # Repo-internal (force-add with git add -f)
 figma.config.json
 .claude/
+
+# Maintainer-only working notes & one-shot audits.
+# Never distributed to consumers; preserved locally for reference until
+# the L2 auto-generation pipeline replaces the manually-curated lookups.
+project/
 
 # apps/portal build artifacts (the app itself IS tracked)
 apps/portal/.next/
