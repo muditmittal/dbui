@@ -6,9 +6,9 @@
 
 ## INSTALL
 
-DBUI ships as source. Installing it is **clone + copy + `npm install` 4 packages + tsconfig alias**.
+DBUI ships as source with all dependencies vendored. Installing it is **clone + copy + tsconfig alias**. No `npm install` needed — no package manager, no registry access.
 
-The one step that needs network access is `npm install @base-ui/react class-variance-authority clsx tailwind-merge`. If your environment firewalls `registry.npmjs.org`, connect to a network with registry access for that one command, then switch back. Everything else works offline.
+All runtime dependencies (Base UI, CVA, clsx, tailwind-merge, sonner, vaul and their transitive deps) ship inside `./dbui/vendor/`. The consumer's tsconfig extends a provided paths file that maps everything.
 
 The install has two parts:
 
@@ -61,44 +61,41 @@ cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 
 This block is **idempotent — run it for first install AND every update.** It clones if `~/dbui` doesn't exist yet, pulls latest if it does, then copies the freshly-synced source into the project.
 
-### Step 2: Install DBUI's 4 dependencies
+### Step 2: Add path aliases to `tsconfig.json`
 
-```bash
-npm install @base-ui/react class-variance-authority clsx tailwind-merge
-```
-
-These are the only packages DBUI needs beyond React and Tailwind. If your npm can't reach `registry.npmjs.org` (ECONNREFUSED), **connect to a network with registry access first** (e.g. off VPN, or configure `npm config set proxy`), run the install, then switch back. You only need to do this once — after the packages are in `node_modules/`, everything works offline.
-
-Two additional packages are optional — install them only if you use the specific component:
-
-| Component | Extra package |
-|---|---|
-| `Sonner` / `toast()` | `sonner` |
-| `Drawer` | `vaul` |
-
-### Step 3: Add path aliases to `tsconfig.json`
+DBUI vendors all its dependencies (Base UI, CVA, clsx, tailwind-merge, sonner, vaul + transitive deps) inside `./dbui/vendor/`. No `npm install` needed. Just extend the provided tsconfig paths:
 
 ```json
 {
+  "extends": "./dbui/vendor/tsconfig-paths.json",
   "compilerOptions": {
-    "paths": {
-      "dbui/*": ["./dbui/src/*"],
-      "dbui-shells/*": ["./dbui-shells/src/*"]
-    }
+    // ... your existing config
   }
 }
 ```
 
-Vite/Webpack projects: mirror the same aliases in `resolve.alias`.
+This maps `dbui/*`, `dbui-shells/*`, and all vendored packages to the right folders.
 
-### Step 4: Import DBUI tokens in root CSS
+**For Vite projects**, also add to `vite.config.ts`:
+
+```ts
+import { dbuiAliases } from "./dbui/vendor/vite-aliases.js"
+
+export default defineConfig({
+  resolve: { alias: { ...dbuiAliases } },
+})
+```
+
+**For Webpack projects**, add the same aliases to `resolve.alias` manually (see `./dbui/vendor/tsconfig-paths.json` for the full list).
+
+### Step 3: Import DBUI tokens in root CSS
 
 ```css
 @import "tailwindcss";
 @import "./dbui/src/tokens/globals.css";
 ```
 
-### Step 5: Install DBUI skills (Cursor users)
+### Step 4: Install DBUI skills (Cursor users)
 
 ```bash
 mkdir -p .cursor/skills
@@ -109,11 +106,11 @@ This copies 4 skill files that teach the AI assistant how to pick components, pi
 
 For Claude Code users: skills aren't needed — CLAUDE.md and the `docs/` folder provide equivalent guidance.
 
-### Step 6: Wire up AI assistant rules ([see "Make AI assistants prioritize DBUI"](#make-ai-assistants-prioritize-dbui))
+### Step 5: Wire up AI assistant rules ([see "Make AI assistants prioritize DBUI"](#make-ai-assistants-prioritize-dbui))
 
 Without this, your AI assistant won't know DBUI exists and will keep generating raw `<button>` and `<div>` elements. Critical for adoption.
 
-### Step 7: Create the first page with the Base Shell
+### Step 6: Create the first page with the Base Shell
 
 ```tsx
 import { Base } from "dbui-shells"
@@ -133,9 +130,9 @@ Then start the dev server (`npm run dev`, `yarn dev`, whatever the project alrea
 
 ### Updating later
 
-Re-run **Step 1** (sync) and **Step 5** (skills copy). That same pair is the update path — Step 1 pulls latest source, Step 5 refreshes the skills. No separate update procedure.
+Re-run **Step 1** (sync) and **Step 4** (skills copy). That same pair is the update path — Step 1 pulls latest source + vendor deps, Step 4 refreshes the skills. No separate update procedure.
 
-Steps 2 (npm deps), 3 (tsconfig aliases), 4 (CSS import), 6 (AI rules wiring), and 7 (first page) only need to be done once. Step 2 may occasionally need re-running if DBUI adds a new dependency in a future version — the release notes will say so.
+Steps 2 (tsconfig/aliases), 3 (CSS import), 5 (AI rules wiring), and 6 (first page) only need to be done once.
 
 ---
 

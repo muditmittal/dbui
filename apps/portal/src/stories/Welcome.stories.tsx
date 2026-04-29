@@ -193,11 +193,16 @@ cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
     note: "The same block handles first install AND every future update. It clones if ~/dbui doesn't exist, pulls latest if it does, then copies the synced source into your project.",
   },
   {
-    label: "Install dependencies",
-    optional: "Run once — only needed on first install",
-    code: `npm install @base-ui/react class-variance-authority clsx tailwind-merge`,
-    copyText: `npm install @base-ui/react class-variance-authority clsx tailwind-merge`,
-    note: "DBUI's 4 runtime dependencies. Needs registry access — if npm gives ECONNREFUSED, connect to a network that can reach registry.npmjs.org (e.g. off VPN), run this, then switch back. Only needed once.",
+    label: "Set up path aliases",
+    optional: "Run once — extend the provided tsconfig, add Vite aliases if applicable",
+    code: `// tsconfig.json
+{ "extends": "./dbui/vendor/tsconfig-paths.json" }
+
+// vite.config.ts (if using Vite)
+import { dbuiAliases } from "./dbui/vendor/vite-aliases.js"
+export default defineConfig({ resolve: { alias: { ...dbuiAliases } } })`,
+    copyText: ``,
+    note: "All dependencies (Base UI, CVA, clsx, tailwind-merge, sonner, vaul) are vendored inside dbui/vendor/. No npm install needed. The tsconfig-paths.json maps everything.",
   },
   {
     label: "Install AI skills",

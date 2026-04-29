@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "dbui/*": ["./dbui/src/*"],
+      "dbui-shells/*": ["./dbui-shells/src/*"],
+
+      "@base-ui/react": ["./dbui/vendor/@base-ui/react"],
+      "@base-ui/react/*": ["./dbui/vendor/@base-ui/react/*"],
+      "@base-ui/utils": ["./dbui/vendor/@base-ui/utils"],
+      "@base-ui/utils/*": ["./dbui/vendor/@base-ui/utils/*"],
+      "@babel/runtime": ["./dbui/vendor/@babel/runtime"],
+      "@babel/runtime/*": ["./dbui/vendor/@babel/runtime/*"],
+      "@floating-ui/react-dom": ["./dbui/vendor/@floating-ui/react-dom"],
+      "@floating-ui/react-dom/*": ["./dbui/vendor/@floating-ui/react-dom/*"],
+      "@floating-ui/dom": ["./dbui/vendor/@floating-ui/dom"],
+      "@floating-ui/dom/*": ["./dbui/vendor/@floating-ui/dom/*"],
+      "@floating-ui/core": ["./dbui/vendor/@floating-ui/core"],
+      "@floating-ui/core/*": ["./dbui/vendor/@floating-ui/core/*"],
+      "@floating-ui/utils": ["./dbui/vendor/@floating-ui/utils"],
+      "@floating-ui/utils/*": ["./dbui/vendor/@floating-ui/utils/*"],
+      "tabbable": ["./dbui/vendor/tabbable"],
+      "use-sync-external-store": ["./dbui/vendor/use-sync-external-store"],
+      "use-sync-external-store/*": ["./dbui/vendor/use-sync-external-store/*"],
+      "class-variance-authority": ["./dbui/vendor/class-variance-authority"],
+      "class-variance-authority/*": ["./dbui/vendor/class-variance-authority/*"],
+      "clsx": ["./dbui/vendor/clsx"],
+      "tailwind-merge": ["./dbui/vendor/tailwind-merge"],
+      "sonner": ["./dbui/vendor/sonner"],
+      "sonner/*": ["./dbui/vendor/sonner/*"],
+      "vaul": ["./dbui/vendor/vaul"],
+      "vaul/*": ["./dbui/vendor/vaul/*"]
+    }
+  }
+}
