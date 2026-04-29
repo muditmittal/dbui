@@ -24,6 +24,8 @@ description: Build a full Databricks product screen from a screenshot, descripti
 
 2. If unsure, default to Shell A (most common). Every shell starts with `<Base>` from `dbui-shells`.
 
+3. **Shells can nest.** Catalog Explorer uses Shell B (tree panel) with Shell E (three-column detail) nested inside its content area. If the screenshot shows both a tree AND a detail view with metadata sidebar, you need both.
+
 ### Phase 2 — Map regions to components
 
 For each region of the identified shell, determine which DBUI component fills it.
