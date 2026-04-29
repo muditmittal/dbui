@@ -45,16 +45,17 @@ If the user explicitly asks for one of these later, fine — but never add them 
 
 #### 1. Add path aliases
 
-DBUI vendors all its dependencies inside `./dbui/vendor/`. Extend the provided tsconfig paths:
+DBUI vendors all its dependencies inside `./dbui/vendor/`. No `npm install` needed.
+
+**If the project has NO existing `paths` in tsconfig** (new projects):
 
 ```json
 {
-  "extends": "./dbui/vendor/tsconfig-paths.json",
-  "compilerOptions": {
-    // ... your existing config
-  }
+  "extends": "./dbui/vendor/tsconfig-paths.json"
 }
 ```
+
+**If the project ALREADY has `paths`** (existing projects with `@/*` or similar): do NOT use `extends` — it replaces paths instead of merging. Read `./dbui/vendor/tsconfig-paths.json` and merge its paths into the existing `paths` object alongside the project's own aliases.
 
 **For Vite projects**, also add to `vite.config.ts`:
 
@@ -62,11 +63,11 @@ DBUI vendors all its dependencies inside `./dbui/vendor/`. Extend the provided t
 import { dbuiAliases } from "./dbui/vendor/vite-aliases.js"
 
 export default defineConfig({
-  resolve: { alias: { ...dbuiAliases } },
+  resolve: { alias: { ...dbuiAliases, ...yourExistingAliases } },
 })
 ```
 
-For Webpack projects, add the same aliases to `resolve.alias` (see `./dbui/vendor/tsconfig-paths.json` for the full list).
+For Webpack/Next.js projects, add the same aliases to `resolve.alias`.
 
 #### 2. Import DBUI tokens in root CSS
 

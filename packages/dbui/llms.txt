@@ -63,7 +63,9 @@ This block is **idempotent — run it for first install AND every update.** It c
 
 ### Step 2: Add path aliases to `tsconfig.json`
 
-DBUI vendors all its dependencies (Base UI, CVA, clsx, tailwind-merge, sonner, vaul + transitive deps) inside `./dbui/vendor/`. No `npm install` needed. Just extend the provided tsconfig paths:
+DBUI vendors all its dependencies (Base UI, CVA, clsx, tailwind-merge, sonner, vaul + transitive deps) inside `./dbui/vendor/`. No `npm install` needed.
+
+**If the project has NO existing `paths` in tsconfig** (new projects, most cases):
 
 ```json
 {
@@ -74,7 +76,9 @@ DBUI vendors all its dependencies (Base UI, CVA, clsx, tailwind-merge, sonner, v
 }
 ```
 
-This maps `dbui/*`, `dbui-shells/*`, and all vendored packages to the right folders.
+**If the project ALREADY has `paths` in tsconfig** (existing projects with `@/*` or similar aliases): do NOT use `extends` — it replaces paths instead of merging. Instead, copy the paths from `./dbui/vendor/tsconfig-paths.json` into your existing `paths` object alongside your own aliases.
+
+The AI assistant can do this for you — just say "add DBUI path aliases to my tsconfig" and it will read `./dbui/vendor/tsconfig-paths.json` and merge them into your existing config.
 
 **For Vite projects**, also add to `vite.config.ts`:
 
@@ -82,11 +86,11 @@ This maps `dbui/*`, `dbui-shells/*`, and all vendored packages to the right fold
 import { dbuiAliases } from "./dbui/vendor/vite-aliases.js"
 
 export default defineConfig({
-  resolve: { alias: { ...dbuiAliases } },
+  resolve: { alias: { ...dbuiAliases, ...yourExistingAliases } },
 })
 ```
 
-**For Webpack projects**, add the same aliases to `resolve.alias` manually (see `./dbui/vendor/tsconfig-paths.json` for the full list).
+**For Webpack/Next.js projects**, add the same aliases to `resolve.alias` (see `./dbui/vendor/tsconfig-paths.json` for the full list).
 
 ### Step 3: Import DBUI tokens in root CSS
 
