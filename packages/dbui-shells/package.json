@@ -6,9 +6,10 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./shell": "./src/Base.tsx",
-    "./catalog": "./src/CatalogExplorer.tsx",
-    "./components/*": "./src/components/*.tsx"
+    "./shell": "./src/shells/Base.tsx",
+    "./catalog": "./src/shells/CatalogExplorer.tsx",
+    "./components/*": "./src/components/*.tsx",
+    "./compositions/*": "./src/compositions/*.tsx"
   },
   "peerDependencies": {
     "react": ">=18",

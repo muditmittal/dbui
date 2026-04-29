@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { PlatformHeader } from "./components/PlatformHeader"
-import { PlatformNav } from "./components/PlatformNav"
-import { AssistantPanel } from "./components/AssistantPanel"
+import { PlatformHeader } from "../components/PlatformHeader"
+import { PlatformNav } from "../components/PlatformNav"
+import { AssistantPanel } from "../components/AssistantPanel"
 
 /**
  * Base — the Databricks Base shell. EVERY product page starts here.

@@ -21,8 +21,11 @@ const config: StorybookConfig = {
       config.resolve.alias = {
         ...config.resolve.alias,
         "dbui": path.resolve(__dirname, "../../../packages/dbui/src"),
-        "dbui-shells/shell": path.resolve(__dirname, "../../../packages/dbui-shells/src/Base.tsx"),
-        "dbui-shells/catalog": path.resolve(__dirname, "../../../packages/dbui-shells/src/CatalogExplorer.tsx"),
+        // Subpath aliases match the new src/{shells,compositions,components}/ folders
+        "dbui-shells/shell": path.resolve(__dirname, "../../../packages/dbui-shells/src/shells/Base.tsx"),
+        "dbui-shells/catalog": path.resolve(__dirname, "../../../packages/dbui-shells/src/shells/CatalogExplorer.tsx"),
+        "dbui-shells/shells": path.resolve(__dirname, "../../../packages/dbui-shells/src/shells"),
+        "dbui-shells/compositions": path.resolve(__dirname, "../../../packages/dbui-shells/src/compositions"),
         "dbui-shells/components": path.resolve(__dirname, "../../../packages/dbui-shells/src/components"),
         "dbui-shells": path.resolve(__dirname, "../../../packages/dbui-shells/src"),
         "@/components/icons": path.resolve(__dirname, "../../../packages/dbui/src/components/icons"),
