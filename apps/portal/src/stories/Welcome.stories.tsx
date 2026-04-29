@@ -193,6 +193,14 @@ cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
     note: "The same block handles first install AND every future update. It clones if ~/dbui doesn't exist, pulls latest if it does, then copies the synced source into your project. The pre-built dist/ ships in git — no npm install needed. Works behind corp firewalls.",
   },
   {
+    label: "Install AI skills",
+    optional: "Cursor users — re-run on updates to get new skills",
+    code: `mkdir -p .cursor/skills
+cp -r ./dbui/skills/* .cursor/skills/`,
+    copyText: `mkdir -p .cursor/skills && cp -r ./dbui/skills/* .cursor/skills/`,
+    note: "Copies 4 skills that teach Cursor how to pick components, pick icons, build full screens, and validate code. Re-run after updates to get new skills.",
+  },
+  {
     label: "Wire up AI rules",
     optional: "Run once on first install only — do NOT re-run on updates if you customize",
     code: `cp ./dbui/CLAUDE.md ./CLAUDE.md`,

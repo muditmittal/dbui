@@ -93,11 +93,22 @@ Why icons and tokens stay on `src/`:
 @import "./dbui/src/tokens/globals.css";
 ```
 
-### Step 4: Wire up AI assistant rules ([see "Make AI assistants prioritize DBUI"](#make-ai-assistants-prioritize-dbui))
+### Step 4: Install DBUI skills (Cursor users)
+
+```bash
+mkdir -p .cursor/skills
+cp -r ./dbui/skills/* .cursor/skills/
+```
+
+This copies 4 skill files that teach the AI assistant how to pick components, pick icons, build full screens, and validate code against DBUI rules. Without these, the agent works from CLAUDE.md alone — with them, it has structured workflows for screen building and validation.
+
+For Claude Code users: skills aren't needed — CLAUDE.md and the `docs/` folder provide equivalent guidance.
+
+### Step 5: Wire up AI assistant rules ([see "Make AI assistants prioritize DBUI"](#make-ai-assistants-prioritize-dbui))
 
 Without this, your AI assistant won't know DBUI exists and will keep generating raw `<button>` and `<div>` elements. Critical for adoption.
 
-### Step 5: Create the first page with the Base Shell
+### Step 6: Create the first page with the Base Shell
 
 ```tsx
 import { Base } from "dbui-shells"
@@ -117,9 +128,9 @@ Then start the dev server (`npm run dev`, `yarn dev`, whatever the project alrea
 
 ### Updating later
 
-Re-run **Step 1**. That same block is the update path — it pulls latest when `~/dbui` already exists. No separate update procedure.
+Re-run **Step 1** (sync) and **Step 4** (skills copy). That same pair is the update path — Step 1 pulls latest source, Step 4 refreshes the skills. No separate update procedure.
 
-Steps 2 (tsconfig aliases), 3 (CSS import), and 4 (AI rules wiring) only need to be set up once. Updates ship through Step 1.
+Steps 2 (tsconfig aliases), 3 (CSS import), 5 (AI rules wiring), and 6 (first page) only need to be done once.
 
 ---
 

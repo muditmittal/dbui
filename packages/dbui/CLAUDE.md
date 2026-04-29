@@ -71,7 +71,16 @@ If using Vite or Webpack, add the equivalent `resolve.alias` entries so the bund
 @import "./dbui/src/tokens/globals.css";
 ```
 
-#### 3. Wire up AI assistant rules
+#### 3. Install DBUI skills (Cursor users)
+
+```bash
+mkdir -p .cursor/skills
+cp -r ./dbui/skills/* .cursor/skills/
+```
+
+Copies 4 skill files: `dbui-pick-component.md`, `dbui-pick-icon.md`, `dbui-build-screen.md`, `dbui-validate.md`. These give the AI assistant structured workflows for building screens, picking the right component/icon, and validating compliance.
+
+#### 4. Wire up AI assistant rules
 
 If the project does NOT already have a `CLAUDE.md` at the root:
 
@@ -81,7 +90,7 @@ cp ./dbui/CLAUDE.md ./CLAUDE.md
 
 If the project ALREADY has a `CLAUDE.md` at the root, **do not overwrite it.** Append a DBUI section instead — see "Adding DBUI to an existing project" below for the recommended snippet. For Cursor specifically, also create `.cursor/rules/dbui.mdc` with `alwaysApply: true` and a `**/*.tsx` glob, copying the contents of `./dbui/CLAUDE.md` into the body. Without this step, the AI assistant will keep generating raw `<button>` and `<input>` instead of DBUI components.
 
-#### 4. Create the first page
+#### 5. Create the first page
 
 ```tsx
 import { Base } from "dbui-shells"
