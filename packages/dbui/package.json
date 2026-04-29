@@ -3,34 +3,23 @@
   "version": "0.2.0",
   "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
   "license": "MIT",
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "sideEffects": false,
   "files": [
-    "dist",
     "src",
     "docs",
+    "skills",
     "llms.txt",
     "composition.md",
     "CLAUDE.md",
     "README.md"
   ],
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs"
-    },
-    "./components/ui/*": {
-      "import": "./dist/components/ui/*.mjs",
-      "source": "./src/components/ui/*.tsx",
-      "default": "./dist/components/ui/*.mjs"
-    },
+    ".": "./src/index.ts",
+    "./components/ui/*": "./src/components/ui/*.tsx",
     "./components/icons/*": "./src/components/icons/*.tsx",
-    "./lib/*": {
-      "import": "./dist/lib/*.mjs",
-      "source": "./src/lib/*",
-      "default": "./dist/lib/*.mjs"
-    },
+    "./lib/*": "./src/lib/*",
     "./tokens/*": "./src/tokens/*",
     "./llms.txt": "./llms.txt"
   },
@@ -72,11 +61,8 @@
     "vaul": "^1.1.2"
   },
   "peerDependencies": {
-    "next-themes": ">=0.4",
     "react": ">=18",
     "react-dom": ">=18",
-    "recharts": ">=2",
-    "react-resizable-panels": ">=2",
     "tailwindcss": ">=4"
   },
   "devDependencies": {

@@ -6,7 +6,7 @@
 
 Check each condition before acting. Skip anything already done. Do not recreate anything that exists.
 
-DBUI ships pre-bundled. The whole install is **clone + copy + tsconfig alias**. **No `npm install` is required for DBUI itself or any of its dependencies** — Base UI, CVA, clsx, tailwind-merge, sonner, vaul are inlined into `packages/dbui/dist/`.
+DBUI ships as source. The install is **clone + copy + npm install 4 packages + tsconfig alias**.
 
 The setup has two parts:
 
@@ -43,7 +43,15 @@ If the user explicitly asks for one of these later, fine — but never add them 
 
 ### Add DBUI
 
-#### 1. Add path aliases
+#### 1. Install DBUI's 4 dependencies
+
+```bash
+npm install @base-ui/react class-variance-authority clsx tailwind-merge
+```
+
+If npm can't reach `registry.npmjs.org`, connect to a network with registry access first (e.g. off VPN, or configure proxy). Only needed once — after packages are in `node_modules/`, everything works offline. Two optional extras: `sonner` (for Toast) and `vaul` (for Drawer) — install only if you use those components.
+
+#### 2. Add path aliases
 
 If `tsconfig.json` doesn't already map `dbui/*` and `dbui-shells/*`, add:
 
@@ -51,27 +59,23 @@ If `tsconfig.json` doesn't already map `dbui/*` and `dbui-shells/*`, add:
 {
   "compilerOptions": {
     "paths": {
-      "dbui/*": ["./dbui/dist/*"],
-      "dbui/components/icons/*": ["./dbui/src/components/icons/*"],
-      "dbui/tokens/*": ["./dbui/src/tokens/*"],
+      "dbui/*": ["./dbui/src/*"],
       "dbui-shells/*": ["./dbui-shells/src/*"]
     }
   }
 }
 ```
 
-The main `dbui/*` alias points at the **pre-built `dist/`** — components ship pre-bundled with all dependencies (Base UI, CVA, clsx, tailwind-merge, sonner, vaul) inlined. Icons and tokens stay on `src/` because they're tiny per-file modules and CSS, respectively.
-
 If using Vite or Webpack, add the equivalent `resolve.alias` entries so the bundler resolves them too.
 
-#### 2. Import DBUI tokens in root CSS
+#### 3. Import DBUI tokens in root CSS
 
 ```css
 @import "tailwindcss";
 @import "./dbui/src/tokens/globals.css";
 ```
 
-#### 3. Install DBUI skills (Cursor users)
+#### 4. Install DBUI skills (Cursor users)
 
 ```bash
 mkdir -p .cursor/skills
@@ -80,7 +84,7 @@ cp -r ./dbui/skills/* .cursor/skills/
 
 Copies 4 skill files: `dbui-pick-component.md`, `dbui-pick-icon.md`, `dbui-build-screen.md`, `dbui-validate.md`. These give the AI assistant structured workflows for building screens, picking the right component/icon, and validating compliance.
 
-#### 4. Wire up AI assistant rules
+#### 5. Wire up AI assistant rules
 
 If the project does NOT already have a `CLAUDE.md` at the root:
 
@@ -90,7 +94,7 @@ cp ./dbui/CLAUDE.md ./CLAUDE.md
 
 If the project ALREADY has a `CLAUDE.md` at the root, **do not overwrite it.** Append a DBUI section instead — see "Adding DBUI to an existing project" below for the recommended snippet. For Cursor specifically, also create `.cursor/rules/dbui.mdc` with `alwaysApply: true` and a `**/*.tsx` glob, copying the contents of `./dbui/CLAUDE.md` into the body. Without this step, the AI assistant will keep generating raw `<button>` and `<input>` instead of DBUI components.
 
-#### 5. Create the first page
+#### 6. Create the first page
 
 ```tsx
 import { Base } from "dbui-shells"
@@ -370,7 +374,7 @@ cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 ```
 
-This block is the install path AND the update path — re-run it whenever you want to refresh DBUI. The pre-built `dist/` ships in git, so no rebuild step. No `npm install` either.
+This block is the install path AND the update path — re-run it whenever you want to refresh DBUI.
 
 **Do NOT auto-copy `./dbui/CLAUDE.md` to the project root** during updates — that would overwrite any customizations the user made. If the user explicitly asks to refresh AI rules, copy it; otherwise leave the root `CLAUDE.md` alone.
 

@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../node_modules/@base-ui/utils/esm/owner.js"],"names":[],"mappings":";AACO,SAAS,cAAc,IAAA,EAAM;AAClC,EAAA,OAAA,CAAO,6BAAM,aAAA,KAAiB,QAAA;AAChC","file":"chunk-SOLCGBP2.mjs","sourcesContent":["export { getWindow as ownerWindow } from '@floating-ui/utils/dom';\nexport function ownerDocument(node) {\n  return node?.ownerDocument || document;\n}"]}

@@ -6,9 +6,9 @@
 
 ## INSTALL
 
-DBUI ships pre-bundled. Installing it is **clone + copy + tsconfig alias**. Nothing else. **No `npm install` is required for DBUI itself or any of its dependencies** — Base UI, CVA, clsx, tailwind-merge, sonner, vaul are all inlined into `packages/dbui/dist/`.
+DBUI ships as source. Installing it is **clone + copy + `npm install` 4 packages + tsconfig alias**.
 
-This is intentional: many consumer environments (Databricks corp network in particular) firewall `registry.npmjs.org`. The install path below works without any registry access.
+The one step that needs network access is `npm install @base-ui/react class-variance-authority clsx tailwind-merge`. If your environment firewalls `registry.npmjs.org`, connect to a network with registry access for that one command, then switch back. Everything else works offline.
 
 The install has two parts:
 
@@ -47,9 +47,7 @@ If the user explicitly asks for one of the above later, fine. Never add any of t
 
 ## Add DBUI
 
-Five steps. None of them require `npm install`.
-
-### Step 1: Sync DBUI into the project
+### Step 1: Sync DBUI source into the project
 
 ```bash
 if [ -d ~/dbui/.git ]; then
@@ -61,19 +59,30 @@ cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 ```
 
-This block is **idempotent — run it for first install AND every update.** It clones if `~/dbui` doesn't exist yet, pulls latest if it does, then copies the freshly-synced source into the project. The pre-built `./dbui/dist/` ships in git — no build step, no `npm install`.
+This block is **idempotent — run it for first install AND every update.** It clones if `~/dbui` doesn't exist yet, pulls latest if it does, then copies the freshly-synced source into the project.
 
-### Step 2: Add path aliases to `tsconfig.json`
+### Step 2: Install DBUI's 4 dependencies
 
-Point `dbui/*` at the **pre-built dist**, and `dbui-shells/*` at its source:
+```bash
+npm install @base-ui/react class-variance-authority clsx tailwind-merge
+```
+
+These are the only packages DBUI needs beyond React and Tailwind. If your npm can't reach `registry.npmjs.org` (ECONNREFUSED), **connect to a network with registry access first** (e.g. off VPN, or configure `npm config set proxy`), run the install, then switch back. You only need to do this once — after the packages are in `node_modules/`, everything works offline.
+
+Two additional packages are optional — install them only if you use the specific component:
+
+| Component | Extra package |
+|---|---|
+| `Sonner` / `toast()` | `sonner` |
+| `Drawer` | `vaul` |
+
+### Step 3: Add path aliases to `tsconfig.json`
 
 ```json
 {
   "compilerOptions": {
     "paths": {
-      "dbui/*": ["./dbui/dist/*"],
-      "dbui/components/icons/*": ["./dbui/src/components/icons/*"],
-      "dbui/tokens/*": ["./dbui/src/tokens/*"],
+      "dbui/*": ["./dbui/src/*"],
       "dbui-shells/*": ["./dbui-shells/src/*"]
     }
   }
@@ -82,18 +91,14 @@ Point `dbui/*` at the **pre-built dist**, and `dbui-shells/*` at its source:
 
 Vite/Webpack projects: mirror the same aliases in `resolve.alias`.
 
-Why icons and tokens stay on `src/`:
-- **Icons** are 451 individual `.tsx` files; we don't pre-bundle them so consumers tree-shake naturally and can read source on hover.
-- **Tokens** are pure CSS (`globals.css`) — no JS to bundle.
-
-### Step 3: Import DBUI tokens in root CSS
+### Step 4: Import DBUI tokens in root CSS
 
 ```css
 @import "tailwindcss";
 @import "./dbui/src/tokens/globals.css";
 ```
 
-### Step 4: Install DBUI skills (Cursor users)
+### Step 5: Install DBUI skills (Cursor users)
 
 ```bash
 mkdir -p .cursor/skills
@@ -104,11 +109,11 @@ This copies 4 skill files that teach the AI assistant how to pick components, pi
 
 For Claude Code users: skills aren't needed — CLAUDE.md and the `docs/` folder provide equivalent guidance.
 
-### Step 5: Wire up AI assistant rules ([see "Make AI assistants prioritize DBUI"](#make-ai-assistants-prioritize-dbui))
+### Step 6: Wire up AI assistant rules ([see "Make AI assistants prioritize DBUI"](#make-ai-assistants-prioritize-dbui))
 
 Without this, your AI assistant won't know DBUI exists and will keep generating raw `<button>` and `<div>` elements. Critical for adoption.
 
-### Step 6: Create the first page with the Base Shell
+### Step 7: Create the first page with the Base Shell
 
 ```tsx
 import { Base } from "dbui-shells"
@@ -128,9 +133,9 @@ Then start the dev server (`npm run dev`, `yarn dev`, whatever the project alrea
 
 ### Updating later
 
-Re-run **Step 1** (sync) and **Step 4** (skills copy). That same pair is the update path — Step 1 pulls latest source, Step 4 refreshes the skills. No separate update procedure.
+Re-run **Step 1** (sync) and **Step 5** (skills copy). That same pair is the update path — Step 1 pulls latest source, Step 5 refreshes the skills. No separate update procedure.
 
-Steps 2 (tsconfig aliases), 3 (CSS import), 5 (AI rules wiring), and 6 (first page) only need to be done once.
+Steps 2 (npm deps), 3 (tsconfig aliases), 4 (CSS import), 6 (AI rules wiring), and 7 (first page) only need to be done once. Step 2 may occasionally need re-running if DBUI adds a new dependency in a future version — the release notes will say so.
 
 ---
 

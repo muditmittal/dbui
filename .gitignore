@@ -2,11 +2,6 @@ node_modules
 .next
 out
 dist
-# Exception: ship the pre-built DBUI dist/ in git so consumers in
-# environments without npm registry access (e.g. Databricks corp network)
-# can clone and use DBUI without running `npm install`.
-!packages/dbui/dist/
-!packages/dbui/dist/**
 .env
 .env.local
 .yarn/cache

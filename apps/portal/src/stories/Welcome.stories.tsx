@@ -190,7 +190,14 @@ fi
 cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
     copyText: `if [ -d ~/dbui/.git ]; then (cd ~/dbui && git pull --ff-only); else git clone https://github.com/muditmittal/dbui.git ~/dbui; fi && cp -r ~/dbui/packages/dbui ./dbui && cp -r ~/dbui/packages/dbui-shells ./dbui-shells`,
-    note: "The same block handles first install AND every future update. It clones if ~/dbui doesn't exist, pulls latest if it does, then copies the synced source into your project. The pre-built dist/ ships in git — no npm install needed. Works behind corp firewalls.",
+    note: "The same block handles first install AND every future update. It clones if ~/dbui doesn't exist, pulls latest if it does, then copies the synced source into your project.",
+  },
+  {
+    label: "Install dependencies",
+    optional: "Run once — only needed on first install",
+    code: `npm install @base-ui/react class-variance-authority clsx tailwind-merge`,
+    copyText: `npm install @base-ui/react class-variance-authority clsx tailwind-merge`,
+    note: "DBUI's 4 runtime dependencies. Needs registry access — if npm gives ECONNREFUSED, connect to a network that can reach registry.npmjs.org (e.g. off VPN), run this, then switch back. Only needed once.",
   },
   {
     label: "Install AI skills",
