@@ -8,7 +8,7 @@
 - `composition.md` — shell-level rules (page layouts, regions, scaling)
 - `docs/icon-index.md` — **always search before inserting any icon**
 - `docs/compositions/*.md` — behavior contracts for complex components
-- `llms.txt` — component API quick reference
+- `install.md` — agent install instructions (served at https://dbuidesign.vercel.app/install)
 
 ---
 
@@ -36,7 +36,7 @@
 
 ### Common Layout Patterns
 
-**List page:** `PageHeader → [gap-4] → ControlBar → [gap-4] → Table → [gap-4] → Pagination`
+**List page:** `PageHeader → ControlsBar → Table → [gap-4] → Pagination` — PageHeader and ControlsBar each carry their own `py-2` so the natural 16px (`gap-4`) rhythm falls out without extra wrappers
 
 **Detail page with sidebar:** Main content `[gap-6]` sidebar. Sidebar sections separated by `gap-6`. Within each sidebar section: `gap-2`.
 

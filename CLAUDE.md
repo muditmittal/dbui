@@ -58,7 +58,7 @@ In Figma: the Base Shell composition on the Shells page is the starting point fo
 - **Variant utilities:** `packages/dbui/src/lib/button-variants.ts` (CVA definitions)
 - **Tokens:** `packages/dbui/src/tokens/globals.css` — CSS custom properties
 - **Code Connect:** `packages/dbui/src/figma/*.figma.js` — maps Figma components to code
-- **LLM context:** `packages/dbui/llms.txt` — single-file reference for AI tools
+- **Agent install:** `packages/dbui/install.md` — served at https://dbuidesign.vercel.app/install
 - **Registry:** `apps/portal/src/app/r/` — dynamic shadcn registry API (serves live source)
 - **Portal:** `apps/portal/` — preview/inspection tool (imports from dbui package)
 - **Legacy kit:** `apps/dbui/` — original shadcn base (superseded by packages/dbui)

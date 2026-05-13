@@ -7,7 +7,7 @@
 - `docs/component-rules.md` — cross-cutting rules for icons, buttons, menus, spacing
 - `docs/icon-index.md` — searchable icon lookup (**always check before inserting icons**)
 - `docs/compositions/*.md` — behavior contracts for complex components
-- `llms.txt` — component API quick reference
+- `install.md` — agent install instructions (served at https://dbuidesign.vercel.app/install)
 
 ---
 
@@ -78,11 +78,11 @@ All region widths in `px`. Scaling is continuous between breakpoints (flex-based
 
 **Purpose:** flat collections (Dashboards, Queries, Jobs, Pipelines, Notebooks, Clusters, Alerts, Warehouses).
 
-**Regions (top → bottom):**
-1. Page header — title left, primary action(s) right
-2. Tabs (optional) — only for sibling variants (`Dashboards` / `Legacy dashboards`)
+**Regions (top → bottom, all flat siblings — no nesting):**
+1. Page header (`<PageHeader>` + `<PageHeaderTitle>` + `<PageHeaderActions>`) — single horizontal row, title left, primary action(s) right
+2. Tabs (optional, sibling of `<PageHeader>`) — only for sibling variants (`Dashboards` / `Legacy dashboards`)
 3. Featured band (optional) — promoted content card grid inside a `bg-muted` inset
-4. Control bar — filter/search/sort
+4. Controls bar (`<ControlsBar>` + `<ControlsBarFilters>` + `<ControlsBarActions>`) — filter/search/sort row, sibling
 5. Table — paginated, first column always entity name, trailing overflow menu
 
 **Scaling:** full-width content, single column. All regions stretch horizontally.

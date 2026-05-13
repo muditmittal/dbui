@@ -11,7 +11,7 @@
     "vendor",
     "docs",
     "skills",
-    "llms.txt",
+    "install.md",
     "composition.md",
     "CLAUDE.md",
     "README.md"
@@ -22,7 +22,7 @@
     "./components/icons/*": "./src/components/icons/*.tsx",
     "./lib/*": "./src/lib/*",
     "./tokens/*": "./src/tokens/*",
-    "./llms.txt": "./llms.txt"
+    "./install.md": "./install.md"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,7 @@
         "types": "./dist/lib/*.d.ts"
       },
       "./tokens/*": "./src/tokens/*",
-      "./llms.txt": "./llms.txt"
+      "./install.md": "./install.md"
     }
   },
   "scripts": {

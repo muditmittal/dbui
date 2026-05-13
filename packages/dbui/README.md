@@ -4,13 +4,13 @@ Databricks component library — 46 components, 451 icons, 162 design tokens. Bu
 
 ## Install
 
-Give this URL to your LLM (Claude, Cursor, etc.):
+Tell your AI agent (Cursor, Claude Code, Isaac, Copilot):
 
-```
-https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/llms.txt
-```
+> Use https://dbuidesign.vercel.app/install to set up DBUI in this project.
 
-It will clone the repo, copy `dbui/` and `dbui-shells/` into your project, configure everything, and start the dev server. You'll see the Databricks Base Shell running locally.
+The agent will fetch the install doc, run the preflight checks (existing project? React 18+? Tailwind v4?), clone the DBUI source into `./dbui/` and `./dbui-shells/`, wire up tsconfig path aliases, import tokens, copy AI rules into `CLAUDE.md`, and verify the Databricks Base Shell renders.
+
+No `npm install` of DBUI. All deps (Base UI, CVA, clsx, tailwind-merge, sonner, vaul) ship vendored inside `./dbui/vendor/`.
 
 ### Manual install
 
@@ -19,10 +19,9 @@ git clone https://github.com/muditmittal/dbui.git ~/dbui
 cp -r ~/dbui/packages/dbui ./dbui
 cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 cp ./dbui/CLAUDE.md ./CLAUDE.md
-npm install @base-ui/react
 ```
 
-Then read `CLAUDE.md` for path alias and CSS token setup.
+Then read `./dbui/install.md` for path-alias and CSS-token setup.
 
 ### Update
 
