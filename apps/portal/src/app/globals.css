@@ -1,7 +1,15 @@
 @import "tailwindcss";
 @source "packages/dbui/src/components/**/*.tsx";
 @source "packages/dbui-shells/src/**/*.tsx";
+@source "packages/dbui-viz/src/**/*.tsx";
+@source "packages/dbui-genie/src/**/*.tsx";
 @source "apps/portal/src/stories/**/*.tsx";
+/* viz token layer for the dbui-viz package (additive — defines --viz-* only) */
+@import "../../../../packages/dbui/src/tokens/viz.css";
+/* canonical DBUI tokens (--db-* semantics + scale) — GENERATED from
+   theme.config.mjs by `yarn design:tokens`. Additive: does not touch the
+   legacy shadcn-flat tokens below. */
+@import "../../../../packages/dbui/src/tokens/tokens.css";
 /* shadcn/tailwind.css — inlined because the npm package exports a virtual path
    that doesn't resolve during Vercel production builds */
 @theme inline {
@@ -106,6 +114,7 @@
   --color-surface-success: var(--surface-success);
   --color-surface-warning: var(--surface-warning);
   --color-surface-danger: var(--surface-danger);
+  --color-icon-folder: var(--icon-folder);
   --color-ai-gradient-start: var(--ai-gradient-start);
   --color-ai-gradient-mid: var(--ai-gradient-mid);
   --color-ai-gradient-end: var(--ai-gradient-end);
@@ -191,6 +200,9 @@
   --surface-warning: #FFF9EB;
   --surface-danger: #FFF5F7;
 
+  /* Asset icon accents — primitive blue/blue400 in Figma; theme-constant. */
+  --icon-folder: #8ACAFF;
+
   /* AI Brand */
   --ai-gradient-start: #4299E0;
   --ai-gradient-mid: #CA42E0;
@@ -208,9 +220,6 @@
   --sidebar-accent-foreground: #161616;
   --sidebar-border: #EBEBEB;
   --sidebar-ring: #2272B4;
-
-  /* Radius base */
-  --radius: 8px;
 }
 
 /* ─── Dark mode — DuBois token values ─── */
@@ -275,6 +284,10 @@
   --surface-success: rgba(39, 124, 67, 0.16);
   --surface-warning: rgba(190, 80, 30, 0.16);
   --surface-danger: rgba(200, 45, 76, 0.16);
+
+  /* Asset icon accents — same constant value across modes (matches Figma
+   * primitive blue/blue400). Reads well against both light and dark canvas. */
+  --icon-folder: #8ACAFF;
 
   /* AI Brand */
   --ai-gradient-start: #4299E0;

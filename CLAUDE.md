@@ -56,7 +56,8 @@ In Figma: the Base Shell composition on the Shells page is the starting point fo
 - **Source of truth (code):** `packages/dbui/src/components/ui/` — the DuBois-reskinned components
 - **Icons:** `packages/dbui/src/components/icons/` — 451 React icon components, one per file
 - **Variant utilities:** `packages/dbui/src/lib/button-variants.ts` (CVA definitions)
-- **Tokens:** `packages/dbui/src/tokens/globals.css` — CSS custom properties
+- **Tokens (legacy, still drives components):** `packages/dbui/src/tokens/globals.css` — shadcn-flat CSS custom properties
+- **Tokens (new, generated):** `packages/dbui/src/tokens/theme.config.mjs` → `tokens.css` (`--db-*`). See `packages/dbui/docs/tokens.md`
 - **Code Connect:** `packages/dbui/src/figma/*.figma.js` — maps Figma components to code
 - **Agent install:** `packages/dbui/install.md` — served at https://dbuidesign.vercel.app/install
 - **Registry:** `apps/portal/src/app/r/` — dynamic shadcn registry API (serves live source)
@@ -69,6 +70,12 @@ IMPORTANT: When implementing Figma designs, use components from `packages/dbui/s
 ---
 
 ## 2. Design Token System
+
+> **Two layers coexist.** Everything in this section describes the **legacy** layer
+> (`globals.css`) — still accurate, and still what every component consumes today.
+> A newer generated layer (`--db-*` semantics + scalar-driven space/type, sourced from
+> `theme.config.mjs`) ships alongside it and is **not yet consumed by components**.
+> Before touching tokens, read `packages/dbui/docs/tokens.md`.
 
 ### Token Architecture (162 total tokens)
 
@@ -445,6 +452,7 @@ Before making design decisions, consult these files:
 
 | Topic                                             | File                                                  |
 | ------------------------------------------------- | ----------------------------------------------------- |
+| **Color/type/space token system (START HERE)**    | `packages/dbui/docs/tokens.md`                        |
 | All token/component/naming decisions              | `research/DESIGN-SYSTEM-DECISIONS.md`                 |
 | Button variant analysis & DuBois comparison       | `research/BUTTON-STUDY.md`                            |
 | Tier 1 component study (Input/Select/Tabs/Dialog) | `research/TIER1-COMPONENT-STUDY.md`                   |

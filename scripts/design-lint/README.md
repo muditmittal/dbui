@@ -41,6 +41,9 @@ yarn design:lint:figma --target 3247:5956 > /tmp/figma-lint.js
 | `non-token-radius` | warning | `rounded-[Npx]` not a DBUI radius (4/8/12/16/24/999). |
 | `inline-hardcoded-color` | error | `style={{ color: '#abc' }}` with a non-token hex. |
 | `inline-off-scale-spacing` | warning | Inline `style` with off-scale `padding`/`margin`/`gap`/etc. |
+| `no-primitive-token` | error | A raw primitive var used directly — `var(--interface-neutral-600)`, `bg-[var(--status-blue-600)]`. Product code must consume a **semantic** token (R2). |
+
+The React report footer prints a **Token compliance** line: `NN% (good/total var() references use a semantic token; N use a raw primitive)`.
 
 ### figma-lint
 
@@ -50,12 +53,27 @@ yarn design:lint:figma --target 3247:5956 > /tmp/figma-lint.js
 | `instance-no-main-component` | warning | INSTANCE that lost its main component (detached or missing). |
 | `non-token-fill` | error | Solid fill not bound to a variable AND not in the approved hex list. |
 | `non-token-stroke` | error | Solid stroke not bound to a variable AND not approved. |
+| `primitive-bound-fill` | warning | Fill bound to a **Color: Primitive** variable instead of a semantic token — the design equivalent of consuming a raw primitive (R2). |
+| `primitive-bound-stroke` | warning | Stroke bound to a **Color: Primitive** variable instead of a semantic token. |
 | `off-scale-spacing` | warning | Auto-layout `paddingTop/Right/Bottom/Left` or `itemSpacing` not on the 4px scale. |
 | `non-token-font` | warning | Text node using a font outside SF Pro Text / SF Pro Display / SF Mono. |
 | `off-ramp-type-size` | warning | Text font size not on the DBUI type ramp. |
 | `non-token-radius` | warning | `cornerRadius` not in the radius set (4/8/12/16/24/999). |
 
 Every violation includes a **fix** suggesting the closest valid token or DBUI replacement.
+
+The Figma report's `summary.tokenCompliance` gives the headline **"are these mocks using the design system?"** score:
+
+```jsonc
+"tokenCompliance": {
+  "colorProps": 128,      // solid fills + strokes checked
+  "semanticBound": 112,   // bound to a Color: Semantic token  ← the good ones
+  "primitiveBound": 4,    // bound to a raw primitive (R2 warning)
+  "otherBound": 2,        // bound to a non-color collection (allowed)
+  "unbound": 10,          // hardcoded hex (error unless it happens to be approved)
+  "scorePct": 88          // semanticBound / colorProps
+}
+```
 
 ---
 
@@ -90,15 +108,34 @@ Scanned 1 file.
 grep -hE "^export \{" packages/dbui/src/components/ui/*.tsx | … > scripts/design-lint/dbui-components.json
 ```
 
-### Allow-listed tokens
-`scripts/design-lint/tokens.json` — colors, spacing, type ramp, fonts, radii. Re-generate when `packages/dbui/src/tokens/globals.css` changes.
+### Token source & generator
+`packages/dbui/src/tokens/theme.config.mjs` is the **one authored source** for all color tokens (primitives + semantics) and the scale system (scalars, space/radius/type/elevation). The generator turns it into the shipped CSS and the linter allowlist — both **generated, never hand-edited**:
+
+```bash
+yarn design:tokens   # theme.config.mjs → tokens.css (--db-* semantics + scale) + tokens.json
+```
+
+Primitives are **generator input only** — they resolve inline into the semantics and ship in no CSS.
+
+### Token compliance rules
+`packages/dbui/docs/token-rules.md` — the full color-token contract (architecture, naming, Figma↔code Code Connect, and the machine-enforceable rules R1–R13). This is the spec the token-compliance linter implements.
+
+### Figma ↔ code sync check
+`yarn design:verify-sync` proves the token system is 1:1 across `theme.config.mjs`, `tokens.css`, and Figma (primitive/semantic parity, light/dark parity, one utility per semantic, no primitive leaking into code, and a value round-trip). It reads `.figma-token-dump.json` — refresh that snapshot with the `use_figma` dump documented at the top of `verify-token-sync.mjs` whenever Figma variables change.
+
+```bash
+yarn design:verify-sync
+```
 
 ---
 
 ## Roadmap
 
 ### Short term
-- [ ] **Sync scripts**: auto-regenerate `dbui-components.json` and `tokens.json` from source.
+- [x] **Token generator**: `yarn design:tokens` generates `tokens.css` (+ `tokens.json`) from the single source `theme.config.mjs`.
+- [ ] **Sync script (components)**: auto-regenerate `dbui-components.json` from source.
+- [x] **Token-compliance R2 (primitive-direct)**: `no-primitive-token` (code) + `primitive-bound-fill/stroke` (Figma) + a compliance score on both sides.
+- [ ] **Token-compliance rules R3–R12**: implement the remaining `🔜 planned` checks in `docs/token-rules.md` (role mismatch, light/dark parity, disabled model, Figma↔code parity).
 - [ ] **Storybook badge**: render the lint report inside a Storybook addon panel so designers see it next to each story.
 - [ ] **CI**: run `yarn design:lint:react` on every PR; fail on errors, comment on warnings.
 

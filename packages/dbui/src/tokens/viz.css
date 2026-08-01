@@ -1,0 +1,153 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * DBUI viz tokens — data-visualization palette for the `dbui-viz` package.
+ *
+ * ADDITIVE BY DESIGN. This file adds a new `viz` token category and does not
+ * modify or override anything in globals.css. Load it AFTER globals.css:
+ *
+ *   @import "tailwindcss";
+ *   @import "dbui/tokens/globals.css";
+ *   @import "dbui/tokens/viz.css";
+ *
+ * Values ported from governance-hub-prototype `src/lib/chartColors.ts` so
+ * prototypes match the shipped GovernanceHub visuals.
+ *
+ * Naming: --viz-<palette>[-<step>]-<role>
+ *   role `solid`  → mark fill / legend swatch
+ *   role `border` → mark stroke (1px)
+ *   role `from`   → gradient start (top of a vertical gradient)
+ *   role `to`     → gradient end (bottom of a vertical gradient)
+ *   role `gradient` → ready-made CSS gradient for DOM elements (chips, legends)
+ *
+ * Vega cannot consume CSS gradient strings, which is why every palette exposes
+ * discrete `from`/`to` stops alongside the CSS `gradient` convenience value.
+ *
+ * Data palettes are intentionally IDENTICAL in light and dark, matching the
+ * existing `--chart-1..5` convention in globals.css. Only the near-white
+ * surfaces (neutral, treemap) get dark-mode variants.
+ * ───────────────────────────────────────────────────────────────────────────── */
+
+@theme inline {
+  /* Solid fills exposed as Tailwind colors so legends/swatches can use
+     `bg-viz-blue`, `text-viz-red`, `border-viz-neutral`, etc. */
+  --color-viz-blue: var(--viz-blue-solid);
+  --color-viz-blue-medium: var(--viz-blue-medium-solid);
+  --color-viz-blue-light: var(--viz-blue-light-solid);
+  --color-viz-orange: var(--viz-orange-solid);
+  --color-viz-orange-medium: var(--viz-orange-medium-solid);
+  --color-viz-orange-light: var(--viz-orange-light-solid);
+  --color-viz-green: var(--viz-green-solid);
+  --color-viz-red: var(--viz-red-solid);
+  --color-viz-neutral: var(--viz-neutral-solid);
+}
+
+:root {
+  /* ─── Blue — primary data (assets, tables, usage) ─── */
+  --viz-blue-solid: #2f7fd3;
+  --viz-blue-border: #2f7fd3;
+  --viz-blue-from: #1f6fd1;
+  --viz-blue-to: #4f9fe5;
+  --viz-blue-gradient: linear-gradient(165deg, #1f6fd1 8.72%, #4f9fe5 94.8%);
+
+  --viz-blue-medium-solid: #5aafea;
+  --viz-blue-medium-border: #5aafea;
+  --viz-blue-medium-from: #7cc5f3;
+  --viz-blue-medium-to: #3f9de6;
+  --viz-blue-medium-gradient: linear-gradient(165deg, #7cc5f3 8.72%, #3f9de6 94.8%);
+
+  --viz-blue-light-solid: #a7dcf9;
+  --viz-blue-light-border: #a7dcf9;
+  --viz-blue-light-from: #cfeaff;
+  --viz-blue-light-to: #8fd0f5;
+  --viz-blue-light-gradient: linear-gradient(165deg, #cfeaff 8.72%, #8fd0f5 94.8%);
+
+  /* ─── Orange — cost / spend ─── */
+  --viz-orange-solid: #d86a1e;
+  --viz-orange-border: #d86a1e;
+  --viz-orange-from: #c45a10;
+  --viz-orange-to: #e88a40;
+  --viz-orange-gradient: linear-gradient(165deg, #c45a10 8.72%, #e88a40 94.8%);
+
+  --viz-orange-medium-solid: #f4a24a;
+  --viz-orange-medium-border: #f4a24a;
+  --viz-orange-medium-from: #e89840;
+  --viz-orange-medium-to: #f4b060;
+  --viz-orange-medium-gradient: linear-gradient(165deg, #e89840 8.72%, #f4b060 94.8%);
+
+  --viz-orange-light-solid: #f9cc8e;
+  --viz-orange-light-border: #f9cc8e;
+  --viz-orange-light-from: #f5c070;
+  --viz-orange-light-to: #fbdca0;
+  --viz-orange-light-gradient: linear-gradient(165deg, #f5c070 8.72%, #fbdca0 94.8%);
+
+  /* ─── Green / Red — health & status ─── */
+  --viz-green-solid: #2faf67;
+  --viz-green-border: #2faf67;
+  --viz-green-from: rgba(47, 175, 103, 0.8);
+  --viz-green-to: rgba(91, 207, 142, 0.8);
+  --viz-green-gradient: linear-gradient(111deg, rgba(47, 175, 103, 0.8) 31.99%, rgba(91, 207, 142, 0.8) 80.41%);
+
+  --viz-red-solid: #d94a3a;
+  --viz-red-border: #d94a3a;
+  --viz-red-from: #f08a7a;
+  --viz-red-to: #d94a3a;
+  --viz-red-gradient: linear-gradient(90deg, #f08a7a 0%, #d94a3a 100%);
+
+  /* ─── Neutral — empty / inactive ─── */
+  --viz-neutral-solid: #d1d9e1;
+  --viz-neutral-border: #d1d9e1;
+  --viz-neutral-from: #eff1f5;
+  --viz-neutral-to: #dde3e8;
+  --viz-neutral-gradient: linear-gradient(165deg, #eff1f5 8.72%, #dde3e8 94.8%);
+
+  /* ─── Sequential treemap scales (lightest → darkest) ─── */
+  --viz-treemap-blue-1: #cfeaff;
+  --viz-treemap-blue-2: #a7dcf9;
+  --viz-treemap-blue-3: #7cc5f3;
+  --viz-treemap-blue-4: #5aafea;
+  --viz-treemap-blue-5: #3f9de6;
+  --viz-treemap-blue-6: #2f7fd3;
+  --viz-treemap-blue-7: #1f6fd1;
+
+  --viz-treemap-orange-1: #fbdca0;
+  --viz-treemap-orange-2: #f9cc8e;
+  --viz-treemap-orange-3: #f5c070;
+  --viz-treemap-orange-4: #f4b060;
+  --viz-treemap-orange-5: #f4a24a;
+  --viz-treemap-orange-6: #e88a40;
+  --viz-treemap-orange-7: #d86a1e;
+  --viz-treemap-orange-8: #c45a10;
+
+  /* ─── Treemap structural surfaces (group = catalog, leaf = schema) ─── */
+  --viz-treemap-group-surface: #e8f4fc;
+  --viz-treemap-group-surface-strong: #d7edfe;
+  --viz-treemap-group-surface-hover: #c5e3f6;
+  --viz-treemap-group-border: #4299e0;
+  --viz-treemap-group-border-hover: #0e538b;
+  --viz-treemap-leaf-surface: #d7edfe;
+  --viz-treemap-leaf-surface-hover: #b8dcf8;
+  --viz-treemap-leaf-border-hover: #4299e0;
+  --viz-treemap-other-surface: #e6f4ff;
+  --viz-treemap-other-border: #7ec4f0;
+}
+
+/* Dark mode — data palettes stay identical (see header). Only the near-white
+ * neutral and treemap surfaces are re-mapped so they don't glow on dark canvas.
+ * PROVISIONAL: derived from the DuBois dark ramp; confirm against Figma. */
+.dark {
+  --viz-neutral-solid: #37444f;
+  --viz-neutral-border: #37444f;
+  --viz-neutral-from: #1f272d;
+  --viz-neutral-to: #37444f;
+  --viz-neutral-gradient: linear-gradient(165deg, #1f272d 8.72%, #37444f 94.8%);
+
+  --viz-treemap-group-surface: rgba(66, 153, 224, 0.1);
+  --viz-treemap-group-surface-strong: rgba(66, 153, 224, 0.18);
+  --viz-treemap-group-surface-hover: rgba(66, 153, 224, 0.28);
+  --viz-treemap-group-border: #2f7fd3;
+  --viz-treemap-group-border-hover: #8acaff;
+  --viz-treemap-leaf-surface: rgba(66, 153, 224, 0.22);
+  --viz-treemap-leaf-surface-hover: rgba(138, 202, 255, 0.34);
+  --viz-treemap-leaf-border-hover: #8acaff;
+  --viz-treemap-other-surface: rgba(66, 153, 224, 0.08);
+  --viz-treemap-other-border: #37444f;
+}

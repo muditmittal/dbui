@@ -1,0 +1,332 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * DBUI tokens — GENERATED. Do not hand-edit.
+ * Source: packages/dbui/src/tokens/theme.config.mjs
+ * Regenerate: yarn design:tokens  (node scripts/design-lint/generate-tokens.mjs)
+ *
+ * Semantics only. Primitives are resolved inline (final hex/rgba) and are NOT
+ * shipped as CSS vars — the palette lives in theme.config.mjs + Figma. Product
+ * code consumes semantics via Tailwind utilities (bg-surface-base) or the raw
+ * --db-* var. Dimensions (space/radius/type/elevation) derive from the scalar
+ * dials so density/size/type can be re-tuned from a handful of numbers.
+ * ───────────────────────────────────────────────────────────────────────────── */
+
+@theme inline {
+  --color-surface-base: var(--db-surface-base);
+  --color-surface-subtle: var(--db-surface-subtle);
+  --color-surface-strong: var(--db-surface-strong);
+  --color-surface-inverse: var(--db-surface-inverse);
+  --color-surface-accent: var(--db-surface-accent);
+  --color-surface-inset: var(--db-surface-inset);
+  --color-surface-disabled: var(--db-surface-disabled);
+  --color-text-base: var(--db-text-base);
+  --color-text-strong: var(--db-text-strong);
+  --color-text-subtle: var(--db-text-subtle);
+  --color-text-inverse: var(--db-text-inverse);
+  --color-text-disabled: var(--db-text-disabled);
+  --color-text-accent: var(--db-text-accent);
+  --color-border-base: var(--db-border-base);
+  --color-border-strong: var(--db-border-strong);
+  --color-border-subtle: var(--db-border-subtle);
+  --color-border-inverse: var(--db-border-inverse);
+  --color-border-disabled: var(--db-border-disabled);
+  --color-border-accent: var(--db-border-accent);
+  --color-action-default-base: var(--db-action-default-base);
+  --color-action-default-hover: var(--db-action-default-hover);
+  --color-action-default-press: var(--db-action-default-press);
+  --color-action-primary-base: var(--db-action-primary-base);
+  --color-action-primary-hover: var(--db-action-primary-hover);
+  --color-action-primary-press: var(--db-action-primary-press);
+  --color-action-selected-base: var(--db-action-selected-base);
+  --color-action-selected-hover: var(--db-action-selected-hover);
+  --color-action-selected-press: var(--db-action-selected-press);
+  --color-action-positive-base: var(--db-action-positive-base);
+  --color-action-positive-hover: var(--db-action-positive-hover);
+  --color-action-positive-press: var(--db-action-positive-press);
+  --color-action-negative-base: var(--db-action-negative-base);
+  --color-action-negative-hover: var(--db-action-negative-hover);
+  --color-action-negative-press: var(--db-action-negative-press);
+  --color-action-label-base: var(--db-action-label-base);
+  --color-action-label-hover: var(--db-action-label-hover);
+  --color-action-label-press: var(--db-action-label-press);
+  --color-action-label-inverse-base: var(--db-action-label-inverse-base);
+  --color-action-label-inverse-hover: var(--db-action-label-inverse-hover);
+  --color-action-label-inverse-press: var(--db-action-label-inverse-press);
+  --color-input-border-base: var(--db-input-border-base);
+  --color-input-border-hover: var(--db-input-border-hover);
+  --color-input-border-focus: var(--db-input-border-focus);
+  --color-focus-ring: var(--db-focus-ring);
+  --color-focus-ring-offset: var(--db-focus-ring-offset);
+  --color-link-base: var(--db-link-base);
+  --color-link-hover: var(--db-link-hover);
+  --color-link-press: var(--db-link-press);
+  --color-link-visited: var(--db-link-visited);
+  --color-status-surface-info: var(--db-status-surface-info);
+  --color-status-surface-negative: var(--db-status-surface-negative);
+  --color-status-surface-positive: var(--db-status-surface-positive);
+  --color-status-surface-warning: var(--db-status-surface-warning);
+  --color-status-border-info: var(--db-status-border-info);
+  --color-status-border-negative: var(--db-status-border-negative);
+  --color-status-border-positive: var(--db-status-border-positive);
+  --color-status-border-warning: var(--db-status-border-warning);
+  --color-status-text-info: var(--db-status-text-info);
+  --color-status-text-negative: var(--db-status-text-negative);
+  --color-status-text-positive: var(--db-status-text-positive);
+  --color-status-text-warning: var(--db-status-text-warning);
+  --color-utility-scrim: var(--db-utility-scrim);
+  --color-utility-surface-skeleton: var(--db-utility-surface-skeleton);
+  --color-utility-text-skeleton: var(--db-utility-text-skeleton);
+  --color-viz-categorical-1: var(--db-viz-categorical-1);
+  --color-viz-categorical-2: var(--db-viz-categorical-2);
+  --color-viz-categorical-3: var(--db-viz-categorical-3);
+  --color-viz-categorical-4: var(--db-viz-categorical-4);
+  --color-viz-categorical-5: var(--db-viz-categorical-5);
+  --color-viz-categorical-6: var(--db-viz-categorical-6);
+  --color-viz-categorical-7: var(--db-viz-categorical-7);
+  --color-viz-categorical-8: var(--db-viz-categorical-8);
+  --color-viz-categorical-9: var(--db-viz-categorical-9);
+  --color-viz-categorical-10: var(--db-viz-categorical-10);
+  --color-viz-sequential-1: var(--db-viz-sequential-1);
+  --color-viz-sequential-2: var(--db-viz-sequential-2);
+  --color-viz-sequential-3: var(--db-viz-sequential-3);
+  --color-viz-sequential-4: var(--db-viz-sequential-4);
+  --color-viz-sequential-5: var(--db-viz-sequential-5);
+  --color-viz-sequential-6: var(--db-viz-sequential-6);
+  --color-viz-sequential-7: var(--db-viz-sequential-7);
+  --color-viz-sequential-8: var(--db-viz-sequential-8);
+  --color-viz-sequential-9: var(--db-viz-sequential-9);
+  --color-viz-sequential-10: var(--db-viz-sequential-10);
+}
+
+:root {
+  /* ── Scalars — the density/size/type dials ── */
+  --db-spacing-unit: 4px;
+  --db-density-scalar: 1;
+  --db-spacing-scalar: 1;
+  --db-sizing-scalar: 1;
+  --db-type-scalar: 1;
+
+  /* ── Space (multiples of the grid unit, scaled by spacing × density) ── */
+  --db-space-0: 0;
+  --db-space-2xs: calc(var(--db-spacing-unit) * 1 * var(--db-spacing-scalar) * var(--db-density-scalar));
+  --db-space-xs: calc(var(--db-spacing-unit) * 2 * var(--db-spacing-scalar) * var(--db-density-scalar));
+  --db-space-sm: calc(var(--db-spacing-unit) * 3 * var(--db-spacing-scalar) * var(--db-density-scalar));
+  --db-space-md: calc(var(--db-spacing-unit) * 4 * var(--db-spacing-scalar) * var(--db-density-scalar));
+  --db-space-lg: calc(var(--db-spacing-unit) * 6 * var(--db-spacing-scalar) * var(--db-density-scalar));
+  --db-space-xl: calc(var(--db-spacing-unit) * 8 * var(--db-spacing-scalar) * var(--db-density-scalar));
+  --db-space-2xl: calc(var(--db-spacing-unit) * 12 * var(--db-spacing-scalar) * var(--db-density-scalar));
+  --db-space-inline-xs: 0.25em;
+  --db-space-inline-sm: 0.5em;
+
+  /* ── Radius (fixed anchors) ── */
+  --db-radius-sm: 4px;
+  --db-radius-md: 8px;
+  --db-radius-lg: 12px;
+  --db-radius-xl: 16px;
+  --db-radius-2xl: 24px;
+  --db-radius-full: 999px;
+
+  /* ── Type (anchored ramp, scaled together by type-scalar) ── */
+  --db-font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --db-mono-font-family: "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace;
+  --db-font-size-sm: calc(12px * var(--db-type-scalar));
+  --db-line-height-sm: calc(16px * var(--db-type-scalar));
+  --db-letter-spacing-sm: calc(0px * var(--db-type-scalar));
+  --db-font-size-md: calc(13px * var(--db-type-scalar));
+  --db-line-height-md: calc(20px * var(--db-type-scalar));
+  --db-letter-spacing-md: calc(0px * var(--db-type-scalar));
+  --db-font-size-lg: calc(16px * var(--db-type-scalar));
+  --db-line-height-lg: calc(22px * var(--db-type-scalar));
+  --db-letter-spacing-lg: calc(0px * var(--db-type-scalar));
+  --db-font-size-xl: calc(22px * var(--db-type-scalar));
+  --db-line-height-xl: calc(28px * var(--db-type-scalar));
+  --db-letter-spacing-xl: calc(-0.2px * var(--db-type-scalar));
+  --db-font-size-2xl: calc(32px * var(--db-type-scalar));
+  --db-line-height-2xl: calc(40px * var(--db-type-scalar));
+  --db-letter-spacing-2xl: calc(-0.4px * var(--db-type-scalar));
+  --db-font-weight: 400;
+  --db-font-weight-bold: 600;
+
+  /* ── Elevation ── */
+  --db-elevation-0: none;
+  --db-elevation-1: 0 8px 40px rgba(0, 0, 0, 0.13);
+  --db-elevation-2: 0 2px 16px rgba(0, 0, 0, 0.08);
+  --db-elevation-3: 0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
+
+  /* ══════════════════════════════════════════════════════════════════════════
+   * SEMANTICS — LIGHT. Consume these (or their Tailwind utilities) in product code.
+   * ══════════════════════════════════════════════════════════════════════════ */
+  --db-surface-base: #FFFFFF;
+  --db-surface-subtle: #FAFAFA;
+  --db-surface-strong: #F5F5F5;
+  --db-surface-inverse: #171717;
+  --db-surface-accent: #D7EDFE;
+  --db-surface-inset: rgba(0, 0, 0, 0.08);
+  --db-surface-disabled: rgba(0, 0, 0, 0.12);
+  --db-text-base: #262626;
+  --db-text-strong: #171717;
+  --db-text-subtle: #525252;
+  --db-text-inverse: #FFFFFF;
+  --db-text-disabled: rgba(0, 0, 0, 0.38);
+  --db-text-accent: #0E538B;
+  --db-border-base: #E5E5E5;
+  --db-border-strong: #D4D4D4;
+  --db-border-subtle: #F5F5F5;
+  --db-border-inverse: #404040;
+  --db-border-disabled: rgba(0, 0, 0, 0.12);
+  --db-border-accent: #2272B4;
+  --db-action-default-base: #FAFAFA;
+  --db-action-default-hover: rgba(0, 0, 0, 0.06);
+  --db-action-default-press: rgba(0, 0, 0, 0.1);
+  --db-action-primary-base: #171717;
+  --db-action-primary-hover: rgba(23, 23, 23, 0.9);
+  --db-action-primary-press: rgba(23, 23, 23, 0.8);
+  --db-action-selected-base: rgba(0, 0, 0, 0.06);
+  --db-action-selected-hover: rgba(0, 0, 0, 0.1);
+  --db-action-selected-press: rgba(0, 0, 0, 0.14);
+  --db-action-positive-base: #277C43;
+  --db-action-positive-hover: #115026;
+  --db-action-positive-press: #093919;
+  --db-action-negative-base: #C82D4C;
+  --db-action-negative-hover: #9E102C;
+  --db-action-negative-press: #630316;
+  --db-action-label-base: #262626;
+  --db-action-label-hover: #171717;
+  --db-action-label-press: #000000;
+  --db-action-label-inverse-base: #FFFFFF;
+  --db-action-label-inverse-hover: rgba(255, 255, 255, 0.8);
+  --db-action-label-inverse-press: rgba(255, 255, 255, 0.7);
+  --db-input-border-base: #E5E5E5;
+  --db-input-border-hover: #A3A3A3;
+  --db-input-border-focus: #171717;
+  --db-focus-ring: #171717;
+  --db-focus-ring-offset: #FFFFFF;
+  --db-link-base: #2272B4;
+  --db-link-hover: #0E538B;
+  --db-link-press: #04355D;
+  --db-link-visited: #04355D;
+  --db-status-surface-info: #F0F8FF;
+  --db-status-surface-negative: #FFF5F7;
+  --db-status-surface-positive: #F3FCF6;
+  --db-status-surface-warning: #FFF9EB;
+  --db-status-border-info: #0E538B;
+  --db-status-border-negative: #9E102C;
+  --db-status-border-positive: #3BA65E;
+  --db-status-border-warning: #DE7921;
+  --db-status-text-info: #2272B4;
+  --db-status-text-negative: #C82D4C;
+  --db-status-text-positive: #277C43;
+  --db-status-text-warning: #BE501E;
+  --db-utility-scrim: rgba(0, 0, 0, 0.72);
+  --db-utility-surface-skeleton: rgba(0, 0, 0, 0.12);
+  --db-utility-text-skeleton: rgba(0, 0, 0, 0.2);
+  --db-viz-categorical-1: #9575CD;
+  --db-viz-categorical-2: #FFD54F;
+  --db-viz-categorical-3: #6CD7D2;
+  --db-viz-categorical-4: #F06292;
+  --db-viz-categorical-5: #D4E157;
+  --db-viz-categorical-6: #A1887F;
+  --db-viz-categorical-7: #90A0E0;
+  --db-viz-categorical-8: #EF9B80;
+  --db-viz-categorical-9: #96BEB5;
+  --db-viz-categorical-10: #AD6DAD;
+  --db-viz-sequential-1: #E8ECF0;
+  --db-viz-sequential-2: #D2F1FC;
+  --db-viz-sequential-3: #A5E5F9;
+  --db-viz-sequential-4: #65D3F4;
+  --db-viz-sequential-5: #22BFE5;
+  --db-viz-sequential-6: #169DBD;
+  --db-viz-sequential-7: #0F7B95;
+  --db-viz-sequential-8: #085B6E;
+  --db-viz-sequential-9: #084150;
+  --db-viz-sequential-10: #0A2C36;
+}
+
+.dark {
+  /* ══════════════════════════════════════════════════════════════════════════
+   * SEMANTICS — DARK.
+   * ══════════════════════════════════════════════════════════════════════════ */
+  --db-surface-base: #11171C;
+  --db-surface-subtle: #1F272D;
+  --db-surface-strong: #2B343D;
+  --db-surface-inverse: #F6F7F9;
+  --db-surface-accent: #021E38;
+  --db-surface-inset: rgba(255, 255, 255, 0.08);
+  --db-surface-disabled: rgba(255, 255, 255, 0.12);
+  --db-text-base: #E8ECF0;
+  --db-text-strong: #FFFFFF;
+  --db-text-subtle: #92A4B3;
+  --db-text-inverse: #11171C;
+  --db-text-disabled: rgba(255, 255, 255, 0.38);
+  --db-text-accent: #8ACAFF;
+  --db-border-base: rgba(255, 255, 255, 0.1);
+  --db-border-strong: rgba(255, 255, 255, 0.15);
+  --db-border-subtle: rgba(255, 255, 255, 0.06);
+  --db-border-inverse: #C0CDD8;
+  --db-border-disabled: rgba(255, 255, 255, 0.12);
+  --db-border-accent: #4299E0;
+  --db-action-default-base: #1F272D;
+  --db-action-default-hover: rgba(255, 255, 255, 0.08);
+  --db-action-default-press: rgba(255, 255, 255, 0.12);
+  --db-action-primary-base: #D1D9E1;
+  --db-action-primary-hover: rgba(209, 217, 225, 0.9);
+  --db-action-primary-press: rgba(209, 217, 225, 0.8);
+  --db-action-selected-base: rgba(255, 255, 255, 0.08);
+  --db-action-selected-hover: rgba(255, 255, 255, 0.12);
+  --db-action-selected-press: rgba(255, 255, 255, 0.16);
+  --db-action-positive-base: #3BA65E;
+  --db-action-positive-hover: #8DDDA8;
+  --db-action-positive-press: #B1ECC5;
+  --db-action-negative-base: #E65B77;
+  --db-action-negative-hover: #F792A6;
+  --db-action-negative-press: #FBD0D8;
+  --db-action-label-base: #F6F7F9;
+  --db-action-label-hover: #FFFFFF;
+  --db-action-label-press: #FFFFFF;
+  --db-action-label-inverse-base: #11171C;
+  --db-action-label-inverse-hover: rgba(0, 0, 0, 0.8);
+  --db-action-label-inverse-press: rgba(0, 0, 0, 0.7);
+  --db-input-border-base: rgba(255, 255, 255, 0.15);
+  --db-input-border-hover: #8396A5;
+  --db-input-border-focus: #D1D9E1;
+  --db-focus-ring: #D1D9E1;
+  --db-focus-ring-offset: #11171C;
+  --db-link-base: #8ACAFF;
+  --db-link-hover: #BAE1FC;
+  --db-link-press: #D7EDFE;
+  --db-link-visited: #D7EDFE;
+  --db-status-surface-info: #021E38;
+  --db-status-surface-negative: #3A010B;
+  --db-status-surface-positive: #04220E;
+  --db-status-surface-warning: #381001;
+  --db-status-border-info: #4299E0;
+  --db-status-border-negative: #E65B77;
+  --db-status-border-positive: #3BA65E;
+  --db-status-border-warning: #DE7921;
+  --db-status-text-info: #8ACAFF;
+  --db-status-text-negative: #F792A6;
+  --db-status-text-positive: #8DDDA8;
+  --db-status-text-warning: #F2BE88;
+  --db-utility-scrim: rgba(0, 0, 0, 0.85);
+  --db-utility-surface-skeleton: rgba(255, 255, 255, 0.12);
+  --db-utility-text-skeleton: rgba(255, 255, 255, 0.2);
+  --db-viz-categorical-1: #8555C9;
+  --db-viz-categorical-2: #BD7C30;
+  --db-viz-categorical-3: #2C8985;
+  --db-viz-categorical-4: #A11E4E;
+  --db-viz-categorical-5: #9E9D00;
+  --db-viz-categorical-6: #A8796D;
+  --db-viz-categorical-7: #4E62BA;
+  --db-viz-categorical-8: #CC471F;
+  --db-viz-categorical-9: #217766;
+  --db-viz-categorical-10: #97409A;
+  --db-viz-sequential-1: #0A2C36;
+  --db-viz-sequential-2: #084150;
+  --db-viz-sequential-3: #085B6E;
+  --db-viz-sequential-4: #0F7B95;
+  --db-viz-sequential-5: #169DBD;
+  --db-viz-sequential-6: #22BFE5;
+  --db-viz-sequential-7: #65D3F4;
+  --db-viz-sequential-8: #A5E5F9;
+  --db-viz-sequential-9: #D2F1FC;
+  --db-viz-sequential-10: #F6F7F9;
+}

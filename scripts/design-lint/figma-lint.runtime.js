@@ -82,6 +82,38 @@ function record(node, level, rule, message, fix) {
   })
 }
 
+// ─── Token-compliance bookkeeping ───
+// A bound paint is only fully compliant when it resolves to the "Color: Semantic"
+// collection. Binding to "Color: Primitive" is the design equivalent of consuming
+// a raw primitive in code (R2) — a warning, not a hard error.
+const SEMANTIC_COLLECTION = "Color: Semantic"
+const PRIMITIVE_COLLECTION = "Color: Primitive"
+const _collCache = {}
+async function collectionNameOfVar(varId) {
+  try {
+    const v = await figma.variables.getVariableByIdAsync(varId)
+    if (!v) return null
+    const cid = v.variableCollectionId
+    if (cid in _collCache) return _collCache[cid]
+    const c = await figma.variables.getVariableCollectionByIdAsync(cid)
+    return (_collCache[cid] = c ? c.name : null)
+  } catch (e) {
+    return null
+  }
+}
+function boundVarId(paint) {
+  const bv = paint && paint.boundVariables
+  const c = bv && bv.color
+  return c && c.id ? c.id : null
+}
+const tokenStats = {
+  colorProps: 0,
+  semanticBound: 0,
+  primitiveBound: 0,
+  otherBound: 0,
+  unbound: 0,
+}
+
 // ─── Component compliance ───
 
 async function checkInstance(node) {
@@ -116,48 +148,87 @@ async function checkInstance(node) {
 
 // ─── Token compliance ───
 
-function checkFills(node) {
+async function checkFills(node) {
   if (!("fills" in node)) return
   const fills = node.fills
   if (!Array.isArray(fills)) return
   for (const fill of fills) {
     if (!fill.visible) continue
     if (fill.type !== "SOLID") continue
+    tokenStats.colorProps++
+    const vid = boundVarId(fill)
+    if (vid) {
+      const coll = await collectionNameOfVar(vid)
+      if (coll === SEMANTIC_COLLECTION) {
+        tokenStats.semanticBound++
+        continue
+      }
+      if (coll === PRIMITIVE_COLLECTION) {
+        tokenStats.primitiveBound++
+        record(
+          node,
+          "warning",
+          "primitive-bound-fill",
+          `Fill is bound to a raw primitive (${PRIMITIVE_COLLECTION}), not a semantic token.`,
+          `Rebind to a ${SEMANTIC_COLLECTION} token (surface/*, action/*, status/surface-*). Primitives are the palette, not for direct use.`
+        )
+        continue
+      }
+      tokenStats.otherBound++ // bound to some other (non-color) collection — allowed
+      continue
+    }
+    tokenStats.unbound++
     const hex = rgbToHex(fill.color)
-    // If the paint is bound to a variable, accept it
-    const isBoundToVariable =
-      fill.boundVariables && Object.keys(fill.boundVariables).length > 0
-    if (isBoundToVariable) continue
     if (!APPROVED_HEX.has(hex)) {
       record(
         node,
         "error",
         "non-token-fill",
         `Fill ${hex} is not a DBUI token (and not bound to a variable).`,
-        `Bind to a color variable (Background/Foreground/Primary/etc.) or replace with one of the approved palette colors.`
+        `Bind to a ${SEMANTIC_COLLECTION} token (surface/*, action/*, …) or replace with an approved palette color.`
       )
     }
   }
 }
 
-function checkStrokes(node) {
+async function checkStrokes(node) {
   if (!("strokes" in node)) return
   const strokes = node.strokes
   if (!Array.isArray(strokes)) return
   for (const stroke of strokes) {
     if (!stroke.visible) continue
     if (stroke.type !== "SOLID") continue
+    tokenStats.colorProps++
+    const vid = boundVarId(stroke)
+    if (vid) {
+      const coll = await collectionNameOfVar(vid)
+      if (coll === SEMANTIC_COLLECTION) {
+        tokenStats.semanticBound++
+        continue
+      }
+      if (coll === PRIMITIVE_COLLECTION) {
+        tokenStats.primitiveBound++
+        record(
+          node,
+          "warning",
+          "primitive-bound-stroke",
+          `Stroke is bound to a raw primitive (${PRIMITIVE_COLLECTION}), not a semantic token.`,
+          `Rebind to a ${SEMANTIC_COLLECTION} token (border/*, input/border-*, status/border-*).`
+        )
+        continue
+      }
+      tokenStats.otherBound++
+      continue
+    }
+    tokenStats.unbound++
     const hex = rgbToHex(stroke.color)
-    const isBound =
-      stroke.boundVariables && Object.keys(stroke.boundVariables).length > 0
-    if (isBound) continue
     if (!APPROVED_HEX.has(hex)) {
       record(
         node,
         "error",
         "non-token-stroke",
         `Stroke ${hex} is not a DBUI token.`,
-        `Bind to the Border or Input variable, or use one of the approved palette colors.`
+        `Bind to a ${SEMANTIC_COLLECTION} border/input token, or use an approved palette color.`
       )
     }
   }
@@ -245,8 +316,8 @@ async function walk(node) {
   await checkInstance(node)
 
   // Token compliance (any visible node)
-  checkFills(node)
-  checkStrokes(node)
+  await checkFills(node)
+  await checkStrokes(node)
   checkSpacing(node)
   checkText(node)
   checkRadius(node)
@@ -285,6 +356,19 @@ function count(n) {
   if ("children" in n && n.children) for (const c of n.children) count(c)
 }
 count(target)
+
+// Token-compliance score: share of color properties bound to a semantic token.
+// Primitive-bound and unbound-hardcoded properties drag the score down; this is
+// the headline "are the mocks using design-system tokens?" number.
+const _denom = tokenStats.colorProps || 1
+summary.tokenCompliance = {
+  colorProps: tokenStats.colorProps,
+  semanticBound: tokenStats.semanticBound,
+  primitiveBound: tokenStats.primitiveBound,
+  otherBound: tokenStats.otherBound,
+  unbound: tokenStats.unbound,
+  scorePct: Math.round((tokenStats.semanticBound / _denom) * 100),
+}
 
 return {
   scope: { id: target.id, name: target.name, type: target.type },

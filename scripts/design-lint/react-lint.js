@@ -31,8 +31,45 @@ const DBUI_COMPONENT_SET = new Set([...components.ui, ...components.shells])
 const ALWAYS_ALLOWED_TAGS = new Set(components.tagsAlwaysAllowed.always)
 const PREFER_WRAPPER_HINTS = components.tagsAlwaysAllowed["ok-but-prefer-wrapper"]
 
+// Interactive HTML tags are never allowed in portal stories or dbui-shells.
+// Use DBUI primitives instead (Button/Input/Select/Textarea/etc.).
+const FORBIDDEN_HTML_TAGS = new Set(["button", "input", "select", "textarea"])
+
 const APPROVED_HEX = new Set([...tokens.colors.light, ...tokens.colors.dark])
 const APPROVED_SPACING_PX = new Set(tokens.spacing.px)
+
+// ─── Token-compliance (granular color system) ───
+// Primitives (interface/*, status/*, viz/<hue>/*, base/*) are the raw palette and
+// must NEVER be consumed directly in product code — only semantics may be.
+// tokens.json carries the ramp names so we recognize a primitive var by shape.
+const PRIMITIVE_RAMPS = new Set(Object.keys(tokens.colors.primitives || {}))
+function isPrimitiveVar(rawName) {
+  const n = rawName.replace(/^--/, "")
+  if (/^base-(white|black)$/.test(n)) return true
+  const m = n.match(/^([a-z]+-[a-z]+)-\d{2,3}$/)
+  return !!(m && PRIMITIVE_RAMPS.has(m[1]))
+}
+// Compliance stats: how many token var() references are semantic vs primitive.
+const tokenStats = { varRefs: 0, primitiveRefs: 0 }
+
+const VAR_REF_RE = /var\(\s*(--[a-z0-9-]+)\s*(?:,[^)]*)?\)/gi
+function checkVarRefs(text, file, line, column, element, source) {
+  VAR_REF_RE.lastIndex = 0
+  let m
+  while ((m = VAR_REF_RE.exec(text))) {
+    const name = m[1]
+    tokenStats.varRefs++
+    if (isPrimitiveVar(name)) {
+      tokenStats.primitiveRefs++
+      violations.push({
+        file, line, column, level: "error", rule: "no-primitive-token", element,
+        message: `\`${name}\` is a raw primitive — product code must consume a semantic token, not the palette.`,
+        fix: `Use a semantic token (var(--surface-base), var(--text-subtle), …) or its utility (bg-surface-base).`,
+        source: source || text.slice(0, 80),
+      })
+    }
+  }
+}
 
 const violations = []
 
@@ -178,6 +215,9 @@ function checkClassName(className, file, line, column, element) {
     }
   }
 
+  // Raw-primitive var() usage (e.g. bg-[var(--interface-neutral-600)])
+  checkVarRefs(className, file, line, column, element)
+
   // Hex-in-string check (rare but possible in cn() calls)
   const hexMatches = className.match(/#[0-9a-fA-F]{3,8}\b/g) || []
   for (const hexRaw of hexMatches) {
@@ -201,6 +241,9 @@ function checkInlineStyle(node, file, line, column, element) {
     const init = pa.getInitializer()
     if (!init) return
     const text = init.getText().replace(/^['"`]|['"`]$/g, "")
+
+    // Raw-primitive var() usage in inline style (e.g. color: 'var(--status-blue-600)')
+    if (text.includes("var(--")) checkVarRefs(text, file, line, column, element, `${name}: ${text}`)
 
     // Color check
     if (/^#[0-9a-fA-F]{3,8}$/.test(text)) {
@@ -244,6 +287,21 @@ function checkElement(opening, sourceFile) {
 
   const isComponent = /^[A-Z]/.test(tagName)
   const isMember = tagName.includes(".")
+
+  if (!isComponent && FORBIDDEN_HTML_TAGS.has(tagName)) {
+    violations.push({
+      file: sourceFile,
+      line,
+      column,
+      level: "error",
+      rule: "no-raw-interactive-html",
+      element: tagName,
+      message: `<${tagName}> is not allowed in DBUI-authored UI code.`,
+      fix: PREFER_WRAPPER_HINTS[tagName] || `Replace <${tagName}> with the DBUI equivalent.`,
+      source: opening.getText().slice(0, 80),
+    })
+    // Still continue to check className/style for additional token violations.
+  }
 
   if (!isComponent && !ALWAYS_ALLOWED_TAGS.has(tagName)) {
     const hint = PREFER_WRAPPER_HINTS[tagName]
@@ -291,7 +349,18 @@ function checkElement(opening, sourceFile) {
 
 function gatherFiles(args) {
   if (args.length > 0 && !args[0].startsWith("--")) {
-    return args.map((a) => path.resolve(a))
+    const out = []
+    for (const a of args) {
+      const p = path.resolve(a)
+      if (fs.existsSync(p) && fs.statSync(p).isDirectory()) {
+        walk(p, (f) => {
+          if (f.endsWith(".tsx") && !f.endsWith(".d.ts")) out.push(f)
+        })
+      } else {
+        out.push(p)
+      }
+    }
+    return out
   }
   const candidates = []
   for (const dir of [path.join(ROOT, "apps/portal/src"), path.join(ROOT, "packages/dbui-shells/src")]) {
@@ -357,6 +426,18 @@ function reportMarkdown(fileCount) {
   for (const v of violations) ruleCounts.set(v.rule, (ruleCounts.get(v.rule) || 0) + 1)
   const sorted = [...ruleCounts.entries()].sort((a, b) => b[1] - a[1])
   for (const [rule, count] of sorted) console.log(`- \`${rule}\` × ${count}`)
+
+  console.log(`\n**Token compliance:** ${tokenComplianceLine()}`)
+}
+
+// A single-line compliance readout for var() usage: how many color references
+// point at semantic tokens (good) vs raw primitives (R2 violation).
+function tokenComplianceLine() {
+  const { varRefs, primitiveRefs } = tokenStats
+  if (varRefs === 0) return "no var() color references found."
+  const good = varRefs - primitiveRefs
+  const pct = Math.round((good / varRefs) * 100)
+  return `${pct}% (${good}/${varRefs} var() references use a semantic token; ${primitiveRefs} use a raw primitive).`
 }
 
 function main() {

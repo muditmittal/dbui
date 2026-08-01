@@ -238,3 +238,99 @@ export const Default: StoryObj = {
     </div>
   ),
 }
+
+// ─── New color system (Color: Semantic) ───
+// Generated from packages/dbui/src/tokens/theme.config.mjs → tokens.css. Chips
+// render straight from the shipped --db-* custom properties, so this doc is
+// always in sync with the token values. Primitives are NOT shown: they don't
+// ship as CSS vars (generator input only — see theme.config.mjs + Figma).
+
+const semanticGroups: { group: string; tokens: string[] }[] = [
+  { group: "surface", tokens: ["base", "subtle", "strong", "inverse", "accent", "inset", "disabled"] },
+  { group: "text", tokens: ["base", "strong", "subtle", "inverse", "disabled", "accent"] },
+  { group: "border", tokens: ["base", "strong", "subtle", "inverse", "disabled", "accent"] },
+  { group: "action", tokens: [
+    "default-base", "default-hover", "default-press",
+    "primary-base", "primary-hover", "primary-press",
+    "selected-base", "selected-hover", "selected-press",
+    "positive-base", "positive-hover", "positive-press",
+    "negative-base", "negative-hover", "negative-press",
+    "label-base", "label-hover", "label-press",
+    "label-inverse-base", "label-inverse-hover", "label-inverse-press",
+  ] },
+  { group: "input", tokens: ["border-base", "border-hover", "border-focus"] },
+  { group: "focus", tokens: ["ring", "ring-offset"] },
+  { group: "link", tokens: ["base", "hover", "press", "visited"] },
+  { group: "status", tokens: [
+    "surface-info", "surface-negative", "surface-positive", "surface-warning",
+    "border-info", "border-negative", "border-positive", "border-warning",
+    "text-info", "text-negative", "text-positive", "text-warning",
+  ] },
+  { group: "utility", tokens: ["scrim", "surface-skeleton", "text-skeleton"] },
+  { group: "viz", tokens: [
+    "categorical-1", "categorical-2", "categorical-3", "categorical-4", "categorical-5",
+    "categorical-6", "categorical-7", "categorical-8", "categorical-9", "categorical-10",
+    "sequential-1", "sequential-2", "sequential-3", "sequential-4", "sequential-5",
+    "sequential-6", "sequential-7", "sequential-8", "sequential-9", "sequential-10",
+  ] },
+]
+
+const chipFrame: React.CSSProperties = {
+  padding: 4, borderRadius: 6, background: "var(--db-surface-base)",
+  display: "inline-flex", border: "1px solid rgba(128,128,128,0.2)",
+}
+const chipBox: React.CSSProperties = {
+  width: 44, height: 28, borderRadius: 4, background: "var(--_v)",
+  border: "1px solid rgba(128,128,128,0.28)",
+}
+
+const labelStrong: React.CSSProperties = { fontSize: 12, fontWeight: 600, color: "#161616" }
+
+// Light + dark chip pair for one semantic token — the dark half renders inside a
+// `.dark` context so tokens.css's dark overrides resolve.
+function DualChip({ v }: { v: string }) {
+  const box = (): React.CSSProperties => ({ ...chipBox, background: `var(${v})` })
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      <div style={chipFrame}><div style={box()} /></div>
+      <div className="dark" style={chipFrame}><div style={box()} /></div>
+    </div>
+  )
+}
+
+export const NewColorSystem: StoryObj = {
+  name: "Color — New System",
+  render: () => (
+    <div style={{ maxWidth: 960, margin: "0 auto", fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}>
+
+      <h2 style={sectionHeader}>Semantics — Color: Semantic</h2>
+      <p style={{ ...hint, fontSize: 12, marginTop: -16, marginBottom: 24 }}>
+        Role tokens consumed by product code. Each row shows <strong>light</strong> (left) and <strong>dark</strong> (right).
+        Values ship as <code style={mono}>--db-*</code> CSS vars generated from <code style={mono}>theme.config.mjs</code>.
+        The raw primitive palette does not ship in code — it lives in the config and Figma’s “Color: Primitive” collection.
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+        {semanticGroups.map((g) => (
+          <div key={g.group}>
+            <h3 style={groupHeader}>{g.group}</h3>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {g.tokens.map((t) => (
+                <div
+                  key={t}
+                  style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 12, alignItems: "center", padding: "6px 0", borderBottom: "1px solid #F3F3F3" }}
+                >
+                  <DualChip v={`--db-${g.group}-${t}`} />
+                  <div>
+                    <div style={labelStrong}>{g.group}/{t}</div>
+                    <code style={mono}>var(--db-{g.group}-{t})</code>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  ),
+}
