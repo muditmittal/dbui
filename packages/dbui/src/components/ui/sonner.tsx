@@ -27,19 +27,19 @@ const Toaster = ({ theme = "system", ...props }: ToasterProps) => {
       className="toaster group"
       icons={{
         success: (
-          <CheckCircleFill className="size-4 text-success" />
+          <CheckCircleFill className="size-4 text-status-text-positive" />
         ),
         info: (
-          <InfoFill className="size-4 text-foreground" />
+          <InfoFill className="size-4 text-text-base" />
         ),
         warning: (
-          <WarningFill className="size-4 text-warning" />
+          <WarningFill className="size-4 text-status-text-warning" />
         ),
         error: (
-          <DangerFill className="size-4 text-destructive" />
+          <DangerFill className="size-4 text-status-text-negative" />
         ),
         loading: (
-          <Loading className="size-4 animate-spin text-foreground" />
+          <Loading className="size-4 animate-spin text-text-base" />
         ),
       }}
       style={

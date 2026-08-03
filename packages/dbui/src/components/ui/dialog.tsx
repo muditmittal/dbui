@@ -73,7 +73,7 @@ function DialogContent({
         data-slot="dialog-content"
         data-size={size}
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 rounded-md border border-border bg-background text-[13px] shadow-lg duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 rounded-md border border-border-base bg-surface-base text-[13px] shadow-lg duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}
@@ -132,7 +132,7 @@ function DialogHeaderIcon({
     <div
       data-slot="dialog-header-icon"
       className={cn(
-        "inline-flex size-10 items-center justify-center rounded-md bg-muted [&_svg:not([class*='size-'])]:size-6",
+        "inline-flex size-10 items-center justify-center rounded-md bg-surface-subtle [&_svg:not([class*='size-'])]:size-6",
         className
       )}
       {...props}
@@ -152,7 +152,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "flex flex-col-reverse gap-2 border-t border-border p-4 sm:flex-row sm:justify-end",
+        "flex flex-col-reverse gap-2 border-t border-border-base p-4 sm:flex-row sm:justify-end",
         className
       )}
       {...props}
@@ -185,7 +185,7 @@ function DialogDescription({
     <DialogPrimitive.Description
       data-slot="dialog-description"
       className={cn(
-        "text-[13px] text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
+        "text-[13px] text-text-subtle *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-text-base",
         className
       )}
       {...props}
