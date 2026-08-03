@@ -1,8 +1,7 @@
 import * as React from "react"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "dbui/components/ui/table"
 import { Badge } from "dbui/components/ui/badge"
-import { Alert, AlertIcon, AlertTitle, AlertDescription } from "dbui/components/ui/alert"
-import { Separator } from "dbui/components/ui/separator"
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription } from "dbui/components/ui/alert"
 import { InfoSmall } from "dbui/components/icons/InfoSmall"
 
 /**
@@ -12,25 +11,28 @@ import { InfoSmall } from "dbui/components/icons/InfoSmall"
  */
 
 export function DocPage({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto flex max-w-4xl flex-col gap-6 pb-16">{children}</div>
+  return <div className="flex max-w-4xl flex-col gap-10 pb-16">{children}</div>
 }
 
 export function Lede({ children }: { children: React.ReactNode }) {
-  return <p className="text-[16px] leading-[22px] text-text-subtle">{children}</p>
+  return <p className="max-w-[68ch] text-[16px] leading-[22px] text-text-subtle">{children}</p>
 }
 
+/**
+ * Storybook's docs stylesheet already draws a rule under every `h2`, so this
+ * adds none of its own — an earlier version did, which produced two.
+ */
 export function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-3">
-      <h2 className="mt-2 text-[16px] leading-[22px] font-semibold text-text-strong">{title}</h2>
-      <Separator />
+    <section className="flex flex-col gap-4">
+      <h2 className="text-[16px] leading-[22px] font-semibold text-text-strong">{title}</h2>
       {children}
     </section>
   )
 }
 
 export function P({ children }: { children: React.ReactNode }) {
-  return <p className="text-[13px] leading-[20px] text-text-base">{children}</p>
+  return <p className="max-w-[68ch] text-[13px] leading-[20px] text-text-base">{children}</p>
 }
 
 /** Inline code that reads as a token, not as prose. */
@@ -45,7 +47,7 @@ export function C({ children }: { children: React.ReactNode }) {
 /** A terminal block. Comments are dimmed so the command itself leads. */
 export function Cmd({ lines }: { lines: Array<[string, string?]> }) {
   return (
-    <div className="overflow-x-auto rounded-md border border-border-base bg-surface-subtle p-3">
+    <div className="overflow-x-auto rounded-md border border-border-base bg-surface-subtle px-4 py-3">
       <pre className="font-mono text-[12px] leading-[22px] text-text-base">
         {lines.map(([cmd, note], i) => (
           <div key={i}>
@@ -60,6 +62,10 @@ export function Cmd({ lines }: { lines: Array<[string, string?]> }) {
 
 type Col = { key: string; header: string; width?: string; mono?: boolean }
 
+/**
+ * Scrolls inside its own container rather than widening the page, which is what
+ * pushed the whole document into a horizontal scroll before.
+ */
 export function DocTable({
   columns,
   rows,
@@ -68,31 +74,41 @@ export function DocTable({
   rows: Array<Record<string, React.ReactNode>>
 }) {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          {columns.map((c) => (
-            <TableHead key={c.key} className={c.width}>
-              {c.header}
-            </TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {rows.map((r, i) => (
-          <TableRow key={i}>
+    <div className="w-full overflow-x-auto">
+      <Table className="min-w-lg">
+        <TableHeader>
+          <TableRow>
             {columns.map((c) => (
-              <TableCell key={c.key} className={c.mono ? "align-top font-mono text-[12px]" : "align-top"}>
-                {r[c.key]}
-              </TableCell>
+              <TableHead key={c.key} className={c.width}>
+                {c.header}
+              </TableHead>
             ))}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {rows.map((r, i) => (
+            <TableRow key={i}>
+              {columns.map((c) => (
+                <TableCell
+                  key={c.key}
+                  className={c.mono ? "align-top py-2 font-mono text-[12px]" : "align-top py-2"}
+                >
+                  {r[c.key]}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   )
 }
 
+/**
+ * Alert is a flex row of [icon][content][action]. Title and description must sit
+ * inside AlertContent or they become siblings of the icon and lay out beside
+ * each other instead of stacking.
+ */
 export function Note({
   title,
   variant = "info",
@@ -107,8 +123,10 @@ export function Note({
       <AlertIcon>
         <InfoSmall />
       </AlertIcon>
-      <AlertTitle>{title}</AlertTitle>
-      <AlertDescription>{children}</AlertDescription>
+      <AlertContent>
+        <AlertTitle>{title}</AlertTitle>
+        <AlertDescription>{children}</AlertDescription>
+      </AlertContent>
     </Alert>
   )
 }

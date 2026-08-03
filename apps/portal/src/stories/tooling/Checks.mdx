@@ -48,7 +48,7 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit
   ]}
 />
 
-<Note title="Reading the output on DBUI's own source" variant="info">
+<Note title="Reading it on DBUI itself" variant="info">
   Rules written for consumers necessarily fire on the primitives that implement them. <C>Button</C>{" "}
   contains a raw <C>&lt;button&gt;</C>, so <C>no-raw-interactive-html</C> reports it.{" "}
   <C>dbui-shells</C> is the honest signal, because it composes rather than defines — it reports zero
@@ -110,7 +110,7 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit
   verifier that shares a list with the thing it verifies proves nothing.
 </P>
 
-<Note title="What that cost, concretely" variant="warning">
+<Note title="Why that matters" variant="warning">
   The first migration verifier checked only the utility names in its own map and reported a
   confident zero while 474 legacy utilities remained in the codebase. The audit derives its list
   from the tokens themselves, crossed with every Tailwind colour prefix, so it cannot agree with the
