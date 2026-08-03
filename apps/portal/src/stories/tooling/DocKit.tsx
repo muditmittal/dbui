@@ -33,10 +33,10 @@ export function DocPage({ title, children }: { title: string; children: React.Re
     // are zeroed here once. Flex gap is then the only thing setting spacing.
     // Storybook's own selectors outrank a plain descendant rule, so these are
     // forced. Measured: without them the nested <p> keeps a 16px margin.
-    <div className="flex w-full flex-col gap-8 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
+    <div className="flex w-full max-w-[820px] flex-col gap-7 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
       <h1
         style={HEADING_RESET}
-        className="text-[32px] leading-[40px] font-semibold text-text-strong"
+        className="text-[32px] leading-[40px] font-semibold tracking-[-0.01em] text-text-strong"
       >
         {title}
       </h1>
@@ -52,7 +52,7 @@ export function Intro({ children }: { children: React.ReactNode }) {
 
 export function Lede({ children }: { children: React.ReactNode }) {
   return (
-    <p style={RESET} className="max-w-[68ch] text-[16px] leading-[22px] text-text-subtle">
+    <p style={RESET} className="max-w-[64ch] text-[17px] leading-[28px] text-text-subtle">
       {children}
     </p>
   )
@@ -60,10 +60,10 @@ export function Lede({ children }: { children: React.ReactNode }) {
 
 export function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section style={RESET} className="flex flex-col gap-3">
+    <section style={RESET} className="flex flex-col gap-4">
       <h2
         style={HEADING_RESET}
-        className="text-[16px] leading-[22px] font-semibold text-text-strong"
+        className="text-[22px] leading-[28px] font-semibold tracking-[-0.01em] text-text-strong"
       >
         {title}
       </h2>
@@ -74,7 +74,7 @@ export function Section({ title, children }: { title: string; children: React.Re
 
 export function P({ children }: { children: React.ReactNode }) {
   return (
-    <p style={RESET} className="max-w-[68ch] text-[13px] leading-[20px] text-text-base">
+    <p style={RESET} className="max-w-[64ch] text-[16px] leading-[26px] text-text-base">
       {children}
     </p>
   )
@@ -127,9 +127,9 @@ export function CodeBlock({ children, caption }: { children: string; caption?: s
 /** A short list of what a page covers, shown directly under the lede. */
 export function Covers({ items }: { items: Array<[string, string]> }) {
   return (
-    <ul style={{ ...RESET, listStyle: "none" }} className="flex max-w-[68ch] flex-col gap-1">
+    <ul style={{ ...RESET, listStyle: "none" }} className="flex max-w-[64ch] flex-col gap-1.5">
       {items.map(([name, why]) => (
-        <li key={name} style={RESET} className="text-[13px] leading-[20px] text-text-base">
+        <li key={name} style={RESET} className="text-[16px] leading-[26px] text-text-base">
           <span className="font-semibold text-text-strong">{name}</span>
           <span className="text-text-subtle">{` — ${why}`}</span>
         </li>
@@ -159,7 +159,7 @@ export function DocTable({
         <TableHeader>
           <TableRow>
             {columns.map((c) => (
-              <TableHead key={c.key} className={`align-bottom whitespace-normal! ${c.width ?? ""}`}>
+              <TableHead key={c.key} className={`h-auto py-2.5 align-bottom text-[13px] whitespace-normal! ${c.width ?? ""}`}>
                 {c.header}
               </TableHead>
             ))}
@@ -173,8 +173,8 @@ export function DocTable({
                   key={c.key}
                   className={
                     c.mono
-                      ? "align-top py-2 font-mono text-[12px] whitespace-normal!"
-                      : "align-top py-2 whitespace-normal!"
+                      ? "align-top py-2.5 font-mono text-[13px] whitespace-normal!"
+                      : "align-top py-2.5 text-[16px] leading-[24px] whitespace-normal!"
                   }
                 >
                   {r[c.key]}
