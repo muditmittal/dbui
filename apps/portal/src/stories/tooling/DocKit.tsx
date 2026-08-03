@@ -33,7 +33,7 @@ export function DocPage({ title, children }: { title: string; children: React.Re
     // are zeroed here once. Flex gap is then the only thing setting spacing.
     // Storybook's own selectors outrank a plain descendant rule, so these are
     // forced. Measured: without them the nested <p> keeps a 16px margin.
-    <div className="flex w-full max-w-[820px] flex-col gap-7 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
+    <div className="flex w-full max-w-3xl flex-col gap-7 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
       <h1
         style={HEADING_RESET}
         className="text-[32px] leading-[40px] font-semibold tracking-[-0.01em] text-text-strong"
@@ -52,7 +52,7 @@ export function Intro({ children }: { children: React.ReactNode }) {
 
 export function Lede({ children }: { children: React.ReactNode }) {
   return (
-    <p style={RESET} className="max-w-[64ch] text-[17px] leading-[28px] text-text-subtle">
+    <p style={RESET} className="max-w-[64ch] text-[16px] leading-[26px] text-text-subtle">
       {children}
     </p>
   )
