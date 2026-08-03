@@ -27,15 +27,15 @@ function Section({
 }) {
   return (
     <section className="mb-10">
-      <h3 className="mb-1 text-[13px] leading-[20px] font-semibold text-foreground">
+      <h3 className="mb-1 text-[13px] leading-[20px] font-semibold text-text-base">
         {title}
       </h3>
       {hint ? (
-        <p className="mb-3 text-[12px] leading-[16px] text-muted-foreground">
+        <p className="mb-3 text-[12px] leading-[16px] text-text-subtle">
           {hint}
         </p>
       ) : null}
-      <div className="rounded-md border border-border bg-background p-4">
+      <div className="rounded-md border border-border-base bg-surface-base p-4">
         {children}
       </div>
     </section>
@@ -242,7 +242,7 @@ export const TreemapTiles: StoryObj = {
           onSelect={setSelection}
           label="Catalogs by size"
         />
-        <p className="mt-3 text-[12px] leading-[16px] text-muted-foreground">
+        <p className="mt-3 text-[12px] leading-[16px] text-text-subtle">
           {selection
             ? `Selected ${selection.type}: ${selection.name}${
                 selection.groupName ? ` (in ${selection.groupName})` : ""

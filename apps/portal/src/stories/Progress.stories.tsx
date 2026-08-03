@@ -20,31 +20,31 @@ export const Playground: StoryObj = {
         {/* Full composition matching Figma: Title + % + bar + status */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <span className="text-[13px] font-semibold text-foreground">Uploading data</span>
-            <span className="text-[13px] text-foreground">50%</span>
+            <span className="text-[13px] font-semibold text-text-base">Uploading data</span>
+            <span className="text-[13px] text-text-base">50%</span>
           </div>
           <Progress value={50} />
-          <span className="text-[12px] leading-[16px] text-muted-foreground">Processing...</span>
+          <span className="text-[12px] leading-[16px] text-text-subtle">Processing...</span>
         </div>
 
         {/* Completed */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <span className="text-[13px] font-semibold text-foreground">Import complete</span>
-            <span className="text-[13px] text-foreground">100%</span>
+            <span className="text-[13px] font-semibold text-text-base">Import complete</span>
+            <span className="text-[13px] text-text-base">100%</span>
           </div>
           <Progress value={100} />
-          <span className="text-[12px] leading-[16px] text-muted-foreground">Done</span>
+          <span className="text-[12px] leading-[16px] text-text-subtle">Done</span>
         </div>
 
         {/* Just started */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <span className="text-[13px] font-semibold text-foreground">Indexing tables</span>
-            <span className="text-[13px] text-foreground">12%</span>
+            <span className="text-[13px] font-semibold text-text-base">Indexing tables</span>
+            <span className="text-[13px] text-text-base">12%</span>
           </div>
           <Progress value={12} />
-          <span className="text-[12px] leading-[16px] text-muted-foreground">Scanning catalog...</span>
+          <span className="text-[12px] leading-[16px] text-text-subtle">Scanning catalog...</span>
         </div>
       </div>
 

@@ -91,6 +91,9 @@ const BATCHES = [
   // Exported rule definitions. Not components, but they quote utility names
   // to consumers, so a stale one is a documented lie.
   { n: 8, name: "Exported rule definitions", match: (p) => p.startsWith("packages/dbui/src/rules/") },
+  // Storybook demo code. Not shipped, but it is the documentation people read,
+  // so a legacy utility here teaches the wrong thing.
+  { n: 9, name: "Storybook stories", match: (p) => p.startsWith("apps/portal/src/stories/") },
 ];
 
 const SCAN_ROOTS = [
@@ -98,6 +101,7 @@ const SCAN_ROOTS = [
   "packages/dbui-shells/src",
   "packages/dbui-genie/src",
   "packages/dbui-viz/src",
+  "apps/portal/src/stories",
 ];
 
 function collectFiles() {

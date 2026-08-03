@@ -19,7 +19,7 @@ export const Playground: StoryObj = {
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Empty</h2>
 
       <Empty>
-        <Search className="size-8 text-muted-foreground" />
+        <Search className="size-8 text-text-subtle" />
         <EmptyTitle>No results found</EmptyTitle>
         <EmptyDescription>Try adjusting your search or filters to find what you're looking for.</EmptyDescription>
         <Button variant="outline" className="mt-2">Clear filters</Button>

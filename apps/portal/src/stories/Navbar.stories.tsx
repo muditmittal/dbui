@@ -31,7 +31,7 @@ export const Default: StoryObj = {
     const [expanded, setExpanded] = useState(true)
     return (
       <>
-        <div className="bg-muted p-4 rounded-lg">
+        <div className="bg-surface-subtle p-4 rounded-lg">
           <Navbar>
             <NavbarNewButton><Plus /> New</NavbarNewButton>
             <NavbarSection>
@@ -68,7 +68,7 @@ export const CollapsedSection: StoryObj = {
   render: () => {
     const [expanded, setExpanded] = useState(false)
     return (
-      <div className="bg-muted p-4 rounded-lg">
+      <div className="bg-surface-subtle p-4 rounded-lg">
         <Navbar>
           <NavbarSection>
             <NavbarSectionHeader expanded={expanded} onToggle={() => setExpanded(!expanded)}>

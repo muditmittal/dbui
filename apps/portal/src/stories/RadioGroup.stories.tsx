@@ -27,7 +27,7 @@ export const Playground: StoryObj = {
         </label>
         <label className="group/field flex cursor-pointer items-center gap-2 py-1.5">
           <RadioGroupItem value="option-3" id="rg-3" disabled />
-          <span className="text-[13px] leading-[20px] text-disabled-foreground">Disabled option</span>
+          <span className="text-[13px] leading-[20px] text-text-disabled">Disabled option</span>
         </label>
       </RadioGroup>
 

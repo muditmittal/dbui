@@ -31,10 +31,10 @@ export const Playground: StoryObj = {
                 </div>
                 <div>
                   <p className="text-[13px] font-semibold">Mudit Mittal</p>
-                  <p className="text-[12px] text-muted-foreground">Product Designer</p>
+                  <p className="text-[12px] text-text-subtle">Product Designer</p>
                 </div>
               </div>
-              <p className="text-[12px] text-muted-foreground">
+              <p className="text-[12px] text-text-subtle">
                 Working on DBUI Design System — bridging Figma and code for Databricks.
               </p>
             </div>

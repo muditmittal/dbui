@@ -26,13 +26,13 @@ export const Playground: StoryObj = {
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         <TabsContent value="home">
-          <div className="text-[13px] text-muted-foreground p-4">Home content</div>
+          <div className="text-[13px] text-text-subtle p-4">Home content</div>
         </TabsContent>
         <TabsContent value="notebooks">
-          <div className="text-[13px] text-muted-foreground p-4">Notebooks content</div>
+          <div className="text-[13px] text-text-subtle p-4">Notebooks content</div>
         </TabsContent>
         <TabsContent value="settings">
-          <div className="text-[13px] text-muted-foreground p-4">Settings content</div>
+          <div className="text-[13px] text-text-subtle p-4">Settings content</div>
         </TabsContent>
       </Tabs>
 

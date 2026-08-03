@@ -91,7 +91,7 @@ const CANNED_REPLY = `Here's the breakdown by region. \`us-east\` carries the la
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-[640px] w-full max-w-[760px] flex-col overflow-hidden rounded-md border border-border bg-background">
+    <div className="flex h-[640px] w-full max-w-[760px] flex-col overflow-hidden rounded-md border border-border-base bg-surface-base">
       {children}
     </div>
   )
@@ -123,7 +123,7 @@ function AssistantTurn({ turn }: { turn: Turn }) {
         </Actions>
         {turn.followUps?.length ? (
           <>
-            <hr className="my-3 border-border" />
+            <hr className="my-3 border-border-base" />
             <FollowUps>
               {turn.followUps.map((item) => (
                 <FollowUp key={item}>{item}</FollowUp>
@@ -193,7 +193,7 @@ export const FullThread: StoryObj = {
           <ConversationScrollButton />
         </Conversation>
 
-        <div className="border-t border-border p-3">
+        <div className="border-t border-border-base p-3">
           <PromptInput accent="ai" onSubmit={handleSubmit}>
             <PromptInputContextBar
               items={context}
@@ -214,7 +214,7 @@ export const FullThread: StoryObj = {
               <PromptInputSubmit status={status} />
             </PromptInputFooter>
           </PromptInput>
-          <p className="mt-2 text-center text-[12px] leading-[16px] text-muted-foreground">
+          <p className="mt-2 text-center text-[12px] leading-[16px] text-text-subtle">
             Always review the accuracy of responses.
           </p>
         </div>
@@ -249,7 +249,7 @@ export const EmptyState: StoryObj = {
           </ConversationEmpty>
         </ConversationContent>
       </Conversation>
-      <div className="border-t border-border p-3">
+      <div className="border-t border-border-base p-3">
         <PromptInput accent="ai">
           <PromptInputTextarea placeholder="Ask a question..." />
           <PromptInputFooter>
@@ -380,7 +380,7 @@ WHERE risk_score > 0.8
           </PromptInput>
           <button
             type="button"
-            className="self-start rounded-sm border border-input px-2 py-1 text-[12px] text-foreground hover:bg-hover"
+            className="self-start rounded-sm border border-input px-2 py-1 text-[12px] text-text-base hover:bg-hover"
             onClick={() =>
               setStatus((prev) => (prev === "ready" ? "streaming" : "ready"))
             }
@@ -402,10 +402,10 @@ function Piece({
 }) {
   return (
     <section>
-      <h3 className="mb-2 text-[13px] leading-[20px] font-semibold text-foreground">
+      <h3 className="mb-2 text-[13px] leading-[20px] font-semibold text-text-base">
         {title}
       </h3>
-      <div className="flex flex-col gap-3 rounded-md border border-border bg-background p-4">
+      <div className="flex flex-col gap-3 rounded-md border border-border-base bg-surface-base p-4">
         {children}
       </div>
     </section>

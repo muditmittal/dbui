@@ -33,7 +33,7 @@ const meta: Meta = {
 export default meta
 
 const surface = (children: React.ReactNode) => (
-  <div className="w-[1100px] overflow-hidden rounded-lg border border-border bg-background">
+  <div className="w-[1100px] overflow-hidden rounded-lg border border-border-base bg-surface-base">
     {children}
   </div>
 )

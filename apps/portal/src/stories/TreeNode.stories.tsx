@@ -42,12 +42,12 @@ const Section: React.FC<{ title: string; description?: string; children: React.R
 }) => (
   <section className="flex flex-col gap-2">
     <header>
-      <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <h3 className="text-[11px] font-semibold uppercase tracking-wider text-text-subtle">
         {title}
       </h3>
-      {description && <p className="text-[12px] text-muted-foreground">{description}</p>}
+      {description && <p className="text-[12px] text-text-subtle">{description}</p>}
     </header>
-    <div className="w-[280px] rounded-md border border-border p-1">{children}</div>
+    <div className="w-[280px] rounded-md border border-border-base p-1">{children}</div>
   </section>
 )
 

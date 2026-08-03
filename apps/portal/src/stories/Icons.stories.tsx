@@ -96,9 +96,9 @@ function IconGrid() {
           placeholder="Search by name, concept, product area, or synonym..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="h-8 w-[400px] rounded-sm border border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring"
+          className="h-8 w-[400px] rounded-sm border border-input bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle focus-visible:border-ring"
         />
-        <span className="text-[12px] text-muted-foreground">
+        <span className="text-[12px] text-text-subtle">
           {totalFiltered} of {iconNames.length} icons
         </span>
       </div>
@@ -110,10 +110,10 @@ function IconGrid() {
           return (
             <div key={cat}>
               <div className="mb-2 flex items-center gap-2">
-                <h3 className="text-[13px] font-semibold text-foreground">
+                <h3 className="text-[13px] font-semibold text-text-base">
                   {categoryLabels[cat]}
                 </h3>
-                <span className="text-[12px] text-muted-foreground">
+                <span className="text-[12px] text-text-subtle">
                   {items.length}
                 </span>
               </div>
@@ -124,7 +124,7 @@ function IconGrid() {
                   return (
                     <div
                       key={name}
-                      className="flex flex-col gap-0 rounded-sm px-2 py-1.5 hover:bg-muted cursor-pointer"
+                      className="flex flex-col gap-0 rounded-sm px-2 py-1.5 hover:bg-surface-subtle cursor-pointer"
                       title={`Click to copy import path`}
                       onClick={() => {
                         const importStr = `import { ${name} } from "@/components/icons/${name}"`
@@ -134,15 +134,15 @@ function IconGrid() {
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <div className="flex size-5 shrink-0 items-center justify-center text-foreground">
-                          {Icon ? <Icon className="size-4" /> : <div className="size-4 rounded-sm bg-muted" />}
+                        <div className="flex size-5 shrink-0 items-center justify-center text-text-base">
+                          {Icon ? <Icon className="size-4" /> : <div className="size-4 rounded-sm bg-surface-subtle" />}
                         </div>
-                        <span className="truncate text-[13px] leading-[20px] text-foreground">
+                        <span className="truncate text-[13px] leading-[20px] text-text-base">
                           {copied === name ? "Copied!" : name}
                         </span>
                       </div>
                       {desc && (
-                        <span className="truncate text-[12px] leading-[16px] text-muted-foreground pl-7">
+                        <span className="truncate text-[12px] leading-[16px] text-text-subtle pl-7">
                           {desc}
                         </span>
                       )}

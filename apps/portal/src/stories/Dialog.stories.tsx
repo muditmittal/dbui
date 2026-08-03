@@ -19,27 +19,27 @@ export const Playground: StoryObj = {
 
       {/* Static visual representation — not interactive */}
       <div
-        className="w-[640px] rounded-md bg-background shadow-lg ring-1 ring-foreground/10"
+        className="w-[640px] rounded-md bg-surface-base shadow-lg ring-1 ring-foreground/10"
         style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}
       >
         {/* Header */}
         <div className="flex items-start justify-between px-4 pt-4 pb-2">
           <div>
-            <div className="text-[13px] font-semibold text-foreground">Dialog Title</div>
-            <div className="text-[13px] text-muted-foreground mt-0.5">This is a description of the dialog content.</div>
+            <div className="text-[13px] font-semibold text-text-base">Dialog Title</div>
+            <div className="text-[13px] text-text-subtle mt-0.5">This is a description of the dialog content.</div>
           </div>
-          <button className="inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground">
+          <button className="inline-flex size-6 items-center justify-center rounded-sm text-text-subtle hover:text-text-base">
             <CloseSmall />
           </button>
         </div>
 
         {/* Body */}
-        <div className="px-4 py-4 text-[13px] text-muted-foreground border-t border-border">
+        <div className="px-4 py-4 text-[13px] text-text-subtle border-t border-border-base">
           Dialog body content goes here. This maps to the Figma .Slot inner component.
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-2 px-4 py-3 border-t border-border">
+        <div className="flex items-center justify-end gap-2 px-4 py-3 border-t border-border-base">
           <Button variant="outline">Cancel</Button>
           <Button>Confirm</Button>
         </div>

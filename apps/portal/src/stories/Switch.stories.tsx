@@ -38,7 +38,7 @@ export const Playground: StoryObj = {
             <td style={{ padding: "14px 24px 14px 0" }}>
               <label className="group/field flex cursor-pointer items-center gap-2">
                 <Switch />
-                <span className="text-[13px] text-foreground">Notifications</span>
+                <span className="text-[13px] text-text-base">Notifications</span>
               </label>
             </td>
           </tr>
@@ -47,7 +47,7 @@ export const Playground: StoryObj = {
             <td style={{ padding: "14px 24px 14px 0" }}>
               <label className="group/field flex cursor-pointer items-center gap-2">
                 <Switch defaultChecked />
-                <span className="text-[13px] text-foreground">Auto-save</span>
+                <span className="text-[13px] text-text-base">Auto-save</span>
               </label>
             </td>
           </tr>
@@ -56,7 +56,7 @@ export const Playground: StoryObj = {
             <td style={{ padding: "14px 24px 14px 0" }}>
               <label className="group/field flex cursor-pointer items-center gap-2">
                 <Switch disabled />
-                <span className="text-[13px] text-muted-foreground">Managed by admin</span>
+                <span className="text-[13px] text-text-subtle">Managed by admin</span>
               </label>
             </td>
           </tr>

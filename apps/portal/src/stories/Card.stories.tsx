@@ -43,7 +43,7 @@ export const Playground: StoryObj = {
                   <CardDescription>Card description with supporting text.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-[13px] text-muted-foreground">Card content goes here.</p>
+                  <p className="text-[13px] text-text-subtle">Card content goes here.</p>
                 </CardContent>
               </Card>
             </td>
@@ -57,7 +57,7 @@ export const Playground: StoryObj = {
                   <CardDescription>Make changes to your workspace configuration.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-[13px] text-muted-foreground">Configuration fields would go here.</p>
+                  <p className="text-[13px] text-text-subtle">Configuration fields would go here.</p>
                 </CardContent>
                 <CardFooter className="justify-end gap-2">
                   <Button variant="outline">Cancel</Button>

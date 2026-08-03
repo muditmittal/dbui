@@ -43,7 +43,7 @@ export const Playground: StoryObj = {
             <td style={{ padding: "14px 24px 14px 0" }}>
               <div className="w-[300px] flex items-center gap-3">
                 <Slider defaultValue={[50]} max={100} min={0} />
-                <span className="text-[13px] text-muted-foreground w-8 text-right">50</span>
+                <span className="text-[13px] text-text-subtle w-8 text-right">50</span>
               </div>
             </td>
           </tr>
@@ -52,7 +52,7 @@ export const Playground: StoryObj = {
             <td style={{ padding: "14px 24px 14px 0" }}>
               <div className="w-[300px] flex items-center gap-3">
                 <Slider defaultValue={[30]} max={100} min={0} disabled />
-                <span className="text-[13px] text-muted-foreground w-8 text-right">30</span>
+                <span className="text-[13px] text-text-subtle w-8 text-right">30</span>
               </div>
             </td>
           </tr>

@@ -33,7 +33,7 @@ export const Playground: StoryObj = {
             <DrawerDescription>Update your cluster configuration.</DrawerDescription>
           </DrawerHeader>
           <div className="px-6 py-4">
-            <p className="text-[13px] text-muted-foreground">
+            <p className="text-[13px] text-text-subtle">
               Drawer content area — forms, details, or settings go here. Content scrolls independently.
             </p>
           </div>

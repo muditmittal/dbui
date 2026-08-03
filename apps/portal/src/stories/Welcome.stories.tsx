@@ -153,7 +153,7 @@ function LivePreview() {
           onKeyDownCapture={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation() } }}
         >
           <Base defaultActive="catalog">
-            <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
+            <div className="flex items-center justify-center h-full text-[13px] text-text-subtle">
               Content goes here — every product page starts with this shell.
             </div>
           </Base>

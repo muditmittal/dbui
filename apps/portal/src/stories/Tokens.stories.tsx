@@ -11,45 +11,45 @@ export default meta
 
 const colorTokens = [
   { group: "Surface", tokens: [
-    { name: "--background", tw: "bg-background", label: "Background" },
-    { name: "--foreground", tw: "text-foreground", label: "Foreground" },
-    { name: "--card", tw: "bg-card", label: "Card" },
-    { name: "--popover", tw: "bg-popover", label: "Popover" },
-    { name: "--secondary", tw: "bg-secondary", label: "Secondary" },
-    { name: "--muted", tw: "bg-muted", label: "Muted" },
-    { name: "--muted-foreground", tw: "text-muted-foreground", label: "Muted FG" },
-    { name: "--accent", tw: "bg-accent", label: "Accent" },
-    { name: "--accent-foreground", tw: "text-accent-foreground", label: "Accent FG" },
+    { name: "--background", tw: "bg-surface-base", label: "Background" },
+    { name: "--foreground", tw: "text-text-base", label: "Foreground" },
+    { name: "--card", tw: "bg-surface-base", label: "Card" },
+    { name: "--popover", tw: "bg-surface-base", label: "Popover" },
+    { name: "--secondary", tw: "bg-surface-subtle", label: "Secondary" },
+    { name: "--muted", tw: "bg-surface-subtle", label: "Muted" },
+    { name: "--muted-foreground", tw: "text-text-subtle", label: "Muted FG" },
+    { name: "--accent", tw: "bg-surface-accent", label: "Accent" },
+    { name: "--accent-foreground", tw: "text-text-accent", label: "Accent FG" },
   ]},
   { group: "Action", tokens: [
     { name: "--primary", tw: "bg-primary", label: "Primary" },
     { name: "--primary-foreground", tw: "text-primary-foreground", label: "Primary FG" },
     { name: "--primary-hover", tw: "bg-primary-hover", label: "Primary Hover" },
     { name: "--primary-press", tw: "bg-primary-press", label: "Primary Press" },
-    { name: "--destructive", tw: "bg-destructive", label: "Destructive" },
-    { name: "--destructive-foreground", tw: "text-destructive-foreground", label: "Destructive FG" },
-    { name: "--destructive-hover", tw: "bg-destructive-hover", label: "Destructive Hover" },
-    { name: "--destructive-press", tw: "bg-destructive-press", label: "Destructive Press" },
-    { name: "--warning", tw: "text-warning", label: "Warning" },
-    { name: "--success", tw: "text-success", label: "Success" },
+    { name: "--destructive", tw: "bg-action-negative-base", label: "Destructive" },
+    { name: "--destructive-foreground", tw: "text-action-label-inverse-base", label: "Destructive FG" },
+    { name: "--destructive-hover", tw: "bg-action-negative-hover", label: "Destructive Hover" },
+    { name: "--destructive-press", tw: "bg-action-negative-press", label: "Destructive Press" },
+    { name: "--warning", tw: "text-status-text-warning", label: "Warning" },
+    { name: "--success", tw: "text-status-text-positive", label: "Success" },
     { name: "--ring", tw: "border-ring", label: "Ring" },
   ]},
   { group: "Interactive", tokens: [
     { name: "--hover", tw: "bg-hover", label: "Hover" },
     { name: "--press", tw: "bg-press", label: "Press" },
-    { name: "--disabled", tw: "bg-disabled", label: "Disabled" },
-    { name: "--disabled-foreground", tw: "text-disabled-foreground", label: "Disabled FG" },
+    { name: "--disabled", tw: "bg-surface-disabled", label: "Disabled" },
+    { name: "--disabled-foreground", tw: "text-text-disabled", label: "Disabled FG" },
   ]},
   { group: "Border", tokens: [
-    { name: "--border", tw: "border-border", label: "Border" },
+    { name: "--border", tw: "border-border-base", label: "Border" },
     { name: "--input", tw: "border-input", label: "Input" },
     { name: "--border-accessible", tw: "border-accessible", label: "Accessible" },
   ]},
   { group: "Status Surfaces", tokens: [
-    { name: "--surface-info", tw: "bg-surface-info", label: "Info" },
-    { name: "--surface-success", tw: "bg-surface-success", label: "Success" },
-    { name: "--surface-warning", tw: "bg-surface-warning", label: "Warning" },
-    { name: "--surface-danger", tw: "bg-surface-danger", label: "Danger" },
+    { name: "--surface-info", tw: "bg-status-surface-info", label: "Info" },
+    { name: "--surface-success", tw: "bg-status-surface-positive", label: "Success" },
+    { name: "--surface-warning", tw: "bg-status-surface-warning", label: "Warning" },
+    { name: "--surface-danger", tw: "bg-status-surface-negative", label: "Danger" },
   ]},
   { group: "Chart", tokens: [
     { name: "--chart-1", tw: "bg-chart-1", label: "Chart 1" },
@@ -67,7 +67,7 @@ const typographyTokens = [
   { name: "Title 4", size: "13px", lh: "20px", weight: "Semibold", font: "SF Pro Display", className: "text-[13px] leading-[20px] font-semibold", sample: "Small heading" },
   { name: "Bold", size: "13px", lh: "20px", weight: "Semibold", font: "SF Pro Text", className: "text-[13px] leading-[20px] font-semibold", sample: "Label emphasis" },
   { name: "Paragraph", size: "13px", lh: "20px", weight: "Regular", font: "SF Pro Text", className: "text-[13px] leading-[20px] font-normal", sample: "Body text for all content" },
-  { name: "Hint", size: "12px", lh: "16px", weight: "Regular", font: "SF Pro Text", className: "text-[12px] leading-[16px] font-normal text-muted-foreground", sample: "Captions and helper text" },
+  { name: "Hint", size: "12px", lh: "16px", weight: "Regular", font: "SF Pro Text", className: "text-[12px] leading-[16px] font-normal text-text-subtle", sample: "Captions and helper text" },
   { name: "Code", size: "13px", lh: "20px", weight: "Regular", font: "SF Mono", className: "font-mono text-[13px] leading-[20px]", sample: "const data = query()" },
 ]
 
@@ -134,7 +134,21 @@ const hint: React.CSSProperties = {
 
 // ─── Page ───
 
-export const Default: StoryObj = {
+/**
+ * The token system components actually consume. Generated from
+ * theme.config.mjs into tokens.css. This is the reference.
+ */
+export const Color: StoryObj = {
+  name: "Color — semantic (current)",
+  render: () => <SemanticColorPage />,
+}
+
+/**
+ * Pre-migration reference. Kept until Stage C deletes the legacy layer from
+ * globals.css. Components no longer reference these names.
+ */
+export const Legacy: StoryObj = {
+  name: "Legacy tokens (pre-migration)",
   render: () => (
     <div style={{ maxWidth: 960, margin: "0 auto", fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}>
 
@@ -186,7 +200,7 @@ export const Default: StoryObj = {
         {shadowTokens.map((t) => (
           <div key={t.name} style={tile}>
             <div style={{ height: 80, display: "flex", alignItems: "center", justifyContent: "center", background: "#F7F7F7" }}>
-              <div className={`size-14 rounded-md bg-background ${t.tw}`} style={{ border: "1px solid #EBEBEB" }} />
+              <div className={`size-14 rounded-md bg-surface-base ${t.tw}`} style={{ border: "1px solid #EBEBEB" }} />
             </div>
             <div style={tileLabel}>
               <div style={{ fontSize: 12, fontWeight: 600, color: "#161616" }}>{t.name}</div>
@@ -263,8 +277,8 @@ const semanticGroups: { group: string; tokens: string[] }[] = [
   { group: "link", tokens: ["base", "hover", "press", "visited"] },
   { group: "status", tokens: [
     "surface-info", "surface-negative", "surface-positive", "surface-warning",
-    "border-info", "border-negative", "border-positive", "border-warning",
-    "text-info", "text-negative", "text-positive", "text-warning",
+    "border-info", "border-negative", "border-positive", "border-status-border-warning",
+    "text-info", "text-negative", "text-positive", "text-status-text-warning",
   ] },
   { group: "utility", tokens: ["scrim", "surface-skeleton", "text-skeleton"] },
   { group: "viz", tokens: [
@@ -298,9 +312,7 @@ function DualChip({ v }: { v: string }) {
   )
 }
 
-export const NewColorSystem: StoryObj = {
-  name: "Color — New System",
-  render: () => (
+const SemanticColorPage = () => (
     <div style={{ maxWidth: 960, margin: "0 auto", fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}>
 
       <h2 style={sectionHeader}>Semantics — Color: Semantic</h2>
@@ -332,5 +344,4 @@ export const NewColorSystem: StoryObj = {
       </div>
 
     </div>
-  ),
-}
+)
