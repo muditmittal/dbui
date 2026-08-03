@@ -22,20 +22,20 @@ const sectionLabel: React.CSSProperties = {
 
 /**
  * Matches Figma InputGroup exactly:
- * - Wrapper: flex, no border by default. On focus-within: border-primary rounded-sm shadow-xs wraps both.
+ * - Wrapper: flex, no border by default. On focus-within: border-border-strong rounded-sm shadow-xs wraps both.
  * - Input: 3-sided border (left/top/bottom), rounded-left only. On parent focus: drops own border.
  * - Button: full border (or border-l only when parent focused), rounded-right only, 32×32.
  */
 function SearchFilter() {
   return (
-    <div className="group/ig flex w-[240px] items-center rounded-sm outline outline-1 outline-transparent focus-within:outline-primary">
+    <div className="group/ig flex w-[240px] items-center rounded-sm outline outline-1 outline-transparent focus-within:outline-focus-ring">
       <input
         placeholder="Search"
-        className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
+        className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
       />
       <button
         aria-label="Filter"
-        className="flex size-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-surface-base shadow-xs text-text-subtle transition-colors hover:bg-hover hover:text-text-base active:bg-press focus-visible:border-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
+        className="flex size-8 shrink-0 items-center justify-center rounded-r-sm border border-input-border-base bg-surface-base shadow-xs text-text-subtle transition-colors hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base [&_svg]:size-4"
       >
         <Sliders />
       </button>
@@ -45,13 +45,13 @@ function SearchFilter() {
 
 function SearchBrowse() {
   return (
-    <div className="group/ig flex w-[240px] items-center rounded-sm outline outline-1 outline-transparent focus-within:outline-primary">
+    <div className="group/ig flex w-[240px] items-center rounded-sm outline outline-1 outline-transparent focus-within:outline-focus-ring">
       <input
         placeholder="Search"
-        className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
+        className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
       />
       <button
-        className="flex h-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-surface-base px-3 shadow-xs text-[13px] text-text-base transition-colors hover:bg-hover active:bg-press focus-visible:border-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input"
+        className="flex h-8 shrink-0 items-center justify-center rounded-r-sm border border-input-border-base bg-surface-base px-3 shadow-xs text-[13px] text-text-base transition-colors hover:bg-action-default-hover active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base"
       >
         Browse
       </button>

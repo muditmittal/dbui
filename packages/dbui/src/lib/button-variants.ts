@@ -20,8 +20,8 @@ import { cva } from "./cva"
  * - Non-filled hover text: --primary-hover (outline/ghost), --accent-foreground (secondary)
  * - Non-filled press text: --primary-press (all non-filled)
  * - Disabled: per-variant (filled → bg-surface-disabled + white text, non-filled → transparent + disabled-foreground)
- * - Focus: filled → shadow-focus (white gap + blue ring), non-filled → border-2 border-ring
- * - Focus on Danger: uses border-ring (blue) NOT border-action-negative-base — consistent system focus ring
+ * - Focus: filled → shadow-focus (white gap + blue ring), non-filled → border-2 border-focus-ring
+ * - Focus on Danger: uses border-focus-ring (blue) NOT border-action-negative-base — consistent system focus ring
  * - Shadow: shadow-xs on filled/bordered variants (not ghost/link)
  */
 export const buttonVariants = cva(
@@ -38,39 +38,39 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: [
-          "shadow-xs border-transparent bg-primary text-primary-foreground",
-          "hover:bg-primary-hover",
-          "active:bg-primary-press",
+          "shadow-xs border-transparent bg-action-primary-base text-action-label-inverse-base",
+          "hover:bg-action-primary-hover",
+          "active:bg-action-primary-press",
           "focus-visible:shadow-focus focus-visible:overflow-clip",
           "disabled:bg-surface-disabled disabled:text-text-disabled disabled:shadow-none disabled:border-transparent",
         ].join(" "),
         outline: [
-          "shadow-xs border-input",
-          "hover:bg-hover hover:border-primary hover:text-primary-hover",
-          "active:bg-press active:border-primary-press active:text-primary-press",
-          "focus-visible:border-2 focus-visible:border-ring",
+          "shadow-xs border-input-border-base",
+          "hover:bg-action-default-hover hover:border-input-border-hover hover:text-link-hover",
+          "active:bg-action-selected-press active:border-input-border-focus active:text-link-press",
+          "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
         secondary: [
           "shadow-xs border-transparent bg-surface-subtle text-text-base",
-          "hover:bg-hover hover:text-text-accent",
-          "active:bg-press active:text-primary-press",
-          "focus-visible:border-2 focus-visible:border-ring",
+          "hover:bg-action-default-hover hover:text-text-accent",
+          "active:bg-action-selected-press active:text-link-press",
+          "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:bg-transparent disabled:text-text-disabled disabled:shadow-none",
         ].join(" "),
         ghost: [
           "border-transparent text-text-base",
-          "hover:bg-hover hover:text-primary-hover",
-          "active:bg-press active:text-primary-press",
-          "focus-visible:border-2 focus-visible:border-ring",
+          "hover:bg-action-default-hover hover:text-link-hover",
+          "active:bg-action-selected-press active:text-link-press",
+          "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:text-text-disabled",
         ].join(" "),
         link: [
-          "border-transparent text-primary underline-offset-4",
+          "border-transparent text-link-base underline-offset-4",
           "!h-auto !rounded-none !px-0 !shadow-none",
-          "hover:underline hover:text-primary-hover",
-          "active:underline active:text-primary-press",
-          "focus-visible:border-ring",
+          "hover:underline hover:text-link-hover",
+          "active:underline active:text-link-press",
+          "focus-visible:border-focus-ring",
           "disabled:text-text-disabled disabled:bg-transparent",
         ].join(" "),
         destructive: [
@@ -84,7 +84,7 @@ export const buttonVariants = cva(
           "shadow-xs border-action-negative-base text-status-text-negative",
           "hover:border-action-negative-hover hover:text-action-negative-hover",
           "active:bg-action-negative-base/20 active:border-action-negative-press active:text-action-negative-press",
-          "focus-visible:border-2 focus-visible:border-ring focus-visible:shadow-none focus-visible:overflow-clip",
+          "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:shadow-none focus-visible:overflow-clip",
           "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
       },

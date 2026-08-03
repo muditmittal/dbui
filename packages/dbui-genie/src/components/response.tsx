@@ -74,7 +74,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode {
             href={link[2]}
             target="_blank"
             rel="noreferrer"
-            className="text-primary underline underline-offset-2 hover:text-primary-hover"
+            className="text-link-base underline underline-offset-2 hover:text-link-hover"
           >
             {renderInline(link[1], key)}
           </a>

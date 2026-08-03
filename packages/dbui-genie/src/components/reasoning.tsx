@@ -69,7 +69,7 @@ function Reasoning({
         <CollapsibleTrigger
           className={cn(
             "flex items-center gap-1 rounded-sm text-[13px] leading-[20px] text-text-subtle outline-none",
-            "hover:text-text-base focus-visible:border focus-visible:border-ring"
+            "hover:text-text-base focus-visible:border focus-visible:border-focus-ring"
           )}
         >
           <span

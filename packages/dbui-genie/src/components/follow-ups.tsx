@@ -47,7 +47,7 @@ function FollowUp({
       type="button"
       className={cn(
         "flex w-full items-start gap-2 rounded-sm px-1 py-1 text-left text-[13px] leading-[20px] text-text-subtle outline-none",
-        "hover:bg-hover hover:text-text-base focus-visible:border focus-visible:border-ring",
+        "hover:bg-action-default-hover hover:text-text-base focus-visible:border focus-visible:border-focus-ring",
         className
       )}
       {...props}

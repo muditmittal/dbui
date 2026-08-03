@@ -120,7 +120,7 @@
   --color-ai-gradient-end: var(--ai-gradient-end);
 
   /* ─── Shadows ─── */
-  --shadow-focus: 0 0 0 1px white, 0 0 0 3px var(--ring);
+  --shadow-focus: 0 0 0 1px var(--db-focus-ring-offset), 0 0 0 3px var(--db-focus-ring);
 
   /* ─── Fonts ─── */
   --font-sans: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

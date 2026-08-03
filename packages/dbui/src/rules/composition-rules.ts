@@ -162,7 +162,7 @@ export const compositionRules = [
   {
     id: "no-hardcoded-colors",
     component: "*",
-    rule: "Never use hardcoded hex colors. Always use semantic tokens (bg-primary, text-text-base, etc.).",
+    rule: "Never use hardcoded hex colors. Always use semantic tokens (bg-action-primary-base, text-text-base, etc.).",
     rationale: "Hardcoded colors break dark mode and theming.",
     severity: "error" as const,
   },

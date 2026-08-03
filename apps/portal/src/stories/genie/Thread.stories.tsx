@@ -380,7 +380,7 @@ WHERE risk_score > 0.8
           </PromptInput>
           <button
             type="button"
-            className="self-start rounded-sm border border-input px-2 py-1 text-[12px] text-text-base hover:bg-hover"
+            className="self-start rounded-sm border border-input-border-base px-2 py-1 text-[12px] text-text-base hover:bg-action-default-hover"
             onClick={() =>
               setStatus((prev) => (prev === "ready" ? "streaming" : "ready"))
             }

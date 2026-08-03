@@ -58,7 +58,7 @@ function BreadcrumbLink({
     defaultTagName: "a",
     props: mergeProps<"a">(
       {
-        className: cn("text-primary transition-colors hover:text-primary/80", className),
+        className: cn("text-link-base transition-colors hover:text-link-base/80", className),
       },
       props
     ),

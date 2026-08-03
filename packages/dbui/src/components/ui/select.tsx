@@ -55,9 +55,9 @@ function SelectTrigger({
       data-size={size}
       data-variant={variant}
       className={cn(
-        "flex w-fit items-center justify-between rounded-sm bg-surface-base text-[13px] leading-[20px] whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring active:border-primary-press disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-action-negative-base data-placeholder:text-text-subtle data-[size=default]:h-8 data-[size=default]:px-3 data-[size=default]:py-0 data-[size=default]:gap-2 data-[size=sm]:h-6 data-[size=sm]:px-2 data-[size=sm]:py-0 data-[size=sm]:gap-1 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:aria-invalid:border-action-negative-base/50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        variant === "default" && "border border-input shadow-xs hover:border-primary dark:bg-input/30 dark:hover:bg-input/50",
-        variant === "ghost" && "border border-transparent shadow-none hover:border-primary hover:shadow-xs data-[size=default]:px-2",
+        "flex w-fit items-center justify-between rounded-sm bg-surface-base text-[13px] leading-[20px] whitespace-nowrap transition-colors outline-none select-none focus-visible:border-focus-ring active:border-input-border-focus disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-action-negative-base data-placeholder:text-text-subtle data-[size=default]:h-8 data-[size=default]:px-3 data-[size=default]:py-0 data-[size=default]:gap-2 data-[size=sm]:h-6 data-[size=sm]:px-2 data-[size=sm]:py-0 data-[size=sm]:gap-1 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:aria-invalid:border-action-negative-base/50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        variant === "default" && "border border-input-border-base shadow-xs hover:border-input-border-hover dark:bg-surface-strong/30 dark:hover:bg-surface-strong/50",
+        variant === "ghost" && "border border-transparent shadow-none hover:border-input-border-hover hover:shadow-xs data-[size=default]:px-2",
         className
       )}
       {...props}
@@ -133,7 +133,7 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-1.5 rounded-sm py-1 pl-8 pr-1.5 text-[13px] outline-hidden select-none focus:bg-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex w-full cursor-default items-center gap-1.5 rounded-sm py-1 pl-8 pr-1.5 text-[13px] outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}

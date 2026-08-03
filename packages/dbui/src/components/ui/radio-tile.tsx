@@ -34,7 +34,7 @@ function RadioTile({
     <RadioPrimitive.Root
       data-slot="radio-tile"
       className={cn(
-        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input bg-surface-base p-4 text-[13px] shadow-xs transition-all outline-none select-none hover:border-primary-hover active:border-primary-press data-checked:border-primary data-checked:shadow-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20",
+        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input-border-base bg-surface-base p-4 text-[13px] shadow-xs transition-all outline-none select-none hover:border-input-border-hover active:border-input-border-focus data-checked:border-action-primary-base data-checked:shadow-none focus-visible:border-focus-ring focus-visible:ring-3 focus-visible:ring-focus-ring/50 disabled:cursor-not-allowed disabled:border-border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20",
         className
       )}
       {...props}
@@ -58,9 +58,9 @@ function RadioTileHeader({
       {children}
       <div
         data-slot="radio-tile-indicator"
-        className="ml-auto flex size-4 shrink-0 items-center justify-center rounded-full border border-input bg-surface-base group-data-checked/radio-tile:border-primary group-data-checked/radio-tile:bg-primary"
+        className="ml-auto flex size-4 shrink-0 items-center justify-center rounded-full border border-input-border-base bg-surface-base group-data-checked/radio-tile:border-action-primary-base group-data-checked/radio-tile:bg-action-primary-base"
       >
-        <span className="size-1.5 rounded-full bg-primary-foreground opacity-0 group-data-checked/radio-tile:opacity-100" />
+        <span className="size-1.5 rounded-full bg-action-label-inverse-base opacity-0 group-data-checked/radio-tile:opacity-100" />
       </div>
     </div>
   )

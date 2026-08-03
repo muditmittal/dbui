@@ -156,7 +156,7 @@ function TreeSection({
             case "ArrowLeft": { e.preventDefault(); if (expanded) setExpanded(false); break }
           }
         }}
-        className="flex h-7 items-center gap-1 rounded-sm px-1 text-[12px] leading-[16px] text-text-subtle hover:text-text-base outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+        className="flex h-7 items-center gap-1 rounded-sm px-1 text-[12px] leading-[16px] text-text-subtle hover:text-text-base outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset"
         aria-expanded={expanded}
       >
         {expanded
@@ -366,13 +366,13 @@ function TreeNode({
           "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 text-[13px] leading-[20px] text-left transition-colors",
           // Pointer-driven focus (mouse hover, programmatic focus from popups,
           // etc.) must not show a ring — only keyboard navigation should.
-          "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
+          "outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset",
           // Row backgrounds — match Figma `.TreeNode` variant set:
           //   default → transparent
-          //   hover   → action/hover (8% blue tint)         = bg-hover
-          //   selected→ action/press (16% blue tint, layers on hover) = bg-press
-          "hover:bg-hover",
-          isSelected && selectable && "bg-press",
+          //   hover   → action/hover (8% blue tint)         = bg-action-default-hover
+          //   selected→ action/press (16% blue tint, layers on hover) = bg-action-selected-press
+          "hover:bg-action-default-hover",
+          isSelected && selectable && "bg-action-selected-press",
           "text-text-base",
           className
         )}
@@ -390,14 +390,14 @@ function TreeNode({
           {isExpandable ? (
             <span className={cn(
               // Chevron color rules:
-              //   • collapsed + idle  → text-input (light)
+              //   • collapsed + idle  → text-border-strong (light)
               //   • collapsed + hover → text-text-subtle (darken on hover)
               //   • expanded          → text-text-subtle (always)
               // Direction (right vs down) follows expansion independently.
               "flex size-4 items-center justify-center",
               isExpanded
                 ? "text-text-subtle"
-                : "text-input group-hover/tree-item:text-text-subtle"
+                : "text-border-strong group-hover/tree-item:text-text-subtle"
             )}>
               {isExpanded
                 ? <ChevronDown className="size-3" />
@@ -441,7 +441,7 @@ function TreeNode({
              * leaves so e.g. you can't focus on a table or notebook. */}
             {(focusable ?? isExpandable) && (
               <button
-                className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-hover hover:text-text-base active:bg-press outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset [&_svg]:size-4"
+                className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset [&_svg]:size-4"
                 aria-label="Focus here"
                 title="Focus here"
                 onClick={(e) => {
@@ -453,7 +453,7 @@ function TreeNode({
               </button>
             )}
             <button
-              className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-hover hover:text-text-base active:bg-press outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset [&_svg]:size-4"
+              className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset [&_svg]:size-4"
               aria-label="More options"
               title="More options"
               onClick={(e) => {

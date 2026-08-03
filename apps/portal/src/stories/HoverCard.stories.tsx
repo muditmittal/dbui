@@ -20,13 +20,13 @@ export const Playground: StoryObj = {
 
       <div style={{ paddingTop: 8 }}>
         <HoverCard defaultOpen>
-          <HoverCardTrigger className="cursor-pointer text-[13px] text-primary underline underline-offset-3">
+          <HoverCardTrigger className="cursor-pointer text-[13px] text-link-base underline underline-offset-3">
             @mudit.mittal
           </HoverCardTrigger>
           <HoverCardContent>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground font-semibold">
+                <div className="flex size-10 items-center justify-center rounded-full bg-action-primary-base text-action-label-inverse-base font-semibold">
                   MM
                 </div>
                 <div>
