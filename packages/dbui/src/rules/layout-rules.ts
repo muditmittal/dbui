@@ -87,8 +87,8 @@ export const layoutRules = {
     navbarWidth: "w-[180px]", // 180px fixed
     contentRadius: "rounded-[8px]",
     contentMargin: "pb-2 pr-2", // 8px bottom and right
-    shellBg: "bg-muted",
-    contentBg: "bg-background",
+    shellBg: "bg-surface-subtle",
+    contentBg: "bg-surface-base",
   },
 
   /**
