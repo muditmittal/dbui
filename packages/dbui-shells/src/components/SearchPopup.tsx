@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import { Button } from "dbui/components/ui/button"
+import { Input } from "dbui/components/ui/input"
+import { FilterToggle } from "dbui/components/ui/toggle"
 import { Search } from "dbui/components/icons/Search"
 import { Notebook } from "dbui/components/icons/Notebook"
 import { Table } from "dbui/components/icons/Table"
@@ -47,9 +49,9 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
         {/* Search input */}
         <div className="flex items-center gap-2 px-3 h-10 border-b border-border">
           <Search className="size-4 shrink-0 text-muted-foreground" />
-          <input
+          <Input
             autoFocus
-            className="flex-1 min-w-0 bg-transparent text-[13px] text-foreground placeholder:text-muted-foreground outline-none"
+            className="flex-1 min-w-0 border-0 bg-transparent shadow-none focus-visible:border-0 focus-visible:shadow-none"
             placeholder="Search data, notebooks, recents, and more..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -65,31 +67,29 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
             const Icon = f.icon
             const isActive = activeFilter === f.label
             return (
-              <button
+              <FilterToggle
                 key={f.label}
-                className={`flex items-center gap-1.5 rounded-sm border px-2 h-7 text-[12px] transition-colors ${
-                  isActive
-                    ? "border-primary bg-accent text-foreground"
-                    : "border-border text-foreground hover:bg-hover"
-                }`}
-                onClick={() => setActiveFilter(isActive ? null : f.label)}
+                size="sm"
+                pressed={isActive}
+                onPressedChange={() => setActiveFilter(isActive ? null : f.label)}
               >
                 <Icon className="size-3.5" />
                 {f.label}
-              </button>
+              </FilterToggle>
             )
           })}
         </div>
 
         {/* Recents */}
         <div className="px-3 pt-1 pb-0.5">
-          <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Recents</span>
+          <span className="text-[12px] leading-[16px] font-semibold text-muted-foreground uppercase tracking-wider">Recents</span>
         </div>
         <div className="max-h-[320px] overflow-y-auto">
           {recentItems.map((item) => (
-            <button
+            <Button
               key={item.name}
-              className="flex items-start gap-3 w-full px-3 py-2 text-left hover:bg-hover transition-colors"
+              variant="ghost"
+              className="h-auto w-full justify-start px-3 py-2"
             >
               <Notebook className="size-4 shrink-0 text-muted-foreground mt-0.5" />
               <div className="flex-1 min-w-0">
@@ -97,20 +97,20 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
                 <div className="text-[12px] text-muted-foreground truncate">{item.path}</div>
               </div>
               <span className="shrink-0 text-[12px] text-muted-foreground whitespace-nowrap">{item.time}</span>
-            </button>
+            </Button>
           ))}
         </div>
 
         {/* Footer */}
         <div className="flex items-center justify-between px-3 py-2 border-t border-border">
-          <button className="flex items-center gap-2 text-[13px] text-muted-foreground hover:text-foreground transition-colors">
+          <Button variant="ghost" className="h-auto px-0 text-muted-foreground hover:text-foreground">
             <Search className="size-4" />
             Open search in a full page
-          </button>
+          </Button>
           <div className="flex items-center gap-1 text-[12px] text-muted-foreground">
-            <kbd className="px-1 py-0.5 rounded border border-border text-[11px]">⌘</kbd>
+            <kbd className="px-1 py-0.5 rounded border border-border text-[12px] leading-[16px]">⌘</kbd>
             <span>+</span>
-            <kbd className="px-1 py-0.5 rounded border border-border text-[11px]">Enter</kbd>
+            <kbd className="px-1 py-0.5 rounded border border-border text-[12px] leading-[16px]">Enter</kbd>
             <span className="ml-1">Open in a new tab</span>
           </div>
         </div>

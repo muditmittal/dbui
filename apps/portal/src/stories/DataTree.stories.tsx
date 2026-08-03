@@ -1,175 +1,149 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { DataTreeView, FileTreeView, type TreeNode, type TreeSectionData } from "dbui/components/ui/data-tree"
-import { Catalog } from "@/components/icons/Catalog"
-import { CatalogUserHome } from "@/components/icons/CatalogUserHome"
-import { CatalogHome } from "@/components/icons/CatalogHome"
+import { DataTree, type DataTreeSection } from "dbui/components/ui/data-tree"
 import { CatalogShared } from "@/components/icons/CatalogShared"
 import { CatalogGear } from "@/components/icons/CatalogGear"
-import { Database } from "@/components/icons/Database"
-import { Table } from "@/components/icons/Table"
-import { Folder } from "@/components/icons/Folder"
-import { FolderOpen } from "@/components/icons/FolderOpen"
-import { Notebook } from "@/components/icons/Notebook"
+import { CatalogUserHome } from "@/components/icons/CatalogUserHome"
 import { Hash } from "@/components/icons/Hash"
-import { Letters } from "@/components/icons/Letters"
 import { Numbers } from "@/components/icons/Numbers"
+import { Decimal } from "@/components/icons/Decimal"
+import { Letters } from "@/components/icons/Letters"
 import { CalendarClock } from "@/components/icons/CalendarClock"
 import { Binary } from "@/components/icons/Binary"
-import { Decimal } from "@/components/icons/Decimal"
-import { TableView } from "@/components/icons/TableView"
-import { TableStream } from "@/components/icons/TableStream"
-import { TableGlasses } from "@/components/icons/TableGlasses"
-import { TableMeasure } from "@/components/icons/TableMeasure"
-import { Models } from "@/components/icons/Models"
-import { FolderCloud } from "@/components/icons/FolderCloud"
-import { Function } from "@/components/icons/Function"
-import { TableModel } from "@/components/icons/TableModel"
-import { TableLightning } from "@/components/icons/TableLightning"
-import { TableGlobe } from "@/components/icons/TableGlobe"
 import { ComponentMeta } from "./components/ComponentMeta"
 import componentSource from "dbui/components/ui/data-tree?raw"
 
+/**
+ * `Content/Tree/Data Tree` — Storybook home for the L2 `<DataTree>` component.
+ *
+ * `<DataTree>` is the **semantic** Data Tree: it knows the Databricks Unity
+ * Catalog conventions (catalog → schema → asset → column) and resolves icons
+ * automatically from the `kind` field on each node.
+ *
+ * Level conventions:
+ *   L1 catalog · L2 schema · L3 table | view | volume | model | function · L4 column (auto-leaf)
+ *   "folder" / "file" can appear at any level as escape hatches for non-asset nodes.
+ *
+ * Section headers are a "virtual" level — leftmost, no track lines, no depth indent.
+ * Top-level catalogs underneath sit at the same x-origin as the section header itself.
+ */
 const meta: Meta = {
-  title: "Content/Tree",
+  title: "Content/Tree/Data Tree",
   parameters: { layout: "padded" },
 }
-
 export default meta
 
-// ─── Data Tree — structured data ───
-// Node behavior:
-//   - leaf: true → no chevron (not expandable). Selectable by default — set selectable: false to override.
-//   - children: [] → expandable (shows "No items" when expanded). Selectable.
-//   - children: [...] → expandable. Selectable.
-//   - selectable: false → grey hover, no selection highlight. Consumer decides.
+// ─── Realistic Unity-Catalog data, kind-driven ───
+//
+// Notice how the data is now self-documenting: every node says what it IS via
+// `kind`. No icon imports required for the standard cases. Pass `icon` only
+// when overriding (e.g. CatalogShared / CatalogUserHome variants, or a typed
+// column icon like Hash for INT, Letters for STRING).
 
-const dataSections: TreeSectionData[] = [
+const dataSections: DataTreeSection[] = [
   {
     label: "My organization",
     nodes: [
       {
-        id: "my_catalog", label: "my_catalog", icon: <CatalogUserHome />, defaultExpanded: true,
+        id: "my_catalog",
+        label: "my_catalog",
+        kind: "catalog",
+        icon: <CatalogUserHome />, // override: my-organization variant
         children: [
           {
-            id: "main", label: "main", icon: <Database />, defaultExpanded: true,
+            id: "main",
+            label: "main",
+            kind: "schema",
             children: [
               {
-                id: "cancelled_orders", label: "cancelled_orders", icon: <Table />,
+                id: "cancelled_orders",
+                label: "cancelled_orders",
+                kind: "table",
                 children: [
-                  { id: "co_order_id", label: "order_id", icon: <Hash />, leaf: true, selectable: false },
-                  { id: "co_customer_id", label: "customer_id", icon: <Hash />, leaf: true, selectable: false },
-                  { id: "co_amount", label: "amount_usd", icon: <Numbers />, leaf: true, selectable: false },
+                  // Columns auto-leaf via kind. Override icons by SQL type.
+                  { id: "co_order_id", label: "order_id", kind: "column", icon: <Hash />, selectable: false },
+                  { id: "co_customer_id", label: "customer_id", kind: "column", icon: <Hash />, selectable: false },
+                  { id: "co_amount", label: "amount_usd", kind: "column", icon: <Numbers />, selectable: false },
                 ],
               },
               {
-                id: "customer_order_details", label: "customer_order_details", icon: <Table />, defaultExpanded: true,
+                id: "customer_order_details",
+                label: "customer_order_details",
+                kind: "table",
                 children: [
-                  { id: "cod_order_id", label: "order_id", icon: <Hash />, leaf: true, selectable: false },
-                  { id: "cod_customer_id", label: "customer_id", icon: <Hash />, leaf: true, selectable: false },
-                  { id: "cod_subtotal", label: "order_subtotal_usd", icon: <Numbers />, leaf: true, selectable: false },
-                  { id: "cod_tax", label: "order_tax_usd", icon: <Numbers />, leaf: true, selectable: false },
-                  { id: "cod_discount", label: "order_discount_usd", icon: <Decimal />, leaf: true, selectable: false },
-                  { id: "cod_received", label: "order_received_date", icon: <CalendarClock />, leaf: true, selectable: false },
-                  { id: "cod_shipped", label: "order_shipped_date", icon: <CalendarClock />, leaf: true, selectable: false },
-                  { id: "cod_shipping", label: "shipping_address", icon: <Letters />, leaf: true, selectable: false },
-                  { id: "cod_billing", label: "billing_address", icon: <Letters />, leaf: true, selectable: false },
-                  { id: "cod_payment", label: "payment_method", icon: <Letters />, leaf: true, selectable: false },
-                  { id: "cod_gift", label: "is_gift", icon: <Binary />, leaf: true, selectable: false },
+                  { id: "cod_order_id", label: "order_id", kind: "column", icon: <Hash />, selectable: false },
+                  { id: "cod_customer_id", label: "customer_id", kind: "column", icon: <Hash />, selectable: false },
+                  { id: "cod_subtotal", label: "order_subtotal_usd", kind: "column", icon: <Numbers />, selectable: false },
+                  { id: "cod_tax", label: "order_tax_usd", kind: "column", icon: <Numbers />, selectable: false },
+                  { id: "cod_discount", label: "order_discount_usd", kind: "column", icon: <Decimal />, selectable: false },
+                  { id: "cod_received", label: "order_received_date", kind: "column", icon: <CalendarClock />, selectable: false },
+                  { id: "cod_shipped", label: "order_shipped_date", kind: "column", icon: <CalendarClock />, selectable: false },
+                  { id: "cod_shipping", label: "shipping_address", kind: "column", icon: <Letters />, selectable: false },
+                  { id: "cod_billing", label: "billing_address", kind: "column", icon: <Letters />, selectable: false },
+                  { id: "cod_payment", label: "payment_method", kind: "column", icon: <Letters />, selectable: false },
+                  { id: "cod_gift", label: "is_gift", kind: "column", icon: <Binary />, selectable: false },
                 ],
               },
-              { id: "customer_feedback", label: "customer_feedback", icon: <Table />, children: [] },
-              { id: "discount_usage", label: "discount_usage", icon: <Table />, children: [] },
+              { id: "customer_feedback", label: "customer_feedback", kind: "table", children: [] },
+              { id: "discount_usage", label: "discount_usage", kind: "table", children: [] },
             ],
           },
-          { id: "system", label: "system", icon: <Database />, children: [] },
+          { id: "system", label: "system", kind: "schema", children: [] },
           {
-            id: "showcase", label: "showcase", icon: <Database />, defaultExpanded: true,
+            id: "showcase",
+            label: "showcase",
+            kind: "schema",
             children: [
-              { id: "orders", label: "orders", icon: <Table />, children: [] },
-              { id: "orders_view", label: "orders_view", icon: <TableView />, children: [] },
-              { id: "orders_stream", label: "orders_stream", icon: <TableStream />, children: [] },
-              { id: "orders_sync", label: "orders_sync", icon: <TableLightning />, children: [] },
-              { id: "orders_online", label: "orders_online", icon: <TableGlobe />, children: [] },
-              { id: "revenue_metrics", label: "revenue_metrics", icon: <TableMeasure />, children: [] },
-              { id: "customer_features", label: "customer_features", icon: <TableModel />, children: [] },
-              { id: "fraud_model", label: "fraud_model", icon: <Models />, leaf: true },
-              { id: "raw_data", label: "raw_data", icon: <FolderCloud />, leaf: true },
-              { id: "clean_address", label: "clean_address", icon: <Function />, leaf: true },
+              // Each row's icon is picked automatically from `kind`.
+              { id: "orders", label: "orders", kind: "table", children: [] },
+              { id: "orders_view", label: "orders_view", kind: "view", children: [] },
+              { id: "revenue_metrics", label: "revenue_metrics", kind: "table", children: [] },
+              { id: "fraud_model", label: "fraud_model", kind: "model" },
+              { id: "raw_data", label: "raw_data", kind: "volume" },
+              { id: "clean_address", label: "clean_address", kind: "function" },
             ],
           },
         ],
       },
-      { id: "main_catalog", label: "main", icon: <CatalogHome />, children: [] },
-      { id: "customers", label: "customers", icon: <Catalog />, children: [] },
-      { id: "dbt_catalog", label: "dbt_catalog", icon: <Catalog />, children: [] },
-      { id: "demand_forecasting", label: "demand_forecasting", icon: <Catalog />, children: [] },
-      { id: "snowflake_catalog", label: "snowflake_catalog", icon: <Catalog />, children: [] },
+      { id: "main_catalog", label: "main", kind: "catalog", children: [] },
+      { id: "customers", label: "customers", kind: "catalog", children: [] },
+      { id: "dbt_catalog", label: "dbt_catalog", kind: "catalog", children: [] },
+      { id: "demand_forecasting", label: "demand_forecasting", kind: "catalog", children: [] },
+      { id: "snowflake_catalog", label: "snowflake_catalog", kind: "catalog", children: [] },
     ],
   },
   {
     label: "Delta shared",
     nodes: [
-      { id: "samples", label: "samples", icon: <CatalogShared />, children: [] },
-      { id: "european_gas", label: "european_gas_and_power", icon: <CatalogShared />, children: [] },
+      // CatalogShared icon is the convention for shared-catalog top rows.
+      { id: "samples", label: "samples", kind: "catalog", icon: <CatalogShared />, children: [] },
+      { id: "european_gas", label: "european_gas_and_power", kind: "catalog", icon: <CatalogShared />, children: [] },
     ],
   },
   {
     label: "Legacy",
     nodes: [
-      { id: "hive_metastore", label: "hive_metastore", icon: <CatalogGear />, children: [] },
+      { id: "hive_metastore", label: "hive_metastore", kind: "catalog", icon: <CatalogGear />, children: [] },
     ],
   },
 ]
 
-// ─── File Tree — structured data ───
-// Folders have children (expandable). Files are leaf nodes.
-
-const fileNodes: TreeNode[] = [
-  {
-    id: "project", label: "my_project", icon: <Folder />, iconExpanded: <FolderOpen />, defaultExpanded: true,
-    children: [
-      {
-        id: "src", label: "src", icon: <Folder />, iconExpanded: <FolderOpen />, defaultExpanded: true,
-        children: [
-          { id: "nb1", label: "notebook_1.py", icon: <Notebook />, leaf: true },
-          { id: "nb2", label: "notebook_2.py", icon: <Notebook />, leaf: true },
-          { id: "utils", label: "utils.py", icon: <Notebook />, leaf: true },
-        ],
-      },
-      {
-        id: "data", label: "data", icon: <Folder />, iconExpanded: <FolderOpen />,
-        children: [
-          { id: "csv1", label: "customers.csv", icon: <Table />, leaf: true },
-          { id: "csv2", label: "orders.csv", icon: <Table />, leaf: true },
-        ],
-      },
-      { id: "configs", label: "configs", icon: <Folder />, iconExpanded: <FolderOpen />, children: [] },
-      { id: "readme", label: "README.md", icon: <Notebook />, leaf: true },
-    ],
-  },
-]
-
-export const Playground: StoryObj = {
+export const Default: StoryObj = {
   render: () => (
     <div>
-      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Tree</h2>
-
-      <div style={{ display: "flex", gap: 48 }}>
-        <div>
-          <h3 style={{ fontSize: 13, fontWeight: 600, color: "#8C8C8C", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 12 }}>Data Tree</h3>
-          <div className="w-[280px]">
-            <DataTreeView sections={dataSections} />
-          </div>
-        </div>
-        <div>
-          <h3 style={{ fontSize: 13, fontWeight: 600, color: "#8C8C8C", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 12 }}>File Tree</h3>
-          <div className="w-[260px]">
-            <FileTreeView nodes={fileNodes} />
-          </div>
-        </div>
+      <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 8px 0", color: "#161616" }}>Data Tree</h2>
+      <p style={{ maxWidth: 720, fontSize: 13, color: "#6F6F6F", lineHeight: "20px", margin: "0 0 16px 0" }}>
+        Semantic L2 component. Nodes carry <code>kind</code> (catalog / schema / table / view / volume /
+        model / function / column / folder / file) — icons resolve automatically.
+      </p>
+      <div className="w-[280px] border border-border rounded-md p-1">
+        <DataTree sections={dataSections} />
       </div>
 
-      <ComponentMeta source={componentSource} componentKey="data-tree" />
+      <ComponentMeta
+        source={componentSource}
+        componentKey="data-tree"
+        figmaUrl="https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3824-3098"
+      />
     </div>
   ),
 }

@@ -1,0 +1,785 @@
+﻿Term,Rule,Replace with (alt term),Style rule explanation,Examples,Related link,New/Updated,Style category,Glossary definition
+".filename (dot-filename), article usage",Use,,"Treat the file as if it started with the word ""dot"". This means to always use ""a"" as the article, as in ""a .assistant.md file"", NOT ""an .assistant.md file"".",,,,"Databricks style,Industry standard terminology",
+"above
+below
+(when referring to location of content in an article)",Avoid,"Use the following terms instead:
+preceding
+following
+earlier
+later","Don’t use ""above"" or ""below"" to refer to the location of content in an article. If you must refer to the location of content in an article, use the appropriate alternative term so that screen readers can interpret the information correct.",,,,"Databricks style,Inclusive language,Localization,Ableist language",
+access control list (ACL),Use,,Lowercase when spelling out.,,,,Industry standard terminology,
+account console,Use,,"Lowercase.
+
+Exception: Match capitalization in UI when specifically referring to the UI.",,,,Databricks product/feature name,
+account console,Use,,"Lowercase.
+
+Exception: Match capitalization in UI when specifically referring to the UI.",,,,Databricks product/feature name,
+account console,Use,,Two words and title case.,,,,Databricks product/feature name,
+account console,Use,,One word and mixed case.,,,,Databricks product/feature name,
+account console,Use,,Title case.,,,,Databricks product/feature name,
+account console,Use,,Three words and title case.,,,,Databricks product/feature name,
+account console,Use,,Three words and title case.,,,,Databricks product/feature name,
+account console,Use,,"Three words and title case.
+Different from AWS PrivateLink.",,,,Databricks product/feature name,
+account console,Use,,Two words and title case.,,,,Databricks product/feature name,
+account console,Use,,One word and mixed case.,,,,Databricks product/feature name,
+account console,Use,,Three words and title case.,,,,Databricks product/feature name,
+account console,Use,,Two words and lowercase.,,,,Databricks product/feature name,
+account console,Use,,Two words and title case.,,,,Databricks product/feature name,
+account console,Use,,Two words and lowercase.,,,,Databricks product/feature name,
+account console,Use,,Two words and lowercase.,,,,Databricks product/feature name,
+account console,Don't use,,Remove/rewrite. Avoid joining these terms,,,,"Databricks product/feature name,Legal",
+account console,,,Two words and title case.,,,,Databricks product/feature name,
+account console,Use,,Two words and title case. Use <DBR> (output = Databricks Runtime). Don’t abbreviate as DBR.,,,,Databricks product/feature name,
+account console,Use,,Three words and title case.,,,,Databricks product/feature name,
+account console,Use,,Title case.,,,,Databricks product/feature name,
+account console,Use,,Two words and lowercase.,,,,Databricks product/feature name,
+account console,Use,,One word and title case.,,,,Databricks product/feature name,
+account console,Use,,Use title case in all instances (except code of course),,,,Databricks product/feature name,
+account console,Use,,Title case. Use <DBR> for Machine Learning or <DBR> <version> ML.,,,,Databricks product/feature name,
+account console,Use,,Lowercase.,,,,"Databricks product/feature name,UI terminology,UI element name",
+account console,Don't use,Use the following feature names instead: Git folders (feature name) or Git folder (asset).,Don't use to refer to the deprecated Databricks Repos feature name.,,https://docs.google.com/document/d/1VbYeHf9SZvVkTpxBxmfxq-xST_Zyg-FdvSvrJZvuSh8/edit,Deprecated,"Databricks product/feature name,UI terminology,UI element name",
+account console,Use,,"“Compute” is an uncountable noun, like “sand,” and we can’t use it as a singular noun. In other words, we can’t say “a compute” alone (or “the compute” when we’re referring to a single instance), but must use “a compute resource” or “the compute resource” when we’re referring to a single instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,account console,Do not use initial caps unless you are referring to a label in the UI.,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"As of April 2023, use admin settings or the admin settings page to refer to the UI available to workspace admins, formerly the admin console. Do not use title case unless you are referring to a label in the UI.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,OK to use to refer to features that use AI.,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Title case. Never prepend ""the"" to the name.","Correct: In Catalog Explorer, click +Add and select Add a storage credential.
+
+Incorrect: In the Catalog Explorer, click +Add and select Add a storage credential.
+
+Incorrect: In the catalog explorer, click +Add and select Add a storage credential.",,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Mixed case with lowercase ""dashboards""",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,AI/BI dashboards,,,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,legacy dashboards,,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Title case and one word ""Databricks.""
+
+We refer to the product and product features as ""Databricks"" in the Databricks documentation for AWS and GCP, and ""Azure Databricks"" in the Azure Databricks documentation.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use Databricks Asset Bundles (DABs) on first mention and bundles or bundle on subsequent mentions. Never use Databricks Asset Bundle, or the acronym DABs. If you need a singular form, use bundle.",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,general knowledge,"From marketing: For clarity, use general knowledge instead of general intelligence to avoid confusion with a similar term: artificial general intelligence (AGI), which has not been achieved yet","Correct: This is what’s driving the shift from general knowledge to data intelligence. Your GenAI applications need to understand your enterprise data and the specifics of your domain and industry. And they need to produce high-quality outputs that are well-governed and continuously evaluated for accuracy.
+
+Incorrect: This is what’s driving the shift from general intelligence to data intelligence. Your GenAI applications need to understand . . .
+
+Correct: Enterprises need more than GenAI applications with general knowledge — they need GenAI that understands their specific data, products and context. Enter data intelligence.
+
+Incorrect: Enterprises need more than GenAI applications with general intelligence — they need GenAI that understands their specific data, products and context. Enter data intelligence.",,,"Databricks style,Databricks product/feature name",
+account console,Use,,"From marketing: For clarity, use general knowledge instead of general intelligence to avoid confusion with a similar term: artificial general intelligence (AGI), which has not been achieved yet","Correct: This is what’s driving the shift from general knowledge to data intelligence. Your GenAI applications need to understand your enterprise data and the specifics of your domain and industry. And they need to produce high-quality outputs that are well-governed and continuously evaluated for accuracy.
+
+Incorrect: This is what’s driving the shift from general intelligence to data intelligence. Your GenAI applications need to understand . . .
+
+Correct: Enterprises need more than GenAI applications with general knowledge — they need GenAI that understands their specific data, products and context. Enter data intelligence.
+
+Incorrect: Enterprises need more than GenAI applications with general intelligence — they need GenAI that understands their specific data, products and context. Enter data intelligence.",,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use ""Databricks File System (DBFS)"" on first mention and ""DBFS"" on subsequent mention.
+
+Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+Databricks platform,Use,,"Use ""the Databricks platform"" (include article the and lowercase platform) in all instances. Do not use Lakehouse platform (legacy terminology).
+Note: The marketing team’s style is uppercase the Databricks Platform.
+
+Use ""on"" as prepositions with Databricks platform. Don't use ""in"" or ""with"".
+
+Use the preposition ""on"" when referring to the Databricks platform (that is, general references like ""on Databricks"").
+
+Use the preposition ""in"" when referring to the following:
+Databricks environment
+
+In articles that are specifically about the Databricks platform, use the ""Databricks Data Intelligence Platform"" on first instance. Use the ""Databricks platform"" (lowercase platform) in all other instances.
+
+Note: The name ""Databricks Data Intelligence Platform"" isn't trademarked and we aren’t planning to trademark it in the future.
+
+In articles that specifically reference the category, use ""a data intelligence platform"" (include article ""a"" and lowercase).
+
+Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.","Correct: Extend the capabilities of the Databricks Data Intelligence Platform by…
+
+Correct: Extend the capabilities of the Data Intelligence Platform by…
+
+Correct: A data intelligence platform brings AI to your data so…
+
+Correct: The Databricks Data Intelligence Platform is built on a lakehouse architecture.
+
+Incorrect: The Databricks Data Intelligence Platform is built on a lakehouse platform.
+
+Correct: Databricks platform, Databricks Data Intelligence Platform, Data Intelligence Platform, data intelligence platform (category), data lakehouse architecture, lakehouse architecture, lakehouse pattern, lakehouse paradigm, lakehouse, Data Intelligence Engine.
+
+Incorrect: Data Platform, data platform, Data AI Platform, Data + AI Platform, data + AI platform, data and AI platform, Databricks Data Platform, Databricks Generative Data Platform (previously proposed name), DIP, DI Platform, Generative Data Platform, GDP, Lakehouse Platform, lakehouse platform. Intelligence Platform.",,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use ""Databricks extension for Visual Studio Code"" on the first mention, then ""Databricks extension"" or ""extension"" on subsequent mentions.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"The basic style guideline for Databricks resources and tools is to use lowercase and include ""Databricks"" on first mention to differentiate it from third-party offerings. Follow standard grammar rules for the plural form.
+
+Referring to UI text in the product?
+Match the casing of the UI text and format the text as bold to indicate that it’s UI text.
+
+For specific Databricks resources and tool names, search on the name in this database.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Lowercase ""workflows.""",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Lowercase ""cluster"" and OK to drop ""Databricks"" on subsequent mention.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Feature: Title case ""Jobs"" and OK to drop ""Databricks"" on subsequent mentions.
+
+Resource: Lowercase ""jobs"" and OK to drop ""Databricks"" on subsequent mentions.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Lowercase ""notebook"" and OK to drop ""Databricks"" on subsequent mention.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Lowercase ""widget"" and OK to drop ""Databricks"" on subsequent mention.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Title case ""Workflows"" and OK to drop ""Databricks"" on subsequent mention.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Lowercase ""widget"" and OK to drop ""Databricks"" on subsequent mention.",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,"Lakeflow Spark Declarative Pipelines (feature)
+""pipeline"" (resource).
+
+Note that ""pipeline"" includes more than just SDP pipelines, it also includes ingestion, dbsql, and database pipelines.","The name has been changed to Lakeflow Spark Declarative Pipelines, or Spark Declarative Pipelines (if you don't need to differentiate between OSS and Databricks versions). You can abbreviate as SDP.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,Lowercase.,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,Lowercase.,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Title case ""Feature Store"" and OK to drop ""Databricks"" on subsequent mention.
+
+Use ""Feature Engineering in Unity Catalog"" when referring to feature engineering in UC-enabled workspaces.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use title capitalization in the following instances:
+
+References to a branded product or feature name (for example, Databricks SQL Serverless).
+Note: While Databricks SQL Serverless is a product, serverless compute in most contexts is NOT technically a product name and should be lowercase.
+
+References to SKUs/billing (for example, Databricks SQL Classic, which is a SKU).
+
+Use sentence capitalization in the following instances:
+
+Generic references to serverless, classic, and pro. This includes references to serverless SQL warehouses (formerly endpoints), classic SQL warehouses, and pro SQL warehouses.
+
+References to serverless compute.
+
+References to serverless data planes and classic data planes.
+Note: These will probably be renamed “compute planes” in the next few months.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,Mixed casing.,,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,DatabricksIQ,,,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,Photon,,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Two words and title case.
+
+
+Use <Delta> (output = Delta Lake). For tables that use Delta format, don’t use the <Delta> replacement. Instead, manually type Delta table.
+
+Identify content specific to Delta Lake on Databricks or OSS Delta Lake with .. delta-edge-only:: and .. delta-oss-only::. The normal Databricks doc output includes .. delta-edge-only:: content.
+
+For information about testing the OSS build, see Making OSS Delta Lake Release.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Lowercase ""transaction log.""",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,Lakeflow Spark Declarative Pipelines (SDP),"The name has been changed to Lakeflow Spark Declarative Pipelines, or Spark Declarative Pipelines (if you don't need to differentiate between OSS and Databricks versions). You can abbreviate as SDP.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use <DS> (output = Delta Sharing). Do not use ""Delta sharing.""",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,Delta Sharing,"Use <DS> (output = Delta Sharing). Do not use ""Delta sharing.""",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Lowercase ""table.""",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,Delta table,,,,,"Databricks style,Databricks product/feature name",
+Databricks lakehouse,Don't use,"See ""Databricks platform"" in this database.","Do not use ""lakehouse platform."" Do not use ""Azure Databricks lakehouse."" Search on ""Databricks platform"" in this database.
+
+OK to use Databricks lakehouse, lakehouse architecture, data lakehouse architecture, lakehouse pattern, lakehouse paradigm, or lakehouse.
+
+""","Correct: The Databricks Data Intelligence Platform is built on a lakehouse architecture.
+
+Incorrect: The Databricks Data Intelligence Platform is built on a lakehouse platform.
+
+Correct: data lakehouse architecture, lakehouse pattern, lakehouse paradigm, lakehouse
+
+Incorrect: Lakehouse Platform, lakehouse platform",,,"Databricks style,Databricks product/feature name",
+account console,Use,,Title case.,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,Title case.,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Data privileges in UC and HMS are capitalized and use backticks. They are not bold.
+
+Workspace ACLs are capitalized and do not use backticks and they are not bold.","Correct: Users with the CAN USE permission can generate personal access tokens.
+
+Correct: You must have the `CREATE CATALOG` privilege on the metastore.
+
+Correct: Users do not have CAN ATTACH TO permission for any cluster that is not enabled for table access control.
+
+Incorrect: Users with the **Can Use** permission can generate personal access tokens.
+
+Incorrect: You must have the CREATE CATALOG privilege on the metastore.",,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use ""SQL warehouse,"" not ""SQL endpoint.""
+
+Databricks changed the name from SQL endpoint to SQL warehouse in 2022 because, in the industry, endpoint refers to either a remote computing device that communicates with a network that it’s connected to, or an entry point to a cloud service. A data warehouse is a data management system that stores current and historical data from multiple sources in a business friendly manner for easier insights and reporting. SQL warehouse accurately describes the full capabilities of this compute resource.",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,SQL warehouse,,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,Title case in all instances.,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,,,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use <AS> for Apache Spark.
+
+When referring to Databricks’ role in Apache Spark, use the word “original” in front of anything that refers to creating or starting Apache Spark. For example, “from/by the original creators of Apache Spark” and “from/by the team that originally created Apache Spark” are acceptable phrases but it is critical to include the word “original / originally” in these phrases. See Official Apache guidelines in the Related link column.",,https://docs.google.com/document/d/1ziesfIHGKDp60t9zUnvSOuCDnDNvL0T4OsHU45wtn6A/edit#heading=h.w905yknnxtzl,,"Databricks style,Databricks product/feature name",
+account console,Use,,Use Databricks Runtime for Genomics or Databricks Runtime <version> Genomics (<DBRG> replacement).,,,,Databricks product/feature name,
+account console,Don't use,,Deprecated feature. Use only when necessary to refer to the deprecated feaure.,,,,Databricks product/feature name,
+account console,Use,,"The name has been changed to Lakeflow Spark Declarative Pipelines, (you can use ""Spark Declarative Pipelines"" if you don't need to differentiate between OSS and Databricks versions). You can abbreviate as SDP.
+
+Use: ""Lakeflow Spark Declarative Pipelines"" when referring to the product/feature (use the replacement). To differentiate from OSS, you can call it ""Lakeflow Spark Declarative Pipelines"". Abbreviate as ""SDP"" (never LSDP--you can say ""Lakeflow SDP"").
+
+The feature name is ""Lakeflow Spark Declarative Pipelines"": Avoid the singular; to discuss a single pipeline resource, use ""pipeline"" instead.
+
+Replacement token :re[LDP] for ""Lakeflow Spark Declarative Pipelines""
+
+As a qualifier, as in “DLT flows”, use “Lakeflow Spark Declarative Pipelines <noun>”. Do NOT use “Lakeflow Spark Declarative Pipelines"" or ""SDP"" in front of “pipeline”.",,,,"Databricks style,Databricks product/feature name",
+account console,Don't use,"Use the following term instead: ""Lakeflow Jobs"" when referring to the feature; ""jobs"" when referring to the resource. If it could be either, defer to referring to the resource (as a ""job"").","""Workflows"" was rebranded as ""Lakeflow Jobs"" (with a stop at ""Databricks Jobs"" in between).
+
+For lower-case ""workflows"", change it to ""jobs"" when referring specifically to configured data processing tasks on Databricks.",,,,"Databricks style,Databricks product/feature name",
+account console,Use,,"Use this when referring to configured data processing tasks run on Databricks. Use ""jobs"" for referring to the resource (that you create and edit). Do not use ""Jobs"" by itself unless referring to UI elements. Do not use ""workflows"" as a resource or feature name.",,,,"Databricks style,Databricks product/feature name",
+ACID,Use,,"Lowercase ""atomicity, consistency, isolation, durability (ACID)"" when spelling out full name. Use ""ACID"" on subsequent mention.",,,,Industry standard terminology,
+ACID transactions,Use,,"Lowercase ""transactions.""",,,,Industry standard terminology,
+actionable,Don't use,,"Don’t use because it has a specific legal meaning. Rewrite or use a simpler, clearer word instead.",,,,Legal,
+adaptive query optimization,Use,,Lowercase.,,,,Industry standard terminology,
+alert,Use,,Lowercase.,,,,"UI terminology,UI element name",
+allowlist,Use,,"One word and lowercase.
+
+Don’t use allowlist as a verb (for example, ""You need to allowlist the user.""). Instead, rewrite to improve clarity.",,,,Inclusive language,
+"AM, PM",Use,,Industry standard: Use all caps.,,https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/term-collections/date-time-terms,,"Databricks style,Industry standard terminology,Google style,MSTP",
+and/or,Don't use,Use the following term instead: or,"Don't use because it's hard to translate and ""and"" is implied when you you use ""or"" by itself.","Correct: Verify that you have saved your connection or file.
+
+Incorrect: Verify that you have closed your connection and/or file.",,,Localization,
+Apache,Use,,One word and title case.,,,,3rd-party product/feature,
+Apache Arrow,Use,,Two words and title case.,,,,3rd-party product/feature,
+Apache GraphX,Use,,Two words and mixed case.,,,,3rd-party product/feature,
+Apache Kafka,Use,,Two words and title case.,,,,3rd-party product/feature,
+Apache MLlib,Use,,Two words and mixed case.,,,,3rd-party product/feature,
+Apache Software Foundation,Use,,Two words and title case.,,,,3rd-party product/feature,
+Apache Spark,Use,,Two words and title case.,,,,3rd-party product/feature,
+Apache Spark Streaming,Use,,Two words and title case.,,,,3rd-party product/feature,
+appears,Use,,"Use appears to refer to something that appears on the screen. Don't use ""displays"" as an intransitive verb. ""Display"" is a transitive verb and it requires an object.","Correct: The Create Library dialog appears.
+Correct: The Create Library dialog is displayed.
+
+Incorrect: The Create Library dialog displays.",,,"Databricks style,UI terminology",
+APPLY CHANGES,Don't use,"""AutoCDC"" when referring to the feature; ""AUTO CDC"" in code and instructional guidance.","For DAIS 2025, Databricks changed the ""APPLY CHANGES"" feature name to ""AutoCDC"" and the supporting SQL syntax to ""AUTO CDC"".",,,,,
+"article, as reference to page on docs.databricks.com",Don't use,page,"Use ""page"" to refer to pages on docs.databricks.com.
+
+Legacy content uses ""article"" to refer to pages on docs.databricks.com, which is overly formal, old-school terminology. In addition, it could be mistranslated.",,,,Databricks style,
+"articles:
+a
+an
+the
+that",Use,,"Don’t drop optional articles and words that add clarity, even if the sentence makes sense and is grammatically correct without it.",,,,"Databricks style,Localization",
+"as
+since
+(as synonyms for ""because"")",Avoid,Use the following term instead: because,"Don’t use ""as"" or ""since"" to mean ""because"" in subordinate clauses because they have multiple meanings and can be hard to translate.",,https://databricks.atlassian.net/wiki/spaces/docstyle/pages/2838004249/Voice+tone+and+audience#Global-audience:-Localization-and-accessibility,,"Databricks style,Localization",
+"as
+since
+(when you mean ""because"")",Don't use,Use the following term instead: because,"Don’t use ""as"" or ""since"" to mean ""because"" in subordinate clauses because ""as"" and ""since"" have multiple meanings. While ""as"" and ""since"" are grammatically correct, they are more difficult for ESL readers and machine translation services to translate correctly.","Correct: The value of the type cannot be cast to because it is malformed.
+
+Incorrect: The value of the type cannot be cast to as it is malformed.
+Incorrect: The value of the type cannot be cast to since it is malformed.",,,Databricks style,
+as well,Don't use,"Use the following terms instead:
+also
+too",Don't use because it has multiple meanings and can be hard to translate.,,,,"Databricks style,Localization",
+as well as,Don't use,"Use the following terms instead:
+and
+in addition to
+as","Don’t use ""as well as"" for and or in addition to because as well as has multiple meanings. While it's grammatically correct, it’s more difficult for ESL readers and machine translation services to translate correctly.","Correct: Call Databricks automation APIs directly by using popular clients such as curl, Postman, HTTPie, and popular libraries such as requests for Python.
+
+Incorrect: Call Databricks automation APIs directly by using popular clients such as curl, Postman, and HTTPie, as well as popular libraries such as requests for Python.
+
+
+Correct: Databricks can read data from and write data to a variety of data formats such as CSV, Delta Lake, JSON, Parquet, XML, and other formats, in addition to data storage providers such as Amazon S3, Google BigQuery and Cloud Storage, Snowflake, and other providers.
+
+Incorrect: Databricks can read data from and write data to a variety of data formats such as CSV, Delta Lake, JSON, Parquet, XML, and other formats, as well as data storage providers such as Amazon S3, Google BigQuery and Cloud Storage, Snowflake, and other providers.
+
+Explanation: What’s the problem here? This sentence could have the following unintended meaning: “Databricks reads data from these formats with an equally good result as other data storage providers” (not what the author intended).",https://databricks.atlassian.net/wiki/spaces/docstyle/pages/2838004249/Voice+tone+and+audience#Global-audience:-Localization-and-accessibility,,Localization,
+AWS PrivateLink,Use,,Two words and mixed case.,,,,3rd-party product/feature,
+banner,Use,,Lowercase.,,,,"UI terminology,UI element name",
+"be sure
+make sure
+ensure",Don't use,"Use the following terms instead:
+check
+verify",Remove or use an alternative term.,"Correct: Run all the following cells
+Incorrect: Be sure to run all the cells above
+
+Correct: Verify that the cluster_name property is set.
+Incorrect: Make sure to set the cluster_name property.",,,Databricks style,
+bento menu,Use,,Use to refer to the visual menu style that has 3 x 3 squares.,,https://databricks.atlassian.net/wiki/spaces/docstyle/pages/2916549408/A-Z+word+list#Menu-icon-names,,"UI terminology,UI element name,Industry standard terminology",
+best-in-class,Don't use,,Remove/rewrite. Don’t use marketing jargon,,,,Databricks style,
+big data,Use,,Lowercase.,,,,Industry standard terminology,
+blacklist,Don't use,Use the following term instead: denylist,"Offensive word (not inclusive; old terminology). Don’t use biased language.
+
+It's OK to use ""blacklist"" if it’s in the UI text, error message, or code that you can’t change. If possible, work with the engineering and design teams to change the term in the UI.",,,,"Inclusive language,Offensive language",
+"blind
+blind to
+blind eye
+dumb",Don't use,"Use any of the following terms instead:
+doesn’t understand
+ignore
+unbiased
+anonymous
+anonymized
+Or a more precise term",Offensive word (not inclusive; old terminology). Don’t use ableist language.,,,,"Inclusive language,Ableist language,Offensive language",
+"breach
+break through",Use,,"Use instead of aggressive or militaristic terms like ""invade.""",,,,"Databricks style,Inclusive language,Localization",
+breadcrumb,Use,,One word and lowercase.,,,,"UI terminology,UI element name",
+Bricksters,Don't use,Use the following term instead: Databricks employees,Don't use internal company jargon.,,,,Databricks internal term,
+checkbox,Use,,"One word. Don't use ""check box"" or ""box.""
+
+Verbs: Use ""select"" or ""clear"" to describe selecting or deselecting a checkbox in the UI. Don’t use any of the following: choose, toggle, select/deselect, turn on/turn off, mark/unmark, or check/uncheck.",,,,"Databricks style,Industry standard terminology,MSTP",
+click,Use,,"For menus, buttons, and links, use ""click."" Don't use ""click on,"" ""choose,"" or ""select"" for these UI elements. Use ""select"" for check boxes or other multiselect options in the UI.","Correct: Click the Account icon and select Manage Account.
+Correct: In the left navigation pane, click Models.
+
+Incorrect: Click on the query that you want to run.",,,"Databricks style,UI terminology,Industry standard terminology",
+click on,Don't use,Use the following term instead: click,,,,,"Databricks style,Industry standard terminology",
+cloud-native,Don't use,Use the following term instead: cloud first,"If necessary, you can use ""cloud first"" to describe technologies that are built originally for the cloud (optimized for cloud scale and performance). Use judiciously and make sure it’s necessary to add clarity.",,,,Inclusive language,
+"command line
+command-line
+command-line interface (CLI)",Use,,Two words as a noun. Hyphenate as an adjective.,,https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/c/command-line,,"Databricks style,MSTP",
+"complete
+finish",Use,,"""Complete"" has multiple meanings. It can imply that something is whole or full. It’s also a synonym for finish. As a best practice, use the term that’s the most precise to avoid confusion and ensure an accurate translation.
+
+""Completed"" means finished, accomplished, or done.
+
+Don't use ""completes"" as an intransitive verb.","Correct: When the transaction is complete…
+Correct: When the transaction is completed…
+Correct: When the transaction is finished…
+
+Incorrect: When the transaction completes...",,,"Databricks style,Industry standard terminology",
+"crazy
+insane",Don't use,"Use any of the following terms instead:
+complicated
+complex
+intense
+time-consuming",Offensive word (not inclusive; old terminology). Don’t use ableist language. The alternative terms are more precise.,,,,"Inclusive language,Ableist language",
+cross-references,Use,Use the following term instead: about,"In cross-references, use ""about"" instead of ""on"" because about is more precise and better for localization. For example, use ""For more information about...""",,,,"Databricks style,Localization",
+"cyberattack
+cybersecurity",Use,,One word and no hyphen.,,,,Industry standard terminology,
+"Databricks
+(company name, Databricks, Inc.)",Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,Databricks style,
+"Databricks Git folder
+Git folders",Use,,"Two words and mixed casing. Use to refer to the Databricks feature (formerly Databricks Repos). OK to drop ""Databricks"" on subsequent mentions.",,,New,"UI terminology,UI element name",
+Databricks recommends…,Use,,"Don't use the <Databricks> replaceable text entity for this because the built content will be incorrect--you must manually type ""Databricks"" in this instance.",,,,Databricks style,
+Databricks Workflows,,,,,,,,
+demilitarized zone,Don't use,Use the following term instead: perimeter network,"Offensive word (not inclusive; old terminology). Don’t use violent, militaristic, or profane language.",,,,"Inclusive language,Offensive language",
+denylist,Use,,One word.,,,,Inclusive language,
+"desire
+wish",Don't use,Use the following term instead: want,,,,,Databricks style,
+dialog,Use,,"In general, avoid talking about UI. Instead, talk about what the customer needs to do.
+When you need to refer to a dialog box, use ""dialog"".
+
+Don't use any of the following: pop-up window, dialog box, or dialogue box.",,,,"Databricks style,UI terminology,Industry standard terminology,MSTP",
+"dialog box
+dialogue box
+pop-up window",Don't use,Use the following term instead: dialog,"In general, avoid talking about UI. Instead, talk about what the customer needs to do.",,,,Databricks style,
+digital transformation,Don't use,,Remove/rewrite. Don’t use marketing jargon.,,,,Databricks style,
+"Directionals:
+top <left/right>
+bottom <right/left>
+far <right/left>
+(with or without hyphens)",Don't use,"Use any of the following terms instead:
+upper-left <UI element>
+upper-right <UI element>
+lower-left <UI element>
+lower-right <UI element>
+leftmost <UI element>
+rightmost <UI element>","Use UI text labels to refer to UI elements. If you must refer to the location of something in the UI, use the appropriate alternative term so that screen readers can interpret the information correctly.",,,,"Databricks style,Inclusive language,UI terminology,Ableist language,MSTP",
+"Directionals:
+upper-left <UI element>
+upper-right <UI element>
+lower-left <UI element>
+lower-right <UI element>
+leftmost <UI element>
+rightmost <UI element>",Use,,"Use UI text labels to refer to UI elements. If you must refer to the location of something in the UI, use the appropriate term so that screen readers can interpret the information correctly.
+
+Accessibility note:
+Don't use directional terms (for example, upper right, lower left, or rightmost) as the only indicator for location because individuals with cognitive impairments and low vision might have difficulty interpreting them. It's OK to use a directional term if you include another location indicator like the UI element (see examples).","Correct: upper-right side of the page
+Correct: lower-left corner
+Correct: rightmost table column",,,"Databricks style,Inclusive language,UI terminology,Ableist language,MSTP",
+displays,Don't use,Use the following term instead: appears,"Use ""appears"" to refer to something that appears on the screen. Don’t use ""displays.""",,,,Localization,
+displays,Don't use,"Use the following terms instead:
+appears
+is displayed","Don't use ""displays"" as an intransitive verb. Display is a transitive verb and it requires an object.","Correct: The Create Library dialog appears.
+Correct: The Create Library dialog is displayed.
+
+Incorrect: The Create Library dialog displays.",,,Databricks style,
+disruptive,Don't use,,"Don’t use marketing jargon. Instead, describe how this product or feature is different or new, and why it's unique.",,,,Databricks style,
+DMZ,Don't use,Use the following term instead: perimeter network,"Offensive word (not inclusive; old terminology). Don’t use violent, militaristic, or profane language.",,,,"Inclusive language,Offensive language",
+Döner menu,Use,,Use to refer to the visual menu style that has three horizontal bars of unequal width.,,https://databricks.atlassian.net/wiki/spaces/docstyle/pages/2916549408/A-Z+word+list#Menu-icon-names,,"UI terminology,UI element name,Industry standard terminology",
+"drop-down menu
+drop-down list",Use,,"Hyphenate ""drop-down"" and always include ""menu"" or ""list.""",,,,"UI terminology,UI element name",
+dropdown,Don't use,Use the following term instead: drop-down menu,,,,,"UI terminology,UI element name",
+dummy,Don't use,Use the following term instead: placeholder,Offensive word (not inclusive; old terminology). Don’t use ableist language.,,,,"Inclusive language,Ableist language,Offensive language",
+"easy, easily",Avoid,,Remove. These are relative terms that can be overused and can offend customers (if they don’t find the task to be easy).,,,,Databricks style,
+"enable
+switch
+turn on
+turn off",Use,,"For toggle switches, use ""enable"", ""switch"", ""turn on"", or ""turn off"" with the name of the toggle or command to describe what the customer must do.
+
+Don’t use ""toggle"" as a verb. It's OK to use as a noun or adjective (for example, toggle key or toggle switch).","Correct: Turn on the Import data option.
+Correct: Enable the Import data option.
+Correct: Turn off Automatically detect file type.
+
+Incorrect: Toggle the Import data option.",,,"Databricks style,UI terminology,Industry standard terminology",
+end user,Don't use,Use the following term instead: user,"Avoid ""user"" when you can. Use any of the following instead: audience, customer, person, people, employee, coworker, or you.
+
+It's OK to use ""user"" in content for developers to distinguish the technology developer from the technology user. It's also OK to use user in content for technology professionals to distinguish the system administrator from the system users.",,,,Industry standard terminology,
+ensure,Avoid,"Use the following terms instead:
+check
+verify",Remove or use an alternative term.,,,,Databricks style,
+enter,Use,,"Use ""enter"" to describe the action of typing something, or to add data to a database.","Correct: Enter the file name.
+
+Incorrect: Type the file name.",,,"Databricks style,UI terminology,MSTP",
+execute,Don't use,Use the following term instead: run,"Offensive word (not inclusive; old terminology). Don’t use violent, militaristic, or profane language.",,,,"Inclusive language,Offensive language",
+file name,Don't use,Use the following term instead: filename,,,,,Industry standard terminology,
+futureproof,Don't use,Use the following term instead: long-term,Remove/rewrite. Don’t use marketing jargon.,,,,Databricks style,
+Gaussian distribution,Use,,Title case first word.,,,,Industry standard terminology,
+generally,Don't use,,"Don’t use ""generally."" It’s unnecessary and can cause confusion.",,,,Databricks style,
+GitHub,Use,,One word and mixed case.,,,,3rd-party product/feature,
+Glow,Use,,One word and title case.,,,,3rd-party product/feature,
+GlowGR,Use,,One word and mixed case.,,,,3rd-party product/feature,
+go to,Use,,,,,,"Databricks style,UI terminology",
+guide,Don't use,,"Don’t use guide to refer a high-level node in the documentation website. It implies a self-contained content collection, which doesn’t accurately reflect the web-based customer experience on the doc website. It doesn’t provide a strong customer intent. Instead, focus on the customer intent that applies to the section.",,,,Databricks style,
+Hadoop,Use,,One word and title case.,,,,3rd-party product/feature,
+hamburger menu,Use,,Use to refer to the visual menu style that has three horizontal bars of equal width.,,https://databricks.atlassian.net/wiki/spaces/docstyle/pages/2916549408/A-Z+word+list#Menu-icon-names,,"UI terminology,UI element name,Industry standard terminology",
+hang,Don't use,"Use the following terms instead:
+stops responding
+suspended
+incomplete
+doesn’t complete
+doesn’t resolve
+fail/failing/failed","Offensive word (not inclusive; old terminology). Don’t use violent, militaristic, or profane language.",,,,"Inclusive language,Offensive language",
+"have to
+need to
+should",Don't use,"Use the following terms instead:
+must
+we recommend","These terms are ambiguous and difficult to translate. The alternative terms are more precise.
+If you must use the term ""should"", explain why the user should or should not do this.","Correct: You must add new permissions.
+
+Incorrect: You will need to add new permissions.
+Incorrect: You have to add the permission.
+Incorrect: You should add new permissions.",,,Databricks style,
+"his or her
+he or she
+he/she
+s/he",Don't use,"Use the following terms instead:
+they
+their
+them","Avoid gendered language. It's OK to use gendered terms if they’re in UI text, error messages, or code that you can’t change. If possible, work with the engineering and design teams to change the term in the UI.",,,,"Databricks style,Inclusive language,Industry standard terminology,English grammar rule",
+hit,Don't use,Use the following term instead: press,"Offensive word (not inclusive; old terminology). Don’t use violent, militaristic, or profane language.",,,,"Inclusive language,Offensive language",
+Home folder,Use,,Two words and mixed casing.,,,,"UI terminology,UI element name",
+Horovod,Use,,One word and title case.,,,,3rd-party product/feature,
+host name,Don't use,Use the following term instead: hostname,"We follow Google style for this term, which is different from Microsoft style.",,https://developers.google.com/style/word-list#hostname,,"Databricks style,Industry standard terminology,Google style",
+hostname,Use,,One word.,,https://developers.google.com/style/word-list#hostname,,"Databricks style,Industry standard terminology,Google style",
+hyphenation - prefixes,Don't use,,"We follow the Microsoft style guide, which calls for omitting hyphens after the following common prefixes (unless omitting the hyphen could confuse the reader):
+auto
+co
+cyber
+exa
+giga
+kilo
+mega
+micro
+multi
+non
+pre
+re
+sub
+tera
+un
+
+Use a hyphen between a prefix and a stem word if a confusing word results without the hyphen (for example, ""non-native"") or if the stem word begins with a capital letter (for example, ""non-XML"").",,https://learn.microsoft.com/en-us/style-guide/punctuation/dashes-hyphens/hyphens#prefixes,,"Databricks style,Industry standard terminology,MSTP,English grammar rule",
+ID,Use,,"Not ""Id"" or ""id,"" except in string literals or enums. In some contexts, it's best to spell out as ""identifier (ID)"" or ""identification (ID)"".",,,,Databricks style,
+innovative,Don't use,,"Don’t use marketing jargon. Instead, describe how this product or feature is different or new, and why it's unique.",,,,Databricks style,
+input,Don't use,Use the following term instead: enter,"Don't use ""input"" as a verb.","Correct: Enter the data.
+
+Incorrect: Input the data.",https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/i/input,,"Databricks style,UI terminology,MSTP",
+insane,Don't use,Use the following term instead: complicated,Offensive word (not inclusive; old terminology). Don’t use ableist language.,,,,"Inclusive language,Ableist language,Offensive language",
+interactions with UI,Use,,Go to the Related link column to find style guidance for interactions with UI.,,https://databricks.atlassian.net/wiki/spaces/docstyle/pages/edit-v2/2916549408#Describing-interactions-with-UI,,"Databricks style,UI terminology,Google style,MSTP",
+invade,Don't use,Use the following term instead: breach,"Offensive word (not inclusive; old terminology). Don’t use violent, militaristic, or profane language.",,,,Inclusive language,
+invalid,Don't use,Use the following term instead: not valid,"Use ""not valid"", not ""invalid"" because ""invalid"" has more than one meaning, one of which is ableist language (that is, “a person made weak or disabled by illness or injury”) and it is hard to translate correctly.",,,,"Inclusive language,Localization,Ableist language,Offensive language",
+"it
+it's",Use,,"The term ""it's"" is the contraction meaning ""it is"" or ""it has"".
+
+The term ""its"" is a possessive form meaning ""belonging to it"".","Correct: It’s easier to see the clustering and sorting behavior when you choose fewer partitions.
+
+Correct: Drop the schema and its tables.",https://www.grammarly.com/blog/its-vs-its/,,English grammar rule,
+kebab menu,Use,,"Use to refer to the visual menu style that has 3 vertical dots.
+- On first mention: the kebab menu (also known as the three-dot menu or vertical three-dot menu).
+- On subsequent mention: the kebab menu",,https://databricks.atlassian.net/wiki/spaces/docstyle/pages/2916549408/A-Z+word+list#Menu-icon-names,,"UI terminology,UI element name,Industry standard terminology",
+Keras,Use,,One word and title case.,,,,3rd-party product/feature,
+"kill
+abort",Don't use,"Use the following terms instead:
+stop
+cancel
+terminate
+end
+close","Offensive word (not inclusive; old terminology). Don’t use violent, militaristic, or profane language.",,,,"Inclusive language,Offensive language",
+Koalas,Use,,One word and title case.,,,,3rd-party product/feature,
+Lambda,Use,,One word and title case.,,,,3rd-party product/feature,
+large language model (LLM),Use,,Lowercase.,,,,Industry standard terminology,
+leading edge,Don't use,,"Don’t use marketing jargon. Instead, describe how this product or feature is different or new, and why it's unique.",,,,Databricks style,
+"left nav
+left navigation pane
+menu on the left-hand side",Don't use,Use the following term instead: sidebar,,,,,"UI terminology,UI element name",
+legacy,Use,,"OK to use to refer to legacy feature/product
+that is still available and a new version has been released. Use parentheses and lowercase after the feature/product name: (legacy)",AI Gateway Mosaic AI Gateway (legacy),,,,
+less,Don't use,Use the following term instead: fewer,"Use ""fewer"" when comparing countable objects. Fewer is a more precise term and is easier for machine translation services to translate correctly.","Correct: count returned to original value (10 fewer)
+
+Incorrect: count returned to original value (10 less)",,,"Databricks style,Localization",
+leverage,Don't use,Use the following term instead: use,,,,,Databricks style,
+Linux,Use,,One word and title case.,,,,3rd-party product/feature,
+Linux Foundation,Use,,Title capitalization.,,,,3rd-party product/feature,
+"log in (verb)
+log out (verb)
+sign in (verb)
+sign out (verb)
+
+login (noun, adjective)
+logout (noun, adjective)
+sign-in <noun> (adjective)
+sign-out <noun> (adjective)",Use,,"log in & log out (verbs)
+Databricks style is: Use ""log in"" or ""log out"" to refer to logging in or out of Databricks. This goes against the current industry standard terminology for cloud-based services. The industry standard is ""sign in "" or ""sign out"" (AWS, Microsoft, and Google). Use ""log in to,"" not ""log into."" Don't use ""log on"" or ""log off.""
+
+sign in & sign out (verbs)
+It's OK if you use ""sign in"" or ""sign out"" to refer to signing in or out of a cloud provider or other software because that's the industry standard terminology.
+
+login, logout, logon (noun or adjective)
+Avoid using ""login"" or ""logout"" as a noun or adjective. Use the label of the dialog or window that you're talking about logging in or out of instead. Do not hyphenate ""login"" or ""logout"" when you use them as nouns or adjectives. Don't use ""logon.""
+
+sign-in, sign-out (noun or adjective)
+Avoid using ""sign-in"" or ""sign-out"" as a noun or adjective. Use the label of the dialog or window that you're talking about signing in to or out of instead. Always hyphenate ""sign-in"" or ""sign-out"" and include the noun your modifying when you use them as nouns or adjectives (for example, ""sign-in dialog"" or ""sign-out page""). Don't use ""signin"", ""sign on"", or ""signon.""","Correct:
+Log in to your Databricks account.
+Log out of your Databricks account.
+Sign in to your AWS account.
+Sign out of your AWS account.
+In the ""Sign in to your account"" dialog, type your admin account password.
+
+Avoid, but OK:
+In the login dialog, type your admin account password.
+On the sign-in page, type your admin account password.
+
+Incorrect:
+Log-in to your Databricks account.
+Log into your Databricks account.
+Logout of your Databricks account.
+Sign-in to your AWS account.
+Close the signout dialog.",https://developers.google.com/style/word-list#sign-in,,Databricks style,
+"logon
+log on
+log off
+signin
+sign on
+signon",Don't use,"Use the following terms instead:
+login (noun or adjective)
+log in (verb)
+log out (verb)
+sign in (verb)
+sign out (verb)","See guidance in this list for for log in, log out, sign in, and sign out.","Correct: Log in to your Databricks account.
+Correct: On the login page, type your admin account password.",,,Databricks style,
+machine learning (ML),Use,,"Lowercase. Use ""ML"" on subsequent mention.",,,,Industry standard terminology,
+make sure,Don't use,"Use the following terms instead:
+check
+verify","Don’t use. Remove or use an alternative term, like ""verify"" or ""check.""",,,,Databricks style,
+"man
+mankind
+man-hours",Don't use,"Use the following terms instead:
+human
+humankind
+people
+person-hours",Not inclusive; old terminology.,,,,Inclusive language,
+Managed MLflow,Use,,Two words and mixed case.,,,,3rd-party product/feature,
+"master
+slave
+master/slave",Don't use,"Use the following terms instead:
+main
+mainline
+primary/secondary (instead of master/slave)","Not inclusive; old terminology.
+
+Exception: OK in some very few instances where you have to match UI, error messages, code, or output. Ideally, we should work with the product team to get it changed.",,,,"Inclusive language,Offensive language",
+may,Avoid,"Use the following terms instead:
+can
+might","To convey possibility, use ""can"" or ""might."" To convey permission, use ""can.""
+Avoid ""may"" because it can be ambiguous and implies permission. In general, reserve ""may"" for official policy or legal considerations.",,,,"Databricks style,Localization",
+meatballs menu,Use,,Use to refer to the visual menu style that has 3 horizontal dots.,,https://databricks.atlassian.net/wiki/spaces/docstyle/pages/2916549408/A-Z+word+list#Menu-icon-names,,"UI terminology,UI element name,Industry standard terminology",
+MLflow,Use,,One word and mised case.,,,,3rd-party product/feature,
+MLOps,Use,,,,,,Industry standard terminology,
+native,Don't use,Use the following term instead: built-in,Offensive word (not inclusive; old terminology).,,,,"Inclusive language,Offensive language",
+natural language processing (NLP),Use,,,,,,Industry standard terminology,
+note that,Don't use,,Remove. It's unnecessary.,"Correct: Changes in blood chemistry may have side effects.
+
+Incorrect: Note that changes in blood chemistry may have side effects.",,,Databricks style,
+notebook,Use,,One word and lowercase.,,,,"Databricks style,UI terminology,UI element name",
+of,Use,,"Use ""of"" even if it doesn’t seem necessary and the content is grammatically correct. Prepositions like of are helpful to ESL readers and translation tools.","Correct: All of the user’s applications
+
+Incorrect: All the user’s applications",,,"Databricks style,Localization,English grammar rule",
+"off-prem/offprem
+on-prem/onprem",Don't use,"Use the following terms instead:
+off-premises
+on-premises",Always use full term spelled out.,,https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/term-collections/cloud-computing-terms,,"Databricks style,Industry standard terminology",
+on demand,Use,,"Two words. Hyphenate ""on-demand"" when you're modifying a noun (for example, on-demand jobs""). Don't use ""ondemand.""",,,,Industry standard terminology,
+on site/on-site,Don't use,Use the following term instead: onsite,One word and no hyphen.,,,,Industry standard terminology,
+"once
+(as a synonym for ""after"" or ""when"")",Don't use,"Use the following terms instead:
+after
+when","Avoid using ""once"" as a synonym for ""after"" or ""when."" Use ""after"" or ""when"" instead because it’s more precise.
+
+The term ""once"" has multiple meanings. For example, it can mean: after, when, as soon as, at some time in the past, on one occasion, or for one time only.",,,,"Databricks style,Localization",
+only,Use,,"Take care when using only as a modifier. Place only next to the noun, subject, verb, or phrase you want to modify.","Correct: You can only access Spark using the DataFrame API.
+Incorrect: You can access Spark only using the DataFrame API.
+
+Correct: Access Control is available only in…
+Incorrect: Access Control is only available in…",https://dictionary.cambridge.org/us/grammar/british-grammar/only,,English grammar rule,
+"page
+page <Name>",Use,,"One word and lowercase. If there is a page name, match the casing in the UI and include the descriptor ""page.""","On the Experiments page, ....",,,"UI terminology,UI element name",
+"page, as reference to page on docs.databricks.com",Use,,"Use ""page"" to refer to pages on docs.databricks.com. Page is less likely to be mistranslated and more in line with our tone and voice guidelines (less formal).
+
+Legacy content uses ""article"" to refer to pages on docs.databricks.com, which is overly formal, old-school terminology. In addition, it could be mistranslated.",,,,Databricks style,
+pandas,Use,,,,,,Industry standard terminology,
+"pane
+<Name> pane",Use,,"One word and lowercase. If there is a page name, match the casing in the UI and include the descriptor ""page.""","In the Details pane, ...",,New,"UI terminology,UI element name",
+panel,Don't use,Use the following term instead: pane,,,,New,"UI terminology,UI element name",
+paradigm shift,Don't use,,"Don’t use marketing jargon. Instead, describe how this product or feature is different or new, and why it's unique.",,,,Databricks style,
+pass-through,Don't use,Use the following term instead: passthrough,"One word, no hyphen.",,,,Databricks style,
+personal access token,Use,,Lowercase and spell out on first instance,,,,"Databricks style,Glossary term,Industry standard terminology",A personal access token (PAT) is a string of characters that can be used to authenticate a user when accessing a computer system instead of the usual password.
+placeholder,Use,,,,,,"Databricks style,UI terminology,Industry standard terminology,MSTP",
+please,Don't use,,"Remove. It's unnecessary. In some instances, customers might perceive these terms as condescending and can inadvertently cause offense.","Correct: See XXX.
+
+Incorrect: Please see XXX.",,,Databricks style,
+plural terms in parentheses: (s) and (es),Don't use,Remove the parentheses and use the plural form.,"Don't add ""(s)"" or ""(es)"" to a singular noun to indicate that it can be singular or plural. Most of the time, use plural instead. If it's important to indicate both, use one or more. The parenthetical form causes problems in machine translation.","Correct: To add rows or columns to a table, ....
+Correct: To add one or more rows or columns to a table, ....
+
+Incorrect: To add row(s) or column(s) to a table, ....",https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/s/s-es,New,"Localization,Industry standard terminology,Google style,MSTP",
+"popup
+pop-up
+warning",Don't use,"Use the following terms instead:
+alert
+banner
+dialog
+menu","It's OK to use “warning” if it is part of the UI text.
+
+To describe a window that appears and asks for, or presents, additional information, use ""dialog"".
+
+To describe a menu that rises from an interface (such as a right-click context menu), use ""menu"".",,https://developers.google.com/style/word-list#sign-in,,"UI terminology,UI element name,Industry standard terminology",
+PostgreSQL,Use,,One word and mised case.,,,,3rd-party product/feature,
+"prepositions: ""on"" vs. ""in""",Use,,"Use the preposition ""on"" with the following:
+cloud platform (specific)
+dashboard
+Databricks platform
+menu
+page
+sidebar
+tab
+toolbar
+web
+
+Use the preposition ""in"" with the following:
+cloud (generic)
+console
+Databricks environment
+dialog
+field
+list
+pane
+service
+window","Creating compute clusters on AWS
+
+On the dashboard you created…
+
+use MLOps on the Databricks platform…
+
+On the File menu…
+
+On the Edit page…
+
+On the sidebar…
+
+On the Compute tab…
+
+On the notebook toolbar…
+
+…available on the web at…
+
+Create and run virtual servers in the cloud
+
+In the account console…
+
+Store your data in Databricks
+
+In the Advanced configurations dialog…
+
+In the Region field…
+
+In the IP access list…
+
+In the Configuration pane…
+
+In Amazon EC2… (or “with Amazon EC2”)
+
+If there is only one row in the window…",,,"Databricks style,UI terminology",
+press,Use,,"Use ""press"" to describe pressing keys on a keyboard.",,,,"Databricks style,UI terminology,MSTP",
+"proceed
+navigate",Don't use,Use the following term instead: go to <page or UI>,"The preferred terminology ""go to"" is simpler and easier to translate.",,,,"Databricks style,UI terminology,MSTP",
+provides,Avoid,Use the following term instead: has,,,,,Databricks style,
+PySpark,Use,,One word and mised case.,,,,3rd-party product/feature,
+PyText,Use,,One word and mised case.,,,,3rd-party product/feature,
+Python,Use,,One word and title case.,,,,3rd-party product/feature,
+Python wheel,Use,,"Always use full term ""Python wheel"" so that machine translation services translate the term correctly.",,,,"Databricks style,Localization",
+PyTorch,Use,,One word and mised case.,,,,3rd-party product/feature,
+quotes,Don't use,Use the following term instead: quotation marks,The full term is more precise and better for localization.,,,,"Databricks style,Localization",
+Redash,Use,,One word and title case.,,,,3rd-party product/feature,
+repo,Don't use,Use the following term instead: repository.,,,https://developers.google.com/style/word-list#repo,New,"Localization,Industry standard terminology,Google style",
+repository,Use,,One word and don't abbreviate.,,https://developers.google.com/style/word-list#repo,New,"Localization,Industry standard terminology,Google style",
+revolutionary,Don't use,,"Don’t use marketing jargon. Instead, describe how this product or feature is different or new, and why it's unique.",,,,Databricks style,
+sanity-check,Don't use,Use the following term instead: final check for completeness,Offensive word (not inclusive; old terminology),,,,"Inclusive language,Ableist language,Offensive language",
+Scala,Use,,One word and title case.,,,,3rd-party product/feature,
+seamless,Don't use,,"Don’t use marketing jargon. Instead, describe how this product or feature is different or new, and why it's unique.",,,,Databricks style,
+select,Use,,"For checkboxes or other multiselect options in the UI, use ""select"" and ""clear"" to describe selecting or deselecting an option.
+Use ""click"" for menus, buttons, and links.
+Don’t use any of the following: choose, toggle, select/deselect, turn on/turn off, mark/unmark, or check/uncheck.","Correct: Select the items in the list that you want to copy.
+Correct: Select the Read only checkbox.
+
+Incorrect: Clear the Read only checkbox.",,,"Databricks style,UI terminology,Industry standard terminology",
+sidebar,Use,,One word and lowercase.,,,New,"UI terminology,UI element name",
+simply,Don't use,,Remove. It's unnecessary.,"Correct: Click and drag notebooks, dashboards, libraries, and folders to move them into another folder.
+
+Incorrect: Simply click and drag notebooks, dashboards, libraries, and folders to move them into another folder.",,,Databricks style,
+Spark,Use,,One word and title case.,,,,3rd-party product/feature,
+sparklyr,Use,,Lowercase.,,,,3rd-party product/feature,
+SparkR,Use,,One word and mised case.,,,,3rd-party product/feature,
+SQL,Use,,"Treat ""SQL"" as an acronym pronounced “sequel” and use the indefinite article ""a"":
+a SQL database.",,https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/s/sql-sql-server,,"Databricks style,MSTP",
+"SQL, articles usage",Use,,"Use ""a"" (not ""an"") with ""SQL"" in all instances.","a SQL warehouse
+a SQL database",,,"Databricks style,Industry standard terminology",
+Structured Streaming,Use,,Two words and title case.,,,,3rd-party product/feature,
+tab,Use,,,,,,"UI terminology,UI element name",
+TensorFlow,Use,,One word and mised case.,,,,3rd-party product/feature,
+thank you,Don't use,,"Remove. It's unnecessary. In some instances, customers might perceive these terms as condescending and can inadvertently cause offense.",,,,Databricks style,
+"that
+which",Use,,"Rules for ""that"":
+- Use ""that"" at the beginning of a clause that is necessary for the sentence to make sense.
+- Include ""that"" even if the sentence is clear without it because it helps to clarify the sentence structure, increases comprehension for ESL readers, and makes it easier to translate in to other languages.
+- Don’t put a comma before ""that"".
+
+Rules for ""which"":
+- Use ""which"" at the beginning of a clause that adds supporting or parenthetical information.
+- If you can omit the clause and the sentence still makes sense, use ""which"".
+- Put a comma before ""which"".","Correct: She held out the hand that was hurt.
+
+Correct: She held out her hand, which Rob shook.",https://www.thoughtco.com/uses-of-that-1210017,,English grammar rule,
+the user should,Don't use,Use the following language instead: we recommend that the user,,,,,Databricks style,
+tile,Use,,,,,,"UI terminology,UI element name",
+timestamp,Use,,One word.,,,,"Industry standard terminology,MSTP",
+type (to describe the action of typing something),Don't use,Use the following term instead: enter,,"Correct: Enter the file name.
+
+Incorrect: Type the file name.",,,"Databricks style,UI terminology,MSTP",
+U.S.,Use,,,,,,Industry standard terminology,
+unified analytics,Use,,Lowercase.,,,,Industry standard terminology,
+unique,Avoid,,"Don’t use marketing jargon to describe a product/feature/functionality as ""unique"". Instead, describe how this product or feature is different or new, and why it's unique.
+OK to use in specific contexts, like ""unique ID,"" ""unique name,"" etc.",,,,Databricks style,
+up to date vs. up-to-date,Use,,"You can use the phrase ""up to date"" as an adjective or adverb, and you hyphenate it as ""up-to-date"" depending on how you're using it:
+As an adjective: When used as an adjective, ""up to date"" is usually not hyphenated if it comes after a noun. For example, ""My calendar is up to date"". However, if it comes before a noun, it should be hyphenated to form the compound adjective ""up-to-date"". For example, ""We bring you the most up-to-date news"".
+As an adverb: When used as an adverb, ""up to date"" is not hyphenated.
+""Up to date"" means having the latest information or being based on the newest information. Some synonyms of ""up to date"" include ""informed about"", ""up on"", ""aware of"", and ""in touch with"".",,,,English grammar rule,
+user name,Don't use,username,"Exception: OK to use ""user name"" if you need to match the UI text or code.",,,,Industry standard terminology,
+username,Use,,One word.,,,,"UI terminology,UI element name,Industry standard terminology",
+utilize,Don't use,Use the following term instead: use,,,,,,
+want,Use,,"Use instead of ""wish"" or ""desire"". Don't use ""want"" when you mean ""need"", which indicates a requirement or obligation.",,,,Databricks style,
+webpage,Use,,One word.,,,,"Industry standard terminology,MSTP",
+website,Use,,One word.,,,,"Industry standard terminology,MSTP",
+white space,Use,,Two words.,,,,"Industry standard terminology,MSTP",
+whitelist,Don't use,Use the following term instead: allowlist,"Offensive word (not inclusive; old terminology). Don’t use biased language.
+
+It's OK to use ""whitelist"" if it’s in the UI text, error message, or code that you can’t change. If possible, work with the engineering and design teams to change the term in the UI.",,,,"Inclusive language,Offensive language",
+widget,Use,,Lowercase.,,,,"UI terminology,UI element name,Industry standard terminology",
+within,Don't use,Use the following term instead: in,"Use ""in <app/product>,"" not ""within <app/product>.""",,,,Databricks style,
+XGBoost,Use,,One word and mised case.,,,,3rd-party product/feature,
+you can,Avoid,"Depending on the context, remove and rewrite to describe the action.","It's OK in some instances. Depending on the context, it can be unnecessarily wordy. When you see ""you can"" in your writing, consider deleting it. ""You can"" implies ability, not action. Rewrite to describe the action if possible.","Incorrect: You can do this during table creation:
+
+Correct: To do this during table creation, use the following example:
+
+Correct: You can use all <Databricks> compute types and task types to configure incremental batch ingestion.
+
+Correct: Databricks does not provide any native tools for downloading data from the internet, but you can use open source tools in supported languages.",https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/c/can-may,,"Databricks style,MSTP",
+you should,Don't use,Use the following language instead: we recommend that you,,,,,Databricks style,
+on (vs. in),Use,,"Use “on” as a preposition with:MenusTabsTaskbar, toolbar, ruler, and desktopDisks, in the sense of a program being on a diskNetworksHardware platformsThe webIn COM programming, an interface is implemented on an object.",,,,,
+,,,,,,,,
+,,,,,,,,

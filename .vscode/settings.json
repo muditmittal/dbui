@@ -1,0 +1,11 @@
+{
+  "files.watcherExclude": {
+    "**/.tmp.driveupload/**": true,
+    "**/.tmp.drivedownload/**": true,
+    "**/node_modules/**": true
+  },
+  "search.exclude": {
+    "**/.tmp.driveupload": true,
+    "**/.tmp.drivedownload": true
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "key": "cohere",
+  "display": "Cohere",
+  "category": "AI & LLM Platforms",
+  "descriptor": "Enterprise AI platform. Vibrant gradients, data-rich dashboard aesthetic",
+  "source": "voltagent",
+  "path": "awesome-design-md/design-md/cohere/DESIGN.md",
+  "lines": 452,
+  "tokens": {
+    "canvas_hex": "#ffffff",
+    "mode": "light",
+    "primary_hex": "#17171c",
+    "accent_hex": null,
+    "color_roles": [
+      "primary",
+      "cohere-black",
+      "ink",
+      "deep-green",
+      "dark-navy",
+      "canvas",
+      "soft-stone",
+      "pale-green",
+      "pale-blue",
+      "hairline",
+      "border-light",
+      "card-border",
+      "muted",
+      "slate",
+      "body-muted",
+      "action-blue",
+      "focus-blue",
+      "coral",
+      "coral-soft",
+      "form-focus",
+      "on-primary",
+      "on-dark",
+      "error"
+    ],
+    "font_families": [
+      "CohereText",
+      "Unica77 Cohere Web",
+      "CohereMono"
+    ],
+    "body_px": 16,
+    "radius_scale_px": [
+      4,
+      8,
+      16,
+      22,
+      30,
+      32,
+      9999
+    ],
+    "spacing_scale_px": [
+      2,
+      6,
+      8,
+      12,
+      16,
+      24,
+      32,
+      80
+    ],
+    "component_names": [
+      "button-primary",
+      "button-secondary",
+      "button-pill-outline",
+      "announcement-bar",
+      "hero-photo-card",
+      "agent-console-card",
+      "trust-logo-strip",
+      "capability-card",
+      "dark-feature-band",
+      "product-card",
+      "blog-filter-chip",
+      "research-table",
+      "contact-form-card",
+      "footer-newsletter"
+    ]
+  },
+  "section_bullets": {
+    "overview": 7,
+    "colors": 20,
+    "typography": 9,
+    "layout": 6,
+    "depth": 0,
+    "shapes": 0,
+    "components": 0,
+    "dosdonts": 14,
+    "agent": 8
+  },
+  "sections": {
+    "overview": "### Overview\nCohere's current web presence feels like a sober enterprise AI command center with editorial restraint. The home page opens on a huge typographic declaration over a white canvas, then uses photography, dark product mockups, trust logos, and generous empty space to make AI infrastructure feel controlled rather than speculative. Product pages invert the tone into deep green-black or dark navy bands, while blog and research pages move toward publishing-system clarity: large filters, thin rules, dense lists, and pale technical backgrounds.\n\nWhat makes the system distinctive is the mix of austere black-and-white UI with bursts of tactile brand imagery. The site avoids decorative chrome in the normal interface; color arrives through photography, abstract 3D media, coral blog taxonomy chips, blue research links, and dark product environments. Cards are rounded but not cute. Type is large, tight, and almost monospaced in spirit, creating a research-lab cadence across marketing, product, and editorial surfaces.\n\n**Key Characteristics:**\n- Monumental display headlines with very tight line height and negative tracking.\n- White editorial canvases interrupted by deep green, dark navy, and image-led CTA bands.\n- Rounded media cards and product cards, usually 8px to 22px.\n- Pill CTAs in near-black or white, with most secondary actions rendered as underlined text links.\n- Trust-logo strips with monochrome partner marks and very wide vertical spacing.\n- Agent-console mockups using dark panels, small status chips, and product integration badges.\n- Blog and research surfaces with prominent taxonomy chips, long rule-separated lists, and search fields.",
+    "colors": "### Colors\n### Brand & Accent\n\n- **Cohere Black** (`#000000`): Announcement bar, highest-contrast text, and the global brand anchor.\n- **Near-Black Primary** (`#17171c`): Primary CTA buttons, dark footer, and deep UI cards.\n- **Deep Enterprise Green** (`#003c33`): Product hero bands for North and Command-style dark sections.\n- **Dark Navy** (`#071829`): Financial-services and security-oriented solution bands.\n- **Action Blue** (`#1863dc`): Editorial links, pagination, and secondary action emphasis.\n- **Coral** (`#ff7759`): Blog category chips, taxonomy outlines, and warm product markers.\n- **Soft Coral** (`#ffad9b`): Pale chip borders and segmented article-label details.\n\n### Surface & Background\n\n- **Canvas White** (`#ffffff`): Dominant page background and form/card surface.\n- **Soft Stone** (`#eeece7`): Product cards, testimonial placeholders, and warm neutral surface blocks.\n- **Pale Green Wash** (`#edfce9`): North page section backdrop behind stacked dark capability panels.\n- **Pale Blue Wash** (`#f1f5ff`): Blog CTA surface behind abstract 3D imagery.\n- **Card Border** (`#f2f2f2`): Softest card containment line.\n\n### Text & Rules\n\n- **Ink** (`#212121`): Default body text and most link text on light backgrounds.\n- **Muted Slate** (`#93939f`): Footer links, dates, metadata, and de-emphasized labels.\n- **Slate** (`#75758a`): Research separators and tertiary text.\n- **Hairline** (`#d9d9dd`): Standard list rules and section dividers.\n- **Border Light** (`#e5e7eb`): Secondary divider and utility rule.\n\n### Semantic\n\n- **Focus Blue** (`#4c6ee6`): Keyboard focus and ring color.\n- **Form Focus Violet** (`#9b60aa`): Focus border for text inputs.\n- **Error Red** (`#b30000`): Extracted ring/shadow color associated with validation-like states.\n\n### Gradient System\n\nCohere does not use gradients as a generic UI fill. Gradients and color fields are media-led: abstract 3D hero imagery, deep blue open-science particle fields, red-orange product video posters, and dark green-to-black product environments. Keep UI surfaces flat; reserve gradient richness for large media panels and CTA image bands.",
+    "typography": "### Typography\n### Font Family\n\n- **Display**: `CohereText`, falling back to `Space Grotesk`, `Inter`, `ui-sans-serif`, and `system-ui`.\n- **Body/UI**: `Unica77 Cohere Web`, falling back to `Inter`, `Arial`, `ui-sans-serif`, and `system-ui`.\n- **Technical labels**: `CohereMono`, falling back to `Arial`, `ui-sans-serif`, and `system-ui`.\n- **Icons**: Cohere uses custom icon fonts and thin-line geometric illustrations.\n\n### Hierarchy\n\n| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |\n|---|---|---:|---:|---:|---:|---|\n| Hero Display | CohereText | 96px | 400 | 1.00 | -1.92px | Home page declaration scale. |\n| Product Display | CohereText | 72px | 400 | 1.00 | -1.44px | Product and research hero headlines. |\n| Section Display | Unica77 | 60px | 400 | 1.00 | -1.2px | Large product-page headings. |\n| Section Heading | Unica77 | 48px | 400 | 1.20 | -0.48px | Split hero and CTA headings. |\n| Card Heading | Unica77 | 32px | 400 | 1.20 | -0.32px | Feature card and list section titles. |\n| Feature Heading | Unica77 | 24px | 400 | 1.30 | 0 | Cards, filters, and article titles. |\n| Body Large | Unica77 | 18px | 400 | 1.40 | 0 | Lead text and larger paragraphs. |\n| Body | Unica77 | 16px | 400 | 1.50 | 0 | Default copy and link text. |\n| Button | Unica77 | 14px | 500 | 1.71 | 0 | Compact CTA labels. |\n| Caption | Unica77 | 14px | 400 | 1.40 | 0 | Metadata and small explanatory text. |\n| Mono Label | CohereMono | 14px | 400 | 1.40 | 0.28px | Uppercase technical labels. |\n| Micro | Unica77 | 12px | 400 | 1.40 | 0 | Footer, nav microcopy, and small links. |\n\n### Principles\n\n- Use massive type sparingly; Cohere pages often have one oversized headline and then settle into restrained 16px-24px UI copy.\n- Keep display type tight. Hero copy should feel compact and carved, not airy.\n- Avoid heavy bold weights. Size, spacing, and surface contrast do most of the hierarchy work.\n- Use uppercase mono labels for category and system markers, especially on product and research pages.\n- Editorial pages can use coral chips and blue links, but the base typography remains black and measured.",
+    "layout": "### Layout\n### Spacing System\n\nThe system uses an 8px base with many one-off alignment values: `2px`, `6px`, `8px`, `10px`, `12px`, `16px`, `20px`, `22px`, `24px`, `28px`, `32px`, `36px`, `40px`, `56px`, `60px`, `64px`, and `80px`.\n\nLarge sections rely on dramatic vertical breathing room. The home page places a trust-logo strip far below the hero media. Product pages often hold dark panels inside fields of empty white space, then transition to dense forms or footers only near the end.\n\n### Grid & Container\n\n- Global nav uses a three-zone layout: logo left, menu centered, sign-in/CTA right.\n- Home hero is centered text above a two-card media composition: a wide product mockup card beside a narrower photography card.\n- Feature sections commonly use 3-column cards on desktop.\n- Product pages alternate centered hero blocks, trust-logo strips, large single-feature bands, and 2- or 3-column card grids.\n- Research pages use full-width lists with date and chip columns instead of decorative cards.\n- Forms use two-column input rows inside a rounded white card on dark or stone section backgrounds.\n\n### Whitespace Philosophy\n\nCohere uses whitespace as a trust signal. Large empty intervals separate the brand claim, customer proof, product proof, and CTA. Dense content appears only where it serves the information architecture: research paper rows, blog card grids, and contact form fields.",
+    "depth": "### Elevation & Depth\nCohere is mostly flat. Depth comes from surface alternation, media contrast, rounded corners, and thin borders rather than drop shadows.\n\n| Level | Treatment | Use |\n|---|---|---|\n| Flat | No shadow, white or dark field | Hero copy, research lists, editorial surfaces |\n| Bordered | 1px `#d9d9dd`, `#e5e7eb`, or dark translucent rules | Research rows, forms, pale cards, footer inputs |\n| Media Lift | Rounded image or video over contrasting section color | Hero photo cards, product videos, CTA imagery |\n| Dark Product Field | Deep green or navy full-width band | Command, North, financial services, security sections |",
+    "shapes": "### Shapes\n### Radius Scale\n\n| Token | Value | Role |\n|---|---:|---|\n| `xs` | 4px | Small images, search fields, article thumbnails, utility elements |\n| `sm` | 8px | Blog chips, cards, small media, dialogs |\n| `md` | 16px | Medium product cards and grouped blocks |\n| `lg` | 22px | Signature media-card and soft placeholder radius |\n| `xl` | 30px | Research/topic filter pills |\n| `pill` | 32px | Primary CTA buttons |\n| `full` | 9999px | Round status elements and fully pill-shaped controls |\n\n### Image Treatment\n\nImages are not decorative backdrops for text except in CTA bands. Most imagery sits as rounded cards with visible corners: product videos, enterprise photography, article thumbnails, and abstract 3D renders. The dominant radii are 8px and 22px.",
+    "components": "### Components\n### **`button-primary`**\n\nNear-black or white pill CTA, depending on surface contrast. Uses 14px-16px Unica77, 12px 24px padding, and a 32px pill radius. This is the primary action style for \"Request a demo\", \"Submit\", and hero CTAs.\n\n### **`button-secondary`**\n\nText-only action link, usually underlined or rule-aligned, with no filled background. Used for \"Explore products\", \"Try the Playground\", newsletter signup, and secondary hero actions.\n\n### **`button-pill-outline`**\n\nOutlined pill control with transparent fill, 1px dark border, and 30px radius. Used for research filters, topic tags, and lightweight taxonomy controls.\n\n### **`announcement-bar`**\n\nFull-width black strip above the nav, 36px tall, centered microcopy with an underlined \"Learn more\" link and a close control at the far right.\n\n### **`hero-photo-card`**\n\nRounded media card used in the home hero and solution pages. It combines photography or abstract imagery with an overlaid dark agent-console module. Radius is usually 22px on large cards and 8px on smaller thumbnails.\n\n### **`agent-console-card`**\n\nDark product mockup panel showing agent names, status chips, integration badges, prompt fields, and generated response cards. Background is near-black, text is white or muted, and small accent chips use product colors.\n\n### **`trust-logo-strip`**\n\nCentered copy above a row of monochrome customer logos. It is intentionally quiet: no cards, no borders, just large horizontal spacing and black or white logos depending on the background.\n\n### **`capability-card`**\n\nContent block with thin-line geometric illustration, 24px heading, body copy, and a text link. On light backgrounds, cards often have only a top rule or a subtle image/card relationship rather than full boxing.\n\n### **`dark-feature-band`**\n\nDeep green or navy full-width section used for product capabilities, security claims, and feature breakdowns. Text turns white; cards use darker translucent surfaces, pale borders, and abstract line illustrations.\n\n### **`product-card`**\n\nWarm stone card used for product/model summaries. Typically 3-column on desktop, with 8px radius, generous padding, a small pill button, a divider line, and checkmark bullet rows.\n\n### **`blog-filter-chip`**\n\nLarge coral taxonomy chip used on the blog index. Active chips invert to coral fill with dark text; inactive chips use coral outline and pale fill. Typography is oversized relative to typical filters, making the taxonomy a hero-level control.\n\n### **`research-table`**\n\nRule-separated publication list with title left, topic pills centered, and date right. Rows are tall, white, and border-driven; filters above use many compact outlined pills.\n\n### **`contact-form-card`**\n\nRounded white form panel set against dark green or warm stone sections. Inputs are rectangular with thin gray borders, 12px-16px padding, and compact labels/placeholders. Submit uses the same near-black pill style as primary CTAs.\n\n### **`footer-newsletter`**\n\nDark footer subscription block with coral \"AI moves fast\" label, white headline, muted legal microcopy, a single-line email field, and arrow submit marker. Footer columns use white section labels and muted links.",
+    "dosdonts": "### Do's and Don'ts\n### Do\n\n- Use white canvas as the default surface; introduce dark green or navy as full-width product bands.\n- Keep primary CTAs pill-shaped and near-black on light surfaces.\n- Use 22px radius on major media cards and placeholders.\n- Use coral for editorial taxonomy and small warm accents, not as the main CTA system.\n- Use monochrome trust logos with wide spacing.\n- Use thin-line geometric illustrations for research and capability icons.\n- Let photography and product mockups carry color, while the UI shell stays restrained.\n\n### Don't\n\n- Do not turn coral or blue into broad decorative surface colors.\n- Do not add heavy drop shadows to cards.\n- Do not make every section card-based; Cohere often uses unframed rows, rules, and open space.\n- Do not use rounded cards below 8px for major media.\n- Do not replace the display/body type split with one generic sans-serif voice.\n- Do not render undocumented interaction variants in documentation or previews.\n- Do not use saturated gradients as normal UI backgrounds; keep gradients media-led.",
+    "agent": "### Responsive Behavior\n### Breakpoints\n\n| Name | Width | Key Changes |\n|---|---:|---|\n| Small Mobile | <425px | Single-column cards, compact nav, reduced hero headline scale |\n| Mobile | 425-640px | Hero media stacks, card grids become one column, form rows stack |\n| Large Mobile | 640-768px | Wider one-column layouts with larger media cards |\n| Tablet | 768-1024px | Two-column cards begin, nav spacing tightens |\n| Desktop | 1024-1440px | Full nav, 3-column card grids, split hero compositions |\n| Large Desktop | 1440-2560px | Wide containers and large empty vertical intervals |\n\n### Touch Targets\n\nPrimary CTAs and pills meet comfortable touch sizing through 12px-24px padding and pill radii. Research filter chips and blog category chips are larger than standard tags, making dense taxonomy surfaces usable on touch devices.\n\n### Collapsing Strategy\n\n- Nav collapses from full horizontal links to a compact mobile menu.\n- Hero media moves from split cards to stacked cards.\n- Product and capability grids collapse from 3 columns to 2 and then 1.\n- Form fields collapse from paired rows to a single column.\n- Research rows preserve their rule-separated structure but stack metadata below titles on smaller widths.\n\n### Iteration Guide\n1. Start from a white canvas or a full-width dark green/navy band; avoid mid-tone page backgrounds unless the screenshot shows a specific CTA/form section.\n2. Use `button-primary` for the single highest-priority action and `button-secondary` for the companion action.\n3. Use `hero-photo-card` or `agent-console-card` when a page needs visual energy; avoid invented dashboard data.\n4. For editorial pages, combine `blog-filter-chip`, `button-pill-outline`, and `research-table` instead of generic marketing cards.\n5. Keep component examples structurally honest: placeholder product frames are better than invented product content.\n\n### Known Gaps\n- Exact proprietary font files are not bundled; use the documented fallbacks when implementing externally.\n- Mobile screenshots were not regenerated in this public update, so mobile behavior is documented from the desktop system and existing responsive patterns.\n- Some live pages lazy-load content blocks late; blank testimonial placeholders are documented as placeholder skeleton surfaces rather than filled testimonial cards."
+  }
+}

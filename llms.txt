@@ -1,0 +1,53 @@
+# DBUI
+
+> An AI-first design system for data and AI workbench UIs — catalogs, queries, runs, lineage,
+> models, governance, and chat over data. React 19, Tailwind v4, Base UI. 61 components, 456
+> semantically classified icons, 84 semantic color tokens with full light/dark parity, and five
+> documented page shells. Built for dense enterprise applications used by data engineers, data
+> scientists, and analysts.
+
+Read `DESIGN.md` for the visual language and `composition.md` for page structure before generating
+any UI. Per-component rules live in each component's JSDoc, not in a central file.
+
+Paths below are relative to the repository root at https://github.com/muditmittal/dbui.
+
+## Start here
+
+- [AGENTS.md](AGENTS.md): Repository map, commands, non-negotiable rules, and boundaries. Read first.
+- [packages/dbui/DESIGN.md](packages/dbui/DESIGN.md): The visual language — color, type, layout, elevation, shape, and do's and don'ts. Use this when generating UI without access to the source.
+- [packages/dbui/composition.md](packages/dbui/composition.md): Five page shells with region widths, scroll ownership, primary-action placement, and forbidden compositions.
+- [CONTRIBUTING.md](CONTRIBUTING.md): The change protocol. Which files must be updated together when anything changes.
+
+## Discovery
+
+- [packages/dbui/docs/component-index.md](packages/dbui/docs/component-index.md): All components by category, with what each is for, what to avoid it for, and synonyms.
+- [packages/dbui/docs/icon-index.md](packages/dbui/docs/icon-index.md): All icons by semantic category — object, action, indicator, component — with labels and synonyms.
+- [packages/dbui/src/components/icons/entity-icons.ts](packages/dbui/src/components/icons/entity-icons.ts): Entity-type to icon mappings for catalogs, schemas, tables, columns, and files.
+
+## Rules
+
+- [packages/dbui/docs/component-rules.md](packages/dbui/docs/component-rules.md): Cross-cutting rules for spacing rhythm, page padding, icon selection, buttons, menus, alerts, and dialogs.
+- [packages/dbui/docs/brandvoice.md](packages/dbui/docs/brandvoice.md): Product voice — tone axes, banned vocabulary, and microcopy templates for buttons, empty states, errors, confirmations, and toasts.
+- [packages/dbui/docs/token-rules.md](packages/dbui/docs/token-rules.md): The color token contract as machine-enforceable rules R1 through R13.
+- [packages/dbui/docs/tokens.md](packages/dbui/docs/tokens.md): How the token system is generated, what ships, and what is legacy.
+
+## Skills
+
+Procedures an agent loads when a task matches.
+
+- [packages/dbui/skills/dbui-pick-component.md](packages/dbui/skills/dbui-pick-component.md): Choose the right component, including near-miss disambiguation.
+- [packages/dbui/skills/dbui-pick-icon.md](packages/dbui/skills/dbui-pick-icon.md): Choose the right icon and respect semantic categories.
+- [packages/dbui/skills/dbui-build-screen.md](packages/dbui/skills/dbui-build-screen.md): Build a full page — pick a shell, map regions, fill content, validate.
+- [packages/dbui/skills/dbui-validate.md](packages/dbui/skills/dbui-validate.md): Check output against the system and report violations by severity.
+
+## Installation
+
+- [packages/dbui/install.md](packages/dbui/install.md): Install into a React and Tailwind v4 project. Clone and vendor; there is no npm package yet.
+- [packages/dbui/CLAUDE.md](packages/dbui/CLAUDE.md): The rules file copied into a consuming project at install time.
+
+## Optional
+
+- [packages/dbui-shells/src/index.ts](packages/dbui-shells/src/index.ts): Shell and composition exports.
+- [packages/dbui-viz/src/index.ts](packages/dbui-viz/src/index.ts): Chart components and the Vega theme bridge.
+- [packages/dbui-genie/src/index.ts](packages/dbui-genie/src/index.ts): Conversational-analytics primitives.
+- [scripts/design-lint/README.md](scripts/design-lint/README.md): The React and Figma design linters and their rule sets.

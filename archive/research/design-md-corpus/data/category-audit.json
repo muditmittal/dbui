@@ -1,0 +1,6658 @@
+{
+  "generated_at": "2026-07-22T20:38:29.382Z",
+  "corpus_root": "/Users/mudit.mittal/open-design/design-systems",
+  "package_count": 151,
+  "cohorts": {
+    "all": {
+      "label": "All design systems",
+      "count": 151,
+      "slugs": [
+        "agentic",
+        "airbnb",
+        "airtable",
+        "ant",
+        "apple",
+        "application",
+        "arc",
+        "artistic",
+        "atelier-zero",
+        "bento",
+        "binance",
+        "bmw",
+        "bmw-m",
+        "bold",
+        "brutalism",
+        "bugatti",
+        "cafe",
+        "cal",
+        "canva",
+        "cisco",
+        "claude",
+        "clay",
+        "claymorphism",
+        "clean",
+        "clickhouse",
+        "cohere",
+        "coinbase",
+        "colorful",
+        "composio",
+        "contemporary",
+        "corporate",
+        "cosmic",
+        "creative",
+        "cursor",
+        "dashboard",
+        "default",
+        "discord",
+        "dithered",
+        "doodle",
+        "dramatic",
+        "duolingo",
+        "editorial",
+        "elegant",
+        "elevenlabs",
+        "energetic",
+        "enterprise",
+        "expo",
+        "expressive",
+        "fantasy",
+        "ferrari",
+        "figma",
+        "flat",
+        "framer",
+        "friendly",
+        "futuristic",
+        "github",
+        "glassmorphism",
+        "gradient",
+        "hashicorp",
+        "hud",
+        "huggingface",
+        "ibm",
+        "intercom",
+        "kami",
+        "kraken",
+        "lamborghini",
+        "levels",
+        "linear-app",
+        "lingo",
+        "loom",
+        "lovable",
+        "luxury",
+        "mastercard",
+        "material",
+        "meta",
+        "minimal",
+        "minimax",
+        "mintlify",
+        "miro",
+        "mission-control",
+        "mistral-ai",
+        "modern",
+        "mongodb",
+        "mono",
+        "neobrutalism",
+        "neon",
+        "neumorphism",
+        "nike",
+        "notion",
+        "nvidia",
+        "ollama",
+        "openai",
+        "opencode-ai",
+        "pacman",
+        "paper",
+        "perplexity",
+        "perspective",
+        "pinterest",
+        "playstation",
+        "posthog",
+        "premium",
+        "professional",
+        "publication",
+        "raycast",
+        "refined",
+        "renault",
+        "replicate",
+        "resend",
+        "retro",
+        "revolut",
+        "runwayml",
+        "sanity",
+        "sentry",
+        "shadcn",
+        "shopify",
+        "simple",
+        "skeumorphism",
+        "slack",
+        "sleek",
+        "spacex",
+        "spacious",
+        "spotify",
+        "starbucks",
+        "storytelling",
+        "stripe",
+        "supabase",
+        "superhuman",
+        "tesla",
+        "tetris",
+        "theverge",
+        "together-ai",
+        "tom-modern",
+        "totality-festival",
+        "trading-terminal",
+        "uber",
+        "urdu",
+        "vercel",
+        "vibrant",
+        "vintage",
+        "vodafone",
+        "voltagent",
+        "warm-editorial",
+        "warp",
+        "webex",
+        "webflow",
+        "wechat",
+        "wired",
+        "wise",
+        "x-ai",
+        "xiaohongshu",
+        "zapier"
+      ]
+    },
+    "dev_analyst": {
+      "label": "Developer / analyst persona",
+      "count": 52,
+      "slugs": [
+        "airtable",
+        "arc",
+        "cal",
+        "canva",
+        "cisco",
+        "claude",
+        "clay",
+        "clickhouse",
+        "cohere",
+        "composio",
+        "cursor",
+        "discord",
+        "duolingo",
+        "elevenlabs",
+        "expo",
+        "figma",
+        "framer",
+        "github",
+        "hashicorp",
+        "huggingface",
+        "intercom",
+        "linear-app",
+        "lovable",
+        "minimax",
+        "mintlify",
+        "miro",
+        "mission-control",
+        "mistral-ai",
+        "mongodb",
+        "notion",
+        "ollama",
+        "openai",
+        "opencode-ai",
+        "perplexity",
+        "posthog",
+        "raycast",
+        "replicate",
+        "resend",
+        "runwayml",
+        "sanity",
+        "sentry",
+        "slack",
+        "supabase",
+        "superhuman",
+        "together-ai",
+        "vercel",
+        "voltagent",
+        "warp",
+        "webex",
+        "webflow",
+        "x-ai",
+        "zapier"
+      ],
+      "meta_categories": [
+        "AI & LLM",
+        "Developer Tools",
+        "Productivity & SaaS",
+        "Backend & Data",
+        "Design & Creative"
+      ]
+    },
+    "agentic_first": {
+      "label": "Agentic-first UX",
+      "count": 20,
+      "slugs": [
+        "agentic",
+        "claude",
+        "cohere",
+        "cursor",
+        "elevenlabs",
+        "huggingface",
+        "lovable",
+        "minimax",
+        "mission-control",
+        "mistral-ai",
+        "ollama",
+        "openai",
+        "opencode-ai",
+        "perplexity",
+        "replicate",
+        "runwayml",
+        "together-ai",
+        "voltagent",
+        "warp",
+        "x-ai"
+      ],
+      "definition": "Curated AI builders, coding agents, and agent frameworks with Agent Prompt Guide or explicit agentic positioning"
+    }
+  },
+  "topic_categories": [
+    {
+      "id": "visual_theme",
+      "label": "Visual theme & atmosphere"
+    },
+    {
+      "id": "color",
+      "label": "Color palette & roles"
+    },
+    {
+      "id": "typography",
+      "label": "Typography"
+    },
+    {
+      "id": "components",
+      "label": "Component stylings"
+    },
+    {
+      "id": "layout",
+      "label": "Layout & spacing"
+    },
+    {
+      "id": "depth",
+      "label": "Depth & elevation"
+    },
+    {
+      "id": "motion",
+      "label": "Motion & interaction"
+    },
+    {
+      "id": "responsive",
+      "label": "Responsive behavior"
+    },
+    {
+      "id": "voice",
+      "label": "Voice & tone"
+    },
+    {
+      "id": "donts",
+      "label": "Do's and don'ts"
+    },
+    {
+      "id": "accessibility",
+      "label": "Accessibility"
+    },
+    {
+      "id": "iconography",
+      "label": "Iconography"
+    },
+    {
+      "id": "data_viz",
+      "label": "Data visualization"
+    },
+    {
+      "id": "agent_guide",
+      "label": "Agent prompt guide"
+    }
+  ],
+  "topic_coverage": {
+    "visual_theme": {
+      "label": "Visual theme & atmosphere",
+      "all": {
+        "hits": 150,
+        "total": 151,
+        "pct": 99
+      },
+      "dev_analyst": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "agentic_first": {
+        "hits": 20,
+        "total": 20,
+        "pct": 100
+      }
+    },
+    "color": {
+      "label": "Color palette & roles",
+      "all": {
+        "hits": 90,
+        "total": 151,
+        "pct": 60
+      },
+      "dev_analyst": {
+        "hits": 50,
+        "total": 52,
+        "pct": 96
+      },
+      "agentic_first": {
+        "hits": 17,
+        "total": 20,
+        "pct": 85
+      }
+    },
+    "typography": {
+      "label": "Typography",
+      "all": {
+        "hits": 151,
+        "total": 151,
+        "pct": 100
+      },
+      "dev_analyst": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "agentic_first": {
+        "hits": 20,
+        "total": 20,
+        "pct": 100
+      }
+    },
+    "components": {
+      "label": "Component stylings",
+      "all": {
+        "hits": 151,
+        "total": 151,
+        "pct": 100
+      },
+      "dev_analyst": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "agentic_first": {
+        "hits": 20,
+        "total": 20,
+        "pct": 100
+      }
+    },
+    "layout": {
+      "label": "Layout & spacing",
+      "all": {
+        "hits": 151,
+        "total": 151,
+        "pct": 100
+      },
+      "dev_analyst": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "agentic_first": {
+        "hits": 20,
+        "total": 20,
+        "pct": 100
+      }
+    },
+    "depth": {
+      "label": "Depth & elevation",
+      "all": {
+        "hits": 80,
+        "total": 151,
+        "pct": 53
+      },
+      "dev_analyst": {
+        "hits": 41,
+        "total": 52,
+        "pct": 79
+      },
+      "agentic_first": {
+        "hits": 15,
+        "total": 20,
+        "pct": 75
+      }
+    },
+    "motion": {
+      "label": "Motion & interaction",
+      "all": {
+        "hits": 73,
+        "total": 151,
+        "pct": 48
+      },
+      "dev_analyst": {
+        "hits": 13,
+        "total": 52,
+        "pct": 25
+      },
+      "agentic_first": {
+        "hits": 7,
+        "total": 20,
+        "pct": 35
+      }
+    },
+    "responsive": {
+      "label": "Responsive behavior",
+      "all": {
+        "hits": 80,
+        "total": 151,
+        "pct": 53
+      },
+      "dev_analyst": {
+        "hits": 41,
+        "total": 52,
+        "pct": 79
+      },
+      "agentic_first": {
+        "hits": 15,
+        "total": 20,
+        "pct": 75
+      }
+    },
+    "voice": {
+      "label": "Voice & tone",
+      "all": {
+        "hits": 63,
+        "total": 151,
+        "pct": 42
+      },
+      "dev_analyst": {
+        "hits": 4,
+        "total": 52,
+        "pct": 8
+      },
+      "agentic_first": {
+        "hits": 3,
+        "total": 20,
+        "pct": 15
+      }
+    },
+    "donts": {
+      "label": "Do's and don'ts",
+      "all": {
+        "hits": 144,
+        "total": 151,
+        "pct": 95
+      },
+      "dev_analyst": {
+        "hits": 48,
+        "total": 52,
+        "pct": 92
+      },
+      "agentic_first": {
+        "hits": 18,
+        "total": 20,
+        "pct": 90
+      }
+    },
+    "accessibility": {
+      "label": "Accessibility",
+      "all": {
+        "hits": 2,
+        "total": 151,
+        "pct": 1
+      },
+      "dev_analyst": {
+        "hits": 1,
+        "total": 52,
+        "pct": 2
+      },
+      "agentic_first": {
+        "hits": 0,
+        "total": 20,
+        "pct": 0
+      }
+    },
+    "iconography": {
+      "label": "Iconography",
+      "all": {
+        "hits": 0,
+        "total": 151,
+        "pct": 0
+      },
+      "dev_analyst": {
+        "hits": 0,
+        "total": 52,
+        "pct": 0
+      },
+      "agentic_first": {
+        "hits": 0,
+        "total": 20,
+        "pct": 0
+      }
+    },
+    "data_viz": {
+      "label": "Data visualization",
+      "all": {
+        "hits": 0,
+        "total": 151,
+        "pct": 0
+      },
+      "dev_analyst": {
+        "hits": 0,
+        "total": 52,
+        "pct": 0
+      },
+      "agentic_first": {
+        "hits": 0,
+        "total": 20,
+        "pct": 0
+      }
+    },
+    "agent_guide": {
+      "label": "Agent prompt guide",
+      "all": {
+        "hits": 82,
+        "total": 151,
+        "pct": 54
+      },
+      "dev_analyst": {
+        "hits": 43,
+        "total": 52,
+        "pct": 83
+      },
+      "agentic_first": {
+        "hits": 15,
+        "total": 20,
+        "pct": 75
+      }
+    }
+  },
+  "meta_category_matrix": {
+    "Themed & Unique": {
+      "count": 8,
+      "slugs": [
+        "agentic",
+        "futuristic",
+        "hud",
+        "loom",
+        "pacman",
+        "tetris",
+        "totality-festival",
+        "trading-terminal"
+      ],
+      "cohort": "other",
+      "agentic_count": 1,
+      "topics": {
+        "visual_theme": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "color": {
+          "hits": 3,
+          "total": 8,
+          "pct": 38
+        },
+        "typography": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "components": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 4,
+          "total": 8,
+          "pct": 50
+        },
+        "motion": {
+          "hits": 4,
+          "total": 8,
+          "pct": 50
+        },
+        "responsive": {
+          "hits": 3,
+          "total": 8,
+          "pct": 38
+        },
+        "voice": {
+          "hits": 4,
+          "total": 8,
+          "pct": 50
+        },
+        "donts": {
+          "hits": 7,
+          "total": 8,
+          "pct": 88
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 3,
+          "total": 8,
+          "pct": 38
+        }
+      },
+      "avg_never": 1,
+      "avg_always": 1,
+      "avg_tables": 10
+    },
+    "E-Commerce & Retail": {
+      "count": 5,
+      "slugs": [
+        "airbnb",
+        "meta",
+        "nike",
+        "shopify",
+        "starbucks"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "color": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "components": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "motion": {
+          "hits": 0,
+          "total": 5,
+          "pct": 0
+        },
+        "responsive": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "voice": {
+          "hits": 0,
+          "total": 5,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 5,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 5,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 5,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 5,
+          "total": 5,
+          "pct": 100
+        }
+      },
+      "avg_never": 3,
+      "avg_always": 2,
+      "avg_tables": 49
+    },
+    "Design & Creative": {
+      "count": 7,
+      "slugs": [
+        "airtable",
+        "canva",
+        "clay",
+        "figma",
+        "framer",
+        "miro",
+        "webflow"
+      ],
+      "cohort": "dev_analyst",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "color": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "components": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 6,
+          "total": 7,
+          "pct": 86
+        },
+        "motion": {
+          "hits": 1,
+          "total": 7,
+          "pct": 14
+        },
+        "responsive": {
+          "hits": 6,
+          "total": 7,
+          "pct": 86
+        },
+        "voice": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 6,
+          "total": 7,
+          "pct": 86
+        }
+      },
+      "avg_never": 1,
+      "avg_always": 1,
+      "avg_tables": 20
+    },
+    "Professional & Corporate": {
+      "count": 10,
+      "slugs": [
+        "ant",
+        "application",
+        "corporate",
+        "dashboard",
+        "elegant",
+        "enterprise",
+        "luxury",
+        "material",
+        "premium",
+        "professional"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "components": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 0
+    },
+    "Media & Consumer": {
+      "count": 12,
+      "slugs": [
+        "apple",
+        "ibm",
+        "nvidia",
+        "pinterest",
+        "playstation",
+        "spacex",
+        "spotify",
+        "theverge",
+        "uber",
+        "vodafone",
+        "wired",
+        "xiaohongshu"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "color": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "components": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "motion": {
+          "hits": 0,
+          "total": 12,
+          "pct": 0
+        },
+        "responsive": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "voice": {
+          "hits": 0,
+          "total": 12,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 11,
+          "total": 12,
+          "pct": 92
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 12,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 12,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 12,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        }
+      },
+      "avg_never": 5,
+      "avg_always": 2,
+      "avg_tables": 36
+    },
+    "Productivity & SaaS": {
+      "count": 12,
+      "slugs": [
+        "arc",
+        "cal",
+        "discord",
+        "duolingo",
+        "intercom",
+        "linear-app",
+        "mintlify",
+        "notion",
+        "resend",
+        "slack",
+        "webex",
+        "zapier"
+      ],
+      "cohort": "dev_analyst",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "color": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "components": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 12,
+          "total": 12,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 8,
+          "total": 12,
+          "pct": 67
+        },
+        "motion": {
+          "hits": 4,
+          "total": 12,
+          "pct": 33
+        },
+        "responsive": {
+          "hits": 8,
+          "total": 12,
+          "pct": 67
+        },
+        "voice": {
+          "hits": 1,
+          "total": 12,
+          "pct": 8
+        },
+        "donts": {
+          "hits": 10,
+          "total": 12,
+          "pct": 83
+        },
+        "accessibility": {
+          "hits": 1,
+          "total": 12,
+          "pct": 8
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 12,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 12,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 9,
+          "total": 12,
+          "pct": 75
+        }
+      },
+      "avg_never": 2,
+      "avg_always": 1,
+      "avg_tables": 30
+    },
+    "Creative & Artistic": {
+      "count": 11,
+      "slugs": [
+        "artistic",
+        "cafe",
+        "cosmic",
+        "creative",
+        "doodle",
+        "editorial",
+        "fantasy",
+        "friendly",
+        "lingo",
+        "publication",
+        "storytelling"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 11,
+          "total": 11,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 11,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 11,
+          "total": 11,
+          "pct": 100
+        },
+        "components": {
+          "hits": 11,
+          "total": 11,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 11,
+          "total": 11,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 11,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 11,
+          "total": 11,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 11,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 11,
+          "total": 11,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 11,
+          "total": 11,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 11,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 11,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 11,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 11,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 0
+    },
+    "Editorial · Studio": {
+      "count": 1,
+      "slugs": [
+        "atelier-zero"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "components": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "voice": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        }
+      },
+      "avg_never": 13,
+      "avg_always": 3,
+      "avg_tables": 0
+    },
+    "Layout & Structure": {
+      "count": 4,
+      "slugs": [
+        "bento",
+        "levels",
+        "perspective",
+        "spacious"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "components": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 0
+    },
+    "Fintech & Crypto": {
+      "count": 7,
+      "slugs": [
+        "binance",
+        "coinbase",
+        "kraken",
+        "mastercard",
+        "revolut",
+        "stripe",
+        "wise"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "color": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "components": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "motion": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "responsive": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "voice": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        }
+      },
+      "avg_never": 2,
+      "avg_always": 1,
+      "avg_tables": 29
+    },
+    "Automotive": {
+      "count": 7,
+      "slugs": [
+        "bmw",
+        "bmw-m",
+        "bugatti",
+        "ferrari",
+        "lamborghini",
+        "renault",
+        "tesla"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "color": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "components": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "motion": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "responsive": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "voice": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 7,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 7,
+          "total": 7,
+          "pct": 100
+        }
+      },
+      "avg_never": 3,
+      "avg_always": 2,
+      "avg_tables": 33
+    },
+    "Bold & Expressive": {
+      "count": 8,
+      "slugs": [
+        "bold",
+        "brutalism",
+        "colorful",
+        "dramatic",
+        "energetic",
+        "expressive",
+        "neobrutalism",
+        "vibrant"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "components": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 8,
+          "total": 8,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 8,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 0
+    },
+    "Backend & Data": {
+      "count": 9,
+      "slugs": [
+        "cisco",
+        "clickhouse",
+        "composio",
+        "hashicorp",
+        "mongodb",
+        "posthog",
+        "sanity",
+        "sentry",
+        "supabase"
+      ],
+      "cohort": "dev_analyst",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "color": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "components": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 8,
+          "total": 9,
+          "pct": 89
+        },
+        "motion": {
+          "hits": 1,
+          "total": 9,
+          "pct": 11
+        },
+        "responsive": {
+          "hits": 8,
+          "total": 9,
+          "pct": 89
+        },
+        "voice": {
+          "hits": 1,
+          "total": 9,
+          "pct": 11
+        },
+        "donts": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 9,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 9,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 9,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        }
+      },
+      "avg_never": 2,
+      "avg_always": 1,
+      "avg_tables": 33
+    },
+    "AI & LLM": {
+      "count": 15,
+      "slugs": [
+        "claude",
+        "cohere",
+        "elevenlabs",
+        "huggingface",
+        "minimax",
+        "mistral-ai",
+        "ollama",
+        "openai",
+        "opencode-ai",
+        "perplexity",
+        "replicate",
+        "runwayml",
+        "together-ai",
+        "voltagent",
+        "x-ai"
+      ],
+      "cohort": "dev_analyst",
+      "agentic_count": 15,
+      "topics": {
+        "visual_theme": {
+          "hits": 15,
+          "total": 15,
+          "pct": 100
+        },
+        "color": {
+          "hits": 14,
+          "total": 15,
+          "pct": 93
+        },
+        "typography": {
+          "hits": 15,
+          "total": 15,
+          "pct": 100
+        },
+        "components": {
+          "hits": 15,
+          "total": 15,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 15,
+          "total": 15,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 12,
+          "total": 15,
+          "pct": 80
+        },
+        "motion": {
+          "hits": 4,
+          "total": 15,
+          "pct": 27
+        },
+        "responsive": {
+          "hits": 12,
+          "total": 15,
+          "pct": 80
+        },
+        "voice": {
+          "hits": 1,
+          "total": 15,
+          "pct": 7
+        },
+        "donts": {
+          "hits": 14,
+          "total": 15,
+          "pct": 93
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 15,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 15,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 15,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 12,
+          "total": 15,
+          "pct": 80
+        }
+      },
+      "avg_never": 2,
+      "avg_always": 2,
+      "avg_tables": 27
+    },
+    "Morphism & Effects": {
+      "count": 6,
+      "slugs": [
+        "claymorphism",
+        "glassmorphism",
+        "gradient",
+        "neon",
+        "neumorphism",
+        "skeumorphism"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 6,
+          "total": 6,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 6,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 6,
+          "total": 6,
+          "pct": 100
+        },
+        "components": {
+          "hits": 6,
+          "total": 6,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 6,
+          "total": 6,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 6,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 6,
+          "total": 6,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 6,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 6,
+          "total": 6,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 6,
+          "total": 6,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 6,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 6,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 6,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 6,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 0
+    },
+    "Modern & Minimal": {
+      "count": 10,
+      "slugs": [
+        "clean",
+        "contemporary",
+        "flat",
+        "minimal",
+        "modern",
+        "mono",
+        "refined",
+        "shadcn",
+        "simple",
+        "sleek"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "components": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 10,
+          "total": 10,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 10,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 0
+    },
+    "Developer Tools": {
+      "count": 9,
+      "slugs": [
+        "cursor",
+        "expo",
+        "github",
+        "lovable",
+        "mission-control",
+        "raycast",
+        "superhuman",
+        "vercel",
+        "warp"
+      ],
+      "cohort": "dev_analyst",
+      "agentic_count": 4,
+      "topics": {
+        "visual_theme": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "color": {
+          "hits": 8,
+          "total": 9,
+          "pct": 89
+        },
+        "typography": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "components": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 9,
+          "total": 9,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 7,
+          "total": 9,
+          "pct": 78
+        },
+        "motion": {
+          "hits": 3,
+          "total": 9,
+          "pct": 33
+        },
+        "responsive": {
+          "hits": 7,
+          "total": 9,
+          "pct": 78
+        },
+        "voice": {
+          "hits": 1,
+          "total": 9,
+          "pct": 11
+        },
+        "donts": {
+          "hits": 8,
+          "total": 9,
+          "pct": 89
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 9,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 9,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 9,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 7,
+          "total": 9,
+          "pct": 78
+        }
+      },
+      "avg_never": 1,
+      "avg_always": 1,
+      "avg_tables": 31
+    },
+    "Starter": {
+      "count": 3,
+      "slugs": [
+        "default",
+        "tom-modern",
+        "warm-editorial"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "color": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "components": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "motion": {
+          "hits": 0,
+          "total": 3,
+          "pct": 0
+        },
+        "responsive": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "voice": {
+          "hits": 0,
+          "total": 3,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 3,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 3,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 3,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 3,
+          "total": 3,
+          "pct": 100
+        }
+      },
+      "avg_never": 3,
+      "avg_always": 0,
+      "avg_tables": 16
+    },
+    "Retro & Nostalgic": {
+      "count": 4,
+      "slugs": [
+        "dithered",
+        "paper",
+        "retro",
+        "vintage"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "color": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "typography": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "components": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 4,
+          "total": 4,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 4,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 0
+    },
+    "Editorial & Print": {
+      "count": 1,
+      "slugs": [
+        "kami"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "color": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "components": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "motion": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "responsive": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "voice": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        }
+      },
+      "avg_never": 10,
+      "avg_always": 3,
+      "avg_tables": 43
+    },
+    "Editorial / Personal / Publication": {
+      "count": 1,
+      "slugs": [
+        "urdu"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "color": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "components": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "donts": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "accessibility": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        }
+      },
+      "avg_never": 5,
+      "avg_always": 7,
+      "avg_tables": 50
+    },
+    "Social & Messaging": {
+      "count": 1,
+      "slugs": [
+        "wechat"
+      ],
+      "cohort": "other",
+      "agentic_count": 0,
+      "topics": {
+        "visual_theme": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "color": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "typography": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "components": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "layout": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "depth": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "motion": {
+          "hits": 1,
+          "total": 1,
+          "pct": 100
+        },
+        "responsive": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "voice": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "donts": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "accessibility": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "iconography": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "data_viz": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        },
+        "agent_guide": {
+          "hits": 0,
+          "total": 1,
+          "pct": 0
+        }
+      },
+      "avg_never": 0,
+      "avg_always": 0,
+      "avg_tables": 58
+    }
+  },
+  "guideline_corpus": {
+    "visual_theme": {
+      "label": "Visual theme & atmosphere",
+      "top_all": [
+        {
+          "text": "Design intent:: Keep outputs recognizable to this style family while preserving usability and readability.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Color stance:: primary, neutral, success, warning, danger",
+          "frequency": 29,
+          "systems": [
+            "ant",
+            "artistic",
+            "bento",
+            "cafe",
+            "claymorphism",
+            "clean",
+            "colorful",
+            "corporate"
+          ]
+        },
+        {
+          "text": "Color stance:: primary, secondary, neutral, success, warning, danger",
+          "frequency": 9,
+          "systems": [
+            "brutalism",
+            "creative",
+            "doodle",
+            "elegant",
+            "expressive",
+            "gradient",
+            "material",
+            "professional"
+          ]
+        },
+        {
+          "text": "Visual style:: minimal, clean",
+          "frequency": 7,
+          "systems": [
+            "cafe",
+            "clean",
+            "elegant",
+            "paper",
+            "shadcn",
+            "simple",
+            "spacious"
+          ]
+        },
+        {
+          "text": "Color stance:: primary, secondary",
+          "frequency": 4,
+          "systems": [
+            "bold",
+            "modern",
+            "neon",
+            "shadcn"
+          ]
+        },
+        {
+          "text": "Visual style:: playful",
+          "frequency": 4,
+          "systems": [
+            "creative",
+            "doodle",
+            "skeumorphism",
+            "storytelling"
+          ]
+        },
+        {
+          "text": "Color stance:: primary, secondary, success, warning, danger, info",
+          "frequency": 4,
+          "systems": [
+            "fantasy",
+            "mono",
+            "neumorphism",
+            "tetris"
+          ]
+        },
+        {
+          "text": "Color stance:: primary, secondary, neutral",
+          "frequency": 3,
+          "systems": [
+            "contemporary",
+            "energetic",
+            "friendly"
+          ]
+        },
+        {
+          "text": "Visual style:: modern, clean, high-contrast",
+          "frequency": 3,
+          "systems": [
+            "dramatic",
+            "neobrutalism",
+            "perspective"
+          ]
+        },
+        {
+          "text": "Visual style:: modern",
+          "frequency": 3,
+          "systems": [
+            "futuristic",
+            "premium",
+            "professional"
+          ]
+        },
+        {
+          "text": "Visual style:: modern, clean",
+          "frequency": 2,
+          "systems": [
+            "bento",
+            "levels"
+          ]
+        },
+        {
+          "text": "Visual style:: bold",
+          "frequency": 2,
+          "systems": [
+            "bold",
+            "brutalism"
+          ]
+        },
+        {
+          "text": "Visual style:: high-contrast, playful, premium",
+          "frequency": 2,
+          "systems": [
+            "colorful",
+            "tetris"
+          ]
+        },
+        {
+          "text": "Visual style:: modern, minimal",
+          "frequency": 2,
+          "systems": [
+            "dithered",
+            "refined"
+          ]
+        },
+        {
+          "text": "Visual style:: modern, editorial",
+          "frequency": 2,
+          "systems": [
+            "editorial",
+            "publication"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "White canvas with deep navy text (`#181d26`)",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Airtable Blue (`#1b61c9`) as primary CTA and link color",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Haas + Haas Groot Disp dual font system",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Positive letter-spacing on body text (0.08px–0.28px)",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "12px radius buttons, 16px–32px for cards",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Multi-layer blue-tinted shadow: `rgba(45,127,249,0.28) 0px 1px 3px`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Semantic theme tokens: `--theme_*` CSS variable naming",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Translucent frosted-glass surfaces over a saturated gradient background",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Theme-color gradients (peach-coral, violet-fuchsia, mint-cyan) as the primary mood",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Inter for product chrome, Argent CF (serif) for marketing display",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Squircle-soft 12–16px radii everywhere",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Sidebar-first layout: tabs, spaces, and bookmarks live on the left, not the top",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Color picker is a brand surface — themes are user-driven, not fixed",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Subtle shadows (`0 8px 32px rgba(0,0,0,0.08)`) over the gradient backdrop",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Purely grayscale brand palette — no brand colors, boldness through monochrome",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Visual style:: modern, bold",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Color stance:: surface/subtle layers",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Design intent:: Keep outputs recognizable to this style family while preserving usability and readability.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Warm parchment canvas (`#f5f4ed`) evoking premium paper, not screens",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Custom Anthropic type family: Serif for headlines, Sans for UI, Mono for code",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Terracotta brand accent (`#c96442`) — warm, earthy, deliberately un-tech",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Exclusively warm-toned neutrals — every gray has a yellow-brown undertone",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Organic, editorial illustrations replacing typical tech iconography",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Ring-based shadow system (`0px 0px 0px 1px`) creating border-like depth without visible borders",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Magazine-like pacing with generous section spacing and serif-driven hierarchy",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Bright white canvas with cool gray containment borders",
+          "frequency": 1,
+          "systems": [
+            "cohere"
+          ]
+        },
+        {
+          "text": "22px signature border-radius — the distinctive \"Cohere card\" roundness",
+          "frequency": 1,
+          "systems": [
+            "cohere"
+          ]
+        }
+      ]
+    },
+    "color": {
+      "label": "Color palette & roles",
+      "top_all": [
+        {
+          "text": "White: (`#ffffff`): Primary surface",
+          "frequency": 2,
+          "systems": [
+            "airtable",
+            "kraken"
+          ]
+        },
+        {
+          "text": "Pure White: (`#ffffff`): Primary text on dark surfaces.",
+          "frequency": 2,
+          "systems": [
+            "clickhouse",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Rausch: (`#ff385c`): The brand's signature coral-pink. CSS variable `--palette-bg-primary-core`. Used for: primary \"Reserve\" button, search submit button, active tab underline, wishlist heart fill, pricing emphasis. The single highest-visibility color on every page.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Deep Rausch: (`#e00b41`): A more saturated variant. CSS variable `--palette-bg-tertiary-core`. Used for pressed/active button states and gradient terminal stops.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Plus Magenta: (`#92174d`): CSS variable `--palette-bg-primary-plus`. The brand color for the Airbnb Plus product tier — a higher-end curated-listing offering.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Luxe Purple: (`#460479`): CSS variable `--palette-bg-primary-luxe`. The brand color for the Airbnb Luxe product tier — villa/estate-level rentals.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Info Blue: (`#428bff`): CSS variable `--palette-text-legal`. Used for legal/informational links (terms, privacy, disclosures) — the only non-monochrome link color in the system.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Canvas White: (`#ffffff`): The default page background. Every card, every container, every detail page starts here.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Soft Cloud: (`#f7f7f7`): Subtle subsurface tint used on footer backgrounds, map-view wrappers, and \"everything else\" sections that want to step back from the primary white.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Hairline Gray: (`#dddddd`): Ubiquitous 1px border color — separates cards, amenity rows, review panels, footer columns. The workhorse of the layout system.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Ink Black: (`#222222`): CSS variable `--palette-text-primary`. The system's near-black. Every heading, every body paragraph, every nav label, every price. Used for ~90% of all text on a page.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Charcoal: (`#3f3f3f`): CSS variable `--palette-text-focused`. Used in focused-state input text and one-step-down emphasis copy.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Ash Gray: (`#6a6a6a`): CSS variable `--palette-bg-tertiary-hover`. Secondary labels, \"Cottage rentals\" subtitle-style copy under city names, muted footer links.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Mute Gray: (`#929292`): CSS variable `--palette-text-link-disabled`. Disabled buttons and low-priority metadata.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Stone Gray: (`#c1c1c1`): Tertiary dividers, icon strokes, placeholder avatars.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Pure White: (`#ffffff`): Primary text on dark surfaces.",
+          "frequency": 2,
+          "systems": [
+            "clickhouse",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Deep Navy: (`#181d26`): Primary text",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Airtable Blue: (`#1b61c9`): CTA buttons, links",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "White: (`#ffffff`): Primary surface",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Spotlight: (`rgba(249,252,255,0.97)`): `--theme_button-text-spotlight`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Success Green: (`#006400`): `--theme_success-text`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Weak Text: (`rgba(4,14,32,0.69)`): `--theme_text-weak`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Secondary Active: (`rgba(7,12,20,0.82)`): `--theme_button-text-secondary-active`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Dark Gray: (`#333333`): Secondary text",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Mid Blue: (`#254fad`): Link/accent blue variant",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Border: (`#e0e2e6`): Card borders",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Light Surface: (`#f8fafc`): Subtle surface",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Blue-tinted: (`rgba(0,0,0,0.32) 0px 0px 1px, rgba(0,0,0,0.08) 0px 0px 2px, rgba(45,127,249,0.28) 0px 1px 3px, rgba(0,0,0,0.06) 0px 0px 0px 0.5px inset`)",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Soft: (`rgba(15,48,106,0.05) 0px 0px 20px`)",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Sunset Start: (`#ff7e5f`): Peach gradient origin.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Anthropic Near Black: (`#141413`): The primary text color and dark-theme surface — not pure black but a warm, almost olive-tinted dark that's gentler on the eyes. The warmest \"black\" in any major tech brand.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Terracotta Brand: (`#c96442`): The core brand color — a burnt orange-brown used for primary CTA buttons, brand moments, and the signature accent. Deliberately earthy and un-tech.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Coral Accent: (`#d97757`): A lighter, warmer variant of the brand color used for text accents, links on dark surfaces, and secondary emphasis.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Error Crimson: (`#b53333`): A deep, warm red for error states — serious without being alarming.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Focus Blue: (`#3898ec`): Standard blue for input focus rings — the only cool color in the entire system, used purely for accessibility.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Parchment: (`#f5f4ed`): The primary page background — a warm cream with a yellow-green tint that feels like aged paper. The emotional foundation of the entire design.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Ivory: (`#faf9f5`): The lightest surface — used for cards and elevated containers on the Parchment background. Barely distinguishable but creates subtle layering.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Pure White: (`#ffffff`): Reserved for specific button surfaces and maximum-contrast elements.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Warm Sand: (`#e8e6dc`): Button backgrounds and prominent interactive surfaces — a noticeably warm light gray.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Dark Surface: (`#30302e`): Dark-theme containers, nav borders, and elevated dark elements — warm charcoal.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Deep Dark: (`#141413`): Dark-theme page background and primary dark surface.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Charcoal Warm: (`#4d4c48`): Button text on light warm surfaces — the go-to dark-on-light text.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        }
+      ]
+    },
+    "typography": {
+      "label": "Typography",
+      "top_all": [
+        {
+          "text": "Headings should carry the style personality; body text should optimize scanability and contrast.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Weights:: 100, 200, 300, 400, 500, 600, 700, 800, 900",
+          "frequency": 51,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Scale:: 12/14/16/20/24/32",
+          "frequency": 21,
+          "systems": [
+            "ant",
+            "application",
+            "bento",
+            "clean",
+            "colorful",
+            "cosmic",
+            "creative",
+            "dashboard"
+          ]
+        },
+        {
+          "text": "Scale:: desktop-first expressive scale",
+          "frequency": 18,
+          "systems": [
+            "bold",
+            "brutalism",
+            "cafe",
+            "claymorphism",
+            "contemporary",
+            "corporate",
+            "enterprise",
+            "futuristic"
+          ]
+        },
+        {
+          "text": "Scale:: 14/16/18/24/32/40",
+          "frequency": 10,
+          "systems": [
+            "agentic",
+            "dithered",
+            "doodle",
+            "editorial",
+            "elegant",
+            "expressive",
+            "friendly",
+            "neon"
+          ]
+        },
+        {
+          "text": "Families:: primary=Inter, display=Inter, mono=JetBrains Mono",
+          "frequency": 9,
+          "systems": [
+            "application",
+            "bento",
+            "colorful",
+            "flat",
+            "levels",
+            "neobrutalism",
+            "premium",
+            "simple"
+          ]
+        },
+        {
+          "text": "Scale:: 12/14/16/18/24/30/36",
+          "frequency": 4,
+          "systems": [
+            "artistic",
+            "gradient",
+            "premium",
+            "spacious"
+          ]
+        },
+        {
+          "text": "Fallbacks: Helvetica, Arial",
+          "frequency": 3,
+          "systems": [
+            "nike"
+          ]
+        },
+        {
+          "text": "Families:: primary=Playfair Display, display=Playfair Display, mono=JetBrains Mono",
+          "frequency": 2,
+          "systems": [
+            "agentic",
+            "refined"
+          ]
+        },
+        {
+          "text": "Families:: primary=Plus Jakarta Sans, display=Plus Jakarta Sans, mono=JetBrains Mono",
+          "frequency": 2,
+          "systems": [
+            "ant",
+            "glassmorphism"
+          ]
+        },
+        {
+          "text": "Families:: primary=Limelight, display=Limelight, mono=JetBrains Mono",
+          "frequency": 2,
+          "systems": [
+            "artistic",
+            "energetic"
+          ]
+        },
+        {
+          "text": "Weights:: 400",
+          "frequency": 2,
+          "systems": [
+            "cosmic",
+            "energetic"
+          ]
+        },
+        {
+          "text": "Scale:: mobile-first compact scale",
+          "frequency": 2,
+          "systems": [
+            "glassmorphism",
+            "professional"
+          ]
+        },
+        {
+          "text": "Families:: primary=Space Mono, display=Space Mono, mono=JetBrains Mono",
+          "frequency": 2,
+          "systems": [
+            "mono",
+            "neumorphism"
+          ]
+        },
+        {
+          "text": "Fallbacks: Helvetica, Arial, sans-serif",
+          "frequency": 2,
+          "systems": [
+            "shopify"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Primary: `Haas`, fallbacks: `-apple-system, system-ui, Segoe UI, Roboto`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Display: `Haas Groot Disp`, fallback: `Haas`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Display / Marketing: `Argent CF`, with fallback: `'Source Serif Pro', Georgia, serif`",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Body / UI: `Inter`, with fallback: `system-ui, -apple-system, BlinkMacSystemFont, sans-serif`",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Code / Mono: `Berkeley Mono`, with fallback: `ui-monospace, Menlo, Consolas, monospace`",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Serif moments are rare: Argent CF appears only in marketing. The product is sans-only.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Title size is small: tabs render at 13px so a long sidebar of 30+ tabs stays scannable.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Tracking tightens with size: -0.03em at 72px, returning to normal by 15px.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Display: `Cal Sans` — custom geometric sans-serif by Mark Davis. Open-source, available on Google Fonts and GitHub. Extremely tight default letter-spacing designed for large headlines. Has 6 character variants (Cc, j, t, u, 0, 1)",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Body: `Inter` — \"rock-solid\" standard body font. Fallback: `Inter Placeholder`",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "UI Light: `Cal Sans UI Variable Light` — light-weight variant (300) for softer UI text with -0.2px letter-spacing",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "UI Medium: `Cal Sans UI Medium` — medium-weight variant (500) for emphasized captions",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Mono: `Roboto Mono` — for code blocks and technical content",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Tertiary: `Matter Regular` / `Matter SemiBold` / `Matter Medium` — additional body fonts for specific contexts",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Cal Sans at large, Inter at small: Cal Sans is exclusively for headings and display — never for body text. The system enforces this division strictly",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Scale:: 14/16/18/24/32/40",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Families:: primary=Playfair Display, display=Playfair Display, mono=JetBrains Mono",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Weights:: 100, 200, 300, 400, 500, 600, 700, 800, 900",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Headings should carry the style personality; body text should optimize scanability and contrast.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Headline: `Anthropic Serif`, with fallback: `Georgia`",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Body / UI: `Anthropic Sans`, with fallback: `Arial`",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Code: `Anthropic Mono`, with fallback: `Arial`",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Serif for authority, sans for utility: Anthropic Serif carries all headline content with medium weight (500), giving every heading the gravitas of a published title. Anthropic Sans handles all functional UI text — buttons, labels, navigation — with quiet efficiency.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Single weight for serifs: All Anthropic Serif headings use weight 500 — no bold, no light. This creates a consistent \"voice\" across all headline sizes, as if the same author wrote every heading.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Relaxed body line-height: Most body text uses 1.60 line-height — significantly more generous than typical tech sites (1.4–1.5). This creates a reading experience closer to a book than a dashboard.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Tight-but-not-compressed headings: Line-heights of 1.10–1.30 for headings are tight but never claustrophobic. The serif letterforms need breathing room that sans-serif fonts don't.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Micro letter-spacing on labels: Small sans text (12px and below) uses deliberate letter-spacing (0.12px–0.5px) to maintain readability at tiny sizes.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        }
+      ]
+    },
+    "components": {
+      "label": "Component stylings",
+      "top_all": [
+        {
+          "text": "Inputs: strong focus-visible states, clear labels, and predictable error messaging.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Cards/sections: use consistent radii, spacing, and elevation strategy across the page.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Background: transparent",
+          "frequency": 49,
+          "systems": [
+            "airbnb",
+            "arc",
+            "bugatti",
+            "cisco",
+            "clay",
+            "clickhouse",
+            "coinbase",
+            "composio"
+          ]
+        },
+        {
+          "text": "Background: `#ffffff`",
+          "frequency": 48,
+          "systems": [
+            "airbnb",
+            "canva",
+            "clay",
+            "duolingo",
+            "elevenlabs",
+            "github",
+            "hashicorp",
+            "huggingface"
+          ]
+        },
+        {
+          "text": "Text: `#ffffff`",
+          "frequency": 42,
+          "systems": [
+            "arc",
+            "canva",
+            "discord",
+            "duolingo",
+            "elevenlabs",
+            "github",
+            "huggingface",
+            "ibm"
+          ]
+        },
+        {
+          "text": "Padding: 8px 16px",
+          "frequency": 20,
+          "systems": [
+            "discord",
+            "huggingface",
+            "linear-app",
+            "lovable",
+            "notion",
+            "sanity",
+            "sentry",
+            "spotify"
+          ]
+        },
+        {
+          "text": "Radius: 9999px",
+          "frequency": 19,
+          "systems": [
+            "arc",
+            "canva",
+            "duolingo",
+            "elevenlabs",
+            "github",
+            "linear-app",
+            "minimax",
+            "mintlify"
+          ]
+        },
+        {
+          "text": "Buttons: primary action uses `#3B82F6`; secondary actions stay neutral.",
+          "frequency": 17,
+          "systems": [
+            "artistic",
+            "claymorphism",
+            "clean",
+            "colorful",
+            "corporate",
+            "cosmic",
+            "creative",
+            "dithered"
+          ]
+        },
+        {
+          "text": "Background: Pure White (`#ffffff`)",
+          "frequency": 17,
+          "systems": [
+            "claude",
+            "cohere",
+            "composio",
+            "expo",
+            "figma",
+            "ollama",
+            "replicate",
+            "uber"
+          ]
+        },
+        {
+          "text": "Text: `#000000`",
+          "frequency": 14,
+          "systems": [
+            "clay",
+            "elevenlabs",
+            "mongodb",
+            "nvidia",
+            "pinterest",
+            "renault",
+            "resend",
+            "revolut"
+          ]
+        },
+        {
+          "text": "Radius: 9999px (full pill)",
+          "frequency": 11,
+          "systems": [
+            "elevenlabs",
+            "lovable",
+            "minimax",
+            "mintlify",
+            "notion",
+            "resend",
+            "revolut",
+            "spotify"
+          ]
+        },
+        {
+          "text": "Text: Pure White (`#ffffff`)",
+          "frequency": 10,
+          "systems": [
+            "clickhouse",
+            "expo",
+            "figma",
+            "mistral-ai",
+            "ollama",
+            "together-ai",
+            "uber",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Padding: 12px 16px",
+          "frequency": 7,
+          "systems": [
+            "clickhouse",
+            "duolingo",
+            "sentry",
+            "shopify",
+            "zapier"
+          ]
+        },
+        {
+          "text": "Padding: 8px 12px",
+          "frequency": 6,
+          "systems": [
+            "arc",
+            "hashicorp",
+            "huggingface",
+            "sanity",
+            "sentry"
+          ]
+        },
+        {
+          "text": "Background: White (`#FFFFFF`)",
+          "frequency": 6,
+          "systems": [
+            "binance",
+            "mastercard",
+            "meta",
+            "nike",
+            "shopify"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Background: `#ffffff`",
+          "frequency": 32,
+          "systems": [
+            "canva",
+            "clay",
+            "duolingo",
+            "elevenlabs",
+            "github",
+            "hashicorp",
+            "huggingface",
+            "minimax"
+          ]
+        },
+        {
+          "text": "Text: `#ffffff`",
+          "frequency": 27,
+          "systems": [
+            "arc",
+            "canva",
+            "discord",
+            "duolingo",
+            "elevenlabs",
+            "github",
+            "huggingface",
+            "intercom"
+          ]
+        },
+        {
+          "text": "Background: transparent",
+          "frequency": 24,
+          "systems": [
+            "arc",
+            "cisco",
+            "clay",
+            "clickhouse",
+            "composio",
+            "discord",
+            "intercom",
+            "linear-app"
+          ]
+        },
+        {
+          "text": "Padding: 8px 16px",
+          "frequency": 15,
+          "systems": [
+            "discord",
+            "huggingface",
+            "linear-app",
+            "lovable",
+            "notion",
+            "sanity",
+            "sentry",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Radius: 9999px",
+          "frequency": 13,
+          "systems": [
+            "arc",
+            "canva",
+            "duolingo",
+            "elevenlabs",
+            "github",
+            "linear-app",
+            "minimax",
+            "mintlify"
+          ]
+        },
+        {
+          "text": "Radius: 9999px (full pill)",
+          "frequency": 9,
+          "systems": [
+            "elevenlabs",
+            "lovable",
+            "minimax",
+            "mintlify",
+            "notion",
+            "resend",
+            "supabase",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Text: Pure White (`#ffffff`)",
+          "frequency": 9,
+          "systems": [
+            "clickhouse",
+            "expo",
+            "figma",
+            "mistral-ai",
+            "ollama",
+            "together-ai",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Background: Pure White (`#ffffff`)",
+          "frequency": 8,
+          "systems": [
+            "claude",
+            "cohere",
+            "composio",
+            "expo",
+            "figma",
+            "ollama",
+            "replicate"
+          ]
+        },
+        {
+          "text": "Text: `#000000`",
+          "frequency": 8,
+          "systems": [
+            "clay",
+            "elevenlabs",
+            "mongodb",
+            "resend"
+          ]
+        },
+        {
+          "text": "Padding: 8px 12px",
+          "frequency": 6,
+          "systems": [
+            "arc",
+            "hashicorp",
+            "huggingface",
+            "sanity",
+            "sentry"
+          ]
+        },
+        {
+          "text": "Padding: 12px 16px",
+          "frequency": 5,
+          "systems": [
+            "clickhouse",
+            "duolingo",
+            "sentry",
+            "zapier"
+          ]
+        },
+        {
+          "text": "Radius: sharp (4px)",
+          "frequency": 5,
+          "systems": [
+            "clickhouse",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Text: `#0d0d0d`",
+          "frequency": 5,
+          "systems": [
+            "mintlify",
+            "openai"
+          ]
+        },
+        {
+          "text": "Border: 1px solid `#d0d7de`",
+          "frequency": 5,
+          "systems": [
+            "github"
+          ]
+        },
+        {
+          "text": "Text: Silver (`#b9b9b9`)",
+          "frequency": 5,
+          "systems": [
+            "sanity"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Background: `#ffffff`",
+          "frequency": 10,
+          "systems": [
+            "elevenlabs",
+            "huggingface",
+            "minimax",
+            "openai",
+            "x-ai"
+          ]
+        },
+        {
+          "text": "Text: `#ffffff`",
+          "frequency": 9,
+          "systems": [
+            "elevenlabs",
+            "huggingface",
+            "minimax",
+            "openai",
+            "x-ai"
+          ]
+        },
+        {
+          "text": "Background: transparent",
+          "frequency": 5,
+          "systems": [
+            "lovable",
+            "mistral-ai",
+            "voltagent",
+            "x-ai"
+          ]
+        },
+        {
+          "text": "Padding: 8px 16px",
+          "frequency": 5,
+          "systems": [
+            "huggingface",
+            "lovable"
+          ]
+        },
+        {
+          "text": "Background: Pure White (`#ffffff`)",
+          "frequency": 4,
+          "systems": [
+            "claude",
+            "cohere",
+            "ollama",
+            "replicate"
+          ]
+        },
+        {
+          "text": "Text: Pure White (`#ffffff`)",
+          "frequency": 4,
+          "systems": [
+            "mistral-ai",
+            "ollama",
+            "together-ai",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Text: `#1c1c1c`",
+          "frequency": 4,
+          "systems": [
+            "lovable"
+          ]
+        },
+        {
+          "text": "Radius: sharp (4px)",
+          "frequency": 4,
+          "systems": [
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Radius: 9999px (full pill)",
+          "frequency": 3,
+          "systems": [
+            "elevenlabs",
+            "lovable",
+            "minimax"
+          ]
+        },
+        {
+          "text": "Radius: 9999px",
+          "frequency": 3,
+          "systems": [
+            "elevenlabs",
+            "minimax",
+            "openai"
+          ]
+        },
+        {
+          "text": "Radius: comfortably rounded (8px)",
+          "frequency": 3,
+          "systems": [
+            "claude",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Radius: generously rounded (12px)",
+          "frequency": 3,
+          "systems": [
+            "claude"
+          ]
+        }
+      ]
+    },
+    "layout": {
+      "label": "Layout & spacing",
+      "top_all": [
+        {
+          "text": "Keep vertical rhythm consistent across sections and components.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Align columns and modules to a predictable grid; avoid ad-hoc offsets.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Base unit: 8px",
+          "frequency": 47,
+          "systems": [
+            "airbnb",
+            "bmw",
+            "cal",
+            "claude",
+            "clay",
+            "clickhouse",
+            "cohere",
+            "composio"
+          ]
+        },
+        {
+          "text": "Spacing scale:: 4/8/12/16/24/32",
+          "frequency": 35,
+          "systems": [
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "claymorphism",
+            "cosmic"
+          ]
+        },
+        {
+          "text": "Spacing scale:: 8pt baseline grid",
+          "frequency": 12,
+          "systems": [
+            "agentic",
+            "clean",
+            "colorful",
+            "corporate",
+            "dashboard",
+            "editorial",
+            "fantasy",
+            "gradient"
+          ]
+        },
+        {
+          "text": "Max content width: approximately 1200px",
+          "frequency": 7,
+          "systems": [
+            "cursor",
+            "linear-app",
+            "mintlify",
+            "notion",
+            "vercel",
+            "x-ai",
+            "zapier"
+          ]
+        },
+        {
+          "text": "Card internal padding: approximately 24–32px",
+          "frequency": 6,
+          "systems": [
+            "claude",
+            "cohere",
+            "expo",
+            "ollama",
+            "together-ai",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Base unit: 8px.",
+          "frequency": 4,
+          "systems": [
+            "bugatti",
+            "playstation",
+            "theverge",
+            "wired"
+          ]
+        },
+        {
+          "text": "Spacing scale:: compact density mode",
+          "frequency": 4,
+          "systems": [
+            "friendly",
+            "mono",
+            "neumorphism",
+            "tetris"
+          ]
+        },
+        {
+          "text": "Base unit: 4px. Scale: 4, 8, 12, 16, 24, 32, 48, 64.",
+          "frequency": 3,
+          "systems": [
+            "arc",
+            "duolingo",
+            "huggingface"
+          ]
+        },
+        {
+          "text": "Max container width: approximately 1200px, centered",
+          "frequency": 3,
+          "systems": [
+            "claude",
+            "composio",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Spacing scale:: comfortable density mode",
+          "frequency": 3,
+          "systems": [
+            "contemporary",
+            "enterprise",
+            "glassmorphism"
+          ]
+        },
+        {
+          "text": "Centered content with generous max-width",
+          "frequency": 3,
+          "systems": [
+            "elevenlabs",
+            "resend",
+            "supabase"
+          ]
+        },
+        {
+          "text": "Card padding: 16px–32px internal spacing",
+          "frequency": 3,
+          "systems": [
+            "raycast",
+            "superhuman",
+            "warp"
+          ]
+        },
+        {
+          "text": "Component gaps: 8px–16px between related elements",
+          "frequency": 3,
+          "systems": [
+            "raycast",
+            "superhuman",
+            "warp"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Base unit: 8px",
+          "frequency": 35,
+          "systems": [
+            "cal",
+            "claude",
+            "clay",
+            "clickhouse",
+            "cohere",
+            "composio",
+            "cursor",
+            "elevenlabs"
+          ]
+        },
+        {
+          "text": "Max content width: approximately 1200px",
+          "frequency": 7,
+          "systems": [
+            "cursor",
+            "linear-app",
+            "mintlify",
+            "notion",
+            "vercel",
+            "x-ai",
+            "zapier"
+          ]
+        },
+        {
+          "text": "Card internal padding: approximately 24–32px",
+          "frequency": 6,
+          "systems": [
+            "claude",
+            "cohere",
+            "expo",
+            "ollama",
+            "together-ai",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Base unit: 4px. Scale: 4, 8, 12, 16, 24, 32, 48, 64.",
+          "frequency": 3,
+          "systems": [
+            "arc",
+            "duolingo",
+            "huggingface"
+          ]
+        },
+        {
+          "text": "Max container width: approximately 1200px, centered",
+          "frequency": 3,
+          "systems": [
+            "claude",
+            "composio",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Centered content with generous max-width",
+          "frequency": 3,
+          "systems": [
+            "elevenlabs",
+            "resend",
+            "supabase"
+          ]
+        },
+        {
+          "text": "Card padding: 16px–32px internal spacing",
+          "frequency": 3,
+          "systems": [
+            "raycast",
+            "superhuman",
+            "warp"
+          ]
+        },
+        {
+          "text": "Component gaps: 8px–16px between related elements",
+          "frequency": 3,
+          "systems": [
+            "raycast",
+            "superhuman",
+            "warp"
+          ]
+        },
+        {
+          "text": "Component gaps: 4px–8px between related elements",
+          "frequency": 2,
+          "systems": [
+            "cal",
+            "posthog"
+          ]
+        },
+        {
+          "text": "Max width: ~1200px content container, centered",
+          "frequency": 2,
+          "systems": [
+            "cal",
+            "superhuman"
+          ]
+        },
+        {
+          "text": "Base rhythm: 8px",
+          "frequency": 2,
+          "systems": [
+            "cisco",
+            "webex"
+          ]
+        },
+        {
+          "text": "Breakpoints: mobile up to 767px, tablet 768px-1199px, desktop 1200px and above",
+          "frequency": 2,
+          "systems": [
+            "cisco",
+            "webex"
+          ]
+        },
+        {
+          "text": "Max content width centered",
+          "frequency": 2,
+          "systems": [
+            "clay",
+            "mongodb"
+          ]
+        },
+        {
+          "text": "Feature sections: multi-column card grids",
+          "frequency": 2,
+          "systems": [
+            "cohere",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Hero: centered single-column with generous top padding (80-120px)",
+          "frequency": 2,
+          "systems": [
+            "cursor",
+            "notion"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Base unit: 8px",
+          "frequency": 15,
+          "systems": [
+            "claude",
+            "cohere",
+            "cursor",
+            "elevenlabs",
+            "lovable",
+            "minimax",
+            "mistral-ai",
+            "ollama"
+          ]
+        },
+        {
+          "text": "Card internal padding: approximately 24–32px",
+          "frequency": 5,
+          "systems": [
+            "claude",
+            "cohere",
+            "ollama",
+            "together-ai",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Max container width: approximately 1200px, centered",
+          "frequency": 2,
+          "systems": [
+            "claude",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Feature sections: multi-column card grids",
+          "frequency": 2,
+          "systems": [
+            "cohere",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Max content width: approximately 1200px",
+          "frequency": 2,
+          "systems": [
+            "cursor",
+            "x-ai"
+          ]
+        },
+        {
+          "text": "Spacing scale:: 8pt baseline grid",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Keep vertical rhythm consistent across sections and components.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Align columns and modules to a predictable grid; avoid ad-hoc offsets.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Scale: 3px, 4px, 6px, 8px, 10px, 12px, 16px, 20px, 24px, 30px",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Button padding: asymmetric (0px 12px 0px 8px) or balanced (8px 16px)",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Section vertical spacing: generous (estimated 80–120px between major sections)",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Hero: centered with editorial layout",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        }
+      ]
+    },
+    "depth": {
+      "label": "Depth & elevation",
+      "top_all": [
+        {
+          "text": "Photography as depth: the system relies heavily on full-bleed photography to create visual depth; shadows and gradients are used sparingly so the photographs do the heavy lifting",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Laurel wreath lockup: the Guest Favorite award uses two SVG laurel illustrations that give the otherwise-flat rating number a ceremonial, trophy-like presence",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "3D rendered category icons: Homes/Experiences/Services icons have their own soft internal lighting and subtle cast shadows baked into the artwork — the only place the brand allows \"dimensional\" illustration",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Blue-tinted multi-layer shadow system",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Soft ambient: `rgba(15,48,106,0.05) 0px 0px 20px`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Decorative depth is primarily created by photographic realism and material rendering, not synthetic UI effects.",
+          "frequency": 1,
+          "systems": [
+            "apple"
+          ]
+        },
+        {
+          "text": "Translucent overlays and glass-like utility bars provide mild atmospheric layering in navigation and controls.",
+          "frequency": 1,
+          "systems": [
+            "apple"
+          ]
+        },
+        {
+          "text": "Golden gradient backgrounds: Behind device mockup sections, radial golden glow centered on the product",
+          "frequency": 1,
+          "systems": [
+            "binance"
+          ]
+        },
+        {
+          "text": "Dark-to-light section transitions: Hard cut (no gradient blend) between white and `#222126` sections",
+          "frequency": 1,
+          "systems": [
+            "binance"
+          ]
+        },
+        {
+          "text": "Price ticker strip: Flat, borderless, reads as a data bar rather than a decorative element",
+          "frequency": 1,
+          "systems": [
+            "binance"
+          ]
+        },
+        {
+          "text": "M Stripe Divider: (`m-stripe-divider`): A 4px-tall horizontal divider carrying the M tricolor (`{colors.m-blue-light}` → `{colors.m-blue-dark}` → `{colors.m-red}`). Used on motorsport chrome, model-detail headers, and brand-identity moments. The stripe is the system's only true \"decorative\" element — used sparingly to mark significance.",
+          "frequency": 1,
+          "systems": [
+            "bmw-m"
+          ]
+        },
+        {
+          "text": "Carbon-fiber surfaces: The technical-spec page uses `{colors.carbon-gray}` (#2b2b2b) cells with subtle texture overlay. This is a single-page treatment, not a system-wide pattern.",
+          "frequency": 1,
+          "systems": [
+            "bmw-m"
+          ]
+        },
+        {
+          "text": "Photographic depth: Full-bleed cars are the depth. Lighting in the photography (track lights, sunset rim-light) does the elevation work that drop shadows would do in a SaaS system.",
+          "frequency": 1,
+          "systems": [
+            "bmw-m"
+          ]
+        },
+        {
+          "text": "Ring borders: `0px 0px 0px 1px` shadows act as borders, avoiding CSS `border` entirely. This creates hairline containment without affecting layout",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Diffused soft shadows: `0px 4px 8px` at 5% opacity add gentle ambient depth",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Blue-tinted multi-layer shadow system",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Soft ambient: `rgba(15,48,106,0.05) 0px 0px 20px`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Ring borders: `0px 0px 0px 1px` shadows act as borders, avoiding CSS `border` entirely. This creates hairline containment without affecting layout",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Diffused soft shadows: `0px 4px 8px` at 5% opacity add gentle ambient depth",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Sharp contact shadows: `0px 1px 5px -4px` at 70% opacity create tight bottom-edge shadows for grounding",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Inset highlights: White inset shadows at the top of buttons create a subtle 3D bevel",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Shadows are composed in comma-separated stacks — each surface gets 2-3 layered shadow definitions working together",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "No gradients or glow effects",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "All depth comes from the sophisticated shadow compositing system",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "The overall effect is subtle but precise — surfaces feel like physical cards sitting on a table",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Light/Dark alternation: The most dramatic depth effect comes from alternating between Parchment (`#f5f4ed`) and Near Black (`#141413`) sections — entire sections shift elevation by changing the ambient light level.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Warm ring halos: Button and card interactions use ring shadows that match the warm palette — never cool-toned or generic gray.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Full-width swatch-colored sections create dramatic depth through color contrast",
+          "frequency": 1,
+          "systems": [
+            "clay"
+          ]
+        },
+        {
+          "text": "Dashed borders add visual texture alongside solid borders",
+          "frequency": 1,
+          "systems": [
+            "clay"
+          ]
+        },
+        {
+          "text": "Product illustrations with warm, organic art style",
+          "frequency": 1,
+          "systems": [
+            "clay"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Light/Dark alternation: The most dramatic depth effect comes from alternating between Parchment (`#f5f4ed`) and Near Black (`#141413`) sections — entire sections shift elevation by changing the ambient light level.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Warm ring halos: Button and card interactions use ring shadows that match the warm palette — never cool-toned or generic gray.",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Warm cream surface variations create subtle tonal depth without shadows",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "oklab borders at 10% and 20% create a spectrum of edge definition",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "No harsh divider lines -- section separation through background tone shifts and spacing",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Hero: soft, warm multi-color gradient wash (pinks, oranges, blues) behind hero — atmospheric, barely visible",
+          "frequency": 1,
+          "systems": [
+            "lovable"
+          ]
+        },
+        {
+          "text": "Footer: gradient background with warm tones transitioning to the bottom",
+          "frequency": 1,
+          "systems": [
+            "lovable"
+          ]
+        },
+        {
+          "text": "No harsh section dividers — spacing and background warmth handle transitions",
+          "frequency": 1,
+          "systems": [
+            "lovable"
+          ]
+        },
+        {
+          "text": "Background color shifts between `#201d1d` and `#302c2c` create subtle surface differentiation",
+          "frequency": 1,
+          "systems": [
+            "opencode-ai"
+          ]
+        },
+        {
+          "text": "Transparent borders at 12% opacity provide barely-visible structure",
+          "frequency": 1,
+          "systems": [
+            "opencode-ai"
+          ]
+        },
+        {
+          "text": "The warm reddish tint in border colors (`rgba(15, 0, 0, 0.12)`) ties borders to the overall warm dark palette",
+          "frequency": 1,
+          "systems": [
+            "opencode-ai"
+          ]
+        },
+        {
+          "text": "No gradients, no blurs, no ambient effects -- pure flat terminal aesthetic",
+          "frequency": 1,
+          "systems": [
+            "opencode-ai"
+          ]
+        }
+      ]
+    },
+    "motion": {
+      "label": "Motion & interaction",
+      "top_all": [
+        {
+          "text": "Default to short, purposeful transitions (150–250ms) with stable easing.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Ensure hover, focus-visible, active, disabled, and loading states are explicit.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Use subtle transitions that emphasize Primary (#3B82F6) as the interaction signal.",
+          "frequency": 17,
+          "systems": [
+            "artistic",
+            "claymorphism",
+            "clean",
+            "colorful",
+            "corporate",
+            "cosmic",
+            "creative",
+            "dithered"
+          ]
+        },
+        {
+          "text": "Use subtle transitions that emphasize Primary (#111111) as the interaction signal.",
+          "frequency": 2,
+          "systems": [
+            "editorial",
+            "paper"
+          ]
+        },
+        {
+          "text": "Use subtle transitions that emphasize Primary (#FF5701) as the interaction signal.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Use subtle transitions that emphasize Primary (#1677FF) as the interaction signal.",
+          "frequency": 1,
+          "systems": [
+            "ant"
+          ]
+        },
+        {
+          "text": "Use subtle transitions that emphasize Primary (#9333EA) as the interaction signal.",
+          "frequency": 1,
+          "systems": [
+            "application"
+          ]
+        },
+        {
+          "text": "Duration: 200ms for hover; 320ms for tab create/close; 480ms for \"Little Arc\" window expand.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Easing: `cubic-bezier(0.32, 0.72, 0, 1)` for window expand (Apple's spring-style).",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Tab swap: 1px translate + opacity blend, no scale change.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Pulse dot:: 6×6 coral circle at top metadata bar and footer,",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Card hover:: translateY(-3px), arrow mark fills coral.",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Button hover:: translateY(-1px), darker coral fill.",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Pill hover:: ink-at-4% wash.",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Transitions:: `0.18s ease` everywhere; never longer than `0.25s`.",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Duration: 200ms for hover; 320ms for tab create/close; 480ms for \"Little Arc\" window expand.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Easing: `cubic-bezier(0.32, 0.72, 0, 1)` for window expand (Apple's spring-style).",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Tab swap: 1px translate + opacity blend, no scale change.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Duration: 180ms for hover; 280ms for menu open; 420ms for editor sidebar collapse.",
+          "frequency": 1,
+          "systems": [
+            "canva"
+          ]
+        },
+        {
+          "text": "Easing: `cubic-bezier(0.4, 0, 0.2, 1)` (Material-style).",
+          "frequency": 1,
+          "systems": [
+            "canva"
+          ]
+        },
+        {
+          "text": "Card lift: translateY(-2px) + shadow grow on hover, single transition.",
+          "frequency": 1,
+          "systems": [
+            "canva"
+          ]
+        },
+        {
+          "text": "Motion should be controlled, smooth, and systems-like",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Use fade, rise, subtle slide, and restrained glow",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Interaction timing: roughly 160ms–260ms for control response, 320ms–500ms for larger section reveals",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Avoid bouncy springs, elastic easing, or playful overshoot",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Respect `prefers-reduced-motion`: remove parallax and staged reveals, keep only instant state swaps or short opacity transitions under 120ms",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Buttons: text color shifts to `--color-error` (`#cf2d56`) on hover -- a distinctive warm crimson that signals interactivity",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Links: color shift to accent orange (`#f54e00`) or underline decoration with `rgba(38, 37, 30, 0.4)`",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Cards: shadow intensification on hover (ambient → elevated)",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Shadow-based focus: `rgba(0,0,0,0.1) 0px 4px 12px` for depth-based focus indication",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Use subtle transitions that emphasize Primary (#FF5701) as the interaction signal.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Default to short, purposeful transitions (150–250ms) with stable easing.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Ensure hover, focus-visible, active, disabled, and loading states are explicit.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Buttons: text color shifts to `--color-error` (`#cf2d56`) on hover -- a distinctive warm crimson that signals interactivity",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Links: color shift to accent orange (`#f54e00`) or underline decoration with `rgba(38, 37, 30, 0.4)`",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Cards: shadow intensification on hover (ambient → elevated)",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Shadow-based focus: `rgba(0,0,0,0.1) 0px 4px 12px` for depth-based focus indication",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Border focus: `oklab(0.263 / 0.2)` (20% border) for input/form focus",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Consistent warm tone in all focus states -- no cold blue focus rings",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Color transitions: 150ms ease for text/background color changes",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Shadow transitions: 200ms ease for elevation changes",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        },
+        {
+          "text": "Transform: subtle scale or translate for interactive feedback",
+          "frequency": 1,
+          "systems": [
+            "cursor"
+          ]
+        }
+      ]
+    },
+    "responsive": {
+      "label": "Responsive behavior",
+      "top_all": [
+        {
+          "text": "Feature cards: 3-column → 2-column → single column stacked",
+          "frequency": 5,
+          "systems": [
+            "cursor",
+            "linear-app",
+            "lovable",
+            "mintlify",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Product screenshots maintain aspect ratio",
+          "frequency": 4,
+          "systems": [
+            "clickhouse",
+            "cohere",
+            "resend",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Footer: multi-column → stacked single column",
+          "frequency": 4,
+          "systems": [
+            "linear-app",
+            "lovable",
+            "mintlify",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Minimum touch target: 44x44px (WCAG AAA)",
+          "frequency": 3,
+          "systems": [
+            "binance",
+            "nike",
+            "shopify"
+          ]
+        },
+        {
+          "text": "Navigation: horizontal → hamburger",
+          "frequency": 3,
+          "systems": [
+            "bmw",
+            "resend",
+            "spacex"
+          ]
+        },
+        {
+          "text": "Card surfaces as touch targets",
+          "frequency": 3,
+          "systems": [
+            "clickhouse",
+            "cohere",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Product screenshots use responsive images with consistent border radius",
+          "frequency": 3,
+          "systems": [
+            "cursor",
+            "notion",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Full-width sections maintain edge-to-edge treatment",
+          "frequency": 3,
+          "systems": [
+            "mintlify",
+            "vercel",
+            "zapier"
+          ]
+        },
+        {
+          "text": "Navigation: Collapses to hamburger on mobile",
+          "frequency": 3,
+          "systems": [
+            "mistral-ai",
+            "runwayml",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Nav links: 44px touch area",
+          "frequency": 2,
+          "systems": [
+            "binance",
+            "shopify"
+          ]
+        },
+        {
+          "text": "Footer: multi-column → stacked",
+          "frequency": 2,
+          "systems": [
+            "bmw",
+            "figma"
+          ]
+        },
+        {
+          "text": "Product screenshots scale responsively",
+          "frequency": 2,
+          "systems": [
+            "cal",
+            "elevenlabs"
+          ]
+        },
+        {
+          "text": "Minimum recommended: 44x44px",
+          "frequency": 2,
+          "systems": [
+            "claude",
+            "expo"
+          ]
+        },
+        {
+          "text": "Feature sections: Multi-column → stacked single column",
+          "frequency": 2,
+          "systems": [
+            "claude",
+            "expo"
+          ]
+        },
+        {
+          "text": "Product screenshots scale proportionally",
+          "frequency": 2,
+          "systems": [
+            "clay",
+            "expo"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Feature cards: 3-column → 2-column → single column stacked",
+          "frequency": 5,
+          "systems": [
+            "cursor",
+            "linear-app",
+            "lovable",
+            "mintlify",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Product screenshots maintain aspect ratio",
+          "frequency": 4,
+          "systems": [
+            "clickhouse",
+            "cohere",
+            "resend",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Footer: multi-column → stacked single column",
+          "frequency": 4,
+          "systems": [
+            "linear-app",
+            "lovable",
+            "mintlify",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Card surfaces as touch targets",
+          "frequency": 3,
+          "systems": [
+            "clickhouse",
+            "cohere",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Product screenshots use responsive images with consistent border radius",
+          "frequency": 3,
+          "systems": [
+            "cursor",
+            "notion",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Full-width sections maintain edge-to-edge treatment",
+          "frequency": 3,
+          "systems": [
+            "mintlify",
+            "vercel",
+            "zapier"
+          ]
+        },
+        {
+          "text": "Navigation: Collapses to hamburger on mobile",
+          "frequency": 3,
+          "systems": [
+            "mistral-ai",
+            "runwayml",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Product screenshots scale responsively",
+          "frequency": 2,
+          "systems": [
+            "cal",
+            "elevenlabs"
+          ]
+        },
+        {
+          "text": "Minimum recommended: 44x44px",
+          "frequency": 2,
+          "systems": [
+            "claude",
+            "expo"
+          ]
+        },
+        {
+          "text": "Feature sections: Multi-column → stacked single column",
+          "frequency": 2,
+          "systems": [
+            "claude",
+            "expo"
+          ]
+        },
+        {
+          "text": "Product screenshots scale proportionally",
+          "frequency": 2,
+          "systems": [
+            "clay",
+            "expo"
+          ]
+        },
+        {
+          "text": "Rounded corners maintained across breakpoints",
+          "frequency": 2,
+          "systems": [
+            "clay",
+            "elevenlabs"
+          ]
+        },
+        {
+          "text": "Hero text: 64px → 40px → 28px progressive scaling",
+          "frequency": 2,
+          "systems": [
+            "composio",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "No visible art direction changes between breakpoints — same crops, proportional scaling",
+          "frequency": 2,
+          "systems": [
+            "composio",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Navigation links at 15px with adequate spacing",
+          "frequency": 2,
+          "systems": [
+            "elevenlabs",
+            "notion"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Navigation: Collapses to hamburger on mobile",
+          "frequency": 3,
+          "systems": [
+            "mistral-ai",
+            "runwayml",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Card surfaces as touch targets",
+          "frequency": 2,
+          "systems": [
+            "cohere",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Product screenshots maintain aspect ratio",
+          "frequency": 2,
+          "systems": [
+            "cohere",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Feature cards: 3-column → 2-column → single column stacked",
+          "frequency": 2,
+          "systems": [
+            "cursor",
+            "lovable"
+          ]
+        },
+        {
+          "text": "Navigation links at comfortable 16px",
+          "frequency": 2,
+          "systems": [
+            "runwayml",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Buttons use generous padding (8–16px vertical minimum)",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Navigation links adequately spaced for thumb navigation",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Card surfaces serve as large touch targets",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Minimum recommended: 44x44px",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Navigation: Full horizontal nav collapses to hamburger on mobile",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Feature sections: Multi-column → stacked single column",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Hero text: 64px → 36px → ~25px progressive scaling",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        }
+      ]
+    },
+    "voice": {
+      "label": "Voice & tone",
+      "top_all": [
+        {
+          "text": "Tone should reflect the visual style: concise, confident, and product-specific.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Keep microcopy action-oriented and avoid generic filler language.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Preserve the style identity in headlines while keeping UI labels literal and clear.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Headlines mix declarative and italicized emotional words.",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Body copy is plain-spoken and specific. Quote real numbers",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Microcopy uses publication metaphors: \"Filed under\", \"Plate Nº\",",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Latin numerals — Roman for sections, Arabic for stats.",
+          "frequency": 1,
+          "systems": [
+            "atelier-zero"
+          ]
+        },
+        {
+          "text": "Voice is confident, technical, and outcome-oriented",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Headlines should sound like platform positioning or systems value, not consumer lifestyle copy",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Use language that suggests trust, resilience, infrastructure, AI readiness, and operational scale",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "The brand should feel global, mission-critical, and composed under pressure",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Precise: Data-first, no marketing language",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Sparse: The UI speaks through values and color, not prose",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Hierarchical: Visual urgency maps directly to operational urgency",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Precise:: Say the thing directly. No throat-clearing (\"Great question!\"), no filler phrases.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Voice is confident, technical, and outcome-oriented",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Headlines should sound like platform positioning or systems value, not consumer lifestyle copy",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Use language that suggests trust, resilience, infrastructure, AI readiness, and operational scale",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "The brand should feel global, mission-critical, and composed under pressure",
+          "frequency": 1,
+          "systems": [
+            "cisco"
+          ]
+        },
+        {
+          "text": "Precise: Data-first, no marketing language",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Sparse: The UI speaks through values and color, not prose",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Hierarchical: Visual urgency maps directly to operational urgency",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Precise:: Say the thing directly. No throat-clearing (\"Great question!\"), no filler phrases.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Cited:: Every factual claim is attributed. Hedging language (\"according to\", \"reportedly\") is preferred over assertions.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Neutral:: No personality performance. Perplexity is a tool, not a friend. The interface does not compliment the user.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Dense:: Short paragraphs, numbered lists for steps, bullet lists for options. Wall-of-text answers are a bug.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Not playful (no winking emoji, no casual slang in UI copy)",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Not enterprise-formal (no \"leverage\", no \"synergy\")",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Not a news outlet (no editorial headlines, no opinionated framing)",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Webex voice is practical, clear, and human",
+          "frequency": 1,
+          "systems": [
+            "webex"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Tone should reflect the visual style: concise, confident, and product-specific.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Keep microcopy action-oriented and avoid generic filler language.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Preserve the style identity in headlines while keeping UI labels literal and clear.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Precise: Data-first, no marketing language",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Sparse: The UI speaks through values and color, not prose",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Hierarchical: Visual urgency maps directly to operational urgency",
+          "frequency": 1,
+          "systems": [
+            "mission-control"
+          ]
+        },
+        {
+          "text": "Precise:: Say the thing directly. No throat-clearing (\"Great question!\"), no filler phrases.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Cited:: Every factual claim is attributed. Hedging language (\"according to\", \"reportedly\") is preferred over assertions.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Neutral:: No personality performance. Perplexity is a tool, not a friend. The interface does not compliment the user.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Dense:: Short paragraphs, numbered lists for steps, bullet lists for options. Wall-of-text answers are a bug.",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Not playful (no winking emoji, no casual slang in UI copy)",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        },
+        {
+          "text": "Not enterprise-formal (no \"leverage\", no \"synergy\")",
+          "frequency": 1,
+          "systems": [
+            "perplexity"
+          ]
+        }
+      ]
+    },
+    "donts": {
+      "label": "Do's and don'ts",
+      "top_all": [
+        {
+          "text": "Do not introduce off-palette colors when an existing token can solve the problem.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Do not flatten hierarchy by using the same type size/weight for all text.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Do not add decorative effects that reduce readability or accessibility.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Do not mix unrelated visual metaphors in the same interface.",
+          "frequency": 57,
+          "systems": [
+            "agentic",
+            "ant",
+            "application",
+            "artistic",
+            "bento",
+            "bold",
+            "brutalism",
+            "cafe"
+          ]
+        },
+        {
+          "text": "Reserve Rausch `#ff385c` for primary actions and the active-tab indicator — never dilute it with decorative uses.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Let photography breathe — 4:3 crops with 14–20px rounded corners, no overlaid text, no gradient scrims.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Use Ink Black `#222222` for every text layer below Rausch — this is the system's near-black, never true `#000000`.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Pair the tri-tab category picker's 3D illustrated icons with flat typography — don't mix illustration styles within a single surface.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Stack three low-opacity shadows (~2%, 4%, 10%) to create the signature booking-panel elevation.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Use Hairline Gray `#dddddd` 1px borders for every card-to-card and row-to-row divider.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Treat the booking panel as sticky on desktop, collapsing to a bottom-anchored reserve bar on mobile.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Use 4–8px spacing within metadata groups and 24px between cards — information density is intentional.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Don't introduce secondary accent colors outside the Rausch / Plus Magenta / Luxe Purple product-tier palette.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Don't place text inside photographs — captions always sit below the image, never overlaid.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Don't use all-caps labels except the single 8px superscript role.",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Keep the sidebar-first layout recognizable; top-nav-only compositions should be avoided unless the artifact is a marketing page.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Use frosted surfaces and gradient warmth as atmosphere, not as decorative blobs or unrelated background ornaments.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Reserve the saturated theme gradient for the browser shell, primary CTA, or one clear focal panel.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Keep product UI sans-only; use the serif display voice only for marketing/editorial moments.",
+          "frequency": 1,
+          "systems": [
+            "arc"
+          ]
+        },
+        {
+          "text": "Use Cal Sans exclusively for headings (24px+) and never for body text — it's a display font with tight default spacing",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Apply positive letter-spacing (+0.2px) when using Cal Sans below 24px — the font cramps at small sizes without it",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Maintain the grayscale palette — boldness comes from contrast, not color",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Use the multi-layered shadow system for card elevation — ring shadow + diffused shadow + contact shadow",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Keep backgrounds pure white — the monochrome philosophy requires a clean canvas",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Use Inter for all body text at weight 300–600 — it's the reliable counterpart to Cal Sans's display personality",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Let product screenshots be the visual content — no illustrations, no decorative graphics",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Apply generous section spacing (80px–96px) — the breathing room is essential to the premium feel",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Use Cal Sans for body text or text below 16px — it wasn't designed for extended reading",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Add brand colors — Cal.com is intentionally grayscale, color is reserved for links and UI states only",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Use CSS borders when shadows can achieve the same containment — the ring-shadow technique is the system's approach",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Do not introduce off-palette colors when an existing token can solve the problem.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Do not flatten hierarchy by using the same type size/weight for all text.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Do not add decorative effects that reduce readability or accessibility.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Do not mix unrelated visual metaphors in the same interface.",
+          "frequency": 1,
+          "systems": [
+            "agentic"
+          ]
+        },
+        {
+          "text": "Use Parchment (`#f5f4ed`) as the primary light background — the warm cream tone IS the Claude personality",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Use Anthropic Serif at weight 500 for all headlines — the single-weight consistency is intentional",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Use Terracotta Brand (`#c96442`) only for primary CTAs and the highest-signal brand moments",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Keep all neutrals warm-toned — every gray should have a yellow-brown undertone",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Use ring shadows (`0px 0px 0px 1px`) for interactive element states instead of drop shadows",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Maintain the editorial serif/sans hierarchy — serif for content headlines, sans for UI",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Use generous body line-height (1.60) for a literary reading experience",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Alternate between light and dark sections to create chapter-like page rhythm",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        }
+      ]
+    },
+    "accessibility": {
+      "label": "Accessibility",
+      "top_all": [
+        {
+          "text": "All interactive elements receive visible focus indicators",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Focus outline: `2px solid` with focus color + shadow level 200",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Tab navigation supported throughout all interactive components",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "High contrast text: near-black on white exceeds WCAG AAA (>14:1 ratio)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Default: Standard appearance with whisper borders",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Hover: Color shift on text, scale(1.05) on buttons, underline on links",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Active/Pressed: scale(0.9) transform, darker background variant",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Focus: Blue outline ring with shadow reinforcement",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Disabled: Warm gray (`#a39e98`) text, reduced opacity",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Primary text (rgba(0,0,0,0.95)) on white: ~18:1 ratio",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Secondary text (#615d59) on white: ~5.5:1 ratio (WCAG AA)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Blue CTA (#0075de) on white: ~4.6:1 ratio (WCAG AA for large text)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Badge text (#097fe8) on badge bg (#f2f9ff): ~4.5:1 ratio (WCAG AA for large text)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Body text:: Minimum 16px (Nastaliq script becomes unreadable at smaller sizes).",
+          "frequency": 1,
+          "systems": [
+            "urdu"
+          ]
+        },
+        {
+          "text": "Labels:: Minimum 14px.",
+          "frequency": 1,
+          "systems": [
+            "urdu"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "All interactive elements receive visible focus indicators",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Focus outline: `2px solid` with focus color + shadow level 200",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Tab navigation supported throughout all interactive components",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "High contrast text: near-black on white exceeds WCAG AAA (>14:1 ratio)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Default: Standard appearance with whisper borders",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Hover: Color shift on text, scale(1.05) on buttons, underline on links",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Active/Pressed: scale(0.9) transform, darker background variant",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Focus: Blue outline ring with shadow reinforcement",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Disabled: Warm gray (`#a39e98`) text, reduced opacity",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Primary text (rgba(0,0,0,0.95)) on white: ~18:1 ratio",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Secondary text (#615d59) on white: ~5.5:1 ratio (WCAG AA)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Blue CTA (#0075de) on white: ~4.6:1 ratio (WCAG AA for large text)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        },
+        {
+          "text": "Badge text (#097fe8) on badge bg (#f2f9ff): ~4.5:1 ratio (WCAG AA for large text)",
+          "frequency": 1,
+          "systems": [
+            "notion"
+          ]
+        }
+      ],
+      "top_agentic_first": []
+    },
+    "iconography": {
+      "label": "Iconography",
+      "top_all": [],
+      "top_dev_analyst": [],
+      "top_agentic_first": []
+    },
+    "data_viz": {
+      "label": "Data visualization",
+      "top_all": [],
+      "top_dev_analyst": [],
+      "top_agentic_first": []
+    },
+    "agent_guide": {
+      "label": "Agent prompt guide",
+      "top_all": [
+        {
+          "text": "Focus on ONE component at a time",
+          "frequency": 12,
+          "systems": [
+            "binance",
+            "claude",
+            "cohere",
+            "composio",
+            "expo",
+            "meta",
+            "nike",
+            "ollama"
+          ]
+        },
+        {
+          "text": "Background: White (`#ffffff`)",
+          "frequency": 7,
+          "systems": [
+            "airtable",
+            "coinbase",
+            "ibm",
+            "kraken",
+            "miro",
+            "pinterest",
+            "webflow"
+          ]
+        },
+        {
+          "text": "Background: Pure White (`#ffffff`)",
+          "frequency": 6,
+          "systems": [
+            "bmw",
+            "cal",
+            "mintlify",
+            "notion",
+            "stripe",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Reference specific color names and hex codes from this document",
+          "frequency": 5,
+          "systems": [
+            "binance",
+            "meta",
+            "nike",
+            "shopify",
+            "starbucks"
+          ]
+        },
+        {
+          "text": "Page Background: \"Pure White (#ffffff)\"",
+          "frequency": 5,
+          "systems": [
+            "cohere",
+            "ollama",
+            "replicate",
+            "together-ai",
+            "uber"
+          ]
+        },
+        {
+          "text": "Page Background: \"Parchment (#f5f4ed)\"",
+          "frequency": 2,
+          "systems": [
+            "claude",
+            "kami"
+          ]
+        },
+        {
+          "text": "Card Surface: \"Ivory (#faf9f5)\"",
+          "frequency": 2,
+          "systems": [
+            "claude",
+            "kami"
+          ]
+        },
+        {
+          "text": "Background Light: \"Pure White (#FFFFFF)\"",
+          "frequency": 2,
+          "systems": [
+            "ferrari",
+            "renault"
+          ]
+        },
+        {
+          "text": "Background Dark: \"Absolute Black (#000000)\"",
+          "frequency": 2,
+          "systems": [
+            "ferrari",
+            "renault"
+          ]
+        },
+        {
+          "text": "Background: White (`#FFFFFF`)",
+          "frequency": 2,
+          "systems": [
+            "meta",
+            "nike"
+          ]
+        },
+        {
+          "text": "Three weights only: 400 (read), 500 (interact), 600 (announce)",
+          "frequency": 2,
+          "systems": [
+            "mintlify",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Primary CTA: \"Rausch (#ff385c)\"",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Page background: \"Canvas White (#ffffff)\"",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Subsurface: \"Soft Cloud (#f7f7f7)\"",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        },
+        {
+          "text": "Heading / body text: \"Ink Black (#222222)\"",
+          "frequency": 1,
+          "systems": [
+            "airbnb"
+          ]
+        }
+      ],
+      "top_dev_analyst": [
+        {
+          "text": "Focus on ONE component at a time",
+          "frequency": 6,
+          "systems": [
+            "claude",
+            "cohere",
+            "composio",
+            "expo",
+            "ollama",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Background: Pure White (`#ffffff`)",
+          "frequency": 4,
+          "systems": [
+            "cal",
+            "mintlify",
+            "notion",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Page Background: \"Pure White (#ffffff)\"",
+          "frequency": 4,
+          "systems": [
+            "cohere",
+            "ollama",
+            "replicate",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Background: White (`#ffffff`)",
+          "frequency": 3,
+          "systems": [
+            "airtable",
+            "miro",
+            "webflow"
+          ]
+        },
+        {
+          "text": "Three weights only: 400 (read), 500 (interact), 600 (announce)",
+          "frequency": 2,
+          "systems": [
+            "mintlify",
+            "vercel"
+          ]
+        },
+        {
+          "text": "Text: Deep Navy (`#181d26`)",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "CTA: Airtable Blue (`#1b61c9`)",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Border: `#e0e2e6`",
+          "frequency": 1,
+          "systems": [
+            "airtable"
+          ]
+        },
+        {
+          "text": "Primary Text: Charcoal (`#242424`)",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Deep Text: Midnight (`#111111`)",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Secondary Text: Mid Gray (`#898989`)",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Link: Link Blue (`#0099ff`)",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "CTA Button: Charcoal (`#242424`) bg, white text",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "Shadow Border: `rgba(34, 42, 53, 0.08)` ring",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        },
+        {
+          "text": "\"Create a hero section with white background, 64px Cal Sans heading at weight 600, line-height 1.10, #242424 text, centered layout with a dark CTA button (#242424, 8px radius, white text)\"",
+          "frequency": 1,
+          "systems": [
+            "cal"
+          ]
+        }
+      ],
+      "top_agentic_first": [
+        {
+          "text": "Focus on ONE component at a time",
+          "frequency": 4,
+          "systems": [
+            "claude",
+            "cohere",
+            "ollama",
+            "voltagent"
+          ]
+        },
+        {
+          "text": "Page Background: \"Pure White (#ffffff)\"",
+          "frequency": 4,
+          "systems": [
+            "cohere",
+            "ollama",
+            "replicate",
+            "together-ai"
+          ]
+        },
+        {
+          "text": "Brand CTA: \"Terracotta Brand (#c96442)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Page Background: \"Parchment (#f5f4ed)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Card Surface: \"Ivory (#faf9f5)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Primary Text: \"Anthropic Near Black (#141413)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Secondary Text: \"Olive Gray (#5e5d59)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Tertiary Text: \"Stone Gray (#87867f)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Borders (light): \"Border Cream (#f0eee6)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "Dark Surface: \"Dark Surface (#30302e)\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "\"Create a hero section on Parchment (#f5f4ed) with a headline at 64px Anthropic Serif weight 500, line-height 1.10. Use Anthropic Near Black (#141413) text. Add a subtitle in Olive Gray (#5e5d59) at 20px Anthropic Sans with 1.60 line-height. Place a Terracotta Brand (#c96442) CTA button with Ivory text, 12px radius.\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        },
+        {
+          "text": "\"Design a feature card on Ivory (#faf9f5) with a 1px solid Border Cream (#f0eee6) border and comfortably rounded corners (8px). Title in Anthropic Serif at 25px weight 500, description in Olive Gray (#5e5d59) at 16px Anthropic Sans. Add a whisper shadow (rgba(0,0,0,0.05) 0px 4px 24px).\"",
+          "frequency": 1,
+          "systems": [
+            "claude"
+          ]
+        }
+      ]
+    }
+  }
+}

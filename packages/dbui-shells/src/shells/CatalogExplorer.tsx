@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react"
 import { Popover } from "@base-ui/react/popover"
 import { Button } from "dbui/components/ui/button"
+import { ButtonIcon } from "dbui/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCellTitle, TableCellIcon, TableCellTitleContent, TableCellMeta } from "dbui/components/ui/table"
 import { DataTreeView, type TreeSectionData, type TreeNodeData } from "dbui/components/ui/data-tree"
@@ -153,26 +154,27 @@ function CatalogTree({
       <div className="flex h-10 items-center gap-2 px-2">
         {/* Back button — only when focused deeper than root */}
         {currentRoot && (
-          <button
+          <Button
             onClick={onUnfocus}
-            className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground"
+            variant="ghost"
+            size="icon-sm"
             aria-label="Go back"
           >
             <ChevronLeft className="size-4" />
-          </button>
+          </Button>
         )}
 
         {/* Root switcher chip — Figma: bg-muted, rounded-sm, py-1 px-1 pr-2, gap-1 */}
         <Popover.Root>
           <Popover.Trigger
             render={
-              <button className="flex items-center gap-1 min-w-0 rounded-sm bg-muted py-1 pl-1 pr-2 text-[13px] text-foreground hover:bg-hover active:bg-press transition-colors">
+              <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-sm bg-muted px-1 pr-2 shadow-none hover:bg-hover active:bg-press">
                 <span className="flex shrink-0 items-center gap-0.5 text-muted-foreground [&_svg]:size-4">
-                  <span className="text-[11px] font-mono text-muted-foreground">./</span>
+                  <span className="text-[12px] leading-[16px] font-mono text-muted-foreground">./</span>
                   {currentRoot?.icon ?? defaultIcon}
                 </span>
-                <span className="truncate max-w-[140px]">{currentRoot?.label ?? "Catalog"}</span>
-              </button>
+                <span className="truncate max-w-36 font-normal">{currentRoot?.label ?? "Catalog"}</span>
+              </Button>
             }
           />
           <Popover.Portal>
@@ -183,10 +185,11 @@ function CatalogTree({
                   focusPath.map((entry, i) => {
                     const isCurrent = i === focusPath.length - 1
                     return (
-                      <button
+                      <Button
                         key={entry.id}
-                        className={`flex w-full min-h-7 items-center gap-2 rounded-sm py-1 text-[13px] hover:bg-hover text-foreground ${isCurrent ? "bg-active" : ""}`}
-                        style={{ paddingLeft: `${6 + i * 12}px` }}
+                        variant="ghost"
+                        className={`h-7 w-full justify-start gap-2 py-1 text-[13px] ${isCurrent ? "bg-active" : ""}`}
+                        style={{ paddingLeft: `${8 + i * 12}px` }}
                         onClick={() => {
                           if (i === 0 && focusPath.length === 1 && onUnfocus) onUnfocus()
                           else if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
@@ -194,32 +197,31 @@ function CatalogTree({
                       >
                         <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{entry.icon}</span>
                         <span className="truncate">{entry.label}</span>
-                      </button>
+                      </Button>
                     )
                   })
                 ) : (
-                  <button
-                    className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] bg-active text-foreground hover:bg-hover"
-                  >
+                  <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-active px-1.5 py-1 text-[13px]">
                     <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{defaultIcon}</span>
                     Catalog
-                  </button>
+                  </Button>
                 )}
 
                 {/* Go to section */}
                 <div className="my-1 h-px bg-border" />
                 <div className="px-1.5 py-1 text-[12px] text-muted-foreground">Go to</div>
                 {(goToItems ?? []).map((item) => (
-                  <button
+                  <Button
                     key={item.id}
-                    className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
+                    variant="ghost"
+                    className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-[13px]"
                     onClick={() => {
                       if (onFocusNode) onFocusNode(item.id, item.label, item.icon)
                     }}
                   >
                     <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{item.icon}</span>
                     {item.label}
-                  </button>
+                  </Button>
                 ))}
               </Popover.Popup>
             </Popover.Positioner>
@@ -417,7 +419,7 @@ function CatalogLanding({
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-2">
           <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-5"><Data /></span>
-          <h1 className="text-[22px] font-semibold leading-[28px] text-foreground" style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif" }}>
+          <h1 className="font-display text-[22px] font-semibold leading-[28px] text-foreground">
             {title}
           </h1>
         </div>
@@ -426,7 +428,11 @@ function CatalogLanding({
             <>
               <Button variant="outline">Govern</Button>
               <Button variant="outline">Connect<ButtonChevron /></Button>
-              <Button variant="outline"><span className="flex items-center text-muted-foreground [&_svg]:size-4"><UserGroup /></span>Share<ButtonChevron /></Button>
+              <Button variant="outline">
+                <ButtonIcon><UserGroup /></ButtonIcon>
+                Share
+                <ButtonChevron />
+              </Button>
               <Button>Create<ButtonChevron /></Button>
             </>
           )}
@@ -455,7 +461,7 @@ function CatalogLanding({
             <TableRow>
               <TableHead className="w-[45%]">Name</TableHead>
               <TableHead>Reason</TableHead>
-              <TableHead className="w-[100px]">Type</TableHead>
+              <TableHead className="w-24">Type</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -480,9 +486,9 @@ function CatalogLanding({
         </Table>
         {items.length > 0 && (
           <div className="flex justify-center py-4">
-            <button className="flex items-center gap-1 text-[13px] text-primary hover:text-primary-hover">
+            <Button variant="ghost" className="text-primary hover:text-primary-hover">
               Load more <ChevronDown className="size-4" />
-            </button>
+            </Button>
           </div>
         )}
       </div>

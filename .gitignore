@@ -17,13 +17,14 @@ packages/dbui/design-tokens.json
 figma.config.json
 .claude/
 
-# Maintainer-only working notes & one-shot audits.
-# Never distributed to consumers; preserved locally for reference until
-# the L2 auto-generation pipeline replaces the manually-curated lookups.
-project/
+.DS_Store
 
 # apps/portal build artifacts (the app itself IS tracked)
 apps/portal/.next/
 apps/portal/node_modules/
 apps/portal/storybook-static/
 apps/portal/out/
+
+# Google Drive (and similar) sync temp folders — huge file counts; keep out of repos.
+.tmp.driveupload/
+.tmp.drivedownload/

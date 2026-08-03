@@ -28,7 +28,7 @@ File names are kebab-case; component exports are PascalCase. Some files export m
 | Category     | What it does                     | Examples                                                                                                   |
 | ------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `action`     | Triggers something on click      | Button, SplitButton                                                                                        |
-| `input`      | Captures user data               | Input, Textarea, Select, Combobox, Checkbox, Switch, Slider                                                |
+| `input`      | Captures user data               | Input, Textarea, Select, Combobox, Checkbox, Switch, Slider, DateRange                                     |
 | `selection`  | Pick from a small fixed set      | Tabs, SegmentControl, RadioGroup, RadioTile, ToggleGroup                                                   |
 | `menu`       | Floating list of actions/options | DropdownMenu, ContextMenu, Menubar                                                                         |
 | `overlay`    | Floats over the page             | Dialog, AlertDialog, Drawer, Popover, HoverCard, Tooltip, Sonner                                           |
@@ -36,7 +36,7 @@ File names are kebab-case; component exports are PascalCase. Some files export m
 | `display`    | Presents data                    | Table, DataTree, Card, KeyValuePair, Avatar, Tag, Item, Chart, Kbd                                         |
 | `navigation` | Moves the user across views      | Navbar, Breadcrumb, Pagination, EditorTabs                                                                 |
 | `layout`     | Structures the surface           | Accordion, Collapsible, Resizable, ScrollArea, Separator, AspectRatio, Direction, Field, Label, InputGroup |
-| `chrome`     | Page/app-level scaffolding       | PageHeader, PlatformHeader                                                                                 |
+| `chrome`     | Page/app-level scaffolding       | PageHeader, ControlsBar, PlatformHeader                                                                    |
 
 
 ---
@@ -55,13 +55,14 @@ Items are grouped by category, alphabetical within each. The category column is 
 | `Toggle`      | Buttons that need to remember pressed state (icon toolbar toggles, filter pills) | Stateless actions → use `Button`; on/off settings → `Switch`                       | toggle button, sticky button                       | `Toggle Button`                              |
 
 
-### `input` — 8 items
+### `input` — 9 items
 
 
 | Component      | Use for                                                                           | Avoid for / Use X instead                                                                     | Synonyms                                           | Figma                                     |
 | -------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------- | ----------------------------------------- |
 | `Checkbox`     | Multi-select within a group, indeterminate parent states, form fields with submit | On/off settings that take effect immediately → use `Switch`                                   | checkmark, multiselect                             | `Checkbox`                                |
 | `Combobox`     | Pick one or many from 10+ options with search                                     | Fewer than 10 fixed options → use `Select`                                                    | typeahead, autocomplete, picker, searchable select | `Combobox` · `Typeahead Combobox` (multi) |
+| `DateRange`    | Pair of start + end date fields (run history, audit windows, time-window filters) | Single date → flag the gap (no `DatePicker` primitive yet)                                    | date picker pair, time window, start/end dates     | `Date Range`                              |
 | `Input`        | Single-line text fields, numbers, search, email — md size by default              | Multi-line → use `Textarea`; >10 options → `Combobox`; search inside a control → `InputGroup` | text field, text input, textbox                    | `Input`                                   |
 | `NativeSelect` | Native HTML `<select>` for accessibility-first or environments without JS         | Anything else — prefer `Select` for visual consistency                                        | html select, native dropdown                       | *code-only*                               |
 | `Select`       | Pick one from ≤10 fixed options                                                   | More than 10 options or needs search → use `Combobox`                                         | dropdown, picker, single-select                    | `Select`                                  |
@@ -164,13 +165,14 @@ Items are grouped by category, alphabetical within each. The category column is 
 | `Separator`   | Visual divider between content groups                                                    | Decorative use — only when grouping is real                                 | divider, hr, line, rule                       | `Separator`    |
 
 
-### `chrome` — 2 items
+### `chrome` — 3 items
 
 
-| Component        | Use for                                                                               | Avoid for / Use X instead                                                 | Synonyms                          | Figma             |
-| ---------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------- | ----------------- |
-| `PageHeader`     | Top of every content surface — breadcrumb, title row, tabs                            | Inside cards or sub-sections — only one PageHeader per surface            | title bar, page title row         | `Page Header`     |
-| `PlatformHeader` | The Databricks 48px top bar (sidebar toggle, search, workspace, Genie, apps, profile) | Custom top bars — every product page uses PlatformHeader via `Base` shell | top bar, app header, platform bar | `Platform Header` |
+| Component        | Use for                                                                               | Avoid for / Use X instead                                                                          | Synonyms                                              | Figma             |
+| ---------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------------- |
+| `ControlsBar`    | Filter / search / sort row below `PageHeader` (Shell A list pages, etc.)              | Inline filters inside a card or table — render those locally; one `ControlsBar` per surface        | filter bar, control bar, toolbar, search bar          | `Controls Bar`    |
+| `PageHeader`     | Top of every content surface — title row + optional Tabs row                          | Filter/search controls — render `<ControlsBar>` as a sibling below; only one PageHeader per surface | title bar, page title row                             | `Page Header`     |
+| `PlatformHeader` | The Databricks 48px top bar (sidebar toggle, search, workspace, Genie, apps, profile) | Custom top bars — every product page uses PlatformHeader via `Base` shell                          | top bar, app header, platform bar                     | `Platform Header` |
 
 
 ### Deprecated

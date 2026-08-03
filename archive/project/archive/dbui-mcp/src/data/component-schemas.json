@@ -1,0 +1,297 @@
+[
+  {
+    "name": "accordion",
+    "sourceFile": "packages/dbui/src/components/ui/accordion.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "alert-dialog",
+    "sourceFile": "packages/dbui/src/components/ui/alert-dialog.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "alert",
+    "sourceFile": "packages/dbui/src/components/ui/alert.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "aspect-ratio",
+    "sourceFile": "packages/dbui/src/components/ui/aspect-ratio.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "avatar",
+    "sourceFile": "packages/dbui/src/components/ui/avatar.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "badge",
+    "sourceFile": "packages/dbui/src/components/ui/badge.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "breadcrumb",
+    "sourceFile": "packages/dbui/src/components/ui/breadcrumb.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "button-group",
+    "sourceFile": "packages/dbui/src/components/ui/button-group.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "button",
+    "sourceFile": "packages/dbui/src/components/ui/button.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "card",
+    "sourceFile": "packages/dbui/src/components/ui/card.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "chart",
+    "sourceFile": "packages/dbui/src/components/ui/chart.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "checkbox",
+    "sourceFile": "packages/dbui/src/components/ui/checkbox.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "collapsible",
+    "sourceFile": "packages/dbui/src/components/ui/collapsible.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "combobox",
+    "sourceFile": "packages/dbui/src/components/ui/combobox.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "context-menu",
+    "sourceFile": "packages/dbui/src/components/ui/context-menu.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "data-tree",
+    "sourceFile": "packages/dbui/src/components/ui/data-tree.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "dialog",
+    "sourceFile": "packages/dbui/src/components/ui/dialog.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "direction",
+    "sourceFile": "packages/dbui/src/components/ui/direction.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "drawer",
+    "sourceFile": "packages/dbui/src/components/ui/drawer.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "dropdown-menu",
+    "sourceFile": "packages/dbui/src/components/ui/dropdown-menu.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "editor-tabs",
+    "sourceFile": "packages/dbui/src/components/ui/editor-tabs.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "empty",
+    "sourceFile": "packages/dbui/src/components/ui/empty.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "field",
+    "sourceFile": "packages/dbui/src/components/ui/field.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "hover-card",
+    "sourceFile": "packages/dbui/src/components/ui/hover-card.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "input-group",
+    "sourceFile": "packages/dbui/src/components/ui/input-group.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "input",
+    "sourceFile": "packages/dbui/src/components/ui/input.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "item",
+    "sourceFile": "packages/dbui/src/components/ui/item.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "kbd",
+    "sourceFile": "packages/dbui/src/components/ui/kbd.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "key-value-pair",
+    "sourceFile": "packages/dbui/src/components/ui/key-value-pair.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "label",
+    "sourceFile": "packages/dbui/src/components/ui/label.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "menubar",
+    "sourceFile": "packages/dbui/src/components/ui/menubar.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "native-select",
+    "sourceFile": "packages/dbui/src/components/ui/native-select.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "navbar",
+    "sourceFile": "packages/dbui/src/components/ui/navbar.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "page-header",
+    "sourceFile": "packages/dbui/src/components/ui/page-header.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "pagination",
+    "sourceFile": "packages/dbui/src/components/ui/pagination.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "platform-header",
+    "sourceFile": "packages/dbui/src/components/ui/platform-header.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "popover",
+    "sourceFile": "packages/dbui/src/components/ui/popover.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "progress",
+    "sourceFile": "packages/dbui/src/components/ui/progress.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "radio-group",
+    "sourceFile": "packages/dbui/src/components/ui/radio-group.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "radio-tile",
+    "sourceFile": "packages/dbui/src/components/ui/radio-tile.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "resizable",
+    "sourceFile": "packages/dbui/src/components/ui/resizable.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "scroll-area",
+    "sourceFile": "packages/dbui/src/components/ui/scroll-area.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "segment-control",
+    "sourceFile": "packages/dbui/src/components/ui/segment-control.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "select",
+    "sourceFile": "packages/dbui/src/components/ui/select.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "separator",
+    "sourceFile": "packages/dbui/src/components/ui/separator.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "skeleton",
+    "sourceFile": "packages/dbui/src/components/ui/skeleton.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "slider",
+    "sourceFile": "packages/dbui/src/components/ui/slider.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "sonner",
+    "sourceFile": "packages/dbui/src/components/ui/sonner.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "spinner",
+    "sourceFile": "packages/dbui/src/components/ui/spinner.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "split-button",
+    "sourceFile": "packages/dbui/src/components/ui/split-button.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "status",
+    "sourceFile": "packages/dbui/src/components/ui/status.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "switch",
+    "sourceFile": "packages/dbui/src/components/ui/switch.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "table",
+    "sourceFile": "packages/dbui/src/components/ui/table.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "tabs",
+    "sourceFile": "packages/dbui/src/components/ui/tabs.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "tag",
+    "sourceFile": "packages/dbui/src/components/ui/tag.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "textarea",
+    "sourceFile": "packages/dbui/src/components/ui/textarea.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "toggle-group",
+    "sourceFile": "packages/dbui/src/components/ui/toggle-group.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "toggle",
+    "sourceFile": "packages/dbui/src/components/ui/toggle.tsx",
+    "schemaExtracted": false
+  },
+  {
+    "name": "tooltip",
+    "sourceFile": "packages/dbui/src/components/ui/tooltip.tsx",
+    "schemaExtracted": false
+  }
+]

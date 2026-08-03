@@ -1,0 +1,38 @@
+{
+  "name": "dbui-viz",
+  "version": "0.1.0",
+  "description": "DBUI Viz — Vega data visualizations for Databricks UI, themed by dbui viz tokens",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./lib/*": "./src/lib/*.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "react-vega": "^8.0.0",
+    "tailwind-merge": "^3.5.0",
+    "vega": "^6.2.0",
+    "vega-embed": "^7.1.0",
+    "vega-lite": "^6.4.1"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  }
+}

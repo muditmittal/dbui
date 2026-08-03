@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DESIGN.md Category Audit — DBUI</title>
+  <style>
+    body { font-family: system-ui, sans-serif; font-size: 14px; line-height: 1.5; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #161616; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 18px; margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0 24px; font-size: 13px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #f6f6f6; }
+    .callout { background: #ebf5ff; border: 1px solid #b8d9f5; padding: 12px 16px; border-radius: 6px; margin: 16px 0; }
+    .muted { color: #666; font-size: 12px; }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+
+<h1>DESIGN.md category audit</h1>
+<p class="muted">151 Open Design packages · July 2026 · For Databricks / DBUI</p>
+
+<div class="callout">
+  <strong>Proposed Databricks category</strong><br>
+  Enterprise B2B · Data &amp; AI Platform · Light-first workbench UI
+</div>
+
+<h2>Three lenses</h2>
+<table>
+  <tr><th>Lens</th><th>n</th><th>Use for DBUI</th></tr>
+  <tr><td>All systems</td><td>151</td><td>Full taxonomy — know what to ignore</td></tr>
+  <tr><td>Dev / analyst</td><td>52</td><td>Vercel, Linear, ClickHouse, Notion, Supabase</td></tr>
+  <tr><td>Agentic-first</td><td>20</td><td>Cursor, Lovable, Claude, VoltAgent (Genie surfaces)</td></tr>
+</table>
+
+<h2>Key findings</h2>
+<ul>
+  <li><strong>83%</strong> of dev/analyst systems have an Agent Prompt Guide (vs 39% consumer)</li>
+  <li><strong>0%</strong> of corpus has iconography or data-viz sections — DBUI can lead</li>
+  <li>Dev tools prioritize <strong>tables + rules</strong>, not motion or brand poetry</li>
+  <li>Agentic systems add: hex quick-ref, copy-paste prompts, non-negotiables</li>
+</ul>
+
+<h2>Metadata categories — compare DBUI here</h2>
+<table>
+  <tr><th>Category</th><th>n</th><th>Agent guide %</th><th>Examples</th></tr>
+  <tr><td>AI &amp; LLM</td><td>15</td><td>80%</td><td>claude, perplexity</td></tr>
+  <tr><td>Backend &amp; Data</td><td>9</td><td>100%</td><td>clickhouse, supabase, sentry</td></tr>
+  <tr><td>Developer Tools</td><td>9</td><td>78%</td><td>cursor, vercel, raycast</td></tr>
+  <tr><td>Productivity &amp; SaaS</td><td>12</td><td>75%</td><td>linear-app, notion</td></tr>
+  <tr><td>Design &amp; Creative</td><td>7</td><td>86%</td><td>figma, framer</td></tr>
+</table>
+<p class="muted">Ignore: Automotive, Fintech consumer, E-Commerce, Media &amp; Consumer, style presets</p>
+
+<h2>Content topics — dev/analyst coverage</h2>
+<table>
+  <tr><th>Topic</th><th>Dev/analyst</th><th>Notes</th></tr>
+  <tr><td>Visual theme, Typography, Components, Layout</td><td>100%</td><td>Table stakes</td></tr>
+  <tr><td>Agent prompt guide</td><td>83%</td><td>Critical for DBUI</td></tr>
+  <tr><td>Do's / Don'ts</td><td>92%</td><td>High</td></tr>
+  <tr><td>Depth &amp; elevation</td><td>79%</td><td>High</td></tr>
+  <tr><td>Responsive</td><td>79%</td><td>Medium</td></tr>
+  <tr><td>Motion</td><td>25%</td><td>Deprioritize</td></tr>
+  <tr><td>Accessibility, Iconography, Data viz</td><td>0%</td><td>DBUI differentiator</td></tr>
+</table>
+
+<h2>Agentic-first systems (n=20)</h2>
+<p>cursor · lovable · claude · voltagent · opencode-ai · perplexity · openai · huggingface · replicate · together-ai · x-ai · mistral-ai · ollama · cohere · elevenlabs · minimax · runwayml · warp · mission-control · agentic</p>
+<ul>
+  <li>§9 leads with literal hex colors</li>
+  <li>5–8 copy-paste example prompts</li>
+  <li>8–10 numbered non-negotiables</li>
+  <li>Iteration checklist before shipping</li>
+</ul>
+
+<h2>Databricks guidelines (all 14 topics)</h2>
+<table>
+  <tr><th>#</th><th>Category</th><th>DBUI should do</th><th>Priority</th></tr>
+  <tr><td>1</td><td>Visual theme</td><td>Two-layer shell; signature: 13px · DuBois blue · shell-first · sentence case</td><td>High</td></tr>
+  <tr><td>2</td><td>Color</td><td>4-col token table; one accent; ai-gradient for Genie only</td><td>High</td></tr>
+  <tr><td>3</td><td>Typography</td><td>Display/Text/Mono; 400+600; 13px base</td><td>High</td></tr>
+  <tr><td>4</td><td>Components</td><td>Pointer to component-index; no raw HTML</td><td>Medium</td></tr>
+  <tr><td>5</td><td>Layout</td><td>Always Base shell; compositions A–E</td><td>High</td></tr>
+  <tr><td>6</td><td>Depth</td><td>shadow-xs / md / lg + focus rules</td><td>High</td></tr>
+  <tr><td>7</td><td>Motion</td><td>Minimal; hover/press tokens only</td><td>Low</td></tr>
+  <tr><td>8</td><td>Responsive</td><td>Base shell breakpoint table</td><td>Medium</td></tr>
+  <tr><td>9</td><td>Voice</td><td>Pointer to brandvoice.md</td><td>Low</td></tr>
+  <tr><td>10</td><td>Do's / Don'ts</td><td>anti-slop.md; wrong-cohort redirect</td><td>High</td></tr>
+  <tr><td>11</td><td>Accessibility</td><td>Focus rings, contrast pairs — differentiator</td><td>High</td></tr>
+  <tr><td>12</td><td>Iconography</td><td>icon-index.csv mandatory — differentiator</td><td>High</td></tr>
+  <tr><td>13</td><td>Data viz</td><td>Chart tokens, dense tables — differentiator</td><td>High</td></tr>
+  <tr><td>14</td><td>Agent guide</td><td>§9 centerpiece: hex ref + prompts + checklist</td><td>Critical</td></tr>
+</table>
+
+<p class="muted">Local file only — no network. Full report: CATEGORY-AUDIT.html in same folder.</p>
+
+</body>
+</html>

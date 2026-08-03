@@ -3,6 +3,8 @@ import { Popover } from "@base-ui/react/popover"
 import { Input } from "dbui/components/ui/input"
 import { Checkbox } from "dbui/components/ui/checkbox"
 import { Switch } from "dbui/components/ui/switch"
+import { Button } from "dbui/components/ui/button"
+import { Tag, TagLabel, TagValue, TagRemove } from "dbui/components/ui/tag"
 import { Sliders } from "dbui/components/icons/Sliders"
 import { ChevronLeft } from "dbui/components/icons/ChevronLeft"
 import { ChevronRight } from "dbui/components/icons/ChevronRight"
@@ -69,10 +71,10 @@ export function FacetedFilter({
     <div className={className}>
       {/* Search + Filter button row */}
       <div className="group/ig flex items-center rounded-sm border border-transparent focus-within:border-primary focus-within:shadow-xs">
-        <input
+        <Input
           placeholder="Search"
+          className="h-8 flex-1 min-w-0 rounded-l-sm rounded-r-none shadow-xs focus-visible:border-transparent focus-visible:shadow-none"
           onChange={(e) => onSearch?.(e.target.value)}
-          className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input bg-background px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-muted-foreground group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
         />
         {/* Filter button */}
         <Popover.Root
@@ -84,12 +86,14 @@ export function FacetedFilter({
         >
           <Popover.Trigger
             render={
-              <button
+              <Button
                 aria-label="Filter"
-                className="flex size-8 shrink-0 items-center justify-center rounded-r-sm border border-input bg-background shadow-xs text-muted-foreground transition-colors hover:bg-hover hover:text-foreground active:bg-press focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
+                variant="ghost"
+                size="icon-md"
+                className="rounded-l-none rounded-r-sm border border-input bg-background shadow-xs text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
               >
                 <Sliders />
-              </button>
+              </Button>
             }
           />
           <Popover.Portal>
@@ -102,15 +106,16 @@ export function FacetedFilter({
                     {Object.keys(facets).map((facet) => {
                       const count = selected[facet]?.size || 0
                       return (
-                        <button
+                        <Button
                           key={facet}
-                          className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover cursor-default"
+                          variant="ghost"
+                          className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-foreground"
                           onClick={() => { setActiveFacet(facet); setSearch("") }}
                         >
                           <span className="flex-1 text-left">{facet}:</span>
                           {count > 0 && <span className="text-[12px] text-primary">{count}</span>}
                           <span className="text-muted-foreground [&_svg]:size-4"><ChevronRight /></span>
-                        </button>
+                        </Button>
                       )
                     })}
                     <div className="-mx-1 my-1 h-px bg-border" />
@@ -124,8 +129,9 @@ export function FacetedFilter({
                 {/* Drilled in: facet values */}
                 {activeFacet && (
                   <div>
-                    <button
-                      className="flex w-full items-center gap-1 px-1.5 py-1.5 text-[13px] text-foreground hover:bg-hover"
+                    <Button
+                      variant="ghost"
+                      className="h-auto w-full justify-start gap-1 px-1.5 py-1.5"
                       onClick={() => {
                         if (activeNested) { setActiveNested(null); setSearch("") }
                         else { setActiveFacet(null); setSearch("") }
@@ -133,7 +139,7 @@ export function FacetedFilter({
                     >
                       <span className="text-muted-foreground [&_svg]:size-4"><ChevronLeft /></span>
                       {activeFacet}:
-                    </button>
+                    </Button>
                     <div className="h-px bg-border" />
                     <div className="p-1">
                       <Input
@@ -143,7 +149,7 @@ export function FacetedFilter({
                         autoFocus
                       />
                     </div>
-                    <div className="max-h-[220px] overflow-y-auto p-1 pt-0" role="group">
+                    <div className="max-h-56 overflow-y-auto p-1 pt-0" role="group">
                       {filteredValues.map((value) => {
                         const hasNested = !activeNested && facets[activeFacet]?.nested?.[value]
                         const fullValue = activeNested ? `${activeNested}/${value}` : value
@@ -157,12 +163,14 @@ export function FacetedFilter({
                                 onCheckedChange={() => toggleValue(activeFacet, value)}
                               />
                               <span className="flex-1 text-left">{value}</span>
-                              <button
-                                className="text-muted-foreground [&_svg]:size-4"
+                              <Button
+                                variant="ghost"
+                                size="icon-sm"
+                                aria-label={`Open ${value}`}
                                 onClick={() => setActiveNested(value)}
                               >
                                 <ChevronRight />
-                              </button>
+                              </Button>
                             </div>
                           )
                         }
@@ -203,18 +211,17 @@ export function FacetedFilter({
             const facetValues = facets[facet]?.values || []
             return (
               <Popover.Root key={facet}>
-                <span className="inline-flex max-w-[200px] items-center gap-1 rounded-sm bg-active px-1.5 py-0.5 text-[12px]">
+                <Tag className="max-w-[240px] bg-active text-[12px]">
                   <Popover.Trigger
                     render={
-                      <button className="inline-flex items-center gap-1 min-w-0 hover:underline cursor-pointer">
-                        <span className="text-muted-foreground shrink-0">{facet}:</span>
-                        <span className="truncate text-foreground">{first}</span>
-                        {extra > 0 && <span className="shrink-0 text-muted-foreground">+{extra}</span>}
-                      </button>
+                      <Button variant="ghost" className="h-auto min-w-0 px-0 py-0 hover:underline">
+                        <TagLabel className="text-muted-foreground">{facet}</TagLabel>
+                        <TagValue className="truncate text-foreground">{first}</TagValue>
+                        {extra > 0 && <TagValue className="text-muted-foreground">+{extra}</TagValue>}
+                      </Button>
                     }
                   />
-                  <button
-                    className="ml-0.5 shrink-0 rounded-sm p-0.5 text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press [&_svg]:size-3"
+                  <TagRemove
                     onClick={() => {
                       setSelected((prev) => {
                         const next = { ...prev }
@@ -224,15 +231,15 @@ export function FacetedFilter({
                     }}
                   >
                     <Close />
-                  </button>
-                </span>
+                  </TagRemove>
+                </Tag>
                 <Popover.Portal>
                   <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
                     <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden">
                       <div className="p-1">
                         <div className="px-1.5 py-1 text-[12px] text-muted-foreground">{facet}</div>
                       </div>
-                      <div className="max-h-[220px] overflow-y-auto p-1 pt-0" role="group">
+                      <div className="max-h-56 overflow-y-auto p-1 pt-0" role="group">
                         {facetValues.map((value) => {
                           const checked = isChecked(facet, value)
                           return (
@@ -255,7 +262,9 @@ export function FacetedFilter({
               </Popover.Root>
             )
           })}
-          <button className="text-[12px] text-primary hover:underline whitespace-nowrap" onClick={resetAll}>Reset</button>
+          <Button variant="link" size="sm" className="h-auto p-0 text-[12px] whitespace-nowrap" onClick={resetAll}>
+            Reset
+          </Button>
         </div>
       )}
     </div>

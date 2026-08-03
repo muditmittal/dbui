@@ -12,13 +12,18 @@ type Props = {
   source: string
   /** Key into variant-mappings.json (e.g. "button", "select") for the Property|Figma|Code table */
   componentKey?: string
+  /** Override the @figma URL parsed from source. Useful when one source file
+   *  documents multiple components (e.g. data-tree.tsx hosts both Tree, DataTree,
+   *  and FileTree) and the parser-default URL would point to the wrong master. */
+  figmaUrl?: string
 }
 
-export function ComponentMeta({ source, componentKey }: Props) {
+export function ComponentMeta({ source, componentKey, figmaUrl: figmaUrlOverride }: Props) {
   const doc = parseComponentDoc(source)
   if (!doc) return null
 
-  const { guidelines, constraints, figmaUrl } = doc
+  const { guidelines, constraints } = doc
+  const figmaUrl = figmaUrlOverride ?? doc.figmaUrl
   const mappingEntry = componentKey
     ? (variantMappings as Record<string, { figmaCode?: Record<string, VariantData> }>)[componentKey]
     : undefined

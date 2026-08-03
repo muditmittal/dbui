@@ -36,8 +36,11 @@ type SegmentControlVariantProps = {
  * Selected item: bg-active, border-primary (blue), NO rounded corners (flush)
  * Unselected items: no fill, border-input (grey dividers), shadow-xs, NO rounded corners
  *
- * Supports both single and multiple selection via Base UI ToggleGroup primitive.
- * Default is single selection (segment control pattern).
+ * Single-select radio-group semantics by default: exactly one item is active
+ * at all times. Clicking the active item is a no-op (cannot toggle off all
+ * items). Pass `required={false}` to opt out (rare).
+ *
+ * For multi-select, pass `multiple` (Base UI ToggleGroup pass-through).
  */
 const SegmentControlContext = React.createContext<
   SegmentControlVariantProps & {
@@ -49,23 +52,49 @@ const SegmentControlContext = React.createContext<
   orientation: "horizontal",
 })
 
+/**
+ * SegmentControl props.
+ *
+ * `required` (default `true`) enforces radio-group semantics: at least one item
+ * must remain selected at all times. Clicking the active item is a no-op.
+ * Set `required={false}` to allow toggling all items off (rare — prefer a
+ * separate Toggle if that's the intent).
+ */
+type SegmentControlOwnProps = SegmentControlVariantProps & {
+  orientation?: "horizontal" | "vertical"
+  required?: boolean
+}
+
 function SegmentControl({
   className,
   variant,
   size,
   orientation = "horizontal",
+  required = true,
+  onValueChange,
   children,
   ...props
-}: ToggleGroupPrimitive.Props &
-  SegmentControlVariantProps & {
-    orientation?: "horizontal" | "vertical"
-  }) {
+}: ToggleGroupPrimitive.Props & SegmentControlOwnProps) {
+  const handleValueChange = React.useCallback<
+    NonNullable<ToggleGroupPrimitive.Props["onValueChange"]>
+  >(
+    (next, details) => {
+      if (required && next.length === 0) {
+        details.cancel()
+        return
+      }
+      onValueChange?.(next, details)
+    },
+    [onValueChange, required],
+  )
+
   return (
     <ToggleGroupPrimitive
       data-slot="segment-control"
       data-variant={variant}
       data-size={size}
       data-orientation={orientation}
+      onValueChange={handleValueChange}
       className={cn(
         "group/segment-control inline-flex items-center rounded-sm",
         // Default variant: muted bg container with padding and gap
@@ -107,22 +136,24 @@ function SegmentControlItem({
       data-slot="segment-control-item"
       onPressedChange={onPressedChange}
       className={cn(
-        "relative z-10 flex-1 inline-flex items-center justify-center gap-1",
+        "relative flex-1 inline-flex items-center justify-center gap-1",
         "text-[13px] leading-[20px] font-normal whitespace-nowrap",
         "transition-colors outline-none select-none",
-        "focus-visible:border-2 focus-visible:border-ring focus:z-20",
+        "focus-visible:border-2 focus-visible:border-ring focus-visible:z-20",
         "disabled:pointer-events-none disabled:text-disabled-foreground",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 
         // ── Default (slider) variant items: rounded pills, no border ──
         !isOutline && [
-          "rounded-sm border text-muted-foreground",
+          "rounded-sm text-muted-foreground",
           "hover:text-foreground",
           "aria-pressed:bg-background aria-pressed:shadow-xs aria-pressed:text-foreground",
-          "data-[state=on]:bg-background data-[state=on]:shadow-xs data-[state=on]:text-foreground",
         ],
 
         // ── Outline variant items: flush (no radius), with input border dividers ──
+        // Items overlap by -1px on the left so neighbors share a single 1px divider.
+        // Pressed item also overlaps -1px on the RIGHT and gets z-10 so its 4 blue
+        // borders sit on top of the adjacent grey ones at every edge.
         isOutline && [
           "rounded-none border border-input shadow-xs",
           "hover:bg-hover",
@@ -130,8 +161,8 @@ function SegmentControlItem({
           "not-first:-ml-px",
           "first:rounded-l-sm",
           "last:rounded-r-sm",
-          "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:text-accent-foreground aria-pressed:relative aria-pressed:z-10",
-          "data-[state=on]:bg-active data-[state=on]:border-primary data-[state=on]:shadow-none data-[state=on]:text-accent-foreground data-[state=on]:relative data-[state=on]:z-10",
+          "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:text-accent-foreground",
+          "aria-pressed:relative aria-pressed:z-10 aria-pressed:not-last:-mr-px",
         ],
 
         // Sizes

@@ -20,7 +20,13 @@
     ],
     "paths": {
       "@/components/icons/*": ["../../packages/dbui/src/components/icons/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "dbui-viz": ["../../packages/dbui-viz/src"],
+      "dbui-viz/*": ["../../packages/dbui-viz/src/*"],
+      "dbui-genie": ["../../packages/dbui-genie/src"],
+      "dbui-genie/*": ["../../packages/dbui-genie/src/*"],
+      "dbui": ["../../packages/dbui/src"],
+      "dbui/*": ["../../packages/dbui/src/*"]
     }
   },
   "include": [

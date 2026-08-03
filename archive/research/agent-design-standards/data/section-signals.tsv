@@ -1,0 +1,21 @@
+key	display	category	canvas_hex	mode	primary_hex	accent_hex	color_roles	font_families	font_count	body_px	radius_scale	spacing_base_px	component_count	dosdonts_bullets	has_responsive	has_iteration	has_known_gaps
+vercel	Vercel	Developer Tools & IDEs	#ffffff	light	#171717	#0070f3	36	Geist, Inter, system-ui, -apple-system, sans-serif; Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, monospace	2	16	0/4/6/8/12/16/64/100/9999	4	41	14	Y		
+replicate	Replicate	AI & LLM Platforms	#f9f7f3	light	#ea2804	#ea2804	26	rb-freigeist-neue; basier-square; jetbrains-mono	3	16	0/4/6/10/16/9999	2	20	16	Y	Y	Y
+clickhouse	ClickHouse	Backend, Database & DevOps	#0a0a0a	dark	#faff69	#22c55e	24	"Inter, sans-serif"; "JetBrains Mono, ui-monospace, monospace"	2	16	4/6/8/12/9999/9999	4	27	13	Y	Y	Y
+hashicorp	HashiCorp	Backend, Database & DevOps	#000000	dark	#000000	#2b89ff	30	hashicorpSans	1	16	4/6/8/12/16/24/9999/9999	1	22	14	Y	Y	Y
+cohere	Cohere	AI & LLM Platforms	#ffffff	light	#17171c		23	CohereText; Unica77 Cohere Web; CohereMono	3	16	4/8/16/22/30/32/9999	2	14	14	Y	Y	Y
+together	Together AI	AI & LLM Platforms	#ffffff	light	#000000	#fc4c02	13	The Future, Inter, Helvetica Neue, Arial, sans-serif; PP Neue Montreal Mono, ui-monospace, SF Mono, Menlo, monospace	2	16	0/4/8/9999	2	36	13	Y		
+sentry	Sentry	Backend, Database & DevOps		unknown	#150f23	#c2ef4e	21	"Sentri Display, Rubik, system-ui, sans-serif"; "Rubik, -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif"; "Rubik, -apple-system, system-ui, sans-serif"; "Monaco, Menlo, Ubuntu Mono, monospace"	4	16	4/6/8/10/12/18/9999	2	21	12	Y	Y	
+airtable	Airtable	Design & Creative Tools	#ffffff	light	#181d26	#1b61c9	28	"Haas Groot Disp, Haas, sans-serif"; "Haas, sans-serif"; "Inter Display, system-ui, sans-serif"	3	14	2/6/10/12/9999/9999	4	26	15	Y	Y	Y
+mongodb	MongoDB	Backend, Database & DevOps	#ffffff	light	#00ed64	#7b3ff2	34	Euclid Circular A; Source Code Pro	2	16	4/6/8/12/16/24/9999	4	44	13	Y	Y	Y
+claude	Claude	AI & LLM Platforms	#faf9f5	light	#cc785c	#5db8a6	25	"Copernicus, Tiempos Headline, serif"; "StyreneB, Inter, sans-serif"; "JetBrains Mono, ui-monospace, monospace"	3	16	4/6/8/12/16/9999/9999	4	29	14	Y	Y	Y
+posthog	PostHog	Backend, Database & DevOps	#eeefe9	light	#f7a501	#2c84e0	29	IBM Plex Sans Variable; ui-monospace; Source Code Pro	3	16	0/2/4/6/8/9999	2	30	15	Y	Y	Y
+figma	Figma	Design & Creative Tools	#ffffff	light	#000000	#ff3d8b	20	figmaSans; figmaMono	2	18	2/6/8/24/32/50/9999	1	23	14	Y	Y	Y
+warp	Warp	Developer Tools & IDEs	#2b2622	dark	#f7f5f0		9	Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; Inter, system-ui, -apple-system, sans-serif; Instrument Serif, Georgia, "Times New Roman", serif; DM Mono, ui-monospace, SFMono-Regular, Menlo, monospace	4	16	0/1/2/3/4/6/9999/9999	2	27	10	Y		
+mintlify	Mintlify	Productivity & SaaS	#ffffff	light	#0a0a0a		32	Inter; Geist Mono	2	16	4/6/8/12/16/24/9999	4	51	13	Y	Y	Y
+cal	Cal.com	Productivity & SaaS	#ffffff	light	#111111		26	"Cal Sans, Inter, sans-serif"; "Inter, sans-serif"; "JetBrains Mono, ui-monospace, monospace"	3	16	4/6/8/12/16/9999/9999	4	26	14	Y	Y	Y
+expo	Expo	Developer Tools & IDEs	#ffffff	light	#000000	#ab6400	28	"'Inter', -apple-system, system-ui, sans-serif"; "'Inter', sans-serif"; "'JetBrains Mono', 'Fira Code', monospace"	3	16	0/4/6/8/12/16/24/9999/9999	4	22	12	Y	Y	Y
+cursor	Cursor	Developer Tools & IDEs	#f7f7f4	light	#f54e00		22	"'CursorGothic', system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif"; "'CursorGothic', sans-serif"; "'JetBrains Mono', 'Fira Code', monospace"	3	16	0/4/6/8/12/16/9999/9999	4	25	10	Y	Y	Y
+linear	Linear	Productivity & SaaS	#010102	dark	#5e6ad2		23	Linear Display; Linear Text; Linear Mono	3	16	4/6/8/12/16/24/9999/9999	4	21	14	Y	Y	Y
+notion	Notion	Productivity & SaaS	#ffffff	light	#5645d4		47	Notion Sans	1	16	4/6/8/12/16/20/24/9999	4	50	13	Y	Y	Y
+webflow	Webflow	Design & Creative Tools	#ffffff	light	#080808	#7a3dff	19	WF Visual Sans Variable, Inter, system-ui, -apple-system, sans-serif; WF Visual Sans Variable, Inter, system-ui, sans-serif; WFVisualSans-Mono, Inconsolata, ui-monospace, SFMono-Regular, Menlo, monospace	3	16	0/2/4/8/9999	2	32	10	Y		

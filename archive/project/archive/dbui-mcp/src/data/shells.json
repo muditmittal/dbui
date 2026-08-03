@@ -1,0 +1,16 @@
+[
+  {
+    "name": "BaseShell",
+    "reactExport": "Base",
+    "sourceFile": "packages/dbui-shells/src/shells/Base.tsx",
+    "importPath": "@muditmittal/dbui-shells",
+    "schemaExtracted": false
+  },
+  {
+    "name": "CatalogLayout",
+    "reactExport": "CatalogLayout",
+    "sourceFile": "packages/dbui-shells/src/shells/CatalogExplorer.tsx",
+    "importPath": "@muditmittal/dbui-shells",
+    "schemaExtracted": false
+  }
+]

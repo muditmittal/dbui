@@ -1,0 +1,407 @@
+{
+  "version": 1,
+  "extractors": {
+    "tokens": {
+      "inputs": [
+        {
+          "path": "packages/dbui/src/tokens/globals.css",
+          "hash": "bb5f5023035dac9c"
+        },
+        {
+          "path": "scripts/design-lint/tokens.json",
+          "hash": "f78583e48bd2ba54"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "tokens.json",
+          "hash": "df7dc4554024d1e0"
+        },
+        {
+          "path": "hex-tokens.json",
+          "hash": "4ccfe509ca5bbe51"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.650Z"
+    },
+    "icons": {
+      "inputs": [
+        {
+          "path": "project/icon-index.md",
+          "hash": "50b1ccf9203bdc40"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "icons.json",
+          "hash": "2db4cb368561d53c"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.654Z"
+    },
+    "components": {
+      "inputs": [
+        {
+          "path": "project/component-index.md",
+          "hash": "05b2419a67a8335d"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "components.json",
+          "hash": "7e65a059c2333061"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.655Z"
+    },
+    "rules": {
+      "inputs": [
+        {
+          "path": "packages/dbui/src/rules/composition-rules.ts",
+          "hash": "a47541548ba8c4b0"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "rules.json",
+          "hash": "a23e881a2779ba99"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.656Z"
+    },
+    "dbui-components-allowlist": {
+      "inputs": [
+        {
+          "path": "scripts/design-lint/dbui-components.json",
+          "hash": "970d15ecd291ef5f"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "dbui-components.json",
+          "hash": "4a3cf18e003aaa92"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.657Z"
+    },
+    "compositions": {
+      "inputs": [
+        {
+          "path": "packages/dbui-shells/src/compositions/DataTreeExplorer.tsx",
+          "hash": "671b1046f8bd3b91"
+        },
+        {
+          "path": "packages/dbui-shells/src/compositions/FileTreeExplorer.tsx",
+          "hash": "f88236220b72067d"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "compositions.json",
+          "hash": "f15b373e4383da35"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.658Z"
+    },
+    "shells": {
+      "inputs": [
+        {
+          "path": "packages/dbui-shells/src/shells/Base.tsx",
+          "hash": "a2fa5deefb7e5e51"
+        },
+        {
+          "path": "packages/dbui-shells/src/shells/CatalogExplorer.tsx",
+          "hash": "fb975d75c4fcf54f"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "shells.json",
+          "hash": "1f0a2b493293e0d3"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.658Z"
+    },
+    "component-schemas": {
+      "inputs": [
+        {
+          "path": "packages/dbui/src/components/ui/accordion.tsx",
+          "hash": "c53a3f8a8b12b65a"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/alert-dialog.tsx",
+          "hash": "b756665237021587"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/alert.tsx",
+          "hash": "84e5df86fd428ca7"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/aspect-ratio.tsx",
+          "hash": "8efbcfc65676009d"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/avatar.tsx",
+          "hash": "2d52772e0d4d20ea"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/badge.tsx",
+          "hash": "06a58a2ded7219a1"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/breadcrumb.tsx",
+          "hash": "666cc8119b69b12c"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/button-group.tsx",
+          "hash": "444d569e2c5c9015"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/button.tsx",
+          "hash": "5ab63ebebb9ebe39"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/card.tsx",
+          "hash": "a9811e5be5f19796"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/chart.tsx",
+          "hash": "34ffbfdc4819e1da"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/checkbox.tsx",
+          "hash": "3e131b73a5b58a51"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/collapsible.tsx",
+          "hash": "e2931f673ef4a0ff"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/combobox.tsx",
+          "hash": "c27f8c271e4a3d2d"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/context-menu.tsx",
+          "hash": "0438423fe7090b22"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/data-tree.tsx",
+          "hash": "d03ff83008080e05"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/dialog.tsx",
+          "hash": "6ba4d1b8f19ea93b"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/direction.tsx",
+          "hash": "1a1e074cb141088e"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/drawer.tsx",
+          "hash": "923dec473a57a8e2"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/dropdown-menu.tsx",
+          "hash": "6f695364b494e87e"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/editor-tabs.tsx",
+          "hash": "f4d6e516cd31289d"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/empty.tsx",
+          "hash": "2e0c748977b415b8"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/field.tsx",
+          "hash": "6088ce0aa57bfac7"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/hover-card.tsx",
+          "hash": "410b75aa9ec59672"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/input-group.tsx",
+          "hash": "878f27e2b9609dd2"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/input.tsx",
+          "hash": "cf3a941308fb35a5"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/item.tsx",
+          "hash": "aa498b1aab80d248"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/kbd.tsx",
+          "hash": "2400af25c35d56da"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/key-value-pair.tsx",
+          "hash": "64c966f8e0f68ddf"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/label.tsx",
+          "hash": "4e0322392dd69b9d"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/menubar.tsx",
+          "hash": "b3ff66d5e6e35b36"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/native-select.tsx",
+          "hash": "6acda0073cf5c206"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/navbar.tsx",
+          "hash": "c2ae1f5a1764b76f"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/page-header.tsx",
+          "hash": "ab6d46c14d096207"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/pagination.tsx",
+          "hash": "7af3c8c9c7b006a5"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/platform-header.tsx",
+          "hash": "cf2292ecca4e31c7"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/popover.tsx",
+          "hash": "6d176a3ec98a66d6"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/progress.tsx",
+          "hash": "5c647c310016359d"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/radio-group.tsx",
+          "hash": "57b264d526da0f35"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/radio-tile.tsx",
+          "hash": "63152f30705eb110"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/resizable.tsx",
+          "hash": "525839e0249fecb0"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/scroll-area.tsx",
+          "hash": "bd52b06802da52aa"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/segment-control.tsx",
+          "hash": "7e9179a797fd4447"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/select.tsx",
+          "hash": "8be681459c1819e0"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/separator.tsx",
+          "hash": "6b306f0350064d31"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/skeleton.tsx",
+          "hash": "9521a815b7f7fd24"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/slider.tsx",
+          "hash": "a56ee33d1ae8fe0d"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/sonner.tsx",
+          "hash": "1b7ce9a14ba25fa7"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/spinner.tsx",
+          "hash": "ecb4c37d164712a5"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/split-button.tsx",
+          "hash": "309e0e70de56e233"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/status.tsx",
+          "hash": "8265399a74d06aa0"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/switch.tsx",
+          "hash": "1ad6d27b3a96197f"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/table.tsx",
+          "hash": "99e7b49b339aae46"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/tabs.tsx",
+          "hash": "4e3bcc10a1a6bdb4"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/tag.tsx",
+          "hash": "9ce9b4db2d4e355d"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/textarea.tsx",
+          "hash": "6d72937deb2c6ca2"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/toggle-group.tsx",
+          "hash": "f7703b4dc937d933"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/toggle.tsx",
+          "hash": "08eeed737bd095f8"
+        },
+        {
+          "path": "packages/dbui/src/components/ui/tooltip.tsx",
+          "hash": "19ba61e8bcc8dcfd"
+        },
+        {
+          "path": "packages/dbui/src/lib/button-variants.ts",
+          "hash": "d4f9da5b687ff61f"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "component-schemas.json",
+          "hash": "07a5ebbe17f4b03d"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.664Z"
+    },
+    "brandvoice-rules": {
+      "inputs": [
+        {
+          "path": "packages/dbui/docs/brandvoice.md",
+          "hash": "7ec558b2ad15a10d"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "brandvoice-rules.json",
+          "hash": "413e1e54510eb98c"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.665Z"
+    },
+    "figma-mapping": {
+      "inputs": [
+        {
+          "path": ".env-FIGMA_FILE_KEY",
+          "hash": null
+        }
+      ],
+      "outputs": [
+        {
+          "path": "figma-mapping.json",
+          "hash": "166441313a1ffbad"
+        }
+      ],
+      "lastRun": "2026-04-28T16:05:32.665Z"
+    }
+  }
+}

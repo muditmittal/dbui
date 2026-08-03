@@ -6,6 +6,7 @@ import { Pencil } from "dbui/components/icons/Pencil"
 import { Gear } from "dbui/components/icons/Gear"
 import { Overflow } from "dbui/components/icons/Overflow"
 import { Image } from "dbui/components/icons/Image"
+import { GenieCode } from "dbui/components/icons/GenieCode"
 
 /**
  * AssistantPanel — agentic chat side panel (Genie Code).
@@ -40,22 +41,16 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
       {/* Empty state */}
       <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
         {/* Large gradient icon */}
-        <svg width="64" height="64" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="assistant-empty-gradient" x1="0" y1="8" x2="16" y2="8" gradientUnits="userSpaceOnUse">
-              <stop offset="24%" stopColor="#4299E0" />
-              <stop offset="47%" stopColor="#CA42E0" />
-              <stop offset="76%" stopColor="#FF5F46" />
-            </linearGradient>
-          </defs>
-          <path
-            fill="url(#assistant-empty-gradient)"
-            d="M0 8.75v-.744c0-.97.786-1.756 1.756-1.756h1.1c.372 0 .712.21.878.543l.595 1.188a4.104 4.104 0 0 0 7.342 0l.595-1.188.069-.12a.98.98 0 0 1 .809-.423H16v1.5h-2.536l-.451.902a5.604 5.604 0 0 1-10.026 0l-.45-.902h-.781a.256.256 0 0 0-.256.256v.744a.5.5 0 0 0 .5.5v1.5a2 2 0 0 1-2-2m10.5 4v1.5h-5v-1.5zM8 1.75a.75.75 0 0 1 .74.621l.226 1.303a.75.75 0 0 0 .61.61l1.303.227a.75.75 0 0 1 0 1.478l-1.303.227a.75.75 0 0 0-.61.61L8.739 8.13a.75.75 0 0 1-1.478 0l-.227-1.303a.75.75 0 0 0-.61-.61L5.12 5.989a.75.75 0 0 1 0-1.478l1.303-.227a.75.75 0 0 0 .61-.61l.227-1.303.035-.13A.75.75 0 0 1 8 1.75"
-          />
-        </svg>
+        <div
+          className="flex size-16 items-center justify-center rounded-xl"
+          style={{ backgroundImage: "var(--ai-gradient)" }}
+          aria-hidden
+        >
+          <GenieCode className="size-8 text-primary-foreground" />
+        </div>
 
         <div className="flex flex-col items-center gap-0.5">
-          <span className="text-[18px] font-semibold text-foreground">Genie Code</span>
+          <span className="text-[22px] font-semibold leading-[28px] text-foreground">Genie Code</span>
           <span className="text-[13px] text-primary font-semibold">Preview</span>
         </div>
 
@@ -84,7 +79,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
           style={{
             border: "1px solid transparent",
             backgroundImage:
-              "linear-gradient(var(--background), var(--background)), linear-gradient(90deg, #4299E0 24%, #CA42E0 47%, #FF5F46 76%)",
+              "linear-gradient(var(--background), var(--background)), var(--ai-gradient)",
             backgroundOrigin: "border-box",
             backgroundClip: "padding-box, border-box",
           }}
@@ -116,7 +111,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
 
       {/* Disclaimer */}
       <div className="px-4 py-1 text-center">
-        <span className="text-[11px] text-muted-foreground">Always review the accuracy of responses.</span>
+        <span className="text-[12px] leading-[16px] text-muted-foreground">Always review the accuracy of responses.</span>
       </div>
     </div>
   )

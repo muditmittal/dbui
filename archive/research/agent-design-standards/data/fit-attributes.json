@@ -1,0 +1,57 @@
+{
+  "_doc": "Curated Databricks-fit attributes for the 40 site-analysis candidates. Each axis 0-3, hand-scored from the voltagent domain descriptor + design knowledge, so the 'closest 20' selection is auditable. Databricks profile: enterprise B2B data & AI platform, light-first product UI, information-dense (tables/catalogs/dashboards/notebooks), technical audience (data eng/scientists/analysts/devs), single restrained brand accent (DuBois blue) on neutral canvas, product-app surface (not marketing splash).",
+  "axes": {
+    "domain": "Proximity to data / AI / dev-infra (Databricks core). 3=data-or-AI infra, 2=adjacent dev/AI, 1=general SaaS, 0=consumer/creative",
+    "audience": "Enterprise + technical audience. 3=enterprise technical, 2=developer/prosumer, 1=general, 0=consumer",
+    "light": "Light-first alignment (Databricks is light-first). 3=light-first, 2=light-capable/dual, 1=dark-first but neutral/restrained, 0=cinematic-dark/consumer",
+    "density": "Information density / data-app surface (tables, catalogs, dashboards). 3=data-dense app, 2=some app density, 1=marketing/reading, 0=sparse hero",
+    "accent": "Restrained single-accent-on-neutral discipline (like DB blue). 3=single disciplined accent, 2=mostly restrained, 1=multi/vibrant, 0=gradient-heavy"
+  },
+  "weights": { "domain": 3, "audience": 2, "light": 2, "density": 2, "accent": 1, "quality": 1 },
+  "systems": {
+    "mistral":    { "domain": 3, "audience": 3, "light": 2, "density": 1, "accent": 2 },
+    "minimax":    { "domain": 3, "audience": 2, "light": 0, "density": 1, "accent": 1 },
+    "together":   { "domain": 3, "audience": 3, "light": 2, "density": 2, "accent": 2 },
+    "replicate":  { "domain": 3, "audience": 3, "light": 3, "density": 2, "accent": 2 },
+    "claude":     { "domain": 3, "audience": 2, "light": 3, "density": 1, "accent": 3 },
+    "ollama":     { "domain": 3, "audience": 3, "light": 1, "density": 1, "accent": 2 },
+    "opencode":   { "domain": 3, "audience": 3, "light": 1, "density": 2, "accent": 1 },
+    "voltagent":  { "domain": 3, "audience": 2, "light": 0, "density": 1, "accent": 2 },
+    "elevenlabs": { "domain": 2, "audience": 2, "light": 0, "density": 1, "accent": 1 },
+    "x":          { "domain": 3, "audience": 2, "light": 1, "density": 1, "accent": 2 },
+    "cohere":     { "domain": 3, "audience": 3, "light": 2, "density": 3, "accent": 1 },
+    "runwayml":   { "domain": 2, "audience": 1, "light": 1, "density": 1, "accent": 2 },
+
+    "vercel":     { "domain": 3, "audience": 3, "light": 3, "density": 2, "accent": 3 },
+    "raycast":    { "domain": 2, "audience": 3, "light": 1, "density": 2, "accent": 1 },
+    "cursor":     { "domain": 3, "audience": 3, "light": 1, "density": 2, "accent": 1 },
+    "expo":       { "domain": 3, "audience": 3, "light": 1, "density": 2, "accent": 1 },
+    "warp":       { "domain": 3, "audience": 3, "light": 1, "density": 2, "accent": 2 },
+    "superhuman": { "domain": 1, "audience": 2, "light": 0, "density": 1, "accent": 1 },
+    "lovable":    { "domain": 2, "audience": 2, "light": 2, "density": 1, "accent": 1 },
+
+    "mongodb":    { "domain": 3, "audience": 3, "light": 2, "density": 2, "accent": 2 },
+    "posthog":    { "domain": 3, "audience": 3, "light": 1, "density": 3, "accent": 1 },
+    "hashicorp":  { "domain": 3, "audience": 3, "light": 2, "density": 2, "accent": 3 },
+    "sentry":     { "domain": 3, "audience": 3, "light": 1, "density": 3, "accent": 2 },
+    "clickhouse": { "domain": 3, "audience": 3, "light": 2, "density": 3, "accent": 2 },
+    "composio":   { "domain": 3, "audience": 3, "light": 1, "density": 2, "accent": 1 },
+    "supabase":   { "domain": 3, "audience": 3, "light": 1, "density": 2, "accent": 2 },
+    "sanity":     { "domain": 2, "audience": 2, "light": 1, "density": 2, "accent": 2 },
+
+    "mintlify":   { "domain": 2, "audience": 3, "light": 3, "density": 1, "accent": 2 },
+    "notion":     { "domain": 1, "audience": 2, "light": 3, "density": 2, "accent": 2 },
+    "resend":     { "domain": 2, "audience": 3, "light": 1, "density": 1, "accent": 2 },
+    "linear":     { "domain": 2, "audience": 3, "light": 1, "density": 2, "accent": 3 },
+    "intercom":   { "domain": 1, "audience": 2, "light": 2, "density": 1, "accent": 2 },
+    "cal":        { "domain": 2, "audience": 3, "light": 3, "density": 1, "accent": 2 },
+    "zapier":     { "domain": 2, "audience": 2, "light": 2, "density": 1, "accent": 1 },
+
+    "miro":       { "domain": 1, "audience": 2, "light": 2, "density": 2, "accent": 1 },
+    "webflow":    { "domain": 2, "audience": 2, "light": 2, "density": 1, "accent": 2 },
+    "figma":      { "domain": 2, "audience": 3, "light": 3, "density": 2, "accent": 1 },
+    "airtable":   { "domain": 2, "audience": 3, "light": 3, "density": 3, "accent": 1 },
+    "framer":     { "domain": 2, "audience": 2, "light": 2, "density": 1, "accent": 2 },
+    "clay":       { "domain": 1, "audience": 1, "light": 2, "density": 1, "accent": 2 }
+  }
+}

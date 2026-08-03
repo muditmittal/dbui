@@ -1,0 +1,23 @@
+{
+  "name": "@muditmittal/dbui-mcp",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP server exposing the DBUI build loop (Structure → Hydrate → Validate → Render) plus primitives, post-render checks, and a modular L2 regen pipeline.",
+  "main": "./src/index.js",
+  "bin": {
+    "dbui-mcp": "./src/index.js"
+  },
+  "scripts": {
+    "build:data": "node scripts/regen-l2.js --all",
+    "regen:l2": "node scripts/regen-l2.js",
+    "regen:l2:all": "node scripts/regen-l2.js --all",
+    "regen:l2:check": "node scripts/regen-l2.js --check",
+    "regen:l2:list": "node scripts/regen-l2.js --list",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.28.0",
+    "ts-morph": "^26.0.0"
+  }
+}

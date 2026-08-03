@@ -2,7 +2,7 @@
   "name": "dbui",
   "private": true,
   "version": "0.2.0",
-  "description": "DBUI Design System — Databricks component library built on shadcn/ui with DuBois design tokens",
+  "description": "DBUI — an AI-first design system for data and AI workbench UIs",
   "license": "MIT",
   "sideEffects": false,
   "exports": {

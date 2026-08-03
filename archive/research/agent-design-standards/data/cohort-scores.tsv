@@ -1,0 +1,41 @@
+rank	key	display	category	total	domain	audience	light	density	accent	quality	lines	chosen
+1	vercel	Vercel	Developer Tools & IDEs	30.89	3	3	3	2	3	2.89	737	YES
+2	replicate	Replicate	AI & LLM Platforms	29.34	3	3	3	2	2	2.34	617	YES
+3	clickhouse	ClickHouse	Backend, Database & DevOps	29	3	3	2	3	2	2	545	YES
+4	hashicorp	HashiCorp	Backend, Database & DevOps	28.03	3	3	2	2	3	2.03	576	YES
+5	cohere	Cohere	AI & LLM Platforms	27.79	3	3	2	3	1	1.79	452	YES
+6	together	Together AI	AI & LLM Platforms	27.69	3	3	2	2	2	2.69	634	YES
+7	sentry	Sentry	Backend, Database & DevOps	27.67	3	3	1	3	2	2.67	552	YES
+8	airtable	Airtable	Design & Creative Tools	27.39	2	3	3	3	1	2.39	555	YES
+9	mongodb	MongoDB	Backend, Database & DevOps	27.14	3	3	2	2	2	2.14	768	YES
+10	claude	Claude	AI & LLM Platforms	26.56	3	2	3	1	3	2.56	590	YES
+11	posthog	PostHog	Backend, Database & DevOps	26.46	3	3	1	3	1	2.46	691	YES
+12	supabase	Supabase	Backend, Database & DevOps	25.31	3	3	1	2	2	2.31	463	
+13	mistral	Mistral AI	AI & LLM Platforms	25.27	3	3	2	1	2	2.27	774	
+14	figma	Figma	Design & Creative Tools	25.19	2	3	3	2	1	2.19	579	YES
+15	warp	Warp	Developer Tools & IDEs	24.95	3	3	1	2	2	1.95	527	YES
+16	mintlify	Mintlify	Productivity & SaaS	24.5	2	3	3	1	2	2.5	853	YES
+17	cal	Cal.com	Productivity & SaaS	24.44	2	3	3	1	2	2.44	543	YES
+18	expo	Expo	Developer Tools & IDEs	24.36	3	3	1	2	1	2.36	527	YES
+19	cursor	Cursor	Developer Tools & IDEs	24.33	3	3	1	2	1	2.33	538	YES
+20	composio	Composio	Backend, Database & DevOps	24	3	3	1	2	1	2	507	
+21	opencode	OpenCode AI	AI & LLM Platforms	23.89	3	3	1	2	1	1.89	522	
+22	ollama	Ollama	AI & LLM Platforms	23.14	3	3	1	1	2	2.14	540	
+23	linear	Linear	Productivity & SaaS	23.1	2	3	1	2	3	2.1	549	YES
+24	raycast	Raycast	Developer Tools & IDEs	21.62	2	3	1	2	1	2.62	670	
+25	notion	Notion	Productivity & SaaS	21.17	1	2	3	2	2	2.17	822	YES
+26	x	xAI	AI & LLM Platforms	20.89	3	2	1	1	2	1.89	466	
+27	webflow	Webflow	Design & Creative Tools	20.5	2	2	2	1	2	2.5	589	YES
+28	resend	Resend	Productivity & SaaS	20.47	2	3	1	1	2	2.47	586	
+29	framer	Framer	Design & Creative Tools	20.17	2	2	2	1	2	2.17	545	
+30	sanity	Sanity	Backend, Database & DevOps	19.15	2	2	1	2	2	1.15	358	
+31	voltagent	VoltAgent	AI & LLM Platforms	18.92	3	2	0	1	2	1.92	522	
+32	zapier	Zapier	Productivity & SaaS	18.9	2	2	2	1	1	1.9	538	
+33	minimax	Minimax	AI & LLM Platforms	18.34	3	2	0	1	1	2.34	747	
+34	miro	Miro	Design & Creative Tools	18.31	1	2	2	2	1	2.31	826	
+35	lovable	Lovable	Developer Tools & IDEs	17.84	2	2	2	1	1	0.84	299	
+36	intercom	Intercom	Productivity & SaaS	17.21	1	2	2	1	2	2.21	547	
+37	elevenlabs	ElevenLabs	AI & LLM Platforms	15.52	2	2	0	1	1	2.52	505	
+38	clay	Clay	Design & Creative Tools	15.12	1	1	2	1	2	2.12	542	
+39	runwayml	Runway	AI & LLM Platforms	14.82	2	1	1	1	2	0.82	245	
+40	superhuman	Superhuman	Developer Tools & IDEs	12.3	1	2	0	1	1	2.3	449	

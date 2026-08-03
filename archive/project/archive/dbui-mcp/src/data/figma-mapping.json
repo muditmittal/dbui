@@ -1,0 +1,6 @@
+{
+  "generatedAt": "2026-04-28T16:06:17.680Z",
+  "fileKey": null,
+  "mapping": {},
+  "note": "Stub. Set FIGMA_FILE_KEY env var and wire actual Figma API extraction to populate."
+}

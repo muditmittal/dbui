@@ -1,0 +1,35 @@
+[
+  {
+    "name": "DataTreeExplorer",
+    "sourceFile": "packages/dbui-shells/src/compositions/DataTreeExplorer.tsx",
+    "category": null,
+    "useFor": null,
+    "avoidFor": null,
+    "synonyms": [],
+    "figma": null,
+    "requiresShell": null,
+    "schemaExtracted": false
+  },
+  {
+    "name": "FileTreeExplorer",
+    "sourceFile": "packages/dbui-shells/src/compositions/FileTreeExplorer.tsx",
+    "category": null,
+    "useFor": null,
+    "avoidFor": null,
+    "synonyms": [],
+    "figma": null,
+    "requiresShell": null,
+    "schemaExtracted": false
+  },
+  {
+    "name": "PreviewPopup",
+    "sourceFile": "packages/dbui-shells/src/compositions/PreviewPopup.tsx",
+    "category": null,
+    "useFor": null,
+    "avoidFor": null,
+    "synonyms": [],
+    "figma": null,
+    "requiresShell": null,
+    "schemaExtracted": false
+  }
+]

@@ -148,7 +148,7 @@ export function PreviewPopup({
           >
             <span
               data-slot="AssetName"
-              className="truncate text-[15px] font-semibold leading-[20px] text-foreground"
+              className="truncate text-[16px] font-semibold leading-[22px] text-foreground"
             >
               {name}
             </span>
@@ -235,13 +235,14 @@ export function PreviewPopup({
         <div data-slot="Description" className="text-[13px] leading-[20px] text-foreground">
           <span className="line-clamp-3">{description}</span>
           {onMoreClick && (
-            <button
-              type="button"
+            <Button
+              variant="link"
+              size="sm"
               onClick={onMoreClick}
-              className="mt-1 inline text-foreground underline underline-offset-2 hover:text-primary"
+              className="mt-1 h-auto p-0 text-foreground"
             >
               More...
-            </button>
+            </Button>
           )}
         </div>
       )}

@@ -637,5 +637,65 @@
     "production": [
       { "variant": "Table", "dbui": "<Table>", "dubois": "<TableUI>", "codeBlock": "import { Table, TableRow, TableCell, TableHeader } from \"@databricks/design-system\"\n\n{/* size: 'default' | 'small' */}\n<Table size=\"default\">\n  <TableHeader>\n    <TableCell>Name</TableCell>\n  </TableHeader>\n  <TableRow>\n    <TableCell>Value</TableCell>\n  </TableRow>\n</Table>" }
     ]
+  },
+  "tree": {
+    "figmaCode": {
+      "Type (.TreeNode)": {
+        "figma": ["Header", "Open folder", "File", "Focused folder"],
+        "code": ["<TreeSection>", "<TreeNode> with children", "<TreeNode leaf>", "<TreeNode> in focused-root state"]
+      },
+      "Selected": {
+        "figma": ["True", "False"],
+        "code": ["selected={true}", "selected={false} | undefined (context drives)"]
+      },
+      "Hover": {
+        "figma": ["True", "False"],
+        "code": ["CSS :hover (bg-hover, chevron darkens)", "default"]
+      },
+      "Trail line": {
+        "figma": [".Track lines (stroke=border/border)"],
+        "code": ["showTrailLine={true} (default); border-border resting, border-muted-foreground when isHighlighted"]
+      }
+    }
+  },
+  "data-tree": {
+    "figmaCode": {
+      "Asset Kind → Icon": {
+        "figma": ["catalog → Catalog", "schema → Database", "table → Table", "view → TableView", "volume → FolderCloud", "model → Models", "function → Function", "column → Letters (override per SQL type)", "folder → Folder", "file → File"],
+        "code": ["kind: \"catalog\"", "kind: \"schema\"", "kind: \"table\"", "kind: \"view\"", "kind: \"volume\"", "kind: \"model\"", "kind: \"function\"", "kind: \"column\" (auto-leaf)", "kind: \"folder\"", "kind: \"file\""]
+      },
+      "Section header (virtual L0)": {
+        "figma": [".TreeNode Type=Header"],
+        "code": ["DataTreeSection { label, nodes, defaultExpanded? }"]
+      },
+      "Depth indent": {
+        "figma": ["chevronWidth = 16 + depth*8 (16 → 24 → 32 → 40)"],
+        "code": ["L1 catalog (depth 1) → L2 schema (depth 2) → L3 asset (depth 3) → L4 column (depth 4)"]
+      },
+      "Focusable kinds": {
+        "figma": ["only namespace rows show 'Focus here'"],
+        "code": ["DATA_KIND_FOCUSABLE = { catalog, schema, folder }"]
+      }
+    }
+  },
+  "file-tree": {
+    "figmaCode": {
+      "Folder Kind → Icon pair": {
+        "figma": ["folder → Folder / FolderOpen", "git-folder → FolderBranch / FolderOpenBranch", "bundle-folder → FolderCube / FolderOpenCube", "pipeline-folder → FolderSolidPipeline / FolderOpenPipeline"],
+        "code": ["kind: \"folder\"", "kind: \"git-folder\"", "kind: \"bundle-folder\"", "kind: \"pipeline-folder\""]
+      },
+      "File Kind → Icon": {
+        "figma": ["file → File", "code-file → FileCode", "notebook → Notebook", "query → Query", "pipeline-file → FilePipeline"],
+        "code": ["kind: \"file\"", "kind: \"code-file\"", "kind: \"notebook\"", "kind: \"query\"", "kind: \"pipeline-file\""]
+      },
+      "Tone (TreeNodeIcon color)": {
+        "figma": ["Folder kinds → blue/blue400 (#8ACAFF)", "File kinds → text/muted-foreground"],
+        "code": ["text-icon-folder", "text-muted-foreground (default)"]
+      },
+      "Focusable kinds": {
+        "figma": ["only folder rows show 'Focus here'"],
+        "code": ["FILE_KIND_FOCUSABLE = all 4 folder kinds"]
+      }
+    }
   }
 }

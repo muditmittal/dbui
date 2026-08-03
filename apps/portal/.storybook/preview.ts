@@ -26,6 +26,8 @@ const preview: Preview = {
           "Overlays",
           "Compositions",
           "Surfaces",
+          "Viz",
+          "Genie",
         ],
       },
     },

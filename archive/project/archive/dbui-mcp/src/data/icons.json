@@ -1,0 +1,3730 @@
+[
+  {
+    "name": "action",
+    "category": null,
+    "description": "Buttons, menu items, toolbar actions",
+    "synonyms": [
+      "Trash → delete"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/action"
+  },
+  {
+    "name": "object",
+    "category": null,
+    "description": "Nav items, tree nodes, entity identification",
+    "synonyms": [
+      "Catalog → Unity Catalog"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/object"
+  },
+  {
+    "name": "indicator",
+    "category": null,
+    "description": "Status badges, alerts, state display",
+    "synonyms": [
+      "Running → in progress"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/indicator"
+  },
+  {
+    "name": "component",
+    "category": null,
+    "description": "Built into controls (chevrons, checks, close)",
+    "synonyms": [
+      "ChevronDown → dropdown"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/component"
+  },
+  {
+    "name": "ArrowsConnect",
+    "category": "object",
+    "description": "Connection — Unity Catalog",
+    "synonyms": [
+      "linked",
+      "joined",
+      "related"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowsConnect"
+  },
+  {
+    "name": "Assistant",
+    "category": "object",
+    "description": "Databricks Assistant — AI",
+    "synonyms": [
+      "chatbot",
+      "help agent"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Assistant"
+  },
+  {
+    "name": "BadgeCode",
+    "category": "object",
+    "description": "Embedded credential — IAM",
+    "synonyms": [
+      "code badge",
+      "run as owner"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BadgeCode"
+  },
+  {
+    "name": "BadgeCodeOff",
+    "category": "object",
+    "description": "No embedded credential — Platform",
+    "synonyms": [
+      "run as viewer",
+      "no code badge"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BadgeCodeOff"
+  },
+  {
+    "name": "BarChart",
+    "category": "object",
+    "description": "bar chart — AI/BI",
+    "synonyms": [
+      "trend",
+      "histogram",
+      "column chart"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BarChart"
+  },
+  {
+    "name": "BarGrouped",
+    "category": "object",
+    "description": "Grouped bar chart — AI/BI",
+    "synonyms": [
+      "clustered bars",
+      "side by side"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BarGrouped"
+  },
+  {
+    "name": "BarStacked",
+    "category": "object",
+    "description": "Stacked bar chart — AI/BI",
+    "synonyms": [
+      "cumulative bar",
+      "layered"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BarStacked"
+  },
+  {
+    "name": "BarStackedPercentage",
+    "category": "object",
+    "description": "Percentage bar chart — AI/BI",
+    "synonyms": [
+      "100% stacked",
+      "proportional"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BarStackedPercentage"
+  },
+  {
+    "name": "Beaker",
+    "category": "object",
+    "description": "Experiment — AI",
+    "synonyms": [
+      "flask",
+      "lab",
+      "test",
+      "training"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Beaker"
+  },
+  {
+    "name": "Binary",
+    "category": "object",
+    "description": "Binary — Data Type",
+    "synonyms": [
+      "boolean",
+      "true/false",
+      "bits"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Binary"
+  },
+  {
+    "name": "Book",
+    "category": "object",
+    "description": "Glossary — Unity Catalog",
+    "synonyms": [
+      "documentation",
+      "manual",
+      "guide",
+      "reference"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Book"
+  },
+  {
+    "name": "Books",
+    "category": "object",
+    "description": "Library — Platform",
+    "synonyms": [
+      "collection",
+      "manuals"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Books"
+  },
+  {
+    "name": "BracketsCurly",
+    "category": "object",
+    "description": "JSON — Data Type",
+    "synonyms": [
+      "curly braces",
+      "code syntax"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BracketsCurly"
+  },
+  {
+    "name": "BracketsSquare",
+    "category": "object",
+    "description": "Array — Data Type",
+    "synonyms": [
+      "list",
+      "square brackets"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BracketsSquare"
+  },
+  {
+    "name": "Branch",
+    "category": "object",
+    "description": "Branch — Workspace",
+    "synonyms": [
+      "git branch",
+      "fork",
+      "version control"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Branch"
+  },
+  {
+    "name": "Briefcase",
+    "category": "object",
+    "description": "Bundle — Workspace",
+    "synonyms": [
+      "DAB",
+      "suitcase",
+      "work"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Briefcase"
+  },
+  {
+    "name": "BriefcaseFill",
+    "category": "object",
+    "description": "Bundle — Workspace",
+    "synonyms": [
+      "DAB",
+      "suitcase",
+      "work"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/BriefcaseFill"
+  },
+  {
+    "name": "Bug",
+    "category": "object",
+    "description": "Bug — Platform",
+    "synonyms": [
+      "error",
+      "defect",
+      "debug",
+      "issue"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Bug"
+  },
+  {
+    "name": "CalendarClock",
+    "category": "object",
+    "description": "Timestamp — Data Type",
+    "synonyms": [
+      "scheduled time",
+      "deadline",
+      "timed event"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CalendarClock"
+  },
+  {
+    "name": "CalendarEvent",
+    "category": "object",
+    "description": "Scheduled event — Lakeflow",
+    "synonyms": [
+      "appointment",
+      "calendar item"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CalendarEvent"
+  },
+  {
+    "name": "Catalog",
+    "category": "object",
+    "description": "Catalog — Unity Catalog",
+    "synonyms": [
+      "data container",
+      "database"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Catalog"
+  },
+  {
+    "name": "CatalogCloud",
+    "category": "object",
+    "description": "Remote Catalog — Unity Catalog",
+    "synonyms": [
+      "remote catalog",
+      "foreign catalog"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CatalogCloud"
+  },
+  {
+    "name": "CatalogGear",
+    "category": "object",
+    "description": "System catalog — Unity Catalog",
+    "synonyms": [
+      "internal catalog"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CatalogGear"
+  },
+  {
+    "name": "CatalogHome",
+    "category": "object",
+    "description": "Home Catalog — Unity Catalog",
+    "synonyms": [
+      "default catalog",
+      "primary"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CatalogHome"
+  },
+  {
+    "name": "CatalogOff",
+    "category": "object",
+    "description": "Disabled catalog — Unity Catalog",
+    "synonyms": [
+      "unavailable",
+      "restricted"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CatalogOff"
+  },
+  {
+    "name": "CatalogShared",
+    "category": "object",
+    "description": "Delta Shared Catalog — Unity Catalog",
+    "synonyms": [
+      "shared",
+      "collaborative",
+      "Delta Sharing"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CatalogShared"
+  },
+  {
+    "name": "CatalogUserHome",
+    "category": "object",
+    "description": "Personal catalog — Unity Catalog",
+    "synonyms": [
+      "my catalog",
+      "user home"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CatalogUserHome"
+  },
+  {
+    "name": "Chain",
+    "category": "object",
+    "description": "Connect — Unity Catalog",
+    "synonyms": [
+      "chain",
+      "link",
+      "connection"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Chain"
+  },
+  {
+    "name": "ChartLine",
+    "category": "object",
+    "description": "line chart — AI/BI",
+    "synonyms": [
+      "trend",
+      "time series"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/ChartLine"
+  },
+  {
+    "name": "Chip",
+    "category": "object",
+    "description": "Hardware — Compute",
+    "synonyms": [
+      "GPU",
+      "processor",
+      "accelerator"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Chip"
+  },
+  {
+    "name": "ClockKey",
+    "category": "object",
+    "description": "Temporary credential — Unity Catalog",
+    "synonyms": [
+      "time-limited key",
+      "expiring token"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/ClockKey"
+  },
+  {
+    "name": "Cloud",
+    "category": "object",
+    "description": "Metastore — Unity Catalog",
+    "synonyms": [
+      "cloud",
+      "hosted",
+      "remote"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Cloud"
+  },
+  {
+    "name": "CloudDatabase",
+    "category": "object",
+    "description": "SQL Warehouse — Compute",
+    "synonyms": [
+      "remote processing",
+      "hosted compute"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CloudDatabase"
+  },
+  {
+    "name": "CloudKey",
+    "category": "object",
+    "description": "Cloud Credentials — Unity Catalog",
+    "synonyms": [
+      "cloud access key",
+      "provider key"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CloudKey"
+  },
+  {
+    "name": "CloudModel",
+    "category": "object",
+    "description": "Model serving endpoint — AI",
+    "synonyms": [
+      "cloud",
+      "model",
+      "api",
+      "endpoint"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CloudModel"
+  },
+  {
+    "name": "Code",
+    "category": "object",
+    "description": "Code — Platform",
+    "synonyms": [
+      "source",
+      "script",
+      "angle brackets"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Code"
+  },
+  {
+    "name": "Connect",
+    "category": "object",
+    "description": "Partner Connect — Platform",
+    "synonyms": [
+      "connect",
+      "integrate",
+      "link"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Connect"
+  },
+  {
+    "name": "CustomApp",
+    "category": "object",
+    "description": "App — Workspace",
+    "synonyms": [
+      "Custom app",
+      "Databricks Apps"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/CustomApp"
+  },
+  {
+    "name": "DAG",
+    "category": "object",
+    "description": "Lineage — Unity Catalog",
+    "synonyms": [
+      "DAG",
+      "data flow",
+      "dependency graph"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/DAG"
+  },
+  {
+    "name": "DAGHorizontal",
+    "category": "object",
+    "description": "horizontal DAG — Lakeflow",
+    "synonyms": [
+      "left-to-right flow",
+      "dependency flow"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/DAGHorizontal"
+  },
+  {
+    "name": "DAGVertical",
+    "category": "object",
+    "description": "DAG — Lakeflow",
+    "synonyms": [
+      "vertical DAG",
+      "data flow"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/DAGVertical"
+  },
+  {
+    "name": "Dashboard",
+    "category": "object",
+    "description": "Dashboard — AI/BI",
+    "synonyms": [
+      "report",
+      "analytics",
+      "visualizations"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Dashboard"
+  },
+  {
+    "name": "DashboardCode",
+    "category": "object",
+    "description": "Code dashboard — AI/BI",
+    "synonyms": [
+      "programmatic dashboard"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/DashboardCode"
+  },
+  {
+    "name": "Data",
+    "category": "object",
+    "description": "Catalog Explorer — Unity Catalog",
+    "synonyms": [
+      "data",
+      "explorer"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Data"
+  },
+  {
+    "name": "Database",
+    "category": "object",
+    "description": "Schema — Unity Catalog",
+    "synonyms": [
+      "data directory",
+      "data container"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Database"
+  },
+  {
+    "name": "DatabaseClock",
+    "category": "object",
+    "description": "Temporal Table — Unity Catalog",
+    "synonyms": [
+      "time travel",
+      "versioned data"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/DatabaseClock"
+  },
+  {
+    "name": "Decimal",
+    "category": "object",
+    "description": "Decimal — Data Type",
+    "synonyms": [
+      "floating point",
+      "precision number"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Decimal"
+  },
+  {
+    "name": "DomainCirclesThree",
+    "category": "object",
+    "description": "Domains — Unity Catalog",
+    "synonyms": [
+      "domain hierarchy",
+      "domain groups"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/DomainCirclesThree"
+  },
+  {
+    "name": "Domains",
+    "category": "object",
+    "description": "Domains — Unity Catalog",
+    "synonyms": [
+      "data domain",
+      "business domain"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Domains"
+  },
+  {
+    "name": "ERD",
+    "category": "object",
+    "description": "Entity Relationship — Unity Catalog",
+    "synonyms": [
+      "ER diagram",
+      "data model"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/ERD"
+  },
+  {
+    "name": "FileCode",
+    "category": "object",
+    "description": "Code File — Workspace",
+    "synonyms": [
+      "script",
+      "source code"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FileCode"
+  },
+  {
+    "name": "FileCube",
+    "category": "object",
+    "description": "Bundle File — Workspace",
+    "synonyms": [
+      "script",
+      "source code"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FileCube"
+  },
+  {
+    "name": "FileDocument",
+    "category": "object",
+    "description": "Document File — Workspace",
+    "synonyms": [
+      "text",
+      "document"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FileDocument"
+  },
+  {
+    "name": "FileImage",
+    "category": "object",
+    "description": "Image File — Workspace",
+    "synonyms": [
+      "photo",
+      "picture",
+      "media"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FileImage"
+  },
+  {
+    "name": "FileLock",
+    "category": "object",
+    "description": "Restricted File — Workspace",
+    "synonyms": [
+      "protected",
+      "access controlled"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FileLock"
+  },
+  {
+    "name": "FileModel",
+    "category": "object",
+    "description": "Model File — Workspace",
+    "synonyms": [
+      "ml artifact",
+      "mlflow model"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FileModel"
+  },
+  {
+    "name": "FilePipeline",
+    "category": "object",
+    "description": "Pipeline File — Workspace",
+    "synonyms": [
+      "ETL file",
+      "DLT source"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FilePipeline"
+  },
+  {
+    "name": "Float",
+    "category": "object",
+    "description": "Float — Data Type",
+    "synonyms": [
+      "floating point",
+      "decimal number"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Float"
+  },
+  {
+    "name": "FolderBranch",
+    "category": "object",
+    "description": "Git folder — Workspace",
+    "synonyms": [
+      "git folder",
+      "versioned directory"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderBranch"
+  },
+  {
+    "name": "FolderBranchFill",
+    "category": "object",
+    "description": "Git Folder — Git",
+    "synonyms": [
+      "git folder",
+      "versioned directory"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderBranchFill"
+  },
+  {
+    "name": "FolderCloud",
+    "category": "object",
+    "description": "Volume folder — Unity Catalog",
+    "synonyms": [
+      "cloud storage",
+      "managed volume"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderCloud"
+  },
+  {
+    "name": "FolderCloudFilled",
+    "category": "object",
+    "description": "Volume folder — Unity Catalog",
+    "synonyms": [
+      "cloud storage",
+      "managed volume"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderCloudFilled"
+  },
+  {
+    "name": "FolderCube",
+    "category": "object",
+    "description": "Bundle folder — Workspace",
+    "synonyms": [
+      "databricks asset bundle",
+      "DAB"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderCube"
+  },
+  {
+    "name": "FolderCubeOutline",
+    "category": "object",
+    "description": "Bundle Folder — Workspace",
+    "synonyms": [
+      "container"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderCubeOutline"
+  },
+  {
+    "name": "FolderFill",
+    "category": "object",
+    "description": "Folder — Workspace",
+    "synonyms": [
+      "directory",
+      "container"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderFill"
+  },
+  {
+    "name": "FolderHome",
+    "category": "object",
+    "description": "Home Folder — Workspace",
+    "synonyms": [
+      "personal directory",
+      "root"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderHome"
+  },
+  {
+    "name": "FolderNode",
+    "category": "object",
+    "description": "Linked Folder — Workspace",
+    "synonyms": [
+      "folder in tree",
+      "connected"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderNode"
+  },
+  {
+    "name": "FolderOutlinePipeline",
+    "category": "object",
+    "description": "Pipeline Folder — Workspace",
+    "synonyms": [
+      "DLT directory"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderOutlinePipeline"
+  },
+  {
+    "name": "FolderSolidPipeline",
+    "category": "object",
+    "description": "Pipeline folder — Lakeflow",
+    "synonyms": [
+      "DLT directory"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/FolderSolidPipeline"
+  },
+  {
+    "name": "Function",
+    "category": "object",
+    "description": "Function — Unity Catalog",
+    "synonyms": [
+      "UDF",
+      "formula",
+      "fx"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Function"
+  },
+  {
+    "name": "Gavel",
+    "category": "object",
+    "description": "Judges — AI",
+    "synonyms": [
+      "rules",
+      "policy",
+      "compliance"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Gavel"
+  },
+  {
+    "name": "GenieCode",
+    "category": "object",
+    "description": "Genie code — AI/BI",
+    "synonyms": [
+      "generative",
+      "agentic",
+      "AI query"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/GenieCode"
+  },
+  {
+    "name": "GenieDeepResearch",
+    "category": "object",
+    "description": "Deep Research — AI/BI",
+    "synonyms": [
+      "genie analysis",
+      "deep dive"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/GenieDeepResearch"
+  },
+  {
+    "name": "Globe",
+    "category": "object",
+    "description": "Account — Unity Catalog",
+    "synonyms": [
+      "world",
+      "public",
+      "web",
+      "global"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Globe"
+  },
+  {
+    "name": "Hash",
+    "category": "object",
+    "description": "ID — Platform",
+    "synonyms": [
+      "hash",
+      "identifier",
+      "number sign"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Hash"
+  },
+  {
+    "name": "Home",
+    "category": "object",
+    "description": "User root folder — Workspace",
+    "synonyms": [
+      "home",
+      "start",
+      "root"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Home"
+  },
+  {
+    "name": "Image",
+    "category": "object",
+    "description": "Image — Workspace",
+    "synonyms": [
+      "picture",
+      "photo",
+      "graphic",
+      "visual",
+      "media"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Image"
+  },
+  {
+    "name": "InfoBook",
+    "category": "object",
+    "description": "Instructions — AI/BI",
+    "synonyms": [
+      "knowledge base",
+      "review queue",
+      "Genie setup"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/InfoBook"
+  },
+  {
+    "name": "Ingestion",
+    "category": "object",
+    "description": "Connectors — Lakeflow",
+    "synonyms": [
+      "pipeline input",
+      "ingest",
+      "ETL"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Ingestion"
+  },
+  {
+    "name": "Key",
+    "category": "object",
+    "description": "Secret — Unity Catalog",
+    "synonyms": [
+      "key",
+      "credential",
+      "access key",
+      "encryption"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Key"
+  },
+  {
+    "name": "Layer",
+    "category": "object",
+    "description": "Feature Table — AI",
+    "synonyms": [
+      "layers",
+      "stack",
+      "Feature Store"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Layer"
+  },
+  {
+    "name": "LayerGraph",
+    "category": "object",
+    "description": "Feature graph — AI",
+    "synonyms": [
+      "feature lineage",
+      "feature dependencies"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/LayerGraph"
+  },
+  {
+    "name": "Leaf",
+    "category": "object",
+    "description": "Environment — Platform",
+    "synonyms": [
+      "green",
+      "nature",
+      "sustainable"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Leaf"
+  },
+  {
+    "name": "Letters",
+    "category": "object",
+    "description": "String — Data Type",
+    "synonyms": [
+      "text",
+      "varchar",
+      "characters"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Letters"
+  },
+  {
+    "name": "LettersNumbers",
+    "category": "object",
+    "description": "Alphanumeric — Data Type",
+    "synonyms": [
+      "mixed type",
+      "text+numbers"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/LettersNumbers"
+  },
+  {
+    "name": "Libraries",
+    "category": "object",
+    "description": "Library — Compute",
+    "synonyms": [
+      "packages",
+      "dependencies",
+      "jar",
+      "whl"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Libraries"
+  },
+  {
+    "name": "Lightning",
+    "category": "object",
+    "description": "Managed tables — Unity Catalog",
+    "synonyms": [
+      "lightning",
+      "bolt",
+      "quick",
+      "instant"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Lightning"
+  },
+  {
+    "name": "LinearLine",
+    "category": "object",
+    "description": "Linear interpolation — AI/BI",
+    "synonyms": [
+      "straight line chart",
+      "trend"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/LinearLine"
+  },
+  {
+    "name": "Map",
+    "category": "object",
+    "description": "Map — Data Type",
+    "synonyms": [
+      "location",
+      "geography",
+      "spatial"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Map"
+  },
+  {
+    "name": "MCP",
+    "category": "object",
+    "description": "MCP — AI",
+    "synonyms": [
+      "model connection protocol",
+      "tool server"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/MCP"
+  },
+  {
+    "name": "Measure",
+    "category": "object",
+    "description": "Metric — AI/BI",
+    "synonyms": [
+      "measure",
+      "KPI",
+      "metric definition"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Measure"
+  },
+  {
+    "name": "Megaphone",
+    "category": "object",
+    "description": "Announcement — Platform",
+    "synonyms": [
+      "broadcast",
+      "news",
+      "release note"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Megaphone"
+  },
+  {
+    "name": "Models",
+    "category": "object",
+    "description": "Model — Unity Catalog",
+    "synonyms": [
+      "ml model",
+      "model registry",
+      "mlflow"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Models"
+  },
+  {
+    "name": "MonotoneLine",
+    "category": "object",
+    "description": "Monotone interpolation — AI/BI",
+    "synonyms": [
+      "smooth curve",
+      "spline"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/MonotoneLine"
+  },
+  {
+    "name": "NeonProject",
+    "category": "object",
+    "description": "Neon Project — Lakebase",
+    "synonyms": [
+      "external project",
+      "integration"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/NeonProject"
+  },
+  {
+    "name": "Notebook",
+    "category": "object",
+    "description": "Notebook — Workspace",
+    "synonyms": [
+      "cell based doc",
+      "data science"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Notebook"
+  },
+  {
+    "name": "NotebookPipeline",
+    "category": "object",
+    "description": "Pipeline notebook — Lakeflow",
+    "synonyms": [
+      "DLT notebook"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/NotebookPipeline"
+  },
+  {
+    "name": "Notification",
+    "category": "object",
+    "description": "Notification — Platform",
+    "synonyms": [
+      "bell",
+      "alert",
+      "notify"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Notification"
+  },
+  {
+    "name": "Numbers",
+    "category": "object",
+    "description": "Number — Data Type",
+    "synonyms": [
+      "integer",
+      "digits"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Numbers"
+  },
+  {
+    "name": "Office",
+    "category": "object",
+    "description": "Organization — Unity Catalog",
+    "synonyms": [
+      "building",
+      "enterprise"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Office"
+  },
+  {
+    "name": "PieChart",
+    "category": "object",
+    "description": "Pie chart — AI/BI",
+    "synonyms": [
+      "donut",
+      "proportion",
+      "percentage chart"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/PieChart"
+  },
+  {
+    "name": "Pipeline",
+    "category": "object",
+    "description": "ETL Pipeline — Lakeflow",
+    "synonyms": [
+      "data flow",
+      "data engineering"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Pipeline"
+  },
+  {
+    "name": "PipelineCode",
+    "category": "object",
+    "description": "Pipeline Code — Lakeflow",
+    "synonyms": [
+      "DLT source code"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/PipelineCode"
+  },
+  {
+    "name": "PipelineCube",
+    "category": "object",
+    "description": "Bundle Pipeline — Lakeflow",
+    "synonyms": [
+      "DLT with bundles"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/PipelineCube"
+  },
+  {
+    "name": "Plug",
+    "category": "object",
+    "description": "Connection — Platform",
+    "synonyms": [
+      "plugin",
+      "connector",
+      "API",
+      "integration"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Plug"
+  },
+  {
+    "name": "Puzzle",
+    "category": "object",
+    "description": "Integration — Platform",
+    "synonyms": [
+      "plugin",
+      "extension",
+      "add-on"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Puzzle"
+  },
+  {
+    "name": "Query",
+    "category": "object",
+    "description": "Query — Workspace",
+    "synonyms": [
+      "sql query",
+      "editor",
+      "code file"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Query"
+  },
+  {
+    "name": "QueryEditor",
+    "category": "object",
+    "description": "SQL Editor — Workspace",
+    "synonyms": [
+      "query editor",
+      "IDE",
+      "authoring"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/QueryEditor"
+  },
+  {
+    "name": "Robot",
+    "category": "object",
+    "description": "Playground — bot, service principal, AI agent",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Robot"
+  },
+  {
+    "name": "Rocket",
+    "category": "object",
+    "description": "deploy — Workspace",
+    "synonyms": [
+      "launch",
+      "ship",
+      "go live"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Rocket"
+  },
+  {
+    "name": "Schema",
+    "category": "object",
+    "description": "Tree — Unity Catalog",
+    "synonyms": [
+      "data structure",
+      "DDL"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Schema"
+  },
+  {
+    "name": "SearchData",
+    "category": "object",
+    "description": "Preview data — Unity Catalog",
+    "synonyms": [
+      "search",
+      "find",
+      "query data"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/SearchData"
+  },
+  {
+    "name": "Shield",
+    "category": "object",
+    "description": "Security — Platform",
+    "synonyms": [
+      "protection",
+      "governance",
+      "firewall",
+      "compliance"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Shield"
+  },
+  {
+    "name": "ShieldCheck",
+    "category": "object",
+    "description": "Governed — Unity Catalog",
+    "synonyms": [
+      "secured",
+      "verified",
+      "compliant"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/ShieldCheck"
+  },
+  {
+    "name": "Sparkle",
+    "category": "object",
+    "description": "Genie assistant — AI/BI",
+    "synonyms": [
+      "assistant",
+      "genie"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Sparkle"
+  },
+  {
+    "name": "SparkleFill",
+    "category": "object",
+    "description": "Genie assistant — AI/BI",
+    "synonyms": [
+      "assistant",
+      "genie"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/SparkleFill"
+  },
+  {
+    "name": "SparkleRectangle",
+    "category": "object",
+    "description": "Genie Space — AI/BI",
+    "synonyms": [
+      "data chat",
+      "assistant",
+      "natural language conversation"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/SparkleRectangle"
+  },
+  {
+    "name": "SpeechBubble",
+    "category": "object",
+    "description": "Feedback — Platform",
+    "synonyms": [
+      "comment",
+      "chat",
+      "message"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/SpeechBubble"
+  },
+  {
+    "name": "Speedometer",
+    "category": "object",
+    "description": "Performance — Platform",
+    "synonyms": [
+      "speed",
+      "metrics",
+      "benchmarking"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Speedometer"
+  },
+  {
+    "name": "StepAfterLine",
+    "category": "object",
+    "description": "Step-after interpolation — AI/BI",
+    "synonyms": [
+      "staircase right"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/StepAfterLine"
+  },
+  {
+    "name": "StepBeforeLine",
+    "category": "object",
+    "description": "Step-before interpolation — AI/BI",
+    "synonyms": [
+      "staircase left"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/StepBeforeLine"
+  },
+  {
+    "name": "StoredProcedure",
+    "category": "object",
+    "description": "Stored procedure — Unity Catalog",
+    "synonyms": [
+      "function",
+      "routine",
+      "sproc"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/StoredProcedure"
+  },
+  {
+    "name": "Storefront",
+    "category": "object",
+    "description": "Marketplace — Platform",
+    "synonyms": [
+      "data shop",
+      "storefront",
+      "data exchange"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Storefront"
+  },
+  {
+    "name": "Table",
+    "category": "object",
+    "description": "Table — Unity Catalog",
+    "synonyms": [
+      "table",
+      "data"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Table"
+  },
+  {
+    "name": "TableClock",
+    "category": "object",
+    "description": "Temporal table — Unity Catalog",
+    "synonyms": [
+      "time travel",
+      "table history"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableClock"
+  },
+  {
+    "name": "TableGlasses",
+    "category": "object",
+    "description": "Table Views — Unity Catalog",
+    "synonyms": [
+      "views",
+      "dataset"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableGlasses"
+  },
+  {
+    "name": "TableGlobe",
+    "category": "object",
+    "description": "External table — Unity Catalog",
+    "synonyms": [
+      "foreign table",
+      "remote data"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableGlobe"
+  },
+  {
+    "name": "TableLightning",
+    "category": "object",
+    "description": "Materialized View — Unity Catalog",
+    "synonyms": [
+      "MV",
+      "precomputed",
+      "auto-refreshed"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableLightning"
+  },
+  {
+    "name": "TableMeasure",
+    "category": "object",
+    "description": "Metric view — AI/BI",
+    "synonyms": [
+      "measure",
+      "KPI",
+      "aggregation"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableMeasure"
+  },
+  {
+    "name": "TableModel",
+    "category": "object",
+    "description": "Model table — AI",
+    "synonyms": [
+      "model registry",
+      "experiment table"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableModel"
+  },
+  {
+    "name": "TableStream",
+    "category": "object",
+    "description": "Streaming Table — Lakeflow",
+    "synonyms": [
+      "real-time table",
+      "live data"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableStream"
+  },
+  {
+    "name": "TableVector",
+    "category": "object",
+    "description": "Vector Index — AI",
+    "synonyms": [
+      "embeddings",
+      "similarity search"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableVector"
+  },
+  {
+    "name": "TableView",
+    "category": "object",
+    "description": "Table View — Unity Catalog",
+    "synonyms": [
+      "tabular display",
+      "data grid"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TableView"
+  },
+  {
+    "name": "Tag",
+    "category": "object",
+    "description": "Tag — Unity Catalog",
+    "synonyms": [
+      "label",
+      "category",
+      "governance tag"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Tag"
+  },
+  {
+    "name": "Terminal",
+    "category": "object",
+    "description": "Web Terminal — Compute",
+    "synonyms": [
+      "console",
+      "CLI",
+      "shell"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Terminal"
+  },
+  {
+    "name": "Token",
+    "category": "object",
+    "description": "Access token — IAM",
+    "synonyms": [
+      "credential",
+      "auth token",
+      "PAT"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Token"
+  },
+  {
+    "name": "Tree",
+    "category": "object",
+    "description": "Cluster — Platform",
+    "synonyms": [
+      "compute",
+      "nested structure"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Tree"
+  },
+  {
+    "name": "Usb",
+    "category": "object",
+    "description": "Connector — Platform",
+    "synonyms": [
+      "USB",
+      "hardware",
+      "peripheral"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Usb"
+  },
+  {
+    "name": "User",
+    "category": "object",
+    "description": "User — IAM",
+    "synonyms": [
+      "person",
+      "profile"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/User"
+  },
+  {
+    "name": "UserBadge",
+    "category": "object",
+    "description": "User — IAM",
+    "synonyms": [
+      "credentialed user",
+      "role indicator"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserBadge"
+  },
+  {
+    "name": "UserCircle",
+    "category": "object",
+    "description": "User profile — IAM",
+    "synonyms": [
+      "avatar",
+      "account",
+      "identity"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserCircle"
+  },
+  {
+    "name": "UserGroup",
+    "category": "object",
+    "description": "Group — IAM",
+    "synonyms": [
+      "team",
+      "people",
+      "members"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserGroup"
+  },
+  {
+    "name": "UserGroupFill",
+    "category": "object",
+    "description": "Group — IAM",
+    "synonyms": [
+      "team",
+      "people",
+      "members"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserGroupFill"
+  },
+  {
+    "name": "UserKey",
+    "category": "object",
+    "description": "Service principal — IAM",
+    "synonyms": [
+      "API key user",
+      "machine identity"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserKey"
+  },
+  {
+    "name": "UserOutline",
+    "category": "object",
+    "description": "User — IAM",
+    "synonyms": [
+      "person",
+      "profile",
+      "outline"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserOutline"
+  },
+  {
+    "name": "UserShield",
+    "category": "object",
+    "description": "Admin user — IAM",
+    "synonyms": [
+      "admin",
+      "security admin",
+      "privileged"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserShield"
+  },
+  {
+    "name": "UserSparkle",
+    "category": "object",
+    "description": "AI user — AI/BI",
+    "synonyms": [
+      "genie",
+      "agent"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserSparkle"
+  },
+  {
+    "name": "UserTeam",
+    "category": "object",
+    "description": "Team — IAM",
+    "synonyms": [
+      "team members",
+      "group"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/UserTeam"
+  },
+  {
+    "name": "WorkflowCode",
+    "category": "object",
+    "description": "Code workflow — Lakeflow",
+    "synonyms": [
+      "programmatic job"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/WorkflowCode"
+  },
+  {
+    "name": "WorkflowCube",
+    "category": "object",
+    "description": "Bundle pipeline — Lakeflow",
+    "synonyms": [
+      "asset bundle",
+      "pipeline"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/WorkflowCube"
+  },
+  {
+    "name": "Workflows",
+    "category": "object",
+    "description": "Jobs — Lakeflow",
+    "synonyms": [
+      "DAG",
+      "task flow",
+      "orchestration",
+      "automation"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Workflows"
+  },
+  {
+    "name": "Workspaces",
+    "category": "object",
+    "description": "Workspace — project space, working area",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Workspaces"
+  },
+  {
+    "name": "AlignCenter",
+    "category": "action",
+    "description": "align center — center align, middle align",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AlignCenter"
+  },
+  {
+    "name": "AlignJustify",
+    "category": "action",
+    "description": "justify — full width text, block align",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AlignJustify"
+  },
+  {
+    "name": "AlignLeft",
+    "category": "action",
+    "description": "align left — left align, flush left",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AlignLeft"
+  },
+  {
+    "name": "AlignRight",
+    "category": "action",
+    "description": "align right — right align, flush right",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AlignRight"
+  },
+  {
+    "name": "AlignVerticalBottom",
+    "category": "action",
+    "description": "align bottom — snap to bottom, vertical align",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AlignVerticalBottom"
+  },
+  {
+    "name": "AlignVerticalCenter",
+    "category": "action",
+    "description": "align middle — center vertically, vertical align",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AlignVerticalCenter"
+  },
+  {
+    "name": "AlignVerticalTop",
+    "category": "action",
+    "description": "align top — snap to top, vertical align",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AlignVerticalTop"
+  },
+  {
+    "name": "App",
+    "category": "action",
+    "description": "app grid — modules, app gallery",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/App"
+  },
+  {
+    "name": "ArrowDown",
+    "category": "action",
+    "description": "move down — descend, collapse, drop",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowDown"
+  },
+  {
+    "name": "ArrowIn",
+    "category": "action",
+    "description": "import — ingest, inbound, data ingestion",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowIn"
+  },
+  {
+    "name": "ArrowLeft",
+    "category": "action",
+    "description": "back — previous, return",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowLeft"
+  },
+  {
+    "name": "ArrowOver",
+    "category": "action",
+    "description": "skip — jump over, pass, skip step",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowOver"
+  },
+  {
+    "name": "ArrowRight",
+    "category": "action",
+    "description": "expand — forward, next, proceed",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowRight"
+  },
+  {
+    "name": "ArrowUp",
+    "category": "action",
+    "description": "move up — ascend, expand, rise",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowUp"
+  },
+  {
+    "name": "At",
+    "category": "action",
+    "description": "mention — tag user, @, email, handle",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/At"
+  },
+  {
+    "name": "AzHorizontal",
+    "category": "action",
+    "description": "sort A-Z — alphabetical, ascending text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AzHorizontal"
+  },
+  {
+    "name": "AzVertical",
+    "category": "action",
+    "description": "sort A-Z — alphabetical vertical, ascending text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/AzVertical"
+  },
+  {
+    "name": "Backup",
+    "category": "action",
+    "description": "backup — restore, snapshot, recovery",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Backup"
+  },
+  {
+    "name": "BarsAscendingHorizontal",
+    "category": "action",
+    "description": "sort ascending — low to high, increasing",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BarsAscendingHorizontal"
+  },
+  {
+    "name": "BarsAscendingVertical",
+    "category": "action",
+    "description": "sort ascending — low to high, increasing",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BarsAscendingVertical"
+  },
+  {
+    "name": "BarsDescendingHorizontal",
+    "category": "action",
+    "description": "sort descending — high to low, decreasing",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BarsDescendingHorizontal"
+  },
+  {
+    "name": "BarsDescendingVertical",
+    "category": "action",
+    "description": "sort descending — high to low, decreasing",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BarsDescendingVertical"
+  },
+  {
+    "name": "Blockquote",
+    "category": "action",
+    "description": "blockquote — quote, citation, callout",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Blockquote"
+  },
+  {
+    "name": "Bold",
+    "category": "action",
+    "description": "bold — strong text, heavy font",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Bold"
+  },
+  {
+    "name": "Bookmark",
+    "category": "action",
+    "description": "bookmark — save, favorite, flag",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Bookmark"
+  },
+  {
+    "name": "BookmarkFill",
+    "category": "action",
+    "description": "bookmarked — saved, favorited, flagged",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BookmarkFill"
+  },
+  {
+    "name": "BracketsX",
+    "category": "action",
+    "description": "invalid code — code error, syntax fail",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BracketsX"
+  },
+  {
+    "name": "BranchCheck",
+    "category": "action",
+    "description": "branch merged — repos, git, approved, PR merged",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BranchCheck"
+  },
+  {
+    "name": "BranchReset",
+    "category": "action",
+    "description": "reset branch — repos, git, revert, undo branch",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BranchReset"
+  },
+  {
+    "name": "Brush",
+    "category": "action",
+    "description": "format — style, paint, customize",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Brush"
+  },
+  {
+    "name": "CalendarRange",
+    "category": "action",
+    "description": "date range — date picker, period selector, timespan",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CalendarRange"
+  },
+  {
+    "name": "CalendarSync",
+    "category": "action",
+    "description": "synced schedule — synchronized, auto-refresh",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CalendarSync"
+  },
+  {
+    "name": "Camera",
+    "category": "action",
+    "description": "screenshot — capture, snapshot, photo",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Camera"
+  },
+  {
+    "name": "CaretDownSquare",
+    "category": "action",
+    "description": "dropdown — expand, select, caret down",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CaretDownSquare"
+  },
+  {
+    "name": "CaretUpSquare",
+    "category": "action",
+    "description": "collapse — close dropdown, caret up",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CaretUpSquare"
+  },
+  {
+    "name": "CellsSquare",
+    "category": "action",
+    "description": "table cells — grid cells, matrix",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CellsSquare"
+  },
+  {
+    "name": "Checkbox",
+    "category": "action",
+    "description": "checkbox — toggle, boolean, multi-select",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Checkbox"
+  },
+  {
+    "name": "CheckSmall",
+    "category": "action",
+    "description": "accept — checkmark, confirm, done",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CheckSmall"
+  },
+  {
+    "name": "ChevronDoubleDown",
+    "category": "action",
+    "description": "expand all — unfold all, open all",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronDoubleDown"
+  },
+  {
+    "name": "ChevronDoubleLeft",
+    "category": "action",
+    "description": "jump to start — first page, skip left",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronDoubleLeft"
+  },
+  {
+    "name": "ChevronDoubleLeftOff",
+    "category": "action",
+    "description": "collapse disabled — can't collapse further",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronDoubleLeftOff"
+  },
+  {
+    "name": "ChevronDoubleRight",
+    "category": "action",
+    "description": "jump to end — last page, skip right",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronDoubleRight"
+  },
+  {
+    "name": "ChevronDoubleRightOff",
+    "category": "action",
+    "description": "expand disabled — can't expand further",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronDoubleRightOff"
+  },
+  {
+    "name": "ChevronDoubleUp",
+    "category": "action",
+    "description": "collapse all — fold all, minimize all",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronDoubleUp"
+  },
+  {
+    "name": "Clipboard",
+    "category": "action",
+    "description": "paste — clipboard, buffer, copy to clipboard",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Clipboard"
+  },
+  {
+    "name": "Clock",
+    "category": "action",
+    "description": "schedule — time, history, recent, schedule",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Clock"
+  },
+  {
+    "name": "CloseSmall",
+    "category": "action",
+    "description": "close — dismiss, x, cancel, remove",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CloseSmall"
+  },
+  {
+    "name": "CloudDownload",
+    "category": "action",
+    "description": "download from cloud — fetch, pull, cloud sync",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CloudDownload"
+  },
+  {
+    "name": "CloudUpload",
+    "category": "action",
+    "description": "upload to cloud — push, deploy, cloud sync",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CloudUpload"
+  },
+  {
+    "name": "ColorFill",
+    "category": "action",
+    "description": "color fill — paint bucket, color picker, text color",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ColorFill"
+  },
+  {
+    "name": "Column",
+    "category": "action",
+    "description": "single column — field, attribute",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Column"
+  },
+  {
+    "name": "Columns",
+    "category": "action",
+    "description": "columns — fields, table columns",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Columns"
+  },
+  {
+    "name": "ColumnSplit",
+    "category": "action",
+    "description": "split column — divide, separate columns",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ColumnSplit"
+  },
+  {
+    "name": "Command",
+    "category": "action",
+    "description": "command — cmd key, keyboard, shortcut",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Command"
+  },
+  {
+    "name": "CommandPalette",
+    "category": "action",
+    "description": "command palette — quick actions, search",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CommandPalette"
+  },
+  {
+    "name": "Compass",
+    "category": "action",
+    "description": "discovery — explore, navigate, browse",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Compass"
+  },
+  {
+    "name": "Copy",
+    "category": "action",
+    "description": "copy — copy, duplicate, replicate",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Copy"
+  },
+  {
+    "name": "Cursor",
+    "category": "action",
+    "description": "cursor — pointer, selection, select",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Cursor"
+  },
+  {
+    "name": "CursorClick",
+    "category": "action",
+    "description": "click — select, tap, interact",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CursorClick"
+  },
+  {
+    "name": "CursorType",
+    "category": "action",
+    "description": "text cursor — I-beam, text select, type mode",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CursorType"
+  },
+  {
+    "name": "DatabaseImport",
+    "category": "action",
+    "description": "import data — data load, ingest to database",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/DatabaseImport"
+  },
+  {
+    "name": "DotsCircle",
+    "category": "action",
+    "description": "more — options, ellipsis",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/DotsCircle"
+  },
+  {
+    "name": "Download",
+    "category": "action",
+    "description": "download — export, save file, fetch",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Download"
+  },
+  {
+    "name": "Drag",
+    "category": "action",
+    "description": "drag handle — grip, reorder, move",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Drag"
+  },
+  {
+    "name": "ExpandLess",
+    "category": "action",
+    "description": "collapse — show less, fold, close",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ExpandLess"
+  },
+  {
+    "name": "ExpandMore",
+    "category": "action",
+    "description": "expand — show more, unfold, see details",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ExpandMore"
+  },
+  {
+    "name": "FaceFrown",
+    "category": "action",
+    "description": "negative feedback — bad, unhappy, dissatisfied",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FaceFrown"
+  },
+  {
+    "name": "FaceNeutral",
+    "category": "action",
+    "description": "neutral feedback — okay, meh, mixed",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FaceNeutral"
+  },
+  {
+    "name": "FaceSmile",
+    "category": "action",
+    "description": "positive feedback — good, happy, satisfied",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FaceSmile"
+  },
+  {
+    "name": "FileNew",
+    "category": "action",
+    "description": "new file — create file, blank document",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FileNew"
+  },
+  {
+    "name": "Filter",
+    "category": "action",
+    "description": "filter — funnel, refine, narrow",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Filter"
+  },
+  {
+    "name": "FlagPointer",
+    "category": "action",
+    "description": "Marker — flag, milestone, waypoint",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FlagPointer"
+  },
+  {
+    "name": "Flow",
+    "category": "action",
+    "description": "conditional logic — if-else, branching, decision",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Flow"
+  },
+  {
+    "name": "FolderNew",
+    "category": "action",
+    "description": "new folder — create directory",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FolderNew"
+  },
+  {
+    "name": "FolderOpen",
+    "category": "action",
+    "description": "Opened folder — expanded directory, browse contents",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FolderOpen"
+  },
+  {
+    "name": "FolderOpenBranch",
+    "category": "action",
+    "description": "Open git folder — expanded git directory",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FolderOpenBranch"
+  },
+  {
+    "name": "FolderOpenCloud",
+    "category": "action",
+    "description": "Open volume folder — expanded cloud directory",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FolderOpenCloud"
+  },
+  {
+    "name": "FolderOpenCube",
+    "category": "action",
+    "description": "Open Bundle Folder — asset bundle",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FolderOpenCube"
+  },
+  {
+    "name": "FolderOpenPipeline",
+    "category": "action",
+    "description": "Open pipeline folder — expanded DLT directory",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FolderOpenPipeline"
+  },
+  {
+    "name": "Font",
+    "category": "action",
+    "description": "font — typography, typeface, text style",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Font"
+  },
+  {
+    "name": "Fork",
+    "category": "action",
+    "description": "branch — repos, git, split, diverge",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Fork"
+  },
+  {
+    "name": "ForkHorizontal",
+    "category": "action",
+    "description": "branch — repos, git, split, diverge",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ForkHorizontal"
+  },
+  {
+    "name": "Fullscreen",
+    "category": "action",
+    "description": "expand window — maximize, presentation mode",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Fullscreen"
+  },
+  {
+    "name": "FullscreenExit",
+    "category": "action",
+    "description": "exit fullscreen — minimize, restore size",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/FullscreenExit"
+  },
+  {
+    "name": "Gear",
+    "category": "action",
+    "description": "settings — config, preferences",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Gear"
+  },
+  {
+    "name": "GearFill",
+    "category": "action",
+    "description": "settings — config, preferences",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/GearFill"
+  },
+  {
+    "name": "Gift",
+    "category": "action",
+    "description": "What's New — Platform",
+    "synonyms": [
+      "new feature",
+      "release",
+      "announcement"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Gift"
+  },
+  {
+    "name": "GitCommit",
+    "category": "action",
+    "description": "commit — repos, git, save version",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/GitCommit"
+  },
+  {
+    "name": "Grid",
+    "category": "action",
+    "description": "grid view — tile view, card layout, gallery",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Grid"
+  },
+  {
+    "name": "Group",
+    "category": "action",
+    "description": "group — cluster, bundle, aggregate",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Group"
+  },
+  {
+    "name": "H1",
+    "category": "action",
+    "description": "heading 1 — title, largest heading",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/H1"
+  },
+  {
+    "name": "H2",
+    "category": "action",
+    "description": "heading 2 — subtitle, section heading",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/H2"
+  },
+  {
+    "name": "H3",
+    "category": "action",
+    "description": "heading 3 — subsection heading",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/H3"
+  },
+  {
+    "name": "H4",
+    "category": "action",
+    "description": "heading 4 — minor heading",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/H4"
+  },
+  {
+    "name": "H5",
+    "category": "action",
+    "description": "heading 5 — small heading",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/H5"
+  },
+  {
+    "name": "H6",
+    "category": "action",
+    "description": "heading 6 — smallest heading",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/H6"
+  },
+  {
+    "name": "History",
+    "category": "action",
+    "description": "log — recent, activity, audit",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/History"
+  },
+  {
+    "name": "IndentDecrease",
+    "category": "action",
+    "description": "outdent — decrease indent, shift left",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/IndentDecrease"
+  },
+  {
+    "name": "IndentIncrease",
+    "category": "action",
+    "description": "indent — increase indent, shift right",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/IndentIncrease"
+  },
+  {
+    "name": "Italic",
+    "category": "action",
+    "description": "italic — emphasis, slanted text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Italic"
+  },
+  {
+    "name": "JoinOperator",
+    "category": "action",
+    "description": "Join — join tables, merge, combine",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/JoinOperator"
+  },
+  {
+    "name": "Keyboard",
+    "category": "action",
+    "description": "keyboard shortcuts — hotkeys, key bindings",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Keyboard"
+  },
+  {
+    "name": "LetterFormat",
+    "category": "action",
+    "description": "text format — font style, letter case",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/LetterFormat"
+  },
+  {
+    "name": "Lifesaver",
+    "category": "action",
+    "description": "Help — Platform",
+    "synonyms": [
+      "support",
+      "rescue",
+      "life ring"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Lifesaver"
+  },
+  {
+    "name": "Link",
+    "category": "action",
+    "description": "copy link — hyperlink, URL, chain link",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Link"
+  },
+  {
+    "name": "LinkOff",
+    "category": "action",
+    "description": "unlink — disconnect, remove link, detach",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/LinkOff"
+  },
+  {
+    "name": "ListBorder",
+    "category": "action",
+    "description": "bordered list — list box, contained list",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ListBorder"
+  },
+  {
+    "name": "ListClear",
+    "category": "action",
+    "description": "clear list — remove all, empty list",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ListClear"
+  },
+  {
+    "name": "ListNumber",
+    "category": "action",
+    "description": "numbered list — ordered list, ol, steps",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ListNumber"
+  },
+  {
+    "name": "Lock",
+    "category": "action",
+    "description": "lock — secure, protected, restricted, ACL",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Lock"
+  },
+  {
+    "name": "LockFill",
+    "category": "action",
+    "description": "locked — secure, protected, restricted",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/LockFill"
+  },
+  {
+    "name": "LockShare",
+    "category": "action",
+    "description": "share access — grant permission, share credentials",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/LockShare"
+  },
+  {
+    "name": "LockUnlocked",
+    "category": "action",
+    "description": "unlock — unsecure, open access, remove restriction",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/LockUnlocked"
+  },
+  {
+    "name": "Loop",
+    "category": "action",
+    "description": "retry — loop, repeat, iterate, re-run",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Loop"
+  },
+  {
+    "name": "Mail",
+    "category": "action",
+    "description": "mail — message, notification, invite",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Mail"
+  },
+  {
+    "name": "Markdown",
+    "category": "action",
+    "description": "Markdown — md, formatted text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Markdown"
+  },
+  {
+    "name": "Menu",
+    "category": "action",
+    "description": "menu — hamburger, navigation toggle, three lines",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Menu"
+  },
+  {
+    "name": "MinusCircle",
+    "category": "action",
+    "description": "remove — minus, subtract, exclude, decrease",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/MinusCircle"
+  },
+  {
+    "name": "MinusCircleFill",
+    "category": "action",
+    "description": "remove — minus, subtract, exclude, decrease",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/MinusCircleFill"
+  },
+  {
+    "name": "MinusCircleSmall",
+    "category": "action",
+    "description": "remove — subtract, decrease, minus",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/MinusCircleSmall"
+  },
+  {
+    "name": "MinusSquare",
+    "category": "action",
+    "description": "remove — subtract, exclude, minus",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/MinusSquare"
+  },
+  {
+    "name": "Moon",
+    "category": "action",
+    "description": "dark mode — night mode, dark theme",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Moon"
+  },
+  {
+    "name": "NewChat",
+    "category": "action",
+    "description": "new conversation — new chat, start thread",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/NewChat"
+  },
+  {
+    "name": "NewWindow",
+    "category": "action",
+    "description": "open — external link, pop out, new tab",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/NewWindow"
+  },
+  {
+    "name": "NotificationOff",
+    "category": "action",
+    "description": "mute notifications — alerts off, silence",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/NotificationOff"
+  },
+  {
+    "name": "NumberFormat",
+    "category": "action",
+    "description": "number format — numeric display, decimal places",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/NumberFormat"
+  },
+  {
+    "name": "PageBottom",
+    "category": "action",
+    "description": "scroll to bottom — jump to end, last item",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PageBottom"
+  },
+  {
+    "name": "PageFirst",
+    "category": "action",
+    "description": "first page — jump to start, beginning",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PageFirst"
+  },
+  {
+    "name": "PageLast",
+    "category": "action",
+    "description": "last page — jump to end, final page",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PageLast"
+  },
+  {
+    "name": "PageTop",
+    "category": "action",
+    "description": "scroll to top — jump to start, first item",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PageTop"
+  },
+  {
+    "name": "PanelDocked",
+    "category": "action",
+    "description": "dock panel — attach panel, pin sidebar",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PanelDocked"
+  },
+  {
+    "name": "PanelFloating",
+    "category": "action",
+    "description": "float panel — detach panel, overlay",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PanelFloating"
+  },
+  {
+    "name": "Paperclip",
+    "category": "action",
+    "description": "attach — attachment, file upload, add file",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Paperclip"
+  },
+  {
+    "name": "Pause",
+    "category": "action",
+    "description": "pause — hold, suspend, pause job",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Pause"
+  },
+  {
+    "name": "Pencil",
+    "category": "action",
+    "description": "edit — edit, write, modify, rename, compose",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Pencil"
+  },
+  {
+    "name": "PencilFill",
+    "category": "action",
+    "description": "edit — modify, write, compose",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PencilFill"
+  },
+  {
+    "name": "PencilSparkle",
+    "category": "action",
+    "description": "AI edit — smart edit, AI-assisted writing",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PencilSparkle"
+  },
+  {
+    "name": "Pin",
+    "category": "action",
+    "description": "pin — anchor, stick, keep visible",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Pin"
+  },
+  {
+    "name": "PinCancel",
+    "category": "action",
+    "description": "unpin — remove pin, unstick",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PinCancel"
+  },
+  {
+    "name": "PinFill",
+    "category": "action",
+    "description": "pinned — anchored, stuck, kept visible",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PinFill"
+  },
+  {
+    "name": "Play",
+    "category": "action",
+    "description": "run — execute, start, launch",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Play"
+  },
+  {
+    "name": "PlayCircle",
+    "category": "action",
+    "description": "run — execute, start, play",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlayCircle"
+  },
+  {
+    "name": "PlayCircleFill",
+    "category": "action",
+    "description": "run — execute, start, play",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlayCircleFill"
+  },
+  {
+    "name": "PlayDouble",
+    "category": "action",
+    "description": "run all — execute all, batch run",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlayDouble"
+  },
+  {
+    "name": "PlayMultiple",
+    "category": "action",
+    "description": "run all — execute batch, run selected",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlayMultiple"
+  },
+  {
+    "name": "PlusCircle",
+    "category": "action",
+    "description": "add — create, new, plus",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlusCircle"
+  },
+  {
+    "name": "PlusCircleFill",
+    "category": "action",
+    "description": "add — create, new, plus",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlusCircleFill"
+  },
+  {
+    "name": "PlusCircleSmall",
+    "category": "action",
+    "description": "add — create, new, plus",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlusCircleSmall"
+  },
+  {
+    "name": "PlusMinusSquare",
+    "category": "action",
+    "description": "increment/decrement — plus minus, counter, stepper",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlusMinusSquare"
+  },
+  {
+    "name": "PlusSquare",
+    "category": "action",
+    "description": "add new — create, new, insert, plus, +",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PlusSquare"
+  },
+  {
+    "name": "PositionBottom",
+    "category": "action",
+    "description": "position bottom — align bottom, dock bottom",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PositionBottom"
+  },
+  {
+    "name": "PositionLeft",
+    "category": "action",
+    "description": "position left — align left, dock left",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PositionLeft"
+  },
+  {
+    "name": "PositionRight",
+    "category": "action",
+    "description": "position right — align right, dock right",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PositionRight"
+  },
+  {
+    "name": "PositionTop",
+    "category": "action",
+    "description": "position top — align top, dock top",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PositionTop"
+  },
+  {
+    "name": "PullRequest",
+    "category": "action",
+    "description": "pull request — PR, merge request, code review",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/PullRequest"
+  },
+  {
+    "name": "Radio",
+    "category": "action",
+    "description": "radio — single select, option, choice",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Radio"
+  },
+  {
+    "name": "ReaderMode",
+    "category": "action",
+    "description": "reader view — read mode, focus mode, clean view",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ReaderMode"
+  },
+  {
+    "name": "Redo",
+    "category": "action",
+    "description": "redo — redo, ctrl+Y, repeat",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Redo"
+  },
+  {
+    "name": "Refresh",
+    "category": "action",
+    "description": "refresh — reload, sync, retry, re-fetch",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Refresh"
+  },
+  {
+    "name": "RefreshPlay",
+    "category": "action",
+    "description": "restart — re-run, refresh and play",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/RefreshPlay"
+  },
+  {
+    "name": "Reply",
+    "category": "action",
+    "description": "reply — respond, answer, thread",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Reply"
+  },
+  {
+    "name": "Resize",
+    "category": "action",
+    "description": "resize — scale, adjust size, drag to resize",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Resize"
+  },
+  {
+    "name": "RichText",
+    "category": "action",
+    "description": "Rich text — formatted text, WYSIWYG",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/RichText"
+  },
+  {
+    "name": "Rows",
+    "category": "action",
+    "description": "rows — horizontal layout, row view",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Rows"
+  },
+  {
+    "name": "Run",
+    "category": "action",
+    "description": "run — execute, start, trigger",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Run"
+  },
+  {
+    "name": "Save",
+    "category": "action",
+    "description": "save — persist, store, ctrl+S",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Save"
+  },
+  {
+    "name": "School",
+    "category": "action",
+    "description": "training — education, academy, learning",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/School"
+  },
+  {
+    "name": "Send",
+    "category": "action",
+    "description": "send — submit, dispatch",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Send"
+  },
+  {
+    "name": "Share",
+    "category": "action",
+    "description": "share — distribute, send to",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Share"
+  },
+  {
+    "name": "Shortcut",
+    "category": "action",
+    "description": "shortcut — keyboard shortcuts, hotkey, key binding",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Shortcut"
+  },
+  {
+    "name": "Sidebar",
+    "category": "action",
+    "description": "show panel — expand sidebar, open sidebar",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Sidebar"
+  },
+  {
+    "name": "SidebarAuto",
+    "category": "action",
+    "description": "auto sidebar — smart sidebar, auto-hide",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SidebarAuto"
+  },
+  {
+    "name": "SidebarClosed",
+    "category": "action",
+    "description": "sidebar closed — panel hidden, sidebar off",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SidebarClosed"
+  },
+  {
+    "name": "SidebarCollapse",
+    "category": "action",
+    "description": "hide panel — collapse sidebar, minimize sidebar",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SidebarCollapse"
+  },
+  {
+    "name": "SidebarExpand",
+    "category": "action",
+    "description": "show panel — expand sidebar, open sidebar",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SidebarExpand"
+  },
+  {
+    "name": "SidebarSync",
+    "category": "action",
+    "description": "sync sidebar — refresh navigation",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SidebarSync"
+  },
+  {
+    "name": "SlashSquare",
+    "category": "action",
+    "description": "command palette — slash command, quick action",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SlashSquare"
+  },
+  {
+    "name": "Sliders",
+    "category": "action",
+    "description": "adjust — sliders, controls, tuning, settings",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Sliders"
+  },
+  {
+    "name": "SortAscending",
+    "category": "action",
+    "description": "sort ascending — A to Z, low to high, sort up",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortAscending"
+  },
+  {
+    "name": "SortCustomHorizontal",
+    "category": "action",
+    "description": "custom sort — manual sort, drag sort horizontal",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortCustomHorizontal"
+  },
+  {
+    "name": "SortCustomVertical",
+    "category": "action",
+    "description": "custom sort — manual sort, drag sort",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortCustomVertical"
+  },
+  {
+    "name": "SortDescending",
+    "category": "action",
+    "description": "sort descending — Z to A, high to low, sort down",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortDescending"
+  },
+  {
+    "name": "SortHorizontalAscending",
+    "category": "action",
+    "description": "sort ascending — low to high, A-Z",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortHorizontalAscending"
+  },
+  {
+    "name": "SortHorizontalDescending",
+    "category": "action",
+    "description": "sort descending — high to low, Z-A",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortHorizontalDescending"
+  },
+  {
+    "name": "SortLetterHorizontalAscending",
+    "category": "action",
+    "description": "sort A-Z — alphabetical ascending",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortLetterHorizontalAscending"
+  },
+  {
+    "name": "SortLetterHorizontalDescending",
+    "category": "action",
+    "description": "sort Z-A — alphabetical descending",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortLetterHorizontalDescending"
+  },
+  {
+    "name": "SortLetterUnsorted",
+    "category": "action",
+    "description": "unsorted — no sort, default order",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortLetterUnsorted"
+  },
+  {
+    "name": "SortLetterVerticalAscending",
+    "category": "action",
+    "description": "sort A-Z vertical — alphabetical ascending",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortLetterVerticalAscending"
+  },
+  {
+    "name": "SortLetterVerticalDescending",
+    "category": "action",
+    "description": "sort Z-A vertical — alphabetical descending",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortLetterVerticalDescending"
+  },
+  {
+    "name": "SortUnsorted",
+    "category": "action",
+    "description": "sort — unsorted, no sort, default order",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SortUnsorted"
+  },
+  {
+    "name": "SpeechBubblePlus",
+    "category": "action",
+    "description": "new comment — add feedback, start thread",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SpeechBubblePlus"
+  },
+  {
+    "name": "SpeechBubbleQuestionMark",
+    "category": "action",
+    "description": "help — support, FAQ, ask question",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SpeechBubbleQuestionMark"
+  },
+  {
+    "name": "SpeechBubbleQuestionMarkFill",
+    "category": "action",
+    "description": "Help — support, FAQ, ask a question",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SpeechBubbleQuestionMarkFill"
+  },
+  {
+    "name": "Star",
+    "category": "action",
+    "description": "favorite — starred, important",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Star"
+  },
+  {
+    "name": "StarFill",
+    "category": "action",
+    "description": "favorited — starred, bookmarked",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/StarFill"
+  },
+  {
+    "name": "Stop",
+    "category": "action",
+    "description": "step — terminate, abort, cancel, kill, end",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Stop"
+  },
+  {
+    "name": "StopCircle",
+    "category": "action",
+    "description": "step — terminate, abort, cancel, kill, end",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/StopCircle"
+  },
+  {
+    "name": "StopCircleFill",
+    "category": "action",
+    "description": "stop — terminate, abort, cancel",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/StopCircleFill"
+  },
+  {
+    "name": "StrikeThrough",
+    "category": "action",
+    "description": "strikethrough — cross out, delete text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/StrikeThrough"
+  },
+  {
+    "name": "Sun",
+    "category": "action",
+    "description": "light mode — day mode, light theme",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Sun"
+  },
+  {
+    "name": "Sync",
+    "category": "action",
+    "description": "sync — refresh, synchronize",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Sync"
+  },
+  {
+    "name": "SyncToFile",
+    "category": "action",
+    "description": "sync to file — export, save externally, file transfer",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SyncToFile"
+  },
+  {
+    "name": "TableAsterisk",
+    "category": "action",
+    "description": "select all columns — wildcard, select *, star",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/TableAsterisk"
+  },
+  {
+    "name": "TableCombine",
+    "category": "action",
+    "description": "Joined table — merge, union, combine datasets",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/TableCombine"
+  },
+  {
+    "name": "Target",
+    "category": "action",
+    "description": "Focus — scope, destination",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Target"
+  },
+  {
+    "name": "Text",
+    "category": "action",
+    "description": "add text — string, characters",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Text"
+  },
+  {
+    "name": "TextBox",
+    "category": "action",
+    "description": "Text widget — AI/BI",
+    "synonyms": [
+      "text box",
+      "text input",
+      "label"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/TextBox"
+  },
+  {
+    "name": "TextJustify",
+    "category": "action",
+    "description": "justify text — full width, block align",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/TextJustify"
+  },
+  {
+    "name": "TextUnderline",
+    "category": "action",
+    "description": "underline — underline text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/TextUnderline"
+  },
+  {
+    "name": "ThumbsDown",
+    "category": "action",
+    "description": "dislike — negative feedback, reject",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ThumbsDown"
+  },
+  {
+    "name": "ThumbsUp",
+    "category": "action",
+    "description": "like — positive feedback, approve",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ThumbsUp"
+  },
+  {
+    "name": "Trash",
+    "category": "action",
+    "description": "delete — remove, trash, discard, destroy",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Trash"
+  },
+  {
+    "name": "Underline",
+    "category": "action",
+    "description": "underline — underline text, emphasis",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Underline"
+  },
+  {
+    "name": "Undo",
+    "category": "action",
+    "description": "undo — revert, go back, ctrl+Z, rollback",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Undo"
+  },
+  {
+    "name": "Upload",
+    "category": "action",
+    "description": "upload — import, push to volume",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Upload"
+  },
+  {
+    "name": "Visible",
+    "category": "action",
+    "description": "show — visible, eye, reveal, view",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Visible"
+  },
+  {
+    "name": "VisibleFill",
+    "category": "action",
+    "description": "visible — showing, eye on, revealed",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/VisibleFill"
+  },
+  {
+    "name": "VisibleOff",
+    "category": "action",
+    "description": "hide — invisible, eye off, conceal, hidden",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/VisibleOff"
+  },
+  {
+    "name": "Wrench",
+    "category": "action",
+    "description": "config — tools, fix, repair",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Wrench"
+  },
+  {
+    "name": "WrenchSparkle",
+    "category": "action",
+    "description": "AI fix — smart repair, AI tools, auto-fix",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/WrenchSparkle"
+  },
+  {
+    "name": "ZaHorizontal",
+    "category": "action",
+    "description": "sort Z-A — reverse alphabetical, descending text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ZaHorizontal"
+  },
+  {
+    "name": "ZaVertical",
+    "category": "action",
+    "description": "sort Z-A — reverse alphabetical vertical, descending text",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ZaVertical"
+  },
+  {
+    "name": "ZoomIn",
+    "category": "action",
+    "description": "zoom in — magnify, enlarge",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ZoomIn"
+  },
+  {
+    "name": "ZoomMarqueeSelection",
+    "category": "action",
+    "description": "marquee select — area select, box select, lasso",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ZoomMarqueeSelection"
+  },
+  {
+    "name": "ZoomOut",
+    "category": "action",
+    "description": "zoom out — shrink, reduce",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ZoomOut"
+  },
+  {
+    "name": "ZoomToFit",
+    "category": "action",
+    "description": "fit to screen — auto zoom, fit view",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ZoomToFit"
+  },
+  {
+    "name": "ArrowDownDot",
+    "category": "indicator",
+    "description": "download point — download target, destination",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowDownDot"
+  },
+  {
+    "name": "ArrowDownFill",
+    "category": "indicator",
+    "description": "download — arrow down, descend",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowDownFill"
+  },
+  {
+    "name": "ArrowUpDot",
+    "category": "indicator",
+    "description": "upload point — upload target, destination",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowUpDot"
+  },
+  {
+    "name": "ArrowUpFill",
+    "category": "indicator",
+    "description": "upload — arrow up, ascend",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowUpFill"
+  },
+  {
+    "name": "BracketsCheck",
+    "category": "indicator",
+    "description": "valid code — syntax ok, code verified",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BracketsCheck"
+  },
+  {
+    "name": "BracketsError",
+    "category": "indicator",
+    "description": "code error — syntax fail, code invalid",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/BracketsError"
+  },
+  {
+    "name": "Certified",
+    "category": "indicator",
+    "description": "Certified — verified, approved, badge, endorsed",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Certified"
+  },
+  {
+    "name": "CertifiedFill",
+    "category": "indicator",
+    "description": "Certified — verified, approved, badge, endorsed",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CertifiedFill"
+  },
+  {
+    "name": "CertifiedFillSmall",
+    "category": "indicator",
+    "description": "Certified — verified, approved, badge, endorsed",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CertifiedFillSmall"
+  },
+  {
+    "name": "CheckCircleBadge",
+    "category": "indicator",
+    "description": "active — online, healthy",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CheckCircleBadge"
+  },
+  {
+    "name": "CheckCircleFill",
+    "category": "indicator",
+    "description": "success — success, complete, passed, healthy",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CheckCircleFill"
+  },
+  {
+    "name": "CheckCircleSmall",
+    "category": "indicator",
+    "description": "success — complete, passed, check",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CheckCircleSmall"
+  },
+  {
+    "name": "CheckLine",
+    "category": "indicator",
+    "description": "partial success — partial check, some complete",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CheckLine"
+  },
+  {
+    "name": "Checklist",
+    "category": "indicator",
+    "description": "list — task, to do, requirements",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Checklist"
+  },
+  {
+    "name": "Circle",
+    "category": "indicator",
+    "description": "health — dot, status",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Circle"
+  },
+  {
+    "name": "CircleOff",
+    "category": "indicator",
+    "description": "offline — inactive, stopped, terminated, down",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CircleOff"
+  },
+  {
+    "name": "CircleOffLarge",
+    "category": "indicator",
+    "description": "offline — inactive, stopped, terminated",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CircleOffLarge"
+  },
+  {
+    "name": "CircleOutline",
+    "category": "indicator",
+    "description": "unavailable — empty, unselected, idle",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CircleOutline"
+  },
+  {
+    "name": "ClockOff",
+    "category": "indicator",
+    "description": "expired — timed out, schedule off, no schedule",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ClockOff"
+  },
+  {
+    "name": "CloudOff",
+    "category": "indicator",
+    "description": "offline — disconnected, no cloud, unavailable",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CloudOff"
+  },
+  {
+    "name": "CreditCard",
+    "category": "indicator",
+    "description": "payment method — subscription, billing",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CreditCard"
+  },
+  {
+    "name": "Danger",
+    "category": "indicator",
+    "description": "failure — error, critical, alert",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Danger"
+  },
+  {
+    "name": "DangerFill",
+    "category": "indicator",
+    "description": "failure — error, critical, alert",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/DangerFill"
+  },
+  {
+    "name": "DangerSmall",
+    "category": "indicator",
+    "description": "error — failure, critical, alert",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/DangerSmall"
+  },
+  {
+    "name": "Deprecated",
+    "category": "indicator",
+    "description": "deprecated — obsolete, end of life, legacy",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Deprecated"
+  },
+  {
+    "name": "DeprecatedSmall",
+    "category": "indicator",
+    "description": "deprecated — obsolete, end of life, legacy",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/DeprecatedSmall"
+  },
+  {
+    "name": "Dollar",
+    "category": "indicator",
+    "description": "cost — price, billing, money, budget",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Dollar"
+  },
+  {
+    "name": "GridDash",
+    "category": "indicator",
+    "description": "placeholder — empty, skeleton, wireframe",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/GridDash"
+  },
+  {
+    "name": "Infinity",
+    "category": "indicator",
+    "description": "unlimited — infinite, no limit, unbounded",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Infinity"
+  },
+  {
+    "name": "Info",
+    "category": "indicator",
+    "description": "info — information, help, hint, tooltip",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Info"
+  },
+  {
+    "name": "InfoFill",
+    "category": "indicator",
+    "description": "info — information, help, hint, tooltip",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/InfoFill"
+  },
+  {
+    "name": "Lightbulb",
+    "category": "indicator",
+    "description": "idea — tip, suggestion, insight",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Lightbulb"
+  },
+  {
+    "name": "LightningCircleFill",
+    "category": "indicator",
+    "description": "serverless — instant, auto-provisioned",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/LightningCircleFill"
+  },
+  {
+    "name": "List",
+    "category": "indicator",
+    "description": "list — bullet list, items, line items, rows",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/List"
+  },
+  {
+    "name": "No",
+    "category": "indicator",
+    "description": "denied — blocked, forbidden, not allowed, prohibited",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/No"
+  },
+  {
+    "name": "QuestionMark",
+    "category": "indicator",
+    "description": "question — help, FAQ, support",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/QuestionMark"
+  },
+  {
+    "name": "QuestionMarkFill",
+    "category": "indicator",
+    "description": "question — help, FAQ, support",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/QuestionMarkFill"
+  },
+  {
+    "name": "RefreshX",
+    "category": "indicator",
+    "description": "sync failed — refresh error, reload failed",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/RefreshX"
+  },
+  {
+    "name": "Running",
+    "category": "indicator",
+    "description": "running — in progress, active, spinning",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Running"
+  },
+  {
+    "name": "SaveClock",
+    "category": "indicator",
+    "description": "auto-saved — save history, version, last saved",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SaveClock"
+  },
+  {
+    "name": "ShieldOff",
+    "category": "indicator",
+    "description": "unprotected — no governance, insecure, ungoverned",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ShieldOff"
+  },
+  {
+    "name": "SparkleDouble",
+    "category": "indicator",
+    "description": "agentic — genie, generate, assistant",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SparkleDouble"
+  },
+  {
+    "name": "SparkleDoubleFill",
+    "category": "indicator",
+    "description": "agentic — genie, agent mode, AI active",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SparkleDoubleFill"
+  },
+  {
+    "name": "SpeechBubbleStar",
+    "category": "indicator",
+    "description": "Featured comment — highlighted feedback, top comment",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SpeechBubbleStar"
+  },
+  {
+    "name": "Stream",
+    "category": "indicator",
+    "description": "Streaming — real-time, live data, event stream",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Stream"
+  },
+  {
+    "name": "SyncSmall",
+    "category": "indicator",
+    "description": "syncing — synchronizing, refreshing",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SyncSmall"
+  },
+  {
+    "name": "ThreeDots",
+    "category": "indicator",
+    "description": "typing — loading dots, ellipsis, in progress",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ThreeDots"
+  },
+  {
+    "name": "Trending",
+    "category": "indicator",
+    "description": "trending — popular, rising, hot, flame",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Trending"
+  },
+  {
+    "name": "Triangle",
+    "category": "indicator",
+    "description": "marker — pointer, caret, sort indicator",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Triangle"
+  },
+  {
+    "name": "WarningFill",
+    "category": "indicator",
+    "description": "warning — caution, !, alert, attention",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/WarningFill"
+  },
+  {
+    "name": "XCircleFill",
+    "category": "indicator",
+    "description": "error — error, invalid, rejected",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/XCircleFill"
+  },
+  {
+    "name": "ArrowsUpDown",
+    "category": "component",
+    "description": "sort — reorder, swap, toggle sort",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ArrowsUpDown"
+  },
+  {
+    "name": "Calendar",
+    "category": "component",
+    "description": "date — schedule, date picker",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Calendar"
+  },
+  {
+    "name": "Check",
+    "category": "component",
+    "description": "accept — checkmark, confirm, done",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Check"
+  },
+  {
+    "name": "CheckCircle",
+    "category": "component",
+    "description": "success — success, complete, passed, healthy",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CheckCircle"
+  },
+  {
+    "name": "ChevronDown",
+    "category": "component",
+    "description": "open menu — expand, dropdown",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronDown"
+  },
+  {
+    "name": "ChevronLeft",
+    "category": "component",
+    "description": "back — previous, navigate left",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronLeft"
+  },
+  {
+    "name": "ChevronRight",
+    "category": "component",
+    "description": "expand tree — forward, next, more",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronRight"
+  },
+  {
+    "name": "ChevronUp",
+    "category": "component",
+    "description": "collapse — collapse, close menu, fold",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/ChevronUp"
+  },
+  {
+    "name": "CircleOutlineLarge",
+    "category": "component",
+    "description": "incomplete — stepper step, not done, pending",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/CircleOutlineLarge"
+  },
+  {
+    "name": "Close",
+    "category": "component",
+    "description": "close — dismiss, x, cancel, remove",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Close"
+  },
+  {
+    "name": "Dash",
+    "category": "component",
+    "description": "remove — minus, subtract, separator",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Dash"
+  },
+  {
+    "name": "File",
+    "category": "component",
+    "description": "File — Workspace",
+    "synonyms": [
+      "text",
+      "doc",
+      "code"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/File"
+  },
+  {
+    "name": "Folder",
+    "category": "component",
+    "description": "Folder — Workspace",
+    "synonyms": [
+      "directory",
+      "container"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Folder"
+  },
+  {
+    "name": "InfoSmall",
+    "category": "component",
+    "description": "info — information, help, hint, tooltip",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/InfoSmall"
+  },
+  {
+    "name": "Loading",
+    "category": "component",
+    "description": "loading — spinner, progress, waiting",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Loading"
+  },
+  {
+    "name": "Overflow",
+    "category": "component",
+    "description": "context menu — more, kebab menu, ellipsis",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Overflow"
+  },
+  {
+    "name": "Plus",
+    "category": "component",
+    "description": "add new — create, new, insert, plus, +",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Plus"
+  },
+  {
+    "name": "Search",
+    "category": "component",
+    "description": "search — keyword search, find, lookup, discover",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/Search"
+  },
+  {
+    "name": "SidebarOpen",
+    "category": "component",
+    "description": "sidebar open — panel visible, sidebar on",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/SidebarOpen"
+  },
+  {
+    "name": "Warning",
+    "category": "component",
+    "description": "warning — In Component",
+    "synonyms": [
+      "caution",
+      "!",
+      "alert",
+      "attention"
+    ],
+    "importPath": "@muditmittal/dbui/components/icons/Warning"
+  },
+  {
+    "name": "XCircle",
+    "category": "component",
+    "description": "error — error, invalid, rejected",
+    "synonyms": [],
+    "importPath": "@muditmittal/dbui/components/icons/XCircle"
+  }
+]

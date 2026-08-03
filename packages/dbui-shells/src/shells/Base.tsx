@@ -54,7 +54,7 @@ export function Base({
   const isCollapsed = sidebarCollapsedProp !== undefined ? sidebarCollapsedProp : collapsed
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-muted" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}>
+    <div className="flex h-screen flex-col overflow-hidden bg-muted">
       <PlatformHeader sidebarCollapsed={isCollapsed} onSidebarToggle={handleSidebarToggle} onGenieToggle={() => setGenieOpen(!genieOpen)} />
 
       <div className="flex flex-1 min-h-0 pb-2 pr-2">
@@ -64,7 +64,7 @@ export function Base({
         )}
 
         {/* Content surface — no gap when nav open, 8px when collapsed */}
-        <main className={`flex-1 min-w-0 min-h-0 overflow-y-auto bg-background border border-border rounded-md ${isCollapsed ? 'ml-2' : ''}`}>
+        <main className={`flex-1 min-w-0 min-h-0 overflow-y-auto bg-background border border-border rounded-md ${isCollapsed ? "ml-2" : ""}`}>
           {children}
         </main>
 

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { FileTreeView, type TreeNodeData } from "dbui/components/ui/data-tree"
+import { FileTree, type FileTreeNode } from "dbui/components/ui/data-tree"
 import { Input } from "dbui/components/ui/input"
 import { Search } from "dbui/components/icons/Search"
 import { cn } from "dbui/lib/utils"
@@ -25,10 +25,10 @@ import { cn } from "dbui/lib/utils"
 // Recursive case-insensitive label match. Same shape as DataTreeExplorer but
 // operates on a flat node array (no sections wrapper).
 
-function filterTreeNodes(nodes: TreeNodeData[], query: string): TreeNodeData[] {
+function filterTreeNodes(nodes: FileTreeNode[], query: string): FileTreeNode[] {
   if (!query) return nodes
   const q = query.toLowerCase()
-  return nodes.reduce<TreeNodeData[]>((acc, node) => {
+  return nodes.reduce<FileTreeNode[]>((acc, node) => {
     const labelMatch = node.label.toLowerCase().includes(q)
     const filteredChildren = node.children ? filterTreeNodes(node.children, query) : undefined
     const hasMatchingChildren = filteredChildren && filteredChildren.length > 0
@@ -62,9 +62,9 @@ export type FileTreeExplorerProps = {
   searchValue?: string
   /** Controlled search onChange. */
   onSearchChange?: (value: string) => void
-  /** Tree data — flat array of nodes (each node may have children for sub-folders). */
-  nodes: TreeNodeData[]
-  /** Tree event callbacks — passed straight through to FileTreeView. */
+  /** Tree data — flat array of kind-driven file nodes (folders may have children). */
+  nodes: FileTreeNode[]
+  /** Tree event callbacks — passed straight through to FileTree. */
   onSelect?: (id: string) => void
   onFocusNode?: (id: string, label: string, icon?: React.ReactNode) => void
   onNodeMenu?: (id: string, label: string) => void
@@ -76,9 +76,9 @@ export type FileTreeExplorerProps = {
 }
 
 /**
- * FileTreeExplorer — pane composition that wraps FileTreeView with a header
- * (title + actions) and a search input. Drop in the left side of any Browser
- * shell to give users a navigable file/folder tree.
+ * FileTreeExplorer — pane composition that wraps `<FileTree>` (L2) with a
+ * header (title + actions) and a search input. Drop in the left side of any
+ * Browser shell to give users a navigable file/folder tree.
  *
  * Modes:
  * - **Uncontrolled search** (default): the composition holds search state and
@@ -162,7 +162,7 @@ export function FileTreeExplorer({
 
       {/* Tree */}
       <div className={cn("flex-1 overflow-y-auto px-1 pb-4", treeClassName)}>
-        <FileTreeView
+        <FileTree
           nodes={displayNodes}
           onSelect={onSelect}
           onFocusNode={onFocusNode}

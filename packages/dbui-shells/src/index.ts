@@ -17,6 +17,18 @@ export type { FileTreeExplorerProps } from "./compositions/FileTreeExplorer"
 export { PreviewPopup } from "./compositions/PreviewPopup"
 export type { PreviewPopupProps, AssetQualityStatus } from "./compositions/PreviewPopup"
 
+// L2 semantic trees — re-exported here so consumers building catalog/workspace
+// surfaces have a single import surface (`@muditmittal/dbui-shells`) for both
+// the explorer compositions and the typed tree primitives they consume.
+export { DataTree, FileTree, DATA_KIND_ICON, FILE_KIND_ICON } from "dbui/components/ui/data-tree"
+export type {
+  DataAssetKind,
+  DataTreeNode,
+  DataTreeSection,
+  FileAssetKind,
+  FileTreeNode,
+} from "dbui/components/ui/data-tree"
+
 // Components — building blocks used by shells.
 export { PlatformHeader } from "./components/PlatformHeader"
 export { PlatformNav } from "./components/PlatformNav"

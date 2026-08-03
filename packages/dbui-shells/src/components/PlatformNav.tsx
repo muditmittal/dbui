@@ -1,5 +1,12 @@
 import React, { useState } from "react"
-import { Navbar, NavbarSection, NavbarSectionHeader, NavbarItem, NavbarItemIcon } from "dbui/components/ui/navbar"
+import {
+  Navbar,
+  NavbarSection,
+  NavbarSectionHeader,
+  NavbarItem,
+  NavbarItemIcon,
+  NavbarNewButton,
+} from "dbui/components/ui/navbar"
 import { Plus } from "dbui/components/icons/Plus"
 import { Clock } from "dbui/components/icons/Clock"
 import { Folder } from "dbui/components/icons/Folder"
@@ -90,10 +97,10 @@ export function PlatformNav({
   return (
     <nav className="w-[180px] shrink-0 overflow-y-auto px-3">
       {/* New button */}
-      <button className="flex h-10 w-full items-center gap-2 border border-[#FDE2E8] bg-[#F5ECEE] pl-3 pr-4 text-[13px] font-medium text-[#11171C]" style={{ borderRadius: 6 }}>
-        <Plus className="size-4 text-[#E65B77]" />
+      <NavbarNewButton>
+        <Plus className="text-primary" />
         New
-      </button>
+      </NavbarNewButton>
 
       <Navbar className="mt-2">
         {navItems.map(renderItem)}

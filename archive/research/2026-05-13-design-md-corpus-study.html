@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Design DESIGN.md corpus study — for DBUI</title>
+<style>
+:root {
+  --background: #ffffff;
+  --foreground: #161616;
+  --muted: #f6f6f6;
+  --muted-foreground: #6f6f6f;
+  --border: #ebebeb;
+  --input: #cbcbcb;
+  --primary: #2272b4;
+  --primary-foreground: #ffffff;
+  --primary-soft: #d7edfe;
+  --primary-soft-2: #ebf5ff;
+  --destructive: #c82d4c;
+  --destructive-soft: #fde4e9;
+  --warning: #be501e;
+  --warning-soft: #fdecd6;
+  --success: #277c43;
+  --success-soft: #dff5e6;
+  --accent: #d7edfe;
+  --code-bg: #f7f7f7;
+  --hover: rgba(34, 114, 180, 0.08);
+  --press: rgba(34, 114, 180, 0.16);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --shadow-xs: 0 1px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--foreground);
+  background: var(--muted);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Sidebar TOC */
+.toc {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px 16px;
+  background: var(--muted);
+  border-right: 1px solid var(--border);
+}
+.toc h2 {
+  font-family: "SF Pro Display", -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  color: var(--foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.toc ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: section;
+}
+.toc li {
+  margin: 0;
+}
+.toc a {
+  display: block;
+  padding: 6px 8px;
+  text-decoration: none;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 18px;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+}
+.toc a:hover {
+  background: var(--hover);
+  color: var(--foreground);
+}
+.toc a.active {
+  color: var(--primary);
+  border-left-color: var(--primary);
+}
+
+/* Main */
+.main {
+  padding: 40px 56px 80px;
+  background: var(--background);
+  border-left: 1px solid var(--border);
+}
+
+/* Hero */
+.hero {
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.hero .badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  background: var(--accent);
+  color: var(--primary);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+.badge.muted {
+  background: var(--muted);
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+}
+.badge.warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+.badge.destructive {
+  background: var(--destructive-soft);
+  color: var(--destructive);
+}
+.badge.success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+h1 {
+  font-family: "SF Pro Display", -apple-system, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+  margin: 0 0 8px;
+}
+.subtitle {
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+/* Headings */
+h2 {
+  font-family: "SF Pro Display", -apple-system, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.25px;
+  margin: 56px 0 16px;
+  padding-top: 16px;
+  scroll-margin-top: 24px;
+}
+h3 {
+  font-family: "SF Pro Display", -apple-system, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+h4 {
+  font-family: "SF Pro Display", -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 20px 0 8px;
+}
+p {
+  margin: 0 0 16px;
+  max-width: 76ch;
+}
+section {
+  margin-bottom: 40px;
+}
+
+/* Code & quotes */
+code {
+  font-family: "SF Mono", ui-monospace, monospace;
+  font-size: 12px;
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-family: "SF Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 18px;
+  overflow-x: auto;
+  margin: 16px 0;
+  max-width: 100%;
+}
+pre code {
+  background: transparent;
+  padding: 0;
+}
+blockquote {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-left: 3px solid var(--primary);
+  background: var(--primary-soft-2);
+  color: var(--foreground);
+  font-style: italic;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+blockquote cite {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted-foreground);
+  font-style: normal;
+  font-size: 12px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+th, td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+th {
+  font-weight: 600;
+  background: var(--muted);
+  border-bottom: 1px solid var(--input);
+  position: sticky;
+  top: 0;
+}
+tbody tr:hover {
+  background: var(--hover);
+}
+td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-family: "SF Mono", ui-monospace, monospace;
+  font-size: 12px;
+}
+
+/* Bars */
+.bar {
+  display: inline-block;
+  width: 120px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.bar-primary { background: var(--primary); }
+.bar-success { background: var(--success); }
+.bar-warning { background: var(--warning); }
+.bar-destructive { background: var(--destructive); }
+.bar-muted { background: var(--muted-foreground); }
+
+/* Stat cards */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.stat-card {
+  padding: 16px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.stat-card .label {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.stat-card .value {
+  font-family: "SF Pro Display", -apple-system, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+.stat-card .sub {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-top: 4px;
+}
+
+/* Comparison grid */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px 80px;
+  gap: 6px 12px;
+  align-items: center;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.compare-grid .head {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+/* Callouts */
+.callout {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--muted);
+}
+.callout.primary {
+  border-color: var(--primary);
+  background: var(--primary-soft-2);
+}
+.callout.warning {
+  border-color: var(--warning);
+  background: var(--warning-soft);
+}
+.callout.destructive {
+  border-color: var(--destructive);
+  background: var(--destructive-soft);
+}
+.callout.success {
+  border-color: var(--success);
+  background: var(--success-soft);
+}
+.callout .ctitle {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+li {
+  margin: 4px 0;
+}
+
+/* Pattern card */
+.pattern-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 16px 0;
+  background: var(--background);
+}
+.pattern-card h4 {
+  margin-top: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.pattern-card .pattern-num {
+  font-family: "SF Mono", ui-monospace, monospace;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--accent);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* Two-column on big screens */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .toc { position: relative; height: auto; }
+  .main { padding: 24px 16px; }
+  .two-col { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .toc { display: none; }
+  .app { grid-template-columns: 1fr; max-width: none; }
+  .main { padding: 0; border: none; }
+  body { background: white; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  
+    <nav class="toc">
+      <h2>Sections</h2>
+      <ol><li><a href="#tldr">TL;DR for DBUI</a></li><li><a href="#methodology">Methodology</a></li><li><a href="#canonical">1 · Canonical 9-section format</a></li><li><a href="#cohorts">2 · Dev-friendly vs Non-dev cohort</a></li><li><a href="#patterns">3 · Twelve recurring patterns</a></li><li><a href="#best">4 · Fifteen practices to adopt</a></li><li><a href="#anti">5 · Anti-patterns / things to avoid</a></li><li><a href="#deep">6 · Dev-friendly cohort deep-dive</a></li><li><a href="#strengths">7 · What DBUI does well</a></li><li><a href="#gaps">8 · DBUI gaps by section</a></li><li><a href="#next">9 · Concrete next steps</a></li><li><a href="#appendix">Appendix</a></li></ol>
+    </nav>
+    
+  <main class="main">
+    <header class="hero">
+      <div class="badge-row"><span class="badge primary">n=149 systems</span><span class="badge success">51 dev-friendly</span><span class="badge muted">98 non-dev</span><span class="badge warning">54% have §9</span><span class="badge muted">2026-05-13</span></div>
+      <h1>Open Design <code>DESIGN.md</code> corpus study</h1>
+      <p class="subtitle">All 149 <code>DESIGN.md</code> files in <code>nexu-io/open-design</code>, mined for patterns Databricks' design system (DBUI) should adopt. Weighted toward developer-friendly systems — Linear, Vercel, Supabase, Cursor, Notion, ClickHouse, Sentry, PostHog, Raycast, Resend — because DBUI is enterprise data tooling, not consumer brand.</p>
+    </header>
+    
+    <section id="tldr">
+      <h2>TL;DR for DBUI</h2>
+      <p>Dev-friendly DESIGN.md files differ structurally from consumer ones. They are <strong>more prescriptive</strong>, <strong>more table-heavy</strong>, and <strong>more agent-runnable</strong>. The Agent Prompt Guide section appears in <strong>84%</strong> of dev-friendly files vs <strong>39%</strong> of consumer ones — a 45-point gap.</p>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Systems analyzed</div>
+          <div class="value">149</div>
+          <div class="sub">All <code>DESIGN.md</code> files under <code>open-design/design-systems/</code></div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Dev-friendly subset</div>
+          <div class="value">51</div>
+          <div class="sub">Dev Tools · AI/LLM · Backend & Data · Productivity · Design tools</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Have §9 Agent Prompt Guide</div>
+          <div class="value">81 <small style="font-size:14px;color:var(--muted-foreground)">/ 149</small></div>
+          <div class="sub">54% of corpus — the missing piece for DBUI</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Median length</div>
+          <div class="value">178 <small style="font-size:14px;color:var(--muted-foreground)">lines</small></div>
+          <div class="sub">~2,000 words; range 63–1002</div>
+        </div>
+      </div>
+      <div class="callout primary">
+        <div class="ctitle">Five concrete moves to steal</div>
+        <ol>
+          <li>Author a single canonical <code>DBUI_DESIGN.md</code> in the 9-section shape, with <code>## 9. Agent Prompt Guide</code> as the most important section (Quick Color Reference + 5–8 Example Component Prompts + Iteration Guide with non-negotiables).</li>
+          <li>Pick a <strong>signature move</strong> and repeat it everywhere — Linear has weight 510; Vercel has shadow-as-border; Cursor has oklab borders; Resend has frost borders. DBUI's candidate: <strong>"13px Inter / DuBois blue / shell-first / sentence-case copy."</strong></li>
+          <li>Phrase rules as <strong>non-negotiables</strong>. The dev-friendly cohort uses <em>never</em> + <em>always</em> on average 18× per file.</li>
+          <li>Ship an <strong>anti-slop list aligned to your tokens</strong> — "no indigo as accent, no emoji icons, no fake metrics, no decorative gradients."</li>
+          <li>Treat the Storybook portal as Layer B, not the system prompt — like Open Design's daemon, the prompt should be a single markdown file at <code>/install</code> + <code>/design</code>, not a multi-page site.</li>
+        </ol>
+      </div>
+    </section>
+    
+    <section id="methodology">
+      <h2>Methodology</h2>
+      <table>
+        <thead>
+          <tr><th>Step</th><th>What</th><th>Output</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Walked every folder under <code>design-systems/</code>, opened each <code>DESIGN.md</code></td><td>149 files</td></tr>
+          <tr><td class="num">2</td><td>Regex-extracted: H1, category tag, ## headings, table rows, code fences, hex/oklch counts, font mentions, <em>non-negotiable</em>/<em>never</em>/<em>always</em> counts</td><td><code>/tmp/design-md-inventory.tsv</code> (29 cols × 149 rows)</td></tr>
+          <tr><td class="num">3</td><td>Extracted full text of §1 Visual Theme, §2 Color, §3 Typography, §7 Do's/Don'ts, §9 Agent Prompt Guide for every file that has them</td><td><code>/tmp/corpus_*.txt</code></td></tr>
+          <tr><td class="num">4</td><td>Computed per-category section coverage; built dev-friendly vs non-dev comparison</td><td><code>/tmp/corpus_data.json</code></td></tr>
+          <tr><td class="num">5</td><td>Verbatim deep reads on 13 dev-friendly systems for representative quotes</td><td>this report</td></tr>
+          <tr><td class="num">6</td><td>Cross-corpus phrase frequency on §1, §7, §9 to surface recurring vocabulary</td><td>embedded below</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Dev-friendly cohort (n=51):</strong> airtable, arc, cal, canva, cisco, claude, clay, clickhouse, cohere, composio, cursor, discord, duolingo, elevenlabs, expo, figma, framer, github, hashicorp, huggingface, intercom, linear-app, lovable, minimax, mintlify, miro, mission-control, mistral-ai, mongodb, notion, ollama, openai, opencode-ai, posthog, raycast, replicate, resend, runwayml, sanity, sentry, slack, superhuman, supabase, together-ai, vercel, voltagent, warp, webex, webflow, x-ai, zapier.</p>
+    </section>
+    
+    <section id="canonical">
+      <h2>1 · Canonical 9-section format</h2>
+      <p>Open Design's <code>design-systems/README.md</code> defines the consumer shape. In practice, <strong>139 / 149 files use strict numbered <code>## 1.</code> … <code>## 9.</code></strong> H2 headings; 10 use unnumbered equivalents. Three sections are universal (100%); four sit at ~50% coverage; four niche sections appear rarely.</p>
+      <h3>Section coverage across the full corpus (n=149)</h3>
+      <table>
+        <thead><tr><th>Section</th><th>Present in</th><th>%</th><th></th></tr></thead>
+        <tbody>
+        <tr>
+          <td>Visual Theme &amp; Atmosphere</td>
+          <td class="num">148 / 149</td>
+          <td class="num"><strong>99%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-primary" style="width: 99%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Color Palette &amp; Roles</td>
+          <td class="num">149 / 149</td>
+          <td class="num"><strong>100%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-primary" style="width: 100%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Typography Rules</td>
+          <td class="num">149 / 149</td>
+          <td class="num"><strong>100%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-primary" style="width: 100%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Component Stylings</td>
+          <td class="num">149 / 149</td>
+          <td class="num"><strong>100%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-primary" style="width: 100%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Layout Principles</td>
+          <td class="num">79 / 149</td>
+          <td class="num"><strong>53%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-warning" style="width: 53%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Depth &amp; Elevation</td>
+          <td class="num">79 / 149</td>
+          <td class="num"><strong>53%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-warning" style="width: 53%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Do&#x27;s and Don&#x27;ts</td>
+          <td class="num">73 / 149</td>
+          <td class="num"><strong>49%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-warning" style="width: 49%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Responsive Behavior</td>
+          <td class="num">79 / 149</td>
+          <td class="num"><strong>53%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-warning" style="width: 53%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Agent Prompt Guide</td>
+          <td class="num">81 / 149</td>
+          <td class="num"><strong>54%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-warning" style="width: 54%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Motion / Animation</td>
+          <td class="num">70 / 149</td>
+          <td class="num"><strong>47%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-warning" style="width: 47%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Voice / Tone</td>
+          <td class="num">61 / 149</td>
+          <td class="num"><strong>41%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-warning" style="width: 41%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Accessibility</td>
+          <td class="num">4 / 149</td>
+          <td class="num"><strong>3%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-destructive" style="width: 3%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Iconography</td>
+          <td class="num">2 / 149</td>
+          <td class="num"><strong>1%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-destructive" style="width: 1%"></div></div></td>
+        </tr>
+        
+        <tr>
+          <td>Data Visualization</td>
+          <td class="num">0 / 149</td>
+          <td class="num"><strong>0%</strong></td>
+          <td><div class="bar"><div class="bar-fill bar-destructive" style="width: 0%"></div></div></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="callout primary">
+        <div class="ctitle">Takeaway for DBUI</div>
+        <p style="margin:0">Sections §§1–4 are table stakes. <strong>§9 Agent Prompt Guide</strong> is the differentiator and the most agent-actionable section. <strong>Accessibility / iconography / data viz are corpus-wide gaps</strong> — DBUI's existing 449-icon index, focus-ring rules, and chart components already give it best-in-class coverage on those three.</p>
+      </div>
+      <h3>Length distribution</h3>
+      <p>Median: <strong>178 lines</strong>; mean: <strong>197 lines</strong>; range: <strong>63–1002</strong>. The 200–300-line band is where most real product systems land.</p>
+      <table>
+        <thead><tr><th>Length bucket</th><th>Files</th><th></th></tr></thead>
+        <tbody>
+        <tr><td>&lt; 100 lines</td><td class="num">61</td><td><div class="bar"><div class="bar-fill bar-muted" style="width: 100.0%"></div></div></td></tr>
+        
+        <tr><td>100–200 lines</td><td class="num">17</td><td><div class="bar"><div class="bar-fill bar-muted" style="width: 27.868852459016395%"></div></div></td></tr>
+        
+        <tr><td>200–300 lines</td><td class="num">37</td><td><div class="bar"><div class="bar-fill bar-muted" style="width: 60.65573770491803%"></div></div></td></tr>
+        
+        <tr><td>300–400 lines</td><td class="num">28</td><td><div class="bar"><div class="bar-fill bar-muted" style="width: 45.90163934426229%"></div></div></td></tr>
+        
+        <tr><td>400+ lines</td><td class="num">6</td><td><div class="bar"><div class="bar-fill bar-muted" style="width: 9.836065573770492%"></div></div></td></tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section id="cohorts">
+      <h2>2 · Dev-friendly vs Non-dev cohort</h2>
+      <p>The corpus splits into two cohorts with <strong>fundamentally different priorities</strong>. Dev-friendly systems lean <em>structural and prescriptive</em>; consumer-brand systems lean <em>emotional and atmospheric</em>.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Dev-friendly (n=51)</th>
+            <th>Non-dev (n=98)</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Agent Prompt Guide</td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-primary" style="width:84%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">84%</span></td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-muted" style="width:39%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">39%</span></td>
+          <td><span class="badge success">+45</span></td>
+        </tr>
+        
+        <tr>
+          <td>Do&#x27;s and Don&#x27;ts</td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-primary" style="width:73%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">73%</span></td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-muted" style="width:37%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">37%</span></td>
+          <td><span class="badge success">+36</span></td>
+        </tr>
+        
+        <tr>
+          <td>Layout</td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-primary" style="width:80%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">80%</span></td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-muted" style="width:39%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">39%</span></td>
+          <td><span class="badge success">+41</span></td>
+        </tr>
+        
+        <tr>
+          <td>Depth / Elevation</td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-primary" style="width:80%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">80%</span></td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-muted" style="width:39%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">39%</span></td>
+          <td><span class="badge success">+41</span></td>
+        </tr>
+        
+        <tr>
+          <td>Responsive</td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-primary" style="width:80%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">80%</span></td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-muted" style="width:39%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">39%</span></td>
+          <td><span class="badge success">+41</span></td>
+        </tr>
+        
+        <tr>
+          <td>Motion / Animation</td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-primary" style="width:20%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">20%</span></td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-muted" style="width:61%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">61%</span></td>
+          <td><span class="badge destructive">-41</span></td>
+        </tr>
+        
+        <tr>
+          <td>Voice / Tone</td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-primary" style="width:6%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">6%</span></td>
+          <td><div class="bar" style="width:160px;"><div class="bar-fill bar-muted" style="width:59%"></div></div><span style="font-family:'SF Mono';font-size:12px;margin-left:8px;">59%</span></td>
+          <td><span class="badge destructive">-53</span></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="callout primary">
+        <div class="ctitle">Interpretation</div>
+        <p style="margin:0">Dev-friendly systems tell the agent <em>which exact hex, which weight, which radius</em>. Consumer-brand systems tell the model <em>what the brand feels like</em>. DBUI's product is enterprise B2B data tooling — <strong>the dev-friendly cohort is the right reference set, not Apple, Spotify, or Starbucks.</strong></p>
+      </div>
+    </section>
+    
+    <section id="patterns">
+      <h2>3 · Twelve recurring patterns</h2>
+      <p>Pulled from the §1 / §7 / §9 corpora and corroborated by phrase frequency. Each pattern includes a verbatim quote and (where applicable) the DBUI version.</p>
+      
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 01</span> Narrative cold open in §1</h4>
+          
+<p>The first paragraph of §1 establishes <em>taste</em> for the model. It always reads like art-direction copy, not a spec.</p>
+<blockquote>"Vercel's website is the visual thesis of developer infrastructure made invisible — a design system so restrained it borders on philosophical. The page is overwhelmingly white (<code>#ffffff</code>) with near-black (<code>#171717</code>) text, creating a gallery-like emptiness where every element earns its pixel."<cite>— vercel/DESIGN.md</cite></blockquote>
+<blockquote>"Linear's website is a masterclass in dark-mode-first product design — a near-black canvas (<code>#08090a</code>) where content emerges from darkness like starlight."<cite>— linear-app/DESIGN.md</cite></blockquote>
+<p><strong>DBUI version:</strong> <em>"DBUI is the visual language of Databricks — enterprise data infrastructure made trustworthy. Surfaces are high-information, low-decoration: a quiet <code>bg-muted</code> shell wrapping a white content surface with <code>rounded-md</code> borders, where the only chromatic color is the Databricks blue (<code>#2272B4</code>) reserved for primary actions."</em></p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 02</span> Quick Color Reference at top of §9</h4>
+          
+<p><strong>All 43 dev-friendly §9 sections lead with a flat list of literal hex values mapped to roles.</strong> Not Tailwind names, not CSS vars. The model sees "Primary CTA: <code>#5e6ad2</code>" and can paste-copy.</p>
+<pre><code>### Quick Color Reference
+- Primary CTA: Vercel Black (`#171717`)
+- Background: Pure White (`#ffffff`)
+- Heading text: Vercel Black (`#171717`)
+- Body text: Gray 600 (`#4d4d4d`)
+- Border (shadow): `rgba(0, 0, 0, 0.08) 0px 0px 0px 1px`
+- Link: Link Blue (`#0072f5`)
+- Focus ring: Focus Blue (`hsla(212, 100%, 48%, 1)`)</code></pre>
+<p>DBUI should publish this list at the top of §9 even though we discourage hardcoded hex elsewhere — the agent needs the literal value to compose code.</p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 03</span> Example Component Prompts as paste-ready strings</h4>
+          
+<p>Every dev-friendly §9 has <strong>5–6 prompt strings the user can copy</strong> into another agent. Imperatives the model can re-utter.</p>
+<blockquote>"Create a hero section on white background. Headline at 48px Geist weight 600, line-height 1.00, letter-spacing -2.4px, color #171717. Subtitle at 20px Geist weight 400, line-height 1.80, color #4d4d4d. Dark CTA button (#171717, 6px radius, 8px 16px padding) and ghost button (white, shadow-border rgba(0,0,0,0.08) 0px 0px 0px 1px, 6px radius)."<cite>— vercel</cite></blockquote>
+<blockquote>"Design a feature card with #fdfdf8 background, 1px #bfc1b7 border, 4px radius, IBM Plex Sans heading at 20px weight 700, and 16px body text at weight 400 with 1.50 line-height in olive ink (#4d4f46)"<cite>— posthog</cite></blockquote>
+<p>This is what makes the file <strong>runnable inside other LLMs</strong>. DBUI's portal should output a handful of these per page archetype (list page, detail page, dialog, form).</p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 04</span> Iteration Guide as numbered non-negotiables</h4>
+          
+<p>The third §9 sub-section is always called <strong>"Iteration Guide"</strong> or <strong>"Non-negotiables"</strong> and is a numbered list of 5–8 rules. The word <em>non-negotiable</em> appears literally in 9 of 81 Agent Guides; <em>never</em> + <em>always</em> appear <strong>~3,500 times across the corpus</strong>.</p>
+<blockquote>1. Always set font-feature-settings <code>"cv01", "ss03"</code> on all Inter text — this is non-negotiable for Linear's look<br>
+2. Letter-spacing scales with font size: -1.584px at 72px, -1.056px at 48px, -0.704px at 32px, normal below 16px<br>
+3. Three weights: 400 (read), 510 (emphasize/navigate), 590 (announce)<br>
+4. Surface elevation via background opacity: <code>rgba(255,255,255, 0.02 → 0.04 → 0.05)</code> — never solid backgrounds on dark<br>
+5. Brand indigo (<code>#5e6ad2</code> / <code>#7170ff</code>) is the only chromatic color — everything else is grayscale<cite>— linear-app</cite></blockquote>
+<p>Each rule <strong>encodes one variable</strong> and <strong>states the failure mode</strong>. <em>"Three weights: 400, 510, 590"</em>, not <em>"use Inter at appropriate weights."</em></p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 05</span> One signature move per system</h4>
+          
+<p>Each dev-friendly system has a <strong>single memorable mechanism</strong> repeated across §1, §4, §9. It's the thing an agent should <em>recognize and reproduce</em>:</p>
+<table>
+  <thead><tr><th>System</th><th>Signature move</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Vercel</strong></td><td>Shadow-as-border — <code>box-shadow: 0 0 0 1px rgba(0,0,0,0.08)</code> replaces CSS borders</td></tr>
+    <tr><td><strong>Linear</strong></td><td>Weight 510 (between regular and medium) + <code>cv01 ss03</code> OpenType features</td></tr>
+    <tr><td><strong>Supabase</strong></td><td>Translucent borders as the depth mechanism on dark (no shadows)</td></tr>
+    <tr><td><strong>Cursor</strong></td><td><code>oklab()</code> border color for perceptual uniformity</td></tr>
+    <tr><td><strong>Notion</strong></td><td>Warm-tinted grays (yellow-brown undertone, never blue-gray)</td></tr>
+    <tr><td><strong>Resend</strong></td><td>Frost borders (<code>rgba(214, 235, 253, 0.19)</code>) on pure black, no shadows</td></tr>
+    <tr><td><strong>Raycast</strong></td><td>Double-ring shadow (outer hairline + inset highlight) for keyboard caps</td></tr>
+    <tr><td><strong>ClickHouse</strong></td><td>Neon Volt <code>#faff69</code> as the sole chromatic accent; everything else mono</td></tr>
+    <tr><td><strong>PostHog</strong></td><td>Warm parchment <code>#fdfdf8</code> background, sage-tinted borders, never pure white</td></tr>
+    <tr><td><strong>Sentry</strong></td><td>Inset shadow on every primary button, warm-purple shadows not gray</td></tr>
+  </tbody>
+</table>
+<div class="callout primary">
+  <div class="ctitle">DBUI candidate signature move</div>
+  <p style="margin:0"><strong>The "muted shell" pattern.</strong> <code>bg-muted</code> outer chrome wraps a <code>bg-background</code> <code>rounded-md</code> content surface. Both have a <code>1px</code> border. DuBois blue is reserved for primary actions only. Every page starts with <code>&lt;Base&gt;</code> from <code>dbui-shells</code> — no exceptions.</p>
+</div>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 06</span> Three weights, three roles</h4>
+          
+<p>A near-universal dev-friendly rule: declare exactly three font weights and map each to one role.</p>
+<table>
+  <thead><tr><th>System</th><th>The three (or four) weights</th></tr></thead>
+  <tbody>
+    <tr><td>Vercel</td><td>400 (body) · 500 (UI / interact) · 600 (announce)</td></tr>
+    <tr><td>Linear</td><td>400 (read) · 510 (emphasize) · 590 (announce)</td></tr>
+    <tr><td>Notion</td><td>400 · 500 · 600 · 700 (four — rare exception)</td></tr>
+    <tr><td>Supabase</td><td>400 default · 500 for buttons / nav only</td></tr>
+    <tr><td>Sentry</td><td>400 (body) · 500 (nav) · 600 (titles) · 700 (CTAs)</td></tr>
+    <tr><td>Resend</td><td>400 throughout; weight is not the emphasis mechanism</td></tr>
+    <tr><td><strong>DBUI today</strong></td><td><strong>400 (read) · 600 semibold (label / heading) · no bold</strong></td></tr>
+  </tbody>
+</table>
+<p>DBUI's existing two-weight system is on the lean end but is in line with the corpus pattern.</p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 07</span> Letter-spacing as a function of font size</h4>
+          
+<p><strong>113 mentions of "letter-spacing" across 81 §9 sections.</strong> Every dev-friendly system has a <em>formula</em> (not a vibe) for tracking at scale.</p>
+<blockquote>"Letter-spacing scales with font size: -2.4px at 48px, -1.28px at 32px, -0.96px at 24px, normal at 14px"<cite>— vercel</cite></blockquote>
+<blockquote>"Letter-spacing scales with font size for CursorGothic: -2.16px at 72px, -0.72px at 36px, -0.325px at 26px, normal at 16px"<cite>— cursor</cite></blockquote>
+<p>DBUI's typography table (currently in <code>docs/component-rules.md</code>) does <strong>not</strong> publish a letter-spacing curve. Add one. Even <em>"0 for all DBUI typography; bias toward natural Inter spacing"</em> is a rule.</p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 08</span> Borders are the depth mechanism on dark</h4>
+          
+<p>Multiple dev systems explicitly <em>forbid drop shadows</em> on dark surfaces, relying on <strong>translucent borders</strong> instead.</p>
+<blockquote>"Don't add box-shadows — they're invisible on dark backgrounds and break the border-defined depth system."<cite>— supabase</cite></blockquote>
+<blockquote>"No shadows — use frost borders for depth against the void."<cite>— resend</cite></blockquote>
+<p>DBUI is light-first, so shadows still work — but the corpus pattern of <strong>explicitly forbidding the alternative depth mechanism</strong> is worth copying. State: <em>"DBUI uses <code>shadow-xs</code> on form controls and <code>shadow-md</code> on popovers — never rely on borders alone, never use heavier shadows."</em></p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 09</span> Token names with rationale, not just hex</h4>
+          
+<p>Color blocks always include a <strong>role name</strong> alongside the value — not <code>"#5e6ad2"</code> but <code>"Brand Indigo (#5e6ad2)"</code>.</p>
+<blockquote>"Reference specific color names — 'use Olive Gray (#5e5d59)' not 'make it gray'"<cite>— claude</cite></blockquote>
+<p>DBUI maps to CSS-variable names (<code>--primary</code>, <code>--muted</code>, <code>--accent</code>), but §2 should spell out <strong>role + Tailwind class + CSS var + literal hex</strong> in one table so the model has all four representations.</p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 10</span> Warm vs cool color tilt is intentional</h4>
+          
+<p>Half a dozen systems explicitly warn against neutral gray, demanding either a warm or cool tilt.</p>
+<blockquote>"Always use warm tones — never pure white/black for primary surfaces."<cite>— cursor</cite></blockquote>
+<blockquote>"Always use warm neutrals — Notion's grays have yellow-brown undertones, never blue-gray."<cite>— notion</cite></blockquote>
+<blockquote>"Use <code>#171717</code> instead of <code>#000000</code> — the micro-warmth matters."<cite>— vercel</cite></blockquote>
+<p>DBUI's <code>#161616</code> foreground and <code>#FFFFFF</code> background are <em>technically neutral</em>. The decision is fine — but it should be <strong>stated as intentional</strong>, not implicit.</p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 11</span> Pill (9999px) for one specific use, never general</h4>
+          
+<p>Pill shapes (<code>border-radius: 9999px</code>) are treated as <strong>a specific signal</strong>, not a general decoration.</p>
+<blockquote>"Pill (9999px) for primary actions, 6px for secondary, 8-16px for cards"<cite>— supabase</cite></blockquote>
+<blockquote>"Don't use pill radius (9999px) on primary action buttons — pills are for badges/tags only"<cite>— vercel</cite></blockquote>
+<p>The advice <em>contradicts itself</em> across systems — but every system <em>has</em> a rule. DBUI uses <code>rounded-full</code> only for Badge / Tag pills and avatars. That's a stance worth stating explicitly.</p>
+
+        </div>
+        
+        <div class="pattern-card">
+          <h4><span class="pattern-num">Pattern 12</span> Anti-pattern paragraph: don&#x27;t X — Y is the system</h4>
+          
+<p>Most dev-friendly systems include 4–6 <em>negative</em> rules — explicit failure modes phrased <em>"don't X — Y is the system."</em></p>
+<blockquote>"Don't use solid colored backgrounds for buttons — transparency is the system."<cite>— linear</cite></blockquote>
+<blockquote>"Don't introduce additional colors — the palette is strictly black, neon, green, and gray."<cite>— clickhouse</cite></blockquote>
+<p>This is opt-in anti-slop scoped to each system's own brand. Open Design <em>also</em> ships a generic <code>craft/anti-ai-slop.md</code> (Tailwind indigo, two-stop gradients, emoji icons, sans-where-serif, rounded-card-with-left-border, invented metrics, lorem ipsum). DBUI should have its own token-aware equivalent.</p>
+
+        </div>
+        
+    </section>
+    
+    <section id="best">
+      <h2>4 · Fifteen practices to adopt (prioritized)</h2>
+      <table>
+        <thead><tr><th>#</th><th>Practice</th><th>Source</th><th>DBUI status</th></tr></thead>
+        <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td>Add `## 9. Agent Prompt Guide` with three subsections</td>
+          <td><small>84% of dev-friendly corpus</small></td>
+          <td><span class="badge destructive">Missing</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">2</td>
+          <td>Five paste-ready Example Component Prompts per archetype</td>
+          <td><small>Vercel · Linear · Notion · Supabase</small></td>
+          <td><span class="badge destructive">Missing</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">3</td>
+          <td>Iteration Guide with 6–8 numbered non-negotiables</td>
+          <td><small>Linear · Cursor · ClickHouse</small></td>
+          <td><span class="badge warning">Partial — in CLAUDE.md Rules</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">4</td>
+          <td>Signature move re-stated everywhere</td>
+          <td><small>Vercel (shadow-as-border) · Linear (510 weight)</small></td>
+          <td><span class="badge destructive">Missing — propose muted-shell + 13px + DuBois blue</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">5</td>
+          <td>Quick Color Reference (literal hex + role) at top of §9</td>
+          <td><small>Universal in dev cohort</small></td>
+          <td><span class="badge destructive">Missing</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">6</td>
+          <td>Letter-spacing scale formula</td>
+          <td><small>113 mentions in corpus</small></td>
+          <td><span class="badge destructive">Missing</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">7</td>
+          <td>Explicit anti-pattern paragraph (5–8 don'ts)</td>
+          <td><small>73 of 149 files</small></td>
+          <td><span class="badge warning">Partial — Patterns LLMs get wrong</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">8</td>
+          <td>Three weights, three roles rule</td>
+          <td><small>Vercel · Linear · Supabase · Sentry</small></td>
+          <td><span class="badge success">Already aligned (400 / 600)</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">9</td>
+          <td>One narrative paragraph in §1 (cold open)</td>
+          <td><small>99% of corpus</small></td>
+          <td><span class="badge destructive">Missing as single paragraph</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">10</td>
+          <td>Per-section Do / Don't split (not combined)</td>
+          <td><small>Notion-style</small></td>
+          <td><span class="badge destructive">Missing structure</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">11</td>
+          <td>Token name + Tailwind + CSS var + hex in one table row</td>
+          <td><small>Most dev systems</small></td>
+          <td><span class="badge warning">Partial in globals.css comments</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">12</td>
+          <td>Generic anti-slop ruleset (DBUI-token-aligned)</td>
+          <td><small>craft/anti-ai-slop.md</small></td>
+          <td><span class="badge destructive">Missing</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">13</td>
+          <td>Breakpoint table for shell collapse</td>
+          <td><small>80% of dev cohort</small></td>
+          <td><span class="badge warning">Implicit in composition.md</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">14</td>
+          <td>Explicit forbidden colors (indigo / lavender as accent)</td>
+          <td><small>Vercel · Supabase · ClickHouse</small></td>
+          <td><span class="badge destructive">Missing</span></td>
+        </tr>
+        
+        <tr>
+          <td class="num">15</td>
+          <td>Wrong-fit redirect — when not to use DBUI</td>
+          <td><small>warm-editorial pattern</small></td>
+          <td><span class="badge destructive">Missing</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section id="anti">
+      <h2>5 · Anti-patterns / things to AVOID</h2>
+      <h3>5.1 · Universal AI-slop warnings</h3>
+      <p>Distilled from Open Design's <code>craft/anti-ai-slop.md</code> plus matching Don't lines across 73 files.</p>
+      <table>
+        <thead><tr><th>AI tell</th><th>What corpus says</th><th>DBUI's existing rule</th></tr></thead>
+        <tbody>
+        <tr>
+          <td><span class="badge destructive">AI tell</span> Default Tailwind indigo as accent</td>
+          <td><em>Indigo is the textbook AI tell</em></td>
+          <td>Use <code>bg-primary</code> (DuBois blue). Never <code>text-indigo-*</code>, <code>bg-violet-*</code></td>
+        </tr>
+        
+        <tr>
+          <td><span class="badge destructive">AI tell</span> Two-stop 'trust' gradient on hero</td>
+          <td><em>A flat surface + intentional type beats this every time</em></td>
+          <td>DBUI's <code>--ai-gradient</code> token is reserved for AI / Genie surfaces only</td>
+        </tr>
+        
+        <tr>
+          <td><span class="badge destructive">AI tell</span> Emoji as feature icons (✨🚀🎯⚡🔥💡)</td>
+          <td><em>Use 1.6–1.8px-stroke monoline SVG with currentColor</em></td>
+          <td>DBUI ships 451 monoline icons. Never use emoji in product UI</td>
+        </tr>
+        
+        <tr>
+          <td><span class="badge destructive">AI tell</span> Rounded card + colored left-border accent</td>
+          <td><em>Drop either the radius or the left border</em></td>
+          <td>DBUI's <code>Status</code> / <code>Alert</code> are the only sanctioned places for a colored stroke</td>
+        </tr>
+        
+        <tr>
+          <td><span class="badge destructive">AI tell</span> Invented metrics (10× faster, 99.9% uptime)</td>
+          <td><em>Either pull from a real source or use a labelled placeholder</em></td>
+          <td>DBUI's <code>brandvoice.md</code> has the equivalent rule; restate in <code>install.md</code></td>
+        </tr>
+        
+        <tr>
+          <td><span class="badge destructive">AI tell</span> Filler copy (lorem ipsum, feature one/two/three)</td>
+          <td><em>An empty section is a design problem to solve with composition</em></td>
+          <td>Already in <code>brandvoice.md</code></td>
+        </tr>
+        
+        <tr>
+          <td><span class="badge destructive">AI tell</span> Drop shadows on form inputs</td>
+          <td><em>Vercel, Linear, Resend all forbid</em></td>
+          <td>DBUI: <code>shadow-xs</code> only on filled buttons; inputs use border, not shadow</td>
+        </tr>
+        </tbody>
+      </table>
+      <h3>5.2 · What NOT to copy from the broader corpus</h3>
+      <p>DBUI is enterprise data tooling. Do not emulate these clusters even though they're well-represented in the corpus:</p>
+      <table>
+        <thead><tr><th>Cluster</th><th>Why wrong for DBUI</th></tr></thead>
+        <tbody><tr><td>Automotive (bmw, bugatti, ferrari, lamborghini, tesla)</td><td>Cinematic dark mode + scroll-driven hero + glossy chrome. Not B2B product UX.</td></tr><tr><td>Fintech consumer (binance, coinbase, kraken, revolut, wise)</td><td>Aggressive green/red, trust gradients, large hero stats. Reads as marketing, not workbench.</td></tr><tr><td>E-Commerce &amp; Retail (airbnb, meta, nike, shopify, starbucks)</td><td>Photography-heavy, generous whitespace, emotional copy. Wrong info density for data products.</td></tr><tr><td>Media &amp; Consumer (apple, ibm, nvidia, pinterest, spotify, theverge, uber, wired)</td><td>Brand-led, not product-led. Atmosphere over utility.</td></tr><tr><td>Bold &amp; Expressive / Themed &amp; Unique (agentic, elegant, morphism, noir, n=16)</td><td>Decorative-only; not designed for actual product surfaces.</td></tr></tbody>
+      </table>
+      <h3>5.3 · Proposed <code>docs/anti-slop.md</code> for DBUI</h3>
+      <div class="callout destructive">
+        <div class="ctitle">15-rule list (token-aware)</div>
+        <ol><li>Default shadcn / Tailwind indigo, violet, purple anywhere as accent. DBUI uses <code>bg-primary</code> (DuBois blue).</li>
+<li>Two-stop gradient on a hero, marketing band, or empty state. The <code>--ai-gradient</code> token is reserved for Genie / AI affordances only.</li>
+<li>Emoji as functional icons. All product icons must come from <code>dbui/components/icons/*</code>.</li>
+<li>Lucide / Heroicons / React Icons imports. DBUI has 451 monoline icons; importing another set is a regression.</li>
+<li>Hardcoded hex / rgb / oklch in Tailwind classes. Always semantic tokens — <code>bg-primary</code>, not <code>bg-[#2272B4]</code>.</li>
+<li><code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;dialog&gt;</code> without a wrapping DBUI component.</li>
+<li><code>asChild</code> instead of Base UI's <code>render</code> prop. Radix pattern, ignored by Base UI.</li>
+<li>Colored-left-border 'status card' as a generic layout. Only <code>Status</code> and <code>Alert</code> sanctioned.</li>
+<li>Invented metrics or numbers in copy.</li>
+<li>Pill radius on primary action buttons. Pills are for Badge / Tag only.</li>
+<li><code>text-sm</code> / <code>font-medium</code>. DBUI base is 13px / semibold.</li>
+<li>Title Case headings. DBUI is sentence case (except product / brand names).</li>
+<li><em>Are you sure?</em> / <em>Something went wrong</em> generic dialog copy. State the action and the consequence.</li>
+<li>Banned words: <em>utilize</em>, <em>leverage</em>, <em>seamless</em>, <em>robust</em>, <em>simply</em>, <em>just</em>, <em>please</em>, <em>kindly</em>.</li>
+<li>Three-dot menu without a <code>DropdownMenu</code> — never raw button + popover.</li></ol>
+      </div>
+    </section>
+    
+    <section id="deep">
+      <h2>6 · Dev-friendly cohort deep-dive</h2>
+      <p>Each system: signature move + verbatim quote + DBUI takeaway.</p>
+      
+        <div class="pattern-card">
+          <h4>vercel <span class="badge muted">Developer Tools</span> <small style="color:var(--muted-foreground);font-weight:400">314 lines</small></h4>
+          <p><strong>Signature move:</strong> Shadow-as-border. Replaces every CSS border with a 1px-spread box-shadow.</p>
+          <blockquote>"Use shadow-as-border (<code>0px 0px 0px 1px rgba(0,0,0,0.08)</code>) instead of traditional CSS borders … Don't use traditional CSS <code>border</code> on cards — use the shadow-border technique"<cite>— vercel</cite></blockquote>
+          <p><strong>For DBUI:</strong> Probably <em>don't</em> adopt — DBUI uses real borders consistently, clearer for enterprise. But adopt Vercel's posture of stating the depth mechanism as a non-negotiable.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>linear-app <span class="badge muted">Productivity &amp; SaaS</span> <small style="color:var(--muted-foreground);font-weight:400">371 lines</small></h4>
+          <p><strong>Signature move:</strong> Inter weight 510 + <code>cv01 ss03</code> OpenType features applied globally.</p>
+          <blockquote>"Always set font-feature-settings <code>'cv01', 'ss03'</code> on all Inter text — this is non-negotiable for Linear's look"<cite>— linear-app</cite></blockquote>
+          <p><strong>For DBUI:</strong> Inter is already DBUI's font; adopting <code>cv01 ss03</code> could be a low-cost upgrade. Investigate.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>supabase <span class="badge muted">Backend &amp; Data</span> <small style="color:var(--muted-foreground);font-weight:400">259 lines</small></h4>
+          <p><strong>Signature move:</strong> Hierarchical translucent borders on dark surfaces (#242424 → #2e2e2e → #363636) as the sole depth mechanism — no shadows.</p>
+          <blockquote>"Don't add box-shadows — they're invisible on dark backgrounds and break the border-defined depth system."<cite>— supabase</cite></blockquote>
+          <p><strong>For DBUI:</strong> Less relevant (DBUI is light-first), but borrow the principle: declare one depth mechanism and forbid the other.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>sentry <span class="badge muted">Backend &amp; Data</span> <small style="color:var(--muted-foreground);font-weight:400">266 lines</small></h4>
+          <p><strong>Signature move:</strong> Warm-purple shadow tones (not gray) + inset shadow on every button for tactile feel.</p>
+          <blockquote>"Maintain the warm purple shadow tones — shadows should feel purple-tinted, not neutral gray"<cite>— sentry</cite></blockquote>
+          <p><strong>For DBUI:</strong> Not adoptable directly. The lesson: shadow color is a brand choice. DBUI's pure-black-at-5%–13% shadows are a deliberate stance worth publishing.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>cursor <span class="badge muted">Developer Tools</span> <small style="color:var(--muted-foreground);font-weight:400">313 lines</small></h4>
+          <p><strong>Signature move:</strong> Warm off-white canvas (#f2f1ed) with <code>oklab()</code> borders for perceptual uniformity.</p>
+          <blockquote>"Always use warm tones — <code>#f2f1ed</code> background, <code>#26251e</code> text, never pure white/black for primary surfaces"<cite>— cursor</cite></blockquote>
+          <p><strong>For DBUI:</strong> Cursor's three-font system (display Gothic / serif body / mono code) is a near-mirror of DBUI's SF Pro Display / SF Pro Text / SF Mono — but DBUI doesn't yet publish the three-voice rule explicitly. Steal that framing.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>clickhouse <span class="badge muted">Backend &amp; Data</span> <small style="color:var(--muted-foreground);font-weight:400">285 lines</small></h4>
+          <p><strong>Signature move:</strong> Neon Volt (<code>#faff69</code>) — one chromatic accent against pure black, weight 900 hero, sharp 4–8px radius, charcoal borders as depth.</p>
+          <blockquote>"Don't introduce additional colors — the palette is strictly black, neon, green, and gray"<cite>— clickhouse</cite></blockquote>
+          <p><strong>For DBUI:</strong> Wrong aesthetic, right discipline: one accent, everything else achromatic. DBUI already does this with DuBois blue.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>posthog <span class="badge muted">Backend &amp; Data</span> <small style="color:var(--muted-foreground);font-weight:400">260 lines</small></h4>
+          <p><strong>Signature move:</strong> Warm parchment canvas (<code>#fdfdf8</code>) + sage-tinted borders, IBM Plex Sans throughout, PostHog Orange (<code>#F54E00</code>) on hover only.</p>
+          <blockquote>"Ensure hover states flash PostHog Orange — if hovering feels bland, you're missing this"<cite>— posthog</cite></blockquote>
+          <p><strong>For DBUI:</strong> DBUI's whites are pure neutral, which is fine — but PostHog's commitment to a <em>specific</em> hue (never neutral gray, always sage) is the kind of conviction DBUI could publish.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>notion <span class="badge muted">Productivity &amp; SaaS</span> <small style="color:var(--muted-foreground);font-weight:400">313 lines</small></h4>
+          <p><strong>Signature move:</strong> Warm-tinted grays with yellow-brown undertones (#f6f5f4, #615d59, #a39e98) — explicitly anti-blue-gray.</p>
+          <blockquote>"Always use warm neutrals — Notion's grays have yellow-brown undertones, never blue-gray"<cite>— notion</cite></blockquote>
+          <p><strong>For DBUI:</strong> Notion's four-weight system (400/500/600/700) is rare. Illustrates DBUI's two-weight system is on the lean end.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>raycast <span class="badge muted">Developer Tools</span> <small style="color:var(--muted-foreground);font-weight:400">272 lines</small></h4>
+          <p><strong>Signature move:</strong> Double-ring shadow (outer hairline + inset highlight) for keyboard caps; positive letter-spacing on body text (atypical).</p>
+          <blockquote>"Verify letter-spacing is positive (+0.2px) on body text — negative spacing breaks the Raycast aesthetic"<cite>— raycast</cite></blockquote>
+          <p><strong>For DBUI:</strong> Raycast's keyboard-cap shadow technique is directly applicable to DBUI's <code>Kbd</code> component.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>resend <span class="badge muted">Productivity &amp; SaaS</span> <small style="color:var(--muted-foreground);font-weight:400">307 lines</small></h4>
+          <p><strong>Signature move:</strong> Frost borders (<code>rgba(214, 235, 253, 0.19)</code>) as the universal structural element on pure black. Three fonts, three roles, never crossed.</p>
+          <blockquote>"Three fonts, three roles: Domaine (hero), ABC Favorit (sections), Inter (body) — never cross"<cite>— resend</cite></blockquote>
+          <p><strong>For DBUI:</strong> Steal the <em>never cross</em> phrasing. Most DBUI docs say 'for headings, use…' without explicitly forbidding the alternative.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>claude <span class="badge muted">AI &amp; LLM</span> <small style="color:var(--muted-foreground);font-weight:400">316 lines</small></h4>
+          <p><strong>Signature move:</strong> Anthropic warm parchment (<code>#f5f4ed</code>) + ivory cards + terracotta brand color, serif + sans pairing.</p>
+          <blockquote>"Reference specific color names — 'use Olive Gray (#5e5d59)' not 'make it gray'"<cite>— claude</cite></blockquote>
+          <p><strong>For DBUI:</strong> Direct lesson: always reference a token by name, not by description. <em>'Use <code>text-muted-foreground</code>'</em>, not <em>'use a lighter gray.'</em></p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>cohere <span class="badge muted">AI &amp; LLM</span> <small style="color:var(--muted-foreground);font-weight:400">270 lines</small></h4>
+          <p><strong>Signature move:</strong> 22px corner radius repeated as a brand motif — every container that can be 22px is 22px.</p>
+          
+          <p><strong>For DBUI:</strong> DBUI's radius system is 4 / 8 / 16 / full. Stating it as a <em>motif rule</em> (not a parameter) is the move.</p>
+        </div>
+        
+        <div class="pattern-card">
+          <h4>mintlify <span class="badge muted">Productivity &amp; SaaS</span> <small style="color:var(--muted-foreground);font-weight:400">330 lines</small></h4>
+          <p><strong>Signature move:</strong> Documentation-as-design — typography table for h1–h6 + body + code; explicit table-of-contents pattern.</p>
+          
+          <p><strong>For DBUI:</strong> Mintlify's <code>## 3. Typography</code> as a single ~30-row table is the move DBUI's <code>component-rules.md</code> should adopt.</p>
+        </div>
+        
+    </section>
+    
+    <section id="strengths">
+      <h2>7 · What DBUI does well versus the corpus</h2>
+      <table>
+        <thead><tr><th>Dimension</th><th>Corpus state</th><th>DBUI state</th><th>Verdict</th></tr></thead>
+        <tbody>
+        <tr>
+          <td><strong>Component catalog</strong></td>
+          <td>Mostly prose lists in §4</td>
+          <td><code>component-index.md</code> with category / when-to-use / avoid-for / synonyms</td>
+          <td><span class="badge primary">DBUI better</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Icon governance</strong></td>
+          <td>Mentioned in 2/149 files</td>
+          <td><code>icon-index.md</code> with 449 icons + semantic categories</td>
+          <td><span class="badge primary">DBUI dramatically better</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Accessibility</strong></td>
+          <td>Mentioned in 4/149 files</td>
+          <td>Focus-ring spec across all interactive components</td>
+          <td><span class="badge primary">DBUI better</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Data viz</strong></td>
+          <td>0/149 files</td>
+          <td>Charts + chart-1..5 tokens + <code>Status</code> + <code>Tag</code> for data</td>
+          <td><span class="badge primary">DBUI uniquely covered</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Install / setup</strong></td>
+          <td>0/149 files address this</td>
+          <td><code>install.md</code> + Preflight + agent-runnable</td>
+          <td><span class="badge primary">DBUI uniquely covered</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Shell composition</strong></td>
+          <td>Marketing-site oriented</td>
+          <td><code>composition.md</code> with 5 product shells (A–E)</td>
+          <td><span class="badge primary">DBUI better for product</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Brand voice</strong></td>
+          <td>Mentioned in ~40%</td>
+          <td><code>brandvoice.md</code> operational checklist with banned words</td>
+          <td><span class="badge primary">DBUI better</span></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="callout success">
+        <div class="ctitle">Headline</div>
+        <p style="margin:0">DBUI's strengths are in <strong>product surface depth</strong> — components, icons, shells, voice, install. The corpus is stronger at <strong>initial visual taste</strong> — §1 Visual Theme narratives and §9 Agent Prompt Guides. The gap is recoverable in one file.</p>
+      </div>
+    </section>
+    
+    <section id="gaps">
+      <h2>8 · DBUI gaps mapped to the 9-section format</h2>
+      <table>
+        <thead><tr><th>§</th><th>Section</th><th>Where DBUI covers it</th><th>What to add</th></tr></thead>
+        <tbody>
+        <tr>
+          <td class="num"><strong>1</strong></td>
+          <td>Visual Theme &amp; Atmosphere</td>
+          <td>Split across root CLAUDE.md + dbui/CLAUDE.md intro</td>
+          <td>Add a 200-word cold open to a new <code>DBUI_DESIGN.md</code></td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>2</strong></td>
+          <td>Color Palette &amp; Roles</td>
+          <td><code>globals.css</code> tokens + root CLAUDE.md token table</td>
+          <td>Build a 4-column table: Role · Tailwind · CSS var · Literal hex (light + dark)</td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>3</strong></td>
+          <td>Typography Rules</td>
+          <td><code>component-rules.md</code> typography + dbui/CLAUDE.md typography reminder</td>
+          <td>Add a 10-row table: page title / section / body / small / caption / button label / table header / etc.</td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>4</strong></td>
+          <td>Component Stylings</td>
+          <td><code>component-index.md</code> (best in corpus) + per-component JSDoc</td>
+          <td>Nothing to add — point §4 at <code>component-index.md</code></td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>5</strong></td>
+          <td>Layout Principles</td>
+          <td><code>composition.md</code> (5 shells) + spacing tiers</td>
+          <td>Already excellent — point §5 at <code>composition.md</code></td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>6</strong></td>
+          <td>Depth &amp; Elevation</td>
+          <td>Distributed across <code>globals.css</code> shadow tokens + JSDoc</td>
+          <td>Write a 4-tier table: <code>shadow-xs</code> / <code>shadow-md</code> / <code>shadow-lg</code> / <code>shadow-focus</code></td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>7</strong></td>
+          <td>Do&#x27;s and Don&#x27;ts</td>
+          <td>Patterns LLMs get wrong + Before you commit in CLAUDE.md</td>
+          <td>Restructure as paired Do/Don't bullets; add explicit forbidden colors / imports / patterns</td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>8</strong></td>
+          <td>Responsive</td>
+          <td>Implicit in <code>composition.md</code></td>
+          <td>Extract a single breakpoint table for shell-to-rail collapse</td>
+        </tr>
+        
+        <tr>
+          <td class="num"><strong>9</strong></td>
+          <td>Agent Prompt Guide</td>
+          <td><strong>Missing entirely.</strong> Implicit in skills + <code>install.md</code> Preflight</td>
+          <td>Author from scratch — see Snippet B in §9 of this report</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section id="next">
+      <h2>9 · Concrete next steps for DBUI</h2>
+      <h3>Phase 1 — Single new file (highest leverage)</h3>
+      <p>Author <code>packages/dbui/DBUI_DESIGN.md</code> in 9-section shape, ~300–400 lines. Skeleton:</p>
+      <pre><code># DBUI Design System
+
+&gt; Category: Enterprise B2B · Data &amp; AI Platform · Light-first product UI
+&gt; Databricks' design language. Quiet shell, dense content, semantic-blue actions.
+
+## 1. Visual theme &amp; atmosphere
+[Snippet A below]
+
+## 2. Color palette &amp; roles
+[4-column table: role | Tailwind | CSS var | hex (light+dark)]
+
+## 3. Typography rules
+[10-row table + 3 voices: SF Pro Display / SF Pro Text / SF Mono]
+
+## 4. Component stylings
+See ./docs/component-index.md for the catalog. Conventions: …
+
+## 5. Layout principles
+See ./composition.md for the five shells (A–E). The four spacing tiers: …
+
+## 6. Depth &amp; elevation
+[4-tier table: shadow-xs → shadow-md → shadow-lg → shadow-focus]
+
+## 7. Do's and Don'ts
+[Paired bullets, ~10 each]
+
+## 8. Responsive behavior
+[Single breakpoint table for shell + rail collapse]
+
+## 9. Agent prompt guide
+[Snippet B below]</code></pre>
+      <h3>Snippet A — §1 Visual theme cold open</h3>
+      <pre><code>DBUI is the visual language of Databricks — enterprise data and AI
+infrastructure made trustworthy through quiet, dense, information-first UI.
+Product surfaces follow a two-layer pattern: a `bg-muted` outer shell carries
+the platform nav and header, wrapping a `bg-background` rounded-md content
+surface where the actual work happens. Every page starts with the Base shell.
+The personality is typographic discipline (13px body, 600 semibold for any
+emphasis), tight 4px radii on controls, and restrained color: DuBois blue
+(`#2272B4`) is the only chromatic accent in default product chrome —
+semantic destructive / warning / success appear only where meaning demands
+them. Agents should bias to **subtraction** (fewer frames, fewer boxes),
+**one primary action per region**, and **semantic tokens** (`bg-primary`,
+`text-foreground`) over literal hex.
+
+**Key characteristics:**
+- 13px Inter / SF Pro Text base — never 14px or 16px
+- Two-layer shell: `bg-muted` chrome + `bg-background` rounded-md content
+- Three voices: SF Pro Display (headings), SF Pro Text (body), SF Mono (code)
+- DuBois blue (`#2272B4`) as the only chromatic action color in default chrome
+- Two weights: 400 (read) + 600 semibold (emphasize / label / heading)
+- 4px control radius / 8px popover radius / 16px card radius / full pill for badges
+- Light-first; dark mode supported via paired tokens, not a separate palette
+- Shadows are quiet (`shadow-xs` 5% black) — depth comes from borders + tokens</code></pre>
+      <h3>Snippet B — §9 Agent Prompt Guide</h3>
+      <pre><code>## 9. Agent prompt guide
+
+### Quick color reference
+| Role | Tailwind | CSS var | Light | Dark |
+|---|---|---|---|---|
+| Page background | `bg-background` | `--background` | `#FFFFFF` | `#0A0A0A` |
+| Page foreground | `text-foreground` | `--foreground` | `#161616` | `#FAFAFA` |
+| Muted chrome | `bg-muted` | `--muted` | `#F6F6F6` | `#1A1A1A` |
+| Secondary text | `text-muted-foreground` | `--muted-foreground` | `#6F6F6F` | `#A0A0A0` |
+| Primary CTA | `bg-primary` | `--primary` | `#2272B4` | `#5AA9E6` |
+| Primary text on primary | `text-primary-foreground` | `--primary-foreground` | `#FFFFFF` | `#FFFFFF` |
+| Hover overlay (non-filled) | `bg-hover` | `--hover` | `rgba(34,114,180,0.08)` | `rgba(90,169,230,0.10)` |
+| Active overlay | `bg-press` | `--press` | `rgba(34,114,180,0.16)` | `rgba(90,169,230,0.18)` |
+| Destructive | `bg-destructive` | `--destructive` | `#C82D4C` | `#E54466` |
+| Warning text | `text-warning` | `--warning` | `#BE501E` | `#E07A41` |
+| Success text | `text-success` | `--success` | `#277C43` | `#3FA565` |
+| Border decorative | `border-border` | `--border` | `#EBEBEB` | `#2A2A2A` |
+| Border form | `border-input` | `--input` | `#CBCBCB` | `#3F3F3F` |
+| Focus ring | `border-ring` | `--ring` | `#2272B4` | `#5AA9E6` |
+
+### Non-negotiables
+1. **Never** raw `&lt;button&gt;`, `&lt;input&gt;`, `&lt;select&gt;`, `&lt;dialog&gt;` — always the DBUI primitive.
+2. **Never** import from `lucide-react`, `@heroicons/*`, `react-icons` — DBUI ships 451 monoline icons.
+3. **Never** hardcode `#`, `rgb(`, `oklch()` in JSX — semantic tokens only.
+4. **Never** `text-sm` or `font-medium` — DBUI base is `text-[13px]` and `font-semibold`.
+5. **Never** Title Case in headings or button labels — sentence case throughout.
+6. **Never** `asChild` — Base UI uses `render={&lt;Component /&gt;}`.
+7. **Always** wrap every page in `&lt;Base&gt;` from `dbui-shells`.
+8. **Always** use `DataTreeView` / `FileTreeView` for hierarchy — never nested divs.
+9. **Always** `align=&quot;start&quot;` for dropdowns and popovers.
+
+### Example component prompts
+- &quot;Build Shell A list page in DBUI: `&lt;Base defaultActive=&#x27;catalog&#x27;&gt;&lt;PageHeader&gt;…&lt;/PageHeader&gt;&lt;ControlsBar&gt;…&lt;/ControlsBar&gt;&lt;Table&gt;…&lt;/Table&gt;&lt;/Base&gt;` — use only `dbui/components/ui/*` imports; spacing follows `gap-4` between regions; primary action goes in `PageHeaderActions`.&quot;
+- &quot;Render a detail page in DBUI Shell E: left tree at 260px width using `DataTreeView`; center column with `Breadcrumb` → `PageHeaderTitle` → `Tabs` → tab content; right metadata sidebar at 280px with `KeyValuePair` rows separated by `Separator`. Each column scrolls independently.&quot;
+- &quot;Confirm-destructive flow in DBUI: open `AlertDialog`, never `Dialog`. Action button uses `variant=&#x27;destructive&#x27;`. Title states the action (&#x27;Delete catalog?&#x27;), description states the consequence, and never starts with &#x27;Are you sure?&#x27;&quot;
+- &quot;Form field in DBUI: `&lt;Field&gt;` containing `&lt;Label&gt;` (semibold 13px) above `&lt;Input&gt;` (32px height, `border-input`, `shadow-xs`), helper text below in `text-muted-foreground text-[12px]`. Error replaces helper text and adds `border-destructive` on the input (no ring, no shadow change).&quot;
+- &quot;Empty state in DBUI: `&lt;Empty&gt;` component with a single 24px icon, 13px semibold title sentence-cased, 13px regular description in `text-muted-foreground`, optional outline button below. No illustrations, no marketing copy, no exclamation marks.&quot;
+
+### Iteration guide (mentally run before answering)
+1. Did I read `./docs/component-index.md` before picking a component?
+2. Did I read `./docs/icon-index.md` before picking an icon?
+3. Did I use `&lt;Base&gt;` as the page wrapper?
+4. Did I use semantic tokens, not literal hex?
+5. Did I use `text-[13px]` and `font-semibold` (never `text-sm` / `font-medium`)?
+6. Did I use the `render` prop on Base UI triggers (never `asChild`)?
+7. Did my copy pass `brandvoice.md` — sentence case, no banned words, action-stated consequences?
+8. Is the page wrapped in the right shell from `composition.md` (A/B/C/D/E)?</code></pre>
+      <h3>Phase 2 — Add <code>docs/anti-slop.md</code></h3>
+      <p>Token-aligned version of <code>craft/anti-ai-slop.md</code>. Use the 15-rule list from §5.3 as the seed. ~80 lines.</p>
+      <h3>Phase 3 — Wire <code>DBUI_DESIGN.md</code> into the install flow</h3>
+      <ul>
+        <li>Update <code>install.md</code> "After install — files inside the project" table to list <code>DBUI_DESIGN.md</code> as the primary visual / behavior reference (above <code>CLAUDE.md</code>).</li>
+        <li>Keep <code>CLAUDE.md</code> focused on rules + reference index, not visual narrative.</li>
+        <li>The two files now have non-overlapping jobs: <code>DBUI_DESIGN.md</code> = what to make; <code>CLAUDE.md</code> = how to make it correctly.</li>
+      </ul>
+      <h3>Phase 4 — Storybook portal mention (low priority)</h3>
+      <p>Optionally add a <code>/design</code> redirect in <code>vercel.json</code> so the visual-narrative file is also one-URL-fetchable. Single line if desired.</p>
+    </section>
+    
+    <section id="appendix">
+      <h2>Appendix</h2>
+      <h3>Per-category section coverage (n=149)</h3>
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Type</th><th>n</th><th>§9 Agent</th><th>§7 Don'ts</th><th>Responsive</th><th>Motion</th><th>Voice</th></tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>AI &amp; LLM</td>
+          <td><span class="badge success">dev</span></td>
+          <td class="num">14</td>
+          <td class="num">86%</td>
+          <td class="num">79%</td>
+          <td class="num">86%</td>
+          <td class="num">14%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Media &amp; Consumer</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">12</td>
+          <td class="num">100%</td>
+          <td class="num">92%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Productivity &amp; SaaS</td>
+          <td><span class="badge success">dev</span></td>
+          <td class="num">12</td>
+          <td class="num">75%</td>
+          <td class="num">50%</td>
+          <td class="num">67%</td>
+          <td class="num">33%</td>
+          <td class="num">8%</td>
+        </tr>
+        
+        <tr>
+          <td>Creative &amp; Artistic</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">11</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>Modern &amp; Minimal</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">10</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>Professional &amp; Corporate</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">10</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>Backend &amp; Data</td>
+          <td><span class="badge success">dev</span></td>
+          <td class="num">9</td>
+          <td class="num">100%</td>
+          <td class="num">89%</td>
+          <td class="num">89%</td>
+          <td class="num">11%</td>
+          <td class="num">11%</td>
+        </tr>
+        
+        <tr>
+          <td>Developer Tools</td>
+          <td><span class="badge success">dev</span></td>
+          <td class="num">9</td>
+          <td class="num">78%</td>
+          <td class="num">67%</td>
+          <td class="num">78%</td>
+          <td class="num">22%</td>
+          <td class="num">11%</td>
+        </tr>
+        
+        <tr>
+          <td>Bold &amp; Expressive</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">8</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>Themed &amp; Unique</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">8</td>
+          <td class="num">38%</td>
+          <td class="num">38%</td>
+          <td class="num">38%</td>
+          <td class="num">50%</td>
+          <td class="num">50%</td>
+        </tr>
+        
+        <tr>
+          <td>Automotive</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">7</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Design &amp; Creative</td>
+          <td><span class="badge success">dev</span></td>
+          <td class="num">7</td>
+          <td class="num">86%</td>
+          <td class="num">86%</td>
+          <td class="num">86%</td>
+          <td class="num">14%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Fintech &amp; Crypto</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">7</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Morphism &amp; Effects</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">6</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>E-Commerce &amp; Retail</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">5</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Layout &amp; Structure</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">4</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>Retro &amp; Nostalgic</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">4</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>Starter</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">2</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Editorial &amp; Print</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">1</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Editorial / Personal / Publication</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">1</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+        </tr>
+        
+        <tr>
+          <td>Editorial · Studio</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">1</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+          <td class="num">100%</td>
+        </tr>
+        
+        <tr>
+          <td>Social &amp; Messaging</td>
+          <td><span class="badge muted">other</span></td>
+          <td class="num">1</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">0%</td>
+          <td class="num">100%</td>
+          <td class="num">0%</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="two-col">
+        <div>
+          <h3>Longest files</h3>
+          <table>
+            <thead><tr><th>System</th><th>Category</th><th>Lines</th></tr></thead>
+            <tbody><tr><td>urdu</td><td>Editorial / Personal / Publication</td><td class="num">1002</td></tr><tr><td>starbucks</td><td>E-Commerce &amp; Retail</td><td class="num">584</td></tr><tr><td>mission-control</td><td>Developer Tools</td><td class="num">474</td></tr><tr><td>vodafone</td><td>Media &amp; Consumer</td><td class="num">427</td></tr><tr><td>kami</td><td>Editorial &amp; Print</td><td class="num">411</td></tr><tr><td>xiaohongshu</td><td>Media &amp; Consumer</td><td class="num">403</td></tr><tr><td>airbnb</td><td>E-Commerce &amp; Retail</td><td class="num">394</td></tr><tr><td>linear-app</td><td>Productivity &amp; SaaS</td><td class="num">371</td></tr></tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Shortest files</h3>
+          <table>
+            <thead><tr><th>System</th><th>Category</th><th>Lines</th></tr></thead>
+            <tbody><tr><td>default</td><td>Starter</td><td class="num">63</td></tr><tr><td>warm-editorial</td><td>Starter</td><td class="num">66</td></tr><tr><td>agentic</td><td>Themed &amp; Unique</td><td class="num">72</td></tr><tr><td>ant</td><td>Professional &amp; Corporate</td><td class="num">72</td></tr><tr><td>application</td><td>Professional &amp; Corporate</td><td class="num">72</td></tr><tr><td>artistic</td><td>Creative &amp; Artistic</td><td class="num">72</td></tr><tr><td>bento</td><td>Layout &amp; Structure</td><td class="num">72</td></tr><tr><td>bold</td><td>Bold &amp; Expressive</td><td class="num">72</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <h3>Source data</h3>
+      <ul>
+        <li>Inventory TSV: <code>/tmp/design-md-inventory.tsv</code> (29 cols × 149 rows)</li>
+        <li>Section corpora: <code>/tmp/corpus_visual_theme.txt</code>, <code>/tmp/corpus_color.txt</code>, <code>/tmp/corpus_typography.txt</code>, <code>/tmp/corpus_donts.txt</code>, <code>/tmp/corpus_agent_guide.txt</code></li>
+        <li>Category × section matrix: <code>/tmp/corpus_data.json</code></li>
+        <li>Open Design source: <code>/Users/mudit.mittal/open-design/design-systems/</code></li>
+        <li>Markdown companion: <code>research/2026-05-13-design-md-corpus-study.md</code></li>
+      </ul>
+    </section>
+    </main>
+</div>
+<script>
+// Active TOC highlighting on scroll
+(function() {
+  const links = document.querySelectorAll('.toc a');
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  function onScroll() {
+    const top = window.scrollY + 100;
+    let activeIdx = 0;
+    for (let i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop <= top) activeIdx = i;
+    }
+    links.forEach((a, i) => a.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

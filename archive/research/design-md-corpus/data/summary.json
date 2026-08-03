@@ -1,0 +1,571 @@
+{
+  "generated_at": "2026-07-22T20:38:29.278Z",
+  "corpus_root": "/Users/mudit.mittal/open-design/design-systems",
+  "package_count": 151,
+  "dev_friendly_count": 52,
+  "other_count": 99,
+  "dev_friendly_categories": [
+    "AI & LLM",
+    "Developer Tools",
+    "Productivity & SaaS",
+    "Backend & Data",
+    "Design & Creative"
+  ],
+  "dev_friendly_slugs": [
+    "airtable",
+    "arc",
+    "cal",
+    "canva",
+    "cisco",
+    "claude",
+    "clay",
+    "clickhouse",
+    "cohere",
+    "composio",
+    "cursor",
+    "discord",
+    "duolingo",
+    "elevenlabs",
+    "expo",
+    "figma",
+    "framer",
+    "github",
+    "hashicorp",
+    "huggingface",
+    "intercom",
+    "linear-app",
+    "lovable",
+    "minimax",
+    "mintlify",
+    "miro",
+    "mission-control",
+    "mistral-ai",
+    "mongodb",
+    "notion",
+    "ollama",
+    "openai",
+    "opencode-ai",
+    "perplexity",
+    "posthog",
+    "raycast",
+    "replicate",
+    "resend",
+    "runwayml",
+    "sanity",
+    "sentry",
+    "slack",
+    "supabase",
+    "superhuman",
+    "together-ai",
+    "vercel",
+    "voltagent",
+    "warp",
+    "webex",
+    "webflow",
+    "x-ai",
+    "zapier"
+  ],
+  "median_lines": 184,
+  "mean_lines": 200,
+  "numbered_section_files": 148,
+  "agent_guide_pct": 54,
+  "section_coverage": {
+    "visual_theme": {
+      "hits": 150,
+      "pct": 99
+    },
+    "color": {
+      "hits": 151,
+      "pct": 100
+    },
+    "typography": {
+      "hits": 151,
+      "pct": 100
+    },
+    "components": {
+      "hits": 151,
+      "pct": 100
+    },
+    "layout": {
+      "hits": 150,
+      "pct": 99
+    },
+    "depth": {
+      "hits": 149,
+      "pct": 99
+    },
+    "donts": {
+      "hits": 74,
+      "pct": 49
+    },
+    "responsive": {
+      "hits": 83,
+      "pct": 55
+    },
+    "agent_guide": {
+      "hits": 82,
+      "pct": 54
+    },
+    "motion": {
+      "hits": 109,
+      "pct": 72
+    },
+    "voice": {
+      "hits": 131,
+      "pct": 87
+    },
+    "accessibility": {
+      "hits": 92,
+      "pct": 61
+    },
+    "iconography": {
+      "hits": 9,
+      "pct": 6
+    },
+    "data_viz": {
+      "hits": 3,
+      "pct": 2
+    }
+  },
+  "package_enrichment": {
+    "manifest": 151,
+    "tokens_css": 151,
+    "usage_md": 150,
+    "components_html": 151,
+    "preview": 151,
+    "yaml_front_matter": 1
+  },
+  "cohort_comparison": {
+    "visual_theme": {
+      "dev_friendly": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "other": {
+        "hits": 98,
+        "total": 99,
+        "pct": 99
+      }
+    },
+    "color": {
+      "dev_friendly": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "other": {
+        "hits": 99,
+        "total": 99,
+        "pct": 100
+      }
+    },
+    "typography": {
+      "dev_friendly": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "other": {
+        "hits": 99,
+        "total": 99,
+        "pct": 100
+      }
+    },
+    "components": {
+      "dev_friendly": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "other": {
+        "hits": 99,
+        "total": 99,
+        "pct": 100
+      }
+    },
+    "layout": {
+      "dev_friendly": {
+        "hits": 52,
+        "total": 52,
+        "pct": 100
+      },
+      "other": {
+        "hits": 98,
+        "total": 99,
+        "pct": 99
+      }
+    },
+    "depth": {
+      "dev_friendly": {
+        "hits": 50,
+        "total": 52,
+        "pct": 96
+      },
+      "other": {
+        "hits": 99,
+        "total": 99,
+        "pct": 100
+      }
+    },
+    "donts": {
+      "dev_friendly": {
+        "hits": 37,
+        "total": 52,
+        "pct": 71
+      },
+      "other": {
+        "hits": 37,
+        "total": 99,
+        "pct": 37
+      }
+    },
+    "responsive": {
+      "dev_friendly": {
+        "hits": 43,
+        "total": 52,
+        "pct": 83
+      },
+      "other": {
+        "hits": 40,
+        "total": 99,
+        "pct": 40
+      }
+    },
+    "agent_guide": {
+      "dev_friendly": {
+        "hits": 43,
+        "total": 52,
+        "pct": 83
+      },
+      "other": {
+        "hits": 39,
+        "total": 99,
+        "pct": 39
+      }
+    },
+    "motion": {
+      "dev_friendly": {
+        "hits": 25,
+        "total": 52,
+        "pct": 48
+      },
+      "other": {
+        "hits": 84,
+        "total": 99,
+        "pct": 85
+      }
+    },
+    "voice": {
+      "dev_friendly": {
+        "hits": 44,
+        "total": 52,
+        "pct": 85
+      },
+      "other": {
+        "hits": 87,
+        "total": 99,
+        "pct": 88
+      }
+    },
+    "accessibility": {
+      "dev_friendly": {
+        "hits": 22,
+        "total": 52,
+        "pct": 42
+      },
+      "other": {
+        "hits": 70,
+        "total": 99,
+        "pct": 71
+      }
+    },
+    "iconography": {
+      "dev_friendly": {
+        "hits": 6,
+        "total": 52,
+        "pct": 12
+      },
+      "other": {
+        "hits": 3,
+        "total": 99,
+        "pct": 3
+      }
+    },
+    "data_viz": {
+      "dev_friendly": {
+        "hits": 1,
+        "total": 52,
+        "pct": 2
+      },
+      "other": {
+        "hits": 2,
+        "total": 99,
+        "pct": 2
+      }
+    }
+  },
+  "categories": {
+    "AI & LLM": {
+      "count": 15,
+      "slugs": [
+        "claude",
+        "cohere",
+        "elevenlabs",
+        "huggingface",
+        "minimax",
+        "mistral-ai",
+        "ollama",
+        "openai",
+        "opencode-ai",
+        "perplexity",
+        "replicate",
+        "runwayml",
+        "together-ai",
+        "voltagent",
+        "x-ai"
+      ]
+    },
+    "Media & Consumer": {
+      "count": 12,
+      "slugs": [
+        "apple",
+        "ibm",
+        "nvidia",
+        "pinterest",
+        "playstation",
+        "spacex",
+        "spotify",
+        "theverge",
+        "uber",
+        "vodafone",
+        "wired",
+        "xiaohongshu"
+      ]
+    },
+    "Productivity & SaaS": {
+      "count": 12,
+      "slugs": [
+        "arc",
+        "cal",
+        "discord",
+        "duolingo",
+        "intercom",
+        "linear-app",
+        "mintlify",
+        "notion",
+        "resend",
+        "slack",
+        "webex",
+        "zapier"
+      ]
+    },
+    "Creative & Artistic": {
+      "count": 11,
+      "slugs": [
+        "artistic",
+        "cafe",
+        "cosmic",
+        "creative",
+        "doodle",
+        "editorial",
+        "fantasy",
+        "friendly",
+        "lingo",
+        "publication",
+        "storytelling"
+      ]
+    },
+    "Professional & Corporate": {
+      "count": 10,
+      "slugs": [
+        "ant",
+        "application",
+        "corporate",
+        "dashboard",
+        "elegant",
+        "enterprise",
+        "luxury",
+        "material",
+        "premium",
+        "professional"
+      ]
+    },
+    "Modern & Minimal": {
+      "count": 10,
+      "slugs": [
+        "clean",
+        "contemporary",
+        "flat",
+        "minimal",
+        "modern",
+        "mono",
+        "refined",
+        "shadcn",
+        "simple",
+        "sleek"
+      ]
+    },
+    "Backend & Data": {
+      "count": 9,
+      "slugs": [
+        "cisco",
+        "clickhouse",
+        "composio",
+        "hashicorp",
+        "mongodb",
+        "posthog",
+        "sanity",
+        "sentry",
+        "supabase"
+      ]
+    },
+    "Developer Tools": {
+      "count": 9,
+      "slugs": [
+        "cursor",
+        "expo",
+        "github",
+        "lovable",
+        "mission-control",
+        "raycast",
+        "superhuman",
+        "vercel",
+        "warp"
+      ]
+    },
+    "Themed & Unique": {
+      "count": 8,
+      "slugs": [
+        "agentic",
+        "futuristic",
+        "hud",
+        "loom",
+        "pacman",
+        "tetris",
+        "totality-festival",
+        "trading-terminal"
+      ]
+    },
+    "Bold & Expressive": {
+      "count": 8,
+      "slugs": [
+        "bold",
+        "brutalism",
+        "colorful",
+        "dramatic",
+        "energetic",
+        "expressive",
+        "neobrutalism",
+        "vibrant"
+      ]
+    },
+    "Design & Creative": {
+      "count": 7,
+      "slugs": [
+        "airtable",
+        "canva",
+        "clay",
+        "figma",
+        "framer",
+        "miro",
+        "webflow"
+      ]
+    },
+    "Fintech & Crypto": {
+      "count": 7,
+      "slugs": [
+        "binance",
+        "coinbase",
+        "kraken",
+        "mastercard",
+        "revolut",
+        "stripe",
+        "wise"
+      ]
+    },
+    "Automotive": {
+      "count": 7,
+      "slugs": [
+        "bmw",
+        "bmw-m",
+        "bugatti",
+        "ferrari",
+        "lamborghini",
+        "renault",
+        "tesla"
+      ]
+    },
+    "Morphism & Effects": {
+      "count": 6,
+      "slugs": [
+        "claymorphism",
+        "glassmorphism",
+        "gradient",
+        "neon",
+        "neumorphism",
+        "skeumorphism"
+      ]
+    },
+    "E-Commerce & Retail": {
+      "count": 5,
+      "slugs": [
+        "airbnb",
+        "meta",
+        "nike",
+        "shopify",
+        "starbucks"
+      ]
+    },
+    "Layout & Structure": {
+      "count": 4,
+      "slugs": [
+        "bento",
+        "levels",
+        "perspective",
+        "spacious"
+      ]
+    },
+    "Retro & Nostalgic": {
+      "count": 4,
+      "slugs": [
+        "dithered",
+        "paper",
+        "retro",
+        "vintage"
+      ]
+    },
+    "Starter": {
+      "count": 3,
+      "slugs": [
+        "default",
+        "tom-modern",
+        "warm-editorial"
+      ]
+    },
+    "Editorial · Studio": {
+      "count": 1,
+      "slugs": [
+        "atelier-zero"
+      ]
+    },
+    "Editorial & Print": {
+      "count": 1,
+      "slugs": [
+        "kami"
+      ]
+    },
+    "Editorial / Personal / Publication": {
+      "count": 1,
+      "slugs": [
+        "urdu"
+      ]
+    },
+    "Social & Messaging": {
+      "count": 1,
+      "slugs": [
+        "wechat"
+      ]
+    }
+  }
+}

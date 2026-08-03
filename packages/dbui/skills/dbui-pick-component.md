@@ -19,7 +19,7 @@ description: Find the right DBUI component for a use case. Triggers when you nee
 
 3. **Check the Category column** to narrow results:
    - `action` → Button, SplitButton
-   - `input` → Input, Textarea, Select, Combobox, Checkbox, Switch, Slider
+   - `input` → Input, Textarea, Select, Combobox, Checkbox, Switch, Slider, DateRange
    - `selection` → Tabs, SegmentControl, RadioGroup, RadioTile, ToggleGroup
    - `menu` → DropdownMenu, ContextMenu, Menubar
    - `overlay` → Dialog, AlertDialog, Drawer, Popover, HoverCard, Tooltip, Sonner
@@ -27,7 +27,7 @@ description: Find the right DBUI component for a use case. Triggers when you nee
    - `display` → Table, DataTree, Card, KeyValuePair, Avatar, Tag, Item, Chart, Kbd
    - `navigation` → Navbar, Breadcrumb, Pagination, EditorTabs
    - `layout` → Accordion, Collapsible, Resizable, ScrollArea, Separator, AspectRatio, Direction, Field, Label, InputGroup
-   - `chrome` → PageHeader, PlatformHeader
+   - `chrome` → PageHeader, ControlsBar, PlatformHeader
 
 4. **Read the "Avoid for" column** on your top match. This prevents near-miss selections (e.g. Dialog says "Avoid for: destructive confirmations" → use AlertDialog instead).
 

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Popover } from "@base-ui/react/popover"
-import { DataTreeView, type TreeSectionData, type TreeNodeData } from "dbui/components/ui/data-tree"
+import { DataTree, type DataTreeSection, type DataTreeNode } from "dbui/components/ui/data-tree"
 import { Button, ButtonChevron } from "dbui/components/ui/button"
 import {
   DropdownMenu,
@@ -80,10 +80,10 @@ export type OverflowMenuItem =
 
 // ─── Filter helpers ───
 
-function filterTreeNodes(nodes: TreeNodeData[], query: string): TreeNodeData[] {
+function filterTreeNodes(nodes: DataTreeNode[], query: string): DataTreeNode[] {
   if (!query) return nodes
   const q = query.toLowerCase()
-  return nodes.reduce<TreeNodeData[]>((acc, node) => {
+  return nodes.reduce<DataTreeNode[]>((acc, node) => {
     const labelMatch = node.label.toLowerCase().includes(q)
     const filteredChildren = node.children ? filterTreeNodes(node.children, query) : undefined
     const hasMatchingChildren = filteredChildren && filteredChildren.length > 0
@@ -98,7 +98,7 @@ function filterTreeNodes(nodes: TreeNodeData[], query: string): TreeNodeData[] {
   }, [])
 }
 
-function filterSections(sections: TreeSectionData[], query: string): TreeSectionData[] {
+function filterSections(sections: DataTreeSection[], query: string): DataTreeSection[] {
   if (!query) return sections
   return sections
     .map((section) => ({
@@ -254,8 +254,8 @@ export type DataTreeExplorerProps = {
   searchValue?: string
   onSearchChange?: (value: string) => void
 
-  /** Tree data. */
-  sections: TreeSectionData[]
+  /** Tree data — kind-driven (catalog/schema/table/view/volume/model/function/column/folder/file). */
+  sections: DataTreeSection[]
   onSelect?: (id: string) => void
   /** Called when user clicks the overflow menu on a tree node. */
   onNodeMenu?: (id: string, label: string) => void
@@ -270,7 +270,7 @@ export type DataTreeExplorerProps = {
  *
  * Header: [Back? + Root-switcher chip] [spacer] [Compute picker] [Add menu] [Overflow menu]
  * Filter: FacetedFilter (default) or plain search Input
- * Body:   DataTreeView with the provided sections
+ * Body:   <DataTree> (L2) with the provided kind-driven sections
  *
  * Pass `headerActions` to fully replace the right-cluster, or override individual menus
  * (`warehouses`, `addMenuItems`, `overflowMenuItems`). Pass `null` to a menu prop to hide it.
@@ -412,26 +412,31 @@ export function DataTreeExplorer({
         <div className="flex h-10 items-center gap-2 px-2">
           {/* Back button — only when focused deeper than root */}
           {currentRoot && onUnfocus && (
-            <button
+            <Button
+              variant="ghost"
+              size="icon-sm"
               onClick={onUnfocus}
-              className="flex size-6 shrink-0 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground"
               aria-label="Go back"
             >
               <ChevronLeft className="size-4" />
-            </button>
+            </Button>
           )}
 
           {/* Root switcher chip */}
           <Popover.Root>
             <Popover.Trigger
               render={
-                <button className="flex items-center gap-1 min-w-0 rounded-sm bg-muted py-1 pl-1 pr-2 text-[13px] text-foreground hover:bg-hover active:bg-press transition-colors">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="min-w-0 justify-start gap-1 rounded-sm bg-muted px-1 pr-2 shadow-none hover:bg-hover active:bg-press"
+                >
                   <span className="flex shrink-0 items-center gap-0.5 text-muted-foreground [&_svg]:size-4">
-                    <span className="text-[11px] font-mono text-muted-foreground">./</span>
+                    <span className="text-[12px] leading-[16px] font-mono text-muted-foreground">./</span>
                     {currentRoot?.icon ?? defaultIcon}
                   </span>
-                  <span className="truncate max-w-[140px]">{currentRoot?.label ?? title}</span>
-                </button>
+                  <span className="truncate max-w-36 font-normal">{currentRoot?.label ?? title}</span>
+                </Button>
               }
             />
             <Popover.Portal>
@@ -442,13 +447,11 @@ export function DataTreeExplorer({
                     focusPath.map((entry, i) => {
                       const isCurrent = i === focusPath.length - 1
                       return (
-                        <button
+                        <Button
                           key={entry.id}
-                          className={cn(
-                            "flex w-full min-h-7 items-center gap-2 rounded-sm py-1 text-[13px] hover:bg-hover text-foreground",
-                            isCurrent && "bg-active"
-                          )}
-                          style={{ paddingLeft: `${6 + i * 12}px` }}
+                          variant="ghost"
+                          className={cn("h-7 w-full justify-start gap-2 py-1 text-[13px]", isCurrent && "bg-active")}
+                          style={{ paddingLeft: `${8 + i * 12}px` }}
                           onClick={() => {
                             if (i === 0 && focusPath.length === 1 && onUnfocus) onUnfocus()
                             else if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
@@ -458,16 +461,16 @@ export function DataTreeExplorer({
                             {entry.icon}
                           </span>
                           <span className="truncate">{entry.label}</span>
-                        </button>
+                        </Button>
                       )
                     })
                   ) : (
-                    <button className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] bg-active text-foreground hover:bg-hover">
+                    <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-active px-1.5 py-1 text-[13px]">
                       <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
                         {defaultIcon}
                       </span>
                       {title}
-                    </button>
+                    </Button>
                   )}
 
                   {/* Go to section */}
@@ -476,16 +479,17 @@ export function DataTreeExplorer({
                       <div className="my-1 h-px bg-border" />
                       <div className="px-1.5 py-1 text-[12px] text-muted-foreground">Go to</div>
                       {goToItems.map((item) => (
-                        <button
+                        <Button
                           key={item.id}
-                          className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
+                          variant="ghost"
+                          className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-[13px]"
                           onClick={() => onFocusNode?.(item.id, item.label, item.icon)}
                         >
                           <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
                             {item.icon}
                           </span>
                           {item.label}
-                        </button>
+                        </Button>
                       ))}
                     </>
                   )}
@@ -521,7 +525,7 @@ export function DataTreeExplorer({
 
       {/* Tree */}
       <div className={cn("flex-1 overflow-y-auto px-1 pb-4", treeClassName)}>
-        <DataTreeView
+        <DataTree
           sections={displaySections}
           onSelect={onSelect}
           onFocusNode={onFocusNode}

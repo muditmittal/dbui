@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>DESIGN.md Patterns Analysis</title><style>
+  body { font-family: system-ui, sans-serif; font-size: 14px; line-height: 1.5; max-width: 960px; margin: 0 auto; padding: 24px 20px 48px; color: #161616; background: #fafafa; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 17px; margin: 28px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #ddd; }
+  h3 { font-size: 14px; margin: 20px 0 8px; color: #333; }
+  p, li { max-width: 72ch; }
+  a { color: #2272b4; }
+  a:hover { text-decoration: underline; }
+  .nav { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 12px 16px; margin: 16px 0 24px; }
+  .nav a { margin-right: 16px; font-weight: 600; }
+  .muted { color: #666; font-size: 12px; }
+  .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #ebf5ff; color: #1a5a8a; margin-left: 6px; }
+  .badge.other { background: #f0f0f0; color: #555; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0 20px; background: #fff; }
+  th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f6f6f6; font-weight: 600; }
+  .pkg { margin-bottom: 10px; padding: 10px 12px; background: #fff; border: 1px solid #e8e8e8; border-radius: 6px; }
+  .pkg-name { font-weight: 600; }
+  .file-links a { font-size: 12px; margin-right: 12px; }
+  .toc { columns: 2; font-size: 13px; margin: 8px 0 16px; }
+  .toc a { display: block; margin-bottom: 4px; }
+  .pattern { background: #fff; border: 1px solid #e8e8e8; border-radius: 6px; padding: 14px 16px; margin: 12px 0; }
+  .pattern h3 { margin-top: 0; }
+  .stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .stat { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 12px 16px; min-width: 120px; }
+  .stat .n { font-size: 24px; font-weight: 700; color: #2272b4; }
+  .stat .l { font-size: 11px; color: #666; }
+</style></head><body><div class="nav"><a href="source-index.html">Source index</a><a href="patterns.html">Patterns analysis</a></div><h1>Common patterns across DESIGN.md files</h1><p class="muted">Analysis of 151 systems · 2026-07-22</p><div class="stat-row">
+  <div class="stat"><div class="n">151</div><div class="l">packages</div></div>
+  <div class="stat"><div class="n">184</div><div class="l">median lines</div></div>
+  <div class="stat"><div class="n">54%</div><div class="l">have agent guide</div></div>
+  <div class="stat"><div class="n">98%</div><div class="l">numbered §1–9 shape</div></div>
+</div><h2>1. Document structure</h2><div class="pattern"><h3>The canonical 9-section shape</h3>
+<p>Most product-inspired systems use numbered sections:</p>
+<ol>
+  <li>Visual theme &amp; atmosphere</li>
+  <li>Color palette &amp; roles</li>
+  <li>Typography rules</li>
+  <li>Component stylings</li>
+  <li>Layout principles</li>
+  <li>Depth &amp; elevation</li>
+  <li>Do's and don'ts</li>
+  <li>Responsive behavior</li>
+  <li>Agent prompt guide</li>
+</ol>
+<p><strong>148</strong> of 151 files (98%) use 7+ numbered <code>## N.</code> sections. Style-preset systems (neon, brutalism…) often use a shorter 7-section guardrail format instead.</p>
+</div><h2>2. Section coverage (all systems)</h2><table><thead><tr><th>Topic</th><th>All</th><th>Dev/analyst</th><th>Agentic</th><th>Pattern</th></tr></thead><tbody><tr>
+    <td>Typography</td>
+    <td>100%</td>
+    <td>100%</td>
+    <td>100%</td>
+    <td class="muted">Hierarchy table: role → size → weight → line-height → tracking</td>
+  </tr><tr>
+    <td>Component stylings</td>
+    <td>100%</td>
+    <td>100%</td>
+    <td>100%</td>
+    <td class="muted">Prose describing buttons, inputs, cards, nav patterns</td>
+  </tr><tr>
+    <td>Layout &amp; spacing</td>
+    <td>100%</td>
+    <td>100%</td>
+    <td>100%</td>
+    <td class="muted">8px grid, max-width, sidebar + content split</td>
+  </tr><tr>
+    <td>Visual theme &amp; atmosphere</td>
+    <td>99%</td>
+    <td>100%</td>
+    <td>100%</td>
+    <td class="muted">Opens with narrative metaphor + key characteristics bullets</td>
+  </tr><tr>
+    <td>Do's and don'ts</td>
+    <td>95%</td>
+    <td>92%</td>
+    <td>90%</td>
+    <td class="muted">Paired do/don't bullets or usage guardrails</td>
+  </tr><tr>
+    <td>Color palette &amp; roles</td>
+    <td>60%</td>
+    <td>96%</td>
+    <td>85%</td>
+    <td class="muted">Role-based tables: surface, ink, accent, semantic, border</td>
+  </tr><tr>
+    <td>Agent prompt guide</td>
+    <td>54%</td>
+    <td>83%</td>
+    <td>75%</td>
+    <td class="muted">Hex quick-ref + example prompts + non-negotiables</td>
+  </tr><tr>
+    <td>Depth &amp; elevation</td>
+    <td>53%</td>
+    <td>79%</td>
+    <td>75%</td>
+    <td class="muted">Shadow tier table or border-as-depth rule</td>
+  </tr><tr>
+    <td>Responsive behavior</td>
+    <td>53%</td>
+    <td>79%</td>
+    <td>75%</td>
+    <td class="muted">Breakpoint table for nav collapse</td>
+  </tr><tr>
+    <td>Motion &amp; interaction</td>
+    <td>48%</td>
+    <td>25%</td>
+    <td>35%</td>
+    <td class="muted">Durations and easings — heavy in consumer, light in dev tools</td>
+  </tr><tr>
+    <td>Voice &amp; tone</td>
+    <td>42%</td>
+    <td>8%</td>
+    <td>15%</td>
+    <td class="muted">Copy tone — common in consumer, rare in dev tools</td>
+  </tr><tr>
+    <td>Accessibility</td>
+    <td>1%</td>
+    <td>2%</td>
+    <td>0%</td>
+    <td class="muted">Rare as dedicated section (corpus gap)</td>
+  </tr><tr>
+    <td>Iconography</td>
+    <td>0%</td>
+    <td>0%</td>
+    <td>0%</td>
+    <td class="muted">Almost never a dedicated section</td>
+  </tr><tr>
+    <td>Data visualization</td>
+    <td>0%</td>
+    <td>0%</td>
+    <td>0%</td>
+    <td class="muted">Almost never a dedicated section</td>
+  </tr></tbody></table><h2>3. Twelve recurring patterns</h2><div class="pattern"><h3>Narrative cold open (§1)</h3><p>First paragraph reads like art direction — metaphor, dominant color, principle. Not a bullet list first.</p><p class="muted">Linear: 'darkness as the native medium' · Vercel: 'gallery-like emptiness'</p></div><div class="pattern"><h3>Quick color reference at top of §9</h3><p>Agent guides lead with literal hex mapped to roles (Primary CTA: #5e6ad2). Tailwind names come second.</p><p class="muted">Present in ~85–90% of dev-friendly systems with §9</p></div><div class="pattern"><h3>Example component prompts</h3><p>5–6 copy-paste strings the user can feed another agent. Imperative voice.</p><p class="muted">'Build a hero section on white background…'</p></div><div class="pattern"><h3>Non-negotiables / iteration guide</h3><p>Numbered list of 5–10 rules. Word 'never' appears ~2× per file on average; 'non-negotiable' in ~10% of agent guides.</p><p class="muted">Linear: font-feature-settings cv01 ss03 is non-negotiable</p></div><div class="pattern"><h3>One chromatic accent</h3><p>Achromatic surfaces + single brand color for primary actions. Status colors only where meaning demands.</p><p class="muted">DuBois blue for DBUI; Linear indigo; Vercel near-black CTA</p></div><div class="pattern"><h3>Three font weights, three roles</h3><p>Most dev systems declare exactly 2–3 weights mapped to body / label / display.</p><p class="muted">DBUI: 400 read + 600 semibold</p></div><div class="pattern"><h3>Typography hierarchy table</h3><p>10-row table is the norm for product systems. Display sizes get negative letter-spacing formulas.</p><p class="muted">13–16px body for dev tools</p></div><div class="pattern"><h3>Explicit depth mechanism</h3><p>State borders OR shadows as the system — forbid mixing metaphors.</p><p class="muted">Vercel: shadow-as-border; DBUI: real borders + quiet shadows</p></div><div class="pattern"><h3>Sidebar + content two-layer layout</h3><p>Platform chrome (muted) wrapping white/near-white content surface.</p><p class="muted">Matches DBUI Base shell pattern</p></div><div class="pattern"><h3>Do / Don't paired anti-patterns</h3><p>Explicit failure modes: 'don't use indigo', 'don't use emoji as icons', 'don't use left-border status cards'.</p><p class="muted">Open Design craft/anti-ai-slop.md distills universal tells</p></div><div class="pattern"><h3>Table-heavy, prescriptive prose</h3><p>Dev/analyst files average ~28 table rows vs ~18 for full corpus. Agents need lookup tables, not essays.</p><p class="muted">Mintlify, ClickHouse, HashiCorp are table-dense</p></div><div class="pattern"><h3>Package enrichment (Open Design 2.0)</h3><p>Each system now ships manifest.json + DESIGN.md + tokens.css + components.html + preview pages.</p><p class="muted">Browse tokens.css alongside prose for machine-readable values</p></div><h2>4. Dev/analyst vs consumer split</h2><table><thead><tr><th>Emphasis</th><th>Dev / analyst (52)</th><th>Consumer / style (99)</th></tr></thead><tbody>
+<tr><td>Agent prompt guide</td><td><strong>83%</strong></td><td>39%</td></tr>
+<tr><td>Do's and don'ts</td><td><strong>92%</strong></td><td>~95% (but different content)</td></tr>
+<tr><td>Depth &amp; elevation</td><td><strong>79%</strong></td><td>~50%</td></tr>
+<tr><td>Motion / animation</td><td>25%</td><td><strong>85%</strong></td></tr>
+<tr><td>Voice &amp; tone narrative</td><td>8%</td><td><strong>88%</strong></td></tr>
+</tbody></table>
+<p>Dev systems tell agents <em>which hex, which weight, which radius</em>. Consumer systems tell models <em>what the brand feels like</em>.</p><h2>5. Corpus gaps (opportunities)</h2><ul>
+  <li><strong>Iconography</strong> — 0% dedicated sections; DBUI has 451 icons + index</li>
+  <li><strong>Data visualization</strong> — 0% dedicated sections; natural fit for Databricks</li>
+  <li><strong>Accessibility</strong> — ~0% dedicated sections; DBUI has focus-ring spec</li>
+  <li><strong>Shell / page compositions</strong> — rare as explicit category; DBUI has Base + A–E shells</li>
+</ul><h2>6. Anti-patterns (common warnings)</h2><table><thead><tr><th>AI tell</th><th>What corpus says</th></tr></thead><tbody>
+<tr><td>Default Tailwind indigo/violet accent</td><td>Textbook AI slop — use brand primary instead</td></tr>
+<tr><td>Two-stop purple→blue gradient heroes</td><td>Flat surface + intentional type beats this</td></tr>
+<tr><td>Emoji as feature icons</td><td>Use monoline SVG with currentColor</td></tr>
+<tr><td>Colored left-border dashboard tiles</td><td>Only sanctioned in Status/Alert components</td></tr>
+<tr><td>Invented metrics (10× faster)</td><td>Use real data or labeled placeholders</td></tr>
+<tr><td>text-sm / font-medium defaults</td><td>Wrong for systems with 13px semibold base</td></tr>
+</tbody></table></body></html>
