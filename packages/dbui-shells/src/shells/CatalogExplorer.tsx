@@ -580,7 +580,7 @@ export function CatalogLayout({
         filter={filterWithSearch}
       />
       {children ?? (
-        <CatalogLanding title={title} items={items} tabs={tabs} actions={actions} />
+        <CatalogLanding title={title} items={items} filters={tabs} actions={actions} />
       )}
     </div>
   )

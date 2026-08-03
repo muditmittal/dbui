@@ -118,7 +118,7 @@ function FilterToggle({
         setInternalPressed(pressed)
         onPressedChange?.(pressed, event)
       }}
-      className={cn(toggleVariants({ variant: "filter", size, className }))}
+      className={cn(toggleVariants({ variant: "filter", size }), className)}
       {...props}
     >
       {isPressed ? (
