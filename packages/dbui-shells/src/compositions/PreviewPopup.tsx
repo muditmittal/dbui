@@ -59,7 +59,7 @@ export type PreviewPopupProps = {
 }
 
 const QUALITY_DOT_CLASS: Record<AssetQualityStatus, string> = {
-  healthy: "bg-success",
+  healthy: "bg-action-positive-base",
   warning: "bg-warning",
   stale: "bg-muted-foreground",
   unknown: "bg-muted-foreground",
@@ -84,10 +84,10 @@ function PropertyRow({
       data-slot={slot}
       className="flex h-5 items-center gap-2 text-[13px] leading-[20px]"
     >
-      <span data-slot="Label" className="w-[80px] shrink-0 text-muted-foreground">
+      <span data-slot="Label" className="w-[80px] shrink-0 text-text-subtle">
         {label}
       </span>
-      <div data-slot="Value" className="flex flex-1 min-w-0 items-center gap-1.5 text-foreground">
+      <div data-slot="Value" className="flex flex-1 min-w-0 items-center gap-1.5 text-text-base">
         {children}
       </div>
     </div>
@@ -124,7 +124,7 @@ export function PreviewPopup({
     <div
       data-slot="preview-popup"
       className={cn(
-        "flex flex-col gap-3 rounded-md border border-border bg-background py-3 px-4 shadow-md",
+        "flex flex-col gap-3 rounded-md border border-border-base bg-surface-base py-3 px-4 shadow-md",
         className
       )}
       style={{ width }}
@@ -134,7 +134,7 @@ export function PreviewPopup({
         {/* TypeIcon — w-4 h-6 with py-1 vertical centering of the 16px glyph */}
         <span
           data-slot="TypeIcon"
-          className="flex h-6 w-4 shrink-0 items-center justify-center py-1 text-foreground [&_svg]:size-4"
+          className="flex h-6 w-4 shrink-0 items-center justify-center py-1 text-text-base [&_svg]:size-4"
           aria-hidden
         >
           {icon ?? <Table />}
@@ -148,7 +148,7 @@ export function PreviewPopup({
           >
             <span
               data-slot="AssetName"
-              className="truncate text-[16px] font-semibold leading-[22px] text-foreground"
+              className="truncate text-[16px] font-semibold leading-[22px] text-text-base"
             >
               {name}
             </span>
@@ -166,7 +166,7 @@ export function PreviewPopup({
           {parentPath && (
             <span
               data-slot="ParentPath"
-              className="truncate text-[12px] leading-[16px] text-muted-foreground"
+              className="truncate text-[12px] leading-[16px] text-text-subtle"
             >
               {parentPath}
             </span>
@@ -207,7 +207,7 @@ export function PreviewPopup({
           {owner && <PropertyRow slot="Owner" label="Owner">{owner}</PropertyRow>}
           {popularity && (
             <PropertyRow slot="Popularity" label="Popularity">
-              <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-3.5">
+              <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-3.5">
                 {popularityIcon ?? <BarChart />}
               </span>
               <span className="truncate">{popularity}</span>
@@ -232,14 +232,14 @@ export function PreviewPopup({
 
       {/* Description — wraps; "More..." inline, click-able when handler provided */}
       {description && (
-        <div data-slot="Description" className="text-[13px] leading-[20px] text-foreground">
+        <div data-slot="Description" className="text-[13px] leading-[20px] text-text-base">
           <span className="line-clamp-3">{description}</span>
           {onMoreClick && (
             <Button
               variant="link"
               size="sm"
               onClick={onMoreClick}
-              className="mt-1 h-auto p-0 text-foreground"
+              className="mt-1 h-auto p-0 text-text-base"
             >
               More...
             </Button>

@@ -7,7 +7,7 @@ import { AssistantPanel } from "../components/AssistantPanel"
  * Base — the Databricks Base shell. EVERY product page starts here.
  *
  * Provides:
- *   - Platform header (48px, bg-muted, fixed)
+ *   - Platform header (48px, bg-surface-subtle, fixed)
  *   - Sidebar nav (180px, collapsible)
  *   - Content surface (white, rounded-lg, scrollable)
  *
@@ -54,7 +54,7 @@ export function Base({
   const isCollapsed = sidebarCollapsedProp !== undefined ? sidebarCollapsedProp : collapsed
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-muted">
+    <div className="flex h-screen flex-col overflow-hidden bg-surface-subtle">
       <PlatformHeader sidebarCollapsed={isCollapsed} onSidebarToggle={handleSidebarToggle} onGenieToggle={() => setGenieOpen(!genieOpen)} />
 
       <div className="flex flex-1 min-h-0 pb-2 pr-2">
@@ -64,7 +64,7 @@ export function Base({
         )}
 
         {/* Content surface — no gap when nav open, 8px when collapsed */}
-        <main className={`flex-1 min-w-0 min-h-0 overflow-y-auto bg-background border border-border rounded-md ${isCollapsed ? "ml-2" : ""}`}>
+        <main className={`flex-1 min-w-0 min-h-0 overflow-y-auto bg-surface-base border border-border-base rounded-md ${isCollapsed ? "ml-2" : ""}`}>
           {children}
         </main>
 

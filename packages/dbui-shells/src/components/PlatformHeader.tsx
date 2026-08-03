@@ -43,13 +43,13 @@ export function PlatformHeader({
   const [searchOpen, setSearchOpen] = useState(false)
 
   return (
-    <header className="flex h-12 shrink-0 items-center px-3 bg-muted">
+    <header className="flex h-12 shrink-0 items-center px-3 bg-surface-subtle">
       {/* Left — fixed, never shrinks */}
       <div className="flex items-center gap-1 shrink-0">
         <Button variant="ghost" size="icon-md" aria-label="Toggle sidebar" onClick={onSidebarToggle}>
           {sidebarCollapsed ? <SidebarClosed /> : <SidebarOpen />}
         </Button>
-        <span className="text-[13px] text-foreground">{cloudLabel}</span>
+        <span className="text-[13px] text-text-base">{cloudLabel}</span>
         <DatabricksLogo className="ml-1 h-8 w-auto" />
       </div>
 
@@ -61,9 +61,9 @@ export function PlatformHeader({
           className={`w-full justify-start gap-2 px-3 shadow-xs overflow-hidden hover:border-primary active:border-primary-press ${searchOpen ? "opacity-0 pointer-events-none" : ""}`}
           onClick={() => setSearchOpen(true)}
         >
-          <Search className="size-4 shrink-0 text-muted-foreground" />
-          <span className="flex-1 min-w-0 truncate text-left text-muted-foreground">Search data, notebooks, recents, and more...</span>
-          <kbd className="shrink-0 text-[12px] text-muted-foreground">⌘ + P</kbd>
+          <Search className="size-4 shrink-0 text-text-subtle" />
+          <span className="flex-1 min-w-0 truncate text-left text-text-subtle">Search data, notebooks, recents, and more...</span>
+          <kbd className="shrink-0 text-[12px] text-text-subtle">⌘ + P</kbd>
         </Button>
         {searchOpen && <SearchPopup onClose={() => setSearchOpen(false)} />}
       </div>
@@ -82,14 +82,14 @@ export function PlatformHeader({
               aria-label="Switch workspace"
             >
               <span className="min-w-0 truncate font-normal">{warehouseLabel}</span>
-              <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
+              <ChevronDown className="size-4 shrink-0 text-text-subtle" />
             </Button>
           } />
           <DropdownMenuContent align="end" style={{ width: 340, borderRadius: 8 }}>
             {/* Search */}
             <div className="px-2 pb-2">
               <div className="relative">
-                <Search className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Search className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-text-subtle" />
                 <Input placeholder="Search workspaces" className="h-8 pl-8" />
               </div>
             </div>
@@ -104,8 +104,8 @@ export function PlatformHeader({
               ].map((ws) => (
                 <DropdownMenuRadioItem key={ws.name} value={ws.name}>
                   <div className="flex flex-col" style={{ gap: 2 }}>
-                    <span className="text-[13px] leading-[20px] text-foreground">{ws.name}</span>
-                    <span className="text-[12px] leading-[16px] text-muted-foreground">{ws.region}</span>
+                    <span className="text-[13px] leading-[20px] text-text-base">{ws.name}</span>
+                    <span className="text-[12px] leading-[16px] text-text-subtle">{ws.region}</span>
                   </div>
                 </DropdownMenuRadioItem>
               ))}
@@ -144,17 +144,17 @@ export function PlatformHeader({
                     </div>
                     <div className="flex flex-col" style={{ gap: 2 }}>
                       <div className="flex items-center gap-2">
-                        <span className="text-[13px] leading-[20px] text-foreground">{item.title}</span>
+                        <span className="text-[13px] leading-[20px] text-text-base">{item.title}</span>
                         {item.badge && (
                           <Badge
                             variant="outline"
-                            className="text-[12px] leading-[16px] font-semibold bg-surface-info text-primary border-transparent px-2 py-0 rounded-full"
+                            className="text-[12px] leading-[16px] font-semibold bg-status-surface-info text-primary border-transparent px-2 py-0 rounded-full"
                           >
                             {item.badge}
                           </Badge>
                         )}
                       </div>
-                      <span className="text-[12px] leading-[16px] text-muted-foreground">{item.desc}</span>
+                      <span className="text-[12px] leading-[16px] text-text-subtle">{item.desc}</span>
                     </div>
                 </DropdownMenuItem>
               ))}
@@ -171,15 +171,15 @@ export function PlatformHeader({
             <DropdownMenuContent align="end" style={{ width: 280 }}>
               {/* User info */}
               <div className="px-3 py-2">
-                <p className="text-[13px] font-semibold text-foreground">Mudit Mittal</p>
-                <p className="text-[12px] text-muted-foreground truncate">mudit.mittal@databricks.com</p>
+                <p className="text-[13px] font-semibold text-text-base">Mudit Mittal</p>
+                <p className="text-[12px] text-text-subtle truncate">mudit.mittal@databricks.com</p>
               </div>
 
               <DropdownMenuSeparator />
 
               {/* Workspace info */}
               <div className="px-3 py-2">
-                <p className="text-[13px] text-foreground">E2 Dogfood</p>
+                <p className="text-[13px] text-text-base">E2 Dogfood</p>
               </div>
 
               <DropdownMenuSeparator />

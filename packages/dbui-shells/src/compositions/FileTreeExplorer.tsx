@@ -121,7 +121,7 @@ export function FileTreeExplorer({
   return (
     <aside
       data-slot="file-tree-explorer"
-      className={cn("flex shrink-0 flex-col border-r border-border bg-background", className)}
+      className={cn("flex shrink-0 flex-col border-r border-border-base bg-surface-base", className)}
       style={{ width }}
     >
       {/* Header — h-10, px-2, gap-2 */}
@@ -129,9 +129,9 @@ export function FileTreeExplorer({
         (title || titleIcon || headerActions) && (
           <div className="flex h-10 items-center gap-2 px-2">
             {(title || titleIcon) && (
-              <div className="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold text-foreground">
+              <div className="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold text-text-base">
                 {titleIcon && (
-                  <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+                  <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                     {titleIcon}
                   </span>
                 )}
@@ -148,7 +148,7 @@ export function FileTreeExplorer({
       {searchEnabled && (
         <div className="px-2 pb-2">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-text-subtle" />
             <Input
               size="default"
               placeholder={searchPlaceholder}

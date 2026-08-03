@@ -149,7 +149,7 @@ function CatalogTree({
   const defaultIcon = <Data />
 
   return (
-    <aside className="flex w-[280px] shrink-0 flex-col border-r border-border">
+    <aside className="flex w-[280px] shrink-0 flex-col border-r border-border-base">
       {/* Header — h-10, px-2, gap-2 — always shows root switcher chip */}
       <div className="flex h-10 items-center gap-2 px-2">
         {/* Back button — only when focused deeper than root */}
@@ -164,13 +164,13 @@ function CatalogTree({
           </Button>
         )}
 
-        {/* Root switcher chip — Figma: bg-muted, rounded-sm, py-1 px-1 pr-2, gap-1 */}
+        {/* Root switcher chip — Figma: bg-surface-subtle, rounded-sm, py-1 px-1 pr-2, gap-1 */}
         <Popover.Root>
           <Popover.Trigger
             render={
-              <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-sm bg-muted px-1 pr-2 shadow-none hover:bg-hover active:bg-press">
-                <span className="flex shrink-0 items-center gap-0.5 text-muted-foreground [&_svg]:size-4">
-                  <span className="text-[12px] leading-[16px] font-mono text-muted-foreground">./</span>
+              <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-hover active:bg-press">
+                <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
+                  <span className="text-[12px] leading-[16px] font-mono text-text-subtle">./</span>
                   {currentRoot?.icon ?? defaultIcon}
                 </span>
                 <span className="truncate max-w-36 font-normal">{currentRoot?.label ?? "Catalog"}</span>
@@ -179,7 +179,7 @@ function CatalogTree({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
+              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
                 {/* Path — default shows "Catalog" as root; when focused shows indented breadcrumb */}
                 {focusPath.length > 0 ? (
                   focusPath.map((entry, i) => {
@@ -195,21 +195,21 @@ function CatalogTree({
                           else if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
                         }}
                       >
-                        <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{entry.icon}</span>
+                        <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">{entry.icon}</span>
                         <span className="truncate">{entry.label}</span>
                       </Button>
                     )
                   })
                 ) : (
                   <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-active px-1.5 py-1 text-[13px]">
-                    <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{defaultIcon}</span>
+                    <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">{defaultIcon}</span>
                     Catalog
                   </Button>
                 )}
 
                 {/* Go to section */}
                 <div className="my-1 h-px bg-border" />
-                <div className="px-1.5 py-1 text-[12px] text-muted-foreground">Go to</div>
+                <div className="px-1.5 py-1 text-[12px] text-text-subtle">Go to</div>
                 {(goToItems ?? []).map((item) => (
                   <Button
                     key={item.id}
@@ -219,7 +219,7 @@ function CatalogTree({
                       if (onFocusNode) onFocusNode(item.id, item.label, item.icon)
                     }}
                   >
-                    <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">{item.icon}</span>
+                    <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">{item.icon}</span>
                     {item.label}
                   </Button>
                 ))}
@@ -238,13 +238,13 @@ function CatalogTree({
         <DropdownMenu>
           <DropdownMenuTrigger render={
             <Button variant="ghost" size="icon-md" aria-label="Warehouse">
-              <span className="inline-block size-2 rounded-full bg-success" />
+              <span className="inline-block size-2 rounded-full bg-action-positive-base" />
             </Button>
           } />
           <DropdownMenuContent align="start" className="w-[280px]">
             <div className="p-1">
               <div className="relative">
-                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-text-subtle" />
                 <Input placeholder="Search" className="pl-8 h-8" />
               </div>
             </div>
@@ -252,32 +252,32 @@ function CatalogTree({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Check className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">Shared SQL Warehouse</span>
                 <Badge variant="outline">Serverless</Badge>
-                <span className="text-[12px] text-muted-foreground">M</span>
+                <span className="text-[12px] text-text-subtle">M</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">ML Data</span>
                 <Badge variant="outline">Serverless</Badge>
-                <span className="text-[12px] text-muted-foreground">S</span>
+                <span className="text-[12px] text-text-subtle">S</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <span className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">Pro warehouse 1</span>
-                <span className="text-[12px] text-muted-foreground">M</span>
+                <span className="text-[12px] text-text-subtle">M</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-success" />
+                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">Pro warehouse 2</span>
-                <span className="text-[12px] text-muted-foreground">S</span>
+                <span className="text-[12px] text-text-subtle">S</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
@@ -418,8 +418,8 @@ function CatalogLanding({
       {/* Title row */}
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-2">
-          <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-5"><Data /></span>
-          <h1 className="font-display text-[22px] font-semibold leading-[28px] text-foreground">
+          <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-5"><Data /></span>
+          <h1 className="font-display text-[22px] font-semibold leading-[28px] text-text-base">
             {title}
           </h1>
         </div>
@@ -469,17 +469,17 @@ function CatalogLanding({
               <TableRow key={i} className="cursor-pointer">
                 <TableCell>
                   <div className="flex items-start gap-2">
-                    <span className="flex shrink-0 items-center text-muted-foreground mt-0.5 [&_svg]:size-4">
+                    <span className="flex shrink-0 items-center text-text-subtle mt-0.5 [&_svg]:size-4">
                       {item.icon ?? <Data />}
                     </span>
                     <div className="flex flex-col">
-                      <span className="text-[13px] leading-[20px] text-foreground">{item.name}</span>
-                      {item.subtitle && <span className="text-[12px] leading-[16px] text-muted-foreground">{item.subtitle}</span>}
+                      <span className="text-[13px] leading-[20px] text-text-base">{item.name}</span>
+                      {item.subtitle && <span className="text-[12px] leading-[16px] text-text-subtle">{item.subtitle}</span>}
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="text-muted-foreground">{item.reason}</TableCell>
-                <TableCell className="text-muted-foreground">{item.type}</TableCell>
+                <TableCell className="text-text-subtle">{item.reason}</TableCell>
+                <TableCell className="text-text-subtle">{item.type}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -16,11 +16,11 @@ import { GenieCode } from "dbui/components/icons/GenieCode"
  */
 export function AssistantPanel({ onClose }: { onClose?: () => void }) {
   return (
-    <div className="flex w-[360px] shrink-0 flex-col border border-border bg-background rounded-md" style={{ marginLeft: 4 }}>
+    <div className="flex w-[360px] shrink-0 flex-col border border-border-base bg-surface-base rounded-md" style={{ marginLeft: 4 }}>
       {/* Header */}
       <div className="flex items-center justify-between pl-2 pr-1 h-10">
         <div className="flex items-center gap-1">
-          <span className="text-[13px] font-semibold text-foreground">Genie Code</span>
+          <span className="text-[13px] font-semibold text-text-base">Genie Code</span>
         </div>
         <div className="flex items-center">
           <Button variant="ghost" size="icon-md" aria-label="New conversation">
@@ -50,11 +50,11 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
         </div>
 
         <div className="flex flex-col items-center gap-0.5">
-          <span className="text-[22px] font-semibold leading-[28px] text-foreground">Genie Code</span>
+          <span className="text-[22px] font-semibold leading-[28px] text-text-base">Genie Code</span>
           <span className="text-[13px] text-primary font-semibold">Preview</span>
         </div>
 
-        <p className="text-[13px] leading-[20px] text-muted-foreground">
+        <p className="text-[13px] leading-[20px] text-text-subtle">
           Ask questions about AI Gateway features, understand configurations, debug errors, or learn how to migrate from the legacy gateway.
         </p>
 
@@ -86,7 +86,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
         >
           {/* Text input */}
           <div className="px-3 py-2 min-h-[36px]">
-            <span className="text-[13px] text-muted-foreground">@ for objects, / for commands, ↑↓ for history</span>
+            <span className="text-[13px] text-text-subtle">@ for objects, / for commands, ↑↓ for history</span>
           </div>
           {/* Toolbar */}
           <div className="flex items-center justify-between px-2 pb-2">
@@ -94,7 +94,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
               <Button variant="ghost" size="icon-sm" aria-label="Attach image">
                 <Image />
               </Button>
-              <span className="text-[13px] text-muted-foreground">@</span>
+              <span className="text-[13px] text-text-subtle">@</span>
             </div>
             <div className="flex items-center gap-0.5">
               <Button variant="ghost" size="sm">
@@ -111,7 +111,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
 
       {/* Disclaimer */}
       <div className="px-4 py-1 text-center">
-        <span className="text-[12px] leading-[16px] text-muted-foreground">Always review the accuracy of responses.</span>
+        <span className="text-[12px] leading-[16px] text-text-subtle">Always review the accuracy of responses.</span>
       </div>
     </div>
   )

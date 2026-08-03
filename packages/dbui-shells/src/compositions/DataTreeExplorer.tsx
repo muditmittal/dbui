@@ -333,7 +333,7 @@ export function DataTreeExplorer({
                         "inline-block size-2 rounded-full",
                         warehouses.find((w) => w.selected)?.status === "stopped"
                           ? "bg-muted-foreground"
-                          : "bg-success"
+                          : "bg-action-positive-base"
                       )}
                     />
                   </Button>
@@ -342,7 +342,7 @@ export function DataTreeExplorer({
               <DropdownMenuContent align="start" className="w-[280px]">
                 <div className="p-1">
                   <div className="relative">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-text-subtle" />
                     <Input placeholder="Search" className="pl-8 h-8" />
                   </div>
                 </div>
@@ -354,12 +354,12 @@ export function DataTreeExplorer({
                       <span
                         className={cn(
                           "inline-block size-2 rounded-full",
-                          w.status === "stopped" ? "bg-muted-foreground" : "bg-success"
+                          w.status === "stopped" ? "bg-muted-foreground" : "bg-action-positive-base"
                         )}
                       />
                       <span className="flex-1">{w.name}</span>
                       {w.serverless && <Badge variant="outline">Serverless</Badge>}
-                      {w.size && <span className="text-[12px] text-muted-foreground">{w.size}</span>}
+                      {w.size && <span className="text-[12px] text-text-subtle">{w.size}</span>}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuGroup>
@@ -404,7 +404,7 @@ export function DataTreeExplorer({
   return (
     <aside
       data-slot="data-tree-explorer"
-      className={cn("flex shrink-0 flex-col border-r border-border bg-background", className)}
+      className={cn("flex shrink-0 flex-col border-r border-border-base bg-surface-base", className)}
       style={{ width }}
     >
       {/* Header — h-10, px-2, gap-2 — root switcher chip + actions */}
@@ -429,10 +429,10 @@ export function DataTreeExplorer({
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="min-w-0 justify-start gap-1 rounded-sm bg-muted px-1 pr-2 shadow-none hover:bg-hover active:bg-press"
+                  className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-hover active:bg-press"
                 >
-                  <span className="flex shrink-0 items-center gap-0.5 text-muted-foreground [&_svg]:size-4">
-                    <span className="text-[12px] leading-[16px] font-mono text-muted-foreground">./</span>
+                  <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
+                    <span className="text-[12px] leading-[16px] font-mono text-text-subtle">./</span>
                     {currentRoot?.icon ?? defaultIcon}
                   </span>
                   <span className="truncate max-w-36 font-normal">{currentRoot?.label ?? title}</span>
@@ -441,7 +441,7 @@ export function DataTreeExplorer({
             />
             <Popover.Portal>
               <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
+                <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
                   {/* Path */}
                   {focusPath.length > 0 ? (
                     focusPath.map((entry, i) => {
@@ -457,7 +457,7 @@ export function DataTreeExplorer({
                             else if (onFocusNode) onFocusNode(entry.id, entry.label, entry.icon)
                           }}
                         >
-                          <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+                          <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                             {entry.icon}
                           </span>
                           <span className="truncate">{entry.label}</span>
@@ -466,7 +466,7 @@ export function DataTreeExplorer({
                     })
                   ) : (
                     <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-active px-1.5 py-1 text-[13px]">
-                      <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+                      <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                         {defaultIcon}
                       </span>
                       {title}
@@ -477,7 +477,7 @@ export function DataTreeExplorer({
                   {goToItems && goToItems.length > 0 && (
                     <>
                       <div className="my-1 h-px bg-border" />
-                      <div className="px-1.5 py-1 text-[12px] text-muted-foreground">Go to</div>
+                      <div className="px-1.5 py-1 text-[12px] text-text-subtle">Go to</div>
                       {goToItems.map((item) => (
                         <Button
                           key={item.id}
@@ -485,7 +485,7 @@ export function DataTreeExplorer({
                           className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-[13px]"
                           onClick={() => onFocusNode?.(item.id, item.label, item.icon)}
                         >
-                          <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+                          <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                             {item.icon}
                           </span>
                           {item.label}
@@ -510,7 +510,7 @@ export function DataTreeExplorer({
             <FacetedFilter facets={facets ?? {}} onSearch={handleSearchChange} />
           ) : (
             <div className="relative">
-              <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-text-subtle" />
               <Input
                 size="default"
                 placeholder={searchPlaceholder}

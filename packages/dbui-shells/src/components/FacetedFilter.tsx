@@ -90,7 +90,7 @@ export function FacetedFilter({
                 aria-label="Filter"
                 variant="ghost"
                 size="icon-md"
-                className="rounded-l-none rounded-r-sm border border-input bg-background shadow-xs text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press focus-visible:border-ring focus-visible:bg-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
+                className="rounded-l-none rounded-r-sm border border-input bg-surface-base shadow-xs text-text-subtle hover:bg-hover hover:text-text-base active:bg-press focus-visible:border-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input [&_svg]:size-4"
               >
                 <Sliders />
               </Button>
@@ -98,7 +98,7 @@ export function FacetedFilter({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden">
+              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden">
 
                 {/* Root: facet categories */}
                 {!activeFacet && (
@@ -109,17 +109,17 @@ export function FacetedFilter({
                         <Button
                           key={facet}
                           variant="ghost"
-                          className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-foreground"
+                          className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-text-base"
                           onClick={() => { setActiveFacet(facet); setSearch("") }}
                         >
                           <span className="flex-1 text-left">{facet}:</span>
                           {count > 0 && <span className="text-[12px] text-primary">{count}</span>}
-                          <span className="text-muted-foreground [&_svg]:size-4"><ChevronRight /></span>
+                          <span className="text-text-subtle [&_svg]:size-4"><ChevronRight /></span>
                         </Button>
                       )
                     })}
                     <div className="-mx-1 my-1 h-px bg-border" />
-                    <label className="flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover">
+                    <label className="flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-hover">
                       <Switch checked={showCanUse} onCheckedChange={setShowCanUse} />
                       <span className="flex-1">Show can-use only</span>
                     </label>
@@ -137,7 +137,7 @@ export function FacetedFilter({
                         else { setActiveFacet(null); setSearch("") }
                       }}
                     >
-                      <span className="text-muted-foreground [&_svg]:size-4"><ChevronLeft /></span>
+                      <span className="text-text-subtle [&_svg]:size-4"><ChevronLeft /></span>
                       {activeFacet}:
                     </Button>
                     <div className="h-px bg-border" />
@@ -157,7 +157,7 @@ export function FacetedFilter({
 
                         if (hasNested) {
                           return (
-                            <div key={value} className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover cursor-default">
+                            <div key={value} className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-hover cursor-default">
                               <Checkbox
                                 checked={checked}
                                 onCheckedChange={() => toggleValue(activeFacet, value)}
@@ -178,7 +178,7 @@ export function FacetedFilter({
                         return (
                           <label
                             key={value}
-                            className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
+                            className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-hover"
                           >
                             <Checkbox
                               checked={checked}
@@ -189,7 +189,7 @@ export function FacetedFilter({
                         )
                       })}
                       {filteredValues.length === 0 && (
-                        <div className="py-4 text-center text-[13px] text-muted-foreground">No results found.</div>
+                        <div className="py-4 text-center text-[13px] text-text-subtle">No results found.</div>
                       )}
                     </div>
                   </div>
@@ -215,9 +215,9 @@ export function FacetedFilter({
                   <Popover.Trigger
                     render={
                       <Button variant="ghost" className="h-auto min-w-0 px-0 py-0 hover:underline">
-                        <TagLabel className="text-muted-foreground">{facet}</TagLabel>
-                        <TagValue className="truncate text-foreground">{first}</TagValue>
-                        {extra > 0 && <TagValue className="text-muted-foreground">+{extra}</TagValue>}
+                        <TagLabel className="text-text-subtle">{facet}</TagLabel>
+                        <TagValue className="truncate text-text-base">{first}</TagValue>
+                        {extra > 0 && <TagValue className="text-text-subtle">+{extra}</TagValue>}
                       </Button>
                     }
                   />
@@ -235,9 +235,9 @@ export function FacetedFilter({
                 </Tag>
                 <Popover.Portal>
                   <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                    <Popover.Popup className="w-[240px] rounded-md bg-popover shadow-md ring-1 ring-foreground/10 overflow-hidden">
+                    <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden">
                       <div className="p-1">
-                        <div className="px-1.5 py-1 text-[12px] text-muted-foreground">{facet}</div>
+                        <div className="px-1.5 py-1 text-[12px] text-text-subtle">{facet}</div>
                       </div>
                       <div className="max-h-56 overflow-y-auto p-1 pt-0" role="group">
                         {facetValues.map((value) => {
@@ -245,7 +245,7 @@ export function FacetedFilter({
                           return (
                             <label
                               key={value}
-                              className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-foreground hover:bg-hover"
+                              className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-hover"
                             >
                               <Checkbox
                                 checked={checked}

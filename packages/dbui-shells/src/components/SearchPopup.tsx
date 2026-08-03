@@ -43,12 +43,12 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
       <div className="fixed inset-0 z-40" onClick={onClose} />
       {/* Popup anchored to search input width */}
       <div
-        className="absolute left-0 right-0 top-0 z-50 bg-background border border-border rounded-md shadow-lg overflow-hidden"
+        className="absolute left-0 right-0 top-0 z-50 bg-surface-base border border-border-base rounded-md shadow-lg overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input */}
-        <div className="flex items-center gap-2 px-3 h-10 border-b border-border">
-          <Search className="size-4 shrink-0 text-muted-foreground" />
+        <div className="flex items-center gap-2 px-3 h-10 border-b border-border-base">
+          <Search className="size-4 shrink-0 text-text-subtle" />
           <Input
             autoFocus
             className="flex-1 min-w-0 border-0 bg-transparent shadow-none focus-visible:border-0 focus-visible:shadow-none"
@@ -82,7 +82,7 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
 
         {/* Recents */}
         <div className="px-3 pt-1 pb-0.5">
-          <span className="text-[12px] leading-[16px] font-semibold text-muted-foreground uppercase tracking-wider">Recents</span>
+          <span className="text-[12px] leading-[16px] font-semibold text-text-subtle uppercase tracking-wider">Recents</span>
         </div>
         <div className="max-h-[320px] overflow-y-auto">
           {recentItems.map((item) => (
@@ -91,26 +91,26 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
               variant="ghost"
               className="h-auto w-full justify-start px-3 py-2"
             >
-              <Notebook className="size-4 shrink-0 text-muted-foreground mt-0.5" />
+              <Notebook className="size-4 shrink-0 text-text-subtle mt-0.5" />
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] text-foreground truncate">{item.name}</div>
-                <div className="text-[12px] text-muted-foreground truncate">{item.path}</div>
+                <div className="text-[13px] text-text-base truncate">{item.name}</div>
+                <div className="text-[12px] text-text-subtle truncate">{item.path}</div>
               </div>
-              <span className="shrink-0 text-[12px] text-muted-foreground whitespace-nowrap">{item.time}</span>
+              <span className="shrink-0 text-[12px] text-text-subtle whitespace-nowrap">{item.time}</span>
             </Button>
           ))}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-3 py-2 border-t border-border">
-          <Button variant="ghost" className="h-auto px-0 text-muted-foreground hover:text-foreground">
+        <div className="flex items-center justify-between px-3 py-2 border-t border-border-base">
+          <Button variant="ghost" className="h-auto px-0 text-text-subtle hover:text-text-base">
             <Search className="size-4" />
             Open search in a full page
           </Button>
-          <div className="flex items-center gap-1 text-[12px] text-muted-foreground">
-            <kbd className="px-1 py-0.5 rounded border border-border text-[12px] leading-[16px]">⌘</kbd>
+          <div className="flex items-center gap-1 text-[12px] text-text-subtle">
+            <kbd className="px-1 py-0.5 rounded border border-border-base text-[12px] leading-[16px]">⌘</kbd>
             <span>+</span>
-            <kbd className="px-1 py-0.5 rounded border border-border text-[12px] leading-[16px]">Enter</kbd>
+            <kbd className="px-1 py-0.5 rounded border border-border-base text-[12px] leading-[16px]">Enter</kbd>
             <span className="ml-1">Open in a new tab</span>
           </div>
         </div>
