@@ -11,16 +11,13 @@ import { InfoSmall } from "dbui/components/icons/InfoSmall"
  */
 
 /**
- * Storybook's docs stylesheet puts its own margins, padding and bottom border on
- * every heading, which fights the flex gaps below and produced both the stray
- * rule under section titles and the uniform 40px gutters. Resetting inline is
- * the reliable way to win against that stylesheet.
+ * Storybook's docs stylesheet sets margins on every element it renders —
+ * headings, paragraphs, lists and sections alike — and those margins *add* to
+ * the flex gaps below, which is what produced the 40px gutters everywhere. Every
+ * primitive here zeroes them so the flex gap is the only thing setting spacing.
  */
-const HEADING_RESET: React.CSSProperties = {
-  margin: 0,
-  padding: 0,
-  border: "none",
-}
+const RESET: React.CSSProperties = { margin: 0, padding: 0 }
+const HEADING_RESET: React.CSSProperties = { ...RESET, border: "none" }
 
 /**
  * Space goes *between* sections, not inside them. A section title, its intro
@@ -30,7 +27,13 @@ const HEADING_RESET: React.CSSProperties = {
  */
 export function DocPage({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="flex max-w-4xl flex-col gap-8 pb-16">
+    // MDX wraps the children of a JSX component in its own <p>, and Storybook's
+    // docs stylesheet gives every <p>, <ul> and <li> a 16px margin. Those nested
+    // elements are not reachable by a style prop on the outer component, so they
+    // are zeroed here once. Flex gap is then the only thing setting spacing.
+    // Storybook's own selectors outrank a plain descendant rule, so these are
+    // forced. Measured: without them the nested <p> keeps a 16px margin.
+    <div className="flex w-full flex-col gap-8 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
       <h1
         style={HEADING_RESET}
         className="text-[32px] leading-[40px] font-semibold text-text-strong"
@@ -48,12 +51,16 @@ export function Intro({ children }: { children: React.ReactNode }) {
 }
 
 export function Lede({ children }: { children: React.ReactNode }) {
-  return <p className="max-w-[68ch] text-[16px] leading-[22px] text-text-subtle">{children}</p>
+  return (
+    <p style={RESET} className="max-w-[68ch] text-[16px] leading-[22px] text-text-subtle">
+      {children}
+    </p>
+  )
 }
 
 export function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-3">
+    <section style={RESET} className="flex flex-col gap-3">
       <h2
         style={HEADING_RESET}
         className="text-[16px] leading-[22px] font-semibold text-text-strong"
@@ -66,7 +73,11 @@ export function Section({ title, children }: { title: string; children: React.Re
 }
 
 export function P({ children }: { children: React.ReactNode }) {
-  return <p className="max-w-[68ch] text-[13px] leading-[20px] text-text-base">{children}</p>
+  return (
+    <p style={RESET} className="max-w-[68ch] text-[13px] leading-[20px] text-text-base">
+      {children}
+    </p>
+  )
 }
 
 /** Inline code, on the Code text style — mono at the paragraph size. */
@@ -86,7 +97,7 @@ export function C({ children }: { children: React.ReactNode }) {
 export function Cmd({ lines }: { lines: Array<[string, string?]> }) {
   return (
     <div className="overflow-x-auto rounded-md border border-border-base bg-surface-inset px-4 py-3">
-      <pre className="w-max font-mono text-[13px] leading-[20px] text-text-base">
+      <pre style={RESET} className="w-max font-mono text-[13px] leading-[20px] text-text-base">
         {lines.map(([cmd, note], i) => (
           <div key={i}>
             <span>{cmd}</span>
@@ -107,7 +118,7 @@ export function CodeBlock({ children, caption }: { children: string; caption?: s
     <div className="flex flex-col gap-1.5">
       {caption ? <span className="text-[12px] leading-[16px] text-text-subtle">{caption}</span> : null}
       <div className="overflow-x-auto rounded-md border border-border-base bg-surface-inset px-4 py-3">
-        <pre className="w-max font-mono text-[13px] leading-[20px] text-text-base">{children}</pre>
+        <pre style={RESET} className="w-max font-mono text-[13px] leading-[20px] text-text-base">{children}</pre>
       </div>
     </div>
   )
@@ -116,9 +127,9 @@ export function CodeBlock({ children, caption }: { children: string; caption?: s
 /** A short list of what a page covers, shown directly under the lede. */
 export function Covers({ items }: { items: Array<[string, string]> }) {
   return (
-    <ul style={{ margin: 0, padding: 0, listStyle: "none" }} className="flex max-w-[68ch] flex-col gap-1">
+    <ul style={{ ...RESET, listStyle: "none" }} className="flex max-w-[68ch] flex-col gap-1">
       {items.map(([name, why]) => (
-        <li key={name} className="text-[13px] leading-[20px] text-text-base">
+        <li key={name} style={RESET} className="text-[13px] leading-[20px] text-text-base">
           <span className="font-semibold text-text-strong">{name}</span>
           <span className="text-text-subtle">{` — ${why}`}</span>
         </li>
@@ -130,8 +141,10 @@ export function Covers({ items }: { items: Array<[string, string]> }) {
 type Col = { key: string; header: string; width?: string; mono?: boolean }
 
 /**
- * Scrolls inside its own container rather than widening the page, which is what
- * pushed the whole document into a horizontal scroll before.
+ * Scrolls inside its own container rather than widening the page. Cells also
+ * override DBUI's whitespace-nowrap: that is correct for a data table, where a
+ * wrapped catalog name is worse than a scroll, but wrong for documentation full
+ * of sentences.
  */
 export function DocTable({
   columns,
@@ -142,11 +155,11 @@ export function DocTable({
 }) {
   return (
     <div className="w-full overflow-x-auto">
-      <Table className="min-w-lg">
+      <Table>
         <TableHeader>
           <TableRow>
             {columns.map((c) => (
-              <TableHead key={c.key} className={c.width}>
+              <TableHead key={c.key} className={`align-bottom whitespace-normal! ${c.width ?? ""}`}>
                 {c.header}
               </TableHead>
             ))}
@@ -158,7 +171,11 @@ export function DocTable({
               {columns.map((c) => (
                 <TableCell
                   key={c.key}
-                  className={c.mono ? "align-top py-2 font-mono text-[12px]" : "align-top py-2"}
+                  className={
+                    c.mono
+                      ? "align-top py-2 font-mono text-[12px] whitespace-normal!"
+                      : "align-top py-2 whitespace-normal!"
+                  }
                 >
                   {r[c.key]}
                 </TableCell>
