@@ -98,7 +98,7 @@ export function FacetedFilter({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden">
+              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
 
                 {/* Root: facet categories */}
                 {!activeFacet && (
@@ -118,7 +118,7 @@ export function FacetedFilter({
                         </Button>
                       )
                     })}
-                    <div className="-mx-1 my-1 h-px bg-border" />
+                    <div className="-mx-1 my-1 h-px bg-border-base" />
                     <label className="flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-hover">
                       <Switch checked={showCanUse} onCheckedChange={setShowCanUse} />
                       <span className="flex-1">Show can-use only</span>
@@ -140,7 +140,7 @@ export function FacetedFilter({
                       <span className="text-text-subtle [&_svg]:size-4"><ChevronLeft /></span>
                       {activeFacet}:
                     </Button>
-                    <div className="h-px bg-border" />
+                    <div className="h-px bg-border-base" />
                     <div className="p-1">
                       <Input
                         placeholder="Search"
@@ -235,7 +235,7 @@ export function FacetedFilter({
                 </Tag>
                 <Popover.Portal>
                   <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                    <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden">
+                    <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
                       <div className="p-1">
                         <div className="px-1.5 py-1 text-[12px] text-text-subtle">{facet}</div>
                       </div>

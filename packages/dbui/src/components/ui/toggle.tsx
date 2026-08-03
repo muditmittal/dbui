@@ -38,7 +38,7 @@ const toggleVariants = cva(
     "disabled:pointer-events-none disabled:text-text-disabled",
     "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:text-text-accent",
     "data-[state=on]:bg-active data-[state=on]:border-primary data-[state=on]:text-text-accent",
-    "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
+    "aria-invalid:border-action-negative-base aria-invalid:ring-action-negative-base/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ].join(" "),
   {
@@ -46,13 +46,13 @@ const toggleVariants = cva(
       variant: {
         default: "border-transparent bg-transparent",
         filter:
-          "border-input shadow-xs hover:border-primary disabled:border-disabled disabled:shadow-none aria-pressed:border-primary data-[state=on]:border-primary",
+          "border-input shadow-xs hover:border-primary disabled:border-border-disabled disabled:shadow-none aria-pressed:border-primary data-[state=on]:border-primary",
         pill: [
           "shadow-xs border-input bg-transparent gap-2 rounded-full",
           "hover:bg-hover hover:border-primary",
           "aria-pressed:bg-active aria-pressed:text-primary-press aria-pressed:border-primary aria-pressed:shadow-none",
           "data-[state=on]:bg-active data-[state=on]:text-primary-press data-[state=on]:border-primary data-[state=on]:shadow-none",
-          "disabled:border-disabled disabled:shadow-none",
+          "disabled:border-border-disabled disabled:shadow-none",
         ].join(" "),
         icon: "border-transparent bg-transparent",
       },

@@ -82,7 +82,7 @@ function DateRangeField({
       className={cn(
         "group/date-range-field inline-flex shrink-0 items-center rounded-sm border border-input bg-surface-base text-[13px] leading-[20px] shadow-xs transition-colors outline-none",
         "hover:border-primary focus-visible:border-ring",
-        "disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-disabled disabled:shadow-none disabled:pointer-events-none",
+        "disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         size === "default" && "h-8 gap-2 px-3",
         size === "sm" && "h-6 gap-1 px-2",

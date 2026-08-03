@@ -34,7 +34,7 @@ function RadioTile({
     <RadioPrimitive.Root
       data-slot="radio-tile"
       className={cn(
-        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input bg-surface-base p-4 text-[13px] shadow-xs transition-all outline-none select-none hover:border-primary-hover active:border-primary-press data-checked:border-primary data-checked:shadow-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
+        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input bg-surface-base p-4 text-[13px] shadow-xs transition-all outline-none select-none hover:border-primary-hover active:border-primary-press data-checked:border-primary data-checked:shadow-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20",
         className
       )}
       {...props}

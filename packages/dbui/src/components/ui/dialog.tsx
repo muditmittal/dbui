@@ -10,7 +10,7 @@ import { Close as CloseIcon } from "../icons/Close"
 /**
  * @standard Dialog
  * @guideline Footer actions: primary right-aligned, cancel left-aligned
- * @guideline Uses shadow-lg with ring-1 ring-foreground/10
+ * @guideline Uses shadow-lg with ring-1 ring-text-base/10
  * @constraint Max one dialog open at a time — never stack
  * @constraint For simple confirmations, use Alert Dialog instead
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=882-2798

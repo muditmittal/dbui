@@ -59,14 +59,29 @@ for (const f of files) {
   }
 }
 
+const { STAGE_B_DEFERRED } = await import("./stage-b-deferred.mjs");
+const deferred = new Set(STAGE_B_DEFERRED);
+
 const entries = Object.entries(hits).sort((a, b) => b[1].n - a[1].n);
+const missed = entries.filter(([cls]) => !deferred.has(cls));
+const planned = entries.filter(([cls]) => deferred.has(cls));
+const sum = (list) => list.reduce((a, [, v]) => a + v.n, 0);
+
 if (entries.length === 0) {
   console.log("CLEAN — no legacy colour utility of any prefix remains.");
 } else {
-  const total = entries.reduce((a, [, v]) => a + v.n, 0);
-  console.log(`${total} occurrence(s) of ${entries.length} legacy utility name(s) remain:\n`);
-  for (const [cls, v] of entries) {
-    console.log(`  ${String(v.n).padStart(4)}  ${cls.padEnd(28)} in ${v.files.size} file(s)`);
-    if (v.n <= 6) [...v.files].forEach((f) => console.log(`        ${f}`));
+  console.log(`${sum(entries)} legacy occurrence(s) across ${entries.length} utility name(s).\n`);
+  console.log(`  Deferred to Stage B (expected): ${sum(planned)} across ${planned.length} names`);
+  console.log(`  Unclassified (a gap):           ${sum(missed)} across ${missed.length} names\n`);
+  if (missed.length) {
+    console.log("UNCLASSIFIED — in neither the Stage A map nor the Stage B list:\n");
+    for (const [cls, v] of missed) {
+      console.log(`  ${String(v.n).padStart(4)}  ${cls.padEnd(28)} in ${v.files.size} file(s)`);
+      [...v.files].slice(0, 4).forEach((f) => console.log(`        ${f}`));
+    }
+  } else {
+    console.log("PASS — every remaining legacy utility is a deliberate Stage B deferral.");
   }
 }
+
+process.exit(missed.length === 0 ? 0 : 1);

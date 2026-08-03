@@ -332,7 +332,7 @@ export function DataTreeExplorer({
                       className={cn(
                         "inline-block size-2 rounded-full",
                         warehouses.find((w) => w.selected)?.status === "stopped"
-                          ? "bg-muted-foreground"
+                          ? "bg-text-subtle"
                           : "bg-action-positive-base"
                       )}
                     />
@@ -354,7 +354,7 @@ export function DataTreeExplorer({
                       <span
                         className={cn(
                           "inline-block size-2 rounded-full",
-                          w.status === "stopped" ? "bg-muted-foreground" : "bg-action-positive-base"
+                          w.status === "stopped" ? "bg-text-subtle" : "bg-action-positive-base"
                         )}
                       />
                       <span className="flex-1">{w.name}</span>
@@ -441,7 +441,7 @@ export function DataTreeExplorer({
             />
             <Popover.Portal>
               <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
+                <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden p-1">
                   {/* Path */}
                   {focusPath.length > 0 ? (
                     focusPath.map((entry, i) => {
@@ -476,7 +476,7 @@ export function DataTreeExplorer({
                   {/* Go to section */}
                   {goToItems && goToItems.length > 0 && (
                     <>
-                      <div className="my-1 h-px bg-border" />
+                      <div className="my-1 h-px bg-border-base" />
                       <div className="px-1.5 py-1 text-[12px] text-text-subtle">Go to</div>
                       {goToItems.map((item) => (
                         <Button

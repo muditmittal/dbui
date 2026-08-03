@@ -312,7 +312,7 @@ function TableCellTime({
       {...props}
     >
       <span
-        className="h-2 shrink-0 rounded-[1px] bg-accent-foreground"
+        className="h-2 shrink-0 rounded-[1px] bg-text-accent"
         style={{ width: barWidth }}
       />
       {children}

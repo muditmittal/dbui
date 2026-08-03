@@ -179,7 +179,7 @@ function CatalogTree({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-foreground/10 overflow-hidden p-1">
+              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden p-1">
                 {/* Path — default shows "Catalog" as root; when focused shows indented breadcrumb */}
                 {focusPath.length > 0 ? (
                   focusPath.map((entry, i) => {
@@ -208,7 +208,7 @@ function CatalogTree({
                 )}
 
                 {/* Go to section */}
-                <div className="my-1 h-px bg-border" />
+                <div className="my-1 h-px bg-border-base" />
                 <div className="px-1.5 py-1 text-[12px] text-text-subtle">Go to</div>
                 {(goToItems ?? []).map((item) => (
                   <Button

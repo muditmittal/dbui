@@ -19,7 +19,7 @@ export const Playground: StoryObj = {
 
       {/* Static visual representation — not interactive */}
       <div
-        className="w-[640px] rounded-md bg-surface-base shadow-lg ring-1 ring-foreground/10"
+        className="w-[640px] rounded-md bg-surface-base shadow-lg ring-1 ring-text-base/10"
         style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}
       >
         {/* Header */}

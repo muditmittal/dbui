@@ -280,7 +280,7 @@ const semanticGroups: { group: string; tokens: string[] }[] = [
     "border-info", "border-negative", "border-positive", "border-status-border-warning",
     "text-info", "text-negative", "text-positive", "text-status-text-warning",
   ] },
-  { group: "utility", tokens: ["scrim", "surface-skeleton", "text-skeleton"] },
+  { group: "utility", tokens: ["scrim", "surface-skeleton", "text-utility-text-skeleton"] },
   { group: "viz", tokens: [
     "categorical-1", "categorical-2", "categorical-3", "categorical-4", "categorical-5",
     "categorical-6", "categorical-7", "categorical-8", "categorical-9", "categorical-10",

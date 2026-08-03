@@ -60,7 +60,7 @@ function TagValue({ className, ...props }: React.ComponentProps<"span">) {
     <>
       <span
         data-slot="tag-divider"
-        className="h-5 w-px shrink-0 bg-border"
+        className="h-5 w-px shrink-0 bg-border-base"
         aria-hidden="true"
       />
       <span

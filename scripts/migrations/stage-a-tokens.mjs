@@ -58,7 +58,34 @@ const MAP = {
   "bg-surface-success": "bg-status-surface-positive",
   "bg-surface-warning": "bg-status-surface-warning",
   "bg-surface-danger": "bg-status-surface-negative",
+
+  // Same legacy tokens reached through a colour prefix the first pass missed.
+  // Tailwind v4 generates every colour prefix from one `--color-*` entry, so a
+  // map keyed only on `bg-`/`text-`/`border-` was always going to be partial.
+  "bg-border": "bg-border-base",
+  "stroke-border": "stroke-border-base",
+  "border-destructive": "border-action-negative-base",
+  "ring-destructive": "ring-action-negative-base",
+  "text-destructive-hover": "text-action-negative-hover",
+  "text-destructive-press": "text-action-negative-press",
+  "border-destructive-hover": "border-action-negative-hover",
+  "border-destructive-press": "border-action-negative-press",
+  "border-success": "border-action-positive-base",
+  "bg-foreground": "bg-text-base",
+  "ring-foreground": "ring-text-base",
+  "fill-foreground": "fill-text-base",
+  "text-background": "text-surface-base",
+  "ring-background": "ring-surface-base",
+  "bg-muted-foreground": "bg-text-subtle",
+  "border-muted-foreground": "border-text-subtle",
+  "fill-muted-foreground": "fill-text-subtle",
+  "fill-muted": "fill-surface-subtle",
+  "bg-accent-foreground": "bg-text-accent",
+  "border-disabled": "border-border-disabled",
+  "text-skeleton": "text-utility-text-skeleton",
 };
+
+// Stage B deferrals live in ./stage-b-deferred.mjs, shared with the audit.
 
 /** Batches in dependency order. Matched against the repo-relative path. */
 const BATCHES = [

@@ -523,7 +523,7 @@ function TreeNode({
           >
             {/* Trail line — `border-border-base` for resting tracks (matches the
              * Figma `.Track lines` stroke binding). Steps up to
-             * `border-muted-foreground` (matching the expanded chevron's
+             * `border-text-subtle` (matching the expanded chevron's
              * color) for the *most recently expanded* row, or the parent
              * track of the *most recently collapsed* row. Gives the user a
              * brief visual anchor for their last action. */}
@@ -531,7 +531,7 @@ function TreeNode({
               <div
                 className={cn(
                   "absolute border-l pointer-events-none z-10 transition-colors",
-                  isHighlighted ? "border-muted-foreground" : "border-border-base",
+                  isHighlighted ? "border-text-subtle" : "border-border-base",
                 )}
                 style={{
                   left: `${12 + depth * 8}px`,

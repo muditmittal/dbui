@@ -31,8 +31,8 @@ const alertVariants = cva(
       variant: {
         info:    "bg-surface-subtle border-border-base",
         warning: "bg-status-surface-warning border-status-border-warning",
-        success: "bg-status-surface-positive border-success",
-        danger:  "bg-status-surface-negative border-destructive",
+        success: "bg-status-surface-positive border-action-positive-base",
+        danger:  "bg-status-surface-negative border-action-negative-base",
       },
     },
     defaultVariants: {

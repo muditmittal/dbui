@@ -61,8 +61,8 @@ export type PreviewPopupProps = {
 const QUALITY_DOT_CLASS: Record<AssetQualityStatus, string> = {
   healthy: "bg-action-positive-base",
   warning: "bg-warning",
-  stale: "bg-muted-foreground",
-  unknown: "bg-muted-foreground",
+  stale: "bg-text-subtle",
+  unknown: "bg-text-subtle",
 }
 
 /**

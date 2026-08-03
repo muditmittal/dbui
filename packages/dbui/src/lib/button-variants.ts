@@ -21,7 +21,7 @@ import { cva } from "./cva"
  * - Non-filled press text: --primary-press (all non-filled)
  * - Disabled: per-variant (filled → bg-surface-disabled + white text, non-filled → transparent + disabled-foreground)
  * - Focus: filled → shadow-focus (white gap + blue ring), non-filled → border-2 border-ring
- * - Focus on Danger: uses border-ring (blue) NOT border-destructive — consistent system focus ring
+ * - Focus on Danger: uses border-ring (blue) NOT border-action-negative-base — consistent system focus ring
  * - Shadow: shadow-xs on filled/bordered variants (not ghost/link)
  */
 export const buttonVariants = cva(
@@ -31,7 +31,7 @@ export const buttonVariants = cva(
     "text-[13px] leading-[20px] font-normal whitespace-nowrap",
     "transition-all outline-none select-none",
     "disabled:pointer-events-none",
-    "aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20",
+    "aria-invalid:border-action-negative-base aria-invalid:ring-2 aria-invalid:ring-action-negative-base/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ].join(" "),
   {
@@ -49,7 +49,7 @@ export const buttonVariants = cva(
           "hover:bg-hover hover:border-primary hover:text-primary-hover",
           "active:bg-press active:border-primary-press active:text-primary-press",
           "focus-visible:border-2 focus-visible:border-ring",
-          "disabled:border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
+          "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
         secondary: [
           "shadow-xs border-transparent bg-surface-subtle text-text-base",
@@ -81,11 +81,11 @@ export const buttonVariants = cva(
           "disabled:bg-surface-disabled disabled:text-text-disabled disabled:shadow-none disabled:border-transparent",
         ].join(" "),
         danger: [
-          "shadow-xs border-destructive text-status-text-negative",
-          "hover:border-destructive-hover hover:text-destructive-hover",
-          "active:bg-action-negative-base/20 active:border-destructive-press active:text-destructive-press",
+          "shadow-xs border-action-negative-base text-status-text-negative",
+          "hover:border-action-negative-hover hover:text-action-negative-hover",
+          "active:bg-action-negative-base/20 active:border-action-negative-press active:text-action-negative-press",
           "focus-visible:border-2 focus-visible:border-ring focus-visible:shadow-none focus-visible:overflow-clip",
-          "disabled:border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
+          "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
       },
       size: {
