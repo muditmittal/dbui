@@ -12,11 +12,20 @@ type ConfigVariants<T extends ConfigSchema> = {
   [K in keyof T]?: StringToBoolean<keyof T[K]> | null | undefined
 }
 
+/**
+ * Compound variants may match several values of the same key at once, e.g.
+ * `{ variant: ["outline", "ghost"], size: ["icon-sm", "icon-md"] }`. The
+ * matcher below has always supported this; only the type did not.
+ */
+type ConfigVariantsMulti<T extends ConfigSchema> = {
+  [K in keyof T]?: StringToBoolean<keyof T[K]> | StringToBoolean<keyof T[K]>[] | null | undefined
+}
+
 type Config<T extends ConfigSchema> = {
   base?: ClassValue
   variants?: T
   defaultVariants?: ConfigVariants<T>
-  compoundVariants?: (ConfigVariants<T> & { class?: ClassValue; className?: ClassValue })[]
+  compoundVariants?: (ConfigVariantsMulti<T> & { class?: ClassValue; className?: ClassValue })[]
 }
 
 export type VariantProps<T extends (...args: any) => any> = Exclude<Parameters<T>[0], undefined>

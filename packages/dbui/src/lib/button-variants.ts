@@ -46,22 +46,24 @@ export const buttonVariants = cva(
         ].join(" "),
         outline: [
           "shadow-xs border-input-border-base",
-          "hover:bg-action-default-hover hover:border-input-border-hover hover:text-link-hover",
-          "active:bg-action-selected-press active:border-input-border-focus active:text-link-press",
+          "hover:bg-action-default-hover hover:border-input-border-hover hover:text-text-strong",
+          "active:bg-action-selected-press active:border-input-border-focus active:text-text-strong",
           "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
         secondary: [
-          "shadow-xs border-transparent bg-surface-subtle text-text-base",
-          "hover:bg-action-default-hover hover:text-text-accent",
-          "active:bg-action-selected-press active:text-link-press",
+          // Resting text colour is set in compoundVariants so it never competes
+          // with the muted icon-only treatment.
+          "shadow-xs border-transparent bg-surface-subtle",
+          "hover:bg-action-default-hover hover:text-text-strong",
+          "active:bg-action-selected-press active:text-text-strong",
           "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:bg-transparent disabled:text-text-disabled disabled:shadow-none",
         ].join(" "),
         ghost: [
-          "border-transparent text-text-base",
-          "hover:bg-action-default-hover hover:text-link-hover",
-          "active:bg-action-selected-press active:text-link-press",
+          "border-transparent",
+          "hover:bg-action-default-hover hover:text-text-strong",
+          "active:bg-action-selected-press active:text-text-strong",
           "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:text-text-disabled",
         ].join(" "),
@@ -91,10 +93,33 @@ export const buttonVariants = cva(
       size: {
         sm: "h-6 gap-1 px-2",
         md: "h-8 gap-1 px-3",
-        "icon-sm": "size-6 text-text-subtle",
-        "icon-md": "size-8 text-text-subtle",
+        // No colour here. An icon-only button's icon colour depends on the
+        // variant it sits in, so it is set in compoundVariants below. Setting it
+        // on the size would emit two competing text-* classes, and cn() joins
+        // rather than merges, so CSS source order — not authoring order — would
+        // decide the winner.
+        "icon-sm": "size-6",
+        "icon-md": "size-8",
       },
     },
+    compoundVariants: [
+      // Exactly one resting text colour is ever emitted, because cn() joins
+      // rather than merges — two competing text-* classes would be resolved by
+      // CSS source order instead of by intent.
+      {
+        variant: ["secondary", "ghost"],
+        size: ["sm", "md"],
+        class: "text-text-base",
+      },
+      // Muted icon is the toolbar convention, but only on the neutral
+      // non-filled variants. On a filled variant it would be a contrast
+      // failure, and on danger it would drop the red.
+      {
+        variant: ["outline", "secondary", "ghost"],
+        size: ["icon-sm", "icon-md"],
+        class: "text-text-subtle",
+      },
+    ],
     defaultVariants: {
       variant: "default",
       size: "md",
