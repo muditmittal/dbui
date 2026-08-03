@@ -34,7 +34,7 @@ function RadioTile({
     <RadioPrimitive.Root
       data-slot="radio-tile"
       className={cn(
-        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input bg-background p-4 text-[13px] shadow-xs transition-all outline-none select-none hover:border-primary-hover active:border-primary-press data-checked:border-primary data-checked:shadow-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-disabled disabled:shadow-none disabled:text-disabled-foreground disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
+        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input bg-surface-base p-4 text-[13px] shadow-xs transition-all outline-none select-none hover:border-primary-hover active:border-primary-press data-checked:border-primary data-checked:shadow-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
         className
       )}
       {...props}
@@ -58,7 +58,7 @@ function RadioTileHeader({
       {children}
       <div
         data-slot="radio-tile-indicator"
-        className="ml-auto flex size-4 shrink-0 items-center justify-center rounded-full border border-input bg-background group-data-checked/radio-tile:border-primary group-data-checked/radio-tile:bg-primary"
+        className="ml-auto flex size-4 shrink-0 items-center justify-center rounded-full border border-input bg-surface-base group-data-checked/radio-tile:border-primary group-data-checked/radio-tile:bg-primary"
       >
         <span className="size-1.5 rounded-full bg-primary-foreground opacity-0 group-data-checked/radio-tile:opacity-100" />
       </div>
@@ -73,7 +73,7 @@ function RadioTileTitle({
   return (
     <div
       data-slot="radio-tile-title"
-      className={cn("font-semibold text-foreground", className)}
+      className={cn("font-semibold text-text-base", className)}
       {...props}
     />
   )
@@ -86,7 +86,7 @@ function RadioTileDescription({
   return (
     <div
       data-slot="radio-tile-description"
-      className={cn("text-[12px] text-muted-foreground", className)}
+      className={cn("text-[12px] text-text-subtle", className)}
       {...props}
     />
   )
@@ -103,7 +103,7 @@ function RadioTileIcon({
     <span
       data-slot="radio-tile-icon"
       className={cn(
-        "pointer-events-none shrink-0 text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
+        "pointer-events-none shrink-0 text-text-subtle [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

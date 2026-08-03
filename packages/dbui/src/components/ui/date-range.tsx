@@ -80,9 +80,9 @@ function DateRangeField({
       data-size={size}
       disabled={disabled}
       className={cn(
-        "group/date-range-field inline-flex shrink-0 items-center rounded-sm border border-input bg-background text-[13px] leading-[20px] shadow-xs transition-colors outline-none",
+        "group/date-range-field inline-flex shrink-0 items-center rounded-sm border border-input bg-surface-base text-[13px] leading-[20px] shadow-xs transition-colors outline-none",
         "hover:border-primary focus-visible:border-ring",
-        "disabled:bg-muted disabled:text-disabled-foreground disabled:border-disabled disabled:shadow-none disabled:pointer-events-none",
+        "disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-disabled disabled:shadow-none disabled:pointer-events-none",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         size === "default" && "h-8 gap-2 px-3",
         size === "sm" && "h-6 gap-1 px-2",
@@ -90,13 +90,13 @@ function DateRangeField({
       )}
       {...props}
     >
-      <span className="flex shrink-0 items-center text-muted-foreground">
+      <span className="flex shrink-0 items-center text-text-subtle">
         {icon ?? <Calendar />}
       </span>
       <span
         className={cn(
           "min-w-0 flex-1 truncate text-left",
-          value ? "text-foreground" : "text-muted-foreground"
+          value ? "text-text-base" : "text-text-subtle"
         )}
       >
         {value ?? placeholder}
@@ -110,7 +110,7 @@ function DateRangeField({
             e.stopPropagation()
             onClear?.()
           }}
-          className="inline-flex shrink-0 items-center justify-center text-muted-foreground hover:text-foreground"
+          className="inline-flex shrink-0 items-center justify-center text-text-subtle hover:text-text-base"
         >
           <XCircleFill className="size-3.5" />
         </span>
