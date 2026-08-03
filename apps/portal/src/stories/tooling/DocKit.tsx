@@ -35,20 +35,24 @@ export function P({ children }: { children: React.ReactNode }) {
   return <p className="max-w-[68ch] text-[13px] leading-[20px] text-text-base">{children}</p>
 }
 
-/** Inline code that reads as a token, not as prose. */
+/** Inline code, on the Code text style — mono at the paragraph size. */
 export function C({ children }: { children: React.ReactNode }) {
   return (
-    <code className="rounded-sm bg-surface-inset px-1 py-0.5 font-mono text-[12px] text-text-base">
+    <code className="rounded-sm bg-surface-inset px-1 py-0.5 font-mono text-[13px] leading-[20px] text-text-base">
       {children}
     </code>
   )
 }
 
-/** A terminal block. Comments are dimmed so the command itself leads. */
+/**
+ * Terminal block. Each entry is a command and an optional trailing note; the
+ * note is dimmed so the command leads. Long lines scroll rather than wrap,
+ * because a wrapped command is unreadable.
+ */
 export function Cmd({ lines }: { lines: Array<[string, string?]> }) {
   return (
-    <div className="overflow-x-auto rounded-md border border-border-base bg-surface-subtle px-4 py-3">
-      <pre className="font-mono text-[12px] leading-[22px] text-text-base">
+    <div className="overflow-x-auto rounded-md border border-border-base bg-surface-inset px-4 py-3">
+      <pre className="w-max font-mono text-[13px] leading-[20px] text-text-base">
         {lines.map(([cmd, note], i) => (
           <div key={i}>
             <span>{cmd}</span>
@@ -57,6 +61,35 @@ export function Cmd({ lines }: { lines: Array<[string, string?]> }) {
         ))}
       </pre>
     </div>
+  )
+}
+
+/**
+ * A block of literal output or code. Unlike Cmd there is no comment column, and
+ * lines are preserved exactly — this is what a caller actually receives.
+ */
+export function CodeBlock({ children, caption }: { children: string; caption?: string }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      {caption ? <span className="text-[12px] leading-[16px] text-text-subtle">{caption}</span> : null}
+      <div className="overflow-x-auto rounded-md border border-border-base bg-surface-inset px-4 py-3">
+        <pre className="w-max font-mono text-[13px] leading-[20px] text-text-base">{children}</pre>
+      </div>
+    </div>
+  )
+}
+
+/** A short list of what a page covers, shown directly under the lede. */
+export function Covers({ items }: { items: Array<[string, string]> }) {
+  return (
+    <ul className="flex max-w-[68ch] flex-col gap-1.5">
+      {items.map(([name, why]) => (
+        <li key={name} className="text-[13px] leading-[20px] text-text-base">
+          <span className="font-semibold text-text-strong">{name}</span>
+          <span className="text-text-subtle">{` — ${why}`}</span>
+        </li>
+      ))}
+    </ul>
   )
 }
 

@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/blocks"
-import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit"
+import { DocPage, Lede, Section, P, C, Cmd, CodeBlock, DocTable, Note, Tag, Covers } from "./DocKit"
 
 <Meta title="Tooling/CLI" />
 
@@ -11,6 +11,13 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit
   The machine-readable surface for the system. The same data this portal renders, addressable from a
   terminal or a subprocess.
 </Lede>
+
+<Covers items={[
+  ["Nine commands", "components, icons, shells, tokens, docs, search, check, doctor, manifest"],
+  ["Two output modes", "--json for machines, --dense for AI context windows"],
+  ["A prescribed workflow", "pick a shell, then components, then verify — in that order"],
+  ["Stable error codes", "so a caller can branch without matching prose"],
+]} />
 
 <Note title="The manifest is authoritative" variant="info">
   <C>dbui manifest --json</C> describes every command and flag, so an agent never has to scrape{" "}
@@ -84,17 +91,15 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit
   <C>lib/*-variants.ts</C>.
 </P>
 
-<Cmd lines={[
-  ["Button (action) import { Button, ButtonChevron, ButtonIcon } from \"dbui/components/ui/button\""],
-  ["USE: Any click action — primary CTAs, toolbar actions, icon buttons, menu triggers"],
-  ["AVOID: State that persists across clicks → use Toggle; on/off settings → Switch"],
-  ["G: Use to trigger all click actions, no state memory"],
-  ["G: Default to Outline for text, Ghost for icon buttons"],
-  ["C: Avoid icons for Menu button variants"],
-  ["C: Limit to one Primary button on a page or dialog"],
-  ["variant: default|outline|secondary|ghost|link|destructive|danger"],
-  ["size: sm|md|icon-sm|icon-md"],
-]} />
+<CodeBlock caption="yarn dbui component Button --dense">{`Button (action) import { Button, ButtonChevron, ButtonIcon } from "dbui/components/ui/button"
+USE: Any click action — primary CTAs, toolbar actions, icon buttons, menu triggers
+AVOID: State that persists across clicks → use Toggle; on/off settings → Switch
+G: Use to trigger all click actions, no state memory
+G: Default to Outline for text, Ghost for icon buttons
+C: Avoid icons for Menu button variants
+C: Limit to one Primary button on a page or dialog
+variant: default|outline|secondary|ghost|link|destructive|danger
+size: sm|md|icon-sm|icon-md`}</CodeBlock>
 
 </Section>
 
@@ -105,13 +110,11 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit
   can branch on it without matching prose.
 </P>
 
-<Cmd lines={[
-  ["{"],
-  ["  \"error\": \"No component named \\\"Buttn\\\"\","],
-  ["  \"code\": \"ERR_UNKNOWN_COMPONENT\","],
-  ["  \"suggestions\": [{ \"name\": \"Button\", \"reason\": \"similar name\" }]"],
-  ["}"],
-]} />
+<CodeBlock caption="yarn dbui component Buttn --json">{`{
+  "error": "No component named \\"Buttn\\"",
+  "code": "ERR_UNKNOWN_COMPONENT",
+  "suggestions": [{ "name": "Button", "reason": "similar name" }]
+}`}</CodeBlock>
 
 </Section>
 

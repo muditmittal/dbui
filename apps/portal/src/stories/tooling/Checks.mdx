@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/blocks"
-import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit"
+import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag, Covers } from "./DocKit"
 
 <Meta title="Tooling/Checks and skills" />
 
@@ -11,6 +11,14 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit
   The enforcement layer. Two linters, a token pipeline, and four procedures an agent loads when a
   task matches.
 </Lede>
+
+<Covers items={[
+  ["React design lint", "13 rules over any React source, not only DBUI code"],
+  ["Figma design lint", "9 rules that run inside a Figma file via MCP"],
+  ["Token pipeline", "the generator and the sync verifier that gates on drift"],
+  ["Legacy token audit", "why a verifier must not share a list with what it verifies"],
+  ["Agent skills", "four built procedures and four planned"],
+]} />
 
 <Section title="React design lint">
 

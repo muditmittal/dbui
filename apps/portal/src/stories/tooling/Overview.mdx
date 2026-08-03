@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/blocks"
-import { DocPage, Lede, Section, P, C, DocTable, Note, Tag } from "./DocKit"
+import { DocPage, Lede, Section, P, C, DocTable, Note, Tag, Covers } from "./DocKit"
 
 <Meta title="Tooling/Overview" />
 
@@ -11,6 +11,12 @@ import { DocPage, Lede, Section, P, C, DocTable, Note, Tag } from "./DocKit"
   Everything DBUI ships that is not a component — the CLI, the MCP server, two linters, the token
   pipeline, and the agent skills. Each has its own page.
 </Lede>
+
+<Covers items={[
+  ["Tools", "the CLI, the MCP server, two linters and the token pipeline"],
+  ["Agent-facing files", "which file each kind of reader actually loads"],
+  ["Migration tooling", "the codemods written for the token migration, and what they did"],
+]} />
 
 <Note title="One API, many surfaces" variant="info">
   <C>packages/dbui-cli/src/api.mjs</C> reads components, icons, shells, tokens and docs from source

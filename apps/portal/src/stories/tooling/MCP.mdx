@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/blocks"
-import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note } from "./DocKit"
+import { DocPage, Lede, Section, P, C, Cmd, CodeBlock, DocTable, Note, Covers } from "./DocKit"
 
 <Meta title="Tooling/MCP server" />
 
@@ -11,6 +11,13 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note } from "./DocKit"
   Lets any MCP-capable agent query the design system directly, instead of being handed pasted
   documentation. JSON-RPC 2.0 over stdio.
 </Lede>
+
+<Covers items={[
+  ["Four tools", "search, list, get and check — the whole system, queryable"],
+  ["Five resources", "the full markdown for clients that prefer documents over tool calls"],
+  ["Connection config", "for Cursor and any other MCP client"],
+  ["No dependencies", "why the transport is hand-rolled rather than SDK-based"],
+]} />
 
 <P>
   It imports the CLI's API module rather than shelling out to the CLI, so the two surfaces render
@@ -24,16 +31,14 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note } from "./DocKit"
   reload the window after changing it.
 </P>
 
-<Cmd lines={[
-  ["{"],
-  ["  \"mcpServers\": {"],
-  ["    \"dbui\": {"],
-  ["      \"command\": \"node\","],
-  ["      \"args\": [\"${workspaceFolder}/packages/dbui-mcp/src/server.mjs\"]"],
-  ["    }"],
-  ["  }"],
-  ["}"],
-]} />
+<CodeBlock caption=".cursor/mcp.json">{`{
+  "mcpServers": {
+    "dbui": {
+      "command": "node",
+      "args": ["\${workspaceFolder}/packages/dbui-mcp/src/server.mjs"]
+    }
+  }
+}`}</CodeBlock>
 
 <P>
   Outside the repo, point <C>args</C> at an absolute path and set <C>DBUI_ROOT</C> to a directory
