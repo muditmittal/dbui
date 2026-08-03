@@ -46,12 +46,12 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
           style={{ backgroundImage: "var(--ai-gradient)" }}
           aria-hidden
         >
-          <GenieCode className="size-8 text-primary-foreground" />
+          <GenieCode className="size-8 text-action-label-inverse-base" />
         </div>
 
         <div className="flex flex-col items-center gap-0.5">
           <span className="text-[22px] font-semibold leading-[28px] text-text-base">Genie Code</span>
-          <span className="text-[13px] text-primary font-semibold">Preview</span>
+          <span className="text-[13px] text-link-base font-semibold">Preview</span>
         </div>
 
         <p className="text-[13px] leading-[20px] text-text-subtle">

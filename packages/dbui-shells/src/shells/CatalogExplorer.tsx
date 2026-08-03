@@ -168,7 +168,7 @@ function CatalogTree({
         <Popover.Root>
           <Popover.Trigger
             render={
-              <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-hover active:bg-press">
+              <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-action-default-hover active:bg-action-selected-press">
                 <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
                   <span className="text-[12px] leading-[16px] font-mono text-text-subtle">./</span>
                   {currentRoot?.icon ?? defaultIcon}
@@ -188,7 +188,7 @@ function CatalogTree({
                       <Button
                         key={entry.id}
                         variant="ghost"
-                        className={`h-7 w-full justify-start gap-2 py-1 text-[13px] ${isCurrent ? "bg-active" : ""}`}
+                        className={`h-7 w-full justify-start gap-2 py-1 text-[13px] ${isCurrent ? "bg-action-selected-base" : ""}`}
                         style={{ paddingLeft: `${8 + i * 12}px` }}
                         onClick={() => {
                           if (i === 0 && focusPath.length === 1 && onUnfocus) onUnfocus()
@@ -201,7 +201,7 @@ function CatalogTree({
                     )
                   })
                 ) : (
-                  <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-active px-1.5 py-1 text-[13px]">
+                  <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-1.5 py-1 text-[13px]">
                     <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">{defaultIcon}</span>
                     Catalog
                   </Button>
@@ -486,7 +486,7 @@ function CatalogLanding({
         </Table>
         {items.length > 0 && (
           <div className="flex justify-center py-4">
-            <Button variant="ghost" className="text-primary hover:text-primary-hover">
+            <Button variant="ghost" className="text-link-base hover:text-link-hover">
               Load more <ChevronDown className="size-4" />
             </Button>
           </div>

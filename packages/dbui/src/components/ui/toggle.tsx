@@ -21,7 +21,7 @@ import { cn } from "../../lib/utils"
  *
  * Figma component: "Toggle Button" (4 variants × 2 sizes × 5 states)
  *
- * Variants: default (no border), filter (border-input + shadow), pill (shadow + checkbox pattern), icon (icon-only)
+ * Variants: default (no border), filter (border-input-border-base + shadow), pill (shadow + checkbox pattern), icon (icon-only)
  * Sizes:    sm (24px), md (32px) — matches Button sizing
  * States:   Default, Hover, Press, Selected, Disabled
  */
@@ -32,12 +32,12 @@ const toggleVariants = cva(
     "text-[13px] leading-[20px] font-normal whitespace-nowrap",
     "transition-all outline-none select-none",
     "text-text-base",
-    "hover:bg-hover",
-    "active:bg-press",
-    "focus-visible:border-2 focus-visible:border-ring",
+    "hover:bg-action-default-hover",
+    "active:bg-action-selected-press",
+    "focus-visible:border-2 focus-visible:border-focus-ring",
     "disabled:pointer-events-none disabled:text-text-disabled",
-    "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:text-text-accent",
-    "data-[state=on]:bg-active data-[state=on]:border-primary data-[state=on]:text-text-accent",
+    "aria-pressed:bg-action-selected-base aria-pressed:border-border-strong aria-pressed:text-text-strong",
+    "data-[state=on]:bg-action-selected-base data-[state=on]:border-border-strong data-[state=on]:text-text-strong",
     "aria-invalid:border-action-negative-base aria-invalid:ring-action-negative-base/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ].join(" "),
@@ -46,12 +46,12 @@ const toggleVariants = cva(
       variant: {
         default: "border-transparent bg-transparent",
         filter:
-          "border-input shadow-xs hover:border-primary disabled:border-border-disabled disabled:shadow-none aria-pressed:border-primary data-[state=on]:border-primary",
+          "border-input-border-base shadow-xs hover:border-input-border-hover disabled:border-border-disabled disabled:shadow-none aria-pressed:border-border-strong data-[state=on]:border-border-strong",
         pill: [
-          "shadow-xs border-input bg-transparent gap-2 rounded-full",
-          "hover:bg-hover hover:border-primary",
-          "aria-pressed:bg-active aria-pressed:text-primary-press aria-pressed:border-primary aria-pressed:shadow-none",
-          "data-[state=on]:bg-active data-[state=on]:text-primary-press data-[state=on]:border-primary data-[state=on]:shadow-none",
+          "shadow-xs border-input-border-base bg-transparent gap-2 rounded-full",
+          "hover:bg-action-default-hover hover:border-input-border-hover",
+          "aria-pressed:bg-action-selected-base aria-pressed:text-text-strong aria-pressed:border-border-strong aria-pressed:shadow-none",
+          "data-[state=on]:bg-action-selected-base data-[state=on]:text-text-strong data-[state=on]:border-border-strong data-[state=on]:shadow-none",
           "disabled:border-border-disabled disabled:shadow-none",
         ].join(" "),
         icon: "border-transparent bg-transparent",
@@ -126,7 +126,7 @@ function FilterToggle({
           <path d="M3 8.5L6.5 12L13 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       ) : (
-        <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-sm border border-input" />
+        <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-sm border border-input-border-base" />
       )}
       {children}
     </TogglePrimitive>

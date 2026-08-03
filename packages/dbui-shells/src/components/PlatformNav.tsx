@@ -98,7 +98,7 @@ export function PlatformNav({
     <nav className="w-[180px] shrink-0 overflow-y-auto px-3">
       {/* New button */}
       <NavbarNewButton>
-        <Plus className="text-primary" />
+        <Plus className="text-link-base" />
         New
       </NavbarNewButton>
 

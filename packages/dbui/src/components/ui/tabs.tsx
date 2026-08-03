@@ -74,9 +74,9 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "relative inline-flex items-center justify-center gap-2 border-b-[3px] border-transparent py-1.5 text-[13px] font-semibold whitespace-nowrap text-text-subtle transition-all outline-none group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-primary-hover active:text-primary-press focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:text-text-disabled aria-disabled:pointer-events-none aria-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative inline-flex items-center justify-center gap-2 border-b-[3px] border-transparent py-1.5 text-[13px] font-semibold whitespace-nowrap text-text-subtle transition-all outline-none group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-text-strong active:text-text-strong focus-visible:border-focus-ring focus-visible:ring-[3px] focus-visible:ring-focus-ring/50 disabled:pointer-events-none disabled:text-text-disabled aria-disabled:pointer-events-none aria-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         // Default variant (lined): active tab gets primary bottom border
-        "group-data-[variant=default]/tabs-list:data-active:border-b-primary group-data-[variant=default]/tabs-list:data-active:text-text-base",
+        "group-data-[variant=default]/tabs-list:data-active:border-b-action-primary-base group-data-[variant=default]/tabs-list:data-active:text-text-base",
         // Pill variant: active tab gets bg + shadow
         "group-data-[variant=pill]/tabs-list:rounded-md group-data-[variant=pill]/tabs-list:border-none group-data-[variant=pill]/tabs-list:px-1.5 group-data-[variant=pill]/tabs-list:py-0.5 group-data-[variant=pill]/tabs-list:data-active:bg-surface-base group-data-[variant=pill]/tabs-list:data-active:text-text-base group-data-[variant=pill]/tabs-list:data-active:shadow-sm",
         className

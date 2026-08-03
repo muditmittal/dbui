@@ -122,7 +122,7 @@ function NavbarItem({
       data-active={active || undefined}
       className={cn(
         "flex h-7 w-full items-center gap-2 rounded-sm px-2 text-[13px] leading-[20px] font-normal text-text-base text-left",
-        "hover:bg-hover",
+        "hover:bg-action-default-hover",
         active && "bg-surface-accent text-text-accent font-semibold [&_[data-slot=navbar-item-icon]]:text-text-accent",
         "[&_svg:not([class*='size-'])]:size-4",
         className

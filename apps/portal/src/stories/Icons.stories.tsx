@@ -96,7 +96,7 @@ function IconGrid() {
           placeholder="Search by name, concept, product area, or synonym..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="h-8 w-[400px] rounded-sm border border-input bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle focus-visible:border-ring"
+          className="h-8 w-[400px] rounded-sm border border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle focus-visible:border-focus-ring"
         />
         <span className="text-[12px] text-text-subtle">
           {totalFiltered} of {iconNames.length} icons

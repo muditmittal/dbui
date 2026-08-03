@@ -429,7 +429,7 @@ export function DataTreeExplorer({
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-hover active:bg-press"
+                  className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-action-default-hover active:bg-action-selected-press"
                 >
                   <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
                     <span className="text-[12px] leading-[16px] font-mono text-text-subtle">./</span>
@@ -450,7 +450,7 @@ export function DataTreeExplorer({
                         <Button
                           key={entry.id}
                           variant="ghost"
-                          className={cn("h-7 w-full justify-start gap-2 py-1 text-[13px]", isCurrent && "bg-active")}
+                          className={cn("h-7 w-full justify-start gap-2 py-1 text-[13px]", isCurrent && "bg-action-selected-base")}
                           style={{ paddingLeft: `${8 + i * 12}px` }}
                           onClick={() => {
                             if (i === 0 && focusPath.length === 1 && onUnfocus) onUnfocus()
@@ -465,7 +465,7 @@ export function DataTreeExplorer({
                       )
                     })
                   ) : (
-                    <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-active px-1.5 py-1 text-[13px]">
+                    <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-1.5 py-1 text-[13px]">
                       <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                         {defaultIcon}
                       </span>

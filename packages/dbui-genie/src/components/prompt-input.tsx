@@ -73,8 +73,8 @@ function PromptInput({
       onSubmit={handleSubmit}
       className={cn(
         "flex w-full flex-col gap-2 rounded-md bg-surface-base p-2 shadow-xs",
-        accent === "default" && "border border-input",
-        "focus-within:border-ring",
+        accent === "default" && "border border-input-border-base",
+        "focus-within:border-focus-ring",
         className
       )}
       style={aiBorderStyle}

@@ -33,8 +33,8 @@ type SegmentControlVariantProps = {
  *
  * ── Outline variant ──
  * Container: bg-surface-base, rounded-sm, shadow-xs, p-0, gap-0
- * Selected item: bg-active, border-primary (blue), NO rounded corners (flush)
- * Unselected items: no fill, border-input (grey dividers), shadow-xs, NO rounded corners
+ * Selected item: bg-action-selected-base, border-border-strong (blue), NO rounded corners (flush)
+ * Unselected items: no fill, border-input-border-base (grey dividers), shadow-xs, NO rounded corners
  *
  * Single-select radio-group semantics by default: exactly one item is active
  * at all times. Clicking the active item is a no-op (cannot toggle off all
@@ -139,7 +139,7 @@ function SegmentControlItem({
         "relative flex-1 inline-flex items-center justify-center gap-1",
         "text-[13px] leading-[20px] font-normal whitespace-nowrap",
         "transition-colors outline-none select-none",
-        "focus-visible:border-2 focus-visible:border-ring focus-visible:z-20",
+        "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:z-20",
         "disabled:pointer-events-none disabled:text-text-disabled",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 
@@ -155,13 +155,13 @@ function SegmentControlItem({
         // Pressed item also overlaps -1px on the RIGHT and gets z-10 so its 4 blue
         // borders sit on top of the adjacent grey ones at every edge.
         isOutline && [
-          "rounded-none border border-input shadow-xs",
-          "hover:bg-hover",
-          "active:bg-press",
+          "rounded-none border border-input-border-base shadow-xs",
+          "hover:bg-action-default-hover",
+          "active:bg-action-selected-press",
           "not-first:-ml-px",
           "first:rounded-l-sm",
           "last:rounded-r-sm",
-          "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:text-text-accent",
+          "aria-pressed:bg-action-selected-base aria-pressed:border-border-strong aria-pressed:shadow-none aria-pressed:text-text-strong",
           "aria-pressed:relative aria-pressed:z-10 aria-pressed:not-last:-mr-px",
         ],
 

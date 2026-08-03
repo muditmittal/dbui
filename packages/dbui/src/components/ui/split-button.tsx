@@ -82,7 +82,7 @@ function SplitButtonSeparator({
       data-slot="split-button-separator"
       orientation={orientation}
       className={cn(
-        "relative self-stretch bg-primary-foreground/20 data-horizontal:mx-px data-horizontal:w-auto data-vertical:my-px data-vertical:h-auto",
+        "relative self-stretch bg-action-label-inverse-base/20 data-horizontal:mx-px data-horizontal:w-auto data-vertical:my-px data-vertical:h-auto",
         className
       )}
       {...props}

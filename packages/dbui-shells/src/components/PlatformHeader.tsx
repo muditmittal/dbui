@@ -58,7 +58,7 @@ export function PlatformHeader({
       <div className="relative w-full h-8" style={{ maxWidth: 640 }}>
         <Button
           variant="outline"
-          className={`w-full justify-start gap-2 px-3 shadow-xs overflow-hidden hover:border-primary active:border-primary-press ${searchOpen ? "opacity-0 pointer-events-none" : ""}`}
+          className={`w-full justify-start gap-2 px-3 shadow-xs overflow-hidden hover:border-input-border-hover active:border-input-border-focus ${searchOpen ? "opacity-0 pointer-events-none" : ""}`}
           onClick={() => setSearchOpen(true)}
         >
           <Search className="size-4 shrink-0 text-text-subtle" />
@@ -148,7 +148,7 @@ export function PlatformHeader({
                         {item.badge && (
                           <Badge
                             variant="outline"
-                            className="text-[12px] leading-[16px] font-semibold bg-status-surface-info text-primary border-transparent px-2 py-0 rounded-full"
+                            className="text-[12px] leading-[16px] font-semibold bg-status-surface-info text-link-base border-transparent px-2 py-0 rounded-full"
                           >
                             {item.badge}
                           </Badge>
@@ -163,7 +163,7 @@ export function PlatformHeader({
           <DropdownMenu>
             <DropdownMenuTrigger render={
               <Button variant="ghost" size="icon-md" aria-label="Profile menu">
-                <span className="flex size-6 items-center justify-center rounded-full bg-primary text-[12px] leading-[16px] font-semibold text-primary-foreground">
+                <span className="flex size-6 items-center justify-center rounded-full bg-action-primary-base text-[12px] leading-[16px] font-semibold text-action-label-inverse-base">
                   {avatarInitial}
                 </span>
               </Button>

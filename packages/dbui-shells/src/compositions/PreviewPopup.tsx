@@ -60,7 +60,7 @@ export type PreviewPopupProps = {
 
 const QUALITY_DOT_CLASS: Record<AssetQualityStatus, string> = {
   healthy: "bg-action-positive-base",
-  warning: "bg-warning",
+  warning: "bg-status-text-warning",
   stale: "bg-text-subtle",
   unknown: "bg-text-subtle",
 }
@@ -155,7 +155,7 @@ export function PreviewPopup({
             {certified && (
               <span
                 data-slot="VerifiedBadge"
-                className="shrink-0 text-primary [&_svg]:size-4"
+                className="shrink-0 text-link-base [&_svg]:size-4"
                 aria-label="Certified"
                 title="Certified"
               >
@@ -182,7 +182,7 @@ export function PreviewPopup({
             onClick={onStarToggle}
             aria-label={starred ? "Unstar" : "Star"}
             title={starred ? "Unstar" : "Star"}
-            className={cn(starred && "text-primary")}
+            className={cn(starred && "text-link-base")}
           >
             <Star />
           </Button>
