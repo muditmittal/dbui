@@ -55,6 +55,16 @@ function Button({
     <ButtonPrimitive
       data-slot="button"
       data-filled={variant === "default" || variant === "destructive" || undefined}
+      // Icons stay muted only on the neutral variants. Where the variant sets a
+      // meaningful text colour — white on a fill, red on danger, blue on link —
+      // the icon must inherit it or it reads as a different, greyed-out control.
+      data-icon-inherit={
+        variant === "default" ||
+        variant === "destructive" ||
+        variant === "danger" ||
+        variant === "link" ||
+        undefined
+      }
       disabled={props.disabled}
       aria-busy={loading || undefined}
       aria-disabled={loading || props.disabled || undefined}
@@ -93,7 +103,7 @@ function ButtonIcon({
       className={cn(
         "pointer-events-none shrink-0 [&_svg:not([class*='size-'])]:size-4",
         "text-text-subtle",
-        "group-data-[filled]/button:text-inherit",
+        "group-data-[icon-inherit]/button:text-inherit",
         className
       )}
       {...props}

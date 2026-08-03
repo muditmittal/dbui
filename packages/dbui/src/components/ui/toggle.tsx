@@ -36,7 +36,7 @@ const toggleVariants = cva(
     "active:bg-action-selected-press",
     "focus-visible:border-2 focus-visible:border-focus-ring",
     "disabled:pointer-events-none disabled:text-text-disabled",
-    "aria-pressed:bg-action-selected-base aria-pressed:border-border-strong aria-pressed:text-text-strong",
+    "aria-pressed:bg-action-selected-base aria-pressed:hover:bg-action-selected-hover aria-pressed:active:bg-action-selected-press aria-pressed:border-border-strong aria-pressed:text-text-strong",
     "data-[state=on]:bg-action-selected-base data-[state=on]:border-border-strong data-[state=on]:text-text-strong",
     "aria-invalid:border-action-negative-base aria-invalid:ring-action-negative-base/20",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -50,7 +50,7 @@ const toggleVariants = cva(
         pill: [
           "shadow-xs border-input-border-base bg-transparent gap-2 rounded-full",
           "hover:bg-action-default-hover hover:border-input-border-hover",
-          "aria-pressed:bg-action-selected-base aria-pressed:text-text-strong aria-pressed:border-border-strong aria-pressed:shadow-none",
+          "aria-pressed:bg-action-selected-base aria-pressed:hover:bg-action-selected-hover aria-pressed:active:bg-action-selected-press aria-pressed:text-text-strong aria-pressed:border-border-strong aria-pressed:shadow-none",
           "data-[state=on]:bg-action-selected-base data-[state=on]:text-text-strong data-[state=on]:border-border-strong data-[state=on]:shadow-none",
           "disabled:border-border-disabled disabled:shadow-none",
         ].join(" "),

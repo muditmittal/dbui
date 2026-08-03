@@ -31,7 +31,7 @@ function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
         className="group/indicator grid place-content-center text-current transition-none [&>svg]:size-4"
       >
         <CheckSmall className="hidden group-data-checked/indicator:block" />
-        <Dash className="hidden group-data-indeterminate/indicator:block" />
+        <Dash className="hidden size-2.5! group-data-indeterminate/indicator:block" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )
