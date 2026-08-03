@@ -144,11 +144,11 @@ export const Color: StoryObj = {
 }
 
 /**
- * Pre-migration reference. Kept until Stage C deletes the legacy layer from
- * globals.css. Components no longer reference these names.
+ * The dimensional scales — type, shadow, radius, spacing. Colour is in the
+ * "Color — semantic" story above.
  */
-export const Legacy: StoryObj = {
-  name: "Legacy tokens (pre-migration)",
+export const Scale: StoryObj = {
+  name: "Scale — type, shadow, radius, spacing",
   render: () => (
     <div style={{ maxWidth: 960, margin: "0 auto", fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}>
 
@@ -173,26 +173,8 @@ export const Legacy: StoryObj = {
       </div>
 
       {/* ── Colors ── */}
-      <h2 style={sectionHeader}>Colors</h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: 32, marginBottom: 48 }}>
-        {colorTokens.map((group) => (
-          <div key={group.group}>
-            <h3 style={groupHeader}>{group.group}</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 12 }}>
-              {group.tokens.map((t) => (
-                <div key={t.name} style={tile}>
-                  <div style={{ height: 56, backgroundColor: `var(${t.name})`, borderBottom: "1px solid #F3F3F3" }} />
-                  <div style={tileLabel}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: "#161616" }}>{t.label}</div>
-                    <code style={mono}>{t.name}</code>
-                    <div style={hint}>{t.tw}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Colour lives in the "Color — semantic" story. The legacy swatches that
+          used to sit here were removed with the legacy layer in Stage C. */}
 
       {/* ── Shadows ── */}
       <h2 style={sectionHeader}>Shadows</h2>

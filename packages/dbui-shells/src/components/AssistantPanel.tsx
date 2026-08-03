@@ -79,7 +79,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
           style={{
             border: "1px solid transparent",
             backgroundImage:
-              "linear-gradient(var(--background), var(--background)), var(--ai-gradient)",
+              "linear-gradient(var(--db-surface-base), var(--db-surface-base)), var(--ai-gradient)",
             backgroundOrigin: "border-box",
             backgroundClip: "padding-box, border-box",
           }}
