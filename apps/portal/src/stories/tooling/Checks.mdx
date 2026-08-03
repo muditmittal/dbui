@@ -1,99 +1,151 @@
 import { Meta } from "@storybook/blocks"
+import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit"
 
 <Meta title="Tooling/Checks and skills" />
 
+<DocPage>
+
 # Checks and skills
 
-The enforcement layer. Two linters, a token pipeline, and four procedures an
-agent loads when a task matches.
+<Lede>
+  The enforcement layer. Two linters, a token pipeline, and four procedures an agent loads when a
+  task matches.
+</Lede>
 
-## React design lint
+<Section title="React design lint">
 
-Scans `.tsx` with ts-morph and reports by severity. It runs against any React
-source, not only code built with DBUI — that is the point, and it is the reason
-someone outside the team has a reason to run it.
+<P>
+  Scans <C>.tsx</C> with ts-morph and reports by severity. It runs against any React source, not
+  only code built with DBUI — that is the point, and it is the reason someone outside the team has
+  a reason to run it.
+</P>
 
-```bash
-yarn design:lint:react <path>          # human output
-yarn design:lint:react <path> --json   # machine output
-yarn dbui check <path>                 # same thing, through the CLI
-```
+<Cmd lines={[
+  ["yarn design:lint:react <path>", "human output"],
+  ["yarn design:lint:react <path> --json", "machine output"],
+  ["yarn dbui check <path>", "same thing, through the CLI"],
+]} />
 
-| Rule | Catches |
-|---|---|
-| `non-dbui-component` | A component that is not a known DBUI export |
-| `prefer-dbui-wrapper` | Raw HTML where a DBUI component exists |
-| `no-raw-interactive-html` | `<button>`, `<input>`, `<select>` in authored UI |
-| `no-arbitrary-color` | Any colour that is not a token |
-| `no-hardcoded-hex` | A hex literal in a className |
-| `inline-hardcoded-color` | The same in an inline style |
-| `prefer-token-class` | A raw value where a token utility exists |
-| `off-scale-spacing` | Spacing off the 4px scale |
-| `inline-off-scale-spacing` | The same in an inline style |
-| `off-ramp-type-size` | A font size outside the type scale |
-| `off-ramp-line-height` | A line height outside the scale |
-| `non-token-radius` | A radius that is not a token |
-| `no-primitive-token` | Reaching past the semantic layer into a primitive |
+<DocTable
+  columns={[
+    { key: "rule", header: "Rule", width: "w-[260px]", mono: true },
+    { key: "catches", header: "Catches" },
+  ]}
+  rows={[
+    { rule: "non-dbui-component", catches: "A component that is not a known DBUI export" },
+    { rule: "prefer-dbui-wrapper", catches: "Raw HTML where a DBUI component exists" },
+    { rule: "no-raw-interactive-html", catches: "button, input or select in authored UI" },
+    { rule: "no-arbitrary-color", catches: "Any colour that is not a token" },
+    { rule: "no-hardcoded-hex", catches: "A hex literal in a className" },
+    { rule: "inline-hardcoded-color", catches: "The same in an inline style" },
+    { rule: "prefer-token-class", catches: "A raw value where a token utility exists" },
+    { rule: "off-scale-spacing", catches: "Spacing off the 4px scale" },
+    { rule: "inline-off-scale-spacing", catches: "The same in an inline style" },
+    { rule: "off-ramp-type-size", catches: "A font size outside the type scale" },
+    { rule: "off-ramp-line-height", catches: "A line height outside the scale" },
+    { rule: "non-token-radius", catches: "A radius that is not a token" },
+    { rule: "no-primitive-token", catches: "Reaching past the semantic layer into a primitive" },
+  ]}
+/>
 
-Reading it on DBUI's own source: rules written for consumers necessarily fire on
-the primitives that implement them. `<Button>` contains a raw `<button>`, so
-`no-raw-interactive-html` reports it. `dbui-shells` is the honest signal, because
-it composes rather than defines — it reports zero errors.
+<Note title="Reading the output on DBUI's own source" variant="info">
+  Rules written for consumers necessarily fire on the primitives that implement them. <C>Button</C>{" "}
+  contains a raw <C>&lt;button&gt;</C>, so <C>no-raw-interactive-html</C> reports it.{" "}
+  <C>dbui-shells</C> is the honest signal, because it composes rather than defines — it reports zero
+  errors.
+</Note>
 
-## Figma design lint
+</Section>
 
-Nine rules that run inside a Figma file through the MCP tool, plus a
-token-compliance score.
+<Section title="Figma design lint">
 
-```bash
-yarn design:lint:figma --target <nodeId>
-```
+<P>
+  Nine rules that run inside a Figma file through the MCP tool, plus a token-compliance score.
+</P>
 
-Catches detached instances, fills and strokes that are not bound to a variable,
-primitive-bound values that should be semantic, off-scale spacing, non-token
-fonts and type sizes, and non-token radii.
+<Cmd lines={[["yarn design:lint:figma --target <nodeId>"]]} />
 
-## Token pipeline
+<P>
+  It catches detached instances, fills and strokes not bound to a variable, primitive-bound values
+  that should be semantic, off-scale spacing, non-token fonts and type sizes, and non-token radii.
+</P>
 
-`theme.config.mjs` is the only place tokens change. Everything else is generated.
+</Section>
 
-```bash
-yarn design:tokens         # config -> tokens.css + the linter allowlist
-yarn design:verify-sync    # assert config, CSS and Figma agree
-```
+<Section title="Token pipeline">
 
-`verify-sync` checks six things: primitives match Figma, semantics match Figma,
-every semantic ships in both modes, every semantic has exactly one Tailwind
-utility, no primitive leaks into shipped CSS, and every value round-trips from
-the config. It exits non-zero on drift, so it belongs in CI.
+<P>
+  <C>theme.config.mjs</C> is the only place tokens change. Everything else is generated, and editing
+  a generated file is the one thing guaranteed to be overwritten.
+</P>
 
-## Legacy token audit
+<Cmd lines={[
+  ["yarn design:tokens", "config → tokens.css + linter allowlist"],
+  ["yarn design:verify-sync", "assert config, CSS and Figma agree"],
+]} />
 
-Written during the migration and kept because it demonstrates a principle worth
-reusing: **a verifier that shares a list with the thing it verifies proves
-nothing.**
+<DocTable
+  columns={[
+    { key: "check", header: "verify-sync asserts" },
+    { key: "why", header: "Why it matters" },
+  ]}
+  rows={[
+    { check: "Primitives match Figma", why: "The source palette has not drifted" },
+    { check: "Semantics match Figma", why: "Every role exists on both sides" },
+    { check: "Every semantic ships in both modes", why: "No token is light-only" },
+    { check: "Every semantic has exactly one Tailwind utility", why: "No ambiguous class resolution" },
+    { check: "No primitive leaks into shipped CSS", why: "Consumers cannot reach past the semantic layer" },
+    { check: "Every value round-trips from the config", why: "The generated file was not hand-edited" },
+  ]}
+/>
 
-The first migration verifier checked only the utility names in its own map and
-reported a confident zero while 474 legacy utilities remained. The audit derives
-its list from the tokens themselves crossed with every Tailwind colour prefix, so
-it cannot agree with the codemod by construction.
+<P>It exits non-zero on drift, so it belongs in CI.</P>
 
-```bash
-node scripts/migrations/audit-legacy-tokens.mjs
-```
+</Section>
 
-## Agent skills
+<Section title="Legacy token audit">
 
-Procedures in `packages/dbui/skills/`, loaded when a task matches the trigger
-phrase rather than held in context permanently.
+<P>
+  Written during the token migration and kept because it demonstrates a principle worth reusing: a
+  verifier that shares a list with the thing it verifies proves nothing.
+</P>
 
-| Skill | Fires when |
-|---|---|
-| `dbui-build-screen` | Building a page or screen. The primary workflow: pick a shell, map regions, fill, validate. |
-| `dbui-pick-component` | Choosing between components, including the near-miss pairs — AlertDialog vs Dialog, Select vs Combobox, Tag vs Badge. |
-| `dbui-pick-icon` | Choosing an icon, and respecting the object / action / indicator / component categories. |
-| `dbui-validate` | Checking output. Errors, then warnings, then information. |
+<Note title="What that cost, concretely" variant="warning">
+  The first migration verifier checked only the utility names in its own map and reported a
+  confident zero while 474 legacy utilities remained in the codebase. The audit derives its list
+  from the tokens themselves, crossed with every Tailwind colour prefix, so it cannot agree with the
+  codemod by construction.
+</Note>
 
-Four more are designed but not written: `dbui-from-screenshot`, `dbui-migrate`,
-`dbui-crit`, and `dbui-add-component` — the last being the contributor-side skill
-that walks the change protocol in `CONTRIBUTING.md` so documentation cannot drift.
+<Cmd lines={[["node scripts/migrations/audit-legacy-tokens.mjs"]]} />
+
+</Section>
+
+<Section title="Agent skills">
+
+<P>
+  Procedures in <C>packages/dbui/skills/</C>, loaded when a task matches the trigger phrase rather
+  than held in context permanently.
+</P>
+
+<DocTable
+  columns={[
+    { key: "skill", header: "Skill", width: "w-[220px]", mono: true },
+    { key: "fires", header: "Fires when" },
+    { key: "state", header: "State", width: "w-[110px]" },
+  ]}
+  rows={[
+    { skill: "dbui-build-screen", fires: "Building a page or screen. The primary workflow: pick a shell, map regions, fill, validate.", state: <Tag>built</Tag> },
+    { skill: "dbui-pick-component", fires: "Choosing between components, including near-miss pairs — AlertDialog vs Dialog, Select vs Combobox, Tag vs Badge.", state: <Tag>built</Tag> },
+    { skill: "dbui-pick-icon", fires: "Choosing an icon, and respecting the object / action / indicator / component categories.", state: <Tag>built</Tag> },
+    { skill: "dbui-validate", fires: "Checking output. Errors, then warnings, then information.", state: <Tag>built</Tag> },
+    { skill: "dbui-from-screenshot", fires: "A screenshot is the input. First step is classifying which shell it is.", state: <Tag>planned</Tag> },
+    { skill: "dbui-migrate", fires: "Moving a shadcn, Tailwind or Radix surface onto DBUI, one route at a time.", state: <Tag>planned</Tag> },
+    { skill: "dbui-crit", fires: "Critiquing a finished screen against the taste rules.", state: <Tag>planned</Tag> },
+    { skill: "dbui-add-component", fires: "Contributing a component. Walks the change protocol so documentation cannot drift.", state: <Tag>planned</Tag> },
+  ]}
+/>
+
+</Section>
+
+</DocPage>

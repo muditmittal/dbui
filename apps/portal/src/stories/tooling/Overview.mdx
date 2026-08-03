@@ -1,50 +1,159 @@
 import { Meta } from "@storybook/blocks"
+import { DocPage, Lede, Section, P, C, DocTable, Note, Tag } from "./DocKit"
 
 <Meta title="Tooling/Overview" />
 
+<DocPage>
+
 # Tooling
 
-Everything DBUI ships that is not a component. Each entry below has its own page.
+<Lede>
+  Everything DBUI ships that is not a component — the CLI, the MCP server, two linters, the token
+  pipeline, and the agent skills. Each has its own page.
+</Lede>
 
-## The rule
+<Note title="One API, many surfaces" variant="info">
+  <C>packages/dbui-cli/src/api.mjs</C> reads components, icons, shells, tokens and docs from source
+  at call time. The CLI formats that for a terminal and the MCP server formats it for an agent.
+  Nothing in between is hand-maintained, so if the two ever disagree it is a bug in a formatter, not
+  a data problem.
+</Note>
 
-There is one API and every surface renders it. `packages/dbui-cli/src/api.mjs`
-reads components, icons, shells, tokens and docs from source at call time. The
-CLI formats that for a terminal, the MCP server formats it for an agent, and
-nothing is hand-maintained in between. If the CLI and the MCP server ever
-disagree, that is a bug in the formatter, not a data problem.
+<Section title="Tools">
 
-## Inventory
+<DocTable
+  columns={[
+    { key: "tool", header: "Tool", width: "w-[170px]" },
+    { key: "what", header: "What it is" },
+    { key: "run", header: "Run it", width: "w-[230px]", mono: true },
+  ]}
+  rows={[
+    {
+      tool: "dbui CLI",
+      what: "Nine commands over components, icons, shells, tokens and docs. Typed JSON envelopes for machines.",
+      run: "yarn dbui <command>",
+    },
+    {
+      tool: "dbui MCP server",
+      what: "JSON-RPC over stdio. Four tools, five resources, zero dependencies.",
+      run: ".cursor/mcp.json",
+    },
+    {
+      tool: "React design lint",
+      what: "13 rules over the AST: raw HTML where a component exists, hardcoded colour, off-scale spacing, non-token radii.",
+      run: "yarn design:lint:react",
+    },
+    {
+      tool: "Figma design lint",
+      what: "Nine rules that run inside a Figma file via MCP, plus a token-compliance score.",
+      run: "yarn design:lint:figma",
+    },
+    {
+      tool: "Token generator",
+      what: "theme.config.mjs to tokens.css and the linter allowlist. The only way tokens change.",
+      run: "yarn design:tokens",
+    },
+    {
+      tool: "Token sync verifier",
+      what: "Asserts config, CSS and Figma agree. Exits non-zero on drift.",
+      run: "yarn design:verify-sync",
+    },
+    {
+      tool: "Legacy token audit",
+      what: "Crosses every legacy token against every Tailwind colour prefix. Cannot agree with the codemod by construction.",
+      run: "audit-legacy-tokens.mjs",
+    },
+    {
+      tool: "Agent skills",
+      what: "Four procedures an agent loads on trigger: pick a component, pick an icon, build a screen, validate output.",
+      run: "loaded by the agent",
+    },
+  ]}
+/>
 
-| Tool | What it is | Where | Run it |
-|---|---|---|---|
-| **dbui CLI** | Nine commands over components, icons, shells, tokens and docs. Typed JSON envelopes for machines. | `packages/dbui-cli` | `yarn dbui <command>` |
-| **dbui MCP server** | JSON-RPC over stdio. Four tools, five resources. Zero dependencies. | `packages/dbui-mcp` | wired in `.cursor/mcp.json` |
-| **React design lint** | 11 rules over the AST: raw HTML where a component exists, hardcoded colour, off-scale spacing, non-token radii. | `scripts/design-lint/react-lint.js` | `yarn design:lint:react <path>` |
-| **Figma design lint** | 9 rules that run inside a Figma file via MCP. Reports a token-compliance score. | `scripts/design-lint/figma-lint.js` | `yarn design:lint:figma --target <nodeId>` |
-| **Token generator** | `theme.config.mjs` to `tokens.css` and the linter allowlist. The only way tokens change. | `scripts/design-lint/generate-tokens.mjs` | `yarn design:tokens` |
-| **Token sync verifier** | Asserts config, CSS and Figma agree. Exits non-zero on drift. | `scripts/design-lint/verify-token-sync.mjs` | `yarn design:verify-sync` |
-| **Legacy token audit** | Crosses every legacy token against every Tailwind colour prefix. Cannot agree with the codemod by construction. | `scripts/migrations/audit-legacy-tokens.mjs` | `node scripts/migrations/audit-legacy-tokens.mjs` |
-| **Agent skills** | Four procedures an agent loads on trigger: pick a component, pick an icon, build a screen, validate output. | `packages/dbui/skills/` | loaded by the agent |
+</Section>
 
-## Agent-facing files
+<Section title="Agent-facing files">
 
-| File | Reader | Contains |
-|---|---|---|
-| `AGENTS.md` | Coding agents at session start | Repo map, commands, boundaries, pointers. Kept under 150 lines on purpose. |
-| `packages/dbui/DESIGN.md` | Agents generating UI without the codebase | The visual language as YAML tokens plus eight fixed sections. |
-| `packages/dbui/composition.md` | Anyone building a screen | Five page shells with regions, pixel budgets, scroll ownership, forbidden compositions. |
-| `llms.txt` | AI search and docs-pointed agents | Curated index of the highest-value documents. |
-| `CONTRIBUTING.md` | Anyone changing the system | Which files must move together for each kind of change. |
+<P>
+  Different readers, different files. These are not interchangeable — an agent working in the repo
+  reads the first, an agent generating UI without the codebase reads the second.
+</P>
 
-## Migration tooling
+<DocTable
+  columns={[
+    { key: "file", header: "File", width: "w-[210px]", mono: true },
+    { key: "reader", header: "Reader", width: "w-[190px]" },
+    { key: "contains", header: "Contains" },
+  ]}
+  rows={[
+    {
+      file: "AGENTS.md",
+      reader: "Coding agents at session start",
+      contains: "Repo map, commands, boundaries, pointers. Kept under 150 lines on purpose.",
+    },
+    {
+      file: "DESIGN.md",
+      reader: "Agents with no access to the code",
+      contains: "The visual language as YAML tokens plus eight fixed sections.",
+    },
+    {
+      file: "composition.md",
+      reader: "Anyone building a screen",
+      contains: "Five page shells with regions, pixel budgets, scroll ownership, forbidden compositions.",
+    },
+    {
+      file: "llms.txt",
+      reader: "AI search and docs-pointed agents",
+      contains: "Curated index of the highest-value documents.",
+    },
+    {
+      file: "CONTRIBUTING.md",
+      reader: "Anyone changing the system",
+      contains: "Which files must move together for each kind of change.",
+    },
+  ]}
+/>
 
-Written for the legacy-to-semantic token migration. Kept because the pattern is
-reusable and because they document what happened.
+</Section>
 
-| Script | What it did |
-|---|---|
-| `stage-a-tokens.mjs` | 772 mechanical renames across nine batches. `--verify` and `--files` for per-batch staging. |
-| `stage-b-tokens.mjs` | 357 value shifts. Resolves on the full class token including variant prefixes, because `border-primary` means two different things depending on whether it sits under `hover:` or `data-checked:`. |
-| `stage-c-vars.mjs` | 21 `var(--legacy)` references in component source that no utility audit could see. |
-| `stage-c-prune.mjs` | Deleted 159 declarations from each stylesheet, against an explicit keep-list. |
+<Section title="Migration tooling">
+
+<P>
+  Written for the legacy-to-semantic token migration. Kept because the patterns are reusable and
+  because they record what happened.
+</P>
+
+<DocTable
+  columns={[
+    { key: "script", header: "Script", width: "w-[190px]", mono: true },
+    { key: "did", header: "What it did" },
+    { key: "n", header: "Scale", width: "w-[110px]" },
+  ]}
+  rows={[
+    {
+      script: "stage-a-tokens.mjs",
+      did: "Mechanical renames across nine batches. Supports --verify and --files for per-batch staging.",
+      n: <Tag>772 swaps</Tag>,
+    },
+    {
+      script: "stage-b-tokens.mjs",
+      did: "Value shifts. Resolves on the full class token including variant prefixes, because border-primary means one thing under hover: and another under data-checked:.",
+      n: <Tag>357 swaps</Tag>,
+    },
+    {
+      script: "stage-c-vars.mjs",
+      did: "var(--legacy) references in component source that no utility audit could see.",
+      n: <Tag>21 refs</Tag>,
+    },
+    {
+      script: "stage-c-prune.mjs",
+      did: "Deleted the legacy layer from both stylesheets, against an explicit keep-list.",
+      n: <Tag>159 each</Tag>,
+    },
+  ]}
+/>
+
+</Section>
+
+</DocPage>

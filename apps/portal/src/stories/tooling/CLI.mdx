@@ -1,97 +1,157 @@
 import { Meta } from "@storybook/blocks"
+import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag } from "./DocKit"
 
 <Meta title="Tooling/CLI" />
 
+<DocPage>
+
 # dbui CLI
 
-The machine-readable surface for the system. Same data as this portal, addressable
-from a terminal or a subprocess.
+<Lede>
+  The machine-readable surface for the system. The same data this portal renders, addressable from a
+  terminal or a subprocess.
+</Lede>
 
-```bash
-yarn dbui <command> [argument] [flags]
-```
+<Note title="The manifest is authoritative" variant="info">
+  <C>dbui manifest --json</C> describes every command and flag, so an agent never has to scrape{" "}
+  <C>--help</C>. This page is a readable copy of it.
+</Note>
 
-`dbui manifest --json` describes every command and flag and is the authoritative
-reference — this page is a readable copy of it.
+<Section title="Commands">
 
-## Commands
+<DocTable
+  columns={[
+    { key: "cmd", header: "Command", width: "w-[130px]", mono: true },
+    { key: "arg", header: "Argument", width: "w-[100px]", mono: true },
+    { key: "returns", header: "What it returns" },
+  ]}
+  rows={[
+    { cmd: "component", arg: "[name]", returns: "Every component by category, or one with its guidelines, constraints, prop values and import path" },
+    { cmd: "icon", arg: "[name]", returns: "Icons grouped by semantic category, or one with its label and synonyms" },
+    { cmd: "shell", arg: "[A–E]", returns: "The five page shells, or one with its regions, scroll ownership and forbidden compositions" },
+    { cmd: "token", arg: "[group]", returns: "Token groups and counts, or one group with light and dark values" },
+    { cmd: "docs", arg: "[topic]", returns: "A reference document in full" },
+    { cmd: "search", arg: "<query>", returns: "Components, icons, shells and docs in one ranked result set" },
+    { cmd: "check", arg: "<path>", returns: "Design linter findings for a file or directory" },
+    { cmd: "doctor", arg: "—", returns: "Health of the setup. Exits non-zero on failure, so it works as a CI gate" },
+    { cmd: "manifest", arg: "—", returns: "Self-description, for agent discovery" },
+  ]}
+/>
 
-| Command | Argument | What it returns |
-|---|---|---|
-| `component` | `[name]` | Every component by category, or one with its guidelines, constraints, prop values and import path |
-| `icon` | `[name]` | Icons grouped by semantic category, or one with its label and synonyms |
-| `shell` | `[A–E]` | The five page shells, or one with its regions, scroll ownership and forbidden compositions |
-| `token` | `[group]` | Token groups and counts, or one group with light and dark values |
-| `docs` | `[topic]` | A reference document in full |
-| `search` | `<query>` | Components, icons, shells and docs in one ranked result set |
-| `check` | `<path>` | Design linter findings for a file or directory |
-| `doctor` | | Health of the setup. Exits non-zero on failure, so it works as a CI gate |
-| `manifest` | | Self-description, for agent discovery |
+</Section>
 
-## Flags
+<Section title="Flags">
 
-| Flag | Effect |
-|---|---|
-| `--json` | Typed envelope `{ apiVersion, type, data }`. Errors return `{ error, code, suggestions }` |
-| `--dense` | Compressed text sized for an AI context window |
-| `--type` | Restrict `search` to `component`, `icon`, `shell` or `doc` |
-| `--category` | Filter `icon` by `action`, `object`, `indicator` or `component` |
-| `--limit` | Cap `search` results |
+<DocTable
+  columns={[
+    { key: "flag", header: "Flag", width: "w-[140px]", mono: true },
+    { key: "effect", header: "Effect" },
+  ]}
+  rows={[
+    { flag: "--json", effect: "Typed envelope { apiVersion, type, data }. Errors return { error, code, suggestions }" },
+    { flag: "--dense", effect: "Compressed text sized for an AI context window" },
+    { flag: "--type", effect: "Restrict search to component, icon, shell or doc" },
+    { flag: "--category", effect: "Filter icon by action, object, indicator or component" },
+    { flag: "--limit", effect: "Cap search results" },
+  ]}
+/>
 
-## The workflow it expects
+</Section>
 
-The order matters. Picking the frame before the content is the difference between
-a product and a padded scroll column.
+<Section title="The workflow it expects">
 
-```bash
-yarn dbui shell                    # 1. pick a frame
-yarn dbui shell B --dense          # 2. read its regions and budgets
-yarn dbui search "faceted filter"  # 3. find what the regions need
-yarn dbui component Combobox --dense   # 4. read the rules before using it
-yarn dbui check src/app            # 5. verify the result
-```
+<P>
+  The order matters. Picking the frame before the content is the difference between a product and a
+  padded scroll column.
+</P>
 
-## What a component record contains
+<Cmd lines={[
+  ["yarn dbui shell", "1. pick a frame"],
+  ["yarn dbui shell B --dense", "2. read its regions and budgets"],
+  ["yarn dbui search \"faceted filter\"", "3. find what the regions need"],
+  ["yarn dbui component Combobox --dense", "4. read the rules before using it"],
+  ["yarn dbui check src/app", "5. verify the result"],
+]} />
 
-Nothing is hand-written. Guidelines and constraints come from the component's own
-JSDoc; category, use-for, avoid-for and synonyms from `component-index.md`; prop
-values from the CVA variant axes, following the import when the variants live in
-a shared `lib/*-variants.ts`.
+</Section>
 
-```
-Button (action) import { Button, ButtonChevron, ButtonIcon } from "dbui/components/ui/button"
-USE: Any click action — primary CTAs, toolbar actions, icon buttons, menu triggers
-AVOID: State that persists across clicks → use `Toggle`; on/off settings → `Switch`
-G: Use to trigger all click actions, no state memory
-G: Default to Outline for text, Ghost for icon buttons
-C: Avoid icons for Menu button variants
-C: No icons for Link variant - only exception is trailing NewWindow for external links
-C: Limit to one Primary button on a page or dialog
-variant: default|outline|secondary|ghost|link|destructive|danger
-size: sm|md|icon-sm|icon-md
-```
+<Section title="What a component record contains">
 
-## Errors
+<P>
+  Nothing here is hand-written. Guidelines and constraints come from the component's own JSDoc;
+  category, use-for, avoid-for and synonyms from <C>component-index.md</C>; prop values from the CVA
+  variant axes, following the import when the variants live in a shared{" "}
+  <C>lib/*-variants.ts</C>.
+</P>
 
-Unknown names return suggestions rather than nothing, and the `code` is stable so
-a caller can branch on it without matching prose.
+<Cmd lines={[
+  ["Button (action) import { Button, ButtonChevron, ButtonIcon } from \"dbui/components/ui/button\""],
+  ["USE: Any click action — primary CTAs, toolbar actions, icon buttons, menu triggers"],
+  ["AVOID: State that persists across clicks → use Toggle; on/off settings → Switch"],
+  ["G: Use to trigger all click actions, no state memory"],
+  ["G: Default to Outline for text, Ghost for icon buttons"],
+  ["C: Avoid icons for Menu button variants"],
+  ["C: Limit to one Primary button on a page or dialog"],
+  ["variant: default|outline|secondary|ghost|link|destructive|danger"],
+  ["size: sm|md|icon-sm|icon-md"],
+]} />
 
-```json
-{
-  "error": "No component named \"Buttn\"",
-  "code": "ERR_UNKNOWN_COMPONENT",
-  "suggestions": [{ "name": "Button", "reason": "similar name" }]
-}
-```
+</Section>
 
-## Where it looks for DBUI
+<Section title="Errors">
 
-`DBUI_ROOT` if set, then a `packages/dbui/` directory walking up from the CLI or
-the working directory, then a vendored `dbui/` directory — so the same binary
-works inside this repo and inside a project that installed by copying.
+<P>
+  Unknown names return suggestions rather than nothing, and the <C>code</C> is stable so a caller
+  can branch on it without matching prose.
+</P>
 
-## Not built yet
+<Cmd lines={[
+  ["{"],
+  ["  \"error\": \"No component named \\\"Buttn\\\"\","],
+  ["  \"code\": \"ERR_UNKNOWN_COMPONENT\","],
+  ["  \"suggestions\": [{ \"name\": \"Button\", \"reason\": \"similar name\" }]"],
+  ["}"],
+]} />
 
-`template --list` and `--skeleton` have nothing to emit until page types carry a
-`.meta.ts` describing their regions. `theme build` has no `defineTheme` to
-compile. Both are tracked.
+</Section>
+
+<Section title="Where it looks for DBUI">
+
+<P>
+  <C>DBUI_ROOT</C> if set, then a <C>packages/dbui/</C> directory walking up from the CLI or the
+  working directory, then a vendored <C>dbui/</C> directory — so the same binary works inside this
+  repo and inside a project that installed by copying.
+</P>
+
+</Section>
+
+<Section title="Not built yet">
+
+<DocTable
+  columns={[
+    { key: "cmd", header: "Command", width: "w-[190px]", mono: true },
+    { key: "blocked", header: "Blocked on" },
+    { key: "state", header: "State", width: "w-[110px]" },
+  ]}
+  rows={[
+    {
+      cmd: "template --skeleton",
+      blocked: "Page types carry no .meta.ts describing their regions, so there is nothing to emit.",
+      state: <Tag>blocked</Tag>,
+    },
+    {
+      cmd: "theme build",
+      blocked: "There is no defineTheme to compile yet.",
+      state: <Tag>blocked</Tag>,
+    },
+    {
+      cmd: "init --features agents",
+      blocked: "Not started. Would generate AGENTS.md from the installed version.",
+      state: <Tag>planned</Tag>,
+    },
+  ]}
+/>
+
+</Section>
+
+</DocPage>
