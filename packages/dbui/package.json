@@ -64,7 +64,17 @@
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18",
-    "tailwindcss": ">=4"
+    "tailwindcss": ">=4",
+    "react-resizable-panels": ">=2",
+    "recharts": ">=2"
+  },
+  "peerDependenciesMeta": {
+    "react-resizable-panels": {
+      "optional": true
+    },
+    "recharts": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "tsup": "^8.5.1"
