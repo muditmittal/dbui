@@ -29,10 +29,10 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        info:    "bg-muted border-border",
-        warning: "bg-surface-warning border-warning",
-        success: "bg-surface-success border-success",
-        danger:  "bg-surface-danger border-destructive",
+        info:    "bg-surface-subtle border-border-base",
+        warning: "bg-status-surface-warning border-status-border-warning",
+        success: "bg-status-surface-positive border-success",
+        danger:  "bg-status-surface-negative border-destructive",
       },
     },
     defaultVariants: {
@@ -71,10 +71,10 @@ function AlertIcon({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="alert-icon"
       className={cn(
         "flex shrink-0 items-center py-0.5 [&_svg:not([class*='size-'])]:size-4",
-        "group-data-[variant=danger]/alert:text-destructive",
-        "group-data-[variant=warning]/alert:text-warning",
-        "group-data-[variant=success]/alert:text-success",
-        "group-data-[variant=info]/alert:text-foreground",
+        "group-data-[variant=danger]/alert:text-status-text-negative",
+        "group-data-[variant=warning]/alert:text-status-text-warning",
+        "group-data-[variant=success]/alert:text-status-text-positive",
+        "group-data-[variant=info]/alert:text-text-base",
         className
       )}
       {...props}
@@ -97,7 +97,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-title"
       className={cn(
-        "font-semibold text-[13px] leading-[20px] group-data-[variant=danger]/alert:text-destructive group-data-[variant=warning]/alert:text-warning group-data-[variant=success]/alert:text-success group-data-[variant=info]/alert:text-foreground",
+        "font-semibold text-[13px] leading-[20px] group-data-[variant=danger]/alert:text-status-text-negative group-data-[variant=warning]/alert:text-status-text-warning group-data-[variant=success]/alert:text-status-text-positive group-data-[variant=info]/alert:text-text-base",
         className
       )}
       {...props}
@@ -112,7 +112,7 @@ function AlertDescription({
   return (
     <div
       data-slot="alert-description"
-      className={cn("text-[13px] leading-[20px] text-foreground", className)}
+      className={cn("text-[13px] leading-[20px] text-text-base", className)}
       {...props}
     />
   )
@@ -138,7 +138,7 @@ function AlertClose({
       type="button"
       aria-label="Dismiss"
       className={cn(
-        "inline-flex size-6 shrink-0 items-center justify-center rounded-sm p-1 text-muted-foreground hover:text-foreground [&_svg:not([class*='size-'])]:size-4",
+        "inline-flex size-6 shrink-0 items-center justify-center rounded-sm p-1 text-text-subtle hover:text-text-base [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

@@ -62,18 +62,18 @@ const statusIconMap: Record<StatusType, Record<"sm" | "md", React.ComponentType<
 }
 
 const statusColorMap: Record<StatusType, string> = {
-  online: "text-success",
-  ready: "text-success",
-  offline: "text-destructive",
+  online: "text-status-text-positive",
+  ready: "text-status-text-positive",
+  offline: "text-status-text-negative",
   pending: "text-input",
   running: "text-primary",
-  syncing: "text-muted-foreground",
-  canceled: "text-muted-foreground",
-  stopped: "text-muted-foreground",
-  info: "text-muted-foreground",
-  success: "text-success",
-  warning: "text-warning",
-  error: "text-destructive",
+  syncing: "text-text-subtle",
+  canceled: "text-text-subtle",
+  stopped: "text-text-subtle",
+  info: "text-text-subtle",
+  success: "text-status-text-positive",
+  warning: "text-status-text-warning",
+  error: "text-status-text-negative",
 }
 
 function Status({

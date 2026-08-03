@@ -19,7 +19,7 @@ function EditorTabs({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="editor-tabs"
       role="tablist"
       className={cn(
-        "flex items-center bg-muted border-b border-border",
+        "flex items-center bg-surface-subtle border-b border-border-base",
         className
       )}
       {...props}
@@ -46,10 +46,10 @@ function EditorTab({
       aria-selected={active}
       data-active={active || undefined}
       className={cn(
-        "group/editor-tab relative flex h-8 shrink-0 items-center gap-2 border-l border-r border-border px-2 py-1 text-[13px] leading-[20px] font-normal select-none",
+        "group/editor-tab relative flex h-8 shrink-0 items-center gap-2 border-l border-r border-border-base px-2 py-1 text-[13px] leading-[20px] font-normal select-none",
         active
-          ? "bg-background text-foreground"
-          : "bg-transparent text-muted-foreground",
+          ? "bg-surface-base text-text-base"
+          : "bg-transparent text-text-subtle",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}
@@ -83,7 +83,7 @@ function EditorTabAddButton({ className, ...props }: React.ComponentProps<"butto
       data-slot="editor-tab-add"
       aria-label="Add tab"
       className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-sm p-2 text-muted-foreground hover:text-foreground",
+        "flex size-8 shrink-0 items-center justify-center rounded-sm p-2 text-text-subtle hover:text-text-base",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

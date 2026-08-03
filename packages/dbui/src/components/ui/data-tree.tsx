@@ -156,7 +156,7 @@ function TreeSection({
             case "ArrowLeft": { e.preventDefault(); if (expanded) setExpanded(false); break }
           }
         }}
-        className="flex h-7 items-center gap-1 rounded-sm px-1 text-[12px] leading-[16px] text-muted-foreground hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+        className="flex h-7 items-center gap-1 rounded-sm px-1 text-[12px] leading-[16px] text-text-subtle hover:text-text-base outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
         aria-expanded={expanded}
       >
         {expanded
@@ -200,7 +200,7 @@ function TreeNode({
   nodeId?: string
   /** Asset icon. Color is owned by the consumer (or by an L2 wrapper like
    *  `<DataTree>`/`<FileTree>` which apply a kind-driven tone). The TreeNode
-   *  primitive only sets a neutral fallback (`text-muted-foreground`). */
+   *  primitive only sets a neutral fallback (`text-text-subtle`). */
   icon?: React.ReactNode
   /** Alternate icon when expanded — used by File Tree to swap closed → open
    *  folder glyphs. Defaults to `icon` if not provided. */
@@ -373,7 +373,7 @@ function TreeNode({
           //   selected→ action/press (16% blue tint, layers on hover) = bg-press
           "hover:bg-hover",
           isSelected && selectable && "bg-press",
-          "text-foreground",
+          "text-text-base",
           className
         )}
         onClick={handleClick}
@@ -391,13 +391,13 @@ function TreeNode({
             <span className={cn(
               // Chevron color rules:
               //   • collapsed + idle  → text-input (light)
-              //   • collapsed + hover → text-muted-foreground (darken on hover)
-              //   • expanded          → text-muted-foreground (always)
+              //   • collapsed + hover → text-text-subtle (darken on hover)
+              //   • expanded          → text-text-subtle (always)
               // Direction (right vs down) follows expansion independently.
               "flex size-4 items-center justify-center",
               isExpanded
-                ? "text-muted-foreground"
-                : "text-input group-hover/tree-item:text-muted-foreground"
+                ? "text-text-subtle"
+                : "text-input group-hover/tree-item:text-text-subtle"
             )}>
               {isExpanded
                 ? <ChevronDown className="size-3" />
@@ -411,12 +411,12 @@ function TreeNode({
 
         {/* Icon — color is owned by the asset (kind-driven via L2 wrappers, or
          * the consumer-supplied icon node). The TreeNode container only sets a
-         * neutral fallback (text-muted-foreground) which gets overridden by an
+         * neutral fallback (text-text-subtle) which gets overridden by an
          * inner span when L2 wraps the icon (e.g. text-icon-folder for File
          * Tree folders). Icon color is intentionally STABLE across selected /
          * expanded / hover states — only the chevron darkens on expansion. */}
         {activeIcon && (
-          <span className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4">
+          <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
             {activeIcon}
           </span>
         )}
@@ -430,7 +430,7 @@ function TreeNode({
          * callback-dependent). Click handlers are optional; if a callback is
          * not provided, the button is cosmetic (consumer can wire later). */}
         {trailing ? (
-          <span className="flex shrink-0 items-center gap-1 text-muted-foreground opacity-0 group-hover/tree-item:opacity-100 transition-opacity">
+          <span className="flex shrink-0 items-center gap-1 text-text-subtle opacity-0 group-hover/tree-item:opacity-100 transition-opacity">
             {trailing}
           </span>
         ) : selectable && (
@@ -441,7 +441,7 @@ function TreeNode({
              * leaves so e.g. you can't focus on a table or notebook. */}
             {(focusable ?? isExpandable) && (
               <button
-                className="flex size-6 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset [&_svg]:size-4"
+                className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-hover hover:text-text-base active:bg-press outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset [&_svg]:size-4"
                 aria-label="Focus here"
                 title="Focus here"
                 onClick={(e) => {
@@ -453,7 +453,7 @@ function TreeNode({
               </button>
             )}
             <button
-              className="flex size-6 items-center justify-center rounded-sm text-muted-foreground hover:bg-hover hover:text-foreground active:bg-press outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset [&_svg]:size-4"
+              className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-hover hover:text-text-base active:bg-press outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset [&_svg]:size-4"
               aria-label="More options"
               title="More options"
               onClick={(e) => {
@@ -521,7 +521,7 @@ function TreeNode({
             data-slot="tree-item-children"
             className="relative overflow-visible"
           >
-            {/* Trail line — `border-border` for resting tracks (matches the
+            {/* Trail line — `border-border-base` for resting tracks (matches the
              * Figma `.Track lines` stroke binding). Steps up to
              * `border-muted-foreground` (matching the expanded chevron's
              * color) for the *most recently expanded* row, or the parent
@@ -531,7 +531,7 @@ function TreeNode({
               <div
                 className={cn(
                   "absolute border-l pointer-events-none z-10 transition-colors",
-                  isHighlighted ? "border-muted-foreground" : "border-border",
+                  isHighlighted ? "border-muted-foreground" : "border-border-base",
                 )}
                 style={{
                   left: `${12 + depth * 8}px`,
@@ -542,7 +542,7 @@ function TreeNode({
             )}
             {childCount > 0 ? children : (
               <div
-                className="flex h-7 items-center text-[13px] text-muted-foreground"
+                className="flex h-7 items-center text-[13px] text-text-subtle"
                 style={{ paddingLeft: `${44 + (depth + 1) * 8}px` }}
               >
                 No items
@@ -565,7 +565,7 @@ function TreeNodeTag({
     <span
       data-slot="tree-node-tag"
       className={cn(
-        "inline-flex items-center gap-1 rounded bg-muted px-1.5 text-[12px] leading-[16px] text-muted-foreground",
+        "inline-flex items-center gap-1 rounded bg-surface-subtle px-1.5 text-[12px] leading-[16px] text-text-subtle",
         className
       )}
       {...props}
@@ -904,7 +904,7 @@ export type FileAssetKind =
  * The `tone` field selects the icon color via a Tailwind text-* class. It
  * matches Figma's per-kind binding on the `TreeNodeIcon` layer:
  *   • Folder kinds → `text-icon-folder` (#8ACAFF, primitive blue/blue400)
- *   • File kinds   → `text-muted-foreground` (default for the row)
+ *   • File kinds   → `text-text-subtle` (default for the row)
  */
 export const FILE_KIND_ICON: Record<
   FileAssetKind,

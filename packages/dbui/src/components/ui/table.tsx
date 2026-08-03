@@ -53,7 +53,7 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
     <tfoot
       data-slot="table-footer"
       className={cn(
-        "border-t bg-muted/50 font-semibold [&>tr]:last:border-b-0",
+        "border-t bg-surface-subtle/50 font-semibold [&>tr]:last:border-b-0",
         className
       )}
       {...props}
@@ -66,7 +66,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+        "border-b transition-colors hover:bg-surface-subtle/50 data-[state=selected]:bg-surface-subtle",
         className
       )}
       {...props}
@@ -79,7 +79,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "h-10 px-2 text-left align-middle font-semibold whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0",
+        "h-10 px-2 text-left align-middle font-semibold whitespace-nowrap text-text-base [&:has([role=checkbox])]:pr-0",
         className
       )}
       {...props}
@@ -107,7 +107,7 @@ function TableCaption({
   return (
     <caption
       data-slot="table-caption"
-      className={cn("mt-4 text-[13px] text-muted-foreground", className)}
+      className={cn("mt-4 text-[13px] text-text-subtle", className)}
       {...props}
     />
   )
@@ -195,7 +195,7 @@ function TableCellMeta({
     <span
       data-slot="table-cell-meta"
       className={cn(
-        "truncate text-[12px] leading-[16px] text-muted-foreground",
+        "truncate text-[12px] leading-[16px] text-text-subtle",
         className
       )}
       {...props}
@@ -268,7 +268,7 @@ function TableCellExpandable({
       data-expanded={expanded || undefined}
       aria-expanded={expanded}
       className={cn(
-        "flex items-center gap-2 text-left font-mono text-[13px] leading-[20px] text-accent-foreground",
+        "flex items-center gap-2 text-left font-mono text-[13px] leading-[20px] text-text-accent",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}
@@ -340,8 +340,8 @@ function TableSortButton({
       data-direction={sorted ? direction : undefined}
       aria-label="Sort column"
       className={cn(
-        "inline-flex size-5 items-center justify-center rounded-sm p-1 text-muted-foreground hover:text-foreground",
-        sorted && "text-foreground",
+        "inline-flex size-5 items-center justify-center rounded-sm p-1 text-text-subtle hover:text-text-base",
+        sorted && "text-text-base",
         className
       )}
       {...props}

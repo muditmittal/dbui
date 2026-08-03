@@ -53,7 +53,7 @@ function NavbarSection({
   return (
     <div
       data-slot="navbar-section"
-      className={cn("flex flex-col border-t border-border pt-2 mt-2", className)}
+      className={cn("flex flex-col border-t border-border-base pt-2 mt-2", className)}
       {...props}
     >
       {React.Children.map(children, (child) => {
@@ -92,14 +92,14 @@ function NavbarSectionHeader({
       aria-expanded={expanded}
       onClick={onToggle}
       className={cn(
-        "flex w-full items-center gap-1 px-2 py-1 text-[12px] leading-[16px] text-muted-foreground hover:text-foreground",
+        "flex w-full items-center gap-1 px-2 py-1 text-[12px] leading-[16px] text-text-subtle hover:text-text-base",
         className
       )}
       {...props}
     >
       <span className="flex-1 truncate text-left">{children}</span>
       <ChevronDown
-        className={cn("size-3 shrink-0 text-muted-foreground transition-transform", !expanded && "-rotate-90")}
+        className={cn("size-3 shrink-0 text-text-subtle transition-transform", !expanded && "-rotate-90")}
       />
     </button>
   )
@@ -109,7 +109,7 @@ NavbarSectionHeader.displayName = "NavbarSectionHeader"
 /**
  * NavbarItem — single navigation item.
  * h-7 (28px), gap-2, px-2, rounded-sm.
- * Active: bg-accent, text-accent-foreground, font-semibold.
+ * Active: bg-surface-accent, text-text-accent, font-semibold.
  */
 function NavbarItem({
   className,
@@ -121,9 +121,9 @@ function NavbarItem({
       data-slot="navbar-item"
       data-active={active || undefined}
       className={cn(
-        "flex h-7 w-full items-center gap-2 rounded-sm px-2 text-[13px] leading-[20px] font-normal text-foreground text-left",
+        "flex h-7 w-full items-center gap-2 rounded-sm px-2 text-[13px] leading-[20px] font-normal text-text-base text-left",
         "hover:bg-hover",
-        active && "bg-accent text-accent-foreground font-semibold [&_[data-slot=navbar-item-icon]]:text-accent-foreground",
+        active && "bg-surface-accent text-text-accent font-semibold [&_[data-slot=navbar-item-icon]]:text-text-accent",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}
@@ -143,7 +143,7 @@ function NavbarItemIcon({
     <span
       data-slot="navbar-item-icon"
       className={cn(
-        "pointer-events-none flex shrink-0 items-center text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
+        "pointer-events-none flex shrink-0 items-center text-text-subtle [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -156,7 +156,7 @@ function NavbarNewButton({ className, ...props }: React.ComponentProps<"button">
     <button
       data-slot="navbar-new-button"
       className={cn(
-        "flex h-8 w-full items-center gap-2 rounded-lg bg-background px-3 shadow-md text-[13px] leading-[20px] font-semibold text-secondary-foreground",
+        "flex h-8 w-full items-center gap-2 rounded-lg bg-surface-base px-3 shadow-md text-[13px] leading-[20px] font-semibold text-text-base",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

@@ -124,7 +124,7 @@ function PlatformHeaderBadge({
     <span
       data-slot="platform-header-badge"
       className={cn(
-        "text-[14px] leading-[20px] text-foreground",
+        "text-[14px] leading-[20px] text-text-base",
         className
       )}
       {...props}

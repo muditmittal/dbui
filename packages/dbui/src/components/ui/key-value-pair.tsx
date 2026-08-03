@@ -45,7 +45,7 @@ function KeyValueTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="key-value-title"
       className={cn(
-        "flex items-center gap-1 py-2 text-[13px] font-semibold text-foreground",
+        "flex items-center gap-1 py-2 text-[13px] font-semibold text-text-base",
         className
       )}
       {...props}
@@ -86,7 +86,7 @@ function KeyValueKey({
     <span
       data-slot="key-value-key"
       className={cn(
-        "overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground",
+        "overflow-hidden text-ellipsis whitespace-nowrap text-text-subtle",
         layout === "vertical"
           ? "w-full shrink-0 text-[12px] leading-[16px]"
           : layout === "flexible"
@@ -104,7 +104,7 @@ function KeyValueValue({ className, ...props }: React.ComponentProps<"span">) {
     <span
       data-slot="key-value-value"
       className={cn(
-        "flex min-h-px min-w-px flex-1 items-center gap-2 text-[13px] leading-[20px] text-foreground",
+        "flex min-h-px min-w-px flex-1 items-center gap-2 text-[13px] leading-[20px] text-text-base",
         className
       )}
       {...props}
@@ -121,7 +121,7 @@ function KeyValueValueEnd({ className, ...props }: React.ComponentProps<"span">)
     <span
       data-slot="key-value-value-end"
       className={cn(
-        "flex min-h-px min-w-px flex-1 items-center justify-end gap-2 text-[13px] leading-[20px] text-foreground text-right",
+        "flex min-h-px min-w-px flex-1 items-center justify-end gap-2 text-[13px] leading-[20px] text-text-base text-right",
         className
       )}
       {...props}
