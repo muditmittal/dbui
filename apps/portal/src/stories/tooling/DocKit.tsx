@@ -2,7 +2,10 @@ import * as React from "react"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "dbui/components/ui/table"
 import { Badge } from "dbui/components/ui/badge"
 import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription } from "dbui/components/ui/alert"
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "dbui/components/ui/collapsible"
 import { InfoSmall } from "dbui/components/icons/InfoSmall"
+import { ChevronDown } from "dbui/components/icons/ChevronDown"
+import { ChevronUp } from "dbui/components/icons/ChevronUp"
 
 /**
  * Documentation primitives for the Tooling pages, built from DBUI components so
@@ -45,9 +48,29 @@ export function DocPage({ title, children }: { title: string; children: React.Re
   )
 }
 
-/** Groups the lede, the contents list and any opening note into one block. */
-export function Intro({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-4">{children}</div>
+/**
+ * The lede, the contents list and any opening note are metadata about the page
+ * rather than the page itself, so they sit in a container that reads as chrome
+ * and start collapsed. A reader who already knows the material goes straight to
+ * the first section; anyone orienting themselves opens it.
+ */
+export function ContentSummary({ children }: { children: React.ReactNode }) {
+  return (
+    <Collapsible defaultOpen={false}>
+      <div className="overflow-hidden rounded-md border border-border-base bg-surface-subtle">
+        <CollapsibleTrigger className="group/summary flex w-full cursor-default items-center gap-2 px-4 py-2.5 text-left text-[13px] leading-[20px] font-semibold text-text-base outline-none hover:bg-action-default-hover focus-visible:shadow-focus [&_svg:not([class*='size-'])]:size-4">
+          <ChevronDown className="shrink-0 text-text-subtle group-aria-expanded/summary:hidden" />
+          <ChevronUp className="hidden shrink-0 text-text-subtle group-aria-expanded/summary:inline" />
+          Content summary
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="flex flex-col gap-4 border-t border-border-base px-4 py-4">
+            {children}
+          </div>
+        </CollapsibleContent>
+      </div>
+    </Collapsible>
+  )
 }
 
 export function Lede({ children }: { children: React.ReactNode }) {

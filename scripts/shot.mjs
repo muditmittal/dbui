@@ -95,6 +95,17 @@ try {
   }, sessionId);
   await send("Page.navigate", { url }, sessionId);
 
+  // Optional: click something before capturing, to shoot an interactive state.
+  const clickArg = process.argv.find((a) => a.startsWith("--click="));
+  if (clickArg) {
+    const selector = clickArg.slice("--click=".length);
+    await sleep(3500);
+    await send("Runtime.evaluate", {
+      expression: `document.querySelector(${JSON.stringify(selector)})?.click()`,
+    }, sessionId);
+    await sleep(800);
+  }
+
   // Storybook docs render client-side; poll until the body stops growing.
   let last = -1;
   for (let i = 0; i < 40; i++) {
