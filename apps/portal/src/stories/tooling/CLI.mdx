@@ -1,0 +1,97 @@
+import { Meta } from "@storybook/blocks"
+
+<Meta title="Tooling/CLI" />
+
+# dbui CLI
+
+The machine-readable surface for the system. Same data as this portal, addressable
+from a terminal or a subprocess.
+
+```bash
+yarn dbui <command> [argument] [flags]
+```
+
+`dbui manifest --json` describes every command and flag and is the authoritative
+reference — this page is a readable copy of it.
+
+## Commands
+
+| Command | Argument | What it returns |
+|---|---|---|
+| `component` | `[name]` | Every component by category, or one with its guidelines, constraints, prop values and import path |
+| `icon` | `[name]` | Icons grouped by semantic category, or one with its label and synonyms |
+| `shell` | `[A–E]` | The five page shells, or one with its regions, scroll ownership and forbidden compositions |
+| `token` | `[group]` | Token groups and counts, or one group with light and dark values |
+| `docs` | `[topic]` | A reference document in full |
+| `search` | `<query>` | Components, icons, shells and docs in one ranked result set |
+| `check` | `<path>` | Design linter findings for a file or directory |
+| `doctor` | | Health of the setup. Exits non-zero on failure, so it works as a CI gate |
+| `manifest` | | Self-description, for agent discovery |
+
+## Flags
+
+| Flag | Effect |
+|---|---|
+| `--json` | Typed envelope `{ apiVersion, type, data }`. Errors return `{ error, code, suggestions }` |
+| `--dense` | Compressed text sized for an AI context window |
+| `--type` | Restrict `search` to `component`, `icon`, `shell` or `doc` |
+| `--category` | Filter `icon` by `action`, `object`, `indicator` or `component` |
+| `--limit` | Cap `search` results |
+
+## The workflow it expects
+
+The order matters. Picking the frame before the content is the difference between
+a product and a padded scroll column.
+
+```bash
+yarn dbui shell                    # 1. pick a frame
+yarn dbui shell B --dense          # 2. read its regions and budgets
+yarn dbui search "faceted filter"  # 3. find what the regions need
+yarn dbui component Combobox --dense   # 4. read the rules before using it
+yarn dbui check src/app            # 5. verify the result
+```
+
+## What a component record contains
+
+Nothing is hand-written. Guidelines and constraints come from the component's own
+JSDoc; category, use-for, avoid-for and synonyms from `component-index.md`; prop
+values from the CVA variant axes, following the import when the variants live in
+a shared `lib/*-variants.ts`.
+
+```
+Button (action) import { Button, ButtonChevron, ButtonIcon } from "dbui/components/ui/button"
+USE: Any click action — primary CTAs, toolbar actions, icon buttons, menu triggers
+AVOID: State that persists across clicks → use `Toggle`; on/off settings → `Switch`
+G: Use to trigger all click actions, no state memory
+G: Default to Outline for text, Ghost for icon buttons
+C: Avoid icons for Menu button variants
+C: No icons for Link variant - only exception is trailing NewWindow for external links
+C: Limit to one Primary button on a page or dialog
+variant: default|outline|secondary|ghost|link|destructive|danger
+size: sm|md|icon-sm|icon-md
+```
+
+## Errors
+
+Unknown names return suggestions rather than nothing, and the `code` is stable so
+a caller can branch on it without matching prose.
+
+```json
+{
+  "error": "No component named \"Buttn\"",
+  "code": "ERR_UNKNOWN_COMPONENT",
+  "suggestions": [{ "name": "Button", "reason": "similar name" }]
+}
+```
+
+## Where it looks for DBUI
+
+`DBUI_ROOT` if set, then a `packages/dbui/` directory walking up from the CLI or
+the working directory, then a vendored `dbui/` directory — so the same binary
+works inside this repo and inside a project that installed by copying.
+
+## Not built yet
+
+`template --list` and `--skeleton` have nothing to emit until page types carry a
+`.meta.ts` describing their regions. `theme build` has no `defineTheme` to
+compile. Both are tracked.

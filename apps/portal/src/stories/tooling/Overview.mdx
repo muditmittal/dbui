@@ -1,0 +1,50 @@
+import { Meta } from "@storybook/blocks"
+
+<Meta title="Tooling/Overview" />
+
+# Tooling
+
+Everything DBUI ships that is not a component. Each entry below has its own page.
+
+## The rule
+
+There is one API and every surface renders it. `packages/dbui-cli/src/api.mjs`
+reads components, icons, shells, tokens and docs from source at call time. The
+CLI formats that for a terminal, the MCP server formats it for an agent, and
+nothing is hand-maintained in between. If the CLI and the MCP server ever
+disagree, that is a bug in the formatter, not a data problem.
+
+## Inventory
+
+| Tool | What it is | Where | Run it |
+|---|---|---|---|
+| **dbui CLI** | Nine commands over components, icons, shells, tokens and docs. Typed JSON envelopes for machines. | `packages/dbui-cli` | `yarn dbui <command>` |
+| **dbui MCP server** | JSON-RPC over stdio. Four tools, five resources. Zero dependencies. | `packages/dbui-mcp` | wired in `.cursor/mcp.json` |
+| **React design lint** | 11 rules over the AST: raw HTML where a component exists, hardcoded colour, off-scale spacing, non-token radii. | `scripts/design-lint/react-lint.js` | `yarn design:lint:react <path>` |
+| **Figma design lint** | 9 rules that run inside a Figma file via MCP. Reports a token-compliance score. | `scripts/design-lint/figma-lint.js` | `yarn design:lint:figma --target <nodeId>` |
+| **Token generator** | `theme.config.mjs` to `tokens.css` and the linter allowlist. The only way tokens change. | `scripts/design-lint/generate-tokens.mjs` | `yarn design:tokens` |
+| **Token sync verifier** | Asserts config, CSS and Figma agree. Exits non-zero on drift. | `scripts/design-lint/verify-token-sync.mjs` | `yarn design:verify-sync` |
+| **Legacy token audit** | Crosses every legacy token against every Tailwind colour prefix. Cannot agree with the codemod by construction. | `scripts/migrations/audit-legacy-tokens.mjs` | `node scripts/migrations/audit-legacy-tokens.mjs` |
+| **Agent skills** | Four procedures an agent loads on trigger: pick a component, pick an icon, build a screen, validate output. | `packages/dbui/skills/` | loaded by the agent |
+
+## Agent-facing files
+
+| File | Reader | Contains |
+|---|---|---|
+| `AGENTS.md` | Coding agents at session start | Repo map, commands, boundaries, pointers. Kept under 150 lines on purpose. |
+| `packages/dbui/DESIGN.md` | Agents generating UI without the codebase | The visual language as YAML tokens plus eight fixed sections. |
+| `packages/dbui/composition.md` | Anyone building a screen | Five page shells with regions, pixel budgets, scroll ownership, forbidden compositions. |
+| `llms.txt` | AI search and docs-pointed agents | Curated index of the highest-value documents. |
+| `CONTRIBUTING.md` | Anyone changing the system | Which files must move together for each kind of change. |
+
+## Migration tooling
+
+Written for the legacy-to-semantic token migration. Kept because the pattern is
+reusable and because they document what happened.
+
+| Script | What it did |
+|---|---|
+| `stage-a-tokens.mjs` | 772 mechanical renames across nine batches. `--verify` and `--files` for per-batch staging. |
+| `stage-b-tokens.mjs` | 357 value shifts. Resolves on the full class token including variant prefixes, because `border-primary` means two different things depending on whether it sits under `hover:` or `data-checked:`. |
+| `stage-c-vars.mjs` | 21 `var(--legacy)` references in component source that no utility audit could see. |
+| `stage-c-prune.mjs` | Deleted 159 declarations from each stylesheet, against an explicit keep-list. |

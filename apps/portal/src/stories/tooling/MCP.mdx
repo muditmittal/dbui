@@ -1,0 +1,78 @@
+import { Meta } from "@storybook/blocks"
+
+<Meta title="Tooling/MCP server" />
+
+# dbui MCP server
+
+Lets any MCP-capable agent query the design system directly, instead of being
+handed pasted documentation. JSON-RPC 2.0 over stdio.
+
+It imports the CLI's API module rather than shelling out to the CLI, so the two
+surfaces render identical data.
+
+## Connect
+
+Already wired for this repo in `.cursor/mcp.json`. Reload the window after
+changing that file.
+
+```json
+{
+  "mcpServers": {
+    "dbui": {
+      "command": "node",
+      "args": ["${workspaceFolder}/packages/dbui-mcp/src/server.mjs"]
+    }
+  }
+}
+```
+
+Outside the repo, point `args` at an absolute path and set `DBUI_ROOT` to a
+directory containing `packages/dbui/` or a vendored `dbui/`.
+
+## Tools
+
+| Tool | Arguments | What it answers |
+|---|---|---|
+| `dbui_search` | `query`, `type?`, `limit?` | *Is what I need a component, an icon or a shell?* Ranked across all four domains. |
+| `dbui_list` | `kind`, `category?` | *What are my options?* Components by category, icons by category, the five shells, token groups, doc topics. |
+| `dbui_get` | `kind`, `name` | *How do I use this correctly?* Guidelines, constraints and prop values for a component; regions, scroll ownership and forbidden compositions for a shell. |
+| `dbui_check` | `path` | *Is this output correct?* Runs the design linter over any React source, not only code built with DBUI. |
+
+`kind` is one of `component`, `icon`, `shell`, `token`, `doc`.
+
+Responses use the dense renderer, because they land directly in a context window.
+An unknown name returns `isError` with suggestions rather than an empty result, so
+the agent can recover in one turn.
+
+## Resources
+
+For clients that prefer reading whole documents over calling tools.
+
+| URI | Document |
+|---|---|
+| `dbui://design` | The visual language — colour, type, layout, elevation, shape, do's and don'ts |
+| `dbui://composition` | Page shells with regions, pixel budgets and forbidden compositions |
+| `dbui://component-index` | Every component by category with use-for and avoid-for |
+| `dbui://icon-index` | Every icon by semantic category with labels and synonyms |
+| `dbui://brandvoice` | Voice and tone — vocabulary, banned words, microcopy templates |
+
+## Why it has no dependencies
+
+The MCP SDK would be the conventional choice. DBUI is deliberately close to
+zero-dependency, the protocol surface needed here is small and stable, and the
+npm registry is not reliably reachable from the corporate network. Hand-rolling
+the transport removed a blocker rather than adding risk.
+
+## Testing it by hand
+
+The server reads newline-delimited JSON on stdin, so it can be driven without a
+client:
+
+```bash
+printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' \
+  | node packages/dbui-mcp/src/server.mjs
+```
+
+A 12-case conformance harness covers `initialize`, `tools/list`, `tools/call`,
+`resources/list`, `resources/read`, unknown-method error codes and the suggestion
+path.

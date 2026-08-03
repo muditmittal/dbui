@@ -1,0 +1,99 @@
+import { Meta } from "@storybook/blocks"
+
+<Meta title="Tooling/Checks and skills" />
+
+# Checks and skills
+
+The enforcement layer. Two linters, a token pipeline, and four procedures an
+agent loads when a task matches.
+
+## React design lint
+
+Scans `.tsx` with ts-morph and reports by severity. It runs against any React
+source, not only code built with DBUI — that is the point, and it is the reason
+someone outside the team has a reason to run it.
+
+```bash
+yarn design:lint:react <path>          # human output
+yarn design:lint:react <path> --json   # machine output
+yarn dbui check <path>                 # same thing, through the CLI
+```
+
+| Rule | Catches |
+|---|---|
+| `non-dbui-component` | A component that is not a known DBUI export |
+| `prefer-dbui-wrapper` | Raw HTML where a DBUI component exists |
+| `no-raw-interactive-html` | `<button>`, `<input>`, `<select>` in authored UI |
+| `no-arbitrary-color` | Any colour that is not a token |
+| `no-hardcoded-hex` | A hex literal in a className |
+| `inline-hardcoded-color` | The same in an inline style |
+| `prefer-token-class` | A raw value where a token utility exists |
+| `off-scale-spacing` | Spacing off the 4px scale |
+| `inline-off-scale-spacing` | The same in an inline style |
+| `off-ramp-type-size` | A font size outside the type scale |
+| `off-ramp-line-height` | A line height outside the scale |
+| `non-token-radius` | A radius that is not a token |
+| `no-primitive-token` | Reaching past the semantic layer into a primitive |
+
+Reading it on DBUI's own source: rules written for consumers necessarily fire on
+the primitives that implement them. `<Button>` contains a raw `<button>`, so
+`no-raw-interactive-html` reports it. `dbui-shells` is the honest signal, because
+it composes rather than defines — it reports zero errors.
+
+## Figma design lint
+
+Nine rules that run inside a Figma file through the MCP tool, plus a
+token-compliance score.
+
+```bash
+yarn design:lint:figma --target <nodeId>
+```
+
+Catches detached instances, fills and strokes that are not bound to a variable,
+primitive-bound values that should be semantic, off-scale spacing, non-token
+fonts and type sizes, and non-token radii.
+
+## Token pipeline
+
+`theme.config.mjs` is the only place tokens change. Everything else is generated.
+
+```bash
+yarn design:tokens         # config -> tokens.css + the linter allowlist
+yarn design:verify-sync    # assert config, CSS and Figma agree
+```
+
+`verify-sync` checks six things: primitives match Figma, semantics match Figma,
+every semantic ships in both modes, every semantic has exactly one Tailwind
+utility, no primitive leaks into shipped CSS, and every value round-trips from
+the config. It exits non-zero on drift, so it belongs in CI.
+
+## Legacy token audit
+
+Written during the migration and kept because it demonstrates a principle worth
+reusing: **a verifier that shares a list with the thing it verifies proves
+nothing.**
+
+The first migration verifier checked only the utility names in its own map and
+reported a confident zero while 474 legacy utilities remained. The audit derives
+its list from the tokens themselves crossed with every Tailwind colour prefix, so
+it cannot agree with the codemod by construction.
+
+```bash
+node scripts/migrations/audit-legacy-tokens.mjs
+```
+
+## Agent skills
+
+Procedures in `packages/dbui/skills/`, loaded when a task matches the trigger
+phrase rather than held in context permanently.
+
+| Skill | Fires when |
+|---|---|
+| `dbui-build-screen` | Building a page or screen. The primary workflow: pick a shell, map regions, fill, validate. |
+| `dbui-pick-component` | Choosing between components, including the near-miss pairs — AlertDialog vs Dialog, Select vs Combobox, Tag vs Badge. |
+| `dbui-pick-icon` | Choosing an icon, and respecting the object / action / indicator / component categories. |
+| `dbui-validate` | Checking output. Errors, then warnings, then information. |
+
+Four more are designed but not written: `dbui-from-screenshot`, `dbui-migrate`,
+`dbui-crit`, and `dbui-add-component` — the last being the contributor-side skill
+that walks the change protocol in `CONTRIBUTING.md` so documentation cannot drift.

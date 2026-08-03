@@ -18,6 +18,7 @@ const preview: Preview = {
         method: "alphabetical",
         order: [
           "dbui",
+          "Tooling",
           "Icons",
           "Tokens",
           "Actions",
