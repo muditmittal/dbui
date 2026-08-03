@@ -1,0 +1,17 @@
+{
+  "name": "dbui-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for the DBUI design system — search, read and lint over stdio",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "dbui-mcp": "./src/server.mjs"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

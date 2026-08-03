@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "dbui-mcp": {
+    "dbui": {
       "command": "node",
-      "args": ["${workspaceFolder}/packages/dbui-mcp/src/index.js"]
+      "args": ["${workspaceFolder}/packages/dbui-mcp/src/server.mjs"]
     }
   }
 }

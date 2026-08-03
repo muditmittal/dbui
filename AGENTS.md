@@ -10,6 +10,8 @@ This file is the entry point. It tells you where to look; it does not repeat wha
 | Path | What |
 |---|---|
 | `packages/dbui/` | 61 components, 456 icons, tokens, docs, skills. The core. |
+| `packages/dbui-cli/` | The machine-readable surface. `--json` for typed envelopes. |
+| `packages/dbui-mcp/` | MCP server over the same API. Wired in `.cursor/mcp.json`. |
 | `packages/dbui-shells/` | Page shells and compositions. Every screen starts here. |
 | `packages/dbui-viz/` | 5 Vega-Lite charts. |
 | `packages/dbui-genie/` | 9 conversational-analytics primitives. |
@@ -21,6 +23,11 @@ This file is the entry point. It tells you where to look; it does not repeat wha
 ## Commands
 
 ```bash
+yarn dbui search <query>          # find a component, icon, shell or doc
+yarn dbui shell                   # list page shells — start here for any screen
+yarn dbui component <name>        # rules, constraints and props for one component
+yarn dbui check <path>            # run the design linter
+yarn dbui doctor                  # diagnose the setup
 yarn workspace portal storybook   # dev surface, port 6006
 yarn design:tokens                # theme.config.mjs -> tokens.css + tokens.json
 yarn design:verify-sync           # assert config <-> CSS <-> Figma parity

@@ -38,6 +38,8 @@
     "build:dbui": "yarn workspace dbui build",
     "lint": "yarn workspace portal lint",
     "preview": "concurrently -n portal,storybook -c blue,magenta \"yarn dev\" \"yarn workspace portal storybook\"",
+    "dbui": "node packages/dbui-cli/bin/dbui.mjs",
+    "mcp": "node packages/dbui-mcp/src/server.mjs",
     "design:lint:react": "node scripts/design-lint/react-lint.js",
     "design:lint:shells": "node scripts/design-lint/react-lint.js packages/dbui-shells/src",
     "design:lint:figma": "node scripts/design-lint/figma-lint.js",
