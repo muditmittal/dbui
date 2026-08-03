@@ -92,7 +92,7 @@ function ButtonIcon({
       data-slot="button-icon"
       className={cn(
         "pointer-events-none shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "text-muted-foreground",
+        "text-text-subtle",
         "group-data-[filled]/button:text-inherit",
         className
       )}

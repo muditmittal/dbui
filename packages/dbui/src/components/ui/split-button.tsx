@@ -59,7 +59,7 @@ function SplitButtonText({
     props: mergeProps<"div">(
       {
         className: cn(
-          "flex items-center gap-2 rounded-lg border bg-muted px-2.5 text-[13px] font-semibold [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+          "flex items-center gap-2 rounded-lg border bg-surface-subtle px-2.5 text-[13px] font-semibold [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
           className
         ),
       },

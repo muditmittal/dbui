@@ -14,12 +14,12 @@ import { cn } from "../../lib/utils"
  */
 
 const badgeVariants = cva(
-  "group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2 py-0.5 text-[12px] font-normal text-muted-foreground whitespace-nowrap [&>svg]:pointer-events-none [&>svg]:size-3!",
+  "group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2 py-0.5 text-[12px] font-normal text-text-subtle whitespace-nowrap [&>svg]:pointer-events-none [&>svg]:size-3!",
   {
     variants: {
       variant: {
-        fill: "bg-secondary",
-        outline: "border border-border",
+        fill: "bg-surface-subtle",
+        outline: "border border-border-base",
       },
     },
     defaultVariants: {

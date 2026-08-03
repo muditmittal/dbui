@@ -27,12 +27,12 @@ type SegmentControlVariantProps = {
  * Figma component: "Segment Control" (2 variants × 2 sizes)
  *
  * ── Default variant ──
- * Container: bg-muted, rounded-sm, p-1 (Default) / p-0.5 (Small), gap-1 / gap-0.5
- * Selected item: bg-background, shadow-xs, NO border, rounded-sm
+ * Container: bg-surface-subtle, rounded-sm, p-1 (Default) / p-0.5 (Small), gap-1 / gap-0.5
+ * Selected item: bg-surface-base, shadow-xs, NO border, rounded-sm
  * Unselected items: transparent, no border, no shadow
  *
  * ── Outline variant ──
- * Container: bg-background, rounded-sm, shadow-xs, p-0, gap-0
+ * Container: bg-surface-base, rounded-sm, shadow-xs, p-0, gap-0
  * Selected item: bg-active, border-primary (blue), NO rounded corners (flush)
  * Unselected items: no fill, border-input (grey dividers), shadow-xs, NO rounded corners
  *
@@ -99,11 +99,11 @@ function SegmentControl({
         "group/segment-control inline-flex items-center rounded-sm",
         // Default variant: muted bg container with padding and gap
         variant !== "outline" && [
-          "bg-muted",
+          "bg-surface-subtle",
           size === "sm" ? "p-0.5 gap-0.5" : "p-1 gap-1",
         ],
         // Outline variant: white bg container, no padding/gap, with shadow
-        variant === "outline" && "bg-background p-0 gap-0 shadow-xs",
+        variant === "outline" && "bg-surface-base p-0 gap-0 shadow-xs",
         orientation === "vertical" && "flex-col items-stretch",
         className
       )}
@@ -140,14 +140,14 @@ function SegmentControlItem({
         "text-[13px] leading-[20px] font-normal whitespace-nowrap",
         "transition-colors outline-none select-none",
         "focus-visible:border-2 focus-visible:border-ring focus-visible:z-20",
-        "disabled:pointer-events-none disabled:text-disabled-foreground",
+        "disabled:pointer-events-none disabled:text-text-disabled",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 
         // ── Default (slider) variant items: rounded pills, no border ──
         !isOutline && [
-          "rounded-sm text-muted-foreground",
-          "hover:text-foreground",
-          "aria-pressed:bg-background aria-pressed:shadow-xs aria-pressed:text-foreground",
+          "rounded-sm text-text-subtle",
+          "hover:text-text-base",
+          "aria-pressed:bg-surface-base aria-pressed:shadow-xs aria-pressed:text-text-base",
         ],
 
         // ── Outline variant items: flush (no radius), with input border dividers ──
@@ -161,7 +161,7 @@ function SegmentControlItem({
           "not-first:-ml-px",
           "first:rounded-l-sm",
           "last:rounded-r-sm",
-          "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:text-accent-foreground",
+          "aria-pressed:bg-active aria-pressed:border-primary aria-pressed:shadow-none aria-pressed:text-text-accent",
           "aria-pressed:relative aria-pressed:z-10 aria-pressed:not-last:-mr-px",
         ],
 

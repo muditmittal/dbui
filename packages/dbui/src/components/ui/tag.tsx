@@ -22,7 +22,7 @@ function Tag({
     <div
       data-slot="tag"
       className={cn(
-        "inline-flex items-center gap-1 rounded-sm bg-muted px-1 py-0 text-[13px] leading-[20px] font-normal text-foreground",
+        "inline-flex items-center gap-1 rounded-sm bg-surface-subtle px-1 py-0 text-[13px] leading-[20px] font-normal text-text-base",
         "[&_svg:not([class*='size-'])]:size-3",
         className
       )}
@@ -65,7 +65,7 @@ function TagValue({ className, ...props }: React.ComponentProps<"span">) {
       />
       <span
         data-slot="tag-value"
-        className={cn("shrink-0 whitespace-nowrap text-muted-foreground", className)}
+        className={cn("shrink-0 whitespace-nowrap text-text-subtle", className)}
         {...props}
       />
     </>
@@ -82,7 +82,7 @@ function TagRemove({
       type="button"
       aria-label="Remove tag"
       className={cn(
-        "inline-flex size-4 shrink-0 items-center justify-center rounded-sm p-0 text-muted-foreground hover:text-foreground",
+        "inline-flex size-4 shrink-0 items-center justify-center rounded-sm p-0 text-text-subtle hover:text-text-base",
         className
       )}
       {...props}
