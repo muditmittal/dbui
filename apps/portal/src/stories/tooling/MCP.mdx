@@ -1,11 +1,12 @@
 import { Meta } from "@storybook/blocks"
-import { DocPage, Lede, Section, P, C, Cmd, CodeBlock, DocTable, Note, Covers } from "./DocKit"
+import { DocPage, Lede, Section, P, C, Cmd, CodeBlock, DocTable, Note, Covers, Intro } from "./DocKit"
 
 <Meta title="Tooling/MCP server" />
 
-<DocPage>
+<DocPage title="dbui MCP server">
 
-# dbui MCP server
+
+<Intro>
 
 <Lede>
   Lets any MCP-capable agent query the design system directly, instead of being handed pasted
@@ -23,6 +24,8 @@ import { DocPage, Lede, Section, P, C, Cmd, CodeBlock, DocTable, Note, Covers } 
   It imports the CLI's API module rather than shelling out to the CLI, so the two surfaces render
   identical data.
 </P>
+
+</Intro>
 
 <Section title="Connect">
 

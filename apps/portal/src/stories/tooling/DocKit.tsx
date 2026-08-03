@@ -10,22 +10,56 @@ import { InfoSmall } from "dbui/components/icons/InfoSmall"
  * so markdown tables do not render — these replace them.
  */
 
-export function DocPage({ children }: { children: React.ReactNode }) {
-  return <div className="flex max-w-4xl flex-col gap-10 pb-16">{children}</div>
+/**
+ * Storybook's docs stylesheet puts its own margins, padding and bottom border on
+ * every heading, which fights the flex gaps below and produced both the stray
+ * rule under section titles and the uniform 40px gutters. Resetting inline is
+ * the reliable way to win against that stylesheet.
+ */
+const HEADING_RESET: React.CSSProperties = {
+  margin: 0,
+  padding: 0,
+  border: "none",
+}
+
+/**
+ * Space goes *between* sections, not inside them. A section title, its intro
+ * sentence and its table are one unit and sit close together; 32px separates
+ * one unit from the next. That proximity is what tells a reader what belongs to
+ * what.
+ */
+export function DocPage({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="flex max-w-4xl flex-col gap-8 pb-16">
+      <h1
+        style={HEADING_RESET}
+        className="text-[32px] leading-[40px] font-semibold text-text-strong"
+      >
+        {title}
+      </h1>
+      {children}
+    </div>
+  )
+}
+
+/** Groups the lede, the contents list and any opening note into one block. */
+export function Intro({ children }: { children: React.ReactNode }) {
+  return <div className="flex flex-col gap-4">{children}</div>
 }
 
 export function Lede({ children }: { children: React.ReactNode }) {
   return <p className="max-w-[68ch] text-[16px] leading-[22px] text-text-subtle">{children}</p>
 }
 
-/**
- * Storybook's docs stylesheet already draws a rule under every `h2`, so this
- * adds none of its own — an earlier version did, which produced two.
- */
 export function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-4">
-      <h2 className="text-[16px] leading-[22px] font-semibold text-text-strong">{title}</h2>
+    <section className="flex flex-col gap-3">
+      <h2
+        style={HEADING_RESET}
+        className="text-[16px] leading-[22px] font-semibold text-text-strong"
+      >
+        {title}
+      </h2>
       {children}
     </section>
   )
@@ -82,7 +116,7 @@ export function CodeBlock({ children, caption }: { children: string; caption?: s
 /** A short list of what a page covers, shown directly under the lede. */
 export function Covers({ items }: { items: Array<[string, string]> }) {
   return (
-    <ul className="flex max-w-[68ch] flex-col gap-1.5">
+    <ul style={{ margin: 0, padding: 0, listStyle: "none" }} className="flex max-w-[68ch] flex-col gap-1">
       {items.map(([name, why]) => (
         <li key={name} className="text-[13px] leading-[20px] text-text-base">
           <span className="font-semibold text-text-strong">{name}</span>

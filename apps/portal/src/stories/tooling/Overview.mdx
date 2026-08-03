@@ -1,11 +1,12 @@
 import { Meta } from "@storybook/blocks"
-import { DocPage, Lede, Section, P, C, DocTable, Note, Tag, Covers } from "./DocKit"
+import { DocPage, Lede, Section, P, C, DocTable, Note, Tag, Covers, Intro } from "./DocKit"
 
 <Meta title="Tooling/Overview" />
 
-<DocPage>
+<DocPage title="Tooling">
 
-# Tooling
+
+<Intro>
 
 <Lede>
   Everything DBUI ships that is not a component — the CLI, the MCP server, two linters, the token
@@ -24,6 +25,8 @@ import { DocPage, Lede, Section, P, C, DocTable, Note, Tag, Covers } from "./Doc
   Nothing in between is hand-maintained, so if the two ever disagree it is a bug in a formatter, not
   a data problem.
 </Note>
+
+</Intro>
 
 <Section title="Tools">
 
