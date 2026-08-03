@@ -48,7 +48,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode {
       nodes.push(
         <code
           key={key}
-          className="rounded-sm bg-code-background px-1 py-0.5 font-mono text-[12px]"
+          className="rounded-sm bg-surface-inset px-1 py-0.5 font-mono text-[12px]"
         >
           {token.slice(1, -1)}
         </code>
@@ -61,7 +61,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode {
       )
     } else if (token.startsWith("~~")) {
       nodes.push(
-        <s key={key} className="text-muted-foreground">
+        <s key={key} className="text-text-subtle">
           {renderInline(token.slice(2, -2), key)}
         </s>
       )
@@ -148,7 +148,7 @@ function parseBlocks(markdown: string): React.ReactNode[] {
         <pre
           key={`b${key++}`}
           data-language={fence[1] || undefined}
-          className="overflow-x-auto rounded-md bg-code-background p-3"
+          className="overflow-x-auto rounded-md bg-surface-inset p-3"
         >
           <code className="font-mono text-[12px] leading-[18px] whitespace-pre">
             {body.join("\n")}
@@ -214,7 +214,7 @@ function parseBlocks(markdown: string): React.ReactNode[] {
     }
 
     if (RULE.test(line)) {
-      blocks.push(<hr key={`b${key++}`} className="border-border" />)
+      blocks.push(<hr key={`b${key++}`} className="border-border-base" />)
       index++
       continue
     }
@@ -231,7 +231,7 @@ function parseBlocks(markdown: string): React.ReactNode[] {
       blocks.push(
         <blockquote
           key={quoteKey}
-          className="border-l-2 border-border pl-3 text-muted-foreground"
+          className="border-l-2 border-border-base pl-3 text-text-subtle"
         >
           {renderInline(body.join(" "), quoteKey)}
         </blockquote>
@@ -261,7 +261,7 @@ function parseBlocks(markdown: string): React.ReactNode[] {
             ),
           },
           items.map((item, i) => (
-            <li key={`${listKey}-l${i}`} className="marker:text-muted-foreground">
+            <li key={`${listKey}-l${i}`} className="marker:text-text-subtle">
               {renderInline(item, `${listKey}-l${i}`)}
             </li>
           ))
@@ -307,7 +307,7 @@ function Response({ children = "", className, ...props }: ResponseProps) {
     <div
       data-slot="response"
       className={cn(
-        "flex w-full min-w-0 flex-col gap-3 text-[13px] leading-[20px] text-foreground",
+        "flex w-full min-w-0 flex-col gap-3 text-[13px] leading-[20px] text-text-base",
         className
       )}
       {...props}

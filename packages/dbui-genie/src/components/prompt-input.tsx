@@ -72,7 +72,7 @@ function PromptInput({
       data-accent={accent}
       onSubmit={handleSubmit}
       className={cn(
-        "flex w-full flex-col gap-2 rounded-md bg-background p-2 shadow-xs",
+        "flex w-full flex-col gap-2 rounded-md bg-surface-base p-2 shadow-xs",
         accent === "default" && "border border-input",
         "focus-within:border-ring",
         className
@@ -107,11 +107,11 @@ function PromptInputContextBar({
         <span
           key={item.id}
           data-slot="prompt-input-context-item"
-          className="inline-flex items-center gap-1 rounded-sm border border-border bg-muted px-2 py-0.5 text-[12px] leading-[16px] text-foreground"
+          className="inline-flex items-center gap-1 rounded-sm border border-border-base bg-surface-subtle px-2 py-0.5 text-[12px] leading-[16px] text-text-base"
         >
           <span className="font-semibold">{item.label}</span>
           {item.detail ? (
-            <span className="text-muted-foreground">{item.detail}</span>
+            <span className="text-text-subtle">{item.detail}</span>
           ) : null}
           {onRemove ? (
             <Button

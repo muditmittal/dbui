@@ -24,7 +24,7 @@ function Loader({
       role="status"
       aria-live="polite"
       className={cn(
-        "flex items-center gap-2 text-[13px] leading-[20px] text-muted-foreground",
+        "flex items-center gap-2 text-[13px] leading-[20px] text-text-subtle",
         className
       )}
       {...props}

@@ -27,7 +27,7 @@ function FollowUps({
       {...props}
     >
       {label ? (
-        <div className="text-[13px] leading-[20px] font-semibold text-foreground">
+        <div className="text-[13px] leading-[20px] font-semibold text-text-base">
           {label}
         </div>
       ) : null}
@@ -46,8 +46,8 @@ function FollowUp({
       data-slot="follow-up"
       type="button"
       className={cn(
-        "flex w-full items-start gap-2 rounded-sm px-1 py-1 text-left text-[13px] leading-[20px] text-muted-foreground outline-none",
-        "hover:bg-hover hover:text-foreground focus-visible:border focus-visible:border-ring",
+        "flex w-full items-start gap-2 rounded-sm px-1 py-1 text-left text-[13px] leading-[20px] text-text-subtle outline-none",
+        "hover:bg-hover hover:text-text-base focus-visible:border focus-visible:border-ring",
         className
       )}
       {...props}

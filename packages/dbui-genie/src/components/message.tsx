@@ -44,9 +44,9 @@ function MessageContent({
       data-slot="message-content"
       data-from={from}
       className={cn(
-        "min-w-0 text-[13px] leading-[20px] text-foreground",
+        "min-w-0 text-[13px] leading-[20px] text-text-base",
         from === "user"
-          ? "max-w-[85%] rounded-md bg-secondary px-3 py-2"
+          ? "max-w-[85%] rounded-md bg-surface-subtle px-3 py-2"
           : "w-full",
         className
       )}
