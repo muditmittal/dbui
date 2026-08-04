@@ -2,7 +2,9 @@ import type { StorybookConfig } from "@storybook/react-webpack5"
 import path from "path"
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(ts|tsx)"],
+  // Scoped to src/stories, because the Next app under src/app now holds .mdx
+  // route files that are pages, not stories.
+  stories: ["../src/stories/**/*.mdx", "../src/stories/**/*.stories.@(ts|tsx)"],
   addons: [
     "@storybook/addon-essentials",
     "@storybook/addon-a11y",

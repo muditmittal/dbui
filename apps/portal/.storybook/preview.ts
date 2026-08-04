@@ -16,13 +16,10 @@ const preview: Preview = {
     options: {
       storySort: {
         method: "alphabetical",
-        // Two roots, like Astryx: Docs is the theory, Components is the library.
-        // Within each, the order is how a builder moves through them — read the
-        // foundations, then browse the gallery, then reach for a component.
+        // Storybook is the component sandbox now. The docs live in the Next.js
+        // site under /docs; only the library and its galleries remain here.
         order: [
           "Home",
-          "Docs",
-          ["Foundations", "Tooling"],
           "Components",
           [
             "Overview",

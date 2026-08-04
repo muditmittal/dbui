@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "dbui/components/ui/table"
 import { Badge } from "dbui/components/ui/badge"
@@ -39,7 +41,7 @@ export function DocPage({ title, children }: { title: string; children: React.Re
     // `sb-unstyled` opts the whole page out of Storybook's docs stylesheet,
     // which otherwise overrides font-family on prose and code — docs rendered in
     // Storybook's font would misrepresent the type system they document.
-    <div className="sb-unstyled flex w-full max-w-3xl flex-col gap-7 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
+    <div className="flex w-full max-w-3xl flex-col gap-7 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
       <h1
         style={HEADING_RESET}
         className="type-title-1 text-text-strong"

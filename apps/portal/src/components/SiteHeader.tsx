@@ -15,7 +15,8 @@ const NAV = [
   { href: "/docs", label: "Docs", exact: true },
   { href: "/components", label: "Components" },
   { href: "/templates", label: "Templates" },
-  { href: "/docs/install", label: "Install" },
+  // /install redirects to the install guide the agent fetches.
+  { href: "/install", label: "Install", exact: true },
 ]
 
 export function SiteHeader() {
