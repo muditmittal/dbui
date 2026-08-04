@@ -119,14 +119,26 @@ try {
     last = h;
   }
 
+  // A tall page is unreadable once scaled to fit, so `--band=<y>,<height>`
+  // captures one horizontal slice of it at full resolution instead.
+  const bandArg = process.argv.find((a) => a.startsWith("--band="));
+  const band = bandArg
+    ? bandArg.slice("--band=".length).split(",").map(Number)
+    : null;
+  const clip = band
+    ? { x: 0, y: band[0], width, height: band[1] ?? 1200, scale: 1 }
+    : fullPage
+      ? { x: 0, y: 0, width, height: last, scale: 1 }
+      : null;
+
   const shot = await send("Page.captureScreenshot", {
     format: "png",
-    captureBeyondViewport: fullPage,
-    ...(fullPage ? { clip: { x: 0, y: 0, width, height: last, scale: 1 } } : {}),
+    captureBeyondViewport: fullPage || Boolean(band),
+    ...(clip ? { clip } : {}),
   }, sessionId);
 
   fs.writeFileSync(out, Buffer.from(shot.data, "base64"));
-  console.log(`wrote ${out}  (${width}x${last})`);
+  console.log(`wrote ${out}  (${width}x${clip ? clip.height : last})`);
   ws.close();
 } finally {
   chrome.kill();

@@ -1,0 +1,69 @@
+<!--
+  The manager runs in its own document, so it needs its own font links and
+  cannot read the preview's CSS custom properties. Values below are the resolved
+  light-mode values from packages/dbui/src/tokens/tokens.css.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/commit-mono/400.css" />
+
+<style>
+  /*
+    Storybook paints the selected row with `colorSecondary` as a solid fill and
+    white text, which reads as a primary button sitting in the nav. These rules
+    replace that with the exact treatment DBUI's own NavbarItem uses, so the
+    portal's chrome obeys the system it documents:
+
+      rest      text/base,   no fill
+      hover     text/base,   action/default-hover
+      selected  text/accent, surface/accent, semibold
+
+    Storybook styles these rows with emotion, which injects its <style> at
+    runtime — after this block. At equal specificity the later rule wins, so
+    every selector here repeats its class to outrank it.
+  */
+  .sidebar-item.sidebar-item[data-selected="true"],
+  .sidebar-item.sidebar-item[data-selected="true"]:hover,
+  .sidebar-item.sidebar-item[data-selected="true"]:focus {
+    background: #d7edfe; /* surface/accent */
+    color: #0e538b; /* text/accent */
+    font-weight: 600;
+  }
+
+  /* Icons in the selected row follow the label rather than inverting to white. */
+  .sidebar-item.sidebar-item[data-selected="true"] svg,
+  .sidebar-item.sidebar-item[data-selected="true"] svg path,
+  .sidebar-item.sidebar-item[data-selected="true"] a {
+    color: #0e538b;
+    fill: currentColor;
+  }
+
+  .sidebar-item.sidebar-item {
+    color: #262626; /* text/base */
+    border-radius: 4px;
+  }
+
+  /* Hover is the same neutral wash every other DBUI control uses. */
+  .sidebar-item.sidebar-item:not([data-selected="true"]):hover,
+  .sidebar-item.sidebar-item:not([data-selected="true"]):focus {
+    background: rgba(0, 0, 0, 0.06); /* action/default-hover */
+    color: #262626;
+  }
+
+  /* The brand logo ships as a 190×68 wordmark; cap its height so it sits on the
+     same rhythm as the search field below it rather than dominating the header. */
+  .sidebar-header img {
+    height: 22px;
+    width: auto;
+  }
+
+  /* Section roots (DOCS, COMPONENTS) are labels, not targets. */
+  .sidebar-subheading.sidebar-subheading {
+    color: #525252;
+    letter-spacing: 0.04em;
+  }
+</style>
