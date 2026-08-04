@@ -61,8 +61,36 @@ const varName = (n) => `${PREFIX}${n}`
 
 const theme = names.map((n) => `  --color-${n}: var(${varName(n)});`).join("\n")
 
+/**
+ * Everything spatial ships in rem, authored in px.
+ *
+ * The config stays in px because that is how designers and Figma think, and
+ * because a comparison against a mock has to be in px to be meaningful. The
+ * conversion happens here, once.
+ *
+ * rem matters for the case px cannot serve: a reader who raises their browser's
+ * default font size. Browser *zoom* scales px and rem alike, so zoom is not the
+ * discriminating case — a font-size preference is, and px ignores it entirely
+ * (WCAG 1.4.4). Radius is included on purpose: an input that grows taller while
+ * its 4px corner stays frozen does not just look bigger, it changes shape.
+ *
+ * Border width is deliberately NOT converted — see borderLines.
+ */
+const ROOT_PX = 16
+const rem = (px) => {
+  if (px === 0) return "0"
+  const value = px / ROOT_PX
+  // Trim float noise: 13/16 = 0.8125, but 0.1 + 0.2 style drift is not welcome.
+  return `${parseFloat(value.toFixed(6))}rem`
+}
+
 const scalarLines = Object.entries(scalars)
-  .map(([k, v]) => `  ${PREFIX}${k}: ${v};`)
+  .map(([k, val]) => {
+    // spacing-unit is a measurement, so it converts with everything else; the
+    // rest are unitless multipliers and must not.
+    const out = typeof val === "string" && val.endsWith("px") ? rem(parseFloat(val)) : val
+    return `  ${PREFIX}${k}: ${out};`
+  })
   .join("\n")
 
 const v = (name) => `var(${PREFIX}${name})` // reference another --db-* token inside calc()
@@ -76,7 +104,12 @@ const spaceLines = [
 ].join("\n")
 
 const radiusLines = Object.entries(radius)
-  .map(([k, v]) => `  ${PREFIX}radius-${k}: ${v};`)
+  .map(([k, val]) => {
+    // `full` is a pill sentinel, not a measurement — leave it alone.
+    const px = parseFloat(val)
+    const out = val.endsWith("px") && px < 100 ? rem(px) : val
+    return `  ${PREFIX}radius-${k}: ${out};`
+  })
   .join("\n")
 
 /** '"Figtree", -apple-system, sans-serif' → ["Figtree", "-apple-system", "sans-serif"] */
@@ -89,9 +122,9 @@ const typeLines = [
   // size, line-height AND tracking all scale together via --db-type-scalar.
   // Weight and family are fixed — they are what the style *is*, not how big it is.
   ...Object.entries(type.scale).flatMap(([k, s]) => [
-    `  ${PREFIX}font-size-${k}: calc(${s.size}px * ${v("type-scalar")});`,
-    `  ${PREFIX}line-height-${k}: calc(${s.line}px * ${v("type-scalar")});`,
-    `  ${PREFIX}letter-spacing-${k}: calc(${s.tracking}px * ${v("type-scalar")});`,
+    `  ${PREFIX}font-size-${k}: calc(${rem(s.size)} * ${v("type-scalar")});`,
+    `  ${PREFIX}line-height-${k}: calc(${rem(s.line)} * ${v("type-scalar")});`,
+    `  ${PREFIX}letter-spacing-${k}: calc(${rem(s.tracking)} * ${v("type-scalar")});`,
     `  ${PREFIX}font-weight-${k}: ${s.weight ?? type.weight.normal};`,
     `  ${PREFIX}font-family-${k}: ${v(s.family === "mono" ? "mono-font-family" : "font-family")};`,
   ]),
@@ -103,13 +136,16 @@ const typeLines = [
 // scalar from being a knob wired to nothing.
 const sizeLines = [
   ...Object.entries(size.element).map(
-    ([k, px]) => `  ${PREFIX}size-element-${k}: calc(${px}px * ${v("sizing-scalar")});`
+    ([k, px]) => `  ${PREFIX}size-element-${k}: calc(${rem(px)} * ${v("sizing-scalar")});`
   ),
   ...Object.entries(size.icon).map(
-    ([k, px]) => `  ${PREFIX}size-icon-${k}: calc(${px}px * ${v("sizing-scalar")});`
+    ([k, px]) => `  ${PREFIX}size-icon-${k}: calc(${rem(px)} * ${v("sizing-scalar")});`
   ),
 ].join("\n")
 
+// Border width stays in px. A 1px hairline is a rendering fact, not a
+// proportion: at a 20px root it would become 1.25px and blur across a subpixel
+// boundary. Rules and dividers should stay crisp when everything else grows.
 const borderLines = Object.entries(border.width)
   .map(([k, px]) => `  ${PREFIX}border-width-${k}: ${px}px;`)
   .join("\n")

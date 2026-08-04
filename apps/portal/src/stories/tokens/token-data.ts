@@ -566,23 +566,23 @@ export const spaceInline: Token[] = [
 export const radius: Token[] = [
   {
     "name": "radius-sm",
-    "value": "4px"
+    "value": "0.25rem"
   },
   {
     "name": "radius-md",
-    "value": "8px"
+    "value": "0.5rem"
   },
   {
     "name": "radius-lg",
-    "value": "12px"
+    "value": "0.75rem"
   },
   {
     "name": "radius-xl",
-    "value": "16px"
+    "value": "1rem"
   },
   {
     "name": "radius-2xl",
-    "value": "24px"
+    "value": "1.5rem"
   },
   {
     "name": "radius-full",
@@ -593,34 +593,34 @@ export const radius: Token[] = [
 export const sizeElement: Token[] = [
   {
     "name": "size-element-sm",
-    "value": "calc(24px * var(--db-sizing-scalar))"
+    "value": "calc(1.5rem * var(--db-sizing-scalar))"
   },
   {
     "name": "size-element-md",
-    "value": "calc(32px * var(--db-sizing-scalar))"
+    "value": "calc(2rem * var(--db-sizing-scalar))"
   }
 ]
 
 export const sizeIcon: Token[] = [
   {
     "name": "size-icon-xs",
-    "value": "calc(12px * var(--db-sizing-scalar))"
+    "value": "calc(0.75rem * var(--db-sizing-scalar))"
   },
   {
     "name": "size-icon-sm",
-    "value": "calc(14px * var(--db-sizing-scalar))"
+    "value": "calc(0.875rem * var(--db-sizing-scalar))"
   },
   {
     "name": "size-icon-md",
-    "value": "calc(16px * var(--db-sizing-scalar))"
+    "value": "calc(1rem * var(--db-sizing-scalar))"
   },
   {
     "name": "size-icon-lg",
-    "value": "calc(20px * var(--db-sizing-scalar))"
+    "value": "calc(1.25rem * var(--db-sizing-scalar))"
   },
   {
     "name": "size-icon-xl",
-    "value": "calc(24px * var(--db-sizing-scalar))"
+    "value": "calc(1.5rem * var(--db-sizing-scalar))"
   }
 ]
 
@@ -695,7 +695,7 @@ export const easing: Token[] = [
 export const scalars: Token[] = [
   {
     "name": "spacing-unit",
-    "value": "4px"
+    "value": "0.25rem"
   },
   {
     "name": "density-scalar",

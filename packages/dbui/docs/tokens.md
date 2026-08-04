@@ -35,6 +35,12 @@ node scripts/generate-token-data.mjs     # refresh the portal's Tokens page
 4. **Figma Code Connect:** semantics carry `codeSyntax.WEB = var(--db-<name>)`;
    primitives have it cleared, since they do not ship.
 5. **Everything dimensional is scalar-tied.** One dial re-flows the system.
+6. **Spatial values ship in rem, authored in px.** The config stays in px because
+   that is how Figma and designers think; the generator converts once, against a
+   16px root. Radius is included — an input that grows taller while its corner
+   stays frozen changes shape, not just size.
+7. **Border width stays in px.** A hairline is a rendering fact, not a proportion:
+   at a 20px root, 1px would become 1.25px and blur across a subpixel boundary.
 
 ## Type
 
