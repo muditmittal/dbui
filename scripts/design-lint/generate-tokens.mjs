@@ -30,10 +30,11 @@ import cfg from "../../packages/dbui/src/tokens/theme.config.mjs"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, "../../")
 const TOKENS_CSS = path.join(ROOT, "packages/dbui/src/tokens/tokens.css")
+const TYPE_CSS = path.join(ROOT, "packages/dbui/src/tokens/type.css")
 const GLOBALS_CSS = path.join(ROOT, "packages/dbui/src/tokens/globals.css")
 const TOKENS_JSON = path.join(__dirname, "tokens.json")
 
-const { meta, primitives, semantics, scalars, space, radius, type, elevation } = cfg
+const { meta, primitives, semantics, scalars, space, radius, size, border, type, elevation, motion } = cfg
 const PREFIX = `--${meta.prefix}-` // --db-
 
 // ── ref resolution ───────────────────────────────────────────────────────────
@@ -78,17 +79,44 @@ const radiusLines = Object.entries(radius)
   .map(([k, v]) => `  ${PREFIX}radius-${k}: ${v};`)
   .join("\n")
 
+/** '"Figtree", -apple-system, sans-serif' → ["Figtree", "-apple-system", "sans-serif"] */
+const splitFamily = (stack) =>
+  stack.split(",").map((f) => f.trim().replace(/^["']|["']$/g, "")).filter(Boolean)
+
 const typeLines = [
   `  ${PREFIX}font-family: ${type.family.text};`,
   `  ${PREFIX}mono-font-family: ${type.family.mono};`,
-  // size, line-height AND tracking all scale together via --db-type-scalar
-  ...Object.entries(type.scale).flatMap(([k, { size, line, tracking }]) => [
-    `  ${PREFIX}font-size-${k}: calc(${size}px * ${v("type-scalar")});`,
-    `  ${PREFIX}line-height-${k}: calc(${line}px * ${v("type-scalar")});`,
-    `  ${PREFIX}letter-spacing-${k}: calc(${tracking}px * ${v("type-scalar")});`,
+  // size, line-height AND tracking all scale together via --db-type-scalar.
+  // Weight and family are fixed — they are what the style *is*, not how big it is.
+  ...Object.entries(type.scale).flatMap(([k, s]) => [
+    `  ${PREFIX}font-size-${k}: calc(${s.size}px * ${v("type-scalar")});`,
+    `  ${PREFIX}line-height-${k}: calc(${s.line}px * ${v("type-scalar")});`,
+    `  ${PREFIX}letter-spacing-${k}: calc(${s.tracking}px * ${v("type-scalar")});`,
+    `  ${PREFIX}font-weight-${k}: ${s.weight ?? type.weight.normal};`,
+    `  ${PREFIX}font-family-${k}: ${v(s.family === "mono" ? "mono-font-family" : "font-family")};`,
   ]),
   `  ${PREFIX}font-weight: ${type.weight.normal};`,
   `  ${PREFIX}font-weight-bold: ${type.weight.bold};`,
+].join("\n")
+
+// Size is the one family the sizing dial drives, which is what stops that
+// scalar from being a knob wired to nothing.
+const sizeLines = [
+  ...Object.entries(size.element).map(
+    ([k, px]) => `  ${PREFIX}size-element-${k}: calc(${px}px * ${v("sizing-scalar")});`
+  ),
+  ...Object.entries(size.icon).map(
+    ([k, px]) => `  ${PREFIX}size-icon-${k}: calc(${px}px * ${v("sizing-scalar")});`
+  ),
+].join("\n")
+
+const borderLines = Object.entries(border.width)
+  .map(([k, px]) => `  ${PREFIX}border-width-${k}: ${px}px;`)
+  .join("\n")
+
+const motionLines = [
+  ...Object.entries(motion.duration).map(([k, val]) => `  ${PREFIX}duration-${k}: ${val};`),
+  ...Object.entries(motion.easing).map(([k, val]) => `  ${PREFIX}ease-${k}: ${val};`),
 ].join("\n")
 
 const elevationLines = Object.entries(elevation)
@@ -127,6 +155,15 @@ ${radiusLines}
   /* ── Type (anchored ramp, scaled together by type-scalar) ── */
 ${typeLines}
 
+  /* ── Size (control heights + icon sizes, scaled by sizing-scalar) ── */
+${sizeLines}
+
+  /* ── Border width ── */
+${borderLines}
+
+  /* ── Motion (two bands, one easing curve for the whole system) ── */
+${motionLines}
+
   /* ── Elevation ── */
 ${elevationLines}
 
@@ -145,6 +182,42 @@ ${darkSemantics}
 `
 
 fs.writeFileSync(TOKENS_CSS, css)
+
+// ── type.css (the ramp as Tailwind utilities) ─────────────────────────────────
+// Emitted rather than hand-written so the utilities cannot drift from the ramp.
+// Prefixed `type-` rather than `text-` on purpose: Tailwind's `text-` is already
+// overloaded for colour, so `text-text-subtle` (a colour) sitting beside a
+// size named `text-text` would be genuinely ambiguous. `type-*` keeps the two
+// axes legible — `class="type-paragraph text-text-subtle"` reads correctly.
+const typeUtilities = Object.entries(type.scale)
+  .map(([k, s]) => {
+    const lines = [
+      `  font-family: ${v(s.family === "mono" ? "mono-font-family" : "font-family")};`,
+      `  font-size: ${v(`font-size-${k}`)};`,
+      `  line-height: ${v(`line-height-${k}`)};`,
+      `  letter-spacing: ${v(`letter-spacing-${k}`)};`,
+      `  font-weight: ${v(`font-weight-${k}`)};`,
+    ]
+    // Eyebrow carries its caps in the style, so no call site retypes it.
+    if (s.transform) lines.push(`  text-transform: ${s.transform};`)
+    return `@utility type-${k} {\n${lines.join("\n")}\n}`
+  })
+  .join("\n\n")
+
+fs.writeFileSync(
+  TYPE_CSS,
+  `/* ─────────────────────────────────────────────────────────────────────────────
+ * DBUI type ramp as utilities — GENERATED. Do not hand-edit.
+ * Source: packages/dbui/src/tokens/theme.config.mjs
+ * Regenerate: yarn design:tokens
+ *
+ * Each utility is the WHOLE style — family, size, line-height, tracking, weight
+ * and numeric variant. Never pair one with \`leading-*\` or \`font-*\`.
+ * ───────────────────────────────────────────────────────────────────────────── */
+
+${typeUtilities}
+`
+)
 
 // ── tokens.json (linter allowlist) ─────────────────────────────────────────────
 const prev = JSON.parse(fs.readFileSync(TOKENS_JSON, "utf-8"))
@@ -207,8 +280,31 @@ const out = {
   },
   spacing: prev.spacing,
   radius: prev.radius,
-  fonts: prev.fonts,
-  type: prev.type,
+  // Derived from theme.config.mjs so the linter's allowlist cannot fall behind
+  // the shipped families. `legacy` stays allowed until every component stops
+  // declaring SF Pro; drop it from the config once that migration lands.
+  fonts: {
+    $comment:
+      "Approved font families, generated from theme.config.mjs `type.family` (+ `type.legacy` during migration). Anything else is non-standard.",
+    sans: splitFamily(type.family.text),
+    display: splitFamily(type.family.text),
+    mono: splitFamily(type.family.mono),
+    legacy: type.legacy ?? {},
+  },
+  // One role-named ramp; `ramp` stays the linter's allowed size/line set.
+  type: {
+    ...prev.type,
+    scale: type.scale,
+    ramp: Object.entries(type.scale).map(([name, s]) => ({
+      name,
+      utility: `type-${name}`,
+      size: s.size,
+      line: s.line,
+      weight: s.weight ?? type.weight.normal,
+      family: s.family ?? "text",
+      transform: s.transform ?? "none",
+    })),
+  },
 }
 
 fs.writeFileSync(TOKENS_JSON, JSON.stringify(out, null, 2) + "\n")

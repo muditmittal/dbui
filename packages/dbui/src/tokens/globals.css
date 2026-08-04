@@ -4,6 +4,7 @@
    theme.config.mjs by `yarn design:tokens`. Additive: does not touch the
    legacy shadcn-flat tokens below. */
 @import "./tokens.css";
+@import "./type.css";
 /* shadcn/tailwind.css — inlined because the npm package exports a virtual path
    that doesn't resolve during Vercel production builds */
 @theme inline {
@@ -63,10 +64,14 @@
   /* ─── Shadows ─── */
   --shadow-focus: 0 0 0 1px var(--db-focus-ring-offset), 0 0 0 3px var(--db-focus-ring);
 
-  /* ─── Fonts ─── */
-  --font-sans: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, "Cascadia Code", "Fira Code", monospace;
+  /* ─── Fonts ───
+   * Both families come from the generated layer so there is one source of
+   * truth. Figtree covers text and display: it has enough weight range that a
+   * separate display face only adds a download. */
+  --font-sans: var(--db-font-family);
+  --font-display: var(--db-font-family);
+  --font-mono: var(--db-mono-font-family);
+
 
   /* ─── Radius — DuBois values, mapped to shadcn usage ─── */
   /* shadcn components use rounded-lg for buttons/inputs, rounded-md for inner elements */

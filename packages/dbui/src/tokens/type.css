@@ -1,0 +1,121 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * DBUI type ramp as utilities — GENERATED. Do not hand-edit.
+ * Source: packages/dbui/src/tokens/theme.config.mjs
+ * Regenerate: yarn design:tokens
+ *
+ * Each utility is the WHOLE style — family, size, line-height, tracking, weight
+ * and numeric variant. Never pair one with `leading-*` or `font-*`.
+ * ───────────────────────────────────────────────────────────────────────────── */
+
+@utility type-hint {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-hint);
+  line-height: var(--db-line-height-hint);
+  letter-spacing: var(--db-letter-spacing-hint);
+  font-weight: var(--db-font-weight-hint);
+}
+
+@utility type-eyebrow {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-eyebrow);
+  line-height: var(--db-line-height-eyebrow);
+  letter-spacing: var(--db-letter-spacing-eyebrow);
+  font-weight: var(--db-font-weight-eyebrow);
+  text-transform: uppercase;
+}
+
+@utility type-label {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-label);
+  line-height: var(--db-line-height-label);
+  letter-spacing: var(--db-letter-spacing-label);
+  font-weight: var(--db-font-weight-label);
+}
+
+@utility type-label-bold {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-label-bold);
+  line-height: var(--db-line-height-label-bold);
+  letter-spacing: var(--db-letter-spacing-label-bold);
+  font-weight: var(--db-font-weight-label-bold);
+}
+
+@utility type-body {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-body);
+  line-height: var(--db-line-height-body);
+  letter-spacing: var(--db-letter-spacing-body);
+  font-weight: var(--db-font-weight-body);
+}
+
+@utility type-body-bold {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-body-bold);
+  line-height: var(--db-line-height-body-bold);
+  letter-spacing: var(--db-letter-spacing-body-bold);
+  font-weight: var(--db-font-weight-body-bold);
+}
+
+@utility type-code {
+  font-family: var(--db-mono-font-family);
+  font-size: var(--db-font-size-code);
+  line-height: var(--db-line-height-code);
+  letter-spacing: var(--db-letter-spacing-code);
+  font-weight: var(--db-font-weight-code);
+}
+
+@utility type-block {
+  font-family: var(--db-mono-font-family);
+  font-size: var(--db-font-size-block);
+  line-height: var(--db-line-height-block);
+  letter-spacing: var(--db-letter-spacing-block);
+  font-weight: var(--db-font-weight-block);
+}
+
+@utility type-paragraph {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-paragraph);
+  line-height: var(--db-line-height-paragraph);
+  letter-spacing: var(--db-letter-spacing-paragraph);
+  font-weight: var(--db-font-weight-paragraph);
+}
+
+@utility type-paragraph-bold {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-paragraph-bold);
+  line-height: var(--db-line-height-paragraph-bold);
+  letter-spacing: var(--db-letter-spacing-paragraph-bold);
+  font-weight: var(--db-font-weight-paragraph-bold);
+}
+
+@utility type-title-4 {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-title-4);
+  line-height: var(--db-line-height-title-4);
+  letter-spacing: var(--db-letter-spacing-title-4);
+  font-weight: var(--db-font-weight-title-4);
+}
+
+@utility type-title-3 {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-title-3);
+  line-height: var(--db-line-height-title-3);
+  letter-spacing: var(--db-letter-spacing-title-3);
+  font-weight: var(--db-font-weight-title-3);
+}
+
+@utility type-title-2 {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-title-2);
+  line-height: var(--db-line-height-title-2);
+  letter-spacing: var(--db-letter-spacing-title-2);
+  font-weight: var(--db-font-weight-title-2);
+}
+
+@utility type-title-1 {
+  font-family: var(--db-font-family);
+  font-size: var(--db-font-size-title-1);
+  line-height: var(--db-line-height-title-1);
+  letter-spacing: var(--db-letter-spacing-title-1);
+  font-weight: var(--db-font-weight-title-1);
+}

@@ -107,6 +107,7 @@
 
   /* ── Space (multiples of the grid unit, scaled by spacing × density) ── */
   --db-space-0: 0;
+  --db-space-3xs: calc(var(--db-spacing-unit) * 0.5 * var(--db-spacing-scalar) * var(--db-density-scalar));
   --db-space-2xs: calc(var(--db-spacing-unit) * 1 * var(--db-spacing-scalar) * var(--db-density-scalar));
   --db-space-xs: calc(var(--db-spacing-unit) * 2 * var(--db-spacing-scalar) * var(--db-density-scalar));
   --db-space-sm: calc(var(--db-spacing-unit) * 3 * var(--db-spacing-scalar) * var(--db-density-scalar));
@@ -126,25 +127,103 @@
   --db-radius-full: 999px;
 
   /* ── Type (anchored ramp, scaled together by type-scalar) ── */
-  --db-font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --db-font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --db-mono-font-family: "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace;
-  --db-font-size-sm: calc(12px * var(--db-type-scalar));
-  --db-line-height-sm: calc(16px * var(--db-type-scalar));
-  --db-letter-spacing-sm: calc(0px * var(--db-type-scalar));
-  --db-font-size-md: calc(13px * var(--db-type-scalar));
-  --db-line-height-md: calc(20px * var(--db-type-scalar));
-  --db-letter-spacing-md: calc(0px * var(--db-type-scalar));
-  --db-font-size-lg: calc(16px * var(--db-type-scalar));
-  --db-line-height-lg: calc(22px * var(--db-type-scalar));
-  --db-letter-spacing-lg: calc(0px * var(--db-type-scalar));
-  --db-font-size-xl: calc(22px * var(--db-type-scalar));
-  --db-line-height-xl: calc(28px * var(--db-type-scalar));
-  --db-letter-spacing-xl: calc(-0.2px * var(--db-type-scalar));
-  --db-font-size-2xl: calc(32px * var(--db-type-scalar));
-  --db-line-height-2xl: calc(40px * var(--db-type-scalar));
-  --db-letter-spacing-2xl: calc(-0.4px * var(--db-type-scalar));
+  --db-font-size-hint: calc(12px * var(--db-type-scalar));
+  --db-line-height-hint: calc(16px * var(--db-type-scalar));
+  --db-letter-spacing-hint: calc(0px * var(--db-type-scalar));
+  --db-font-weight-hint: 400;
+  --db-font-family-hint: var(--db-font-family);
+  --db-font-size-eyebrow: calc(12px * var(--db-type-scalar));
+  --db-line-height-eyebrow: calc(16px * var(--db-type-scalar));
+  --db-letter-spacing-eyebrow: calc(0.5px * var(--db-type-scalar));
+  --db-font-weight-eyebrow: 600;
+  --db-font-family-eyebrow: var(--db-font-family);
+  --db-font-size-label: calc(13px * var(--db-type-scalar));
+  --db-line-height-label: calc(16px * var(--db-type-scalar));
+  --db-letter-spacing-label: calc(0px * var(--db-type-scalar));
+  --db-font-weight-label: 400;
+  --db-font-family-label: var(--db-font-family);
+  --db-font-size-label-bold: calc(13px * var(--db-type-scalar));
+  --db-line-height-label-bold: calc(16px * var(--db-type-scalar));
+  --db-letter-spacing-label-bold: calc(0px * var(--db-type-scalar));
+  --db-font-weight-label-bold: 600;
+  --db-font-family-label-bold: var(--db-font-family);
+  --db-font-size-body: calc(13px * var(--db-type-scalar));
+  --db-line-height-body: calc(20px * var(--db-type-scalar));
+  --db-letter-spacing-body: calc(0px * var(--db-type-scalar));
+  --db-font-weight-body: 400;
+  --db-font-family-body: var(--db-font-family);
+  --db-font-size-body-bold: calc(13px * var(--db-type-scalar));
+  --db-line-height-body-bold: calc(20px * var(--db-type-scalar));
+  --db-letter-spacing-body-bold: calc(0px * var(--db-type-scalar));
+  --db-font-weight-body-bold: 600;
+  --db-font-family-body-bold: var(--db-font-family);
+  --db-font-size-code: calc(13px * var(--db-type-scalar));
+  --db-line-height-code: calc(20px * var(--db-type-scalar));
+  --db-letter-spacing-code: calc(0px * var(--db-type-scalar));
+  --db-font-weight-code: 400;
+  --db-font-family-code: var(--db-mono-font-family);
+  --db-font-size-block: calc(14px * var(--db-type-scalar));
+  --db-line-height-block: calc(22px * var(--db-type-scalar));
+  --db-letter-spacing-block: calc(0px * var(--db-type-scalar));
+  --db-font-weight-block: 400;
+  --db-font-family-block: var(--db-mono-font-family);
+  --db-font-size-paragraph: calc(15px * var(--db-type-scalar));
+  --db-line-height-paragraph: calc(22px * var(--db-type-scalar));
+  --db-letter-spacing-paragraph: calc(0px * var(--db-type-scalar));
+  --db-font-weight-paragraph: 400;
+  --db-font-family-paragraph: var(--db-font-family);
+  --db-font-size-paragraph-bold: calc(15px * var(--db-type-scalar));
+  --db-line-height-paragraph-bold: calc(22px * var(--db-type-scalar));
+  --db-letter-spacing-paragraph-bold: calc(0px * var(--db-type-scalar));
+  --db-font-weight-paragraph-bold: 600;
+  --db-font-family-paragraph-bold: var(--db-font-family);
+  --db-font-size-title-4: calc(16px * var(--db-type-scalar));
+  --db-line-height-title-4: calc(24px * var(--db-type-scalar));
+  --db-letter-spacing-title-4: calc(0px * var(--db-type-scalar));
+  --db-font-weight-title-4: 600;
+  --db-font-family-title-4: var(--db-font-family);
+  --db-font-size-title-3: calc(20px * var(--db-type-scalar));
+  --db-line-height-title-3: calc(28px * var(--db-type-scalar));
+  --db-letter-spacing-title-3: calc(0px * var(--db-type-scalar));
+  --db-font-weight-title-3: 600;
+  --db-font-family-title-3: var(--db-font-family);
+  --db-font-size-title-2: calc(24px * var(--db-type-scalar));
+  --db-line-height-title-2: calc(32px * var(--db-type-scalar));
+  --db-letter-spacing-title-2: calc(-0.2px * var(--db-type-scalar));
+  --db-font-weight-title-2: 600;
+  --db-font-family-title-2: var(--db-font-family);
+  --db-font-size-title-1: calc(32px * var(--db-type-scalar));
+  --db-line-height-title-1: calc(40px * var(--db-type-scalar));
+  --db-letter-spacing-title-1: calc(-0.4px * var(--db-type-scalar));
+  --db-font-weight-title-1: 600;
+  --db-font-family-title-1: var(--db-font-family);
   --db-font-weight: 400;
   --db-font-weight-bold: 600;
+
+  /* ── Size (control heights + icon sizes, scaled by sizing-scalar) ── */
+  --db-size-element-sm: calc(24px * var(--db-sizing-scalar));
+  --db-size-element-md: calc(32px * var(--db-sizing-scalar));
+  --db-size-icon-xs: calc(12px * var(--db-sizing-scalar));
+  --db-size-icon-sm: calc(14px * var(--db-sizing-scalar));
+  --db-size-icon-md: calc(16px * var(--db-sizing-scalar));
+  --db-size-icon-lg: calc(20px * var(--db-sizing-scalar));
+  --db-size-icon-xl: calc(24px * var(--db-sizing-scalar));
+
+  /* ── Border width ── */
+  --db-border-width-none: 0px;
+  --db-border-width-thin: 1px;
+  --db-border-width-thick: 2px;
+
+  /* ── Motion (two bands, one easing curve for the whole system) ── */
+  --db-duration-fast-min: 130ms;
+  --db-duration-fast: 175ms;
+  --db-duration-fast-max: 230ms;
+  --db-duration-medium-min: 310ms;
+  --db-duration-medium: 410ms;
+  --db-duration-medium-max: 550ms;
+  --db-ease-standard: cubic-bezier(0.24, 1, 0.4, 1);
 
   /* ── Elevation ── */
   --db-elevation-0: none;

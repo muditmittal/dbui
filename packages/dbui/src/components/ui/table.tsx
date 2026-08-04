@@ -74,12 +74,22 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   )
 }
 
-function TableHead({ className, ...props }: React.ComponentProps<"th">) {
+/**
+ * @guideline Mirror `numeric` from the cells below it, or the header will sit
+ *   left while its column sits right.
+ */
+function TableHead({
+  className,
+  numeric,
+  ...props
+}: React.ComponentProps<"th"> & { numeric?: boolean }) {
   return (
     <th
       data-slot="table-head"
+      data-numeric={numeric ? "" : undefined}
       className={cn(
         "h-10 px-2 text-left align-middle font-semibold whitespace-nowrap text-text-base [&:has([role=checkbox])]:pr-0",
+        numeric && "text-right",
         className
       )}
       {...props}
@@ -87,12 +97,27 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   )
 }
 
-function TableCell({ className, ...props }: React.ComponentProps<"td">) {
+/**
+ * @guideline Set `numeric` on any cell holding a number. Figtree's digits are
+ *   not equal-width — they vary by about 3px across 0–9 — so a column of figures
+ *   visibly jitters without tabular numerals. `numeric` also right-aligns, which
+ *   is what lets the eye compare magnitudes down a column.
+ * @constraint `numeric` is a property of the cell, not a type style: alignment
+ *   cannot be expressed by a font, and correct number rendering is not something
+ *   an author should have to opt into style-by-style.
+ */
+function TableCell({
+  className,
+  numeric,
+  ...props
+}: React.ComponentProps<"td"> & { numeric?: boolean }) {
   return (
     <td
       data-slot="table-cell"
+      data-numeric={numeric ? "" : undefined}
       className={cn(
         "p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0",
+        numeric && "text-right tabular-nums",
         className
       )}
       {...props}

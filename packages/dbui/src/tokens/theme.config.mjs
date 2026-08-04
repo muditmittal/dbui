@@ -272,7 +272,9 @@ export const scalars = {
 /* Space tokens — multiples of `spacing-unit`, scaled by spacing × density.
  * `inline-*` gaps are em-relative so they track the text size they sit beside. */
 export const space = {
-  units: { "0": 0, "2xs": 1, xs: 2, sm: 3, md: 4, lg: 6, xl: 8, "2xl": 12 },
+  // Half-step at the bottom only, for tight insets and icon nudges. The scale
+  // stays coarse above 8px on purpose: fewer steps is what makes it consistent.
+  units: { "0": 0, "3xs": 0.5, "2xs": 1, xs: 2, sm: 3, md: 4, lg: 6, xl: 8, "2xl": 12 },
   inline: { xs: "0.25em", sm: "0.5em" },
 }
 
@@ -288,16 +290,61 @@ export const radius = { sm: "4px", md: "8px", lg: "12px", xl: "16px", "2xl": "24
  * 32/40); larger steps get slightly negative tracking for optical tightness. */
 export const type = {
   family: {
-    text: '"DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    text: '"Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     mono: '"Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace',
   },
-  // name → { size, line, tracking } — all in px, all scaled by --db-type-scalar
+  /* One ramp, named by what the text is. The split that matters most is
+   * label vs body: both are 13px, but a label is single-line by definition and
+   * body wraps, so they take different leading.
+   *
+   *   hint      — captions, helper text, timestamps
+   *   eyebrow   — overlines; carries its own caps and tracking
+   *   label     — single-line UI: buttons, menu items, cells, form labels
+   *   body      — wrapping 13px: descriptions, helper blocks
+   *   code      — inline mono: identifiers, paths
+   *   block     — mono blocks
+   *   paragraph — read as language: chat messages, docs, empty states
+   *   title     — headings, 4 → 1
+   *
+   * There is deliberately no `data` style. Tabular figures are a correctness
+   * property, not a look — a reader never sees "tabular", only misalignment
+   * when it is missing — and a numeric cell also needs right alignment, which
+   * no type style can express. It lives on `<TableCell numeric>` instead.
+   *
+   * Density is NOT expressed here. `--db-type-scalar` scales the whole ramp from
+   * one dial, which is the right mechanism for "roomier everywhere" — a second
+   * parallel ramp would inflate controls along with prose.
+   *
+   * name → { size, line, tracking, weight, family, transform }; px values scale. */
   scale: {
-    sm: { size: 12, line: 16, tracking: 0 },
-    md: { size: 13, line: 20, tracking: 0 },
-    lg: { size: 16, line: 22, tracking: 0 },
-    xl: { size: 22, line: 28, tracking: -0.2 },
-    "2xl": { size: 32, line: 40, tracking: -0.4 },
+    hint: { size: 12, line: 16, tracking: 0, weight: 400, family: "text" },
+    // Caps and tracking live in the style so nobody re-types them per use.
+    eyebrow: { size: 12, line: 16, tracking: 0.5, weight: 600, family: "text", transform: "uppercase" },
+
+    // 13/16 — the line box equals the 16px icon box, so text and icon align in a
+    // row without adjustment, and a 24px control gets 4px of breathing room
+    // instead of 2px. Single-line by definition; anything that wraps uses `body`.
+    label: { size: 13, line: 16, tracking: 0, weight: 400, family: "text" },
+    "label-bold": { size: 13, line: 16, tracking: 0, weight: 600, family: "text" },
+
+    // 13/20 — same size, loose enough to wrap. Descriptions inside Alert, Empty,
+    // RadioTile, Card, DropdownMenu and Item all live here.
+    body: { size: 13, line: 20, tracking: 0, weight: 400, family: "text" },
+    "body-bold": { size: 13, line: 20, tracking: 0, weight: 600, family: "text" },
+
+    // Mono steps down against the sans it sits beside: at equal size it reads
+    // larger. No `-bold` — code emphasis is carried by colour, never weight.
+    code: { size: 13, line: 20, tracking: 0, weight: 400, family: "mono" },
+    block: { size: 14, line: 22, tracking: 0, weight: 400, family: "mono" },
+
+    // Genie renders markdown, and `**bold**` inside a message lands on -bold.
+    paragraph: { size: 15, line: 22, tracking: 0, weight: 400, family: "text" },
+    "paragraph-bold": { size: 15, line: 22, tracking: 0, weight: 600, family: "text" },
+
+    "title-4": { size: 16, line: 24, tracking: 0, weight: 600, family: "text" },
+    "title-3": { size: 20, line: 28, tracking: 0, weight: 600, family: "text" },
+    "title-2": { size: 24, line: 32, tracking: -0.2, weight: 600, family: "text" },
+    "title-1": { size: 32, line: 40, tracking: -0.4, weight: 600, family: "text" },
   },
   weight: { normal: 400, bold: 600 },
   // Legacy families kept in the linter allowlist during migration (components
@@ -318,4 +365,37 @@ export const elevation = {
   3: "0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05)",
 }
 
-export default { meta, primitives, semantics, scalars, space, radius, type, elevation }
+/* Size — control heights and icon sizes, scaled by `sizing-scalar`.
+ * Control heights are the 24/32px the components already use; naming them means
+ * the sizing dial finally drives something instead of shipping as a dead knob.
+ * Icon `md` is 16px on purpose: it matches the `label` line box (13/16), so text
+ * and icon align in a row without adjustment. */
+export const size = {
+  element: { sm: 24, md: 32 },
+  icon: { xs: 12, sm: 14, md: 16, lg: 20, xl: 24 },
+}
+
+/* Border width. `thick` is the focus treatment on non-filled controls. */
+export const border = { width: { none: 0, thin: 1, thick: 2 } }
+
+/* Motion — two bands, and exactly ONE easing curve for the whole system.
+ * A single curve is a deliberate economy: systems that ship five easings mostly
+ * ship five things nobody can choose between. Durations follow
+ * min = base × 0.75, max = base ÷ 0.75, rounded to 5ms.
+ *
+ * There is deliberately no `slow` band. Astryx's runs 730–1300ms, which is wrong
+ * for tooling that sits between someone and their data — anything approaching a
+ * second reads as the product being slow, not as polish. */
+export const motion = {
+  duration: {
+    "fast-min": "130ms",
+    fast: "175ms",
+    "fast-max": "230ms",
+    "medium-min": "310ms",
+    medium: "410ms",
+    "medium-max": "550ms",
+  },
+  easing: { standard: "cubic-bezier(0.24, 1, 0.4, 1)" },
+}
+
+export default { meta, primitives, semantics, scalars, space, radius, size, border, type, elevation, motion }
