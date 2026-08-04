@@ -54,7 +54,9 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
+        {/* Wider than the nav's gap: a text link beside a filled button needs
+            more separation than two links of the same weight. */}
+        <div className="ml-auto flex items-center gap-4">
           <a
             href="https://github.com/muditmittal/dbui"
             target="_blank"
