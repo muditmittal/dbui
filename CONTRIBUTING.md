@@ -8,10 +8,22 @@ This file exists to make that impossible to do by accident. **Every change type 
 complete set of files that must move together.** If you cannot update all of them, do not land the
 change.
 
-## The one rule that prevents most drift
+## The two rules that prevent most drift
+
+**No prose states a value.** Not a hex, a pixel size, a duration, a count. Values live in
+`theme.config.mjs`, ship in `tokens.css`, render on the portal's Tokens page and print from
+`dbui token`. A value written into a sentence is a value that will be wrong later — the six
+documentation failures this system has had were all a restated value or a restated status.
+
+Prose earns its place only if deleting it would change what someone does. "450 icons" fails
+that test. "`label` is 13/16 because the line box matches the icon box" passes, because
+without it someone normalises it to 13/20 and breaks row alignment. Write that reasoning as a
+comment **at the point of change** — in `theme.config.mjs`, in the component's JSDoc — not in
+a doc the person editing it will never open.
 
 **Every kind of rule has exactly one owner.** Never state the same rule in two files. When they
-disagree, the more specific source wins.
+disagree, the more specific source wins. Status has exactly one owner too: `TRACKER.md`. No
+reference doc describes how far along anything is.
 
 | Kind of rule | Owned by | Never also state it in |
 |---|---|---|
@@ -72,10 +84,9 @@ classification entries — do not add a seventh.
 3. Update the matching Figma variable in the Primitive or Semantic collection.
 4. Refresh `scripts/design-lint/.figma-token-dump.json` from Figma.
 5. Run `yarn design:verify-sync`. It must report in sync before you land.
-6. If the change alters the visual language, update the YAML front matter in
-   `packages/dbui/DESIGN.md` and the prose section it belongs to.
-
-While the token migration is in flight, also update `docs/token-migration-map.md`.
+6. If the change alters the *reasoning* — not the value — update the relevant
+   section of `packages/dbui/DESIGN.md`. It holds no values by design.
+7. Run `node scripts/generate-token-data.mjs` to refresh the portal's Tokens page.
 
 ### Adding or changing a page shell
 

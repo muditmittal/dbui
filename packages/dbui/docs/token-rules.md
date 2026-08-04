@@ -103,86 +103,8 @@ Figma (Color: Primitive + Color: Semantic)   ← design source; kept in parity w
 
 ---
 
-## 4. Semantic catalog (reference)
+## 4. Compliance rules (linter-enforceable)
 
-Every token below is defined in both modes. "Light / Dark" show the aliased primitive
-(or `rgba` for alpha tokens).
-
-### Surface — element backgrounds (`bg-*`)
-| Token | Light | Dark | Use |
-| --- | --- | --- | --- |
-| `surface/base` | base/white | cool/900 | Page / card background |
-| `surface/subtle` | neutral/050 | cool/800 | Recessed panels, striping |
-| `surface/strong` | neutral/100 | cool/700 | Raised wells, hover rows |
-| `surface/inverse` | neutral/900 | cool/050 | Tooltips, inverted chips |
-| `surface/accent` | blue/200 | blue/900 | Selected / active-nav background |
-| `surface/inset` | `rgba 8%` | `rgba 8%` | Inset code wells |
-| `surface/disabled` | `rgba 12%` | `rgba 12%` | Disabled control fill (role token, see R6) |
-
-### Text — foreground (`text-*`)
-| Token | Light | Dark | Use |
-| --- | --- | --- | --- |
-| `text/base` | neutral/800 | cool/100 | Body text |
-| `text/strong` | neutral/900 | base/white | Headings, emphasis |
-| `text/subtle` | neutral/600 | cool/400 | Secondary / helper text (AA on strong surfaces) |
-| `text/inverse` | base/white | cool/900 | Text on inverse/filled surfaces |
-| `text/disabled` | `rgba 38%` | `rgba 38%` | Disabled text/label (role token) |
-| `text/accent` | blue/700 | blue/400 | Accent-colored text |
-
-### Border (`border-*`)
-| Token | Light | Dark | Use |
-| --- | --- | --- | --- |
-| `border/base` | neutral/200 | `rgba 10%` | Default dividers |
-| `border/strong` | neutral/300 | `rgba 15%` | Emphasized separation |
-| `border/subtle` | neutral/100 | `rgba 6%` | Faint hairlines |
-| `border/inverse` | neutral/700 | cool/300 | Borders on inverse surfaces |
-| `border/disabled` | `rgba 12%` | `rgba 12%` | Disabled control border (role token) |
-| `border/accent` | blue/600 | blue/500 | Accent outline |
-
-### Action — controls. `base` + `hover` + `press` only.
-| Group | Light base | Dark base | Use |
-| --- | --- | --- | --- |
-| `action/default/*` | neutral/050 | cool/800 | Secondary/subtle button fill |
-| `action/primary/*` | neutral/900 | cool/200 | Primary (filled) button |
-| `action/selected/*` | `rgba 6%` | `rgba 8%` | Selected/toggle wash |
-| `action/positive/*` | green/600 | green/500 | Confirm/positive filled |
-| `action/negative/*` | red/600 | red/500 | Destructive filled |
-| `action/label/*` | neutral/800 | cool/050 | Label on subtle controls |
-| `action/label-inverse/*` | base/white | cool/900 | Label on filled controls |
-
-`hover`/`press` for the non-filled groups (`default`, `selected`, `label*`) are **alpha
-washes**; the filled groups (`primary`, `positive`, `negative`) step along their ramp
-(hover=+100, press=+200) or use an alpha of their own base (primary).
-
-### Input / Focus / Link
-| Token | Light | Dark | Use |
-| --- | --- | --- | --- |
-| `input/border-base` | neutral/200 | `rgba 15%` | Field border at rest |
-| `input/border-hover` | neutral/400 | cool/500 | Field border hover |
-| `input/border-focus` | neutral/900 | cool/200 | Field border focus |
-| `focus/ring` | neutral/900 | cool/200 | Focus ring (dark & bold) |
-| `focus/ring-offset` | base/white | cool/900 | Ring gap against surface |
-| `link/base·hover·press·visited` | blue/600→800 | blue/400→200 | Hyperlinks |
-
-### Status — `surface` + `border` + `text` triplet for info / negative / positive / warning
-| Role | Info | Negative | Positive | Warning |
-| --- | --- | --- | --- | --- |
-| `status/surface-*` | blue/100·900 | red/100·900 | green/100·900 | yellow/100·900 |
-| `status/border-*` | blue/700·500 | red/700·500 | green/700·500 | yellow/700·500 |
-| `status/text-*` | blue/600·400 | red/600·400 | green/600·400 | yellow/600·400 |
-
-### Utility & Viz
-| Token | Light | Dark | Use |
-| --- | --- | --- | --- |
-| `utility/scrim` | `rgba 30%` | `rgba 50%` | Modal/overlay scrim |
-| `utility/surface-skeleton` | `rgba 12%` | `rgba 12%` | Skeleton block |
-| `utility/text-skeleton` | `rgba 20%` | `rgba 20%` | Skeleton text line |
-| `viz/categorical/1…10` | hued primitives | hued primitives | Discrete series (order fixed) |
-| `viz/sequential/1…10` | cyan ramp | cyan ramp (reversed) | Continuous scales |
-
----
-
-## 5. Compliance rules (linter-enforceable)
 
 Each rule states **what** is enforced, **why**, and **how a linter detects it**.
 `✅ live` = already checked by react-lint/figma-lint; `🔜 planned` = for the
@@ -215,32 +137,8 @@ token-compliance linter.
 
 ---
 
-## 6. Migration status (legacy → semantic)
+---
 
-The shadcn-flat tokens in `globals.css` (`--background`, `--primary`,
-`--muted-foreground`, …) are **still shipped** and still consumed by components. The new
-semantic layer is **additive** — it coexists without changing rendered output yet.
-
-**Rough mapping** (for the eventual component migration):
-
-| Legacy | Semantic |
-| --- | --- |
-| `--background` / `--card` / `--popover` | `surface/base` |
-| `--foreground` | `text/base` (headings → `text/strong`) |
-| `--muted` / `--secondary` | `surface/strong` |
-| `--muted-foreground` | `text/subtle` |
-| `--primary` | `action/primary/base` |
-| `--primary-foreground` | `action/label-inverse/base` |
-| `--destructive` | `action/negative/base` / `status/text-negative` |
-| `--accent` / `--accent-foreground` | `surface/accent` / `text/accent` |
-| `--border` | `border/base` |
-| `--input` | `input/border-base` |
-| `--ring` | `focus/ring` |
-| `--disabled*` | `surface/disabled` · `border/disabled` · `text/disabled` |
-
-> ⚠️ Adopting the mapping flips light-mode `--primary` from DuBois blue `#2272B4` to
-> neutral `#171717` (the shadcn redesign). That is a deliberate visual change and must be
-> a separate, reviewed step — it is **not** part of the additive token layer.
-
-When a component migrates, swap its legacy utility for the semantic one
-(`bg-primary` → `bg-action-primary-base`) and drop the legacy alias once nothing uses it.
+The catalog of semantic values is `src/tokens/tokens.css`, rendered on the
+portal's Tokens page and printed by `dbui token`. Migration status is in
+`TRACKER.md`.

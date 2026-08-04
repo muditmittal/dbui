@@ -449,8 +449,19 @@ export function doctor() {
   const missingDoc = Object.entries(DOC_TOPICS).filter(([, fn]) => !read(fn().file)).map(([k]) => k);
   add("Docs present", missingDoc.length === 0 ? "pass" : "warn", missingDoc.length ? `Missing: ${missingDoc.join(", ")}` : "All topics resolve.");
 
-  const undocumented = Object.values(components()).filter((c) => c.guidelines.length === 0).length;
-  add("Component annotations", undocumented === 0 ? "pass" : "warn", `${undocumented} component(s) have no @guideline.`, undocumented ? "Agents fall back to guessing for these." : null);
+  // Components the index marks excluded, internal or deprioritized are not meant
+  // to carry guidelines. Counting them made this warning read four times worse
+  // than it is, which trains people to ignore it.
+  const missingGuideline = Object.values(components()).filter(
+    (c) => c.guidelines.length === 0 && !/excluded|utility|internal|deprioriti/i.test(c.name)
+  );
+  const undocumented = missingGuideline.length;
+  add(
+    "Component annotations",
+    undocumented === 0 ? "pass" : "warn",
+    `${undocumented} component(s) have no @guideline.`,
+    undocumented ? `Agents fall back to guessing for these: ${missingGuideline.map((c) => c.name).join(", ")}.` : null
+  );
 
   const uncategorised = Object.values(components()).filter((c) => !c.category).length;
   add("Index coverage", uncategorised === 0 ? "pass" : "warn", `${uncategorised} component(s) are not in component-index.md.`, uncategorised ? "They will not surface in category listings." : null);
