@@ -1,6 +1,18 @@
 import Link from "next/link"
 
 import { DOCS_NAV } from "@/components/docs-nav-data"
+
+/**
+ * Each layer depends only on the ones above it. That is the claim the system
+ * rests on, so it belongs with the documentation rather than the marketing page.
+ */
+const LAYERS = [
+  { name: "Tokens", detail: "Colour, type, space, radius, size, elevation, motion", href: "/docs/tokens" },
+  { name: "Icons", detail: "450 icons, semantically tagged and searchable", href: "/components" },
+  { name: "Components", detail: "48 components, each paired 1:1 with Figma", href: "/components" },
+  { name: "Compositions", detail: "Recurring assemblies — trees, filters, headers", href: "/components" },
+  { name: "Shells", detail: "Five page archetypes. Every page starts with one", href: "/templates" },
+]
 import { galleryTotal } from "@/stories/components/gallery-data"
 import { tokenCounts } from "@/stories/tokens/token-data"
 
@@ -28,6 +40,26 @@ export default function DocsOverview() {
           </div>
         ))}
       </div>
+
+      <h2 className="type-title-3 mt-12 text-text-strong">How it stacks</h2>
+      <p className="type-body mt-3 max-w-[68ch] text-text-subtle">
+        Each layer depends only on the ones above it. That is what makes swapping a token set or an
+        icon pack safe — everything below keeps working.
+      </p>
+      <ol className="mt-5 flex flex-col" style={{ listStyle: "none", padding: 0 }}>
+        {LAYERS.map((layer, i) => (
+          <li key={layer.name}>
+            <Link
+              href={layer.href}
+              className="flex items-baseline gap-5 border-b border-border-subtle px-3 py-3.5 no-underline transition-colors hover:bg-surface-hover"
+            >
+              <span className="type-hint w-5 shrink-0 text-text-subtle tabular-nums">{i + 1}</span>
+              <span className="type-label-bold w-36 shrink-0 text-text-strong">{layer.name}</span>
+              <span className="type-body text-text-subtle">{layer.detail}</span>
+            </Link>
+          </li>
+        ))}
+      </ol>
 
       <h2 className="type-title-3 mt-12 text-text-strong">Everything here</h2>
       <div className="mt-5 flex flex-col gap-8">

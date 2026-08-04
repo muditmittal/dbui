@@ -8,18 +8,6 @@ import { SiteHeader } from "@/components/SiteHeader"
 import { galleryTotal } from "@/stories/components/gallery-data"
 import { tokenCounts } from "@/stories/tokens/token-data"
 
-/**
- * Each layer depends only on the ones above it. That is the claim the whole
- * system rests on, so it leads the page.
- */
-const LAYERS = [
-  { name: "Tokens", detail: `${tokenCounts.colorGroups} colours, 14 type styles, all generated from one file`, href: "/docs/tokens" },
-  { name: "Icons", detail: "450 icons, semantically tagged and searchable", href: "/components" },
-  { name: "Components", detail: `${galleryTotal} components, each paired 1:1 with Figma`, href: "/components" },
-  { name: "Compositions", detail: "Recurring assemblies — trees, filters, headers", href: "/components" },
-  { name: "Shells", detail: "Five page archetypes. Every page starts with one", href: "/components" },
-]
-
 const ENTRY = [
   {
     href: "/components",
@@ -78,11 +66,16 @@ export default function Home() {
               The outline variant is transparent by design, but here it sits over
               the animated dot field, so the dots read through the label. A solid
               surface is a property of this context, not a fix to the variant.
+
+              The hover wash arrives as a background-image so it layers over that
+              solid colour. The variant's own hover sets background-color, which
+              would have replaced the fill and let the dots back through at the
+              exact moment the pointer is on the button.
             */}
             <Button
               variant="outline"
               nativeButton={false}
-              className="bg-surface-base"
+              className="bg-surface-base hover:bg-surface-base hover:[background-image:linear-gradient(var(--db-action-default-hover),var(--db-action-default-hover))]"
               render={<Link href="/components" />}
             >
               Browse components
@@ -105,7 +98,7 @@ export default function Home() {
             <Link
               key={card.href}
               href={card.href}
-              className="group flex flex-col gap-1.5 rounded-md border border-border-base bg-surface-base p-5 no-underline transition-colors hover:border-border-strong hover:bg-action-default-hover"
+              className="group flex flex-col gap-1.5 rounded-md border border-border-base bg-surface-base p-5 no-underline transition-colors hover:border-border-strong hover:bg-surface-hover"
             >
               <span className="type-eyebrow text-text-subtle">{card.eyebrow}</span>
               <span className="type-title-4 text-text-strong group-hover:underline">
@@ -116,32 +109,6 @@ export default function Home() {
           ))}
         </section>
 
-        <section className="border-t border-border-base pt-16 pb-24">
-          <h2 className="type-title-2 text-text-strong">How it stacks</h2>
-          <p className="type-paragraph mt-3 max-w-[64ch] text-text-subtle">
-            Each layer depends only on the ones above it. That is what makes swapping a token set or
-            an icon pack safe — everything below keeps working.
-          </p>
-
-          <ol className="mt-8 flex flex-col" style={{ listStyle: "none", padding: 0 }}>
-            {LAYERS.map((layer, i) => (
-              <li key={layer.name}>
-                <Link
-                  href={layer.href}
-                  className="flex items-baseline gap-5 rounded-sm border-b border-border-subtle px-3 py-4 no-underline transition-colors hover:bg-action-default-hover"
-                >
-                  <span className="type-hint w-5 shrink-0 text-text-subtle tabular-nums">
-                    {i + 1}
-                  </span>
-                  <span className="type-label-bold w-40 shrink-0 text-text-strong">
-                    {layer.name}
-                  </span>
-                  <span className="type-body text-text-subtle">{layer.detail}</span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </section>
       </main>
 
       <footer className="border-t border-border-base">

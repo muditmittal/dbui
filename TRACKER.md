@@ -22,7 +22,8 @@ Anything those contradict is this file being wrong.
 ## Open
 
 1. **Figma token migration.** Variables carry pre-migration names; Title 4 is now
-   16/24 and needs rebinding. Do Figma and Code Connect in one pass or they drift.
+   16/24 and needs rebinding, and `surface-hover` is new since. `verify-token-sync`
+   already reports the gap. Do Figma and Code Connect in one pass or they drift.
 2. **Portal build.** The Next.js site (`/`, `/docs`) needs the remaining doc pages
    ported from the Storybook MDX. Storybook keeps `/components`.
 3. **Generate the token docs.** Four drifts in one session. Generate the derivable

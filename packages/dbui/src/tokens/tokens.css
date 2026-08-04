@@ -16,6 +16,7 @@
   --color-surface-strong: var(--db-surface-strong);
   --color-surface-inverse: var(--db-surface-inverse);
   --color-surface-accent: var(--db-surface-accent);
+  --color-surface-hover: var(--db-surface-hover);
   --color-surface-inset: var(--db-surface-inset);
   --color-surface-disabled: var(--db-surface-disabled);
   --color-text-base: var(--db-text-base);
@@ -134,7 +135,7 @@
   --db-letter-spacing-hint: calc(0 * var(--db-type-scalar));
   --db-font-weight-hint: 400;
   --db-font-family-hint: var(--db-font-family);
-  --db-font-size-eyebrow: calc(0.75rem * var(--db-type-scalar));
+  --db-font-size-eyebrow: calc(0.6875rem * var(--db-type-scalar));
   --db-line-height-eyebrow: calc(1rem * var(--db-type-scalar));
   --db-letter-spacing-eyebrow: calc(0.03125rem * var(--db-type-scalar));
   --db-font-weight-eyebrow: 600;
@@ -239,6 +240,7 @@
   --db-surface-strong: #F5F5F5;
   --db-surface-inverse: #171717;
   --db-surface-accent: #D7EDFE;
+  --db-surface-hover: rgba(0, 0, 0, 0.03);
   --db-surface-inset: rgba(0, 0, 0, 0.08);
   --db-surface-disabled: rgba(0, 0, 0, 0.12);
   --db-text-base: #262626;
@@ -329,6 +331,7 @@
   --db-surface-strong: #2B343D;
   --db-surface-inverse: #F6F7F9;
   --db-surface-accent: #021E38;
+  --db-surface-hover: rgba(255, 255, 255, 0.04);
   --db-surface-inset: rgba(255, 255, 255, 0.08);
   --db-surface-disabled: rgba(255, 255, 255, 0.12);
   --db-text-base: #E8ECF0;

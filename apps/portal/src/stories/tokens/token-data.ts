@@ -37,6 +37,11 @@ export const colorGroups: ColorGroup[] = [
         "dark": "#021E38"
       },
       {
+        "name": "surface-hover",
+        "light": "rgba(0, 0, 0, 0.03)",
+        "dark": "rgba(255, 255, 255, 0.04)"
+      },
+      {
         "name": "surface-inset",
         "light": "rgba(0, 0, 0, 0.08)",
         "dark": "rgba(255, 255, 255, 0.08)"
@@ -701,7 +706,7 @@ export const scalars: Token[] = [
 ]
 
 export const tokenCounts = {
-  "colorGroups": 84,
+  "colorGroups": 85,
   "space": 9,
   "spaceInline": 2,
   "radius": 6,

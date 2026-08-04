@@ -140,6 +140,14 @@ export const semantics = {
   "surface-strong": { light: "interface.neutral.100", dark: "interface.cool.700" },
   "surface-inverse": { light: "interface.neutral.900", dark: "interface.cool.050" },
   "surface-accent": { light: "status.blue.200", dark: "status.blue.900" },
+  /* Hover for large targets — cards, tiles, table rows, list items.
+   *
+   * Deliberately lighter than action-default-hover. That 6% wash is tuned for a
+   * control the size of a button, where the eye reads it as a tint; across a
+   * whole card it reads as a fill, and it drags the text contrast down with it.
+   * Area changes how the same alpha is perceived, so a large surface needs its
+   * own value rather than borrowing the control one. */
+  "surface-hover": { light: { ref: "base.black", a: 0.03 }, dark: { ref: "base.white", a: 0.04 } },
   "surface-inset": { light: { ref: "base.black", a: 0.08 }, dark: { ref: "base.white", a: 0.08 } },
   "surface-disabled": { light: { ref: "base.black", a: 0.12 }, dark: { ref: "base.white", a: 0.12 } },
 
@@ -319,7 +327,11 @@ export const type = {
   scale: {
     hint: { size: 12, line: 16, tracking: 0, weight: 400, family: "text" },
     // Caps and tracking live in the style so nobody re-types them per use.
-    eyebrow: { size: 12, line: 16, tracking: 0.5, weight: 600, family: "text", transform: "uppercase" },
+    // 11px is the only sub-12 size in the ramp, and it is an optical correction
+    // rather than a new step: capitals have no descenders and fill the whole
+    // x-height band, so all-caps at 12px reads noticeably larger than 12px
+    // sentence case sitting beside it.
+    eyebrow: { size: 11, line: 16, tracking: 0.5, weight: 600, family: "text", transform: "uppercase" },
 
     // 13/16 — the line box equals the 16px icon box, so text and icon align in a
     // row without adjustment, and a 24px control gets 4px of breathing room

@@ -63,6 +63,7 @@ Scalars and the two `em` inline steps have no single px value by design.
 | `--db-surface-accent` | Color | #D7EDFE |  | #021E38 |
 | `--db-surface-base` | Color | #FFFFFF |  | #11171C |
 | `--db-surface-disabled` | Color | rgba(0, 0, 0, 0.12) |  | rgba(255, 255, 255, 0.12) |
+| `--db-surface-hover` | Color | rgba(0, 0, 0, 0.03) |  | rgba(255, 255, 255, 0.04) |
 | `--db-surface-inset` | Color | rgba(0, 0, 0, 0.08) |  | rgba(255, 255, 255, 0.08) |
 | `--db-surface-inverse` | Color | #171717 |  | #F6F7F9 |
 | `--db-surface-strong` | Color | #F5F5F5 |  | #2B343D |
@@ -131,7 +132,7 @@ Scalars and the two `em` inline steps have no single px value by design.
 | `--db-font-size-body` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
 | `--db-font-size-body-bold` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
 | `--db-font-size-code` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
-| `--db-font-size-eyebrow` | Typography | calc(0.75rem * var(--db-type-scalar)) | 12px |  |
+| `--db-font-size-eyebrow` | Typography | calc(0.6875rem * var(--db-type-scalar)) | 11px |  |
 | `--db-font-size-hint` | Typography | calc(0.75rem * var(--db-type-scalar)) | 12px |  |
 | `--db-font-size-label` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
 | `--db-font-size-label-bold` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
@@ -219,7 +220,7 @@ Scalars and the two `em` inline steps have no single px value by design.
 | Utility | Size | Line height | Weight | Family | Case |
 | --- | --- | --- | --- | --- | --- |
 | `type-hint` | 12px | 16px | 400 | sans |  |
-| `type-eyebrow` | 12px | 16px | 600 | sans | uppercase |
+| `type-eyebrow` | 11px | 16px | 600 | sans | uppercase |
 | `type-label` | 13px | 16px | 400 | sans |  |
 | `type-label-bold` | 13px | 16px | 600 | sans |  |
 | `type-body` | 13px | 20px | 400 | sans |  |
