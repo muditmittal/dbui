@@ -7,7 +7,7 @@ import componentSource from "dbui/components/ui/toggle?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Actions/Toggle",
+  title: "Components/Actions/Toggle",
   parameters: { layout: "padded" },
 }
 

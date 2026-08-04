@@ -6,7 +6,7 @@ import componentSource from "dbui/components/ui/dialog?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Overlays/Dialog",
+  title: "Components/Overlays/Dialog",
   parameters: { layout: "padded" },
 }
 

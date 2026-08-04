@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/spinner?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Spinner",
+  title: "Components/Content/Spinner",
   parameters: { layout: "padded" },
 }
 

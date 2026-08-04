@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/separator?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Separator",
+  title: "Components/Content/Separator",
   parameters: { layout: "padded" },
 }
 

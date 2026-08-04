@@ -7,7 +7,7 @@ import componentSource from "dbui/components/ui/split-button?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Actions/SplitButton",
+  title: "Components/Actions/SplitButton",
   parameters: { layout: "padded" },
 }
 

@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/select?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/Select",
+  title: "Components/Controls/Select",
   parameters: { layout: "padded" },
 }
 

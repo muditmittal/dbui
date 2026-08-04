@@ -36,7 +36,7 @@ import { SparkleFill } from "dbui/components/icons/SparkleFill"
 import { GenieCode } from "dbui/components/icons/GenieCode"
 
 const meta: Meta = {
-  title: "Genie/Thread",
+  title: "Components/Genie/Thread",
   parameters: { layout: "padded" },
 }
 

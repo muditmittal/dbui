@@ -7,7 +7,7 @@ import { ProductionMap } from "./components/ProductionMap"
 const allStatuses = ["online", "ready", "offline", "pending", "running", "syncing", "canceled", "stopped", "info", "success", "warning", "error"] as const
 
 const meta: Meta = {
-  title: "Content/Status",
+  title: "Components/Content/Status",
   parameters: { layout: "padded" },
 }
 

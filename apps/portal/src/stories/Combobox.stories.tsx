@@ -64,7 +64,7 @@ const tags = [
 ]
 
 const meta: Meta = {
-  title: "Controls/Combobox",
+  title: "Components/Controls/Combobox",
   parameters: { layout: "padded" },
 }
 

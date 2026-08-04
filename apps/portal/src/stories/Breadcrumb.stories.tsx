@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/breadcrumb?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Breadcrumb",
+  title: "Components/Content/Breadcrumb",
   parameters: { layout: "padded" },
 }
 

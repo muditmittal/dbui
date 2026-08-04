@@ -5,7 +5,7 @@ import { ProductionMap } from "./components/ProductionMap"
 import componentSource from "dbui/components/ui/key-value-pair?raw"
 
 const meta: Meta = {
-  title: "Content/KeyValuePair",
+  title: "Components/Content/KeyValuePair",
   argTypes: {
     layout: { control: "radio", options: ["horizontal", "vertical", "flexible"] },
   },

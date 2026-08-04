@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/switch?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/Switch",
+  title: "Components/Controls/Switch",
   parameters: { layout: "padded" },
 }
 

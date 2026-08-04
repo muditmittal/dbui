@@ -54,7 +54,7 @@ const teamMembers = [
 const allUsers = [...recentUsers, ...teamMembers]
 
 const meta: Meta = {
-  title: "Controls/TypeaheadCombobox",
+  title: "Components/Controls/TypeaheadCombobox",
   parameters: { layout: "padded" },
 }
 

@@ -7,7 +7,7 @@ import { treeSections, catalogItems } from "./catalog-data"
 import { CatalogUserHome } from "@/components/icons/CatalogUserHome"
 
 const meta: Meta = {
-  title: "Shells/Catalog Explorer",
+  title: "Components/Shells/Catalog Explorer",
   parameters: { layout: "fullscreen" },
 }
 

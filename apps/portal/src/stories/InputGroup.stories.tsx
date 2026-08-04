@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/input-group?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/InputGroup",
+  title: "Components/Controls/InputGroup",
   parameters: { layout: "padded" },
 }
 

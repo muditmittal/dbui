@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/input?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/Input",
+  title: "Components/Controls/Input",
   parameters: { layout: "padded" },
 }
 

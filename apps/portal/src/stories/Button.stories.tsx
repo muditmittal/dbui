@@ -11,7 +11,7 @@ import componentSource from "dbui/components/ui/button?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Actions/Button",
+  title: "Components/Actions/Button",
   parameters: { layout: "padded" },
   argTypes: {
     variant: {

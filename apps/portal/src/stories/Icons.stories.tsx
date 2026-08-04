@@ -4,7 +4,7 @@ import { iconClassifications } from "../../../../packages/dbui/src/components/ic
 import { iconDescriptions } from "../../../../packages/dbui/src/components/icons/descriptions"
 
 const meta: Meta = {
-  title: "Icons",
+  title: "Components/Icons",
   parameters: { layout: "padded" },
 }
 

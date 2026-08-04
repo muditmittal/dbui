@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { PlatformHeader } from "dbui-shells/components/PlatformHeader"
 
 const meta: Meta = {
-  title: "Compositions/Platform Header",
+  title: "Components/Compositions/Platform Header",
   parameters: { layout: "fullscreen" },
 }
 

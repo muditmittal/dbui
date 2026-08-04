@@ -16,7 +16,7 @@ import componentSource from "dbui/components/ui/alert-dialog?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Overlays/AlertDialog",
+  title: "Components/Overlays/AlertDialog",
   parameters: { layout: "padded" },
 }
 

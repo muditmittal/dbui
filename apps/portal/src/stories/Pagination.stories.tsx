@@ -6,7 +6,7 @@ import componentSource from "dbui/components/ui/pagination?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Pagination",
+  title: "Components/Content/Pagination",
   parameters: { layout: "padded" },
 }
 

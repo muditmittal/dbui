@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/accordion?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Accordion",
+  title: "Components/Content/Accordion",
   parameters: { layout: "padded" },
 }
 

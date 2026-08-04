@@ -17,7 +17,7 @@ const variantConfig: { variant: "danger" | "warning" | "info" | "success"; icon:
 ]
 
 const meta: Meta = {
-  title: "Overlays/Alert",
+  title: "Components/Overlays/Alert",
   parameters: { layout: "padded" },
 }
 

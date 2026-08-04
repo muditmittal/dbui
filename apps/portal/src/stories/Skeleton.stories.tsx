@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/skeleton?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Skeleton",
+  title: "Components/Content/Skeleton",
   parameters: { layout: "padded" },
 }
 

@@ -8,7 +8,7 @@ import { ProductionMap } from "./components/ProductionMap"
 import componentSource from "dbui/components/ui/table?raw"
 
 const meta: Meta = {
-  title: "Content/Table",
+  title: "Components/Content/Table",
   parameters: { layout: "padded" },
 }
 

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { AssistantPanel } from "dbui-shells/components/AssistantPanel"
 
 const meta: Meta = {
-  title: "Compositions/Assistant Panel",
+  title: "Components/Compositions/Assistant Panel",
   parameters: { layout: "fullscreen" },
 }
 

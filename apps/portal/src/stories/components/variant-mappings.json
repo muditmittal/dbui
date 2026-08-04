@@ -690,7 +690,7 @@
       },
       "Tone (TreeNodeIcon color)": {
         "figma": ["Folder kinds → blue/blue400 (#8ACAFF)", "File kinds → text/muted-foreground"],
-        "code": ["text-icon-folder", "text-muted-foreground (default)"]
+        "code": ["text-icon-folder", "text-text-subtle (default)"]
       },
       "Focusable kinds": {
         "figma": ["only folder rows show 'Focus here'"],

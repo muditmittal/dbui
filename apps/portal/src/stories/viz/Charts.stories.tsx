@@ -10,7 +10,7 @@ import {
 } from "dbui-viz"
 
 const meta: Meta = {
-  title: "Viz/Charts",
+  title: "Components/Viz/Charts",
   parameters: { layout: "padded" },
 }
 

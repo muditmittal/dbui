@@ -7,7 +7,7 @@ import {
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Overlays/HoverCard",
+  title: "Components/Overlays/HoverCard",
   parameters: { layout: "padded" },
 }
 

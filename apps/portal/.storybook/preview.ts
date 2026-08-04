@@ -16,20 +16,26 @@ const preview: Preview = {
     options: {
       storySort: {
         method: "alphabetical",
+        // Two roots, like Astryx: Docs is the theory, Components is the library.
+        // Within each, the order is how a builder moves through them — read the
+        // foundations, then browse the gallery, then reach for a component.
         order: [
-          "dbui",
-          "Foundations",
-          "Tooling",
-          "Icons",
-          "Tokens",
-          "Actions",
-          "Controls",
-          "Content",
-          "Overlays",
-          "Compositions",
-          "Surfaces",
-          "Viz",
-          "Genie",
+          "Home",
+          "Docs",
+          ["Foundations", "Tooling"],
+          "Components",
+          [
+            "Overview",
+            "Actions",
+            "Controls",
+            "Content",
+            "Overlays",
+            "Icons",
+            "Viz",
+            "Genie",
+            "Compositions",
+            "Shells",
+          ],
         ],
       },
     },

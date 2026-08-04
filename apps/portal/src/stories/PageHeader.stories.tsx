@@ -20,7 +20,7 @@ import { Copy } from "@/components/icons/Copy"
 import { Star } from "@/components/icons/Star"
 
 const meta: Meta = {
-  title: "Compositions/Page Header",
+  title: "Components/Compositions/Page Header",
   parameters: { layout: "padded" },
 }
 

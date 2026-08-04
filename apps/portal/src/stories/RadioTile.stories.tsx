@@ -15,7 +15,7 @@ import componentSource from "dbui/components/ui/radio-tile?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/RadioTile",
+  title: "Components/Controls/RadioTile",
   parameters: { layout: "padded" },
 }
 

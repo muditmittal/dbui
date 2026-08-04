@@ -7,7 +7,7 @@ import componentSource from "dbui/components/ui/editor-tabs?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/EditorTabs",
+  title: "Components/Content/EditorTabs",
   parameters: { layout: "padded" },
 }
 

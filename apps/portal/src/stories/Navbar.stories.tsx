@@ -10,7 +10,7 @@ import { ProductionMap } from "./components/ProductionMap"
 import componentSource from "dbui/components/ui/navbar?raw"
 
 const meta: Meta = {
-  title: "Content/Navbar",
+  title: "Components/Content/Navbar",
   parameters: {
     layout: "padded",
     docs: {

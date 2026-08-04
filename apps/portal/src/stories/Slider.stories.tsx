@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/slider?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/Slider",
+  title: "Components/Controls/Slider",
   parameters: { layout: "padded" },
 }
 

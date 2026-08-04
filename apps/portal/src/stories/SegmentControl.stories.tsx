@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/segment-control?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Actions/SegmentControl",
+  title: "Components/Actions/SegmentControl",
   parameters: { layout: "padded" },
 }
 

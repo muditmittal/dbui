@@ -6,7 +6,7 @@ import componentSource from "dbui/components/ui/avatar?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Avatar",
+  title: "Components/Content/Avatar",
   parameters: { layout: "padded" },
 }
 

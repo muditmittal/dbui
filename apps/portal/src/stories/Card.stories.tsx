@@ -6,7 +6,7 @@ import componentSource from "dbui/components/ui/card?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Card",
+  title: "Components/Content/Card",
   parameters: { layout: "padded" },
 }
 

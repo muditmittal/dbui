@@ -14,7 +14,7 @@ import componentSource from "dbui/components/ui/drawer?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Overlays/Drawer",
+  title: "Components/Overlays/Drawer",
   parameters: { layout: "padded" },
 }
 

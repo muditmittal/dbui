@@ -49,7 +49,7 @@ import { ChevronDown } from "@/components/icons/ChevronDown"
  */
 
 const meta: Meta = {
-  title: "Compositions/Page Header Patterns",
+  title: "Components/Compositions/Page Header Patterns",
   parameters: { layout: "padded" },
 }
 

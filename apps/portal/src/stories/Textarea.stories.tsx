@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/textarea?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/Textarea",
+  title: "Components/Controls/Textarea",
   parameters: { layout: "padded" },
 }
 

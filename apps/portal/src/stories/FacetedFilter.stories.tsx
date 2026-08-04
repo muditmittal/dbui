@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { FacetedFilter } from "dbui-shells/components/FacetedFilter"
 
 const meta: Meta = {
-  title: "Compositions/Faceted Filter",
+  title: "Components/Compositions/Faceted Filter",
   parameters: { layout: "padded" },
 }
 

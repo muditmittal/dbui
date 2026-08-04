@@ -7,7 +7,7 @@ import componentSource from "dbui/components/ui/empty?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Empty",
+  title: "Components/Content/Empty",
   parameters: { layout: "padded" },
 }
 

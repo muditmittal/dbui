@@ -6,7 +6,7 @@ import componentSource from "dbui/components/ui/tag?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Tag",
+  title: "Components/Content/Tag",
   parameters: { layout: "padded" },
 }
 

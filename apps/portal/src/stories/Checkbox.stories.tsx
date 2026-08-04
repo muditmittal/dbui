@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/checkbox?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/Checkbox",
+  title: "Components/Controls/Checkbox",
   parameters: { layout: "padded" },
 }
 

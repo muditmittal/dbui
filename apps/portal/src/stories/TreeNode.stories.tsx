@@ -30,7 +30,7 @@ import componentSource from "dbui/components/ui/data-tree?raw"
  * L1 surface as a *reference*, not as the canonical usage path.
  */
 const meta: Meta = {
-  title: "Content/Tree/TreeNode",
+  title: "Components/Content/Tree/TreeNode",
   parameters: { layout: "padded" },
 }
 export default meta

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Base } from "dbui-shells/shell"
 
 const meta: Meta = {
-  title: "Shells/Base",
+  title: "Components/Shells/Base",
   parameters: { layout: "fullscreen" },
 }
 

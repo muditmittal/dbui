@@ -8,7 +8,7 @@ import componentSource from "dbui/components/ui/sonner?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Overlays/Toast",
+  title: "Components/Overlays/Toast",
   parameters: { layout: "padded" },
 }
 

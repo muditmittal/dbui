@@ -20,7 +20,7 @@ import componentSource from "dbui/components/ui/data-tree?raw"
  * real, indented entity starting at depth 0.
  */
 const meta: Meta = {
-  title: "Content/Tree/File Tree",
+  title: "Components/Content/Tree/File Tree",
   parameters: { layout: "padded" },
 }
 export default meta

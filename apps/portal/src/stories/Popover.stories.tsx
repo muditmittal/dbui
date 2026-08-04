@@ -11,7 +11,7 @@ import componentSource from "dbui/components/ui/popover?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Overlays/Popover",
+  title: "Components/Overlays/Popover",
   parameters: { layout: "padded" },
 }
 

@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/progress?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Progress",
+  title: "Components/Content/Progress",
   parameters: { layout: "padded" },
 }
 

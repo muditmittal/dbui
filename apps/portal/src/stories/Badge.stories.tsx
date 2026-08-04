@@ -6,7 +6,7 @@ import componentSource from "dbui/components/ui/badge?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Content/Badge",
+  title: "Components/Content/Badge",
   parameters: { layout: "padded" },
 }
 

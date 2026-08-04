@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { PlatformNav } from "./components/PlatformNav"
 
 const meta: Meta = {
-  title: "Compositions/Platform Nav",
+  title: "Components/Compositions/Platform Nav",
   parameters: { layout: "padded" },
 }
 

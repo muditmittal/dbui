@@ -27,7 +27,7 @@ import componentSource from "dbui/components/ui/data-tree?raw"
  * Top-level catalogs underneath sit at the same x-origin as the section header itself.
  */
 const meta: Meta = {
-  title: "Content/Tree/Data Tree",
+  title: "Components/Content/Tree/Data Tree",
   parameters: { layout: "padded" },
 }
 export default meta

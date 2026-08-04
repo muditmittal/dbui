@@ -26,7 +26,7 @@ import { Button } from "dbui/components/ui/button"
 import { Search } from "@/components/icons/Search"
 
 const meta: Meta = {
-  title: "Compositions/Controls Bar",
+  title: "Components/Compositions/Controls Bar",
   parameters: { layout: "padded" },
 }
 

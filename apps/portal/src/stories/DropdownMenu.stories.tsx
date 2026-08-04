@@ -37,7 +37,7 @@ import componentSource from "dbui/components/ui/dropdown-menu?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/DropdownMenu",
+  title: "Components/Controls/DropdownMenu",
   parameters: { layout: "padded" },
 }
 

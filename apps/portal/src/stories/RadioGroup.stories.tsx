@@ -5,7 +5,7 @@ import componentSource from "dbui/components/ui/radio-group?raw"
 import { ProductionMap } from "./components/ProductionMap"
 
 const meta: Meta = {
-  title: "Controls/RadioGroup",
+  title: "Components/Controls/RadioGroup",
   parameters: { layout: "padded" },
 }
 

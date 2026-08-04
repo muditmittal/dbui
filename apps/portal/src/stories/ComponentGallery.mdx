@@ -1,0 +1,20 @@
+import { Meta } from "@storybook/blocks"
+import { ComponentGallery } from "./components/ComponentGallery"
+
+{/*
+  A docs entry rather than a story: the gallery is a page, and Storybook hides
+  the controls panel on docs entries. The grid itself is generated from the CLI
+  by scripts/generate-gallery.mjs, so it cannot drift from the library.
+*/}
+
+<Meta title="Components/Overview" />
+
+{/*
+  `sb-unstyled` opts out of Storybook's docs stylesheet. Without it the docs CSS
+  restyles the demos — buttons pick up link colours and the type switches to
+  Storybook's font — which would make the gallery misrepresent the components.
+*/}
+
+<div className="sb-unstyled">
+  <ComponentGallery />
+</div>

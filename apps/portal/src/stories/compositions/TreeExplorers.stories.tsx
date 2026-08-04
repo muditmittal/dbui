@@ -380,7 +380,7 @@ const fileHeaderActions = (
 // ─── Stories ───────────────────────────────────────────────────────────────
 
 const meta: Meta = {
-  title: "Compositions/Tree Explorers",
+  title: "Components/Compositions/Tree Explorers",
   parameters: { layout: "fullscreen" },
 }
 export default meta
