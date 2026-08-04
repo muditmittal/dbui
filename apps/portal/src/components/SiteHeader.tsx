@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Button } from "dbui/components/ui/button"
+import { DbuiLogo } from "./DbuiLogo"
 
 const NAV = [
   { href: "/docs", label: "Docs" },
@@ -18,8 +19,12 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-10 border-b border-border-base bg-surface-base/85 backdrop-blur">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center gap-8 px-6">
-        <Link href="/" className="type-title-4 text-text-strong no-underline">
-          dbui
+        <Link
+          href="/"
+          aria-label="DBUI home"
+          className="shrink-0 text-text-strong no-underline"
+        >
+          <DbuiLogo className="h-5 w-auto" />
         </Link>
 
         <nav className="flex items-center gap-1">
