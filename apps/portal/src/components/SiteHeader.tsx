@@ -33,7 +33,7 @@ export function SiteHeader() {
           <DbuiLogo className="h-5 w-auto" />
         </Link>
 
-        <nav className="flex items-center gap-1">
+        <nav className="flex items-center gap-2">
           {NAV.map((item) => {
             const active = item.exact
               ? pathname === item.href
