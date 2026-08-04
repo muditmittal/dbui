@@ -61,6 +61,19 @@
     width: auto;
   }
 
+  /*
+    Storybook's "+" button scaffolds a story file straight into the repo. Adding
+    a component here has a protocol — index row, linter allowlist, Code Connect,
+    gallery tile — so a one-click story that skips all of it is a trap.
+
+    Targeted by position after `.search-field`, which is a stable class; the
+    button's own class is emotion-generated and changes between builds. The
+    :has(button) guard means a future sibling that is not this control survives.
+  */
+  .search-field + div:has(button) {
+    display: none;
+  }
+
   /* Section roots (DOCS, COMPONENTS) are labels, not targets. */
   .sidebar-subheading.sidebar-subheading {
     color: #525252;
