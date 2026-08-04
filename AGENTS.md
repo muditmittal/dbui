@@ -90,13 +90,21 @@ Skills in `packages/dbui/skills/` cover the common workflows: `dbui-pick-compone
 
 ## Known state, August 2026
 
-Being explicit so you do not act on stale assumptions:
+`TRACKER.md` is the live status — what is done, what is open, and how to verify both. Read it
+before assuming anything about progress. The rest of this section is the part that changes how
+you should *act*:
 
-- **Token migration is mid-flight.** `tokens.css` ships 128 `--db-*` properties and is Figma-verified,
-  but no component consumes it yet — all 55 color-using components still read the legacy
-  `globals.css` layer. Do not "fix" a component to use `--db-*` outside the migration.
-- **There is no CLI, no MCP server, and no published package.** Install is clone-and-copy per
-  `packages/dbui/install.md`.
-- **There are no tests and no CI.** The design linters are the only automated check.
+- **The token migration is complete.** Components consume the generated `--db-*` semantics; the
+  legacy colour layer is pruned. Never reintroduce a legacy name — `bg-primary`, `text-foreground`
+  and friends no longer exist.
+- **Type goes through the ramp.** `type-label` for single-line UI, `type-body` for text that wraps,
+  `type-paragraph` for prose. Each class is the whole style, so never pair it with `leading-`,
+  `font-` or `uppercase`. Numbers in a table use `<TableCell numeric>`, not a type class.
+- **Components still carry `text-[13px]` literals.** Migrating them to the ramp is open work; do not
+  convert one opportunistically outside that effort.
+- **There is no published package.** Install is clone-and-copy per `packages/dbui/install.md`, and
+  the npm registry is unreachable inside the corporate network.
+- **There are no tests and no CI.** The design linters and `dbui doctor` are the only automated
+  checks.
 - **`component-index.md` and `icon-index.md` are hand-maintained** and can lag the source. The
   component's own JSDoc is authoritative when they disagree.
