@@ -50,7 +50,13 @@ export default function Home() {
 
         <section className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-6 pt-28 pb-24 text-center">
           <Badge variant="outline">Alpha · internal preview</Badge>
-          <h1 className="type-title-1 max-w-[20ch] text-text-strong">
+          {/*
+            text-balance rather than a <br>: the browser evens the two lines,
+            which lands on "…for data / and AI workbenches." at this width and
+            still rewraps sensibly on a narrow screen. A hard break would strand
+            words on small viewports.
+          */}
+          <h1 className="type-title-1 max-w-[24ch] text-balance text-text-strong">
             The UI stack for data and AI workbenches.
           </h1>
           <p className="type-paragraph max-w-[62ch] text-text-subtle">
