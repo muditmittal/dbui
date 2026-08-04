@@ -54,8 +54,7 @@ export default function Home() {
             The UI stack for data and AI workbenches.
           </h1>
           <p className="type-paragraph max-w-[62ch] text-text-subtle">
-            Tokens, icons, components and page shells that agents and people read from the same
-            source — so a screenshot becomes a real page built from real parts, not a one-off.
+            Tokens, icons, components, and shells — one source agents and people build from.
           </p>
           <div className="mt-2 flex items-center gap-3">
             <Button nativeButton={false} render={<Link href="/docs" />}>
