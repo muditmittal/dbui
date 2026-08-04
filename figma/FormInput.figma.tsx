@@ -19,7 +19,7 @@ figma.connect("https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-S
       "Active": false,
       "Error": true,
     }),
-    hint: figma.boolean("Hint", { true: <p className="text-[12px] text-muted-foreground">Helper text</p>, false: <></> }),
+    hint: figma.boolean("Hint", { true: <p className="text-[12px] text-text-subtle">Helper text</p>, false: <></> }),
   },
   example: ({ type, invalid, hint }) => (
     <div className="grid gap-2">

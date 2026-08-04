@@ -50,7 +50,7 @@
 | Header height    | 48px (`h-12`)                                                |
 | Navbar width     | 180px (`w-[180px]`)                                          |
 | Content surface  | `bg-background rounded-[8px] shadow-md border border-border` |
-| Shell background | `bg-muted`                                                   |
+| Shell background | `bg-surface-subtle`                                                   |
 | Content margin   | 8px bottom + right (`pb-2 pr-2`)                             |
 
 

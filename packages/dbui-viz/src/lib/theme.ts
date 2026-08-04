@@ -212,10 +212,13 @@ export function resolveVizTheme(scope?: Element | null): VizTheme {
       otherSurface: readVar(styles, "--viz-treemap-other-surface", FALLBACK.treemap.otherSurface),
       otherBorder: readVar(styles, "--viz-treemap-other-border", FALLBACK.treemap.otherBorder),
     },
-    foreground: readVar(styles, "--foreground", FALLBACK.foreground),
-    mutedForeground: readVar(styles, "--muted-foreground", FALLBACK.mutedForeground),
-    border: readVar(styles, "--border", FALLBACK.border),
-    background: readVar(styles, "--background", FALLBACK.background),
+    // These four were still reading the pre-migration variable names, which
+    // Stage C deleted — every chart was silently falling back to FALLBACK
+    // instead of following the theme.
+    foreground: readVar(styles, "--db-text-base", FALLBACK.foreground),
+    mutedForeground: readVar(styles, "--db-text-subtle", FALLBACK.mutedForeground),
+    border: readVar(styles, "--db-border-base", FALLBACK.border),
+    background: readVar(styles, "--db-surface-base", FALLBACK.background),
     fontSans: readVar(styles, "--font-sans", FALLBACK.fontSans),
     fontMono: readVar(styles, "--font-mono", FALLBACK.fontMono),
     isDark:

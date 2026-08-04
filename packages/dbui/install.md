@@ -158,7 +158,7 @@ Based on Preflight check 5:
 
   - Always use components from `dbui/components/ui/*`. Never raw `<button>`, `<input>`, `<div role="dialog">`.
   - Always use icons from `dbui/components/icons/{Name}`. Never lucide, heroicons, or any other icon package.
-  - Always use semantic tokens (`bg-primary`, `text-foreground`). Never hardcode hex colors.
+  - Always use semantic tokens (`bg-action-primary-base`, `text-text-base`). Never hardcode hex colors.
   - Every page wraps in `<Base>` from `dbui-shells`.
   - Base UI uses `render={<Component />}`, not Radix `asChild`.
 
@@ -189,7 +189,7 @@ import { Base } from "dbui-shells"
 export default function Home() {
   return (
     <Base defaultActive="catalog">
-      <div className="flex items-center justify-center h-full text-[13px] text-muted-foreground">
+      <div className="flex items-center justify-center h-full text-[13px] text-text-subtle">
         DBUI is installed. Start building here.
       </div>
     </Base>

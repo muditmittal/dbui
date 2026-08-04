@@ -28,7 +28,7 @@ Anything else (what icon a slot uses, what hover color is applied, what a compon
 
 ### Platform Header
 - **Component:** `<PlatformHeader>` — `import { PlatformHeader } from "@muditmittal/dbui/components/ui/platform-header"`
-- **Placement:** sticky top, `bg-muted`, full viewport width
+- **Placement:** sticky top, `bg-surface-subtle`, full viewport width
 - **Height:** 48px, fixed across all shells and breakpoints
 - **Scaling:** stretches horizontally. Internal collapse behavior (search, right-side slots) is the component's responsibility.
 - **Z-order:** above everything except modals and toasts
@@ -81,7 +81,7 @@ All region widths in `px`. Scaling is continuous between breakpoints (flex-based
 **Regions (top → bottom, all flat siblings — no nesting):**
 1. Page header (`<PageHeader>` + `<PageHeaderTitle>` + `<PageHeaderActions>`) — single horizontal row, title left, primary action(s) right
 2. Tabs (optional, sibling of `<PageHeader>`) — only for sibling variants (`Dashboards` / `Legacy dashboards`)
-3. Featured band (optional) — promoted content card grid inside a `bg-muted` inset
+3. Featured band (optional) — promoted content card grid inside a `bg-surface-subtle` inset
 4. Controls bar (`<ControlsBar>` + `<ControlsBarFilters>` + `<ControlsBarActions>`) — filter/search/sort row, sibling
 5. Table — paginated, first column always entity name, trailing overflow menu
 
@@ -134,7 +134,7 @@ All region widths in `px`. Scaling is continuous between breakpoints (flex-based
 
 **Key distinction from Shell B (enforced at the component level, not here):**
 - Data Tree uses type-specific colored icons per entity
-- File Tree uses a single blue `folder` icon; all other entity types use `text-muted-foreground`
+- File Tree uses a single blue `folder` icon; all other entity types use `text-text-subtle`
 
 **Adjacency:**
 - ✅ Breadcrumb at top of detail surface (user navigates the path freely)

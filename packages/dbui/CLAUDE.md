@@ -10,7 +10,7 @@
 
 1. **DBUI components only.** Never use raw `<button>`, `<input>`, `<div role="dialog">`. If it exists in DBUI, use it.
 2. **DBUI icons only.** Never install lucide, heroicons, or any icon package. All 451 icons are in `dbui/components/icons/`.
-3. **Semantic tokens only.** Never hardcode hex colors or pixel values. Use `bg-primary`, `text-foreground`, `rounded-sm`, etc.
+3. **Semantic tokens only.** Never hardcode hex colors or pixel values. Use `bg-action-primary-base`, `text-text-base`, `rounded-sm`, etc.
 4. **Base UI `render` prop.** Not Radix `asChild`. Example: `<DialogTrigger render={<Button />}>Open</DialogTrigger>`
 5. **Shell first.** Every page starts with `<Base>`. Never build header/nav/chrome from scratch.
 6. **Tree for hierarchies.** Never fake trees with nested divs or NavbarItems. Use `<DataTreeView>` or `<FileTreeView>`.
@@ -56,11 +56,11 @@ The Shell provides:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ Platform Header (48px, bg-muted)                    │
+│ Platform Header (48px, bg-surface-subtle)                    │
 ├────────┬────────────────────────────────────────────┤
 │Sidebar │ Content surface (bg-background, rounded-md)│
 │180px   │                                            │
-│bg-muted│ ┌─ Breadcrumb ──────────────────────────┐  │
+│bg-surface-subtle│ ┌─ Breadcrumb ──────────────────────────┐  │
 │        │ │ Catalog > main > users                │  │
 │Navbar  │ ├─ Title row ───────────────────────────┤  │
 │  items │ │ Icon + Name          Actions buttons  │  │
@@ -116,7 +116,7 @@ When given a screenshot of Databricks UI to implement:
 
 These are the #1 mistakes from our audit. Internalize them.
 
-**Icon-only buttons use `text-muted-foreground` automatically:**
+**Icon-only buttons use `text-text-subtle` automatically:**
 
 ```tsx
 // Size icon-md or icon-sm makes the icon muted — don't add the class yourself
@@ -165,13 +165,13 @@ const nodes = [
 <div className="flex flex-col gap-1.5">
   <Label htmlFor="name">Name</Label>
   <Input id="name" placeholder="Enter name" />
-  <span className="text-[12px] text-muted-foreground">Helper text here</span>
+  <span className="text-[12px] text-text-subtle">Helper text here</span>
 </div>
 ```
 
 ## Typography reminder
 
-Databricks base is **13px**, not 14px or 16px. Body: `text-[13px] leading-[20px]`. Labels: same + `font-semibold`. Captions: `text-[12px] leading-[16px] text-muted-foreground`. Page title: `text-[22px] font-semibold`. Section heading: `text-[18px] font-semibold`.
+Databricks base is **13px**, not 14px or 16px. Body: `text-[13px] leading-[20px]`. Labels: same + `font-semibold`. Captions: `text-[12px] leading-[16px] text-text-subtle`. Page title: `text-[22px] font-semibold`. Section heading: `text-[18px] font-semibold`.
 
 Full type system → `./dbui/docs/component-rules.md`.
 
@@ -182,7 +182,7 @@ Scan your output for these violations:
 **Code:**
 
 - `from "lucide-react"` (or any other icon pkg) → use `from "dbui/components/icons/<Name>"`
-- `bg-[#` or `text-[#` or any hex/rgb/oklch → semantic token (`bg-primary`, `text-foreground`, …)
+- `bg-[#` or `text-[#` or any hex/rgb/oklch → semantic token (`bg-action-primary-base`, `text-text-base`, …)
 - Lowercase `<button`, `<input`, `<select>`, `<dialog>`, `<details>` → DBUI component
 - `asChild` → `render={<Component />}`
 - Nested `<div>` faking a tree → `DataTreeView` or `FileTreeView`

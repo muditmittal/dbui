@@ -37,7 +37,7 @@ Replace with `from "dbui/components/icons/{Name}"`.
 
 **Hardcoded colors:**
 Scan className strings and style objects for:
-- `bg-[#` or `text-[#` → replace with semantic token (`bg-primary`, `text-foreground`, etc.)
+- `bg-[#` or `text-[#` → replace with semantic token (`bg-action-primary-base`, `text-text-base`, etc.)
 - `color: "#` or `background: "#` in style objects → replace with `var(--token-name)`
 Look up the closest token in `./dbui/src/tokens/globals.css`.
 

@@ -103,6 +103,9 @@ function parseVariants(src) {
   return axes;
 }
 
+/** Compare component names without case or separators ("Toggle Button" → "togglebutton"). */
+const handle = (s) => String(s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
 /** The discovery table — category, what to use it for, what not to. */
 function indexRows() {
   const md = read(path.join(PATHS.docs, "component-index.md"));
@@ -133,6 +136,7 @@ export function components() {
   requireRepo();
   if (_components) return _components;
   const rows = indexRows();
+  const rowsByHandle = new Map(Object.entries(rows).map(([k, v]) => [handle(k), v]));
   const out = {};
   for (const file of listFiles(PATHS.ui)) {
     const slug = file.replace(/\.tsx$/, "");
@@ -144,7 +148,16 @@ export function components() {
     const variantImport = src.match(/from\s+"\.\.\/\.\.\/lib\/([a-z-]+variants)"/)?.[1];
     const variantSrc = variantImport ? (read(path.join(PATHS.lib, `${variantImport}.ts`)) ?? "") : "";
     const primary = doc.standard || exports[0] || slug;
-    const meta = rows[primary] ?? rows[exports[0]] ?? {};
+    // The index is keyed by the component's export name, but `primary` may be a
+    // prose name from JSDoc ("Toggle Button") and exports[0] is whichever export
+    // happens to come first in the file. Try every handle we have, comparing
+    // without case or separators, so a component is never silently uncategorised.
+    const meta =
+      rows[primary] ??
+      rowsByHandle.get(handle(primary)) ??
+      rowsByHandle.get(handle(slug)) ??
+      exports.map((e) => rowsByHandle.get(handle(e))).find(Boolean) ??
+      {};
     out[slug] = {
       name: primary,
       slug,

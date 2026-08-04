@@ -15,11 +15,10 @@ import { cva } from "./cva"
  * Figma component: "Icon Button" (6 variants × 2 sizes × 5 states) → uses icon-sm/icon-md sizes
  *
  * Token usage:
- * - Filled hover/press: --primary-hover, --primary-press, --destructive-hover, --destructive-press
- * - Non-filled hover/press bg: --hover (primary@8%), --press (primary@16%)
- * - Non-filled hover text: --primary-hover (outline/ghost), --accent-foreground (secondary)
- * - Non-filled press text: --primary-press (all non-filled)
- * - Disabled: per-variant (filled → bg-surface-disabled + white text, non-filled → transparent + disabled-foreground)
+ * - Filled hover/press: action-primary-hover/-press, action-negative-hover/-press
+ * - Non-filled hover/press bg: action-default-hover, action-selected-press
+ * - Non-filled hover/press text: text-text-strong
+ * - Disabled: per-variant (filled → bg-surface-disabled + inverse label, non-filled → transparent + text-text-disabled)
  * - Focus: filled → shadow-focus (white gap + blue ring), non-filled → border-2 border-focus-ring
  * - Focus on Danger: uses border-focus-ring (blue) NOT border-action-negative-base — consistent system focus ring
  * - Shadow: shadow-xs on filled/bordered variants (not ghost/link)

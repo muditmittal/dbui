@@ -42,9 +42,13 @@ disagree, the more specific source wins.
 6. Add or update the Code Connect file in `figma/<Name>.figma.tsx`, and add variant mappings to
    `apps/portal/src/stories/components/variant-mappings.json`.
 7. Export it from `packages/dbui/src/index.ts` and add a tsup entry in `packages/dbui/tsup.config.ts`.
-8. Run `yarn design:lint:react packages/dbui/src/components/ui/<name>.tsx`.
+8. Add a demo tile to `apps/portal/src/stories/components/gallery-demos.tsx`, keyed by the name shown
+   in `component-index.md`, then run `node scripts/generate-gallery.mjs`. The gallery groups and
+   links itself from the CLI, but the tile is the one part it cannot infer. A component with no tile
+   still appears — it just shows its name instead of a demo.
+9. Run `yarn design:lint:react packages/dbui/src/components/ui/<name>.tsx`.
 
-Removing a component reverses all eight, and requires a note in the changelog because it breaks
+Removing a component reverses all nine, and requires a note in the changelog because it breaks
 consumers.
 
 ### Adding or changing an icon

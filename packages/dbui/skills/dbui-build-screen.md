@@ -63,9 +63,9 @@ For each region of the identified shell, determine which DBUI component fills it
 
 2. **Import from `dbui/components/ui/*`** and `dbui/components/icons/*`. Never from @radix-ui, @base-ui, lucide, heroicons.
 
-3. **Use semantic tokens only.** `bg-primary`, `text-foreground`, `border-border`. Never hardcode hex.
+3. **Use semantic tokens only.** `bg-action-primary-base`, `text-text-base`, `border-border-base`. Never hardcode hex.
 
-4. **Base font is 13px, not 14px.** Body: `text-[13px] leading-[20px]`. Labels: `text-[13px] leading-[20px] font-semibold`. Captions: `text-[12px] leading-[16px] text-muted-foreground`.
+4. **Use the named type ramp, not pixel values.** Each `type-*` class is the whole style — family, size, line-height, weight and case — so never pair it with `leading-`, `font-` or `uppercase`. Single-line UI (buttons, menu items, cells): `type-label`, or `type-label-bold` for column headers and form labels. Text that wraps (descriptions, helper blocks): `type-body`. Anything read as language (chat messages, docs, empty states): `type-paragraph`. Captions: `type-hint`. Overlines: `type-eyebrow` (it already applies caps). Code: `type-code` inline, `type-block` for blocks.
 
 5. **Spacing rhythm: 8 / 16 / 24.** Inside a component: `gap-2`. Between fields: `gap-4`. Between blocks: `gap-6`. Page padding: `px-6 py-4`.
 
@@ -82,12 +82,14 @@ Run this checklist before considering the screen complete:
 
 **Layout:**
 - [ ] Page wraps in `<Base>` from `dbui-shells`
-- [ ] Surfaces: shell background is `bg-muted`, content surface is `bg-background border rounded-md`
+- [ ] Surfaces: shell background is `bg-surface-subtle`, content surface is `bg-surface-base border border-border-base rounded-md`
 - [ ] Spacing uses 8/16/24 rhythm, not arbitrary values
 
 **Typography:**
-- [ ] Body text is `text-[13px]`, not `text-sm` (which is 14px in Tailwind)
-- [ ] Font weight is `font-semibold` (600), not `font-medium` (500)
+- [ ] Text uses a `type-*` class, not `text-sm` or a `text-[13px]` literal
+- [ ] Text that wraps uses `type-body` or `type-paragraph`, never `type-label`
+- [ ] Numbers in a table use `<TableCell numeric>` and `<TableHead numeric>` — never a type class
+- [ ] No `leading-`, `font-` or `uppercase` paired with a `type-*` class — it carries all three
 
 **Tokens:**
 - [ ] No hardcoded hex colors (`bg-[#...]` or `text-[#...]`)

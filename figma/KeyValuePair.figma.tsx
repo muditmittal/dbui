@@ -11,7 +11,7 @@ figma.connect("https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-S
   example: ({ layout }) => (
     <div className={`flex ${layout === "vertical" ? "flex-col gap-1" : "flex-row gap-4"}`}>
       <dt className="text-[13px] font-semibold text-foreground">Key</dt>
-      <dd className="text-[13px] text-muted-foreground">Value</dd>
+      <dd className="text-[13px] text-text-subtle">Value</dd>
     </div>
   ),
 })
