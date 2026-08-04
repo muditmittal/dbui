@@ -62,7 +62,7 @@ export function SiteHeader() {
           >
             GitHub
           </a>
-          <Button size="sm" render={<Link href="/docs" />}>
+          <Button size="sm" nativeButton={false} render={<Link href="/docs" />}>
             Get started
           </Button>
         </div>

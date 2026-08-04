@@ -2,6 +2,8 @@ import Link from "next/link"
 
 import { Badge } from "dbui/components/ui/badge"
 import { Button } from "dbui/components/ui/button"
+import { DotField } from "@/components/DotField"
+import { ShellPreview } from "@/components/ShellPreview"
 import { SiteHeader } from "@/components/SiteHeader"
 import { galleryTotal } from "@/stories/components/gallery-data"
 import { tokenCounts } from "@/stories/tokens/token-data"
@@ -50,29 +52,42 @@ export default function Home() {
     <>
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-6xl px-6">
-        <section className="flex flex-col items-start gap-6 pt-24 pb-20">
+      {/*
+        The dot field sits behind the hero only. It is decorative, so it is
+        aria-hidden and stops animating under prefers-reduced-motion.
+      */}
+      <div className="relative">
+        <DotField className="pointer-events-none absolute inset-0 h-full w-full" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-surface-base" />
+
+        <section className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-6 pt-28 pb-24 text-center">
           <Badge variant="outline">Alpha · internal preview</Badge>
-          {/*
-            The ramp tops out at title-1 (32px). A marketing hero would normally
-            want more, but shipping an off-ramp size on the page that showcases
-            the system is the wrong trade — if we want a bigger hero, the answer
-            is a `display` step in the ramp, not a one-off here.
-          */}
           <h1 className="type-title-1 max-w-[20ch] text-text-strong">
             A design system agents can actually build with.
           </h1>
-          <p className="type-paragraph max-w-[64ch] text-text-subtle">
+          <p className="type-paragraph max-w-[62ch] text-text-subtle">
             DBUI is an AI-first design system for data and AI workbenches. Tokens, icons, components
             and page shells that agents and people read from the same source — so a screenshot
             becomes a real page built from real parts, not a one-off.
           </p>
           <div className="mt-2 flex items-center gap-3">
-            <Button render={<Link href="/docs" />}>Read the docs</Button>
-            <Button variant="outline" render={<Link href="/components" />}>
+            <Button nativeButton={false} render={<Link href="/docs" />}>
+              Read the docs
+            </Button>
+            <Button variant="outline" nativeButton={false} render={<Link href="/components" />}>
               Browse components
             </Button>
           </div>
+        </section>
+      </div>
+
+      <main className="mx-auto w-full max-w-6xl px-6">
+        <section className="pb-24">
+          <ShellPreview />
+          <p className="type-body mx-auto mt-4 max-w-[62ch] text-center text-text-subtle">
+            The Base shell, running. Platform header, product nav, content surface and the assistant
+            panel — every product page starts here rather than from an empty page.
+          </p>
         </section>
 
         <section className="grid grid-cols-1 gap-3 pb-20 sm:grid-cols-2">
