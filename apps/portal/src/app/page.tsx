@@ -51,12 +51,11 @@ export default function Home() {
         <section className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-6 pt-28 pb-24 text-center">
           <Badge variant="outline">Alpha · internal preview</Badge>
           <h1 className="type-title-1 max-w-[20ch] text-text-strong">
-            A design system agents can actually build with.
+            The UI stack for data and AI workbenches.
           </h1>
           <p className="type-paragraph max-w-[62ch] text-text-subtle">
-            DBUI is an AI-first design system for data and AI workbenches. Tokens, icons, components
-            and page shells that agents and people read from the same source — so a screenshot
-            becomes a real page built from real parts, not a one-off.
+            Tokens, icons, components and page shells that agents and people read from the same
+            source — so a screenshot becomes a real page built from real parts, not a one-off.
           </p>
           <div className="mt-2 flex items-center gap-3">
             <Button nativeButton={false} render={<Link href="/docs" />}>
