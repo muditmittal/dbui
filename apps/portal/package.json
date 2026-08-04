@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build:site": "storybook build -o public/storybook && next build"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",

@@ -28,3 +28,6 @@ apps/portal/out/
 # Google Drive (and similar) sync temp folders — huge file counts; keep out of repos.
 .tmp.driveupload/
 .tmp.drivedownload/
+
+# Storybook static build, emitted into the portal for /components
+apps/portal/public/storybook/

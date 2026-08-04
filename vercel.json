@@ -1,16 +1,14 @@
 {
-  "buildCommand": "cd apps/portal && npx storybook build -o ../../storybook-static",
-  "outputDirectory": "storybook-static",
-  "installCommand": "yarn install",
-  "framework": null,
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "yarn install --no-immutable",
+  "buildCommand": "cd apps/portal && npx storybook build -o public/storybook && next build",
+  "outputDirectory": "apps/portal/.next",
   "redirects": [
     {
       "source": "/install",
       "destination": "https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/install.md",
       "permanent": false
     }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
