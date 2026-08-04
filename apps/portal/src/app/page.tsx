@@ -74,7 +74,17 @@ export default function Home() {
             <Button nativeButton={false} render={<Link href="/docs" />}>
               Read the docs
             </Button>
-            <Button variant="outline" nativeButton={false} render={<Link href="/components" />}>
+            {/*
+              The outline variant is transparent by design, but here it sits over
+              the animated dot field, so the dots read through the label. A solid
+              surface is a property of this context, not a fix to the variant.
+            */}
+            <Button
+              variant="outline"
+              nativeButton={false}
+              className="bg-surface-base"
+              render={<Link href="/components" />}
+            >
               Browse components
             </Button>
           </div>
