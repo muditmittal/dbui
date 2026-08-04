@@ -14,7 +14,7 @@ const NAV = [
   { href: "/", label: "Home", exact: true },
   { href: "/docs", label: "Docs", exact: true },
   { href: "/components", label: "Components" },
-  { href: "/docs/tokens", label: "Tokens" },
+  { href: "/templates", label: "Templates" },
   { href: "/docs/install", label: "Install" },
 ]
 
