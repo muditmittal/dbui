@@ -3,45 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-/**
- * Grouped by the order someone actually needs them: understand the system, then
- * its foundations, then the rules, then the tooling.
- */
-export const DOCS_NAV = [
-  {
-    title: "Start",
-    items: [
-      { href: "/docs", label: "Overview" },
-      { href: "/docs/install", label: "Installation" },
-      { href: "/docs/principles", label: "Design principles" },
-    ],
-  },
-  {
-    title: "Foundations",
-    items: [
-      { href: "/docs/tokens", label: "Tokens" },
-      { href: "/docs/type", label: "Typography" },
-      { href: "/docs/icons", label: "Icons" },
-      { href: "/docs/layout", label: "Layout" },
-    ],
-  },
-  {
-    title: "Guides",
-    items: [
-      { href: "/docs/voice", label: "Voice and tone" },
-      { href: "/docs/accessibility", label: "Accessibility" },
-      { href: "/docs/i18n", label: "Internationalization" },
-    ],
-  },
-  {
-    title: "Tooling",
-    items: [
-      { href: "/docs/cli", label: "CLI" },
-      { href: "/docs/mcp", label: "MCP server" },
-      { href: "/docs/checks", label: "Checks and skills" },
-    ],
-  },
-]
+import { DOCS_NAV } from "./docs-nav-data"
+
 
 export function DocsNav() {
   const pathname = usePathname()

@@ -4,9 +4,7 @@
   "description": "MCP server for the DBUI design system — search, read and lint over stdio",
   "license": "MIT",
   "type": "module",
-  "bin": {
-    "dbui-mcp": "./src/server.mjs"
-  },
+  "bin": "./src/server.mjs",
   "files": [
     "src",
     "README.md"

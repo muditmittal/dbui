@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { DOCS_NAV } from "@/components/DocsNav"
+import { DOCS_NAV } from "@/components/docs-nav-data"
 import { galleryTotal } from "@/stories/components/gallery-data"
 import { tokenCounts } from "@/stories/tokens/token-data"
 

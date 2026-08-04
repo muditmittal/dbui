@@ -17,14 +17,14 @@ Anything those contradict is this file being wrong.
 | Portal | Done |
 | CLI + MCP | Done |
 | Figma | Stale — pre-migration token names |
-| Install | Blocked — npm registry unreachable on the corporate network |
+| Install | Works — registry points at the Databricks npm proxy |
 
 ## Open
 
 1. **Figma token migration.** Variables carry pre-migration names; Title 4 is now
    16/24 and needs rebinding. Do Figma and Code Connect in one pass or they drift.
-2. **Install path inside Databricks.** Registry refuses connections; `github.com`
-   resolves. Blocks the Storybook 8.6 → 10.4 upgrade too. Separate workstream.
+2. **Portal build.** The Next.js site (`/`, `/docs`) needs the remaining doc pages
+   ported from the Storybook MDX. Storybook keeps `/components`.
 3. **Generate the token docs.** Four drifts in one session. Generate the derivable
    blocks, check them in CI when CI exists.
 4. **Components onto the type ramp.** 94 `text-[13px]` literals. Each is a judgement
@@ -38,7 +38,7 @@ Anything those contradict is this file being wrong.
 - 9 components use raw `opacity-50` for disabled instead of the disabled tokens.
 - `doctor` promises "exits non-zero on failure" and exits 0.
 - Storybook 8.6 → 10.4. Two majors; v9 removed `addon-essentials` and moved
-  `@storybook/blocks`. Own branch. Blocked on 2.
+  `@storybook/blocks`. Own branch. Now unblocked.
 
 ## Not started
 
