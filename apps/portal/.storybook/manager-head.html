@@ -55,6 +55,24 @@
   }
 
   /*
+    The sidebar header row is noise inside the portal: the site header above the
+    frame already says Components, and the Shortcuts menu is Storybook's own
+    chrome rather than anything this audience needs.
+
+    Only the two divs are hidden, not the row. Its first child is a "Skip to
+    canvas" link — a keyboard bypass (WCAG 2.4.1) that is invisible until
+    focused, and hiding the whole row would remove it from the tab order.
+  */
+  .sidebar-header.sidebar-header {
+    padding: 0;
+    min-height: 0;
+    height: 0;
+  }
+  .sidebar-header.sidebar-header > div {
+    display: none;
+  }
+
+  /*
     Storybook's "+" button scaffolds a story file straight into the repo. Adding
     a component here has a protocol — index row, linter allowlist, Code Connect,
     gallery tile — so a one-click story that skips all of it is a trap.
