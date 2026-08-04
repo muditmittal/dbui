@@ -53,9 +53,14 @@ const COLOR_GROUPS = [
   ["utility", "Utility", "Scrim and skeleton — surfaces that exist only to obscure or stand in."],
 ]
 
+/** Dimensional families whose names collide with a colour prefix. */
+const NOT_COLOR = /^(border-width-|surface-)?$/
+
 const colorGroups = COLOR_GROUPS.map(([prefix, label, blurb]) => {
   const names = Object.keys(light).filter((n) => {
     if (!n.startsWith(prefix + "-")) return false
+    // `border-width-*` is a dimension, not a colour, but shares the prefix.
+    if (n.startsWith("border-width-")) return false
     // `border-*` must not swallow `input-border-*`; longest prefix wins.
     return !COLOR_GROUPS.some(([other]) => other !== prefix && other.length > prefix.length && n.startsWith(other + "-"))
   })

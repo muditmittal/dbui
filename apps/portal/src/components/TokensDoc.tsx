@@ -54,14 +54,52 @@ export function TokensDoc() {
       </p>
 
       <Section
-        title="Colour"
+        title="How colour works"
+        lede="Read this once and the reference below becomes obvious. Every colour token answers three questions in its name, in order."
+      >
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {[
+            ["Family", "What kind of thing is this?", "surface · text · border · action · status"],
+            ["Role", "What job does it do?", "base · subtle · strong · accent · inverse"],
+            ["State", "What is happening to it?", "hover · press · disabled"],
+          ].map(([title, question, examples]) => (
+            <div key={title} className="rounded-md border border-border-base p-4">
+              <div className="type-eyebrow text-text-subtle">{title}</div>
+              <div className="type-label-bold mt-1 text-text-strong">{question}</div>
+              <div className="type-hint mt-2 text-text-subtle">{examples}</div>
+            </div>
+          ))}
+        </div>
+
+        <p className="type-body max-w-[68ch] text-text-subtle">
+          So <code className="type-code">action-primary-hover</code> is the hover stop of the primary
+          action fill, and <code className="type-code">text-subtle</code> is foreground that steps
+          back. You never pick a colour — you describe the job and the name follows.
+        </p>
+
+        <div className="rounded-md border border-border-base bg-surface-subtle p-4">
+          <div className="type-label-bold text-text-strong">Surfaces and their text come in pairs</div>
+          <p className="type-body mt-1 max-w-[68ch] text-text-subtle">
+            Every surface has foreground colours that belong on it. Put{" "}
+            <code className="type-code">text-base</code> on{" "}
+            <code className="type-code">surface-base</code>, and{" "}
+            <code className="type-code">text-inverse</code> on{" "}
+            <code className="type-code">surface-inverse</code>. The contrast chips below show the
+            ratio each foreground achieves on the default surface, so the pairing is checkable rather
+            than a convention you have to remember.
+          </p>
+        </div>
+      </Section>
+
+      <Section
+        title="Colour reference"
         lede={`${tokenCounts.colorGroups} semantic tokens, each shipping a light and a dark value. Both are shown side by side, because a token that only works in one mode is a defect.`}
       >
         {colorGroups.map((group) => (
           <div key={group.key} className="flex flex-col gap-2">
             <div className="type-label-bold text-text-strong">{group.label}</div>
             <div className="type-hint text-text-subtle">{group.blurb}</div>
-            <ColorSwatches group={group} limit={5} />
+            <ColorSwatches group={group} limit={5} surface="#FFFFFF" />
           </div>
         ))}
       </Section>

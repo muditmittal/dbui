@@ -79,31 +79,119 @@ function Value({ children }: { children: React.ReactNode }) {
 
 /* ── Colour ─────────────────────────────────────────────────────────────── */
 
+/** Composite an rgba() over white; swatches are shown on a light surface. */
+function toRgb(value: string): [number, number, number] | null {
+  const hex = value.trim().match(/^#([0-9a-f]{6})$/i)
+  if (hex) {
+    const n = parseInt(hex[1], 16)
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+  }
+  const rgba = value.trim().match(/^rgba?\(([^)]+)\)$/i)
+  if (rgba) {
+    const p = rgba[1].split(",").map((x) => parseFloat(x))
+    const a = p[3] ?? 1
+    return [
+      Math.round(p[0] * a + 255 * (1 - a)),
+      Math.round(p[1] * a + 255 * (1 - a)),
+      Math.round(p[2] * a + 255 * (1 - a)),
+    ]
+  }
+  return null
+}
+
+/** WCAG 2.1 relative luminance. */
+function luminance([r, g, b]: [number, number, number]) {
+  const f = (c: number) => {
+    const s = c / 255
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
+  }
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+}
+
+export function contrastRatio(a: string, b: string): number | null {
+  const ca = toRgb(a)
+  const cb = toRgb(b)
+  if (!ca || !cb) return null
+  const la = luminance(ca)
+  const lb = luminance(cb)
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05)
+}
+
+/** The surface inverse foregrounds are designed to sit on. */
+const INVERSE_SURFACE = "#171717"
+
+/**
+ * A swatch is decoration until it tells you whether it passes. Text tokens carry
+ * their ratio against the surface they are meant to sit on, so the page is
+ * checkable rather than merely illustrative.
+ */
+function ContrastChip({ ratio }: { ratio: number }) {
+  const r = Math.round(ratio * 100) / 100
+  // 4.5:1 is the WCAG AA threshold for body text; 3:1 for large text and UI.
+  const tone =
+    r >= 4.5
+      ? "bg-status-surface-positive text-status-text-positive"
+      : r >= 3
+        ? "bg-status-surface-warning text-status-text-warning"
+        : "bg-status-surface-negative text-status-text-negative"
+  const label = r >= 4.5 ? "AA" : r >= 3 ? "AA large" : "fail"
+  return (
+    <span className={`type-hint shrink-0 rounded-full px-2 py-0.5 ${tone}`} title={`${r}:1`}>
+      {r}:1 · {label}
+    </span>
+  )
+}
+
 /** Light and dark side by side, because a token that only works in one is a bug. */
-export function ColorSwatches({ group, limit = 6 }: { group: ColorGroup; limit?: number }) {
+export function ColorSwatches({
+  group,
+  limit = 6,
+  surface,
+}: {
+  group: ColorGroup
+  limit?: number
+  /** When set, text tokens in this group get a contrast ratio against it. */
+  surface?: string
+}) {
   const hidden = Math.max(0, group.tokens.length - limit)
   return (
     <ShowMore count={hidden ? group.tokens.length : 0} label={`${group.label.toLowerCase()} tokens`}>
       {(expanded) => (
         <Panel>
-          {(expanded ? group.tokens : group.tokens.slice(0, limit)).map((t, i, arr) => (
-            <Row key={t.name} last={i === arr.length - 1}>
-              <div className="flex shrink-0 gap-1">
-                <span
-                  className="block size-7 rounded-sm border border-border-base"
-                  style={{ background: t.light }}
-                  title={`light: ${t.light}`}
-                />
-                <span
-                  className="block size-7 rounded-sm border border-border-base"
-                  style={{ background: t.dark }}
-                  title={`dark: ${t.dark}`}
-                />
-              </div>
-              <Name>--db-{t.name}</Name>
-              <span className="type-hint truncate text-text-subtle">{t.light}</span>
-            </Row>
-          ))}
+          {(expanded ? group.tokens : group.tokens.slice(0, limit)).map((t, i, arr) => {
+            // Only foreground tokens have a meaningful ratio against a surface.
+            const isForeground = /^(text|link|status-text|action-label)/.test(t.name)
+            // Inverse foregrounds are designed for the inverse surface, so
+            // measuring them against the light one would report a false failure.
+            const against = /inverse/.test(t.name) ? INVERSE_SURFACE : surface
+            // WCAG 1.4.3 exempts disabled controls from the contrast minimum.
+            const exempt = /disabled/.test(t.name)
+            const ratio =
+              against && isForeground && !exempt ? contrastRatio(t.light, against) : null
+            return (
+              <Row key={t.name} last={i === arr.length - 1}>
+                <div className="flex shrink-0 gap-1">
+                  <span
+                    className="block size-7 rounded-sm border border-border-base"
+                    style={{ background: t.light }}
+                    title={`light: ${t.light}`}
+                  />
+                  <span
+                    className="block size-7 rounded-sm border border-border-base"
+                    style={{ background: t.dark }}
+                    title={`dark: ${t.dark}`}
+                  />
+                </div>
+                <Name>--db-{t.name}</Name>
+                <span className="type-hint flex-1 truncate text-text-subtle">{t.light}</span>
+                {ratio ? (
+                  <ContrastChip ratio={ratio} />
+                ) : exempt ? (
+                  <span className="type-hint shrink-0 text-text-subtle">exempt</span>
+                ) : null}
+              </Row>
+            )
+          })}
         </Panel>
       )}
     </ShowMore>

@@ -203,21 +203,6 @@ export const colorGroups: ColorGroup[] = [
     "blurb": "Decorative dividers and outlines. Form controls use the separate input-border set.",
     "tokens": [
       {
-        "name": "border-width-none",
-        "light": "0px",
-        "dark": "0px"
-      },
-      {
-        "name": "border-width-thin",
-        "light": "1px",
-        "dark": "1px"
-      },
-      {
-        "name": "border-width-thick",
-        "light": "2px",
-        "dark": "2px"
-      },
-      {
         "name": "border-base",
         "light": "#E5E5E5",
         "dark": "rgba(255, 255, 255, 0.1)"
@@ -716,7 +701,7 @@ export const scalars: Token[] = [
 ]
 
 export const tokenCounts = {
-  "colorGroups": 87,
+  "colorGroups": 84,
   "space": 9,
   "spaceInline": 2,
   "radius": 6,

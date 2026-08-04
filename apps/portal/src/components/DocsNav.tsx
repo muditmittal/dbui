@@ -10,7 +10,8 @@ export function DocsNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="flex flex-col gap-7">
+    // Wraps into rows on narrow screens, stacks into a rail from md up.
+    <nav className="flex flex-row flex-wrap gap-x-6 gap-y-3 md:flex-col md:gap-7">
       {DOCS_NAV.map((group) => (
         <div key={group.title} className="flex flex-col gap-1">
           <span className="type-eyebrow px-2 pb-1 text-text-subtle">{group.title}</span>

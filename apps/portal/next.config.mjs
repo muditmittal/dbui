@@ -4,11 +4,8 @@ const nextConfig = {
   // to compile them itself.
   transpilePackages: ["dbui", "dbui-shells", "dbui-viz", "dbui-genie"],
 
-  // Storybook builds into public/storybook, so it is served as static files
-  // under /storybook without a second deployment.
   async redirects() {
     return [
-      { source: "/components", destination: "/storybook/index.html", permanent: false },
       {
         source: "/install",
         destination:
