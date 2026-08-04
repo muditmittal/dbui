@@ -65,7 +65,7 @@ const ALIASES = {
   chart: "charts",
 }
 
-const normalise = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "")
+const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "")
 
 /** Category display order — action-first, matching how a builder reaches for them. */
 const ORDER = [
@@ -100,7 +100,7 @@ const emit = (key, label) => {
     .map((c) => {
       // The index annotates names in parentheses; the gallery shows the name only.
       const name = c.name.replace(/\s*\(.*\)\s*$/, "").trim()
-      const key = normalise(name)
+      const key = normalize(name)
       const match = stories.get(ALIASES[key] ?? key) ?? stories.get(key)
       if (match) linked++
       else unlinked++

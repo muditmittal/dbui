@@ -56,7 +56,7 @@ function Button({
       data-slot="button"
       data-filled={variant === "default" || variant === "destructive" || undefined}
       // Icons stay muted only on the neutral variants. Where the variant sets a
-      // meaningful text colour — white on a fill, red on danger, blue on link —
+      // meaningful text color — white on a fill, red on danger, blue on link —
       // the icon must inherit it or it reads as a different, greyed-out control.
       data-icon-inherit={
         variant === "default" ||

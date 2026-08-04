@@ -19,14 +19,14 @@ import {
  * @guideline Use for a small part-to-whole split where the total matters — pass `centerValue` to show it
  * @guideline Prefer SegmentedBar when the breakdown sits inline in a row or table cell
  * @guideline Keep to 6 slices or fewer; group the tail into "Others"
- * @constraint Never use a full pie — the centre hole is where the total lives
+ * @constraint Never use a full pie — the center hole is where the total lives
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
  */
 
 export interface DonutSlice {
   label: string
   value: number
-  /** Semantic colour. Falls back to the standard series order. */
+  /** Semantic color. Falls back to the standard series order. */
   palette?: VizPaletteName
 }
 
@@ -40,7 +40,7 @@ export interface DonutChartProps
   showLegend?: boolean
   /** Large value rendered in the middle of the ring. */
   centerValue?: string
-  /** Caption under the centre value. */
+  /** Caption under the center value. */
   centerLabel?: string
 }
 

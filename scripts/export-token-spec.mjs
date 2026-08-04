@@ -39,7 +39,7 @@ const light = block(css, ":root")
 const dark = block(css, ".dark")
 
 /** Category, in the order engineering's sheet uses, extended with what we added. */
-function categorise(name) {
+function categorize(name) {
   const n = name.replace("--db-", "")
   if (/^(surface|text|action|border-(base|subtle|strong|accent|inverse|disabled)|input-border|status|link|focus|viz|utility)/.test(n)) return "Color"
   if (/scalar$|^spacing-unit$|^space-/.test(n)) return "Density"
@@ -96,7 +96,7 @@ function resolve(value, seen = 0) {
 const rows = Object.keys(light)
   .map((name) => ({
     token: name,
-    category: categorise(name),
+    category: categorize(name),
     light: light[name],
     dark: dark[name] && dark[name] !== light[name] ? dark[name] : "",
     computed: resolve(light[name]),

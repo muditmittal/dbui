@@ -39,27 +39,27 @@ function block(source, selector) {
 const light = block(css, ":root")
 const dark = block(css, ".dark")
 
-/** Group semantic colours by their first path segment (surface, text, action…). */
+/** Group semantic colors by their first path segment (surface, text, action…). */
 const COLOR_GROUPS = [
-  ["surface", "Surface", "Backgrounds. Every surface has a text colour that belongs on it."],
-  ["text", "Text", "Foreground colours. Base is the default, subtle steps back, inverse sits on dark surfaces."],
+  ["surface", "Surface", "Backgrounds. Every surface has a text color that belongs on it."],
+  ["text", "Text", "Foreground colors. Base is the default, subtle steps back, inverse sits on dark surfaces."],
   ["action", "Action", "Interactive fills and their labels. Hover and press are separate stops, not opacity tricks."],
   ["border", "Border", "Decorative dividers and outlines. Form controls use the separate input-border set."],
   ["input-border", "Input border", "Form control borders — darker than decorative borders so fields read as editable."],
-  ["status", "Status", "Positive, negative, warning and info, each with a surface, a border and a text colour."],
+  ["status", "Status", "Positive, negative, warning and info, each with a surface, a border and a text color."],
   ["link", "Link", "Link states. Visited is separate so long documents stay navigable."],
   ["focus", "Focus", "The focus ring and its offset. Never suppress these."],
   ["viz", "Data visualisation", "Categorical for unordered series, sequential for ordered magnitude."],
   ["utility", "Utility", "Scrim and skeleton — surfaces that exist only to obscure or stand in."],
 ]
 
-/** Dimensional families whose names collide with a colour prefix. */
+/** Dimensional families whose names collide with a color prefix. */
 const NOT_COLOR = /^(border-width-|surface-)?$/
 
 const colorGroups = COLOR_GROUPS.map(([prefix, label, blurb]) => {
   const names = Object.keys(light).filter((n) => {
     if (!n.startsWith(prefix + "-")) return false
-    // `border-width-*` is a dimension, not a colour, but shares the prefix.
+    // `border-width-*` is a dimension, not a color, but shares the prefix.
     if (n.startsWith("border-width-")) return false
     // `border-*` must not swallow `input-border-*`; longest prefix wins.
     return !COLOR_GROUPS.some(([other]) => other !== prefix && other.length > prefix.length && n.startsWith(other + "-"))
@@ -72,7 +72,7 @@ const colorGroups = COLOR_GROUPS.map(([prefix, label, blurb]) => {
   }
 }).filter((g) => g.tokens.length)
 
-/** Non-colour families, each as name → value pairs. */
+/** Non-color families, each as name → value pairs. */
 const pick = (re) =>
   Object.entries(light)
     .filter(([n]) => re.test(n))

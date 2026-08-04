@@ -435,7 +435,7 @@ export const demos: Record<string, React.ReactNode> = {
     </Chrome>
   ),
 
-  // Uncategorised
+  // Uncategorized
   "Editor Tabs": (
     <div className="flex w-52 items-end gap-0.5 border-b border-border-base text-[12px]">
       <div className="rounded-t-sm border border-b-0 border-border-base bg-surface-base px-2 py-1">query.sql</div>

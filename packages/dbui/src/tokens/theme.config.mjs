@@ -345,7 +345,7 @@ export const type = {
     "body-bold": { size: 13, line: 20, tracking: 0, weight: 600, family: "text" },
 
     // Mono steps down against the sans it sits beside: at equal size it reads
-    // larger. No `-bold` — code emphasis is carried by colour, never weight.
+    // larger. No `-bold` — code emphasis is carried by color, never weight.
     code: { size: 13, line: 20, tracking: 0, weight: 400, family: "mono" },
     block: { size: 14, line: 22, tracking: 0, weight: 400, family: "mono" },
 

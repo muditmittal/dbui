@@ -298,7 +298,7 @@ export const VIZ_SERIES_ORDER: VizPaletteName[] = [
 /**
  * Shared Vega/Vega-Lite config: axis, legend and text styling pulled from dbui
  * tokens so every chart inherits Databricks typography (12px labels) and the
- * current colour mode.
+ * current color mode.
  */
 export function vizVegaConfig(theme: VizTheme) {
   return {

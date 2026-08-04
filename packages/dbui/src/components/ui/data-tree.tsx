@@ -746,7 +746,7 @@ const DATA_KIND_FOCUSABLE: ReadonlySet<DataAssetKind> = new Set([
 export type DataTreeNode = {
   id: string
   label: string
-  /** Asset kind — drives default icon and leaf behaviour. */
+  /** Asset kind — drives default icon and leaf behavior. */
   kind: DataAssetKind
   /** Override the default icon for this kind (e.g. CatalogShared). */
   icon?: React.ReactNode

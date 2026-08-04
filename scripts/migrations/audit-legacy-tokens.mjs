@@ -68,7 +68,7 @@ const planned = entries.filter(([cls]) => deferred.has(cls));
 const sum = (list) => list.reduce((a, [, v]) => a + v.n, 0);
 
 if (entries.length === 0) {
-  console.log("CLEAN — no legacy colour utility of any prefix remains.");
+  console.log("CLEAN — no legacy color utility of any prefix remains.");
 } else {
   console.log(`${sum(entries)} legacy occurrence(s) across ${entries.length} utility name(s).\n`);
   console.log(`  Deferred to Stage B (expected): ${sum(planned)} across ${planned.length} names`);

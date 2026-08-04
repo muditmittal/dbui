@@ -72,7 +72,7 @@ export default function Home() {
               surface is a property of this context, not a fix to the variant.
 
               The hover wash arrives as a background-image so it layers over that
-              solid colour. The variant's own hover sets background-color, which
+              solid color. The variant's own hover sets background-color, which
               would have replaced the fill and let the dots back through at the
               exact moment the pointer is on the button.
             */}

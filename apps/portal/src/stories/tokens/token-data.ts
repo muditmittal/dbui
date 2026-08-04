@@ -9,7 +9,7 @@ export const colorGroups: ColorGroup[] = [
   {
     "key": "surface",
     "label": "Surface",
-    "blurb": "Backgrounds. Every surface has a text colour that belongs on it.",
+    "blurb": "Backgrounds. Every surface has a text color that belongs on it.",
     "tokens": [
       {
         "name": "surface-base",
@@ -56,7 +56,7 @@ export const colorGroups: ColorGroup[] = [
   {
     "key": "text",
     "label": "Text",
-    "blurb": "Foreground colours. Base is the default, subtle steps back, inverse sits on dark surfaces.",
+    "blurb": "Foreground colors. Base is the default, subtle steps back, inverse sits on dark surfaces.",
     "tokens": [
       {
         "name": "text-base",
@@ -264,7 +264,7 @@ export const colorGroups: ColorGroup[] = [
   {
     "key": "status",
     "label": "Status",
-    "blurb": "Positive, negative, warning and info, each with a surface, a border and a text colour.",
+    "blurb": "Positive, negative, warning and info, each with a surface, a border and a text color.",
     "tokens": [
       {
         "name": "status-surface-info",

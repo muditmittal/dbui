@@ -2,7 +2,7 @@
  * The dbui wordmark.
  *
  * Filled with `currentColor` rather than a fixed value, so it follows the text
- * colour of wherever it sits and works in both themes. The viewBox is cropped to
+ * color of wherever it sits and works in both themes. The viewBox is cropped to
  * the mark itself — the source SVG carries large empty margins.
  */
 export function DbuiLogo({ className }: { className?: string }) {

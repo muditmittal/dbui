@@ -13,7 +13,7 @@ import { ChevronUp } from "dbui/components/icons/ChevronUp"
 
 import type { ColorGroup, Token } from "./token-data"
 
-/** Families like colour run to dozens of rows; show a useful handful first. */
+/** Families like color run to dozens of rows; show a useful handful first. */
 export function ShowMore({
   count,
   label = "tokens",
@@ -77,7 +77,7 @@ function Value({ children }: { children: React.ReactNode }) {
   )
 }
 
-/* ── Colour ─────────────────────────────────────────────────────────────── */
+/* ── Color ─────────────────────────────────────────────────────────────── */
 
 /** Composite an rgba() over white; swatches are shown on a light surface. */
 function toRgb(value: string): [number, number, number] | null {

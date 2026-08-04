@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Report the resolved typography and spacing of a page: font size, line height,
- * weight and colour per element role, plus container width and the real gaps
+ * weight and color per element role, plus container width and the real gaps
  * between blocks. Used to copy a reference design by its numbers rather than by
  * eye.
  *

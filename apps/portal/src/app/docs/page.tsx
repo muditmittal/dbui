@@ -7,7 +7,7 @@ import { DOCS_NAV } from "@/components/docs-nav-data"
  * rests on, so it belongs with the documentation rather than the marketing page.
  */
 const LAYERS = [
-  { name: "Tokens", detail: "Colour, type, space, radius, size, elevation, motion", href: "/docs/tokens" },
+  { name: "Tokens", detail: "Color, type, space, radius, size, elevation, motion", href: "/docs/tokens" },
   { name: "Icons", detail: "450 icons, semantically tagged and searchable", href: "/components" },
   { name: "Components", detail: "48 components, each paired 1:1 with Figma", href: "/components" },
   { name: "Compositions", detail: "Recurring assemblies — trees, filters, headers", href: "/components" },
@@ -29,7 +29,7 @@ export default function DocsOverview() {
       <h2 className="type-title-3 mt-12 text-text-strong">What ships</h2>
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
-          [tokenCounts.colorGroups, "semantic colours"],
+          [tokenCounts.colorGroups, "semantic colors"],
           ["14", "type styles"],
           [galleryTotal, "components"],
           ["450", "icons"],

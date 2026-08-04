@@ -95,7 +95,7 @@ before assuming anything about progress. The rest of this section is the part th
 you should *act*:
 
 - **The token migration is complete.** Components consume the generated `--db-*` semantics; the
-  legacy colour layer is pruned. Never reintroduce a legacy name — `bg-primary`, `text-foreground`
+  legacy color layer is pruned. Never reintroduce a legacy name — `bg-primary`, `text-foreground`
   and friends no longer exist.
 - **Type goes through the ramp.** `type-label` for single-line UI, `type-body` for text that wraps,
   `type-paragraph` for prose. Each class is the whole style, so never pair it with `leading-`,

@@ -26,7 +26,7 @@ import {
 export interface Segment {
   label: string
   value: number
-  /** Semantic colour. Falls back to the standard series order. */
+  /** Semantic color. Falls back to the standard series order. */
   palette?: VizPaletteName
 }
 
@@ -71,7 +71,7 @@ function SegmentedBar({
       mark: {
         type: "bar",
         cornerRadius,
-        // A hairline in the canvas colour separates adjacent segments.
+        // A hairline in the canvas color separates adjacent segments.
         stroke: theme.background,
         strokeWidth: 1,
         height: barHeight,

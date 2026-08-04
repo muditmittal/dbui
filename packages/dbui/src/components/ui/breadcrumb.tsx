@@ -58,7 +58,14 @@ function BreadcrumbLink({
     defaultTagName: "a",
     props: mergeProps<"a">(
       {
-        className: cn("text-link-base transition-colors hover:text-link-base/80", className),
+        // Neutral at rest: position in the trail already signals that these are
+        // links, so color would be redundant emphasis on a component that can
+        // appear on every page. The link treatment arrives on hover, where it
+        // marks the one crumb under the cursor instead of all of them.
+        className: cn(
+          "text-text-subtle underline-offset-2 transition-colors hover:text-link-base hover:underline",
+          className
+        ),
       },
       props
     ),

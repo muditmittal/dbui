@@ -151,7 +151,7 @@ export function components() {
     // The index is keyed by the component's export name, but `primary` may be a
     // prose name from JSDoc ("Toggle Button") and exports[0] is whichever export
     // happens to come first in the file. Try every handle we have, comparing
-    // without case or separators, so a component is never silently uncategorised.
+    // without case or separators, so a component is never silently uncategorized.
     const meta =
       rows[primary] ??
       rowsByHandle.get(handle(primary)) ??
@@ -184,7 +184,7 @@ export function componentList() {
   const all = components();
   const byCategory = {};
   for (const c of Object.values(all)) {
-    const k = c.category ?? "uncategorised";
+    const k = c.category ?? "uncategorized";
     (byCategory[k] ??= []).push({ name: c.name, slug: c.slug, useFor: c.useFor });
   }
   return envelope("component.list", { total: Object.keys(all).length, categories: byCategory });
@@ -463,8 +463,8 @@ export function doctor() {
     undocumented ? `Agents fall back to guessing for these: ${missingGuideline.map((c) => c.name).join(", ")}.` : null
   );
 
-  const uncategorised = Object.values(components()).filter((c) => !c.category).length;
-  add("Index coverage", uncategorised === 0 ? "pass" : "warn", `${uncategorised} component(s) are not in component-index.md.`, uncategorised ? "They will not surface in category listings." : null);
+  const uncategorized = Object.values(components()).filter((c) => !c.category).length;
+  add("Index coverage", uncategorized === 0 ? "pass" : "warn", `${uncategorized} component(s) are not in component-index.md.`, uncategorized ? "They will not surface in category listings." : null);
 
   const summary = {
     pass: checks.filter((c) => c.status === "pass").length,

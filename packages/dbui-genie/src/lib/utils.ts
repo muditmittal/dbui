@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge"
  * cn — merge class names with Tailwind conflict resolution.
  *
  * Uses `twMerge(clsx(...))` so a caller-supplied `className` reliably overrides
- * a component's built-in utilities (last-wins), which is the behaviour shadcn
+ * a component's built-in utilities (last-wins), which is the behavior shadcn
  * consumers and LLMs expect. Kept local to this package so it is purely
  * additive — no existing dbui file is modified.
  */

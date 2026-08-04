@@ -11,7 +11,8 @@
 ## Core principles
 
 The Databricks voice is professional, authoritative and concise, but human and
-approachable.
+approachable. **American spelling throughout** — color, behavior, optimize,
+canceled. This applies to code comments and token names as well as UI copy.
 
 | Principle | Meaning | Do | Don't |
 |---|---|---|---|

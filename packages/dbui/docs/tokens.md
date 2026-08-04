@@ -54,8 +54,8 @@ takes 20px. Using `label` for text that wraps is the most common mistake.
 **Each class is the whole style** — family, size, line-height, tracking, weight
 and case. Never pair one with `leading-`, `font-` or `uppercase`.
 
-**`type-` not `text-`.** Tailwind's `text-` already means colour. A size called
-`text-text` beside a colour called `text-text-subtle` would be ambiguous;
+**`type-` not `text-`.** Tailwind's `text-` already means color. A size called
+`text-text` beside a color called `text-text-subtle` would be ambiguous;
 `class="type-paragraph text-text-subtle"` reads correctly.
 
 **There is no `data` style.** Numbers in a table use `<TableCell numeric>`.
@@ -64,7 +64,7 @@ Tabular figures are a correctness property, not a look — a reader never sees
 about 3px across 0–9. A numeric cell also needs right alignment, which no type
 style can express. Outside a table, apply `tabular-nums` directly.
 
-**`code` has no bold.** Code emphasis is carried by colour, never weight.
+**`code` has no bold.** Code emphasis is carried by color, never weight.
 
 **Density is not a second ramp.** `--db-type-scalar` scales the whole ramp from
 one dial. A parallel "comfortable" ramp would inflate controls along with prose.
@@ -84,5 +84,5 @@ See `TRACKER.md` for status. Nothing in this file describes progress.
 
 ## Also
 
-`token-rules.md` — the colour contract and the machine-enforceable rules.
+`token-rules.md` — the color contract and the machine-enforceable rules.
 `scripts/design-lint/README.md` — the linters.

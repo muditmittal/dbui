@@ -51,7 +51,7 @@ export const buttonVariants = cva(
           "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
         secondary: [
-          // Resting text colour is set in compoundVariants so it never competes
+          // Resting text color is set in compoundVariants so it never competes
           // with the muted icon-only treatment.
           "shadow-xs border-transparent bg-surface-subtle",
           "hover:bg-action-default-hover hover:text-text-strong",
@@ -92,7 +92,7 @@ export const buttonVariants = cva(
       size: {
         sm: "h-6 gap-1 px-2",
         md: "h-8 gap-1 px-3",
-        // No colour here. An icon-only button's icon colour depends on the
+        // No color here. An icon-only button's icon color depends on the
         // variant it sits in, so it is set in compoundVariants below. Setting it
         // on the size would emit two competing text-* classes, and cn() joins
         // rather than merges, so CSS source order — not authoring order — would
@@ -102,7 +102,7 @@ export const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      // Exactly one resting text colour is ever emitted, because cn() joins
+      // Exactly one resting text color is ever emitted, because cn() joins
       // rather than merges — two competing text-* classes would be resolved by
       // CSS source order instead of by intent.
       {

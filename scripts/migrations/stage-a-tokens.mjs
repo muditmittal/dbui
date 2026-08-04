@@ -59,8 +59,8 @@ const MAP = {
   "bg-surface-warning": "bg-status-surface-warning",
   "bg-surface-danger": "bg-status-surface-negative",
 
-  // Same legacy tokens reached through a colour prefix the first pass missed.
-  // Tailwind v4 generates every colour prefix from one `--color-*` entry, so a
+  // Same legacy tokens reached through a color prefix the first pass missed.
+  // Tailwind v4 generates every color prefix from one `--color-*` entry, so a
   // map keyed only on `bg-`/`text-`/`border-` was always going to be partial.
   "bg-border": "bg-border-base",
   "stroke-border": "stroke-border-base",

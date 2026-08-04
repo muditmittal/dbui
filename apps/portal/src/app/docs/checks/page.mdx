@@ -43,7 +43,7 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag, Covers, Content
     { rule: "non-dbui-component", catches: "A component that is not a known DBUI export" },
     { rule: "prefer-dbui-wrapper", catches: "Raw HTML where a DBUI component exists" },
     { rule: "no-raw-interactive-html", catches: "button, input or select in authored UI" },
-    { rule: "no-arbitrary-color", catches: "Any colour that is not a token" },
+    { rule: "no-arbitrary-color", catches: "Any color that is not a token" },
     { rule: "no-hardcoded-hex", catches: "A hex literal in a className" },
     { rule: "inline-hardcoded-color", catches: "The same in an inline style" },
     { rule: "prefer-token-class", catches: "A raw value where a token utility exists" },
@@ -121,7 +121,7 @@ import { DocPage, Lede, Section, P, C, Cmd, DocTable, Note, Tag, Covers, Content
 <Note title="Why that matters" variant="warning">
   The first migration verifier checked only the utility names in its own map and reported a
   confident zero while 474 legacy utilities remained in the codebase. The audit derives its list
-  from the tokens themselves, crossed with every Tailwind colour prefix, so it cannot agree with the
+  from the tokens themselves, crossed with every Tailwind color prefix, so it cannot agree with the
   codemod by construction.
 </Note>
 

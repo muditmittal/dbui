@@ -4,7 +4,7 @@
  *
  * Removes the legacy `--color-*` @theme mappings and their `:root` / `.dark`
  * value declarations. Deliberately keeps everything that is not part of the
- * legacy colour system: the brand/asset layer, the radius and font scales that
+ * legacy color system: the brand/asset layer, the radius and font scales that
  * still power Tailwind utilities, and --shadow-focus, which Stage B already
  * repointed at the new focus ring.
  *
@@ -24,7 +24,7 @@ const TARGETS = [
   "apps/portal/src/app/globals.css",
 ];
 
-/** Legacy colour tokens to remove, in both @theme and value blocks. */
+/** Legacy color tokens to remove, in both @theme and value blocks. */
 const REMOVE = [
   "background", "foreground", "card", "card-foreground", "popover", "popover-foreground",
   "primary", "primary-foreground", "primary-hover", "primary-press",

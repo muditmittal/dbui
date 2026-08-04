@@ -37,7 +37,7 @@ function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
 /**
  * TooltipArrow — the small triangular pointer at the edge of the tooltip.
  * Matches Figma `.TooltipArrow`. Auto-rendered inside `<TooltipContent>` by default;
- * exported for cases where consumers want to compose explicitly or customise.
+ * exported for cases where consumers want to compose explicitly or customize.
  */
 function TooltipArrow({
   className,

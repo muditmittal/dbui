@@ -54,8 +54,8 @@ export function TokensDoc() {
       </p>
 
       <Section
-        title="How colour works"
-        lede="Read this once and the reference below becomes obvious. Every colour token answers three questions in its name, in order."
+        title="How color works"
+        lede="Read this once and the reference below becomes obvious. Every color token answers three questions in its name, in order."
       >
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {[
@@ -74,13 +74,13 @@ export function TokensDoc() {
         <p className="type-body max-w-[68ch] text-text-subtle">
           So <code className="type-code">action-primary-hover</code> is the hover stop of the primary
           action fill, and <code className="type-code">text-subtle</code> is foreground that steps
-          back. You never pick a colour — you describe the job and the name follows.
+          back. You never pick a color — you describe the job and the name follows.
         </p>
 
         <div className="rounded-md border border-border-base bg-surface-subtle p-4">
           <div className="type-label-bold text-text-strong">Surfaces and their text come in pairs</div>
           <p className="type-body mt-1 max-w-[68ch] text-text-subtle">
-            Every surface has foreground colours that belong on it. Put{" "}
+            Every surface has foreground colors that belong on it. Put{" "}
             <code className="type-code">text-base</code> on{" "}
             <code className="type-code">surface-base</code>, and{" "}
             <code className="type-code">text-inverse</code> on{" "}
@@ -92,7 +92,7 @@ export function TokensDoc() {
       </Section>
 
       <Section
-        title="Colour reference"
+        title="Color reference"
         lede={`${tokenCounts.colorGroups} semantic tokens, each shipping a light and a dark value. Both are shown side by side, because a token that only works in one mode is a defect.`}
       >
         {colorGroups.map((group) => (

@@ -18,7 +18,7 @@ import {
  * @standard Line Series
  * @guideline Use for any metric over time — usage, spend, failures, query counts
  * @guideline Omit axes (showAxis={false}) for an inline sparkline inside a card or table cell
- * @guideline Leave `palette` unset for the default ink line; set it only when a series needs semantic colour
+ * @guideline Leave `palette` unset for the default ink line; set it only when a series needs semantic color
  * @constraint The end dot marks "latest value" — it is hidden automatically for multi-series charts
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
  */
@@ -37,7 +37,7 @@ export interface LineSeriesProps
   data: LinePoint[]
   /** Accessible description of the chart. */
   label?: string
-  /** Semantic colour. Defaults to the foreground ink line used across GovernanceHub. */
+  /** Semantic color. Defaults to the foreground ink line used across GovernanceHub. */
   palette?: VizPaletteName
   /** Fill the area under the line. */
   area?: boolean

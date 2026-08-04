@@ -222,7 +222,7 @@ fs.writeFileSync(TOKENS_CSS, css)
 // ── type.css (the ramp as Tailwind utilities) ─────────────────────────────────
 // Emitted rather than hand-written so the utilities cannot drift from the ramp.
 // Prefixed `type-` rather than `text-` on purpose: Tailwind's `text-` is already
-// overloaded for colour, so `text-text-subtle` (a colour) sitting beside a
+// overloaded for color, so `text-text-subtle` (a color) sitting beside a
 // size named `text-text` would be genuinely ambiguous. `type-*` keeps the two
 // axes legible — `class="type-paragraph text-text-subtle"` reads correctly.
 const typeUtilities = Object.entries(type.scale)

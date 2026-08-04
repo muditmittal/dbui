@@ -211,7 +211,7 @@ export const Donut: StoryObj = {
   render: () => (
     <Section
       title="DonutChart"
-      hint="The centre hole carries the total — never render a full pie."
+      hint="The center hole carries the total — never render a full pie."
     >
       <DonutChart
         slices={healthMix}

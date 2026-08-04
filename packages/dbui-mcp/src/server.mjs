@@ -60,7 +60,7 @@ const TOOLS = [
   {
     name: "dbui_check",
     description:
-      "Run the DBUI design linter over a file or directory and return findings: raw HTML where a component exists, hardcoded colours, off-scale spacing, non-token radii. Works on any React source, not only code built with DBUI.",
+      "Run the DBUI design linter over a file or directory and return findings: raw HTML where a component exists, hardcoded colors, off-scale spacing, non-token radii. Works on any React source, not only code built with DBUI.",
     inputSchema: {
       type: "object",
       properties: { path: { type: "string", description: "File or directory path" } },
@@ -70,7 +70,7 @@ const TOOLS = [
 ];
 
 const RESOURCES = [
-  { uri: "dbui://design", name: "DESIGN.md", description: "The visual language: colour, type, layout, elevation, shape, do's and don'ts", mimeType: "text/markdown", topic: "design" },
+  { uri: "dbui://design", name: "DESIGN.md", description: "The visual language: color, type, layout, elevation, shape, do's and don'ts", mimeType: "text/markdown", topic: "design" },
   { uri: "dbui://composition", name: "composition.md", description: "Page shells with regions, pixel budgets, scroll ownership and forbidden compositions", mimeType: "text/markdown", topic: "composition" },
   { uri: "dbui://component-index", name: "component-index.md", description: "Every component by category, with what to use it for and what to avoid it for", mimeType: "text/markdown", topic: "component-index" },
   { uri: "dbui://icon-index", name: "icon-index.md", description: "Every icon by semantic category with labels and synonyms", mimeType: "text/markdown", topic: "icon-index" },
