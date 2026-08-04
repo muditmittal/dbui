@@ -18,11 +18,12 @@ const preview: Preview = {
         method: "alphabetical",
         // Storybook is the component sandbox now. The docs live in the Next.js
         // site under /docs; only the library and its galleries remain here.
+        // Storybook opens on the first entry, which makes the gallery the
+        // landing page for the section.
         order: [
-          "Home",
           "Components",
           [
-            "Overview",
+            "Components",
             "Actions",
             "Controls",
             "Content",
