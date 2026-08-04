@@ -6,8 +6,13 @@ import { usePathname } from "next/navigation"
 import { Button } from "dbui/components/ui/button"
 import { DbuiLogo } from "./DbuiLogo"
 
+/**
+ * `exact` marks the entries that are prefixes of other entries. Without it,
+ * "/" would match every route and "/docs" would stay lit on every docs child.
+ */
 const NAV = [
-  { href: "/docs", label: "Docs" },
+  { href: "/", label: "Home", exact: true },
+  { href: "/docs", label: "Docs", exact: true },
   { href: "/components", label: "Components" },
   { href: "/docs/tokens", label: "Tokens" },
   { href: "/docs/install", label: "Install" },
@@ -29,9 +34,9 @@ export function SiteHeader() {
 
         <nav className="flex items-center gap-1">
           {NAV.map((item) => {
-            // /docs must not light up for every /docs/* child beyond itself.
-            const active =
-              item.href === "/docs" ? pathname === "/docs" : pathname.startsWith(item.href)
+            const active = item.exact
+              ? pathname === item.href
+              : pathname.startsWith(item.href)
             return (
               <Link
                 key={item.href}
