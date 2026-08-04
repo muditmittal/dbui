@@ -87,6 +87,8 @@ classification entries — do not add a seventh.
 6. If the change alters the *reasoning* — not the value — update the relevant
    section of `packages/dbui/DESIGN.md`. It holds no values by design.
 7. Run `node scripts/generate-token-data.mjs` to refresh the portal's Tokens page.
+8. Run `node scripts/export-token-spec.mjs --md --out packages/dbui/docs/token-spec.md`
+   to refresh the spec engineering reviews.
 
 ### Adding or changing a page shell
 
