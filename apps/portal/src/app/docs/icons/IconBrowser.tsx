@@ -95,6 +95,7 @@ export function IconBrowser() {
   const [glyphs, setGlyphs] = React.useState<Record<string, Glyph>>({})
   const requested = React.useRef(new Set<IconCategory>())
   const sentinel = React.useRef<HTMLDivElement>(null)
+  const scrollBox = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
     for (const key of category === "all" ? iconCategories : [category]) {
@@ -114,13 +115,21 @@ export function IconBrowser() {
       .map((entry) => entry.icon)
   }, [category, query])
 
-  React.useEffect(() => setLimit(PAGE), [category, query])
+  // A new filter is a new list, so it starts at the first row and at one page.
+  // Without the scroll reset the reader lands part-way down a result set they
+  // have not seen, and the sentinel is left sitting under the viewport.
+  React.useEffect(() => {
+    setLimit(PAGE)
+    if (scrollBox.current) scrollBox.current.scrollTop = 0
+  }, [category, query])
 
   const shown = matches.slice(0, limit)
   const more = matches.length - shown.length
 
-  // Re-observed after each page, because the sentinel moves down the document
-  // every time one is added and an observer only fires on a crossing.
+  // Watched against the scroll box rather than the viewport, so a page is added
+  // when the reader reaches the end of the table and not when the table happens
+  // to pass through the window. Re-observed after each page, because an observer
+  // only fires on a crossing and the sentinel has just moved.
   React.useEffect(() => {
     const node = sentinel.current
     if (!node || more === 0) return
@@ -128,7 +137,7 @@ export function IconBrowser() {
       (entries) => {
         if (entries[0]?.isIntersecting) setLimit((n) => n + PAGE)
       },
-      { rootMargin: "600px" }
+      { root: scrollBox.current, rootMargin: "400px" }
     )
     observer.observe(node)
     return () => observer.disconnect()
@@ -178,13 +187,28 @@ export function IconBrowser() {
           </EmptyHeader>
         </Empty>
       ) : (
-        <div className="overflow-hidden rounded-md border border-border-base">
+        /*
+          The set is longer than any page it sits on, so it scrolls inside a box
+          of its own. Letting it own the page scroll would bury every section
+          below it under four hundred rows.
+        */
+        <div
+          ref={scrollBox}
+          className="max-h-144 overflow-y-auto rounded-md border border-border-base"
+        >
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="type-label-bold w-10 pl-3" aria-label="Preview" />
-                <TableHead className="type-label-bold w-44">Name</TableHead>
-                <TableHead className="type-label-bold">What the tag says</TableHead>
+                <TableHead
+                  className="type-label-bold sticky top-0 z-10 w-10 bg-surface-base pl-3"
+                  aria-label="Preview"
+                />
+                <TableHead className="type-label-bold sticky top-0 z-10 w-44 bg-surface-base">
+                  Name
+                </TableHead>
+                <TableHead className="type-label-bold sticky top-0 z-10 bg-surface-base">
+                  What the tag says
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -216,18 +240,18 @@ export function IconBrowser() {
               ))}
             </TableBody>
           </Table>
+          {/*
+            In the flow under the last row, so the next page mounts 400px of
+            scroll before the reader gets there and the table never shows a gap.
+          */}
+          {more > 0 ? (
+            <div ref={sentinel} className="type-label px-3 py-2 text-text-subtle">
+              {more} more below
+            </div>
+          ) : null}
         </div>
       )}
 
-      {/*
-        Kept in the flow rather than absolutely placed, so it is 600px of scroll
-        below the last row and the next page is mounted before it is reached.
-      */}
-      {more > 0 ? (
-        <div ref={sentinel} className="type-label text-text-subtle">
-          {more} more below
-        </div>
-      ) : null}
     </div>
   )
 }

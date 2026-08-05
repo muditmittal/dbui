@@ -163,14 +163,36 @@
   color: var(--shiki-dark);
 }
 
+/* ─── Type scale experiment ───
+ * Three multipliers over the shipped ramp, switched from the docs rail.
+ *
+ * The dial is the root font size rather than `--db-type-scalar` because the
+ * spatial families are authored in rem against a 16px root, so the root is the
+ * one input that moves all of them at once — type, space, radius, control and
+ * icon sizes, and Tailwind's own rem utilities. `--db-type-scalar` moves the
+ * ramp and nothing else, which grows text inside boxes that stay put.
+ *
+ * Percentages rather than px so this composes with a reader who has raised
+ * their browser's default font size instead of overriding them.
+ */
+html[data-type-scale="1.2"] {
+  font-size: 120%;
+}
+html[data-type-scale="1.4"] {
+  font-size: 140%;
+}
+
 @layer base {
   * {
     @apply border-border-base outline-focus-ring/50;
   }
   body {
     @apply bg-surface-base text-text-base;
-    font-size: 13px;
-    line-height: 20px;
+    /* The ramp's own body step, not a restated 13/20. Identical at 1x, and it
+       is the only reason unclassed text tracks the scale instead of staying
+       frozen while everything around it grows. */
+    font-size: var(--db-font-size-body);
+    line-height: var(--db-line-height-body);
   }
   html {
     @apply font-sans;
