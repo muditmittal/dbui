@@ -120,7 +120,7 @@ export function EmptyStatesSpecimen() {
           </SegmentControl>
         </SpecimenControl>
       }
-      caption="One region, five causes. Only one of them offers a create action, and the one that failed keeps the way back rather than the way in."
+      caption="Switch the cause: one region, five different ways out. Only one of them offers a create action, and the one that failed keeps the way back rather than the way in."
     >
       {/*
         Fixed floor rather than a natural height. The switcher is a docs control,
@@ -252,7 +252,7 @@ export function FilteringSpecimen() {
   const empty = !resolving && shown.length === 0
 
   return (
-    <Specimen caption="Applying a filter dims the rows already on screen rather than blanking them, and reads back as a removable tag. All three at once matches nothing, so the way out is to relax one rather than clear them all.">
+    <Specimen caption="Apply a filter: the rows already on screen dim rather than blanking, and the filter reads back as a removable tag. All three at once matches nothing, so the way out is to relax one rather than clear them all.">
       <ControlsBar className="border-b border-border-subtle">
         <ControlsBarFilters>
           {FILTERS.map((filter) => (
@@ -327,7 +327,7 @@ export function FilteringSpecimen() {
             >
               <span className="type-code min-w-0 flex-1 truncate text-text-base">{run.name}</span>
               <span className="type-hint w-14 shrink-0 text-text-subtle">{run.owner}</span>
-              <span className="flex w-20 shrink-0 items-center gap-1.5">
+              <span className="flex w-24 shrink-0 items-center gap-1.5">
                 <Status status={run.failed ? "error" : "success"} size="sm" />
                 <span className="type-hint text-text-subtle">
                   {run.failed ? "Failed" : "Succeeded"}
@@ -355,7 +355,7 @@ export function DisclosureSpecimen() {
   const after = useTimers()
 
   return (
-    <Specimen caption="The region takes its height the moment it opens and holds a skeleton until the statistics arrive. Opening is instant, filling is not, and nothing above the trigger moves either way.">
+    <Specimen caption="Open the region: it takes its full height at once and holds a skeleton until the statistics arrive. Opening is instant, filling is not, and nothing above the trigger moves either way.">
       <div className="flex items-center gap-2 border-b border-border-subtle px-4 py-2.5">
         <span className="type-code text-text-base">main.sales.orders</span>
         <Badge variant="outline">Delta</Badge>
@@ -504,7 +504,7 @@ export function ThresholdSpecimen() {
   }
 
   return (
-    <Specimen caption="The count is back before the gate opens, so it draws no indicator at all. The scan crosses the same gate, so its trigger goes busy and then hands off to a named run the reader is free to leave.">
+    <Specimen caption="Refresh the count: it is back before the gate opens, so it draws no indicator at all. Run the scan and it crosses the same gate, so the trigger goes busy and then hands off to a named run the reader is free to leave.">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-border-subtle px-4 py-3">
         <span className="type-body text-text-subtle">Rows in main.sales.orders</span>
         <span className="type-body text-text-strong tabular-nums">

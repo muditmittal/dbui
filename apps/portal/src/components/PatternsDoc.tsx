@@ -158,11 +158,20 @@ export function PatternsDoc() {
             <Link
               key={pattern.id}
               href={`#${pattern.id}`}
-              className="flex items-baseline gap-5 border-b border-border-subtle px-3 py-3 no-underline transition-colors hover:bg-surface-hover"
+              className="flex items-baseline gap-x-5 gap-y-0.5 border-b border-border-subtle px-3 py-3 no-underline transition-colors hover:bg-surface-hover"
             >
               <span className="type-hint w-5 shrink-0 text-text-subtle tabular-nums">{i + 1}</span>
-              <span className="type-label-bold w-56 shrink-0 text-text-strong">{pattern.name}</span>
-              <span className="type-body text-text-subtle">{pattern.summary}</span>
+              {/*
+                Stacks below sm. Two columns at 400px gave the summary four
+                wrapped lines against a one-line name, which made an eight-row
+                index read as the longest block on the page.
+              */}
+              <span className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-5">
+                <span className="type-label-bold shrink-0 text-text-strong sm:w-56">
+                  {pattern.name}
+                </span>
+                <span className="type-body text-text-subtle">{pattern.summary}</span>
+              </span>
             </Link>
           ))}
         </div>
@@ -191,7 +200,8 @@ export function PatternsDoc() {
       <DocSection title="What was left out">
         <Para>
           These belong here and are not here yet. They are listed rather than quietly omitted,
-          because a reader who cannot find saving should learn that it is missing on purpose.
+          because a reader who cannot find &ldquo;saving&rdquo; should learn that it is missing on
+          purpose.
         </Para>
         <RefTable
           columns={[
