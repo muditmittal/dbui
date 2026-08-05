@@ -389,4 +389,182 @@ export const PATTERNS: Pattern[] = [
       "Report a bulk result as success when part of it failed",
     ],
   },
+  {
+    id: "destructive-at-scale",
+    name: "Destructive actions at scale",
+    group: "Acting at scale",
+    intent:
+      "Dropping one table is a confirmation. Dropping a schema is a different act — it takes every table under it, every grant attached to them and an unknown number of dashboards downstream, none of which is on the screen when the button is clicked. Friction has to scale with two things at once: how wide the blast radius is and whether the act can be taken back. The top rung of that ladder is not more friction. It is showing the radius.",
+    use: [
+      "The action removes, overwrites or revokes something, and repeating it will not bring it back",
+      "The number of affected objects is larger than the number on screen",
+      "Other objects depend on what is about to change",
+    ],
+    avoid: [
+      "Repeating the action undoes it. Just do it, with no dialog at all",
+      "Everything affected is visible and reversible — an undo window is enough",
+      "The friction is compensating for a bad default. Fix the default",
+    ],
+    anatomy: [
+      { component: "AlertDialog", role: "The confirmation. Carries both cancel and confirm, and the overlay does not dismiss it" },
+      { component: "Button", role: "`variant=\"destructive\"` on confirm, and the object's name in the label" },
+      { component: "Input", role: "Typed confirmation, for the widest and least reversible acts only" },
+      { component: "Alert", role: "The blast radius, stated inside the dialog before the controls" },
+      { component: "Table", role: "The dependency list, once it is longer than a sentence" },
+      { component: "Sonner", role: "The undo window, where the act is reversible" },
+      { component: "Badge", role: "The count, by object type" },
+    ],
+    behavior: [
+      {
+        moment: "Reversible, and everything affected is on screen",
+        does: "It runs. `Sonner` reports it and carries an undo action",
+        invariant: "No dialog. Confirming a reversible act trains people to dismiss the dialog that matters",
+      },
+      {
+        moment: "The undo window is open",
+        does: "The toast holds for its full duration and the row shows as pending",
+        invariant: "Nothing is committed until the window closes. Undo restores, it does not re-create",
+      },
+      {
+        moment: "Undo is clicked",
+        does: "The row returns to the state it was in",
+        invariant: "It is the same object with the same identity, not a copy wearing the same name",
+      },
+      {
+        moment: "Irreversible, and narrow",
+        does: "`AlertDialog` names the object and the exact consequence",
+        invariant: "The sentence says the act cannot be undone. Cancel takes focus, not confirm",
+      },
+      {
+        moment: "The act reaches objects that are not on screen",
+        does: "The dialog states the count by object type, above the controls",
+        invariant: "The count is computed, not estimated. A number nobody verified is worse than no number",
+      },
+      {
+        moment: "Something downstream depends on it",
+        does: "Dependents are listed, or the dialog says the check could not run",
+        invariant: "Saying nothing about dependents reads as “there are none”",
+      },
+      {
+        moment: "Irreversible and wide",
+        does: "Confirm stays inert until the object's name is entered exactly",
+        invariant: "Typing forces a re-read, so the name in the field is the name in the sentence above it",
+      },
+      {
+        moment: "Confirm is clicked",
+        does: "The dialog closes and the work reports through the long-running pattern",
+        invariant: "The dialog does not sit and spin. Confirming and reporting are separate moments",
+      },
+      {
+        moment: "Part of the operation fails",
+        does: "Failures are named individually and successes are not retried",
+        invariant: "A partial delete is never reported as a delete",
+      },
+    ],
+    gap: "There is no typed-confirmation composition — `AlertDialog` plus `Input` plus the match check is assembled by hand each time. Undo is not a system capability either: `sonner.tsx` exports only the `Toaster`, so an action inside a toast comes from the vendored library and is neither wrapped nor documented. Nothing in DBUI computes or renders a blast radius, so the counts above are the surface's job to produce.",
+    dos: [
+      "Scale the friction to the blast radius and the reversibility, not to how nervous the action feels",
+      "Count what will be affected and break the count down by object type",
+      "Say what could not be checked when a dependency lookup fails or times out",
+      "Put the object's name in the confirm control so the button says what it destroys",
+    ],
+    donts: [
+      "Confirm a reversible action. Every unnecessary dialog costs the next one its authority",
+      "Spend a typed confirmation on something narrow. It is a budget and it runs out",
+      "Give the destructive control the default focus",
+      "Soften the sentence. The consequence goes in plain words or it is not stated",
+    ],
+  },
+  {
+    id: "multi-step-flows",
+    name: "Multi-step flows",
+    group: "Acting at scale",
+    intent:
+      "A wizard exists because a task has a real order — later choices depend on earlier ones, and the whole thing commits at once. That second half is what separates it from a long form. Everything entered is provisional until the last step, so the pattern is about where the commit point sits, what going back costs and what happens when step four fails after steps one to three already changed something.",
+    use: [
+      "Later steps depend on earlier ones, so the order is real rather than cosmetic",
+      "The task creates something that does not exist yet, so there is nothing to edit incrementally",
+      "The inputs are unlikely to all be at hand, and breaking the task up is a kindness",
+    ],
+    avoid: [
+      "The steps are independent. That is a form with sections, and a wizard makes it slower",
+      "The object already exists. Edit it in place and save per section",
+      "There are two steps. Two steps is one dialog",
+      "The reader will run this weekly. A wizard serves the first time, not the fiftieth",
+    ],
+    anatomy: [
+      { component: "Dialog", role: "The container when the flow is short and returns the reader where they started" },
+      { component: "PageHeader", role: "The container when the flow is long enough to deserve its own URL" },
+      { component: "Progress", role: "Position through a counted set of steps" },
+      { component: "Field", role: "Each input, with its label and its error in one place" },
+      { component: "Button", role: "Back and next. Next is primary, back never is" },
+      { component: "KeyValuePair", role: "The review step, one row per decision made" },
+      { component: "AlertDialog", role: "The confirmation on abandoning a flow that holds entered data" },
+    ],
+    behavior: [
+      {
+        moment: "The flow opens",
+        does: "Step one, with the total number of steps visible",
+        invariant: "The reader knows how long this is before they commit to starting it",
+      },
+      {
+        moment: "A step is left",
+        does: "Validation runs for that step and blocks the move if it fails",
+        invariant: "Validation happens on leaving a step, never on every keystroke inside it",
+      },
+      {
+        moment: "Back is clicked",
+        does: "The previous step returns with every value intact",
+        invariant: "Going back is free. A flow that loses input on back is a flow people abandon",
+      },
+      {
+        moment: "A later choice invalidates an earlier answer",
+        does: "The affected step is marked and the reader is told what changed",
+        invariant: "An earlier answer is never silently discarded and never silently left wrong",
+      },
+      {
+        moment: "The flow is abandoned part-way",
+        does: "`AlertDialog` names what will be lost",
+        invariant: "Only promise a saved draft if something actually saved it",
+      },
+      {
+        moment: "The review step",
+        does: "Every decision listed, each linking back to the step that set it",
+        invariant: "The review is the last place a mistake is still cheap, so nothing is summarized away",
+      },
+      {
+        moment: "Commit is clicked",
+        does: "Step navigation disables and one indeterminate indicator runs",
+        invariant: "There is one commit point, and nothing was written before it",
+      },
+      {
+        moment: "The commit runs longer than a few seconds",
+        does: "It hands off to the long-running pattern and releases the reader",
+        invariant: "A dialog does not hold someone hostage to a provisioning job",
+      },
+      {
+        moment: "The commit fails",
+        does: "The flow returns to the step that caused it with the error attached to the field",
+        invariant: "Nobody re-enters something they already entered",
+      },
+      {
+        moment: "The commit partly succeeds",
+        does: "What was created is named, and the flow offers to finish the rest",
+        invariant: "A half-created object that is never mentioned again is the worst outcome this pattern has",
+      },
+    ],
+    gap: "There is no step indicator. `Progress` draws a bar toward a known endpoint but carries no step labels, no completed and remaining states and no way back to a finished step, so the numbered rail every wizard needs is built per surface. This is the largest gap on the page. Draft persistence is not a system capability either, so a flow cannot honestly tell the reader their progress is saved.",
+    dos: [
+      "Put the whole flow behind one commit point, and write nothing before it",
+      "Make back free from every step, including the review",
+      "Name the step an error came from, and take the reader to it",
+      "Hand a slow commit to the long-running pattern instead of holding the dialog open",
+    ],
+    donts: [
+      "Use a wizard for steps that do not depend on each other",
+      "Write partial state at each step. That is an editor wearing a wizard's clothes",
+      "Validate on keystroke inside a step",
+      "Claim a saved draft the system does not store",
+    ],
+  },
 ]
