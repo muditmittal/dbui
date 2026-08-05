@@ -11,7 +11,8 @@ import { Badge } from "dbui/components/ui/badge"
 import { ChevronDown } from "dbui/components/icons/ChevronDown"
 import { ChevronUp } from "dbui/components/icons/ChevronUp"
 
-import type { ColorGroup, Token } from "./token-data"
+import type { ColorGroup, Token, TypeStep } from "./token-data"
+import type { Family, Scalar, TailwindNamespace } from "./token-consumption"
 
 /** Families like color run to dozens of rows; show a useful handful first. */
 export function ShowMore({
@@ -350,28 +351,114 @@ export function MotionScale({ tokens, easing }: { tokens: Token[]; easing: strin
 
 /* ── Type ───────────────────────────────────────────────────────────────── */
 
-export function TypeScale({
-  rows,
-}: {
-  rows: { name: string; size: string; lh: string; weight: string; sample: string; use: string }[]
-}) {
+/**
+ * Size and leading come from the generated ramp rather than the caller. They
+ * were caller-supplied strings, and `eyebrow` drifted to a size the config does
+ * not give it — which is the whole argument for rendering a value instead of
+ * writing it down.
+ *
+ * `for` stays a prop because it is the one thing here that is not a value: it is
+ * the editorial answer to "which step do I pick", and it belongs to the page.
+ */
+export function TypeScale({ steps, use }: { steps: TypeStep[]; use: Record<string, string> }) {
   return (
     <Panel>
-      {rows.map((t, i) => (
+      {steps.map((t, i) => (
         <div
           key={t.name}
-          className={`flex items-start gap-4 px-4 py-3 ${i === rows.length - 1 ? "" : "border-b border-border-subtle"}`}
+          className={`flex items-start gap-4 px-4 py-3 ${i === steps.length - 1 ? "" : "border-b border-border-subtle"}`}
         >
           <div className="w-48 shrink-0">
             <code className="type-code text-text-base">{t.name}</code>
             <div className="type-hint text-text-subtle">
-              {t.size}/{t.lh} · {t.weight}
+              {t.size} / {t.line} · {t.weight}
             </div>
           </div>
           <div className="min-w-0 flex-1">
-            <span className={`${t.name} text-text-base`}>{t.sample}</span>
+            <span className={`${t.name} text-text-base`}>The quick brown fox</span>
           </div>
-          <div className="type-hint w-45 shrink-0 text-text-subtle">{t.use}</div>
+          <div className="type-hint w-40 shrink-0 text-text-subtle">{use[t.name]}</div>
+        </div>
+      ))}
+    </Panel>
+  )
+}
+
+/* ── Wiring ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Whether anything resolves to a family. This is the one status on the page, and
+ * it is measured rather than declared — `TRACKER.md` owns progress, but "does a
+ * line of code read this" is a property of the current tree, not a milestone.
+ */
+export function Wired({ live }: { live: boolean }) {
+  return live ? (
+    <Badge variant="outline">live</Badge>
+  ) : (
+    <Badge variant="warning">unconsumed</Badge>
+  )
+}
+
+/**
+ * How each family reaches code, in the order the page presents them.
+ *
+ * `reaches` is editorial — a sentence fragment naming the mechanism — and every
+ * number beside it is measured. A family with no mechanism renders the em dash,
+ * so the empty cell is the finding.
+ */
+export function WiringTable({
+  families,
+  reaches,
+}: {
+  families: Family[]
+  reaches: Record<string, React.ReactNode>
+}) {
+  return (
+    <Panel>
+      {families.map((f, i) => (
+        <Row key={f.key} last={i === families.length - 1}>
+          <span className="type-label-bold w-28 shrink-0 text-text-strong">{f.label}</span>
+          <span className="type-hint w-16 shrink-0 text-text-subtle">{f.tokens}</span>
+          <span className="type-body min-w-0 flex-1 text-text-subtle">
+            {reaches[f.key] ?? <span aria-hidden="true">&mdash;</span>}
+          </span>
+          <Wired live={f.live} />
+        </Row>
+      ))}
+    </Panel>
+  )
+}
+
+/**
+ * The Tailwind theme namespaces the system actually depends on, with whose value
+ * is in force. Sorted by use in the generator, so the row order is the order of
+ * how much a rule about it would matter.
+ *
+ * Rows with no uses are dropped: a namespace nothing writes a class for is not a
+ * dependency, and listing it would pad the one table on the page whose length is
+ * the point.
+ */
+export function TailwindTable({
+  rows,
+  governs,
+}: {
+  rows: TailwindNamespace[]
+  governs: Record<string, React.ReactNode>
+}) {
+  const used = rows.filter((r) => r.uses > 0)
+  return (
+    <Panel>
+      {used.map((r, i) => (
+        <div
+          key={r.namespace}
+          className={`flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-baseline sm:gap-4 ${i === used.length - 1 ? "" : "border-b border-border-subtle"}`}
+        >
+          <code className="type-code w-64 shrink-0 text-text-base">{r.namespace}</code>
+          <span className="type-body min-w-0 flex-1 text-text-subtle">{governs[r.namespace]}</span>
+          <span className="type-hint w-32 shrink-0 text-text-subtle">
+            {r.overriddenIn ? "DBUI overrides" : "Tailwind default"}
+          </span>
+          <span className="type-hint w-16 shrink-0 tabular-nums text-text-subtle">{r.uses}</span>
         </div>
       ))}
     </Panel>
@@ -380,14 +467,30 @@ export function TypeScale({
 
 /* ── Scalars ────────────────────────────────────────────────────────────── */
 
-export function ScalarList({ tokens }: { tokens: Token[] }) {
+/**
+ * A dial is only a dial if turning it moves something, so each row carries what
+ * it multiplies and whether that family is read. The value is beside it because
+ * every one of them is currently at rest, and a reader has to see that the
+ * defaults are neutral before the liveness column means anything.
+ */
+export function ScalarList({
+  tokens,
+  consumption,
+  drives,
+}: {
+  tokens: Token[]
+  consumption: Scalar[]
+  drives: Record<string, React.ReactNode>
+}) {
+  const live = new Map(consumption.map((s) => [s.name, s.live]))
   return (
     <Panel>
       {tokens.map((t, i) => (
         <Row key={t.name} last={i === tokens.length - 1}>
           <Name>--db-{t.name}</Name>
           <Value>{t.value}</Value>
-          <Badge variant="outline">dial</Badge>
+          <span className="type-body min-w-0 flex-1 text-text-subtle">{drives[t.name]}</span>
+          <Wired live={live.get(`--db-${t.name}`) ?? false} />
         </Row>
       ))}
     </Panel>
