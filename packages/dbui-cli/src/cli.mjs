@@ -101,7 +101,11 @@ export async function run(argv) {
       throw new DbuiError(`Unknown command "${command}"`, "ERR_UNKNOWN_COMMAND", COMMANDS.map((c) => ({ name: c.name, reason: "available command" })));
   }
 
-  const code = env.type === "doctor" && env.data.summary.fail > 0 ? 1 : 0;
+  // check exits non-zero on errors so it can gate a commit, the way doctor does.
+  const failed =
+    (env.type === "doctor" && env.data.summary.fail > 0) ||
+    (env.type === "check" && env.data.summary.error > 0);
+  const code = failed ? 1 : 0;
   return { out: json ? JSON.stringify(env, null, 2) : render(env, { dense }), code };
 }
 

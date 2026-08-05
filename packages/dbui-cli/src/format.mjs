@@ -130,10 +130,15 @@ export function render(env, { dense = false } = {}) {
 
     case "check": {
       const lines = [`Design check — ${d.target}\n`];
-      if (d.summary) lines.push(`  ${JSON.stringify(d.summary)}`);
       const findings = d.findings ?? d.issues ?? [];
+      if (d.summary) {
+        const { error = 0, warning = 0, info = 0 } = d.summary;
+        lines.push(`  ${error} errors, ${warning} warnings, ${info} info\n`);
+      }
+      // The linter calls it `level`; reading `severity` printed "?" on every row.
       for (const f of findings.slice(0, 40)) {
-        lines.push(`  ${(f.severity ?? "?").padEnd(8)} ${(f.rule ?? "").padEnd(24)} ${f.file ?? ""}:${f.line ?? ""}`);
+        const level = f.level ?? f.severity ?? "?";
+        lines.push(`  ${level.padEnd(8)} ${(f.rule ?? "").padEnd(24)} ${f.file ?? ""}:${f.line ?? ""}`);
         if (f.message) lines.push(`      ${f.message}`);
       }
       if (findings.length > 40) lines.push(`  … ${findings.length - 40} more`);

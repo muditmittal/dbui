@@ -419,7 +419,18 @@ export async function check(target) {
   } catch {
     throw new DbuiError("The design linter did not return JSON.", "ERR_CHECK_FAILED", [{ name: "stdout", reason: res.stdout.slice(0, 200) }]);
   }
-  return envelope("check", { target, ...parsed });
+  /*
+    react-lint.js --json prints a bare array. Spreading it into an object gave
+    { target, 0: {...}, 1: {...} }, so the renderer's `d.findings` was undefined
+    and every file came back clean — on the one path AGENTS.md tells agents to
+    run before landing.
+  */
+  const findings = Array.isArray(parsed) ? parsed : (parsed.findings ?? []);
+  const summary = findings.reduce(
+    (acc, f) => ({ ...acc, [f.level]: (acc[f.level] ?? 0) + 1 }),
+    { error: 0, warning: 0, info: 0 }
+  );
+  return envelope("check", { target, summary, findings });
 }
 
 /* -------------------------------------------------------------- doctor --- */
