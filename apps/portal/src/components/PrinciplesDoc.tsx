@@ -1,26 +1,4 @@
 import { Badge } from "dbui"
-import {
-  AudienceSpecimen,
-  AutomationSpecimen,
-  CalmSpecimen,
-  EvidenceSpecimen,
-  RestraintSpecimen,
-  VoiceSpecimen,
-} from "@/components/PrincipleSpecimens"
-
-/**
- * Built here rather than exported from the client module: a plain object crossing
- * the server boundary arrives as a client reference, but individual component
- * exports resolve correctly.
- */
-const SPECIMENS: Record<string, React.ComponentType> = {
-  Audience: AudienceSpecimen,
-  Visuals: CalmSpecimen,
-  Voice: VoiceSpecimen,
-  Restraint: RestraintSpecimen,
-  Automation: AutomationSpecimen,
-  Evidence: EvidenceSpecimen,
-}
 
 type Principle = {
   name: string
@@ -189,41 +167,30 @@ export function PrinciplesDoc() {
         who we serve, and the rest largely follow from it.
       </p>
 
-      <div className="mt-14 flex flex-col gap-16">
-        {PRINCIPLES.map((p, i) => {
-          const Specimen = SPECIMENS[p.aspect]
-          return (
-            <section key={p.name} style={{ margin: 0 }}>
-              <div className="flex items-baseline gap-3">
-                <span className="type-eyebrow text-text-subtle">{p.aspect}</span>
-              </div>
+      <div className="mt-12 flex flex-col gap-12">
+        {PRINCIPLES.map((p, i) => (
+          <section key={p.name} style={{ margin: 0 }}>
+            <div className="type-eyebrow text-text-subtle">{p.aspect}</div>
 
-              <div className="mt-1 flex items-baseline gap-4">
-                <span
-                  aria-hidden
-                  className="type-title-1 shrink-0 text-border-base"
-                  style={{ fontVariantNumeric: "tabular-nums" }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h2 className="type-title-3 text-text-strong">{p.name}</h2>
-              </div>
+            <div className="mt-1 flex items-baseline gap-4">
+              <span
+                aria-hidden
+                className="type-title-1 shrink-0 text-border-base"
+                style={{ fontVariantNumeric: "tabular-nums" }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h2 className="type-title-3 text-text-strong">{p.name}</h2>
+            </div>
 
-              <p className="type-paragraph mt-1.5 max-w-[62ch] text-text-base">{p.rule}</p>
-              <p className="type-body mt-3 max-w-[66ch] text-text-subtle">{p.meaning}</p>
+            <p className="type-paragraph mt-1.5 max-w-[62ch] text-text-base">{p.rule}</p>
+            <p className="type-body mt-3 max-w-[66ch] text-text-subtle">{p.meaning}</p>
 
-              {Specimen ? (
-                <div className="mt-7">
-                  <Specimen />
-                </div>
-              ) : null}
-
-              <div className="mt-8">
-                <Guidance dos={p.dos} donts={p.donts} />
-              </div>
-            </section>
-          )
-        })}
+            <div className="mt-6">
+              <Guidance dos={p.dos} donts={p.donts} />
+            </div>
+          </section>
+        ))}
       </div>
 
       <section
