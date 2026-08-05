@@ -129,7 +129,7 @@ export function FileTreeExplorer({
         (title || titleIcon || headerActions) && (
           <div className="flex h-10 items-center gap-2 px-2">
             {(title || titleIcon) && (
-              <div className="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold text-text-base">
+              <div className="flex min-w-0 items-center gap-1.5 type-label-bold text-text-base">
                 {titleIcon && (
                   <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                     {titleIcon}

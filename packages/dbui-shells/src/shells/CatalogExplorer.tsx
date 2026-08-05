@@ -170,7 +170,7 @@ function CatalogTree({
             render={
               <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-action-default-hover active:bg-action-selected-press">
                 <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
-                  <span className="text-[12px] leading-[16px] font-mono text-text-subtle">./</span>
+                  <span className="type-code text-text-subtle">./</span>
                   {currentRoot?.icon ?? defaultIcon}
                 </span>
                 <span className="truncate max-w-36 font-normal">{currentRoot?.label ?? "Catalog"}</span>
@@ -188,7 +188,7 @@ function CatalogTree({
                       <Button
                         key={entry.id}
                         variant="ghost"
-                        className={`h-7 w-full justify-start gap-2 py-1 text-[13px] ${isCurrent ? "bg-action-selected-base" : ""}`}
+                        className={`h-7 w-full justify-start gap-2 py-1 ${isCurrent ? "bg-action-selected-base" : ""}`}
                         style={{ paddingLeft: `${8 + i * 12}px` }}
                         onClick={() => {
                           if (i === 0 && focusPath.length === 1 && onUnfocus) onUnfocus()
@@ -201,7 +201,7 @@ function CatalogTree({
                     )
                   })
                 ) : (
-                  <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-1.5 py-1 text-[13px]">
+                  <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-1.5 py-1">
                     <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">{defaultIcon}</span>
                     Catalog
                   </Button>
@@ -209,12 +209,12 @@ function CatalogTree({
 
                 {/* Go to section */}
                 <div className="my-1 h-px bg-border-base" />
-                <div className="px-1.5 py-1 text-[12px] text-text-subtle">Go to</div>
+                <div className="px-1.5 py-1 type-hint text-text-subtle">Go to</div>
                 {(goToItems ?? []).map((item) => (
                   <Button
                     key={item.id}
                     variant="ghost"
-                    className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-[13px]"
+                    className="h-7 w-full justify-start gap-2 px-1.5 py-1"
                     onClick={() => {
                       if (onFocusNode) onFocusNode(item.id, item.label, item.icon)
                     }}
@@ -255,14 +255,14 @@ function CatalogTree({
                 <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">Shared SQL Warehouse</span>
                 <Badge variant="outline">Serverless</Badge>
-                <span className="text-[12px] text-text-subtle">M</span>
+                <span className="type-hint text-text-subtle">M</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span className="size-4" />
                 <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">ML Data</span>
                 <Badge variant="outline">Serverless</Badge>
-                <span className="text-[12px] text-text-subtle">S</span>
+                <span className="type-hint text-text-subtle">S</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -271,13 +271,13 @@ function CatalogTree({
                 <span className="size-4" />
                 <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">Pro warehouse 1</span>
-                <span className="text-[12px] text-text-subtle">M</span>
+                <span className="type-hint text-text-subtle">M</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span className="size-4" />
                 <span className="inline-block size-2 rounded-full bg-action-positive-base" />
                 <span className="flex-1">Pro warehouse 2</span>
-                <span className="text-[12px] text-text-subtle">S</span>
+                <span className="type-hint text-text-subtle">S</span>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
@@ -419,7 +419,7 @@ function CatalogLanding({
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-2">
           <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-5"><Data /></span>
-          <h1 className="font-display text-[22px] font-semibold leading-[28px] text-text-base">
+          <h1 className="type-title-3 text-text-base">
             {title}
           </h1>
         </div>
@@ -473,8 +473,8 @@ function CatalogLanding({
                       {item.icon ?? <Data />}
                     </span>
                     <div className="flex flex-col">
-                      <span className="text-[13px] leading-[20px] text-text-base">{item.name}</span>
-                      {item.subtitle && <span className="text-[12px] leading-[16px] text-text-subtle">{item.subtitle}</span>}
+                      <span className="type-label text-text-base">{item.name}</span>
+                      {item.subtitle && <span className="type-hint text-text-subtle">{item.subtitle}</span>}
                     </div>
                   </div>
                 </TableCell>

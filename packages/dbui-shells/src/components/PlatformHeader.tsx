@@ -49,7 +49,7 @@ export function PlatformHeader({
         <Button variant="ghost" size="icon-md" aria-label="Toggle sidebar" onClick={onSidebarToggle}>
           {sidebarCollapsed ? <SidebarClosed /> : <SidebarOpen />}
         </Button>
-        <span className="text-[13px] text-text-base">{cloudLabel}</span>
+        <span className="type-label text-text-base">{cloudLabel}</span>
         <DatabricksLogo className="ml-1 h-8 w-auto" />
       </div>
 
@@ -63,7 +63,7 @@ export function PlatformHeader({
         >
           <Search className="size-4 shrink-0 text-text-subtle" />
           <span className="flex-1 min-w-0 truncate text-left text-text-subtle">Search data, notebooks, recents, and more...</span>
-          <kbd className="shrink-0 text-[12px] text-text-subtle">⌘ + P</kbd>
+          <kbd className="shrink-0 type-hint text-text-subtle">⌘ + P</kbd>
         </Button>
         {searchOpen && <SearchPopup onClose={() => setSearchOpen(false)} />}
       </div>
@@ -104,8 +104,8 @@ export function PlatformHeader({
               ].map((ws) => (
                 <DropdownMenuRadioItem key={ws.name} value={ws.name}>
                   <div className="flex flex-col" style={{ gap: 2 }}>
-                    <span className="text-[13px] leading-[20px] text-text-base">{ws.name}</span>
-                    <span className="text-[12px] leading-[16px] text-text-subtle">{ws.region}</span>
+                    <span className="type-label text-text-base">{ws.name}</span>
+                    <span className="type-hint text-text-subtle">{ws.region}</span>
                   </div>
                 </DropdownMenuRadioItem>
               ))}
@@ -144,7 +144,7 @@ export function PlatformHeader({
                     </div>
                     <div className="flex flex-col" style={{ gap: 2 }}>
                       <div className="flex items-center gap-2">
-                        <span className="text-[13px] leading-[20px] text-text-base">{item.title}</span>
+                        <span className="type-label text-text-base">{item.title}</span>
                         {item.badge && (
                           <Badge
                             variant="outline"
@@ -154,7 +154,7 @@ export function PlatformHeader({
                           </Badge>
                         )}
                       </div>
-                      <span className="text-[12px] leading-[16px] text-text-subtle">{item.desc}</span>
+                      <span className="type-hint text-text-subtle">{item.desc}</span>
                     </div>
                 </DropdownMenuItem>
               ))}
@@ -171,15 +171,15 @@ export function PlatformHeader({
             <DropdownMenuContent align="end" style={{ width: 280 }}>
               {/* User info */}
               <div className="px-3 py-2">
-                <p className="text-[13px] font-semibold text-text-base">Mudit Mittal</p>
-                <p className="text-[12px] text-text-subtle truncate">mudit.mittal@databricks.com</p>
+                <p className="type-label-bold text-text-base">Mudit Mittal</p>
+                <p className="type-hint text-text-subtle truncate">mudit.mittal@databricks.com</p>
               </div>
 
               <DropdownMenuSeparator />
 
               {/* Workspace info */}
               <div className="px-3 py-2">
-                <p className="text-[13px] text-text-base">E2 Dogfood</p>
+                <p className="type-label text-text-base">E2 Dogfood</p>
               </div>
 
               <DropdownMenuSeparator />

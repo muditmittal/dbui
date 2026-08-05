@@ -82,7 +82,7 @@ function PropertyRow({
   return (
     <div
       data-slot={slot}
-      className="flex h-5 items-center gap-2 text-[13px] leading-[20px]"
+      className="flex h-5 items-center gap-2 type-label"
     >
       <span data-slot="Label" className="w-[80px] shrink-0 text-text-subtle">
         {label}
@@ -148,7 +148,7 @@ export function PreviewPopup({
           >
             <span
               data-slot="AssetName"
-              className="truncate text-[16px] font-semibold leading-[22px] text-text-base"
+              className="truncate type-title-4 text-text-base"
             >
               {name}
             </span>
@@ -166,7 +166,7 @@ export function PreviewPopup({
           {parentPath && (
             <span
               data-slot="ParentPath"
-              className="truncate text-[12px] leading-[16px] text-text-subtle"
+              className="truncate type-hint text-text-subtle"
             >
               {parentPath}
             </span>
@@ -232,7 +232,7 @@ export function PreviewPopup({
 
       {/* Description — wraps; "More..." inline, click-able when handler provided */}
       {description && (
-        <div data-slot="Description" className="text-[13px] leading-[20px] text-text-base">
+        <div data-slot="Description" className="type-body text-text-base">
           <span className="line-clamp-3">{description}</span>
           {onMoreClick && (
             <Button

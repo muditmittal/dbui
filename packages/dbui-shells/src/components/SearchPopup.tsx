@@ -82,7 +82,7 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
 
         {/* Recents */}
         <div className="px-3 pt-1 pb-0.5">
-          <span className="text-[12px] leading-[16px] font-semibold text-text-subtle uppercase tracking-wider">Recents</span>
+          <span className="type-eyebrow text-text-subtle">Recents</span>
         </div>
         <div className="max-h-[320px] overflow-y-auto">
           {recentItems.map((item) => (
@@ -93,10 +93,10 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
             >
               <Notebook className="size-4 shrink-0 text-text-subtle mt-0.5" />
               <div className="flex-1 min-w-0">
-                <div className="text-[13px] text-text-base truncate">{item.name}</div>
-                <div className="text-[12px] text-text-subtle truncate">{item.path}</div>
+                <div className="type-label text-text-base truncate">{item.name}</div>
+                <div className="type-hint text-text-subtle truncate">{item.path}</div>
               </div>
-              <span className="shrink-0 text-[12px] text-text-subtle whitespace-nowrap">{item.time}</span>
+              <span className="shrink-0 type-hint text-text-subtle whitespace-nowrap">{item.time}</span>
             </Button>
           ))}
         </div>
@@ -107,10 +107,10 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
             <Search className="size-4" />
             Open search in a full page
           </Button>
-          <div className="flex items-center gap-1 text-[12px] text-text-subtle">
-            <kbd className="px-1 py-0.5 rounded border border-border-base text-[12px] leading-[16px]">⌘</kbd>
+          <div className="flex items-center gap-1 type-hint text-text-subtle">
+            <kbd className="px-1 py-0.5 rounded border border-border-base type-hint">⌘</kbd>
             <span>+</span>
-            <kbd className="px-1 py-0.5 rounded border border-border-base text-[12px] leading-[16px]">Enter</kbd>
+            <kbd className="px-1 py-0.5 rounded border border-border-base type-hint">Enter</kbd>
             <span className="ml-1">Open in a new tab</span>
           </div>
         </div>

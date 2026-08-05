@@ -359,7 +359,7 @@ export function DataTreeExplorer({
                       />
                       <span className="flex-1">{w.name}</span>
                       {w.serverless && <Badge variant="outline">Serverless</Badge>}
-                      {w.size && <span className="text-[12px] text-text-subtle">{w.size}</span>}
+                      {w.size && <span className="type-hint text-text-subtle">{w.size}</span>}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuGroup>
@@ -432,7 +432,7 @@ export function DataTreeExplorer({
                   className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-action-default-hover active:bg-action-selected-press"
                 >
                   <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
-                    <span className="text-[12px] leading-[16px] font-mono text-text-subtle">./</span>
+                    <span className="type-code text-text-subtle">./</span>
                     {currentRoot?.icon ?? defaultIcon}
                   </span>
                   <span className="truncate max-w-36 font-normal">{currentRoot?.label ?? title}</span>
@@ -450,7 +450,7 @@ export function DataTreeExplorer({
                         <Button
                           key={entry.id}
                           variant="ghost"
-                          className={cn("h-7 w-full justify-start gap-2 py-1 text-[13px]", isCurrent && "bg-action-selected-base")}
+                          className={cn("h-7 w-full justify-start gap-2 py-1", isCurrent && "bg-action-selected-base")}
                           style={{ paddingLeft: `${8 + i * 12}px` }}
                           onClick={() => {
                             if (i === 0 && focusPath.length === 1 && onUnfocus) onUnfocus()
@@ -465,7 +465,7 @@ export function DataTreeExplorer({
                       )
                     })
                   ) : (
-                    <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-1.5 py-1 text-[13px]">
+                    <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-1.5 py-1">
                       <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                         {defaultIcon}
                       </span>
@@ -477,12 +477,12 @@ export function DataTreeExplorer({
                   {goToItems && goToItems.length > 0 && (
                     <>
                       <div className="my-1 h-px bg-border-base" />
-                      <div className="px-1.5 py-1 text-[12px] text-text-subtle">Go to</div>
+                      <div className="px-1.5 py-1 type-hint text-text-subtle">Go to</div>
                       {goToItems.map((item) => (
                         <Button
                           key={item.id}
                           variant="ghost"
-                          className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-[13px]"
+                          className="h-7 w-full justify-start gap-2 px-1.5 py-1"
                           onClick={() => onFocusNode?.(item.id, item.label, item.icon)}
                         >
                           <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
