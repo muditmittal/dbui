@@ -170,19 +170,14 @@ export function PrinciplesDoc() {
       <div className="mt-12 flex flex-col gap-12">
         {PRINCIPLES.map((p, i) => (
           <section key={p.name} style={{ margin: 0 }}>
-            <div className="type-eyebrow text-text-subtle">{p.aspect}</div>
-
-            <div className="mt-1 flex items-baseline gap-4">
-              <span
-                aria-hidden
-                className="type-title-1 shrink-0 text-border-base"
-                style={{ fontVariantNumeric: "tabular-nums" }}
-              >
+            <div className="type-eyebrow flex items-baseline gap-2 text-text-subtle">
+              <span style={{ fontVariantNumeric: "tabular-nums" }}>
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h2 className="type-title-3 text-text-strong">{p.name}</h2>
+              <span>{p.aspect}</span>
             </div>
 
+            <h2 className="type-title-3 mt-2 text-text-strong">{p.name}</h2>
             <p className="type-paragraph mt-1.5 max-w-[62ch] text-text-base">{p.rule}</p>
             <p className="type-body mt-3 max-w-[66ch] text-text-subtle">{p.meaning}</p>
 
