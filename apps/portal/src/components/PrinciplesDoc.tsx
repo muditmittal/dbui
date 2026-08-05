@@ -3,7 +3,6 @@ import { Badge } from "dbui"
 type Principle = {
   name: string
   aspect: string
-  rule: string
   meaning: string
   dos: string[]
   donts: string[]
@@ -22,9 +21,8 @@ const PRINCIPLES: Principle[] = [
   {
     name: "Built for people accountable for the data",
     aspect: "Audience",
-    rule: "Design for the moment someone has to answer for a number.",
     meaning:
-      "The same table is read by an engineer debugging a pipeline, an analyst checking a metric and a steward approving access — at different points in work that runs for weeks. Design the object to carry its own context, not the screen to one reader’s moment.",
+      "The same table is read by an engineer debugging a pipeline, an analyst checking a metric and a steward approving access. Design the object to carry its own context, not the screen to one reader’s moment.",
     dos: [
       "Let an object explain itself wherever it appears — in search, in lineage, in a result",
       "Carry context across a handoff; people arrive mid-task from somewhere else",
@@ -39,9 +37,8 @@ const PRINCIPLES: Principle[] = [
   {
     name: "Calm carries the work",
     aspect: "Visuals",
-    rule: "The frame recedes so the data advances.",
     meaning:
-      "Color, weight and motion belong to the content. Chrome stays neutral, borders divide, and density is part of calm — forty quiet rows read easier than twelve decorated ones.",
+      "Colour, weight and motion belong to the content, not the frame. Density is part of calm — forty quiet rows read easier than twelve decorated ones.",
     dos: [
       "Reserve color for meaning: status, selection, links",
       "Divide with borders; save shadow for what genuinely floats",
@@ -56,9 +53,8 @@ const PRINCIPLES: Principle[] = [
   {
     name: "Clear over clever, honest over hype",
     aspect: "Voice",
-    rule: "Plain words, stated limits, named consequences.",
     meaning:
-      "Say what is true, including the inconvenient parts. Our readers know the technical vocabulary and will discover the limits anyway — the only question is whether they hear it from us first.",
+      "Say what is true, including the inconvenient parts. Our readers know the technical vocabulary and will find the limits anyway — the only question is whether they hear it from us first.",
     dos: [
       "Name a limit before someone hits it",
       "Use the precise technical term over the friendlier approximation",
@@ -73,9 +69,8 @@ const PRINCIPLES: Principle[] = [
   {
     name: "Every element earns its place",
     aspect: "Restraint",
-    rule: "Anything added dilutes everything else.",
     meaning:
-      "The test is subtraction: remove it, and if nothing breaks and nobody notices, it had not earned its place. Time counts as an element — a spinner that flashes and an animation that delays a result are both costs the user did not ask for.",
+      "The test is subtraction: remove it, and if nothing breaks and nobody notices, it had not earned its place. Time counts too — a spinner that flashes still costs the reader something.",
     dos: [
       "Put the burden of proof on whoever is adding",
       "Keep one primary action per surface",
@@ -90,9 +85,8 @@ const PRINCIPLES: Principle[] = [
   {
     name: "Automate the work, surface the decision",
     aspect: "Automation",
-    rule: "Automation clears the desk; a person still signs.",
     meaning:
-      "The platform removes grunt work so attention goes to judgment. Automation earns its leverage by handing the decision back, visibly, at the point where thinking is required.",
+      "The platform removes grunt work so attention goes to judgment. Automation earns its leverage by handing the decision back, visibly, where thinking is required.",
     dos: [
       "Show what was generated before it runs",
       "Make automated actions visible and reversible",
@@ -107,9 +101,8 @@ const PRINCIPLES: Principle[] = [
   {
     name: "Show the trace, not just the outcome",
     aspect: "Evidence",
-    rule: "Every value, state and answer carries where it came from.",
     meaning:
-      "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads just as confidently as a right one — the trace is the only thing that tells them apart.",
+      "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads just as confidently as a right one — the trace is what tells them apart.",
     dos: [
       "Show the query behind a generated answer",
       "State freshness and scope on anything cached or partial",
@@ -178,8 +171,7 @@ export function PrinciplesDoc() {
             </div>
 
             <h2 className="type-title-3 mt-2 text-text-strong">{p.name}</h2>
-            <p className="type-paragraph mt-1.5 max-w-[62ch] text-text-base">{p.rule}</p>
-            <p className="type-body mt-3 max-w-[66ch] text-text-subtle">{p.meaning}</p>
+            <p className="type-paragraph mt-2 max-w-[66ch] text-text-subtle">{p.meaning}</p>
 
             <div className="mt-6">
               <Guidance dos={p.dos} donts={p.donts} />
