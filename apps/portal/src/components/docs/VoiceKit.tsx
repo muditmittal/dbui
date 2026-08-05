@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Badge } from "dbui/components/ui/badge"
 
 import { Guidance } from "@/components/docs/Guidance"
+import { RefTable } from "@/components/docs/Prose"
 
 /**
  * Renderers for the Voice and tone page.
@@ -134,6 +135,38 @@ export function EntryList({ children }: { children: React.ReactNode }) {
     <div className="divide-y divide-border-base overflow-hidden rounded-md border border-border-base">
       {children}
     </div>
+  )
+}
+
+/**
+ * The word lists stay tables. Every cell is a word or a short phrase, the rows
+ * are parallel, and there are enough of them that a stacked list would run for
+ * pages — this is what a table is for.
+ *
+ * What the table was missing is weight. All three columns arrived at the same
+ * emphasis, so the answer, the thing being replaced and the footnote read as
+ * equals. The word to use now leads and the reason recedes.
+ */
+export function WordTable({
+  rows,
+  widths,
+}: {
+  rows: Array<{ use: string; not: string; reason: string }>
+  widths: [string, string]
+}) {
+  return (
+    <RefTable
+      columns={[
+        { key: "use", header: "Use", width: widths[0] },
+        { key: "not", header: "Not", width: widths[1] },
+        { key: "reason", header: "Reason" },
+      ]}
+      rows={rows.map((row) => ({
+        use: <span className="type-body-bold text-text-strong">{row.use}</span>,
+        not: row.not,
+        reason: <span className="text-text-subtle">{row.reason}</span>,
+      }))}
+    />
   )
 }
 

@@ -1,10 +1,12 @@
 import { DocHeader, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
 import {
   AnchoredSection,
+  AnchoredSubsection,
   EntryList,
   JumpTo,
   PrincipleEntry,
   ToneEntry,
+  WordTable,
   type Tone,
 } from "@/components/docs/VoiceKit"
 
@@ -19,19 +21,23 @@ import {
  * anchors are for.
  */
 
-const SECTIONS = [
-  { id: "core-principles", title: "Core principles" },
-  { id: "tone-scale", title: "Voice and tone scale" },
-  { id: "tone-in-ui-context", title: "Tone in UI context" },
-  { id: "casing-and-punctuation", title: "Casing and punctuation" },
-  { id: "grammar-and-mechanics", title: "Grammar and mechanics" },
-  { id: "accessibility", title: "Accessibility" },
-  { id: "globalization", title: "Globalization" },
-  { id: "content-quality", title: "Content quality" },
-  { id: "terminology", title: "Terminology" },
-  { id: "product-names", title: "Product names" },
-  { id: "methodology", title: "Methodology and sources" },
-]
+/**
+ * One definition per section, used for both the heading and the jump list, so
+ * a link can never name a heading that has since been reworded.
+ */
+const S = {
+  principles: { id: "core-principles", title: "Core principles" },
+  scale: { id: "tone-scale", title: "Voice and tone scale" },
+  moments: { id: "tone-in-ui-context", title: "Tone in UI context" },
+  casing: { id: "casing", title: "Sentence casing and punctuation" },
+  grammar: { id: "grammar", title: "Grammar and mechanics" },
+  checklists: { id: "checklists", title: "Quality checklists" },
+  terminology: { id: "terminology", title: "Terminology" },
+  productNames: { id: "product-names", title: "Product names" },
+  methodology: { id: "methodology", title: "Methodology and sources" },
+}
+
+const SECTIONS = Object.values(S)
 
 const PRINCIPLES = [
   {
@@ -257,7 +263,7 @@ export function VoiceDoc() {
         <JumpTo sections={SECTIONS} />
       </div>
 
-      <AnchoredSection id="core-principles" title="Core principles">
+      <AnchoredSection {...S.principles}>
         <Para>
           The Databricks voice is professional, authoritative and concise, but human and
           approachable. American spelling throughout — color, behavior, optimize, canceled. This
@@ -270,7 +276,7 @@ export function VoiceDoc() {
         </div>
       </AnchoredSection>
 
-      <AnchoredSection id="tone-scale" title="Voice and tone scale">
+      <AnchoredSection {...S.scale}>
         <Para>
           Voice is the constant personality of the product. Tone flexes with the user&rsquo;s
           context and the stakes involved.
@@ -282,7 +288,7 @@ export function VoiceDoc() {
         </EntryList>
       </AnchoredSection>
 
-      <AnchoredSection id="tone-in-ui-context" title="Tone in UI context">
+      <AnchoredSection {...S.moments}>
         <EntryList>
           {MOMENTS.map((entry) => (
             <ToneEntry key={entry.term} {...entry} />
@@ -290,7 +296,7 @@ export function VoiceDoc() {
         </EntryList>
       </AnchoredSection>
 
-      <AnchoredSection id="casing-and-punctuation" title="Sentence casing and punctuation">
+      <AnchoredSection {...S.casing}>
         <Para>
           Use sentence case for every UI string — capitalize only the first word. Never use title
           case for generic labels. Follow US English, and do not use semicolons.
@@ -305,7 +311,7 @@ export function VoiceDoc() {
         />
       </AnchoredSection>
 
-      <AnchoredSection id="grammar-and-mechanics" title="Grammar and mechanics">
+      <AnchoredSection {...S.grammar}>
         <RefTable
           columns={[
             { key: "category", header: "Category", width: "w-[20%]" },
@@ -316,59 +322,47 @@ export function VoiceDoc() {
         />
       </AnchoredSection>
 
-      <AnchoredSection id="accessibility" title="Accessibility">
-        <RefTable
-          columns={[
-            { key: "rule", header: "Rule", width: "w-[28%]" },
-            { key: "guideline", header: "Guideline" },
-          ]}
-          rows={ACCESSIBILITY}
-        />
+      <AnchoredSection {...S.checklists}>
+        <AnchoredSubsection title="Accessibility">
+          <RefTable
+            columns={[
+              { key: "rule", header: "Rule", width: "w-[28%]" },
+              { key: "guideline", header: "Guideline" },
+            ]}
+            rows={ACCESSIBILITY}
+          />
+        </AnchoredSubsection>
+
+        <AnchoredSubsection title="Globalization">
+          <RefTable
+            columns={[
+              { key: "rule", header: "Rule", width: "w-[28%]" },
+              { key: "guideline", header: "Guideline" },
+            ]}
+            rows={GLOBALIZATION}
+          />
+        </AnchoredSubsection>
+
+        <AnchoredSubsection title="Content quality">
+          <RefTable
+            columns={[
+              { key: "rule", header: "Rule", width: "w-[28%]" },
+              { key: "guideline", header: "Guideline" },
+            ]}
+            rows={CONTENT_QUALITY}
+          />
+        </AnchoredSubsection>
       </AnchoredSection>
 
-      <AnchoredSection id="globalization" title="Globalization">
-        <RefTable
-          columns={[
-            { key: "rule", header: "Rule", width: "w-[28%]" },
-            { key: "guideline", header: "Guideline" },
-          ]}
-          rows={GLOBALIZATION}
-        />
+      <AnchoredSection {...S.terminology}>
+        <WordTable rows={TERMINOLOGY} widths={["w-[25%]", "w-[33%]"]} />
       </AnchoredSection>
 
-      <AnchoredSection id="content-quality" title="Content quality">
-        <RefTable
-          columns={[
-            { key: "rule", header: "Rule", width: "w-[28%]" },
-            { key: "guideline", header: "Guideline" },
-          ]}
-          rows={CONTENT_QUALITY}
-        />
+      <AnchoredSection {...S.productNames}>
+        <WordTable rows={PRODUCT_NAMES} widths={["w-[27%]", "w-[35%]"]} />
       </AnchoredSection>
 
-      <AnchoredSection id="terminology" title="Terminology">
-        <RefTable
-          columns={[
-            { key: "use", header: "Use", width: "w-[25%]" },
-            { key: "not", header: "Not", width: "w-[33%]" },
-            { key: "reason", header: "Reason" },
-          ]}
-          rows={TERMINOLOGY}
-        />
-      </AnchoredSection>
-
-      <AnchoredSection id="product-names" title="Product names">
-        <RefTable
-          columns={[
-            { key: "use", header: "Use", width: "w-[27%]" },
-            { key: "not", header: "Not", width: "w-[35%]" },
-            { key: "reason", header: "Reason" },
-          ]}
-          rows={PRODUCT_NAMES}
-        />
-      </AnchoredSection>
-
-      <AnchoredSection id="methodology" title="Methodology and sources">
+      <AnchoredSection {...S.methodology}>
         <Para>
           The topics here draw on agent-readable design-system files and a study of the content
           principles of Adobe Spectrum, IBM Carbon and Material Design. The rules come from a sample
