@@ -189,7 +189,7 @@ import { Base } from "dbui-shells"
 export default function Home() {
   return (
     <Base defaultActive="catalog">
-      <div className="flex items-center justify-center h-full text-[13px] text-text-subtle">
+      <div className="flex items-center justify-center h-full type-body text-text-subtle">
         DBUI is installed. Start building here.
       </div>
     </Base>

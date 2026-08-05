@@ -142,7 +142,6 @@ Fix these opportunistically when touching adjacent code, and delete the line whe
   not exist.
 - Six icon components have no `classifications.ts` entry: `CircleSmall`, `Databricks`,
   `DatabricksLogo`, `DotsCircleSmall`, `RunningSmall`, `Slash`.
-- The token migration is mid-flight: `tokens.css` ships but no component consumes it.
 
 ## Working with an AI agent on this repo
 

@@ -50,9 +50,14 @@ If the file exports a top-level page component (`export default function Page/Ap
 ### Warnings (should fix)
 
 **Typography drift:**
-- `text-sm` → should be `text-[13px]` (Databricks base is 13px, not Tailwind's 14px)
-- `text-xs` → should be `text-[12px]`
-- `font-medium` → should be `font-semibold` (Databricks uses weight 600, not 500)
+- `text-sm`, `text-xs` or any `text-[Npx]` → should be a `type-*` class off the ramp
+- A `type-*` paired with `leading-`, `font-`, `tracking-` or `uppercase` → drop the
+  companion, the ramp class already carries it
+- `font-medium` on its own → should be `font-semibold` (Databricks uses weight 600, not 500)
+
+Pick the step by what the text is: `type-label` for single-line UI, `type-body` when
+it wraps, `type-hint` for captions and helper text, `type-paragraph` for prose. See
+`./dbui/docs/tokens.md`.
 
 **Arbitrary values where tokens exist:**
 Scan className for bracket values and check if a token covers them:
