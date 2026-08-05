@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Badge } from "dbui/components/ui/badge"
+import { Button } from "dbui/components/ui/button"
 import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from "dbui/components/ui/empty"
 import { Input } from "dbui/components/ui/input"
 import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
@@ -25,12 +26,16 @@ import type { Glyph } from "@/components/icon-data/glyphs-object"
  * in when it is first shown, because the drawings are an order of magnitude
  * larger than the words and most visits look at one category.
  *
- * Rows are added in pages as the reader scrolls rather than all at once. The
- * largest category is over two hundred icons, and every one of them is an inline
- * SVG — mounting the whole category costs more than anyone browsing it will read.
+ * The table sits in the page flow and never scrolls inside itself. It used to
+ * live in a 689px box holding up to 33,000px of its own scroll, which trapped
+ * the wheel: a reader scrolling down the page crossed the table and could not
+ * get past it without moving the pointer off it first. The cost of taking the
+ * box away is that the rest of the page sits below however many rows are open,
+ * so the list is bounded until the reader asks for the rest.
  */
 
-const PAGE = 60
+/** Enough rows to show the shape of the set without owning the page. */
+const WINDOW = 40
 
 /**
  * Static specifiers, so the bundler can see four chunks. A computed import path
@@ -73,10 +78,14 @@ const DEFAULT_VIEW_BOX = "0 0 16 16"
 /**
  * The body is React's own output for the icon component, produced at build time
  * by scripts/generate-icon-data.mjs. Setting it as markup is what lets the page
- * draw 456 icons without importing 456 modules; nothing here is user input.
+ * draw every icon without importing a module each; nothing here is user input.
+ *
+ * The placeholder holds the glyph's exact box, so the row never resizes when a
+ * chunk lands. It is transparent rather than filled: a grid of grey squares
+ * turning into drawings reads as a fault, and the chunk arrives in a few frames.
  */
 function IconGlyph({ glyph }: { glyph: Glyph | undefined }) {
-  if (!glyph) return <span className="block size-4 rounded-xs bg-surface-inset" />
+  if (!glyph) return <span className="block size-4" />
   return (
     <svg
       viewBox={glyph.viewBox ?? DEFAULT_VIEW_BOX}
@@ -91,11 +100,10 @@ function IconGlyph({ glyph }: { glyph: Glyph | undefined }) {
 export function IconBrowser() {
   const [category, setCategory] = React.useState<IconCategory | "all">("all")
   const [query, setQuery] = React.useState("")
-  const [limit, setLimit] = React.useState(PAGE)
+  const [expanded, setExpanded] = React.useState(false)
   const [glyphs, setGlyphs] = React.useState<Record<string, Glyph>>({})
   const requested = React.useRef(new Set<IconCategory>())
-  const sentinel = React.useRef<HTMLDivElement>(null)
-  const scrollBox = React.useRef<HTMLDivElement>(null)
+  const top = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
     for (const key of category === "all" ? iconCategories : [category]) {
@@ -107,44 +115,36 @@ export function IconBrowser() {
     }
   }, [category])
 
+  // The field owns the caret; the table is allowed to arrive a frame later.
+  // Filtering is cheap, but the list it produces is not, and a deferred value
+  // is what keeps a fast typist from ever waiting on a row.
+  const deferredQuery = React.useDeferredValue(query)
+
   const matches = React.useMemo(() => {
-    const q = query.trim().toLowerCase()
+    const q = deferredQuery.trim().toLowerCase()
     return searchable
       .filter((entry) => category === "all" || entry.icon.category === category)
       .filter((entry) => !q || entry.haystack.includes(q))
       .map((entry) => entry.icon)
-  }, [category, query])
+  }, [category, deferredQuery])
 
-  // A new filter is a new list, so it starts at the first row and at one page.
-  // Without the scroll reset the reader lands part-way down a result set they
-  // have not seen, and the sentinel is left sitting under the viewport.
+  // A new filter is a new list, so it closes back to one window. Leaving it open
+  // would drop the reader into several thousand pixels of rows they did not ask
+  // for every time they changed a letter.
   React.useEffect(() => {
-    setLimit(PAGE)
-    if (scrollBox.current) scrollBox.current.scrollTop = 0
-  }, [category, query])
+    setExpanded(false)
+  }, [category, deferredQuery])
 
-  const shown = matches.slice(0, limit)
-  const more = matches.length - shown.length
+  const shown = expanded ? matches : matches.slice(0, WINDOW)
+  const hidden = matches.length - shown.length
 
-  // Watched against the scroll box rather than the viewport, so a page is added
-  // when the reader reaches the end of the table and not when the table happens
-  // to pass through the window. Re-observed after each page, because an observer
-  // only fires on a crossing and the sentinel has just moved.
-  React.useEffect(() => {
-    const node = sentinel.current
-    if (!node || more === 0) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) setLimit((n) => n + PAGE)
-      },
-      { root: scrollBox.current, rootMargin: "400px" }
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [more])
+  const collapse = () => {
+    setExpanded(false)
+    top.current?.scrollIntoView({ block: "start" })
+  }
 
   return (
-    <div className="mt-6 flex flex-col gap-4">
+    <div ref={top} className="mt-6 flex scroll-mt-20 flex-col gap-4">
       {/*
         The switcher takes the full measure on its own row. Five segments and a
         field side by side overrun 44rem, and squeezing the segments is the worse
@@ -187,48 +187,42 @@ export function IconBrowser() {
           </EmptyHeader>
         </Empty>
       ) : (
-        /*
-          The set is longer than any page it sits on, so it scrolls inside a box
-          of its own. Letting it own the page scroll would bury every section
-          below it under four hundred rows.
-        */
-        <div
-          ref={scrollBox}
-          className="max-h-144 overflow-y-auto rounded-md border border-border-base"
-        >
+        <div className="overflow-hidden rounded-md border border-border-base">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead
-                  className="type-label-bold sticky top-0 z-10 w-10 bg-surface-base pl-3"
-                  aria-label="Preview"
-                />
-                <TableHead className="type-label-bold sticky top-0 z-10 w-44 bg-surface-base">
-                  Name
-                </TableHead>
-                <TableHead className="type-label-bold sticky top-0 z-10 bg-surface-base">
-                  What the tag says
-                </TableHead>
+                <TableHead className="type-label-bold w-11 pl-3" aria-label="Preview" />
+                <TableHead className="type-label-bold w-52">Name</TableHead>
+                <TableHead className="type-label-bold">What the tag says</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {shown.map((icon) => (
                 <TableRow key={icon.name}>
-                  <TableCell className="pl-3 align-top">
+                  <TableCell className="w-11 py-1.5 pl-3">
                     <IconGlyph glyph={glyphs[icon.name]} />
                   </TableCell>
-                  <TableCell className="type-code align-top break-words whitespace-normal! text-text-base">
+                  <TableCell className="type-code w-52 py-1.5 text-text-base">
                     {icon.name}
                   </TableCell>
-                  <TableCell className="align-top whitespace-normal!">
-                    <div className="flex flex-col gap-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="type-body text-text-base">{icon.label}</span>
-                        {icon.area ? <Badge variant="outline">{icon.area}</Badge> : null}
-                        {icon.mapped === false ? (
-                          <Badge variant="warning">Not in the maps</Badge>
-                        ) : null}
-                      </div>
+                  {/*
+                    One line per icon. The label, the area and the synonyms fit
+                    inside the measure for all but the longest few, and those
+                    wrap rather than clip — the synonyms are the field that makes
+                    the set searchable, so none of it may be hidden.
+                  */}
+                  <TableCell className="py-1.5 whitespace-normal!">
+                    {/*
+                      Wider than the gap inside the row, because the label and
+                      the synonyms are the same size and only differ in weight of
+                      color — without the space they read as one run of words.
+                    */}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
+                      <span className="type-body text-text-base">{icon.label}</span>
+                      {icon.area ? <Badge variant="outline">{icon.area}</Badge> : null}
+                      {icon.mapped === false ? (
+                        <Badge variant="warning">Not in the maps</Badge>
+                      ) : null}
                       {icon.synonyms?.length ? (
                         <span className="type-body text-text-subtle">
                           {icon.synonyms.join(", ")}
@@ -240,18 +234,31 @@ export function IconBrowser() {
               ))}
             </TableBody>
           </Table>
-          {/*
-            In the flow under the last row, so the next page mounts 400px of
-            scroll before the reader gets there and the table never shows a gap.
-          */}
-          {more > 0 ? (
-            <div ref={sentinel} className="type-label px-3 py-2 text-text-subtle">
-              {more} more below
-            </div>
-          ) : null}
         </div>
       )}
 
+      {/*
+        Opening the rest is a decision, not a side effect of scrolling. The old
+        table added a page whenever an observer saw the end coming, which grew
+        the scroll under the reader by four thousand pixels at a time.
+      */}
+      {hidden > 0 ? (
+        <Button
+          variant="outline"
+          size="sm"
+          className="self-start"
+          // Mounting four hundred rows is one long frame. As a transition the
+          // press still highlights on time and the rows arrive behind it.
+          onClick={() => React.startTransition(() => setExpanded(true))}
+        >
+          Show the remaining {hidden}
+        </Button>
+      ) : null}
+      {expanded && matches.length > WINDOW ? (
+        <Button variant="ghost" size="sm" className="self-start" onClick={collapse}>
+          Show fewer
+        </Button>
+      ) : null}
     </div>
   )
 }

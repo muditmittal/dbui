@@ -78,18 +78,15 @@ export default function IconsPage() {
   return (
     <>
       <DocHeader title="Icons">
-        One set, tagged by concept, so the right icon can be found without knowing its name. Switch
-        category or search the table below on the name, the concept or the words someone would reach
-        for instead.
+        One set, tagged by concept, so the right icon can be found without knowing its name.
       </DocHeader>
 
       <IconBrowser />
 
       <DocSection title="Four categories">
         <Para>
-          Category is the first cut, and it is a claim about the icon&rsquo;s job rather than its
-          drawing. The same shape can be an object in a tree and an action in a toolbar, so the tag
-          records which one it is and the count shows how far a category narrows the search.
+          Category is a claim about the icon&rsquo;s job rather than its drawing. The same shape can
+          be an object in a tree and an action in a toolbar, so the tag records which one it is.
         </Para>
         <RefTable
           columns={[
@@ -116,37 +113,30 @@ export default function IconsPage() {
         <Para>
           The tag is one line above the component, and it holds four things — the category, the
           concept the icon names, the product area it belongs to and the words someone might search
-          instead of the concept. The table above renders those four, which is why searching it
-          finds an icon by a word that appears nowhere in its name.
+          instead of the concept. The table above renders all four, which is why searching it finds
+          an icon by a word that appears nowhere in its name.
         </Para>
         {exampleTag ? <Command>{exampleTag}</Command> : null}
         <Para>
-          The last field is the one that makes the set searchable. It carries the words a person
-          would reach for when they do not know the Databricks name, which is the normal case for
-          anyone new to the platform. An icon with no synonyms is findable only by someone who
-          already knows what it is called.
+          The last field is the one that makes the set searchable. An icon with no synonyms is
+          findable only by someone who already knows what it is called.
         </Para>
         <Para>
           A row marked as not in the maps has a tag but no entry in{" "}
           <Code>classifications.ts</Code> or <Code>descriptions.ts</Code>. It is browsable here,
           because this page reads the tag, and invisible to <Code>dbui icon</Code>, because the CLI
-          reads the maps. Adding an icon means updating every surface that describes it, not just
-          the component. <Code>CONTRIBUTING.md</Code> lists them and names the ones that are behind.
+          reads the maps. <Code>CONTRIBUTING.md</Code> lists every surface an icon has to land on
+          and names the ones that are behind.
         </Para>
       </DocSection>
 
       <DocSection title="The same set, as data">
         <Para>
-          Everything the table above shows is generated from the tags at build time, so an agent can
-          read it without a browser. Search returns icons alongside components, shells and docs.
+          The table is generated from the tags at build time, so an agent reads the same set without
+          a browser. Guessing a name is how the wrong icon gets shipped, so search the concept, read
+          what comes back, then import the exact name.
         </Para>
         <Command>yarn dbui search &lt;concept&gt;</Command>
-        <Para>
-          <Code>dbui icon &lt;name&gt;</Code> prints one icon with its category, label, area,
-          synonyms and import path. <Code>dbui icon --category object</Code> lists a single
-          category. Both take <Code>--json</Code>. Guessing a name is how the wrong icon gets
-          shipped, so search the concept, read what comes back, then import the exact name.
-        </Para>
       </DocSection>
 
       <DocSection title="Typed nodes resolve through a map">
@@ -191,33 +181,17 @@ dataEntityIcons.streamingTable // "TableStream"`}
         <Para>
           Every icon takes a numeric <Code>size</Code> prop and renders a square at that size. The
           default is a literal in each icon component, and it matches the <Code>md</Code> step of the
-          icon scale. The{" "}
+          icon scale on the{" "}
           <Link href="/docs/tokens" className="text-text-accent">
             Tokens page
-          </Link>{" "}
-          shows the scale and explains why <Code>md</Code> is the size it is.
+          </Link>
+          .
         </Para>
         <Para>
-          The scale ships as CSS custom properties, but nothing consumes them yet. Components size
-          icons with Tailwind utilities instead, and the numeric default is not wired to the token.
-          Changing the sizing scalar therefore does not move an icon today. Treat the scale as the
-          set of sizes to choose from rather than as a live dial.
-        </Para>
-      </DocSection>
-
-      <DocSection title="The pack is a replaceable layer">
-        <Para>
-          Icons sit between tokens and components, and nothing below them depends on a particular
-          drawing. Each icon is imported from its own path rather than a barrel, and every component
-          that needs one imports it by name, so a different pack could be dropped in by supplying
-          the same names and the same metadata surfaces. That is the whole reason the layer is
-          separate.
-        </Para>
-        <Para>
-          Only the Databricks pack exists today. A second pack is listed as not started in{" "}
-          <Code>TRACKER.md</Code>, so the swap is a property of the structure rather than something
-          the system has done. Never install an icon package to fill a gap — the linter reports it,
-          and a mixed set is visible to a user immediately.
+          That scale ships as CSS custom properties, but nothing consumes them. Components size
+          icons with Tailwind utilities and the numeric default is not wired to the token, so
+          changing the sizing scalar does not move an icon. Treat the scale as the set of sizes to
+          choose from rather than as a live dial.
         </Para>
       </DocSection>
 
