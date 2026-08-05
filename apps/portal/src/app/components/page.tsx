@@ -16,15 +16,25 @@ const STORYBOOK_URL =
     ? "http://localhost:6006"
     : "/storybook/index.html"
 
-export default function ComponentsPage() {
+/**
+ * `?path=` is forwarded into the frame so a gallery tile on /docs/components can
+ * open one component. Storybook reads the same parameter, so the route needs to
+ * pass it through rather than translate it. Anything that is not a story id is
+ * dropped: the value lands in a frame URL.
+ */
+export default async function ComponentsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ path?: string }>
+}) {
+  const { path } = await searchParams
+  const story = /^\/story\/[a-z0-9-]+$/i.test(path ?? "") ? path : null
+  const src = story ? `${STORYBOOK_URL}/?path=${story}` : STORYBOOK_URL
+
   return (
     <div className="flex h-screen flex-col">
       <SiteHeader />
-      <iframe
-        src={STORYBOOK_URL}
-        title="DBUI components"
-        className="min-h-0 w-full flex-1 border-0"
-      />
+      <iframe src={src} title="DBUI components" className="min-h-0 w-full flex-1 border-0" />
     </div>
   )
 }

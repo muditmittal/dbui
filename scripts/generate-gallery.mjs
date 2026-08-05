@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generates the data behind the Components gallery.
+ * Generates the data behind the Components gallery on /docs/components.
  *
  * The gallery must never be a hand-maintained list — it is the public claim
  * about what the library contains, so it is derived from the same CLI API that
@@ -16,6 +16,23 @@ import { componentList } from "../packages/dbui-cli/src/api.mjs"
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const STORIES = path.join(ROOT, "apps/portal/src/stories")
 const OUT = path.join(STORIES, "components/gallery-data.ts")
+const INDEX_MD = path.join(ROOT, "packages/dbui/docs/component-index.md")
+
+/**
+ * The one-line descriptor shown above each category in the gallery, read from
+ * the "What it does" column of the index's Categories table. The index owns
+ * which component to pick, and a category descriptor is part of that, so the
+ * gallery renders the index's words rather than keeping its own copy.
+ */
+function categoryBlurbs() {
+  const md = fs.readFileSync(INDEX_MD, "utf8")
+  const blurbs = {}
+  for (const line of md.split("\n")) {
+    const m = line.match(/^\|\s*`([a-z]+)`\s*\|([^|]+)\|/)
+    if (m) blurbs[m[1]] = m[2].trim()
+  }
+  return blurbs
+}
 
 /** Storybook's own id algorithm, so generated links match the live index. */
 const sanitize = (s) =>
@@ -83,10 +100,12 @@ const ORDER = [
 
 const stories = indexStories()
 const { categories } = componentList().data
+const blurbs = categoryBlurbs()
 
 const groups = []
 let linked = 0
 let unlinked = 0
+const undescribed = []
 
 const seen = new Set()
 const emit = (key, label) => {
@@ -113,7 +132,9 @@ const emit = (key, label) => {
       }
     })
     .sort((a, b) => a.name.localeCompare(b.name))
-  if (entries.length) groups.push({ key, label, items: entries })
+  if (!entries.length) return
+  if (!blurbs[key]) undescribed.push(key)
+  groups.push({ key, label, blurb: blurbs[key] ?? "", items: entries })
 }
 
 for (const [key, label] of ORDER) emit(key, label)
@@ -136,6 +157,7 @@ export type GalleryItem = {
 export type GalleryGroup = {
   key: string
   label: string
+  blurb: string
   items: GalleryItem[]
 }
 
@@ -153,4 +175,7 @@ console.log(`  ${linked} linked to a story, ${unlinked} without one`)
 if (unlinked) {
   const missing = groups.flatMap((g) => g.items.filter((i) => !i.storyId).map((i) => i.name))
   console.log(`  missing stories: ${missing.join(", ")}`)
+}
+if (undescribed.length) {
+  console.log(`  no Categories row in component-index.md: ${undescribed.join(", ")}`)
 }

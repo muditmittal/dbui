@@ -11,6 +11,7 @@ export type GalleryItem = {
 export type GalleryGroup = {
   key: string
   label: string
+  blurb: string
   items: GalleryItem[]
 }
 
@@ -18,6 +19,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "action",
     "label": "Action",
+    "blurb": "Does something the moment it is clicked",
     "items": [
       {
         "name": "Button",
@@ -42,6 +44,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "input",
     "label": "Input",
+    "blurb": "Collects a value the screen reads later",
     "items": [
       {
         "name": "Checkbox",
@@ -96,6 +99,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "selection",
     "label": "Selection",
+    "blurb": "Picks one of a few choices that are already on screen",
     "items": [
       {
         "name": "Radio",
@@ -120,6 +124,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "menu",
     "label": "Menu",
+    "blurb": "Holds actions in a list that opens from a trigger",
     "items": [
       {
         "name": "Dropdown Menu",
@@ -132,6 +137,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "overlay",
     "label": "Overlay",
+    "blurb": "Puts content above the page and takes focus with it",
     "items": [
       {
         "name": "Alert Dialog",
@@ -180,6 +186,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "navigation",
     "label": "Navigation",
+    "blurb": "Moves the reader between views",
     "items": [
       {
         "name": "Breadcrumb",
@@ -216,6 +223,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "feedback",
     "label": "Feedback",
+    "blurb": "Reports what the system is doing or what just happened",
     "items": [
       {
         "name": "Alert",
@@ -264,6 +272,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "display",
     "label": "Display",
+    "blurb": "Shows data the screen already has",
     "items": [
       {
         "name": "Avatar",
@@ -306,6 +315,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "layout",
     "label": "Layout",
+    "blurb": "Arranges other components and carries no content of its own",
     "items": [
       {
         "name": "Accordion",
@@ -342,6 +352,7 @@ export const galleryGroups: GalleryGroup[] = [
   {
     "key": "chrome",
     "label": "Chrome",
+    "blurb": "Frames the page, so a screen takes it from a shell rather than building one",
     "items": [
       {
         "name": "Controls Bar",

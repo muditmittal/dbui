@@ -1,20 +1,22 @@
 import { Meta } from "@storybook/blocks"
-import { ComponentGallery } from "./components/ComponentGallery"
 
 {/*
-  A docs entry rather than a story: the gallery is a page, and Storybook hides
-  the controls panel on docs entries. The grid itself is generated from the CLI
-  by scripts/generate-gallery.mjs, so it cannot drift from the library.
+  Storybook's landing entry. It used to hold a second copy of the gallery grid;
+  the grid now lives once, on /docs/components, and this page exists only to say
+  where. A reader who lands here is looking for the catalog and would otherwise
+  hunt for it in the sidebar.
 */}
 
 <Meta title="Components/Components" />
 
-{/*
-  `sb-unstyled` opts out of Storybook's docs stylesheet. Without it the docs CSS
-  restyles the demos — buttons pick up link colors and the type switches to
-  Storybook's font — which would make the gallery misrepresent the components.
-*/}
-
 <div className="sb-unstyled">
-  <ComponentGallery />
+  <h1 className="type-title-1 text-text-strong">Components</h1>
+  <p className="type-paragraph mt-3 max-w-xl text-text-subtle">
+    One component at a time, with every variant and its controls. Pick one from the sidebar, or
+    browse the whole set as a grid in the{" "}
+    <a href="/docs/components" target="_top" className="text-text-accent">
+      component gallery
+    </a>
+    , where each tile links back here.
+  </p>
 </div>

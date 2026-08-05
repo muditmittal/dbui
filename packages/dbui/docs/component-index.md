@@ -27,16 +27,16 @@ File names are kebab-case; component exports are PascalCase. Some files export m
 
 | Category     | What it does                     | Examples                                                                                                   |
 | ------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `action`     | Triggers something on click      | Button, SplitButton                                                                                        |
-| `input`      | Captures user data               | Input, Textarea, Select, Combobox, Checkbox, Switch, Slider, DateRange                                     |
-| `selection`  | Pick from a small fixed set      | Tabs, SegmentControl, RadioGroup, RadioTile, ToggleGroup                                                   |
-| `menu`       | Floating list of actions/options | DropdownMenu, ContextMenu, Menubar                                                                         |
-| `overlay`    | Floats over the page             | Dialog, AlertDialog, Drawer, Popover, HoverCard, Tooltip, Sonner                                           |
-| `feedback`   | Communicates system state        | Alert, Badge, Status, Spinner, Skeleton, Progress, Empty                                                   |
-| `display`    | Presents data                    | Table, DataTree, Card, KeyValuePair, Avatar, Tag, Item, Chart, Kbd                                         |
-| `navigation` | Moves the user across views      | Navbar, Breadcrumb, Pagination, EditorTabs                                                                 |
-| `layout`     | Structures the surface           | Accordion, Collapsible, Resizable, ScrollArea, Separator, AspectRatio, Direction, Field, Label, InputGroup |
-| `chrome`     | Page/app-level scaffolding       | PageHeader, ControlsBar, PlatformHeader                                                                    |
+| `action`     | Does something the moment it is clicked | Button, SplitButton                                                                                 |
+| `input`      | Collects a value the screen reads later | Input, Textarea, Select, Combobox, Checkbox, Switch, Slider, DateRange                              |
+| `selection`  | Picks one of a few choices that are already on screen | Tabs, SegmentControl, RadioGroup, RadioTile, ToggleGroup                       |
+| `menu`       | Holds actions in a list that opens from a trigger | DropdownMenu, ContextMenu, Menubar                                                 |
+| `overlay`    | Puts content above the page and takes focus with it | Dialog, AlertDialog, Drawer, Popover, HoverCard, Tooltip, Sonner                 |
+| `feedback`   | Reports what the system is doing or what just happened | Alert, Badge, Status, Spinner, Skeleton, Progress, Empty                      |
+| `display`    | Shows data the screen already has | Table, DataTree, Card, KeyValuePair, Avatar, Tag, Item, Chart, Kbd                                        |
+| `navigation` | Moves the reader between views   | Navbar, Breadcrumb, Pagination, EditorTabs                                                                 |
+| `layout`     | Arranges other components and carries no content of its own | Accordion, Collapsible, Resizable, ScrollArea, Separator, AspectRatio, Direction, Field, Label, InputGroup |
+| `chrome`     | Frames the page, so a screen takes it from a shell rather than building one | PageHeader, ControlsBar, PlatformHeader                    |
 
 
 ---
