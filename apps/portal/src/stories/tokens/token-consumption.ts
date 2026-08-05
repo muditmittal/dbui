@@ -70,12 +70,8 @@ export const families: Family[] = [
         "refs": 1
       }
     ],
-    "portalRefs": 9,
+    "portalRefs": 5,
     "portalConsumers": [
-      {
-        "file": "apps/portal/src/stories/tokens/token-consumption.ts",
-        "refs": 4
-      },
       {
         "file": "apps/portal/src/app/globals.css",
         "refs": 2
@@ -109,12 +105,8 @@ export const families: Family[] = [
         "refs": 3
       }
     ],
-    "portalRefs": 11,
+    "portalRefs": 5,
     "portalConsumers": [
-      {
-        "file": "apps/portal/src/stories/tokens/token-consumption.ts",
-        "refs": 6
-      },
       {
         "file": "apps/portal/src/app/globals.css",
         "refs": 5
@@ -146,14 +138,10 @@ export const families: Family[] = [
     },
     "systemRefs": 0,
     "systemConsumers": [],
-    "portalRefs": 12,
+    "portalRefs": 6,
     "portalConsumers": [
       {
         "file": "apps/portal/src/app/globals.css",
-        "refs": 6
-      },
-      {
-        "file": "apps/portal/src/stories/tokens/token-consumption.ts",
         "refs": 6
       }
     ],
@@ -215,13 +203,8 @@ export const families: Family[] = [
     "bridge": null,
     "systemRefs": 0,
     "systemConsumers": [],
-    "portalRefs": 31,
-    "portalConsumers": [
-      {
-        "file": "apps/portal/src/stories/tokens/token-data.ts",
-        "refs": 31
-      }
-    ],
+    "portalRefs": 0,
+    "portalConsumers": [],
     "live": true
   }
 ]

@@ -51,7 +51,15 @@ const GENERATED = new Set([TOKENS_CSS, TYPE_CSS, "scripts/design-lint/tokens.jso
  * and `"text-base"` sitting in the semantics map reads as a Tailwind `text-base`
  * to any scanner that treats every quoted string as a class list.
  */
-const NOT_SOURCE = new Set(["packages/dbui/src/tokens/theme.config.mjs"])
+const NOT_SOURCE = new Set([
+  "packages/dbui/src/tokens/theme.config.mjs",
+  // This file's own output and its sibling. Both hold token values as string
+  // data, so scanning them counts the Tokens page's source data as a consumer
+  // of the tokens it describes — and this one would accumulate against itself
+  // on every run.
+  "apps/portal/src/stories/tokens/token-data.ts",
+  "apps/portal/src/stories/tokens/token-consumption.ts",
+])
 
 function walk(dir, out = []) {
   if (!fs.existsSync(dir)) return out
