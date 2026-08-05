@@ -1,5 +1,6 @@
 import * as React from "react"
 import Link from "next/link"
+import { Badge } from "dbui/components/ui/badge"
 
 import { Guidance } from "@/components/docs/Guidance"
 
@@ -72,6 +73,67 @@ export function PrincipleEntry({
       </div>
       <Guidance dos={[write]} donts={[avoid]} />
     </section>
+  )
+}
+
+/**
+ * The example is the only thing on this page written in the product's voice
+ * rather than about it, so it is set apart as a specimen. Sized to its content:
+ * a sample that stretches the full measure reads as a field to fill in.
+ */
+export function Specimen({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="type-body w-fit max-w-full rounded-sm bg-surface-inset px-2 py-1 text-text-base">
+      {children}
+    </span>
+  )
+}
+
+const TONE_VARIANT = {
+  Warm: "info",
+  Neutral: "outline",
+  Cautious: "warning",
+} as const
+
+export type Tone = keyof typeof TONE_VARIANT
+
+/**
+ * Tone, term, guidance and example were four columns and all four wrapped. The
+ * tone is the one field with a fixed vocabulary, so it goes to a badge in a
+ * fixed gutter — the same shape `Guidance` uses — and the rest stacks into one
+ * column that reads top to bottom.
+ */
+export function ToneEntry({
+  tone,
+  term,
+  guidance,
+  example,
+}: {
+  tone: Tone
+  term: string
+  guidance: string
+  example: string
+}) {
+  return (
+    <div className="flex items-start gap-4 px-4 py-3">
+      <span className="w-20 shrink-0 pt-0.5">
+        <Badge variant={TONE_VARIANT[tone]}>{tone}</Badge>
+      </span>
+      <div className="flex min-w-0 flex-col items-start gap-1.5">
+        <span className="type-label-bold text-text-strong">{term}</span>
+        <span className="type-body text-text-subtle">{guidance}</span>
+        <Specimen>{example}</Specimen>
+      </div>
+    </div>
+  )
+}
+
+/** The bordered, divided container the entry lists share with `Guidance`. */
+export function EntryList({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="divide-y divide-border-base overflow-hidden rounded-md border border-border-base">
+      {children}
+    </div>
   )
 }
 

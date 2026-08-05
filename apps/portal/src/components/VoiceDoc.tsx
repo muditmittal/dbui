@@ -1,5 +1,12 @@
 import { DocHeader, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
-import { AnchoredSection, JumpTo, PrincipleEntry } from "@/components/docs/VoiceKit"
+import {
+  AnchoredSection,
+  EntryList,
+  JumpTo,
+  PrincipleEntry,
+  ToneEntry,
+  type Tone,
+} from "@/components/docs/VoiceKit"
 
 /**
  * The rendered view of `packages/dbui/docs/brandvoice.md`. Every rule on this
@@ -53,72 +60,74 @@ const PRINCIPLES = [
   },
 ]
 
-const TONE_SCALE = [
+/** The `term` of a tone on the scale is the context it belongs to. */
+const TONE_SCALE: Array<{ tone: Tone; term: string; guidance: string; example: string }> = [
   {
     tone: "Warm",
-    context: "Empty states, onboarding, success toasts",
+    term: "Empty states, onboarding, success toasts",
     guidance: "Brief encouragement for first-run or success moments",
     example: "Create your first query to explore your data",
   },
   {
     tone: "Neutral",
-    context: "Nav labels, page titles, field labels",
+    term: "Nav labels, page titles, field labels",
     guidance: "The default instructive, matter-of-fact style",
     example: "Genie answers questions about your data",
   },
   {
     tone: "Cautious",
-    context: "Errors, delete confirmations, permission grants",
+    term: "Errors, delete confirmations, permission grants",
     guidance: "Firm and precise for destructive or security actions",
     example: "Deleting this catalog can't be undone",
   },
 ]
 
-const MOMENTS = [
+/** The `term` of a moment is the kind of string being written. */
+const MOMENTS: Array<{ tone: Tone; term: string; guidance: string; example: string }> = [
   {
-    moment: "Navigation label",
+    term: "Navigation label",
     tone: "Neutral",
     guidance: "Noun, 1–2 words, matches the destination exactly",
     example: "SQL warehouses",
   },
   {
-    moment: "Page title",
+    term: "Page title",
     tone: "Neutral",
     guidance: "Names the object or task, no end punctuation",
     example: "Create a metastore",
   },
   {
-    moment: "Button / CTA",
+    term: "Button / CTA",
     tone: "Neutral",
     guidance: "Verb plus object. Loading uses the present continuous",
     example: "Add data · Saving… · Delete",
   },
   {
-    moment: "Description",
+    term: "Description",
     tone: "Neutral",
     guidance: "Explains what and why in two sentences or fewer",
     example: "Genie answers questions about your data.",
   },
   {
-    moment: "Tooltip",
+    term: "Tooltip",
     tone: "Neutral",
     guidance: "Adds information not already in the label. No final period",
     example: "Serverless compute starts in seconds",
   },
   {
-    moment: "Empty state",
+    term: "Empty state",
     tone: "Warm",
     guidance: "Title of six words or fewer, one sentence for the next step",
     example: "No queries yet. Create a query to start.",
   },
   {
-    moment: "Error message",
+    term: "Error message",
     tone: "Cautious",
     guidance: "State what happened, why, and what to do next",
     example: "Couldn't run the query. Retry in a few seconds.",
   },
   {
-    moment: "Destructive action",
+    term: "Destructive action",
     tone: "Cautious",
     guidance: "State the exact irreversible consequence",
     example: "This can't be undone.",
@@ -266,27 +275,19 @@ export function VoiceDoc() {
           Voice is the constant personality of the product. Tone flexes with the user&rsquo;s
           context and the stakes involved.
         </Para>
-        <RefTable
-          columns={[
-            { key: "tone", header: "Tone", width: "w-[16%]" },
-            { key: "context", header: "Context", width: "w-[26%]" },
-            { key: "guidance", header: "Guidance" },
-            { key: "example", header: "Example" },
-          ]}
-          rows={TONE_SCALE}
-        />
+        <EntryList>
+          {TONE_SCALE.map((entry) => (
+            <ToneEntry key={entry.tone} {...entry} />
+          ))}
+        </EntryList>
       </AnchoredSection>
 
       <AnchoredSection id="tone-in-ui-context" title="Tone in UI context">
-        <RefTable
-          columns={[
-            { key: "moment", header: "Moment", width: "w-[22%]" },
-            { key: "tone", header: "Tone", width: "w-[13%]" },
-            { key: "guidance", header: "Guidance" },
-            { key: "example", header: "Example" },
-          ]}
-          rows={MOMENTS}
-        />
+        <EntryList>
+          {MOMENTS.map((entry) => (
+            <ToneEntry key={entry.term} {...entry} />
+          ))}
+        </EntryList>
       </AnchoredSection>
 
       <AnchoredSection id="casing-and-punctuation" title="Sentence casing and punctuation">
