@@ -25,6 +25,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/commit-mono/400.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/commit-mono/700.css" />
+        {/*
+          Applies the type scale before first paint, so a reader who chose 1.4x
+          never sees the page reflow from 1x. `?scale=` wins over the stored
+          value so a link can pin one multiplier for a screenshot or a review.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=new URLSearchParams(location.search).get("scale")||localStorage.getItem("dbui-type-scale");if(s==="1.2"||s==="1.4")document.documentElement.dataset.typeScale=s}catch(e){}})()`,
+          }}
+        />
       </head>
       <body className="bg-surface-base text-text-base antialiased">{children}</body>
     </html>
