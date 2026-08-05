@@ -150,6 +150,19 @@
 
 }
 
+/* Syntax highlighting for the docs code blocks.
+   Shiki emits both themes at once as custom properties and lets CSS pick, so one
+   payload serves both modes and switching costs no JavaScript. The colors are
+   DBUI primitives; the mapping lives in components/docs/syntax.ts. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
 @layer base {
   * {
     @apply border-border-base outline-focus-ring/50;

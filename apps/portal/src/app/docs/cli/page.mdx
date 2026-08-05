@@ -1,4 +1,5 @@
-import { DocPage, Lede, Section, P, C, Cmd, CodeBlock, DocTable, Note, Tag, Covers, ContentSummary } from "@/components/docs/DocKit"
+import { DocPage, Lede, Section, P, C, DocTable, Note, Tag, Covers, ContentSummary } from "@/components/docs/DocKit"
+import { Cmd, CodeBlock } from "@/components/docs/CodeBlock"
 
 <DocPage title="dbui CLI">
 
@@ -110,7 +111,7 @@ size: sm|md|icon-sm|icon-md`}</CodeBlock>
   can branch on it without matching prose.
 </P>
 
-<CodeBlock caption="yarn dbui component Buttn --json">{`{
+<CodeBlock caption="yarn dbui component Buttn --json" language="json">{`{
   "error": "No component named \\"Buttn\\"",
   "code": "ERR_UNKNOWN_COMPONENT",
   "suggestions": [{ "name": "Button", "reason": "similar name" }]

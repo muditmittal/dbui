@@ -7,6 +7,10 @@
  * directly. Node 22 ships a global WebSocket, so there is no dependency.
  *
  *   node scripts/shot.mjs <url> <out.png> [width] [fullPage]
+ *
+ * Flags: --dark            shoot dark mode
+ *        --band=<y>,<h>    capture one full-resolution slice of a tall page
+ *        --click=<sel>     click something before capturing
  */
 
 import { spawn } from "node:child_process";
@@ -117,6 +121,16 @@ try {
     const h = result.value ?? 0;
     if (h > 200 && h === last) break;
     last = h;
+  }
+
+  // `--dark` shoots dark mode. The portal has no theme switch — DBUI keys dark
+  // off a `dark` class, and every token is a CSS variable under it, so setting
+  // the class is the whole toggle and needs no reload.
+  if (process.argv.includes("--dark")) {
+    await send("Runtime.evaluate", {
+      expression: "document.documentElement.classList.add('dark')",
+    }, sessionId);
+    await sleep(400);
   }
 
   // A tall page is unreadable once scaled to fit, so `--band=<y>,<height>`

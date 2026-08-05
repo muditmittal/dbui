@@ -118,39 +118,10 @@ export function C({ children }: { children: React.ReactNode }) {
 }
 
 /**
- * Terminal block. Each entry is a command and an optional trailing note; the
- * note is dimmed so the command leads. Long lines scroll rather than wrap,
- * because a wrapped command is unreadable.
+ * `Cmd` and `CodeBlock` live in ./CodeBlock.tsx, not here. They are async server
+ * components so the syntax highlighter runs on the server and never reaches the
+ * browser, and this module is a client module because of the collapsible above.
  */
-export function Cmd({ lines }: { lines: Array<[string, string?]> }) {
-  return (
-    <div className="overflow-x-auto rounded-md border border-border-base bg-surface-inset px-4 py-3">
-      <pre style={RESET} className="w-max font-mono type-block text-text-base">
-        {lines.map(([cmd, note], i) => (
-          <div key={i}>
-            <span>{cmd}</span>
-            {note ? <span className="text-text-subtle">{`  # ${note}`}</span> : null}
-          </div>
-        ))}
-      </pre>
-    </div>
-  )
-}
-
-/**
- * A block of literal output or code. Unlike Cmd there is no comment column, and
- * lines are preserved exactly — this is what a caller actually receives.
- */
-export function CodeBlock({ children, caption }: { children: string; caption?: string }) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      {caption ? <span className="text-[12px] leading-[16px] text-text-subtle">{caption}</span> : null}
-      <div className="overflow-x-auto rounded-md border border-border-base bg-surface-inset px-4 py-3">
-        <pre style={RESET} className="w-max font-mono type-block text-text-base">{children}</pre>
-      </div>
-    </div>
-  )
-}
 
 /** A short list of what a page covers, shown directly under the lede. */
 export function Covers({ items }: { items: Array<[string, string]> }) {
