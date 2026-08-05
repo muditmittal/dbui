@@ -1,7 +1,5 @@
 import Link from "next/link"
 
-import { iconClassifications } from "@/components/icons/classifications"
-import { iconDescriptions } from "@/components/icons/descriptions"
 import {
   dataEntityIcons,
   fileEntityIcons,
@@ -19,37 +17,40 @@ import {
 } from "@/components/docs/Prose"
 import { CodeBlock } from "@/components/docs/CodeBlock"
 import { Guidance } from "@/components/docs/Guidance"
+import { icons, iconCategories } from "@/components/icon-data"
+
+import { IconBrowser } from "./IconBrowser"
 
 export const metadata = { title: "Icons — DBUI" }
 
 /**
- * Counted from `classifications.ts` rather than written down, because the two
- * numbers this page could have quoted disagree: the icon directory holds more
- * components than the metadata maps have keys, and `icon-index.md` reports the
- * map count as if it were the set. Rendering the map means the page cannot be
- * the one that is wrong.
+ * Everything countable on this page is counted from the generated data, which
+ * is read from the `use:` tag on each component. The page and the browser above
+ * it therefore cannot disagree, and neither can be the surface that is wrong.
  *
- * The gap itself is not restated here. `CONTRIBUTING.md` owns known drift and
- * names the icons that are missing an entry.
+ * The maps the CLI reads hold fewer icons than the directory does.
+ * `CONTRIBUTING.md` owns that gap and names the icons; the browser marks them.
  */
-const CATEGORY_ORDER = ["object", "action", "indicator", "component"] as const
-
-const CATEGORY_MEANING: Record<(typeof CATEGORY_ORDER)[number], string> = {
+const CATEGORY_MEANING: Record<(typeof iconCategories)[number], string> = {
   object: "Names a thing — a catalog, a job, a model. Belongs where an entity is being identified.",
   action: "Names a verb. Belongs where something happens on click.",
   indicator: "Names a state. Belongs where a status is being reported.",
   component: "Built into a control's own chrome, and used nowhere else.",
 }
 
-const tagged = CATEGORY_ORDER.map((category) => ({
+const tagged = iconCategories.map((category) => ({
   category: <Code>{category}</Code>,
   meaning: CATEGORY_MEANING[category],
-  count: Object.values(iconClassifications).filter((c) => c === category).length,
+  count: icons.filter((icon) => icon.category === category).length,
 }))
 
-/** The tag on a real icon, so the shape below is not a paraphrase of one. */
-const EXAMPLE = "Catalog"
-const exampleTag = `/** use:${iconClassifications[EXAMPLE]} ${iconDescriptions[EXAMPLE]} */`
+/** The tag on a real icon, rebuilt from its record, so the shape is not a paraphrase. */
+const EXAMPLE = icons.find((icon) => icon.name === "Catalog")
+const exampleTag = EXAMPLE
+  ? `/** use:${EXAMPLE.category} ${[EXAMPLE.label, EXAMPLE.area, EXAMPLE.synonyms?.join(", ")]
+      .filter(Boolean)
+      .join(" | ")} */`
+  : null
 
 /**
  * Two columns of `type → Icon`. A table would be taller than the content
@@ -77,18 +78,12 @@ export default function IconsPage() {
   return (
     <>
       <DocHeader title="Icons">
-        One set, tagged by concept, so the right icon can be found without knowing its name. The
-        searchable grid lives in Storybook. This page covers the rules a grid cannot express.
+        One set, tagged by concept, so the right icon can be found without knowing its name. Switch
+        category or search the table below on the name, the concept or the words someone would reach
+        for instead.
       </DocHeader>
 
-      <div className="mt-8">
-        <SourceNote>
-          <Code>packages/dbui/docs/icon-index.md</Code> decides which icon to pick, and it is the
-          only file that does. The metadata behind it lives on each icon component as a{" "}
-          <Code>use:</Code> tag, mirrored into <Code>classifications.ts</Code> and{" "}
-          <Code>descriptions.ts</Code>. When a tag and the index disagree, the tag wins.
-        </SourceNote>
-      </div>
+      <IconBrowser />
 
       <DocSection title="Four categories">
         <Para>
@@ -112,44 +107,45 @@ export default function IconsPage() {
       </DocSection>
 
       <DocSection title="Every icon carries its own metadata">
+        <SourceNote>
+          <Code>packages/dbui/docs/icon-index.md</Code> decides which icon to pick, and it is the
+          only file that does. The metadata behind it lives on each icon component as a{" "}
+          <Code>use:</Code> tag, mirrored into <Code>classifications.ts</Code> and{" "}
+          <Code>descriptions.ts</Code>. When a tag and the index disagree, the tag wins.
+        </SourceNote>
         <Para>
           The tag is one line above the component, and it holds four things — the category, the
           concept the icon names, the product area it belongs to and the words someone might search
-          instead of the concept.
+          instead of the concept. The table above renders those four, which is why searching it
+          finds an icon by a word that appears nowhere in its name.
         </Para>
-        <Command>{exampleTag}</Command>
+        {exampleTag ? <Command>{exampleTag}</Command> : null}
         <Para>
-          The third field is the one that makes the set searchable. It carries the words a person
+          The last field is the one that makes the set searchable. It carries the words a person
           would reach for when they do not know the Databricks name, which is the normal case for
           anyone new to the platform. An icon with no synonyms is findable only by someone who
           already knows what it is called.
         </Para>
         <Para>
-          Adding an icon means updating every surface that describes it, not just the component.{" "}
-          <Code>CONTRIBUTING.md</Code> lists them, and it also names the icons that are currently
-          missing an entry. Those are unreachable by search until the entry is added.
+          A row marked as not in the maps has a tag but no entry in{" "}
+          <Code>classifications.ts</Code> or <Code>descriptions.ts</Code>. It is browsable here,
+          because this page reads the tag, and invisible to <Code>dbui icon</Code>, because the CLI
+          reads the maps. Adding an icon means updating every surface that describes it, not just
+          the component. <Code>CONTRIBUTING.md</Code> lists them and names the ones that are behind.
         </Para>
       </DocSection>
 
-      <DocSection title="Search by concept, not by name">
+      <DocSection title="The same set, as data">
         <Para>
-          Guessing an icon name is how the wrong icon gets shipped. Search the concept, read what
-          comes back, then import the exact name.
+          Everything the table above shows is generated from the tags at build time, so an agent can
+          read it without a browser. Search returns icons alongside components, shells and docs.
         </Para>
         <Command>yarn dbui search &lt;concept&gt;</Command>
         <Para>
           <Code>dbui icon &lt;name&gt;</Code> prints one icon with its category, label, area,
           synonyms and import path. <Code>dbui icon --category object</Code> lists a single
-          category. Both take <Code>--json</Code>.
-        </Para>
-        <Para>
-          For browsing rather than looking up, the{" "}
-          <Link href="/components" className="text-text-accent">
-            component gallery
-          </Link>{" "}
-          has an Icons page with a live grid that filters on name, label, area and synonyms together
-          and copies the import on click. Use it to choose between two candidates you have already
-          narrowed to.
+          category. Both take <Code>--json</Code>. Guessing a name is how the wrong icon gets
+          shipped, so search the concept, read what comes back, then import the exact name.
         </Para>
       </DocSection>
 
