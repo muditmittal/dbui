@@ -214,4 +214,179 @@ export const PATTERNS: Pattern[] = [
       "Keep rows selected after a filter change removes them from view",
     ],
   },
+  {
+    id: "progressive-disclosure",
+    name: "Progressive disclosure",
+    group: "Finding your way in",
+    intent:
+      "A catalog object carries forty attributes and three of them matter right now. Disclosure is choosing the three. What actually goes wrong is rarely that too much is hidden — it is that the reader loses their place when a region opens, or that the same kind of depth sits behind a chevron here, a drawer there and a dialog somewhere else, so nothing can be learned once.",
+    use: [
+      "A minority of readers need a detail that would cost every reader a scan",
+      "The detail belongs to the object in view, and leaving the object would break the task",
+      "One surface has to serve both a scan and an inspection",
+    ],
+    avoid: [
+      "Everyone needs it. That is not disclosure, that is a layout problem",
+      "Opening it hides what it was opened from — that is a page, not a disclosure",
+      "The content is a list of actions — use `DropdownMenu`",
+      "The field is required. A requirement is never hidden",
+    ],
+    anatomy: [
+      { component: "Collapsible", role: "One region, opening in place, siblings still visible" },
+      { component: "Accordion", role: "A set of sibling regions where one open at a time is enough" },
+      { component: "Drawer", role: "Detail for a selected row, beside the list rather than over it" },
+      { component: "Dialog", role: "A focused task that has to finish before the reader goes back" },
+      { component: "Popover", role: "A small interactive detail anchored to its trigger" },
+      { component: "HoverCard", role: "Read-only preview. Nothing inside it is clickable" },
+      { component: "Tooltip", role: "One line, on an icon-only trigger" },
+      { component: "DataTree", role: "Hierarchy, where expanding is the navigation" },
+    ],
+    behavior: [
+      {
+        moment: "Trigger at rest",
+        does: "A chevron and a label naming what is inside",
+        invariant: "The label says what the region holds. Never “more” or “details”",
+      },
+      {
+        moment: "Region opens",
+        does: "Content expands in place below the trigger",
+        invariant: "The trigger does not move and nothing above it reflows. The reader keeps their anchor",
+      },
+      {
+        moment: "Content is still loading when the region opens",
+        does: "The region opens at once and holds a `Skeleton`",
+        invariant: "Opening never waits on a fetch. Opening is instant, filling is not",
+      },
+      {
+        moment: "Content fails to load",
+        does: "`Alert` inside the open region, with a retry",
+        invariant: "The region stays open. Collapsing on failure hides the only explanation",
+      },
+      {
+        moment: "The reader leaves the surface and returns",
+        does: "The region is in the state they left it",
+        invariant: "Open and closed is state worth keeping, and it belongs with the filters and the scroll",
+      },
+      {
+        moment: "A search matches text inside a closed region",
+        does: "The region opens and the match is marked",
+        invariant: "Never count a match the reader cannot see",
+      },
+      {
+        moment: "A field inside a closed region fails validation",
+        does: "The region opens and stays open, focus moves to the field",
+        invariant: "A form never reports an error the reader has to go hunting for",
+      },
+      {
+        moment: "A drawer opens for a row",
+        does: "The list stays visible and the row is marked as selected",
+        invariant: "The drawer and the selected row are one fact shown twice, so closing one clears the other",
+      },
+    ],
+    gap: "No disclosure primitive owns its own asynchronous content. Each takes children and knows nothing about loading, so the skeleton-on-open behavior above is written per surface. Open state is local to the component, so persisting it across a navigation is also per surface. `Collapsible` is documented only as an inner primitive of `Accordion` and carries no rules of its own.",
+    dos: [
+      "Name the contents in the trigger, so a closed region is still legible",
+      "Open the region first and fill it second, with a skeleton in between",
+      "Open a region automatically when it holds a search match or a validation error",
+      "Pick one affordance per kind of depth and hold it across every surface",
+    ],
+    donts: [
+      "Hide a required field, a destructive consequence or an error behind a disclosure",
+      "Nest an accordion inside an accordion",
+      "Use a chevron to trigger a menu. The kebab is the menu affordance",
+      "Move the trigger, or the content above it, when the region opens",
+    ],
+  },
+  {
+    id: "bulk-selection",
+    name: "Bulk selection",
+    group: "Acting at scale",
+    intent:
+      "The moment a table grows a checkbox column, every action on the page acquires a second meaning: does this apply to the row under my cursor or to the 812 rows I selected three filters ago. Bulk selection is almost entirely a scope problem. Selecting is trivial. Knowing what is selected — across a page boundary, across a filter change, after nine of forty operations failed — is the pattern.",
+    use: [
+      "The same action gets applied to many objects and doing it one at a time is the actual complaint",
+      "The set can be described in words: this page, this filter, every match",
+      "The result of the action is inspectable afterwards",
+    ],
+    avoid: [
+      "The action is only ever taken on one object — put it in a row-level `DropdownMenu`",
+      "The collection is small enough to act on directly",
+      "The action cannot be previewed or reversed. Keep it single-object until one of those is true",
+    ],
+    anatomy: [
+      { component: "Checkbox", role: "One per row, plus a header checkbox that goes indeterminate" },
+      { component: "Table", role: "The rows. Selection state is held by the surface, not the component" },
+      { component: "ControlsBar", role: "Where the selection summary and the bulk actions sit" },
+      { component: "Badge", role: "The count, and the scope word next to it" },
+      { component: "SplitButton", role: "A primary bulk action with its related alternatives" },
+      { component: "Pagination", role: "The boundary the selection has to survive, or explicitly not" },
+      { component: "AlertDialog", role: "Required as soon as the bulk action is destructive" },
+      { component: "Sonner", role: "The result, including the partial one" },
+    ],
+    behavior: [
+      {
+        moment: "Nothing selected",
+        does: "No bulk region. Row actions behave as usual",
+        invariant: "The surface still has exactly one primary action, and it is not a bulk one",
+      },
+      {
+        moment: "First row selected",
+        does: "The bulk region appears with a count, a scope word and the actions",
+        invariant: "Its appearance does not reflow the table. Reserve the space or overlay it",
+      },
+      {
+        moment: "Header checkbox clicked",
+        does: "Every row on the current page is selected",
+        invariant: "“All” means this page unless the interface says otherwise in words, right next to the count",
+      },
+      {
+        moment: "Some rows selected, not all",
+        does: "The header checkbox goes indeterminate",
+        invariant: "Indeterminate means partial selection and nothing else. Never loading, never unknown",
+      },
+      {
+        moment: "A full page is selected and more pages match",
+        does: "A separate control offers to select every matching object, naming the number",
+        invariant: "Crossing the page boundary is a decision the reader makes, never a consequence of one click",
+      },
+      {
+        moment: "The reader pages forward with a selection held",
+        does: "The count persists and states how many selected rows are off-screen",
+        invariant: "A number the reader cannot see is still a number they are accountable for",
+      },
+      {
+        moment: "A filter changes under a live selection",
+        does: "Rows that no longer match leave the selection and the count drops visibly",
+        invariant: "The count never covers rows the reader can no longer open and inspect",
+      },
+      {
+        moment: "The bulk action runs",
+        does: "Affected rows take a pending state in place and the selection is held",
+        invariant: "The table is not blanked, not reordered and not blocked while the work runs",
+      },
+      {
+        moment: "Some succeed and some fail",
+        does: "Successes leave the selection, failures stay selected and carry a per-row reason",
+        invariant: "Retry acts only on what failed. A partial failure never re-runs a success",
+      },
+      {
+        moment: "Everything succeeds",
+        does: "Selection clears and `Sonner` reports the count",
+        invariant: "The number in the toast matches the number in the confirmation that preceded it",
+      },
+    ],
+    gap: "`Table` has no selection API. The checkbox column, the header's indeterminate state, persistence across pages and select-all-matching are composed by hand on every surface that needs them. There is no bulk action bar either — `ControlsBar` is the right home but has no selection variant, so the count, the scope word, the clear control and the actions are laid out from scratch each time.",
+    dos: [
+      "Put the scope in words beside the count: this page, this filter, or every matching object",
+      "Make crossing the page boundary its own control, with the real number in the label",
+      "Keep failed rows selected after a partial failure, so retry is the obvious next click",
+      "Keep a clear-selection control reachable from every page, including the ones with no selected rows on them",
+    ],
+    donts: [
+      "Let a filter change the selected set without changing the visible count",
+      "Reuse the indeterminate checkbox to mean anything other than partial selection",
+      "Blank, reorder or re-sort the table while a bulk action is running",
+      "Report a bulk result as success when part of it failed",
+    ],
+  },
 ]
