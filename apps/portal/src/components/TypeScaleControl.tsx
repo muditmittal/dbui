@@ -20,23 +20,27 @@ import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-c
 const SCALES = ["1", "1.2", "1.4"] as const
 type Scale = (typeof SCALES)[number]
 
+/** The multiplier the docs read at, and the one the attribute never spells out. */
+const DEFAULT_SCALE: Scale = "1.2"
+
 export const TYPE_SCALE_KEY = "dbui-type-scale"
 
 const isScale = (v: string | undefined): v is Scale => SCALES.includes(v as Scale)
 
 export function TypeScaleControl() {
-  const [scale, setScale] = React.useState<Scale>("1")
+  const [scale, setScale] = React.useState<Scale>(DEFAULT_SCALE)
 
   React.useEffect(() => {
     const current = document.documentElement.dataset.typeScale
-    if (isScale(current)) setScale(current)
+    setScale(isScale(current) ? current : DEFAULT_SCALE)
   }, [])
 
   const apply = React.useCallback((next: Scale) => {
     setScale(next)
     const root = document.documentElement
-    // 1x is the absence of the attribute, so the default page has no state.
-    if (next === "1") delete root.dataset.typeScale
+    // The default is the absence of the attribute, so the default page has no
+    // state and nothing has to be undone to get back to it.
+    if (next === DEFAULT_SCALE) delete root.dataset.typeScale
     else root.dataset.typeScale = next
     try {
       localStorage.setItem(TYPE_SCALE_KEY, next)

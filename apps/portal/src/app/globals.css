@@ -166,7 +166,7 @@
   color: var(--shiki-dark);
 }
 
-/* ─── Type scale experiment ───
+/* ─── Type scale ───
  * Three multipliers over the shipped ramp, switched from the docs rail.
  *
  * The dial is the root font size rather than `--db-type-scalar` because the
@@ -177,10 +177,20 @@
  *
  * Percentages rather than px so this composes with a reader who has raised
  * their browser's default font size instead of overriding them.
+ *
+ * The docs read at 1.2x. That is the bare `html` rule, so the default page
+ * carries no state and the attribute only ever appears when a reader has
+ * chosen otherwise. 1x and 1.4x stay one click away in the rail.
  */
 /* Unlayered on purpose. Tailwind's own rules live in @layer base, and an
    unlayered rule beats every layered one, so this cannot be undone by a
    preflight reset that happens to be emitted later. */
+html {
+  font-size: 120%;
+}
+html[data-type-scale="1"] {
+  font-size: 100%;
+}
 html[data-type-scale="1.2"] {
   font-size: 120%;
 }
