@@ -22,7 +22,10 @@ function Tag({
     <div
       data-slot="tag"
       className={cn(
-        "inline-flex items-center gap-1 rounded-sm bg-surface-subtle px-1 py-0 text-[13px] leading-[20px] font-normal text-text-base",
+        // h-5 rather than leaning on the line box: the divider in TagValue is
+        // h-5, so a chip sized by its leading would be overflowed by its own
+        // divider the moment the label line box stopped being 20px.
+        "inline-flex h-5 items-center gap-1 rounded-sm bg-surface-subtle px-1 py-0 type-label text-text-base",
         "[&_svg:not([class*='size-'])]:size-3",
         className
       )}

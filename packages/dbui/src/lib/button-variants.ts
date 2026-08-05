@@ -27,7 +27,7 @@ export const buttonVariants = cva(
   [
     "group/button inline-flex shrink-0 items-center justify-center",
     "rounded-sm border",
-    "text-[13px] leading-[20px] font-normal whitespace-nowrap",
+    "type-label whitespace-nowrap",
     "transition-all outline-none select-none",
     "disabled:pointer-events-none",
     "aria-invalid:border-action-negative-base aria-invalid:ring-2 aria-invalid:ring-action-negative-base/20",

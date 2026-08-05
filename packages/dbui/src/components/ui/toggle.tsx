@@ -29,7 +29,7 @@ const toggleVariants = cva(
   [
     "group/toggle inline-flex items-center justify-center gap-1",
     "rounded-sm border",
-    "text-[13px] leading-[20px] font-normal whitespace-nowrap",
+    "type-label whitespace-nowrap",
     "transition-all outline-none select-none",
     "text-text-base",
     "hover:bg-action-default-hover",

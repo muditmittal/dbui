@@ -137,7 +137,7 @@ function SegmentControlItem({
       onPressedChange={onPressedChange}
       className={cn(
         "relative flex-1 inline-flex items-center justify-center gap-1",
-        "text-[13px] leading-[20px] font-normal whitespace-nowrap",
+        "type-label whitespace-nowrap",
         "transition-colors outline-none select-none",
         "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:z-20",
         "disabled:pointer-events-none disabled:text-text-disabled",
