@@ -26,6 +26,18 @@ export default function DocsOverview() {
         the same source arrive at the same UI.
       </p>
 
+      <Link
+        href="/docs/principles"
+        className="mt-8 flex flex-col gap-1 rounded-md border border-border-base bg-surface-base p-5 no-underline transition-colors hover:border-border-strong hover:bg-surface-hover"
+      >
+        <span className="type-eyebrow text-text-subtle">Start here</span>
+        <span className="type-title-4 text-text-strong">Design principles</span>
+        <span className="type-body text-text-subtle">
+          Six principles that decide how the interface looks, speaks and behaves — each naming
+          something that loses.
+        </span>
+      </Link>
+
       <h2 className="type-title-3 mt-12 text-text-strong">What ships</h2>
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[

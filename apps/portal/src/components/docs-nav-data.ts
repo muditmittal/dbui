@@ -8,7 +8,10 @@
 export const DOCS_NAV = [
   {
     title: "Start",
-    items: [{ href: "/docs", label: "Overview" }],
+    items: [
+      { href: "/docs", label: "Overview" },
+      { href: "/docs/principles", label: "Design principles" },
+    ],
   },
   {
     title: "Foundations",
