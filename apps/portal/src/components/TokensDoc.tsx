@@ -102,25 +102,25 @@ const GOVERNS: Record<string, React.ReactNode> = {
     </>
   ),
   "--shadow-*": <>Every shadow that ships. Elevation is not in this path.</>,
-  "ring and outline width": <>Focus treatments. The widths are baked into the utility.</>,
+  "--shadow-focus": (
+    <>
+      The focus ring. Built from two color tokens in <Code>globals.css</Code>, so its widths are the
+      one dimensional value authored outside <Code>theme.config.mjs</Code>.
+    </>
+  ),
+  "ring and outline width": <>The rest of the focus treatment. Widths are baked into the utility.</>,
   "--animate-*": (
     <>
-      Spinners and enter and exit transitions, from Tailwind and from{" "}
-      <Code>tw-animate-css</Code>.
+      Spinners and enter and exit transitions, from Tailwind and from <Code>tw-animate-css</Code>.
     </>
   ),
   "z-index scale": <>Stacking order. Tailwind bakes the steps, so no token can govern it.</>,
   "--default-transition-duration": <>What a bare <Code>transition-*</Code> takes. Not the motion tokens.</>,
-  "--default-transition-timing-function": (
-    <>
-      The curve a bare <Code>transition-*</Code> runs on, and what <Code>duration-*</Code> and{" "}
-      <Code>ease-*</Code> pick from.
-    </>
-  ),
-  "--font-weight-*": <>Weight applied outside the ramp. Every one of these is a type class that was not used.</>,
+  "duration-* and ease-*": <>Explicit overrides. Bare numbers, so neither Tailwind nor DBUI owns the value.</>,
+  "--font-weight-*": <>Weight outside the ramp. Each one is a type class that was not used.</>,
   "--breakpoint-*": <>The <Code>sm:</Code> and <Code>md:</Code> variants. Barely load-bearing.</>,
   "--container-*": <>Named max widths on popovers and panels.</>,
-  "--leading-*": <>Leading applied outside the ramp, which the ramp already carries.</>,
+  "--leading-*": <>Leading outside the ramp, which the ramp already carries.</>,
   "--blur-*": <>Backdrop blur on scrims.</>,
   "--text-*": <>Font size outside the ramp.</>,
   "--tracking-*": <>Tracking outside the ramp.</>,
@@ -347,9 +347,8 @@ export function TokensDoc() {
     <>
       <h1 className="type-title-1 text-text-strong">Tokens</h1>
       <p className="type-paragraph mt-4 text-text-subtle">
-        <Code>theme.config.mjs</Code> is the one authored file. It generates the CSS variables, the
-        type ramp and the linter&rsquo;s allowlist together — but it does not generate everything
-        that affects rendering, and the wiring table is the honest account of which parts it reaches.
+        <Code>theme.config.mjs</Code> is the one authored file, and it does not generate everything
+        that affects rendering. Wiring is the account of what it reaches.
       </p>
 
       <nav aria-label="Token families" className="mt-6 flex flex-wrap gap-2">
@@ -363,22 +362,16 @@ export function TokensDoc() {
       <Section
         id="wiring"
         title="Wiring"
-        scope={
-          <>
-            Whether a line of code resolves to a family. Measured against the repo rather than
-            declared, so a token that ships and is read by nothing says so here.
-          </>
-        }
+        scope="Whether a line of code resolves to a family, measured against the repo rather than declared."
         cautions={[
           <>
             {unconsumed.length} families are read by nothing:{" "}
-            {unconsumed.map((f) => f.label.toLowerCase()).join(", ")}. They are correct values with
-            no consumers, so changing one changes nothing on screen.
+            {unconsumed.map((f) => f.label.toLowerCase()).join(", ")}. Changing one changes nothing
+            on screen.
           </>,
           <>
-            An unconsumed family is still safe to reach for through{" "}
-            <Code>var(--db-*)</Code>. It just will not agree with the Tailwind utility beside it once
-            a scalar leaves 1.
+            An unconsumed family is still safe through <Code>var(--db-*)</Code>. It just will not
+            agree with the Tailwind utility beside it once a scalar leaves 1.
           </>,
         ]}
       >
@@ -390,16 +383,16 @@ export function TokensDoc() {
         title="What comes from Tailwind"
         scope={
           <>
-            The theme namespaces the shipped components depend on, with whose value is in force.
-            Tailwind {tailwindVersion} is a source of truth here alongside{" "}
-            <Code>theme.config.mjs</Code>, and these are the concepts a rule could name.
+            Tailwind {tailwindVersion} is a source of truth alongside <Code>theme.config.mjs</Code>.
+            These are the namespaces the shipped components depend on, so these are the concepts a
+            rule can name.
           </>
         }
         cautions={[
           <>
             <Code>--spacing</Code> is rem-based, which is the only reason the system rescales under a
-            root font-size change. That is the right behavior arriving from Tailwind rather than from
-            the space tokens.
+            root font-size change. The right behavior, arriving from Tailwind rather than from the
+            space tokens.
           </>,
           <>
             <Code>--radius-*</Code> is mapped in {radiusFiles.length} files and only{" "}
@@ -420,7 +413,7 @@ export function TokensDoc() {
       <Section
         id="anatomy"
         title="How a name is built"
-        scope="A name answers three questions in order, so reading it left to right tells you what a token is for without opening its value."
+        scope="A name answers three questions in order, so reading it left to right tells you what a token is for."
         cautions={[
           <>
             The same name reaches code two ways — <Code>bg-surface-base</Code> and{" "}
@@ -442,10 +435,7 @@ export function TokensDoc() {
             <Code>border-*</Code> is decorative. Form controls take <Code>input-border-*</Code>,
             which is darker so a field reads as editable.
           </>,
-          <>
-            Primitives do not ship as CSS, so the palette cannot be reached from product code by
-            construction. The linter rejects one if you name it anyway.
-          </>,
+          <>Primitives do not ship as CSS, so the palette cannot be named from product code.</>,
           <>
             <Code>surface-hover</Code> is lighter than <Code>action-default-hover</Code> on purpose.
             The same alpha reads as a tint on a button and as a fill across a card.
@@ -465,12 +455,11 @@ export function TokensDoc() {
         id="type"
         title="Type"
         live={isLive("type")}
-        scope="Family, size, leading, tracking, weight and case, as one class. Not color and not alignment — those stay separate so a step can be reused on any surface."
+        scope="Family, size, leading, tracking, weight and case, as one class. Not color and not alignment."
         cautions={[
           <>
-            <Code>label</Code> and <Code>body</Code> are the same size and differ only in leading. A
-            label is single-line by definition, so its line box matches the icon box. Using it for
-            text that wraps looks correct until a second line appears.
+            <Code>label</Code> and <Code>body</Code> are the same size and differ only in leading.
+            Using <Code>label</Code> for text that wraps looks correct until a second line appears.
           </>,
           <>
             Never pair a <Code>type-</Code> class with <Code>leading-</Code>, <Code>font-</Code> or{" "}
@@ -480,7 +469,6 @@ export function TokensDoc() {
             Numbers in a table take <Code>numeric</Code> on the cell. Tabular figures need right
             alignment too, which no type style can express.
           </>,
-          <><Code>type-</Code> not <Code>text-</Code>, because <Code>text-</Code> already means color.</>,
         ]}
       >
         <TypeScale steps={typeSteps} use={TYPE_USE} />
@@ -490,15 +478,12 @@ export function TokensDoc() {
         id="space"
         title="Space"
         live={isLive("space")}
-        scope="Would govern gaps and padding. Governs nothing today — components spend Tailwind's scale, and these tokens sit beside it unread."
+        scope="Would govern gaps and padding. Governs nothing today — components spend Tailwind's scale instead."
         cautions={[
+          <>Coarse above the half step on purpose. A scale with every increment makes any value look defensible.</>,
           <>
-            Deliberately coarse above the half step. A scale with every increment lets any value look
-            defensible, which is what makes spacing inconsistent.
-          </>,
-          <>
-            <Code>inline-*</Code> is em-relative, so it tracks the text it sits beside rather than the
-            grid. It is the only part of this family that has no Tailwind equivalent.
+            <Code>inline-*</Code> is em-relative, so it tracks the text beside it rather than the
+            grid. The only part of this family with no Tailwind equivalent.
           </>,
         ]}
       >
@@ -513,12 +498,7 @@ export function TokensDoc() {
         cautions={[
           <>
             <Code>rounded-3xl</Code> is the pill, not a step above 2xl. <Code>rounded-xs</Code> and{" "}
-            <Code>rounded-4xl</Code> are Tailwind&rsquo;s own and are not on this scale at all.
-          </>,
-          <>
-            Radius ships in rem with the rest of the spatial families. A px corner on a control whose
-            height is in rem changes the control&rsquo;s shape rather than its size when the root
-            moves.
+            <Code>rounded-4xl</Code> are Tailwind&rsquo;s and are not on this scale at all.
           </>,
         ]}
       >
@@ -546,12 +526,7 @@ export function TokensDoc() {
         title="Border"
         live={isLive("border")}
         scope="Hairline weights. Read by nothing — components write Tailwind's border and ring widths."
-        cautions={[
-          <>
-            The only family that stays in px while everything spatial ships in rem. A hairline is a
-            rendering fact, so scaling it blurs it across a subpixel boundary.
-          </>,
-        ]}
+        cautions={[<>The only family in px rather than rem. A scaled hairline blurs.</>]}
       >
         <BorderScale tokens={borderWidth} />
       </Section>
@@ -562,13 +537,10 @@ export function TokensDoc() {
         live={isLive("elevation")}
         scope="Shadows for surfaces that float. Read by nothing in the shipped components — they use Tailwind's shadow-* instead."
         cautions={[
+          <>Counts down. When two surfaces overlap, the one on top takes the lower number.</>,
           <>
-            Counts down. 1 is the highest surface, 3 the softest, 0 flat. When two surfaces overlap,
-            the one on top takes the lower number.
-          </>,
-          <>
-            Tailwind&rsquo;s <Code>shadow-lg</Code> is not <Code>elevation-1</Code>. The two scales
-            have different values and opposite directions.
+            Tailwind&rsquo;s <Code>shadow-lg</Code> is not <Code>elevation-1</Code> — different
+            values, opposite directions.
           </>,
         ]}
       >
@@ -582,12 +554,8 @@ export function TokensDoc() {
         scope="Two duration bands and one easing curve. Read by nothing — a bare transition-* takes Tailwind's default duration and curve."
         cautions={[
           <>
-            One curve is a deliberate economy. A second would give nobody a way to choose between
-            them.
-          </>,
-          <>
-            There is no slow band. Anything approaching a second reads as the product being slow
-            rather than as polish.
+            There is no slow band on purpose. Anything approaching a second reads as the product
+            being slow rather than as polish.
           </>,
         ]}
       >
@@ -600,17 +568,16 @@ export function TokensDoc() {
       <Section
         id="scalars"
         title="Scalars"
-        scope="Dials that re-tune a whole family from one number. Each row carries what it multiplies, because a dial attached to an unread family does nothing."
+        scope="Dials that re-tune a whole family from one number, each shown with what it multiplies."
         cautions={[
           <>
-            {scalarConsumption.filter((s) => !s.live).length} of the{" "}
-            {scalarConsumption.length} dials turn nothing today. They multiply space and size, and
-            neither family is read.
+            {scalarConsumption.filter((s) => !s.live).length} of the {scalarConsumption.length} turn
+            nothing today. They multiply space and size, and neither family is read.
           </>,
           <>
-            The docs rail moves the root font size, not <Code>--db-type-scalar</Code>. The root is the
-            one input that moves type, radius and Tailwind&rsquo;s rem utilities together. The type
-            scalar moves the ramp alone, which grows text inside boxes that stay put.
+            For a roomier page, move the root font size rather than <Code>--db-type-scalar</Code>. The
+            root moves type, radius and Tailwind&rsquo;s rem utilities together. The type scalar grows
+            text inside boxes that stay put.
           </>,
         ]}
       >
@@ -620,7 +587,7 @@ export function TokensDoc() {
       <Section
         id="tools"
         title="Tools"
-        scope="Nothing here has to be read off this page. The same values print from a terminal and answer over MCP, and the linter checks a file against them."
+        scope="Nothing here has to be read off this page."
       >
         <div className="flex flex-col gap-3">
           <h3 className="type-title-4 text-text-strong">From a terminal</h3>
@@ -637,7 +604,7 @@ export function TokensDoc() {
           <h3 className="type-title-4 text-text-strong">From an agent</h3>
           <p className="type-body text-text-subtle">
             The MCP server delegates to the same module the CLI uses, so the two cannot disagree
-            about a value. The skills are procedures an agent loads on trigger.
+            about a value.
           </p>
           <RefTable
             columns={[

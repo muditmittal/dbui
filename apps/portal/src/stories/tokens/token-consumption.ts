@@ -21,6 +21,9 @@ export type TailwindNamespace = {
   tailwindValue: string | null
   overriddenIn: string | null
   overriddenTo: string | null
+  /** override = DBUI replaces a Tailwind key · addition = DBUI adds one to the
+   *  namespace · tailwind = Tailwind's value stands · utility = no theme key. */
+  origin: "override" | "addition" | "tailwind" | "utility"
   uses: number
   files: number
 }
@@ -254,6 +257,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "0.25rem",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 818,
     "files": 78
   },
@@ -263,6 +267,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "0.375rem",
     "overriddenIn": "packages/dbui/src/tokens/globals.css",
     "overriddenTo": "8px",
+    "origin": "override",
     "uses": 126,
     "files": 56
   },
@@ -272,6 +277,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 83,
     "files": 33
   },
@@ -281,6 +287,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": null,
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "utility",
     "uses": 57,
     "files": 31
   },
@@ -290,6 +297,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "spin 1s linear infinite",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 40,
     "files": 18
   },
@@ -299,6 +307,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": null,
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "utility",
     "uses": 34,
     "files": 20
   },
@@ -308,15 +317,17 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "150ms",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 29,
     "files": 22
   },
   {
-    "namespace": "--default-transition-timing-function",
-    "probe": "--default-transition-timing-function",
-    "tailwindValue": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "namespace": "duration-* and ease-*",
+    "probe": null,
+    "tailwindValue": null,
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "utility",
     "uses": 14,
     "files": 10
   },
@@ -326,6 +337,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "600",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 14,
     "files": 11
   },
@@ -335,7 +347,18 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "40rem",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 13,
+    "files": 4
+  },
+  {
+    "namespace": "--shadow-focus",
+    "probe": "--shadow-focus",
+    "tailwindValue": null,
+    "overriddenIn": "packages/dbui/src/tokens/globals.css",
+    "overriddenTo": "0 0 0 1px var(--db-focus-ring-offset), 0 0 0 3px var(--db-focus-ring)",
+    "origin": "addition",
+    "uses": 5,
     "files": 4
   },
   {
@@ -344,6 +367,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "24rem",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 3,
     "files": 2
   },
@@ -353,6 +377,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "1.375",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 3,
     "files": 2
   },
@@ -362,6 +387,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "4px",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 2,
     "files": 2
   },
@@ -371,6 +397,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "0.875rem",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 0,
     "files": 0
   },
@@ -380,6 +407,7 @@ export const tailwind: TailwindNamespace[] = [
     "tailwindValue": "-0.025em",
     "overriddenIn": null,
     "overriddenTo": null,
+    "origin": "tailwind",
     "uses": 0,
     "files": 0
   }

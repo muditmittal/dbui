@@ -453,6 +453,18 @@ export function WiringTable({
 }
 
 /**
+ * Whose value is in force. Replacing a Tailwind key and adding one to its
+ * namespace are different facts, and the second is the more interesting: it means
+ * a value is authored somewhere other than `theme.config.mjs`.
+ */
+const ORIGIN: Record<string, string> = {
+  override: "DBUI overrides",
+  addition: "DBUI adds",
+  tailwind: "Tailwind default",
+  utility: "in the utility",
+}
+
+/**
  * The Tailwind theme namespaces the system actually depends on, with whose value
  * is in force. Sorted by use in the generator, so row order is the order in which
  * a rule about one would matter.
@@ -482,9 +494,7 @@ export function TailwindTable({
         >
           <div className="flex items-baseline gap-3">
             <code className="type-code min-w-0 flex-1 truncate text-text-base">{r.namespace}</code>
-            <span className="type-hint shrink-0 text-text-subtle">
-              {r.overriddenIn ? "DBUI overrides" : "Tailwind default"}
-            </span>
+            <span className="type-hint shrink-0 text-text-subtle">{ORIGIN[r.origin]}</span>
             <span className="type-hint w-16 shrink-0 text-right tabular-nums text-text-subtle">
               {r.uses} uses
             </span>

@@ -290,8 +290,15 @@ const TAILWIND = [
   { namespace: "--spacing", probe: "--spacing", utilities: /^-?(p|px|py|pt|pr|pb|pl|ps|pe|m|mx|my|mt|mr|mb|ml|ms|me|gap|gap-x|gap-y|space-x|space-y|inset|inset-x|inset-y|top|right|bottom|left|start|end|w|h|size|min-w|min-h|max-w|max-h|translate-x|translate-y)-(\d+(\.\d+)?|px)$/ },
   { namespace: "--radius-*", probe: "--radius-md", utilities: /^rounded(-[a-z]+)?(-(none|xs|sm|md|lg|xl|2xl|3xl|4xl|full))?$/ },
   { namespace: "--shadow-*", probe: "--shadow-lg", utilities: /^(shadow|inset-shadow|drop-shadow)-(2xs|xs|sm|md|lg|xl|2xl|none)$/ },
+  // Not a Tailwind key at all — DBUI adds it to the shadow namespace in
+  // globals.css, composing two color tokens with px widths that live nowhere
+  // else. The focus treatment is therefore authored outside theme.config.mjs.
+  { namespace: "--shadow-focus", probe: "--shadow-focus", utilities: /^shadow-focus$/ },
   { namespace: "--default-transition-duration", probe: "--default-transition-duration", utilities: /^transition(-(all|colors|opacity|shadow|transform|none))?$/ },
-  { namespace: "--default-transition-timing-function", probe: "--default-transition-timing-function", utilities: /^(ease|duration)-/ },
+  // Explicit overrides rather than a namespace: `duration-100` is a bare number
+  // and bypasses both Tailwind's default and the DBUI motion tokens, so pinning
+  // it to a theme key would misreport where its value comes from.
+  { namespace: "duration-* and ease-*", probe: null, utilities: /^(duration|ease)-/ },
   { namespace: "--container-*", probe: "--container-sm", utilities: /^(max-w|min-w|w)-(3xs|2xs|xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl)$/ },
   { namespace: "--breakpoint-*", probe: "--breakpoint-sm", utilities: null, variants: /^(max-)?(sm|md|lg|xl|2xl):/ },
   { namespace: "--text-*", probe: "--text-sm", utilities: /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/ },
@@ -322,12 +329,16 @@ const tailwind = TAILWIND.map((t) => {
     if (n) { uses += n; seen.add(f) }
   }
   const ov = t.probe ? override(t.probe) : null
+  const tailwindValue = t.probe ? twDefault(t.probe) : null
   return {
     namespace: t.namespace,
     probe: t.probe,
-    tailwindValue: t.probe ? twDefault(t.probe) : null,
+    tailwindValue,
     overriddenIn: ov?.file ?? null,
     overriddenTo: ov?.value ?? null,
+    // Overriding an existing Tailwind key and adding a new one to its namespace
+    // are different claims, and the page has to be able to say which.
+    origin: ov ? (tailwindValue ? "override" : "addition") : t.probe ? "tailwind" : "utility",
     uses,
     files: seen.size,
   }
@@ -395,6 +406,9 @@ export type TailwindNamespace = {
   tailwindValue: string | null
   overriddenIn: string | null
   overriddenTo: string | null
+  /** override = DBUI replaces a Tailwind key · addition = DBUI adds one to the
+   *  namespace · tailwind = Tailwind's value stands · utility = no theme key. */
+  origin: "override" | "addition" | "tailwind" | "utility"
   uses: number
   files: number
 }
