@@ -25,7 +25,7 @@ import { cn } from "../../lib/utils"
  * Removable: optional close button
  */
 const alertVariants = cva(
-  "group/alert flex w-full items-start gap-2 rounded-md border p-3 text-[13px] leading-[20px]",
+  "group/alert flex w-full items-start gap-2 rounded-md border p-3 type-body",
   {
     variants: {
       variant: {
@@ -97,7 +97,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-title"
       className={cn(
-        "font-semibold text-[13px] leading-[20px] group-data-[variant=danger]/alert:text-status-text-negative group-data-[variant=warning]/alert:text-status-text-warning group-data-[variant=success]/alert:text-status-text-positive group-data-[variant=info]/alert:text-text-base",
+        "type-body-bold group-data-[variant=danger]/alert:text-status-text-negative group-data-[variant=warning]/alert:text-status-text-warning group-data-[variant=success]/alert:text-status-text-positive group-data-[variant=info]/alert:text-text-base",
         className
       )}
       {...props}
@@ -112,7 +112,7 @@ function AlertDescription({
   return (
     <div
       data-slot="alert-description"
-      className={cn("text-[13px] leading-[20px] text-text-base", className)}
+      className={cn("type-body text-text-base", className)}
       {...props}
     />
   )
