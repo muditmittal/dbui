@@ -4,6 +4,15 @@
 export type Token = { name: string; value: string }
 export type ColorToken = { name: string; light: string; dark: string }
 export type ColorGroup = { key: string; label: string; blurb: string; tokens: ColorToken[] }
+/** One step of the ramp. `size` and `line` are px at a 16px root. */
+export type TypeStep = {
+  name: string
+  size: number | null
+  line: number | null
+  weight: string | null
+  mono: boolean
+  uppercase: boolean
+}
 
 export const colorGroups: ColorGroup[] = [
   {
@@ -503,6 +512,121 @@ export const colorGroups: ColorGroup[] = [
   }
 ]
 
+export const type: TypeStep[] = [
+  {
+    "name": "type-hint",
+    "size": 12,
+    "line": 16,
+    "weight": "400",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-eyebrow",
+    "size": 11,
+    "line": 16,
+    "weight": "600",
+    "mono": false,
+    "uppercase": true
+  },
+  {
+    "name": "type-label",
+    "size": 13,
+    "line": 16,
+    "weight": "400",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-label-bold",
+    "size": 13,
+    "line": 16,
+    "weight": "600",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-body",
+    "size": 13,
+    "line": 20,
+    "weight": "400",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-body-bold",
+    "size": 13,
+    "line": 20,
+    "weight": "600",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-code",
+    "size": 13,
+    "line": 20,
+    "weight": "400",
+    "mono": true,
+    "uppercase": false
+  },
+  {
+    "name": "type-block",
+    "size": 14,
+    "line": 22,
+    "weight": "400",
+    "mono": true,
+    "uppercase": false
+  },
+  {
+    "name": "type-paragraph",
+    "size": 15,
+    "line": 22,
+    "weight": "400",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-paragraph-bold",
+    "size": 15,
+    "line": 22,
+    "weight": "600",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-title-4",
+    "size": 16,
+    "line": 24,
+    "weight": "600",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-title-3",
+    "size": 20,
+    "line": 28,
+    "weight": "600",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-title-2",
+    "size": 24,
+    "line": 32,
+    "weight": "600",
+    "mono": false,
+    "uppercase": false
+  },
+  {
+    "name": "type-title-1",
+    "size": 32,
+    "line": 40,
+    "weight": "600",
+    "mono": false,
+    "uppercase": false
+  }
+]
+
 export const space: Token[] = [
   {
     "name": "space-0",
@@ -716,5 +840,6 @@ export const tokenCounts = {
   "elevation": 4,
   "duration": 6,
   "easing": 1,
-  "scalars": 5
+  "scalars": 5,
+  "type": 14
 }

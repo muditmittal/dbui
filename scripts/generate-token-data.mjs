@@ -14,9 +14,11 @@ import { fileURLToPath } from "node:url"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const TOKENS_CSS = path.join(ROOT, "packages/dbui/src/tokens/tokens.css")
+const TYPE_CSS = path.join(ROOT, "packages/dbui/src/tokens/type.css")
 const OUT = path.join(ROOT, "apps/portal/src/stories/tokens/token-data.ts")
 
 const css = fs.readFileSync(TOKENS_CSS, "utf8")
+const typeCss = fs.readFileSync(TYPE_CSS, "utf8")
 
 /** Pull `--db-x: value;` pairs out of one block. */
 function block(source, selector) {
@@ -78,6 +80,38 @@ const pick = (re) =>
     .filter(([n]) => re.test(n))
     .map(([name, value]) => ({ name, value }))
 
+/**
+ * The type ramp, assembled per step rather than left as 74 loose properties.
+ *
+ * Size and leading are what the page has to show — `label` and `body` are the
+ * same size and differ only in leading, and a sample alone cannot show that.
+ * They were typed into the page as "13 / 16" strings, which is how `eyebrow`
+ * came to claim a size the config does not give it.
+ *
+ * Resolved to px at a 16px root the way `export-token-spec.mjs` does it: the
+ * config authors in px because that is how Figma and designers think, the
+ * generator converts to rem once, and a reviewer needs the px back.
+ */
+const remToPx = (value) => {
+  const m = String(value).match(/([\d.]+)rem/)
+  if (!m) return null
+  return parseFloat((parseFloat(m[1]) * 16).toFixed(4))
+}
+
+/** Utility order in type.css is ramp order, which is neither alphabetical nor by size. */
+const typeSteps = [...typeCss.matchAll(/@utility type-([a-z0-9-]+)\s*\{([\s\S]*?)\n\}/g)].map(
+  ([, step, body]) => ({
+    // The class, so the page can apply the sample with the same string it names.
+    name: `type-${step}`,
+    size: remToPx(light[`font-size-${step}`]),
+    line: remToPx(light[`line-height-${step}`]),
+    weight: light[`font-weight-${step}`] ?? null,
+    mono: (light[`font-family-${step}`] ?? "").includes("mono"),
+    // Carried in the utility, not in a var, so it has to be read from here.
+    uppercase: /text-transform:\s*uppercase/.test(body),
+  })
+)
+
 const data = {
   colorGroups,
   space: pick(/^space-(?!inline)/),
@@ -98,6 +132,7 @@ const counts = Object.fromEntries(
     k === "colorGroups" ? v.reduce((n, g) => n + g.tokens.length, 0) : v.length,
   ])
 )
+counts.type = typeSteps.length
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true })
 fs.writeFileSync(
@@ -108,8 +143,19 @@ fs.writeFileSync(
 export type Token = { name: string; value: string }
 export type ColorToken = { name: string; light: string; dark: string }
 export type ColorGroup = { key: string; label: string; blurb: string; tokens: ColorToken[] }
+/** One step of the ramp. \`size\` and \`line\` are px at a 16px root. */
+export type TypeStep = {
+  name: string
+  size: number | null
+  line: number | null
+  weight: string | null
+  mono: boolean
+  uppercase: boolean
+}
 
 export const colorGroups: ColorGroup[] = ${JSON.stringify(data.colorGroups, null, 2)}
+
+export const type: TypeStep[] = ${JSON.stringify(typeSteps, null, 2)}
 
 ${Object.entries(data)
   .filter(([k]) => k !== "colorGroups")
