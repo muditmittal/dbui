@@ -26,14 +26,14 @@ import { cn } from "../../lib/utils"
  * Usage (title only):
  *   <PageHeader>
  *     <PageHeaderTitle>
- *       <h1 className="text-[22px] leading-[28px] font-semibold">Compute</h1>
+ *       <h1 className="type-title-3">Compute</h1>
  *     </PageHeaderTitle>
  *   </PageHeader>
  *
  * Usage (title + actions, with tabs as sibling):
  *   <PageHeader>
  *     <PageHeaderTitle>
- *       <h1 className="text-[22px] leading-[28px] font-semibold">Agents</h1>
+ *       <h1 className="type-title-3">Agents</h1>
  *     </PageHeaderTitle>
  *     <PageHeaderActions>
  *       <Button variant="outline">Register MCP Server</Button>

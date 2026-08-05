@@ -114,7 +114,7 @@ function PlatformHeaderRight({
 
 /**
  * PlatformHeaderBadge — cloud/workspace name badge.
- * Maps to Figma .Workspace nav "Cloud badge" text (14px).
+ * Maps to Figma .Workspace nav "Cloud badge" text.
  */
 function PlatformHeaderBadge({
   className,
@@ -124,7 +124,7 @@ function PlatformHeaderBadge({
     <span
       data-slot="platform-header-badge"
       className={cn(
-        "text-[14px] leading-[20px] text-text-base",
+        "type-label text-text-base",
         className
       )}
       {...props}

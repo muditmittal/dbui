@@ -21,7 +21,7 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
     >
       <table
         data-slot="table"
-        className={cn("w-full caption-bottom text-[13px]", className)}
+        className={cn("w-full caption-bottom type-body", className)}
         {...props}
       />
     </div>
@@ -132,7 +132,7 @@ function TableCaption({
   return (
     <caption
       data-slot="table-caption"
-      className={cn("mt-4 text-[13px] text-text-subtle", className)}
+      className={cn("mt-4 type-body text-text-subtle", className)}
       {...props}
     />
   )
@@ -220,7 +220,7 @@ function TableCellMeta({
     <span
       data-slot="table-cell-meta"
       className={cn(
-        "truncate text-[12px] leading-[16px] text-text-subtle",
+        "truncate type-hint text-text-subtle",
         className
       )}
       {...props}
@@ -293,7 +293,7 @@ function TableCellExpandable({
       data-expanded={expanded || undefined}
       aria-expanded={expanded}
       className={cn(
-        "flex items-center gap-2 text-left font-mono text-[13px] leading-[20px] text-text-accent",
+        "flex items-center gap-2 text-left type-code text-text-accent",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

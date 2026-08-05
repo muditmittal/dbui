@@ -92,7 +92,7 @@ function NavbarSectionHeader({
       aria-expanded={expanded}
       onClick={onToggle}
       className={cn(
-        "flex w-full items-center gap-1 px-2 py-1 text-[12px] leading-[16px] text-text-subtle hover:text-text-base",
+        "flex w-full items-center gap-1 px-2 py-1 type-hint text-text-subtle hover:text-text-base",
         className
       )}
       {...props}
@@ -121,7 +121,7 @@ function NavbarItem({
       data-slot="navbar-item"
       data-active={active || undefined}
       className={cn(
-        "flex h-7 w-full items-center gap-2 rounded-sm px-2 text-[13px] leading-[20px] font-normal text-text-base text-left",
+        "flex h-7 w-full items-center gap-2 rounded-sm px-2 type-label text-text-base text-left",
         "hover:bg-action-default-hover",
         active && "bg-surface-accent text-text-accent font-semibold [&_[data-slot=navbar-item-icon]]:text-text-accent",
         "[&_svg:not([class*='size-'])]:size-4",
@@ -156,7 +156,7 @@ function NavbarNewButton({ className, ...props }: React.ComponentProps<"button">
     <button
       data-slot="navbar-new-button"
       className={cn(
-        "flex h-8 w-full items-center gap-2 rounded-lg bg-surface-base px-3 shadow-md text-[13px] leading-[20px] font-semibold text-text-base",
+        "flex h-8 w-full items-center gap-2 rounded-lg bg-surface-base px-3 shadow-md type-label-bold text-text-base",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

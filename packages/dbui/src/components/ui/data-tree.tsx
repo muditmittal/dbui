@@ -156,7 +156,7 @@ function TreeSection({
             case "ArrowLeft": { e.preventDefault(); if (expanded) setExpanded(false); break }
           }
         }}
-        className="flex h-7 items-center gap-1 rounded-sm px-1 text-[12px] leading-[16px] text-text-subtle hover:text-text-base outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset"
+        className="flex h-7 items-center gap-1 rounded-sm px-1 type-hint text-text-subtle hover:text-text-base outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset"
         aria-expanded={expanded}
       >
         {expanded
@@ -363,7 +363,7 @@ function TreeNode({
         aria-selected={isSelected}
         aria-expanded={isExpandable ? isExpanded : undefined}
         className={cn(
-          "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 text-[13px] leading-[20px] text-left transition-colors",
+          "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 type-label text-left transition-colors",
           // Pointer-driven focus (mouse hover, programmatic focus from popups,
           // etc.) must not show a ring — only keyboard navigation should.
           "outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset",
@@ -542,7 +542,7 @@ function TreeNode({
             )}
             {childCount > 0 ? children : (
               <div
-                className="flex h-7 items-center text-[13px] text-text-subtle"
+                className="flex h-7 items-center type-label text-text-subtle"
                 style={{ paddingLeft: `${44 + (depth + 1) * 8}px` }}
               >
                 No items
@@ -565,7 +565,7 @@ function TreeNodeTag({
     <span
       data-slot="tree-node-tag"
       className={cn(
-        "inline-flex items-center gap-1 rounded bg-surface-subtle px-1.5 text-[12px] leading-[16px] text-text-subtle",
+        "inline-flex items-center gap-1 rounded bg-surface-subtle px-1.5 type-hint text-text-subtle",
         className
       )}
       {...props}

@@ -31,7 +31,7 @@ function KeyValuePair({
       data-slot="key-value-pair"
       data-layout={layout}
       className={cn(
-        "flex flex-col gap-0 text-[13px]",
+        "flex flex-col gap-0 type-body",
         layout === "horizontal" ? "w-full" : layout === "flexible" ? "w-full" : "w-[280px]",
         className
       )}
@@ -45,7 +45,7 @@ function KeyValueTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="key-value-title"
       className={cn(
-        "flex items-center gap-1 py-2 text-[13px] font-semibold text-text-base",
+        "flex items-center gap-1 py-2 type-body-bold text-text-base",
         className
       )}
       {...props}
@@ -64,7 +64,7 @@ function KeyValueItem({
     <div
       data-slot="key-value-row"
       className={cn(
-        "flex items-center py-0.5",
+        "flex items-center py-1",
         layout === "vertical"
           ? "flex-col items-start gap-0.5"
           : "flex-row gap-0",
@@ -88,10 +88,10 @@ function KeyValueKey({
       className={cn(
         "overflow-hidden text-ellipsis whitespace-nowrap text-text-subtle",
         layout === "vertical"
-          ? "w-full shrink-0 text-[12px] leading-[16px]"
+          ? "w-full shrink-0 type-hint"
           : layout === "flexible"
-            ? "min-w-0 flex-1 text-[13px] leading-[20px]"
-            : "w-[120px] shrink-0 text-[13px] leading-[20px]",
+            ? "min-w-0 flex-1 type-label"
+            : "w-[120px] shrink-0 type-label",
         className
       )}
       {...props}
@@ -104,7 +104,7 @@ function KeyValueValue({ className, ...props }: React.ComponentProps<"span">) {
     <span
       data-slot="key-value-value"
       className={cn(
-        "flex min-h-px min-w-px flex-1 items-center gap-2 text-[13px] leading-[20px] text-text-base",
+        "flex min-h-px min-w-px flex-1 items-center gap-2 type-label text-text-base",
         className
       )}
       {...props}
@@ -121,7 +121,7 @@ function KeyValueValueEnd({ className, ...props }: React.ComponentProps<"span">)
     <span
       data-slot="key-value-value-end"
       className={cn(
-        "flex min-h-px min-w-px flex-1 items-center justify-end gap-2 text-[13px] leading-[20px] text-text-base text-right",
+        "flex min-h-px min-w-px flex-1 items-center justify-end gap-2 type-label text-text-base text-right",
         className
       )}
       {...props}

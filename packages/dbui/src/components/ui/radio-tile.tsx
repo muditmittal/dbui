@@ -34,7 +34,7 @@ function RadioTile({
     <RadioPrimitive.Root
       data-slot="radio-tile"
       className={cn(
-        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input-border-base bg-surface-base p-4 text-[13px] shadow-xs transition-all outline-none select-none hover:border-input-border-hover active:border-input-border-focus data-checked:border-action-primary-base data-checked:shadow-none focus-visible:border-focus-ring focus-visible:ring-3 focus-visible:ring-focus-ring/50 disabled:cursor-not-allowed disabled:border-border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20",
+        "group/radio-tile relative flex flex-col gap-1 rounded-sm border border-input-border-base bg-surface-base p-4 type-body shadow-xs transition-all outline-none select-none hover:border-input-border-hover active:border-input-border-focus data-checked:border-action-primary-base data-checked:shadow-none focus-visible:border-focus-ring focus-visible:ring-3 focus-visible:ring-focus-ring/50 disabled:cursor-not-allowed disabled:border-border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20",
         className
       )}
       {...props}
@@ -86,7 +86,7 @@ function RadioTileDescription({
   return (
     <div
       data-slot="radio-tile-description"
-      className={cn("text-[12px] text-text-subtle", className)}
+      className={cn("type-body text-text-subtle", className)}
       {...props}
     />
   )

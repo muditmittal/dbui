@@ -46,7 +46,7 @@ function EditorTab({
       aria-selected={active}
       data-active={active || undefined}
       className={cn(
-        "group/editor-tab relative flex h-8 shrink-0 items-center gap-2 border-l border-r border-border-base px-2 py-1 text-[13px] leading-[20px] font-normal select-none",
+        "group/editor-tab relative flex h-8 shrink-0 items-center gap-2 border-l border-r border-border-base px-2 py-1 type-label select-none",
         active
           ? "bg-surface-base text-text-base"
           : "bg-transparent text-text-subtle",
