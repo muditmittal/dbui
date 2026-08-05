@@ -1,7 +1,7 @@
 # Status
 
-Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`.
-Anything those contradict is this file being wrong.
+Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
+`generate-token-consumption.mjs`. Anything those contradict is this file being wrong.
 
 **2026-08-05**
 
@@ -9,7 +9,7 @@ Anything those contradict is this file being wrong.
 
 | Layer | State |
 | --- | --- |
-| Tokens | Done |
+| Tokens | Color, type and radius live — the other dimensional families unconsumed |
 | Icons | Done |
 | Components | Done — 3 have no story, 1 has no `@guideline` |
 | Compositions | Partial — exist, not documented |
@@ -32,6 +32,17 @@ Anything those contradict is this file being wrong.
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.
+5. **Space, size, border width, elevation and motion are read by nothing.** Components
+   spend Tailwind's own scales instead, so every scalar except `type-scalar` turns
+   nothing, and the system rescales under a root change only because Tailwind's
+   `--spacing` is rem-based. `generate-token-consumption.mjs` measures it and
+   `/docs/tokens` renders it. Wiring the families up is a migration across every
+   component, so decide whether these tokens are the intended contract before
+   spending it.
+6. **`--radius-*` is mapped from px in the package and from tokens in the portal.**
+   Identical at a 16px root, so nothing looks wrong here. A consumer copy freezes
+   corners while control heights scale. `--shadow-focus` has the same shape: authored
+   in `globals.css` rather than `theme.config.mjs`.
 
 ## Small
 
