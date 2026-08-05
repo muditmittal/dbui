@@ -97,10 +97,14 @@ function DonutChart({
     if (centerValue) {
       layers.push({
         data: { values: [{ text: centerValue }] },
+        // The ramp has no step at the 22px this used to carry, and 20 and 24 sit
+        // the same distance from it. It takes the smaller of the two: the number
+        // shares a 172px hole with the caption under it, so overshooting costs a
+        // collision and undershooting costs nothing.
         mark: {
           type: "text",
-          fontSize: 22,
-          fontWeight: 600,
+          fontSize: theme.type.title3.size,
+          fontWeight: theme.type.title3.weight,
           font: theme.fontSans,
           color: theme.foreground,
           dy: centerLabel ? -8 : 0,
@@ -114,7 +118,7 @@ function DonutChart({
         data: { values: [{ text: centerLabel }] },
         mark: {
           type: "text",
-          fontSize: 12,
+          fontSize: theme.type.hint.size,
           font: theme.fontSans,
           color: theme.mutedForeground,
           dy: centerValue ? 12 : 0,

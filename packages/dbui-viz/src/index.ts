@@ -36,6 +36,8 @@ export {
   type VizPaletteName,
   type VizTheme,
   type VizTreemapTheme,
+  type VizType,
+  type VizTypeStep,
 } from "./lib/theme"
 
 // Utilities

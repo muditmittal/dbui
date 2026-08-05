@@ -28,12 +28,7 @@ Anything those contradict is this file being wrong.
    ported from the Storybook MDX. Storybook keeps `/components`.
 3. **Generate the token docs.** Four drifts in one session. Generate the derivable
    blocks, check them in CI when CI exists.
-4. **Charts do not scale.** `dbui-viz` sets font size as a number inside the
-   Vega-Lite spec, which no CSS class reaches, so chart text stays put while the
-   page around it grows. The donut's center value is also a size the ramp does not
-   carry. Fixing it means teaching `resolveVizTheme` to read the ramp vars and
-   resolve rem to px.
-5. **Genie prose sits on `body`, not `paragraph`.** `theme.config.mjs` names chat
+4. **Genie prose sits on `body`, not `paragraph`.** `theme.config.mjs` names chat
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.
@@ -43,6 +38,11 @@ Anything those contradict is this file being wrong.
 - `Platform Header` has no `@guideline` — the only real one. `doctor` reports 14, but
   13 are marked excluded or internal, so the check should filter them.
 - `Date Range`, `Aspect Ratio`, `Label` have no story.
+- `LineSeries` draws no axis labels even with `showAxis` on. The end-dot layer
+  carries `axis: null` and Vega-Lite resolves axes across layers, so it strips the
+  axis from the whole view. Visible in the Charts story.
+- `DonutChart` clamps the Vega view width to its `size` prop, so a right-oriented
+  legend gets no room of its own and draws over the ring.
 - 9 components use raw `opacity-50` for disabled instead of the disabled tokens.
 - `doctor` promises "exits non-zero on failure" and exits 0.
 - Storybook 8.6 → 10.4. Two majors; v9 removed `addon-essentials` and moved

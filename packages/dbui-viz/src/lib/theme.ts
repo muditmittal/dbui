@@ -17,8 +17,9 @@ export const VEGA_EMBED_OPTIONS: EmbedOptions = {
  * Vega theming bridge for DBUI.
  *
  * Vega specs cannot read CSS custom properties, so this module resolves the
- * `--viz-*` tokens (plus the existing dbui semantic tokens for axes and text)
- * into concrete values at runtime, and re-resolves them when light/dark flips.
+ * `--viz-*` tokens (plus the existing dbui semantic tokens for axes and text,
+ * and the steps of the type ramp a chart is allowed to draw from) into concrete
+ * values at runtime, and re-resolves them when light/dark flips.
  *
  * Requires `dbui/tokens/viz.css` to be loaded. Fallbacks mirror the light-mode
  * token values so SSR and tests render sensibly without a stylesheet.
@@ -61,6 +62,26 @@ export interface VizTreemapTheme {
   otherBorder: string
 }
 
+/** One step of the type ramp, resolved to the numbers Vega takes. */
+export interface VizTypeStep {
+  size: number
+  weight: number
+}
+
+/**
+ * The steps of the type ramp a chart may draw from.
+ *
+ * Keyed by ramp step rather than by role, so a chart names a step and never a
+ * number — which is what makes it impossible for a chart to render at a size the
+ * ramp does not define. Add a key here before a chart can use a new step.
+ */
+export interface VizType {
+  /** Axis labels and titles, legend labels and titles, chart captions. */
+  hint: VizTypeStep
+  /** The one large number a chart displays, such as a donut's center total. */
+  title3: VizTypeStep
+}
+
 export interface VizTheme {
   palettes: Record<VizPaletteName, VizPalette>
   treemap: VizTreemapTheme
@@ -70,7 +91,14 @@ export interface VizTheme {
   background: string
   fontSans: string
   fontMono: string
+  type: VizType
   isDark: boolean
+}
+
+/** VizType key → the ramp step name the token vars are suffixed with. */
+const TYPE_STEPS: Record<keyof VizType, string> = {
+  hint: "hint",
+  title3: "title-3",
 }
 
 const PALETTE_VARS: Record<VizPaletteName, string> = {
@@ -131,6 +159,10 @@ const FALLBACK: VizTheme = {
   background: "#ffffff",
   fontSans: '"SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif',
   fontMono: '"SF Mono", SFMono-Regular, ui-monospace, monospace',
+  type: {
+    hint: { size: 12, weight: 400 },
+    title3: { size: 20, weight: 600 },
+  },
   isDark: false,
 }
 
@@ -150,6 +182,61 @@ function readVar(
   if (!styles) return fallback
   const value = styles.getPropertyValue(name).trim()
   return value || fallback
+}
+
+/**
+ * Resolve the ramp steps in `TYPE_STEPS` to px.
+ *
+ * `readVar` cannot do this. The ramp ships as `calc(<rem> * var(--db-type-scalar))`
+ * and an unregistered custom property computes to that expression rather than to
+ * a length, so `getPropertyValue` hands back the calc rather than a number.
+ * Parsing it here would mean re-implementing the generator's arithmetic and
+ * drifting the day the expression changes shape. A throwaway element carrying
+ * the step as a real font-size makes the browser resolve it instead, which is
+ * the only reading that cannot disagree with what the page renders.
+ *
+ * Read once per theme resolve. A chart does not follow the root font size
+ * afterwards — SVG text that reflowed under the reader would be worse than text
+ * that holds still, and the point of sourcing from the ramp is consistency of
+ * the value, not live scaling.
+ */
+function resolveType(
+  styles: CSSStyleDeclaration | null,
+  scope?: Element | null
+): VizType {
+  const host = scope ?? (typeof document === "undefined" ? null : document.body)
+  if (!styles || !host) return FALLBACK.type
+
+  const probe = document.createElement("span")
+  probe.setAttribute("aria-hidden", "true")
+  probe.style.position = "absolute"
+  probe.style.visibility = "hidden"
+  probe.style.pointerEvents = "none"
+  host.appendChild(probe)
+
+  const type = {} as VizType
+  for (const key of Object.keys(TYPE_STEPS) as (keyof VizType)[]) {
+    const step = TYPE_STEPS[key]
+    const fallback = FALLBACK.type[key]
+    // An absent var means the tokens never loaded, and the probe would then
+    // report whatever it inherited — a plausible number that is not the ramp.
+    if (!readVar(styles, `--db-font-size-${step}`, "")) {
+      type[key] = fallback
+      continue
+    }
+    probe.style.fontSize = `var(--db-font-size-${step})`
+    probe.style.fontWeight = `var(--db-font-weight-${step})`
+    const resolved = window.getComputedStyle(probe)
+    const size = Number.parseFloat(resolved.fontSize)
+    const weight = Number.parseFloat(resolved.fontWeight)
+    type[key] = {
+      size: Number.isFinite(size) && size > 0 ? size : fallback.size,
+      weight: Number.isFinite(weight) && weight > 0 ? weight : fallback.weight,
+    }
+  }
+
+  probe.remove()
+  return type
 }
 
 /** Resolve the current viz theme from CSS custom properties. */
@@ -221,6 +308,7 @@ export function resolveVizTheme(scope?: Element | null): VizTheme {
     background: readVar(styles, "--db-surface-base", FALLBACK.background),
     fontSans: readVar(styles, "--font-sans", FALLBACK.fontSans),
     fontMono: readVar(styles, "--font-mono", FALLBACK.fontMono),
+    type: resolveType(styles, scope),
     isDark:
       typeof document !== "undefined" &&
       document.documentElement.classList.contains("dark"),
@@ -297,8 +385,11 @@ export const VIZ_SERIES_ORDER: VizPaletteName[] = [
 
 /**
  * Shared Vega/Vega-Lite config: axis, legend and text styling pulled from dbui
- * tokens so every chart inherits Databricks typography (12px labels) and the
- * current color mode.
+ * tokens so every chart inherits Databricks typography and the current color
+ * mode.
+ *
+ * Axis and legend text is chrome around the data — the same role the ramp calls
+ * `hint`, and the same step the captions beside a chart already take.
  */
 export function vizVegaConfig(theme: VizTheme) {
   return {
@@ -306,13 +397,13 @@ export function vizVegaConfig(theme: VizTheme) {
     font: theme.fontSans,
     axis: {
       labelFont: theme.fontSans,
-      labelFontSize: 12,
+      labelFontSize: theme.type.hint.size,
       labelColor: theme.mutedForeground,
       labelPadding: 6,
       titleFont: theme.fontSans,
-      titleFontSize: 12,
+      titleFontSize: theme.type.hint.size,
       titleColor: theme.mutedForeground,
-      titleFontWeight: 400,
+      titleFontWeight: theme.type.hint.weight,
       domain: false,
       ticks: false,
       grid: false,
@@ -325,10 +416,10 @@ export function vizVegaConfig(theme: VizTheme) {
     },
     legend: {
       labelFont: theme.fontSans,
-      labelFontSize: 12,
+      labelFontSize: theme.type.hint.size,
       labelColor: theme.mutedForeground,
       titleFont: theme.fontSans,
-      titleFontSize: 12,
+      titleFontSize: theme.type.hint.size,
       titleColor: theme.mutedForeground,
       symbolType: "circle",
       symbolSize: 64,
