@@ -107,7 +107,7 @@ function PromptInputContextBar({
         <span
           key={item.id}
           data-slot="prompt-input-context-item"
-          className="inline-flex items-center gap-1 rounded-sm border border-border-base bg-surface-subtle px-2 py-0.5 text-[12px] leading-[16px] text-text-base"
+          className="inline-flex items-center gap-1 rounded-sm border border-border-base bg-surface-subtle px-2 py-0.5 type-hint text-text-base"
         >
           <span className="font-semibold">{item.label}</span>
           {item.detail ? (

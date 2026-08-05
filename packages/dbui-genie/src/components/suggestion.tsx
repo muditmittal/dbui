@@ -37,7 +37,12 @@ function Suggestion({
       type={type}
       variant={variant}
       size={size}
-      className={cn("h-auto py-1 text-left whitespace-normal", className)}
+      // type-body because whitespace-normal undoes Button's single-line
+      // assumption, and a wrapped suggestion on the label line box would set
+      // its second line 4px tight against the first. Important because the
+      // ramp utilities are emitted alphabetically, so plain type-body would
+      // lose to the type-label the Button already carries.
+      className={cn("h-auto py-1 text-left type-body! whitespace-normal", className)}
       {...props}
     />
   )

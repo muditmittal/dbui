@@ -48,7 +48,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode {
       nodes.push(
         <code
           key={key}
-          className="rounded-sm bg-surface-inset px-1 py-0.5 font-mono text-[12px]"
+          className="rounded-sm bg-surface-inset px-1 py-0.5 type-code"
         >
           {token.slice(1, -1)}
         </code>
@@ -116,9 +116,9 @@ function splitTableRow(line: string): string[] {
 }
 
 const HEADING_CLASS = [
-  "text-[22px] leading-[28px] font-semibold",
-  "text-[18px] leading-[24px] font-semibold",
-  "text-[13px] leading-[20px] font-semibold",
+  "type-title-3",
+  "type-title-4",
+  "type-body-bold",
 ]
 
 function parseBlocks(markdown: string): React.ReactNode[] {
@@ -150,7 +150,7 @@ function parseBlocks(markdown: string): React.ReactNode[] {
           data-language={fence[1] || undefined}
           className="overflow-x-auto rounded-md bg-surface-inset p-3"
         >
-          <code className="font-mono text-[12px] leading-[18px] whitespace-pre">
+          <code className="type-block whitespace-pre">
             {body.join("\n")}
           </code>
         </pre>
@@ -307,7 +307,7 @@ function Response({ children = "", className, ...props }: ResponseProps) {
     <div
       data-slot="response"
       className={cn(
-        "flex w-full min-w-0 flex-col gap-3 text-[13px] leading-[20px] text-text-base",
+        "flex w-full min-w-0 flex-col gap-3 type-body text-text-base",
         className
       )}
       {...props}

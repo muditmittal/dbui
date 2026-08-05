@@ -68,7 +68,7 @@ function Reasoning({
       <Collapsible open={isOpen} onOpenChange={handleOpenChange}>
         <CollapsibleTrigger
           className={cn(
-            "flex items-center gap-1 rounded-sm text-[13px] leading-[20px] text-text-subtle outline-none",
+            "flex items-center gap-1 rounded-sm type-label text-text-subtle outline-none",
             "hover:text-text-base focus-visible:border focus-visible:border-focus-ring"
           )}
         >
@@ -85,7 +85,7 @@ function Reasoning({
           </span>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="mt-2 border-l-2 border-border-base pl-3 text-[13px] leading-[20px] text-text-subtle">
+          <div className="mt-2 border-l-2 border-border-base pl-3 type-body text-text-subtle">
             {children}
           </div>
         </CollapsibleContent>
