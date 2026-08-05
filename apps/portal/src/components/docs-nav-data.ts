@@ -28,7 +28,12 @@ export const DOCS_NAV: DocsNavEntry[] = [
       { href: "/docs/icons", label: "Icons" },
       { href: "/docs/components", label: "Components" },
       { href: "/docs/patterns", label: "Patterns" },
-      { href: "/docs/accessibility", label: "Accessibility and internationalization" },
+      // Not "Accessibility and internationalization". That label wrapped to three
+      // rail lines, and nobody scans a rail for a twenty-letter word. `/docs/foundations`
+      // already linked the page as "Accessibility", so shortening it removes a
+      // second name rather than adding a third. The language rules are announced
+      // in the page's own description.
+      { href: "/docs/accessibility", label: "Accessibility" },
     ],
   },
   {

@@ -1,173 +1,131 @@
 import Link from "next/link"
 
-import {
-  DocHeader,
-  DocSection,
-  Para,
-  Code,
-  RefTable,
-  SourceNote,
-} from "@/components/docs/Prose"
+import { DocHeader, DocSection, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
 import { CodeBlock } from "@/components/docs/CodeBlock"
 import { Guidance } from "@/components/docs/Guidance"
 
-export const metadata = { title: "Accessibility and internationalization — DBUI" }
+export const metadata = { title: "Accessibility — DBUI" }
 
 /**
- * A hub, not a standard. `brandvoice.md` already holds an Accessibility and a
- * Globalization checklist, so a second set of rules here would be two standards
- * disagreeing within a month. This page says where each of those checks lands in
- * code, and — the part no other file covers — what the system does not check.
+ * Rules, then reliance. Everything here is either something a person does on a
+ * screen or a limit on what the system does for them. Explaining what contrast
+ * or a live region is belongs to WCAG, not to a page someone opens mid-task.
  *
- * The gaps are stated plainly on purpose. A design system that implies coverage
- * it does not have gets trusted once and then never again.
+ * `brandvoice.md` owns the Accessibility and Globalization checklists, so this
+ * page states no rule that file does not already hold. What it adds is the shape
+ * each rule takes in code, and — the part no other file covers — what nothing
+ * checks. The gaps are the most useful lines here. A system that implies
+ * coverage it does not have is trusted once.
+ *
+ * No number appears in this prose. The ratios, the alt-text band and the
+ * expansion allowance live in `brandvoice.md` and on the Tokens page, and a
+ * copied number is one edit from being wrong.
  */
 
-const COVERAGE = [
+/**
+ * Read as a promise and its limit. A reader needs to know which layer to lean
+ * on and where leaning stops, and only the second column of each row is
+ * something they could not have assumed.
+ */
+const RELIANCE = [
   {
-    check: "Color contrast",
-    where: "Computed on the Tokens page for every foreground against the surface it sits on",
-    gap: "Token pairs only. Nothing measures a composed screen, or text over an image or a chart.",
+    layer: "Tokens",
+    gives:
+      "A contrast ratio computed for every foreground against the surface it belongs on, in light and dark, printed beside the swatch",
+    not: "A composed screen. Nothing measures text over an image, a chart or a color you introduced.",
   },
   {
-    check: "Component behavior",
-    where: "Inherited from the Base UI primitive each component wraps",
-    gap: "Only as correct as the primitive. Nothing verifies what DBUI adds on top of it.",
+    layer: "Base UI primitives",
+    gives:
+      "Arrow keys, Escape, focus return to the trigger and focus containment, inside one component",
+    not: "Focus order across a screen you compose, or anything DBUI adds on top of the primitive.",
   },
   {
-    check: "Per-component requirements",
-    where: "Stated as a constraint in the component's own JSDoc",
-    gap: "Prose an author has to read. No build step reads it for them.",
+    layer: "Component JSDoc",
+    gives: "The requirement for that one component, written as a constraint where it has one",
+    not: "Nothing reads it for you. It is prose in a file the author has to open.",
   },
   {
-    check: "Story review",
-    where: "Storybook runs axe in an accessibility panel, per story, on demand",
-    gap: "Manual and one story at a time. It gates nothing. A story is not a screen.",
+    layer: "Storybook",
+    gives: "An axe panel, one story at a time, when someone opens it",
+    not: "It gates nothing, and a story is not a screen.",
   },
   {
-    check: "Design lint",
-    where: "Reports non-DBUI elements, non-token color, off-scale spacing and type",
-    gap: "No accessibility rule at all. A missing label passes clean.",
+    layer: "Design lint",
+    gives: "Raw elements where a component exists, non-token color, off-scale spacing and type",
+    not: "No accessibility rule at all. A control with no label passes clean.",
   },
 ]
 
 export default function AccessibilityPage() {
   return (
     <>
-      <DocHeader title="Accessibility and internationalization">
-        Where each check lands in code, and an honest account of what the system does not verify for
-        you.
+      <DocHeader title="Accessibility">
+        What to do so a screen works for anyone, on any input, in any language &mdash; and what the
+        system does not check for you.
       </DocHeader>
 
       <div className="mt-8">
         <SourceNote>
-          <Code>packages/dbui/docs/brandvoice.md</Code> holds the Accessibility and Globalization
+          <Code>packages/dbui/docs/brandvoice.md</Code> owns the Accessibility and Globalization
           checklists, and the{" "}
           <Link href="/docs/voice" className="text-text-accent">
             Voice and tone page
           </Link>{" "}
-          renders them. This page adds no rules of its own. It says which file, token or component
-          each rule turns into.
+          renders them. Change a rule there, not here. This page says what each one looks like in
+          code.
         </SourceNote>
       </div>
 
-      <DocSection title="Contrast is measured, not asserted">
-        <Para>
-          Color pairs are checkable rather than a convention to remember. The{" "}
-          <Link href="/docs/tokens" className="text-text-accent">
-            Tokens page
-          </Link>{" "}
-          computes the ratio each foreground achieves against the surface it belongs on and prints it
-          beside the swatch, in light and dark. Read the ratio there rather than anywhere it has been
-          copied to, because a copied number is one edit away from being wrong.
-        </Para>
-        <Para>
-          The rule that makes it work is the pairing. Every surface has foregrounds that belong on
-          it, so <Code>text-base</Code> goes on <Code>surface-base</Code> and{" "}
-          <Code>text-inverse</Code> on <Code>surface-inverse</Code>. Putting a subtle foreground on a
-          surface it was not tuned for is how a token system still ships unreadable text. Disabled
-          foregrounds sit below the threshold by design, which WCAG allows for a control that cannot
-          be operated.
-        </Para>
-      </DocSection>
-
-      <DocSection title="Keyboard and focus">
-        <Para>
-          Focus is visible through <Code>focus-visible</Code> rather than <Code>focus</Code>, so the
-          ring appears for someone moving by keyboard and not for someone who just clicked. The ring
-          itself is a token pair — <Code>focus-ring</Code> and <Code>focus-ring-offset</Code> — which
-          is what keeps it one recognizable shape across every control and lets it invert with the
-          theme.
-        </Para>
-        <Para>
-          Keyboard behavior inside a component comes from the Base UI primitive it wraps, not from
-          DBUI. Arrow keys in a menu, Escape to dismiss, focus returning to the trigger and focus
-          staying inside an open dialog are the primitive&rsquo;s work. That is a deliberate
-          dependency, and it is also the boundary of what the system can promise — the order focus
-          moves through a screen you compose is yours, and nothing here checks it.
-        </Para>
-      </DocSection>
-
-      <DocSection title="An icon is not a name">
-        <Para>
-          An icon-only control has no accessible name unless you give it one. The glyph is not read
-          out, the tooltip is not read out reliably, and a control announced as
-          &ldquo;button&rdquo; is a dead end for anyone using a screen reader.
-        </Para>
-        <CodeBlock caption="An icon-only control needs a label that says what it does">
+      <DocSection title="Controls">
+        <Guidance
+          dos={[
+            "Give every icon-only control a label that names the action, not the glyph",
+            "Pair a foreground with the surface it was tuned for, and read the ratio on the Tokens page rather than out of prose",
+            "Write button and link text that still says what it does when read on its own",
+            "Reach every control with the keyboard before calling a screen done, and watch where focus lands when a dialog closes",
+          ]}
+          donts={[
+            "Assume a component is accessible because it came from the system",
+            "Put a subtle foreground on a surface it was not tuned for",
+            "Name a control by where it sits — a screen reader has no left",
+            "Wait for the linter to catch a missing label — it has no accessibility rule",
+          ]}
+        />
+        <CodeBlock caption="The rule that gets skipped most: an icon carries no name">
           {`<Button size="icon-md" aria-label="Delete catalog">
   <Trash />
 </Button>`}
         </CodeBlock>
+      </DocSection>
+
+      <DocSection title="Strings">
+        <Guidance
+          dos={[
+            "Pass values into one whole string, so a translator is given the sentence and not its pieces",
+            "Let flex or grid size anything holding a translatable label, and check the layout against the longest translation rather than the English",
+            "Write every date in the ISO 8601 form — it sorts as a string and it cannot be read month-first by mistake",
+            "Front-load the terms that carry the meaning in alt text, and keep it inside the length band brandvoice.md sets",
+          ]}
+          donts={[
+            "Assemble a sentence from fragments at run time",
+            "Set a fixed width on anything holding a translatable string",
+            "Bake meaning into text inside an image — number the callouts and put the words beside it",
+            "Format a date to the reader's locale — nothing catches it, and nothing tells them which number is the month",
+          ]}
+        />
         <Para>
-          A few components state this as a constraint in their own JSDoc, which is where a
-          per-component rule belongs. Nothing enforces it. The design linter has no accessibility
-          rule, so the version without a label passes every check the repository runs.
+          There is no internationalization framework here. No message catalog, no
+          pseudo-localization pass, no translated string anywhere. Every string in the components
+          and in this portal is hardcoded English, so read these rules as what keeps the copy
+          translatable for whenever that work starts rather than as a pipeline that already runs.
         </Para>
       </DocSection>
 
-      <DocSection title="Text that has to survive translation">
+      <DocSection title="Direction">
         <Para>
-          A string is translated whole. Assembling one at runtime from fragments produces word order
-          that is correct in English and wrong in most other languages, and it gives a translator
-          nothing to work with. Pass the values into one string instead of concatenating around them.
-        </Para>
-        <Para>
-          Translated text is usually longer, so a label needs room to grow. <Code>brandvoice.md</Code>{" "}
-          sets the allowance. In practice it means no fixed width on anything holding a translatable
-          string, and no layout that depends on a label being short — let flex and grid size the
-          control, and check the long case rather than the English one.
-        </Para>
-        <Para>
-          Alt text follows the same file. It has a length band, it front-loads the terms that carry
-          the meaning, and it ends with a period. Keep meaningful text out of the image itself, which
-          is the rule that most often gets skipped in a diagram.
-        </Para>
-        <Para>
-          The gap here is total. There is no internationalization framework in the system, no message
-          catalog and no pseudo-localization pass. Every string in the components and in this portal
-          is hardcoded English. These rules are how the copy stays translatable for whenever that
-          work happens — they are not a description of a working pipeline.
-        </Para>
-      </DocSection>
-
-      <DocSection title="Dates">
-        <Para>
-          Dates render in the ISO 8601 form, digits only, most significant first. It is unambiguous
-          across locales, it sorts as a string and it removes the month-day question entirely. The
-          rule is in <Code>brandvoice.md</Code>.
-        </Para>
-        <Para>
-          The system ships no date formatter, so each surface formats its own. Nothing stops a screen
-          from rendering a locale-specific string, and nothing catches it.
-        </Para>
-      </DocSection>
-
-      <DocSection title="Right to left">
-        <Para>
-          Direction is set once high in the tree, then read from context by every component under it.
-          The provider is re-exported from the system so a consumer does not import it from Base UI
-          directly.
+          Set direction once at the root and let every component read it from context. The provider
+          is re-exported from the system, so nothing imports it from Base UI directly.
         </Para>
         <CodeBlock caption="Set direction once, at the root of the app">
           {`import { DirectionProvider } from "dbui/components/ui/direction"
@@ -177,54 +135,28 @@ export default function AccessibilityPage() {
 </DirectionProvider>`}
         </CodeBlock>
         <Para>
-          What this buys today is the Base UI layer. Primitives read the provider and place popups,
-          menus and positioned surfaces on the correct side. What it does not buy is the components
-          themselves. DBUI positions with physical properties — margin left, padding left, absolute
-          left — rather than the logical equivalents, so a mirrored layout will not fully mirror.
-          Icons stay where they were, gutters stay on the same side, and nothing warns you.
-        </Para>
-        <Para>
-          No screen in the system has been built or reviewed in a right-to-left direction. Treat RTL
-          as started rather than supported, and expect to fix positioning per screen.
+          Rely on that for popup placement and for nothing else. Primitives read the provider and put
+          menus, popovers and positioned surfaces on the correct side. The components do not follow:
+          DBUI positions with physical properties rather than logical ones, so a mirrored layout does
+          not fully mirror. Icons stay where they were, gutters stay on the same side, and nothing
+          warns you. No screen in the system has been built or reviewed right to left, so budget for
+          fixing position per screen.
         </Para>
       </DocSection>
 
-      <DocSection title="What checks what">
+      <DocSection title="What you can rely on">
         <Para>
-          Five things happen today. None of them is a test suite, and none of them runs on its own.
-          What each one does not cover is the part worth reading.
+          There is no automated accessibility suite and no continuous integration to run one in, so
+          every check below is done by a person or not at all. The second column is the part worth
+          reading.
         </Para>
         <RefTable
           columns={[
-            { key: "check", header: "Check", width: "w-[168px]" },
-            { key: "where", header: "Where it happens" },
-            { key: "gap", header: "What it does not cover" },
+            { key: "layer", header: "Layer", width: "w-[152px]" },
+            { key: "gives", header: "What it gives you" },
+            { key: "not", header: "What it does not" },
           ]}
-          rows={COVERAGE}
-        />
-        <Para>
-          There is no automated accessibility suite, and no continuous integration to run one in. The{" "}
-          <Link href="/docs/checks" className="text-text-accent">
-            design linters
-          </Link>{" "}
-          are the only automated checks the repository has, and their subject is tokens and component
-          use rather than accessibility. Accessibility and internationalization linters are listed as
-          not started in <Code>TRACKER.md</Code>. Until they exist, every check in the table is done
-          by a person or not at all.
-        </Para>
-        <Guidance
-          dos={[
-            "Give every icon-only control a label that names the action, not the glyph",
-            "Read the contrast ratio on the Tokens page, and pair a foreground with the surface it was tuned for",
-            "Reach the whole screen with the keyboard before calling it done, and watch where focus goes",
-            "Pass values into one string, and check the layout with the longest label rather than the English one",
-          ]}
-          donts={[
-            "Assume a component is accessible because it came from the system",
-            "Describe position or direction in copy — a screen reader has no left",
-            "Build a right-to-left screen expecting the components to mirror",
-            "Read an accessibility number out of prose when a page computes it",
-          ]}
+          rows={RELIANCE}
         />
       </DocSection>
     </>
