@@ -22,15 +22,15 @@ const PRINCIPLES: Principle[] = [
     name: "Built for people accountable for the data",
     aspect: "Audience",
     meaning:
-      "The same table is read by an engineer debugging a pipeline, an analyst checking a metric and a steward approving access. Design the object to carry its own context, not the screen to one reader’s moment.",
+      "The same table is read by an engineer debugging a pipeline, an analyst checking a metric and a steward approving access. Design the object to carry its own context, not the screen for one reader.",
     dos: [
       "Let an object explain itself wherever it appears — in search, in lineage, in a result",
-      "Carry context across a handoff; people arrive mid-task from somewhere else",
+      "Carry context across a handoff — people arrive mid-task from somewhere else",
       "Preserve place — filters, selection and scroll survive leaving and coming back",
     ],
     donts: [
       "Assume this screen is where the work started or where it ends",
-      "Require someone to already know the name of what they are looking for",
+      "Require someone to know the name of what they are looking for",
       "Optimize for the person who set this up over the person who inherits it",
     ],
   },
@@ -38,10 +38,10 @@ const PRINCIPLES: Principle[] = [
     name: "Calm carries the work",
     aspect: "Visuals",
     meaning:
-      "Colour, weight and motion belong to the content, not the frame. Density is part of calm — forty quiet rows read easier than twelve decorated ones.",
+      "Color, weight and motion belong to the content, not the frame. Density is part of calm — forty quiet rows read better than twelve decorated ones.",
     dos: [
       "Reserve color for meaning: status, selection, links",
-      "Divide with borders; save shadow for what genuinely floats",
+      "Divide with borders — save shadow for what genuinely floats",
       "Treat density as a feature — fit more without adding noise",
     ],
     donts: [
@@ -54,7 +54,7 @@ const PRINCIPLES: Principle[] = [
     name: "Clear over clever, honest over hype",
     aspect: "Voice",
     meaning:
-      "Say what is true, including the inconvenient parts. Our readers know the technical vocabulary and will find the limits anyway — the only question is whether they hear it from us first.",
+      "Say what is true, including the inconvenient parts. People using the product know the technical terms and will find the limits anyway — the only question is whether they hear it from you first.",
     dos: [
       "Name a limit before someone hits it",
       "Use the precise technical term over the friendlier approximation",
@@ -63,14 +63,14 @@ const PRINCIPLES: Principle[] = [
     donts: [
       "Soften a destructive consequence to reduce friction",
       "Claim speed or quality the reader cannot verify",
-      "Apologize, emote, or congratulate",
+      "Apologize, emote or congratulate",
     ],
   },
   {
     name: "Every element earns its place",
     aspect: "Restraint",
     meaning:
-      "The test is subtraction: remove it, and if nothing breaks and nobody notices, it had not earned its place. Time counts too — a spinner that flashes still costs the reader something.",
+      "The test is subtraction: remove it, and if nothing breaks and nobody notices, it had not earned its place. Time counts too — a spinner that flashes costs more than it saves.",
     dos: [
       "Put the burden of proof on whoever is adding",
       "Keep one primary action per surface",
@@ -86,7 +86,7 @@ const PRINCIPLES: Principle[] = [
     name: "Automate the work, surface the decision",
     aspect: "Automation",
     meaning:
-      "The platform removes grunt work so attention goes to judgment. Automation earns its leverage by handing the decision back, visibly, where thinking is required.",
+      "The platform removes repetitive work so attention goes to judgment. Automation earns its place by handing the decision back, visibly, where thinking is required.",
     dos: [
       "Show what was generated before it runs",
       "Make automated actions visible and reversible",
@@ -95,14 +95,14 @@ const PRINCIPLES: Principle[] = [
     donts: [
       "Hide the scope of a bulk or generated operation",
       "Put the opt-out behind an administrator",
-      "Design a flow so seamless it never pauses",
+      "Build a flow that never pauses for a decision",
     ],
   },
   {
     name: "Show the trace, not just the outcome",
     aspect: "Evidence",
     meaning:
-      "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads just as confidently as a right one — the trace is what tells them apart.",
+      "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads as confidently as a right one — the trace is what tells them apart.",
     dos: [
       "Show the query behind a generated answer",
       "State freshness and scope on anything cached or partial",
@@ -111,7 +111,7 @@ const PRINCIPLES: Principle[] = [
     donts: [
       "Present a number with no way back to its source",
       "Make diagnosing a failure a scavenger hunt",
-      "Trade the trace away for visual economy",
+      "Trade the trace away to save space",
     ],
   },
 ]

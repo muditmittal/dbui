@@ -8,7 +8,7 @@ import { cn } from "../../lib/utils"
  * @standard Badge
  * @guideline Keep text to 1-2 words
  * @guideline Default to Outline for neutral/low-emphasis status
- * @guideline Reach for a status variant only when the colour carries meaning — serves "Calm carries the work"
+ * @guideline Reach for a status variant only when the color carries meaning — serves "Calm carries the work"
  * @constraint Badges are not interactive — don't use as buttons
  * @constraint Don't combine with long text — truncation looks broken
  * @constraint Don't use a status variant for decoration or category — neutral variants exist for that
