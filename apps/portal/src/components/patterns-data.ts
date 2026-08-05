@@ -31,6 +31,8 @@ export type Pattern = {
   id: string
   name: string
   group: string
+  /** One line, the failure the pattern prevents. The index entry and the search result. */
+  summary: string
   intent: string
   use: string[]
   avoid: string[]
@@ -60,11 +62,48 @@ export const PATTERN_GROUPS = [
   },
 ] as const
 
+/**
+ * Patterns that belong here and are not here yet. Each row names the reason,
+ * and in most cases the reason is that DBUI has nothing to hang the pattern on,
+ * so the entry would be a heading followed by a gap.
+ */
+export const DEFERRED = [
+  {
+    name: "Saving and inline editing",
+    why: "Explicit against automatic saving is a genuine decision, but nothing in DBUI marks a field as dirty, saving or saved, and there is no inline-edit affordance. The entry would be gap end to end.",
+  },
+  {
+    name: "Form validation",
+    why: "The rules belong to `Field` and its JSDoc owns them. Only the cross-field timing question is pattern-shaped, and it is small enough to live inside multi-step flows for now.",
+  },
+  {
+    name: "Search",
+    why: "Covered inside filtering, where it currently lives in practice. It earns its own entry when search stops being one input in a `ControlsBar`.",
+  },
+  {
+    name: "Comparison and diff",
+    why: "Real for a workbench — two query plans, two schema versions, two runs. There is no component for it, so anything written now would be a proposal rather than documentation.",
+  },
+  {
+    name: "Command surfaces and shortcuts",
+    why: "`Kbd` renders a shortcut. Nothing dispatches one, and there is no command palette, so there is no behavior to document.",
+  },
+  {
+    name: "Notifications and activity",
+    why: "`Sonner` covers the moment after an action. Anything that has to persist past it has no home in the system.",
+  },
+  {
+    name: "New and changed feature callouts",
+    why: "Nothing in DBUI marks something as new, and the honest guidance today is not to.",
+  },
+]
+
 export const PATTERNS: Pattern[] = [
   {
     id: "empty-states",
     name: "Empty states",
     group: "Finding your way in",
+    summary: "Four different kinds of nothing, four different ways out",
     intent:
       "A region with no rows has at least four unrelated causes, and each one has a different way out. Treating them as one state is the most common failure in this pattern — a table filtered down to nothing that says “create your first query” has sent the reader to the wrong action, and they will create a second query they did not need.",
     use: [
@@ -141,6 +180,7 @@ export const PATTERNS: Pattern[] = [
     id: "filtering",
     name: "Filtering",
     group: "Finding your way in",
+    summary: "Narrowing that stays legible, reversible and shareable",
     intent:
       "Filtering is how a workbench gets from a hundred thousand objects to the four being worked on. The controls are the easy half. The hard half is that the narrowed view has to stay legible, reversible and shareable — someone arriving at a link should be able to tell what has been excluded without reading every control, and someone who came back after lunch should find the same view they left.",
     use: [
@@ -218,6 +258,7 @@ export const PATTERNS: Pattern[] = [
     id: "progressive-disclosure",
     name: "Progressive disclosure",
     group: "Finding your way in",
+    summary: "Depth on the same surface, without losing the reader's place",
     intent:
       "A catalog object carries forty attributes and three of them matter right now. Disclosure is choosing the three. What actually goes wrong is rarely that too much is hidden — it is that the reader loses their place when a region opens, or that the same kind of depth sits behind a chevron here, a drawer there and a dialog somewhere else, so nothing can be learned once.",
     use: [
@@ -301,6 +342,7 @@ export const PATTERNS: Pattern[] = [
     id: "bulk-selection",
     name: "Bulk selection",
     group: "Acting at scale",
+    summary: "Knowing what is selected across pages, filters and failures",
     intent:
       "The moment a table grows a checkbox column, every action on the page acquires a second meaning: does this apply to the row under my cursor or to the 812 rows I selected three filters ago. Bulk selection is almost entirely a scope problem. Selecting is trivial. Knowing what is selected — across a page boundary, across a filter change, after nine of forty operations failed — is the pattern.",
     use: [
@@ -393,6 +435,7 @@ export const PATTERNS: Pattern[] = [
     id: "destructive-at-scale",
     name: "Destructive actions at scale",
     group: "Acting at scale",
+    summary: "Friction scaled to the blast radius, not to the nerves",
     intent:
       "Dropping one table is a confirmation. Dropping a schema is a different act — it takes every table under it, every grant attached to them and an unknown number of dashboards downstream, none of which is on the screen when the button is clicked. Friction has to scale with two things at once: how wide the blast radius is and whether the act can be taken back. The top rung of that ladder is not more friction. It is showing the radius.",
     use: [
@@ -479,6 +522,7 @@ export const PATTERNS: Pattern[] = [
     id: "multi-step-flows",
     name: "Multi-step flows",
     group: "Acting at scale",
+    summary: "One commit point, and going back is always free",
     intent:
       "A wizard exists because a task has a real order — later choices depend on earlier ones, and the whole thing commits at once. That second half is what separates it from a long form. Everything entered is provisional until the last step, so the pattern is about where the commit point sits, what going back costs and what happens when step four fails after steps one to three already changed something.",
     use: [
@@ -571,6 +615,7 @@ export const PATTERNS: Pattern[] = [
     id: "long-running-operations",
     name: "Long-running operations",
     group: "Work that outlives the click",
+    summary: "Releasing the reader without losing track of the work",
     intent:
       "A query runs for under a minute. A pipeline runs for most of an hour. A permission scan across a metastore runs for as long as it runs. General design systems treat this as a loading state and stop there, which is why it is the pattern most often rebuilt badly. The interface has three jobs: match the indicator to the wait, release the reader from watching, and still tell the truth when they come back to a tab they left open all afternoon.",
     use: [
@@ -631,17 +676,17 @@ export const PATTERNS: Pattern[] = [
       },
       {
         moment: "The work fails",
-        does: "`Alert` with what failed, why, and the next action",
+        does: "`Alert` with what failed, why and the next action",
         invariant: "The inputs survive, so a failed run is re-runnable without re-entering anything",
       },
       {
-        moment: "The work is cancelled",
-        does: "The run reads as cancelled",
+        moment: "The work is canceled",
+        does: "The run reads as canceled",
         invariant: "Cancelled is a third outcome. It is neither a success nor an error and never renders as one",
       },
       {
         moment: "Cancellation is requested and cannot be honored",
-        does: "The control says the work is past the point of cancelling",
+        does: "The control says the work is past the point of canceling",
         invariant: "Never offer a cancel the system will not act on",
       },
       {
@@ -655,12 +700,12 @@ export const PATTERNS: Pattern[] = [
       "Pick the indicator from what is known about the endpoint, not from how the wait feels",
       "Release the reader as soon as the work has an identity they can return to",
       "Say plainly that the work continues after they navigate away",
-      "Keep cancelled distinct from failed everywhere the outcome is shown",
+      "Keep canceled distinct from failed everywhere the outcome is shown",
     ],
     donts: [
       "Show a determinate bar for work with no knowable end",
       "Trust state that was fetched before the tab lost focus",
-      "Offer a cancel control for work that cannot be cancelled",
+      "Offer a cancel control for work that cannot be canceled",
       "Make a toast the only place a completion was ever recorded",
     ],
   },
@@ -668,6 +713,7 @@ export const PATTERNS: Pattern[] = [
     id: "partial-results",
     name: "Partial results",
     group: "Work that outlives the click",
+    summary: "Saying so, at the number, when the answer is incomplete",
     intent:
       "The most dangerous screen in a data product is the one that is subtly incomplete. A query that hit its row limit, a lineage graph missing the assets the reader has no grant on, a search that skipped a catalog it could not reach — each returns a plausible, well-formatted, wrong answer that looks exactly like a right one. Every rule below is the same rule in a different place: state the gap where the data is, not in a footnote under it.",
     use: [

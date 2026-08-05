@@ -17,7 +17,7 @@ import type { Pattern } from "@/components/patterns-data"
  */
 
 /** Backtick spans become inline code. No other markup is supported, on purpose. */
-function ticks(text: string) {
+export function ticks(text: string) {
   return text.split(/(`[^`]+`)/g).map((part, i) =>
     part.startsWith("`") && part.endsWith("`") ? (
       <Code key={i}>{part.slice(1, -1)}</Code>

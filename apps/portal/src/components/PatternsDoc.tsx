@@ -1,6 +1,8 @@
+import Link from "next/link"
+
 import { DocHeader, DocSection, Para, Code, Command, RefTable } from "@/components/docs/Prose"
-import { PatternEntry } from "@/components/docs/PatternKit"
-import { PATTERNS, PATTERN_GROUPS } from "@/components/patterns-data"
+import { PatternEntry, ticks } from "@/components/docs/PatternKit"
+import { PATTERNS, PATTERN_GROUPS, DEFERRED } from "@/components/patterns-data"
 
 /**
  * A pattern is a sequence, not a picture. Every entry therefore renders the
@@ -83,6 +85,22 @@ export function PatternsDoc() {
         </Para>
       </DocSection>
 
+      <DocSection title="The set">
+        <div className="flex flex-col">
+          {PATTERNS.map((pattern, i) => (
+            <Link
+              key={pattern.id}
+              href={`#${pattern.id}`}
+              className="flex items-baseline gap-5 border-b border-border-subtle px-3 py-3 no-underline transition-colors hover:bg-surface-hover"
+            >
+              <span className="type-hint w-5 shrink-0 text-text-subtle tabular-nums">{i + 1}</span>
+              <span className="type-label-bold w-56 shrink-0 text-text-strong">{pattern.name}</span>
+              <span className="type-body text-text-subtle">{pattern.summary}</span>
+            </Link>
+          ))}
+        </div>
+      </DocSection>
+
       {PATTERN_GROUPS.map((group) => {
         const members = PATTERNS.filter((p) => p.group === group.name)
         if (members.length === 0) return null
@@ -103,16 +121,35 @@ export function PatternsDoc() {
         )
       })}
 
+      <DocSection title="What was left out">
+        <Para>
+          Seven patterns that belong on this page are not on it. In almost every case the reason is
+          the same: DBUI has nothing to hang them on, so the entry would be a heading followed by a
+          gap. They are listed rather than quietly omitted, because a reader who cannot find
+          &ldquo;saving&rdquo; here should learn that it is missing on purpose.
+        </Para>
+        <RefTable
+          columns={[
+            { key: "name", header: "Pattern", width: "w-[28%]" },
+            { key: "why", header: "Why not yet", width: "w-[72%]" },
+          ]}
+          rows={DEFERRED.map((row) => ({ name: row.name, why: ticks(row.why) }))}
+        />
+      </DocSection>
+
       <DocSection title="Read the patterns as data">
         <Para>
-          Every field on this page is a plain string in one array, so a pattern can be handed to an
-          agent without rendering the page. The behavior table in particular serializes without loss
-          — three named columns, one row per moment.
+          Every field behind this page is a plain string in one array, so a pattern can be handed to
+          an agent without rendering anything. The behavior table is the part that matters here: three
+          named columns and one row per moment serialize without loss, which is exactly what a prose
+          description of the same sequence cannot do.
         </Para>
         <Command>yarn dbui search &lt;query&gt; --json</Command>
         <Para>
-          A dedicated <Code>dbui pattern</Code> command does not exist yet. Until it does, the array
-          in <Code>patterns-data.ts</Code> is the source and this page is one view of it.
+          There is no <Code>dbui pattern</Code> command yet. Until there is, the array in{" "}
+          <Code>patterns-data.ts</Code> is the source and this page is one view of it. The shape a
+          pattern should take over the CLI and MCP — and how it should reach an agent from a
+          component&rsquo;s own JSDoc — is an open question, not a decided one.
         </Para>
       </DocSection>
     </>
