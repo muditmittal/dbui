@@ -294,7 +294,9 @@ export const demos: Record<string, React.ReactNode> = {
       <Skeleton className="h-3 w-3/5" />
     </div>
   ),
-  Spinner: <Spinner />,
+  // Larger than the default: at 16px, a partial arc in a 112px tile reads as a
+  // stray glyph rather than as something turning.
+  Spinner: <Spinner className="size-6" />,
   Status: (
     <div className="flex flex-col gap-1.5">
       <Status status="running" size="sm" />

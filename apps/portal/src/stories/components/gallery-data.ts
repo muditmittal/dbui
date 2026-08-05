@@ -338,7 +338,7 @@ export const galleryGroups: GalleryGroup[] = [
       {
         "name": "Label",
         "slug": "label",
-        "useFor": "Form labels (Bold style, 13px Semibold)",
+        "useFor": "The name of a form field",
         "storyId": null
       },
       {
@@ -369,7 +369,7 @@ export const galleryGroups: GalleryGroup[] = [
       {
         "name": "Platform Header",
         "slug": "platform-header",
-        "useFor": "The Databricks 48px top bar (sidebar toggle, search, workspace, Genie, apps, profile)",
+        "useFor": "The Databricks top bar (sidebar toggle, search, workspace, Genie, apps, profile)",
         "storyId": "components-compositions-platform-header--default"
       }
     ]
