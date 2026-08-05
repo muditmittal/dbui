@@ -77,14 +77,17 @@
   --font-mono: var(--db-mono-font-family);
 
 
-  /* ─── Radius — DuBois values, mapped to shadcn usage ─── */
-  /* shadcn components use rounded-lg for buttons/inputs, rounded-md for inner elements */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-  --radius-3xl: 999px;
+  /* ─── Radius — the shipped tokens, not a second copy of their values ───
+   * These were px literals restating tokens.css. Identical at 1x, but a px
+   * corner on a control whose height is in rem changes the control's shape
+   * as soon as the root moves, which is the case the rem radii exist for.
+   * `rounded-3xl` is the pill sentinel and stays on `full`. */
+  --radius-sm: var(--db-radius-sm);
+  --radius-md: var(--db-radius-md);
+  --radius-lg: var(--db-radius-lg);
+  --radius-xl: var(--db-radius-xl);
+  --radius-2xl: var(--db-radius-2xl);
+  --radius-3xl: var(--db-radius-full);
 }
 
 /* ─── Light mode — DuBois token values ─── */
