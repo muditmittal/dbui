@@ -152,9 +152,9 @@ function Guidance({ dos, donts }: { dos: string[]; donts: string[] }) {
 
 export function PrinciplesDoc() {
   return (
-    <>
+    <div className="max-w-[40rem]">
       <h1 className="type-title-1 text-text-strong">Design principles</h1>
-      <p className="type-paragraph mt-4 max-w-[64ch] text-text-subtle">
+      <p className="type-paragraph mt-4 text-text-subtle">
         Six principles for the Databricks interface. Each one gives something up — a principle
         nobody could disagree with cannot settle an argument. They build in order: the first says
         who we serve, and the rest largely follow from it.
@@ -171,7 +171,7 @@ export function PrinciplesDoc() {
             </div>
 
             <h2 className="type-title-3 mt-2 text-text-strong">{p.name}</h2>
-            <p className="type-paragraph mt-2 max-w-[66ch] text-text-subtle">{p.meaning}</p>
+            <p className="type-paragraph mt-2 text-text-subtle">{p.meaning}</p>
 
             <div className="mt-6">
               <Guidance dos={p.dos} donts={p.donts} />
@@ -187,17 +187,17 @@ export function PrinciplesDoc() {
         <h2 className="type-title-4 text-text-strong" style={{ marginTop: 0 }}>
           Where these live
         </h2>
-        <p className="type-body mt-2 max-w-[66ch] text-text-subtle">
+        <p className="type-body mt-2 text-text-subtle">
           A principle only holds if the guidance cites it. Each component&rsquo;s{" "}
           <code className="type-code">@guideline</code> names the principle it serves, so a rule and
           its reason arrive together — in the source, in <code className="type-code">dbui component</code>,
           and in the MCP response an agent reads.
         </p>
-        <p className="type-body mt-3 max-w-[66ch] text-text-subtle">
+        <p className="type-body mt-3 text-text-subtle">
           Anything on this page that cannot be traced into a component rule is decoration, and
           should be cut.
         </p>
       </section>
-    </>
+    </div>
   )
 }
