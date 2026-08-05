@@ -84,14 +84,14 @@ const REACHES: Record<string, React.ReactNode> = {
       here.
     </>
   ),
-  scalars: <>Multiplied inside the generated CSS. One of the five turns a family anything reads.</>,
+  scalars: <>Multiplied inside the generated CSS. Only one of the five turns a family anything reads.</>,
 }
 
 /** What each Tailwind namespace governs, and where it bites. */
 const GOVERNS: Record<string, React.ReactNode> = {
   "--spacing": (
     <>
-      Padding, margin, gap, inset, and every numeric <Code>w-</Code>, <Code>h-</Code> and{" "}
+      Padding, margin, gap, inset and every numeric <Code>w-</Code>, <Code>h-</Code> and{" "}
       <Code>size-</Code>. The spacing system in practice.
     </>
   ),
@@ -144,13 +144,17 @@ const TYPE_USE: Record<string, string> = {
   "type-title-1": "Page heading",
 }
 
-/** What each dial multiplies, so its status reads as a consequence. */
+/**
+ * What each dial multiplies, so its status reads as a consequence rather than a
+ * verdict. The density note is the one that matters: the config calls it the
+ * master dial, and in the shipped CSS it reaches space and nothing else.
+ */
 const DRIVES: Record<string, React.ReactNode> = {
-  "spacing-unit": <>The grid step every space token is a multiple of.</>,
-  "density-scalar": <>Space, on top of the spacing dial.</>,
-  "spacing-scalar": <>Space.</>,
+  "spacing-unit": <>The grid step every space token multiplies.</>,
+  "density-scalar": <>Space. Described as the master dial, but space is all it reaches.</>,
+  "spacing-scalar": <>Space, alongside the density dial.</>,
   "sizing-scalar": <>Control heights and icon boxes.</>,
-  "type-scalar": <>The whole ramp, proportionally.</>,
+  "type-scalar": <>The whole type ramp, proportionally.</>,
 }
 
 const TERMINAL_TOOLS = [
@@ -465,7 +469,7 @@ export function TokensDoc() {
         cautions={[
           <>
             <Code>label</Code> and <Code>body</Code> are the same size and differ only in leading. A
-            label is single-line by definition, so its line box matches the icon box; using it for
+            label is single-line by definition, so its line box matches the icon box. Using it for
             text that wraps looks correct until a second line appears.
           </>,
           <>
@@ -605,8 +609,8 @@ export function TokensDoc() {
           </>,
           <>
             The docs rail moves the root font size, not <Code>--db-type-scalar</Code>. The root is the
-            one input that moves type, radius and Tailwind&rsquo;s rem utilities together; the type
-            scalar grows text inside boxes that stay put.
+            one input that moves type, radius and Tailwind&rsquo;s rem utilities together. The type
+            scalar moves the ramp alone, which grows text inside boxes that stay put.
           </>,
         ]}
       >

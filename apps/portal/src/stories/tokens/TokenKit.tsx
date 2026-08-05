@@ -399,6 +399,19 @@ export function Wired({ live }: { live: boolean }) {
   )
 }
 
+/** Names the columns of a scan table. Without it a bare count is a mystery. */
+function HeadRow({ cells }: { cells: [string, string][] }) {
+  return (
+    <div className="flex items-baseline gap-4 border-b border-border-base bg-surface-subtle px-4 py-2">
+      {cells.map(([label, width]) => (
+        <span key={label} className={`type-eyebrow ${width} text-text-subtle`}>
+          {label}
+        </span>
+      ))}
+    </div>
+  )
+}
+
 /**
  * How each family reaches code, in the order the page presents them.
  *
@@ -415,14 +428,24 @@ export function WiringTable({
 }) {
   return (
     <Panel>
+      <HeadRow
+        cells={[
+          ["Family", "w-24 shrink-0"],
+          ["Tokens", "w-12 shrink-0"],
+          ["Reaches code as", "min-w-0 flex-1"],
+          ["Status", "w-24 shrink-0"],
+        ]}
+      />
       {families.map((f, i) => (
         <Row key={f.key} last={i === families.length - 1}>
-          <span className="type-label-bold w-28 shrink-0 text-text-strong">{f.label}</span>
-          <span className="type-hint w-16 shrink-0 text-text-subtle">{f.tokens}</span>
+          <span className="type-label-bold w-24 shrink-0 text-text-strong">{f.label}</span>
+          <span className="type-hint w-12 shrink-0 tabular-nums text-text-subtle">{f.tokens}</span>
           <span className="type-body min-w-0 flex-1 text-text-subtle">
             {reaches[f.key] ?? <span aria-hidden="true">&mdash;</span>}
           </span>
-          <Wired live={f.live} />
+          <span className="w-24 shrink-0">
+            <Wired live={f.live} />
+          </span>
         </Row>
       ))}
     </Panel>
@@ -431,12 +454,16 @@ export function WiringTable({
 
 /**
  * The Tailwind theme namespaces the system actually depends on, with whose value
- * is in force. Sorted by use in the generator, so the row order is the order of
- * how much a rule about it would matter.
+ * is in force. Sorted by use in the generator, so row order is the order in which
+ * a rule about one would matter.
+ *
+ * Two lines rather than four columns. The namespace is a long mono string and the
+ * description is a sentence, and side by side in this measure the mono column
+ * starved the sentence into an eight-line ribbon. Stacking gives the sentence the
+ * full width and keeps the name and its numbers on one scannable line.
  *
  * Rows with no uses are dropped: a namespace nothing writes a class for is not a
- * dependency, and listing it would pad the one table on the page whose length is
- * the point.
+ * dependency, and listing it would pad the one table whose length is the point.
  */
 export function TailwindTable({
   rows,
@@ -451,14 +478,18 @@ export function TailwindTable({
       {used.map((r, i) => (
         <div
           key={r.namespace}
-          className={`flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-baseline sm:gap-4 ${i === used.length - 1 ? "" : "border-b border-border-subtle"}`}
+          className={`flex flex-col gap-1 px-4 py-3 ${i === used.length - 1 ? "" : "border-b border-border-subtle"}`}
         >
-          <code className="type-code w-64 shrink-0 text-text-base">{r.namespace}</code>
-          <span className="type-body min-w-0 flex-1 text-text-subtle">{governs[r.namespace]}</span>
-          <span className="type-hint w-32 shrink-0 text-text-subtle">
-            {r.overriddenIn ? "DBUI overrides" : "Tailwind default"}
-          </span>
-          <span className="type-hint w-16 shrink-0 tabular-nums text-text-subtle">{r.uses}</span>
+          <div className="flex items-baseline gap-3">
+            <code className="type-code min-w-0 flex-1 truncate text-text-base">{r.namespace}</code>
+            <span className="type-hint shrink-0 text-text-subtle">
+              {r.overriddenIn ? "DBUI overrides" : "Tailwind default"}
+            </span>
+            <span className="type-hint w-16 shrink-0 text-right tabular-nums text-text-subtle">
+              {r.uses} uses
+            </span>
+          </div>
+          <span className="type-body text-text-subtle">{governs[r.namespace]}</span>
         </div>
       ))}
     </Panel>
@@ -486,12 +517,17 @@ export function ScalarList({
   return (
     <Panel>
       {tokens.map((t, i) => (
-        <Row key={t.name} last={i === tokens.length - 1}>
-          <Name>--db-{t.name}</Name>
-          <Value>{t.value}</Value>
-          <span className="type-body min-w-0 flex-1 text-text-subtle">{drives[t.name]}</span>
-          <Wired live={live.get(`--db-${t.name}`) ?? false} />
-        </Row>
+        <div
+          key={t.name}
+          className={`flex flex-col gap-1 px-4 py-3 ${i === tokens.length - 1 ? "" : "border-b border-border-subtle"}`}
+        >
+          <div className="flex items-baseline gap-3">
+            <code className="type-code min-w-0 flex-1 truncate text-text-base">--db-{t.name}</code>
+            <span className="type-hint shrink-0 tabular-nums text-text-subtle">{t.value}</span>
+            <Wired live={live.get(`--db-${t.name}`) ?? false} />
+          </div>
+          <span className="type-body text-text-subtle">{drives[t.name]}</span>
+        </div>
       ))}
     </Panel>
   )
