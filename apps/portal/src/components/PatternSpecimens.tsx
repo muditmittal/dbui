@@ -8,7 +8,7 @@ import { Button, ButtonIcon } from "dbui/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "dbui/components/ui/collapsible"
 import { ControlsBar, ControlsBarFilters } from "dbui/components/ui/controls-bar"
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "dbui/components/ui/empty"
-import { KeyValueItem, KeyValueKey, KeyValuePair, KeyValueValue } from "dbui/components/ui/key-value-pair"
+import { KeyValueItem, KeyValueKey, KeyValuePair, KeyValueValueEnd } from "dbui/components/ui/key-value-pair"
 import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
 import { Skeleton } from "dbui/components/ui/skeleton"
 import { Status } from "dbui/components/ui/status"
@@ -122,14 +122,19 @@ export function EmptyStatesSpecimen() {
       }
       caption="One region, five causes. Only one of them offers a create action, and the one that failed keeps the way back rather than the way in."
     >
+      {/*
+        Fixed floor rather than a natural height. The switcher is a docs control,
+        so a region that grew by 48px between two causes would be the page
+        moving under the reader for no reason the pattern cares about.
+      */}
       <div
-        className={`flex min-h-44 flex-col px-4 py-4 ${
+        className={`flex min-h-56 flex-col px-4 py-4 ${
           cause === "Loading" ? "justify-start gap-2" : "justify-center"
         }`}
       >
         {cause === "Loading" ? (
           <>
-            {[0, 1, 2, 3].map((row) => (
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((row) => (
               <div key={row} className="flex items-center gap-4">
                 <Skeleton className="h-4 w-44" />
                 <Skeleton className="h-4 w-20" />
@@ -236,7 +241,10 @@ export function FilteringSpecimen() {
     return () => clearTimeout(t)
   }, [resolving, active])
 
-  function apply(next: string[]) {
+  // Functional update rather than a spread over the closed-over array: two
+  // filters clicked inside one tick would otherwise both read the same `active`
+  // and the second would drop the first.
+  function apply(next: (prev: string[]) => string[]) {
     setActive(next)
     setResolving(true)
   }
@@ -253,10 +261,8 @@ export function FilteringSpecimen() {
               size="sm"
               pressed={active.includes(filter.id)}
               onPressedChange={(pressed) =>
-                apply(
-                  pressed
-                    ? [...active, filter.id]
-                    : active.filter((id) => id !== filter.id)
+                apply((prev) =>
+                  pressed ? [...prev, filter.id] : prev.filter((id) => id !== filter.id)
                 )
               }
             >
@@ -276,13 +282,13 @@ export function FilteringSpecimen() {
               <TagValue>{filter.value}</TagValue>
               <TagRemove
                 aria-label={`Remove ${filter.label} filter`}
-                onClick={() => apply(active.filter((id) => id !== filter.id))}
+                onClick={() => apply((prev) => prev.filter((id) => id !== filter.id))}
               />
             </Tag>
           ))
         )}
         {active.length > 1 ? (
-          <Button variant="link" size="sm" onClick={() => apply([])}>
+          <Button variant="link" size="sm" onClick={() => apply(() => [])}>
             Clear all
           </Button>
         ) : null}
@@ -308,7 +314,7 @@ export function FilteringSpecimen() {
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
-              <Button variant="outline" size="sm" onClick={() => apply([])}>
+              <Button variant="outline" size="sm" onClick={() => apply(() => [])}>
                 Clear filters
               </Button>
             </EmptyContent>
@@ -370,20 +376,25 @@ export function DisclosureSpecimen() {
         </div>
 
         <CollapsibleContent>
-          <div className="flex min-h-24 flex-col justify-center border-t border-border-subtle px-4 py-3">
+          {/*
+            The skeleton is three rows on the same row height as the statistics,
+            so the panel is the height it will end up at from the frame it opens.
+            A skeleton that does not match its content trades one reflow for two.
+          */}
+          <div className="border-t border-border-subtle px-4 py-3">
             {loaded ? (
-              <KeyValuePair>
+              <KeyValuePair layout="flexible">
                 {COLUMN_STATS.map(([key, value]) => (
-                  <KeyValueItem key={key}>
-                    <KeyValueKey>{key}</KeyValueKey>
-                    <KeyValueValue className="tabular-nums">{value}</KeyValueValue>
+                  <KeyValueItem key={key} layout="flexible">
+                    <KeyValueKey layout="flexible">{key}</KeyValueKey>
+                    <KeyValueValueEnd className="tabular-nums">{value}</KeyValueValueEnd>
                   </KeyValueItem>
                 ))}
               </KeyValuePair>
             ) : (
-              <div className="flex flex-col gap-3">
+              <div className="flex w-full flex-col">
                 {[0, 1, 2].map((row) => (
-                  <div key={row} className="flex items-center justify-between gap-4">
+                  <div key={row} className="flex items-center justify-between gap-4 py-1">
                     <Skeleton className="h-4 w-32" />
                     <Skeleton className="h-4 w-16" />
                   </div>

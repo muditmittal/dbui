@@ -1,8 +1,8 @@
+import * as React from "react"
 import Link from "next/link"
 
 import { DocHeader, DocSection, Para, Code, Command, RefTable } from "@/components/docs/Prose"
 import { Guidance } from "@/components/docs/Guidance"
-import { ticks } from "@/components/docs/PatternKit"
 import { PatternSpecimen } from "@/components/PatternSpecimens"
 import { PATTERNS, PATTERN_GROUPS, DEFERRED, type Pattern } from "@/components/patterns-data"
 
@@ -24,6 +24,23 @@ import { PATTERNS, PATTERN_GROUPS, DEFERRED, type Pattern } from "@/components/p
  * Nothing here sets a measure. The docs column is capped once, on `<article>`
  * in `app/docs/layout.tsx`.
  */
+
+/**
+ * Backtick spans become inline code. No other markup is supported, on purpose:
+ * `patterns-data.ts` holds nothing but plain strings so the same objects can be
+ * emitted as JSON, and one escape hatch for a component name is the whole budget.
+ *
+ * `Guidance` renders its rows verbatim, so a do or a don't never carries ticks.
+ */
+export function ticks(text: string) {
+  return text.split(/(`[^`]+`)/g).map((part, i) =>
+    part.startsWith("`") && part.endsWith("`") ? (
+      <Code key={i}>{part.slice(1, -1)}</Code>
+    ) : (
+      <React.Fragment key={i}>{part}</React.Fragment>
+    )
+  )
+}
 
 /** Names the block below it. Used only where the block would otherwise be unlabeled. */
 function SlotLabel({ children }: { children: React.ReactNode }) {
@@ -92,14 +109,15 @@ function NoSpecimen({ children }: { children: string }) {
 function PatternEntry({ pattern, index }: { pattern: Pattern; index: number }) {
   return (
     <section id={pattern.id} style={{ margin: 0, scrollMarginTop: "5rem" }}>
-      <div className="type-eyebrow flex items-baseline gap-2 text-text-subtle">
-        <span style={{ fontVariantNumeric: "tabular-nums" }}>
-          {String(index).padStart(2, "0")}
-        </span>
-        <span>{pattern.group}</span>
+      {/*
+        The number only. The group is the heading two lines up, so naming it
+        again here was the page telling the reader something they had just read.
+      */}
+      <div className="type-eyebrow text-text-subtle" style={{ fontVariantNumeric: "tabular-nums" }}>
+        {String(index).padStart(2, "0")}
       </div>
 
-      <h3 className="type-title-3 mt-2 text-text-strong">{pattern.name}</h3>
+      <h3 className="type-title-3 mt-1 text-text-strong">{pattern.name}</h3>
       <p className="type-paragraph mt-2 text-text-subtle">{pattern.intent}</p>
 
       <div className="mt-6 flex flex-col gap-6">

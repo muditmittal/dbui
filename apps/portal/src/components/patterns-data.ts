@@ -135,7 +135,7 @@ export const PATTERNS: Pattern[] = [
       "Keep filter and search controls mounted and populated behind an empty result",
       "Let a healthy zero read as healthy, with no action attached to it",
       "Say which grant is missing when permission is the reason, and who can grant it",
-      "Give the create action the same label it carries in `PageHeader`",
+      "Give the create action the same label the page header carries, and the same behavior",
     ],
     donts: [
       "Render an empty state while a request is in flight — zero rows and unknown rows look nothing alike",
@@ -426,7 +426,7 @@ export const PATTERNS: Pattern[] = [
       "Name which source failed and which ones did not",
       "Put freshness beside the data, with a refresh control",
       "Carry the caveat into exports, copies and anything an agent reads back",
-      "Send a permission filter that removed everything to `Empty`, naming the missing grant",
+      "Send a permission filter that removed every row to an empty state naming the missing grant",
     ],
     donts: [
       "Filter rows for permission without saying that rows were filtered",
