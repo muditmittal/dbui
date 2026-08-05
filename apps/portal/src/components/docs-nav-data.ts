@@ -4,29 +4,40 @@
  * a client reference rather than the value — so `DOCS_NAV.map` is not a function.
  *
  * Only routes that exist. A nav entry that 404s is worse than a missing one.
+ *
+ * URLs stay flat. `Foundations` and `Tooling` are groups in the nav and landing
+ * pages of their own, but nothing sits at `/docs/foundations/tokens`. Grouping is
+ * a navigation concern, so it does not get to rewrite every route and link.
  */
-export const DOCS_NAV = [
+
+export type DocsNavItem = { href: string; label: string }
+
+export type DocsNavEntry = DocsNavItem & {
+  /** Present on a group. The entry itself is the group's landing page. */
+  items?: DocsNavItem[]
+}
+
+export const DOCS_NAV: DocsNavEntry[] = [
+  { href: "/docs/principles", label: "Design principles" },
+  { href: "/docs/voice", label: "Voice and tone" },
   {
-    title: "Start",
-    items: [
-      { href: "/docs", label: "Overview" },
-      { href: "/docs/principles", label: "Design principles" },
-    ],
-  },
-  {
-    title: "Foundations",
+    href: "/docs/foundations",
+    label: "Foundations",
     items: [
       { href: "/docs/tokens", label: "Tokens" },
-      { href: "/docs/voice", label: "Voice and tone" },
+      { href: "/docs/icons", label: "Icons" },
+      { href: "/docs/components", label: "Components" },
+      { href: "/docs/patterns", label: "Patterns" },
+      { href: "/docs/accessibility", label: "Accessibility and internationalization" },
     ],
   },
   {
-    title: "Tooling",
+    href: "/docs/overview",
+    label: "Tooling",
     items: [
-      { href: "/docs/overview", label: "Overview" },
       { href: "/docs/cli", label: "CLI" },
-      { href: "/docs/mcp", label: "MCP server" },
-      { href: "/docs/checks", label: "Checks and skills" },
+      { href: "/docs/mcp", label: "MCP servers" },
+      { href: "/docs/checks", label: "Design linters" },
     ],
   },
 ]
