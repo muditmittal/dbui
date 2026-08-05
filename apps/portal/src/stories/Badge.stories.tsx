@@ -46,6 +46,14 @@ export const Playground: StoryObj = {
               <Badge variant="outline"><Key /> Badge</Badge>
             </td>
           </tr>
+          {(["positive", "negative", "warning", "info"] as const).map((v) => (
+            <tr key={v}>
+              <td style={{ padding: "14px 24px 14px 0", verticalAlign: "middle", fontSize: 12, color: "#6F6F6F", textTransform: "capitalize" }}>{v}</td>
+              <td style={{ padding: "14px 24px 14px 0" }}>
+                <Badge variant={v}><Key /> Badge</Badge>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 

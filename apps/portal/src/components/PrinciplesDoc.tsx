@@ -1,5 +1,4 @@
-import { Check } from "dbui/components/icons/Check"
-import { Close } from "dbui/components/icons/Close"
+import { Badge } from "dbui"
 import {
   AudienceSpecimen,
   AutomationSpecimen,
@@ -146,18 +145,34 @@ const PRINCIPLES: Principle[] = [
   },
 ]
 
-function Column({ items, tone }: { items: string[]; tone: "do" | "dont" }) {
-  const positive = tone === "do"
-  const color = positive ? "text-status-text-positive" : "text-status-text-negative"
+/**
+ * One stacked list rather than two columns. The columns were only earning their
+ * keep while every do had a mirrored don't; once the items became independent,
+ * side-by-side asked the reader to compare things that were not comparable.
+ */
+function Guidance({ dos, donts }: { dos: string[]; donts: string[] }) {
+  const rows = [
+    ...dos.map((text) => ({ text, tone: "do" as const })),
+    ...donts.map((text) => ({ text, tone: "dont" as const })),
+  ]
+
   return (
-    <div className="flex flex-1 flex-col gap-2.5">
-      <div className={`type-eyebrow ${color}`}>{positive ? "Do" : "Don't"}</div>
-      {items.map((item) => (
-        <div key={item} className="type-body flex gap-2 text-text-base">
-          <span className={`mt-0.5 shrink-0 ${color}`}>
-            {positive ? <Check className="size-4" /> : <Close className="size-4" />}
+    <div className="overflow-hidden rounded-md border border-border-base">
+      {rows.map(({ text, tone }, i) => (
+        <div
+          key={text}
+          className={`flex items-start gap-4 px-4 py-2.5 ${
+            i < rows.length - 1 ? "border-b border-border-base" : ""
+          }`}
+        >
+          {/* Fixed gutter rather than a fixed pill width: the two labels are
+              different lengths, and the text column is what needs to line up. */}
+          <span className="w-14 shrink-0">
+            <Badge variant={tone === "do" ? "positive" : "negative"}>
+              {tone === "do" ? "Do" : "Don't"}
+            </Badge>
           </span>
-          <span>{item}</span>
+          <span className="type-body text-text-base">{text}</span>
         </div>
       ))}
     </div>
@@ -203,9 +218,8 @@ export function PrinciplesDoc() {
                 </div>
               ) : null}
 
-              <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:gap-10">
-                <Column items={p.dos} tone="do" />
-                <Column items={p.donts} tone="dont" />
+              <div className="mt-8">
+                <Guidance dos={p.dos} donts={p.donts} />
               </div>
             </section>
           )
