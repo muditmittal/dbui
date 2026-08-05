@@ -312,7 +312,7 @@ function ContextMenuItemBadge({
     <span
       data-slot="context-menu-item-badge"
       className={cn(
-        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-1.5 text-[12px] font-semibold text-text-subtle group-focus/context-menu-item:bg-text-accent/10 group-focus/context-menu-item:text-text-base",
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-1.5 type-label-bold text-text-subtle group-focus/context-menu-item:bg-text-accent/10 group-focus/context-menu-item:text-text-base",
         className
       )}
       {...props}

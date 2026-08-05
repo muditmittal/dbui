@@ -28,18 +28,12 @@ Anything those contradict is this file being wrong.
    ported from the Storybook MDX. Storybook keeps `/components`.
 3. **Generate the token docs.** Four drifts in one session. Generate the derivable
    blocks, check them in CI when CI exists.
-4. **A bold step at the hint size.** The ramp has no 12/16 at weight 600, so seven
-   sites keep a px literal and stay frozen when the root font size moves: the count
-   badge in `dropdown-menu`, `context-menu` and `menubar`, `Kbd`, the small
-   `AvatarFallback`, and two spans in the shells' `PlatformHeader`. Adding a step
-   needs a decision, not a patch — verify by loading any page at 1.4x and looking for
-   text that did not grow. Everything else is on the ramp.
-5. **Charts do not scale.** `dbui-viz` sets font size as a number inside the
+4. **Charts do not scale.** `dbui-viz` sets font size as a number inside the
    Vega-Lite spec, which no CSS class reaches, so chart text stays put while the
    page around it grows. The donut's center value is also a size the ramp does not
    carry. Fixing it means teaching `resolveVizTheme` to read the ramp vars and
    resolve rem to px.
-6. **Genie prose sits on `body`, not `paragraph`.** `theme.config.mjs` names chat
+5. **Genie prose sits on `body`, not `paragraph`.** `theme.config.mjs` names chat
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.

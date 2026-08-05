@@ -148,7 +148,7 @@ export function PlatformHeader({
                         {item.badge && (
                           <Badge
                             variant="outline"
-                            className="text-[12px] leading-[16px] font-semibold bg-status-surface-info text-link-base border-transparent px-2 py-0 rounded-full"
+                            className="type-label-bold bg-status-surface-info text-link-base border-transparent px-2 py-0 rounded-full"
                           >
                             {item.badge}
                           </Badge>
@@ -163,7 +163,7 @@ export function PlatformHeader({
           <DropdownMenu>
             <DropdownMenuTrigger render={
               <Button variant="ghost" size="icon-md" aria-label="Profile menu">
-                <span className="flex size-6 items-center justify-center rounded-full bg-action-primary-base text-[12px] leading-[16px] font-semibold text-action-label-inverse-base">
+                <span className="flex size-6 items-center justify-center rounded-full bg-action-primary-base type-label-bold text-action-label-inverse-base">
                   {avatarInitial}
                 </span>
               </Button>

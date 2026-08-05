@@ -101,8 +101,7 @@ you should *act*:
   `type-paragraph` for prose. Each class is the whole style, so never pair it with `leading-`,
   `font-` or `uppercase`. Numbers in a table use `<TableCell numeric>`, not a type class.
 - **Components are on the ramp.** Never reintroduce a `text-[Npx]` or `leading-[Npx]` literal — a px
-  literal does not scale when the root font size does, so the box grows and the label does not. Seven
-  sites are still on literals for one missing ramp step; `TRACKER.md` has the list.
+  literal does not scale when the root font size does, so the box grows and the label does not.
 - **There is no published package.** Install is clone-and-copy per `packages/dbui/install.md`, and
   the npm registry is unreachable inside the corporate network.
 - **There are no tests and no CI.** The design linters and `dbui doctor` are the only automated

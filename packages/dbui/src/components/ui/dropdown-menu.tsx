@@ -332,7 +332,7 @@ function DropdownMenuItemBadge({
     <span
       data-slot="dropdown-menu-item-badge"
       className={cn(
-        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-1.5 text-[12px] font-semibold text-text-subtle group-focus/dropdown-menu-item:bg-text-accent/10 group-focus/dropdown-menu-item:text-text-base",
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-1.5 type-label-bold text-text-subtle group-focus/dropdown-menu-item:bg-text-accent/10 group-focus/dropdown-menu-item:text-text-base",
         className
       )}
       {...props}
