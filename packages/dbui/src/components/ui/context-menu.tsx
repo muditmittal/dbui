@@ -83,7 +83,7 @@ function ContextMenuLabel({
       data-slot="context-menu-label"
       data-inset={inset}
       className={cn(
-        "px-2 py-1 text-[12px] leading-[16px] text-text-subtle data-inset:pl-7",
+        "px-2 py-1 type-hint text-text-subtle data-inset:pl-7",
         className
       )}
       {...props}
@@ -106,7 +106,7 @@ function ContextMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "group/context-menu-item relative flex cursor-default items-center gap-1.5 rounded-sm px-1.5 py-1 text-[13px] outline-hidden select-none focus:bg-action-default-hover data-inset:pl-7 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative",
+        "group/context-menu-item relative flex min-h-7 cursor-default items-center gap-1.5 rounded-sm px-1.5 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-7 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative",
         className
       )}
       {...props}
@@ -133,7 +133,7 @@ function ContextMenuSubTrigger({
       data-slot="context-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "flex cursor-default items-center gap-1.5 rounded-sm px-1.5 py-1 text-[13px] outline-hidden select-none focus:bg-action-default-hover data-inset:pl-7 data-open:bg-action-default-hover [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex min-h-7 cursor-default items-center gap-1.5 rounded-sm px-1.5 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-7 data-open:bg-action-default-hover [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -171,7 +171,7 @@ function ContextMenuCheckboxItem({
       data-slot="context-menu-checkbox-item"
       data-inset={inset}
       className={cn(
-        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-1.5 pr-1.5 text-[13px] outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-1.5 pr-1.5 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
@@ -211,7 +211,7 @@ function ContextMenuRadioItem({
       data-slot="context-menu-radio-item"
       data-inset={inset}
       className={cn(
-        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-7 pr-1.5 text-[13px] outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-sm py-1 pl-7 pr-1.5 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -250,7 +250,7 @@ function ContextMenuShortcut({
     <span
       data-slot="context-menu-shortcut"
       className={cn(
-        "ml-auto text-[12px] tracking-widest text-text-subtle group-focus/context-menu-item:text-text-subtle",
+        "ml-auto type-hint text-text-subtle group-focus/context-menu-item:text-text-subtle",
         className
       )}
       {...props}
@@ -292,7 +292,7 @@ function ContextMenuItemDescription({
     <span
       data-slot="context-menu-item-description"
       className={cn(
-        "block text-[12px] leading-[16px] text-text-subtle font-normal group-focus/context-menu-item:text-text-base/70",
+        "block type-hint text-text-subtle group-focus/context-menu-item:text-text-base/70",
         className
       )}
       {...props}
@@ -348,7 +348,7 @@ function ContextMenuEmpty({
     <div
       data-slot="context-menu-empty"
       className={cn(
-        "flex items-center justify-center px-2 py-4 text-[13px] text-text-subtle",
+        "flex items-center justify-center px-2 py-4 type-body text-text-subtle",
         className
       )}
       {...props}
@@ -371,7 +371,7 @@ function ContextMenuLoading({
     <div
       data-slot="context-menu-loading"
       className={cn(
-        "flex items-center justify-center gap-2 px-2 py-4 text-[13px] text-text-subtle",
+        "flex items-center justify-center gap-2 px-2 py-4 type-body text-text-subtle",
         className
       )}
       {...props}
