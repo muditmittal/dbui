@@ -387,7 +387,7 @@ export const PATTERNS: Pattern[] = [
     gap: "There is no run component, so a named operation with elapsed time, a cancel and a result link is rebuilt on every surface that has runs. `Spinner` and `Progress` have no built-in delay and no token defines the flicker threshold, so each surface picks its own. Nothing re-fetches on focus.",
     dos: [
       "Pick the indicator from what is known about the endpoint, not from how the wait feels",
-      "Keep the trigger's width and label when it takes a busy state",
+      "Keep the trigger's width when it takes a busy state. A button that resizes moves the page under the cursor",
       "Release the reader as soon as the work has an identity they can return to",
       "Say plainly that the work continues after they navigate away",
       "Re-fetch run state when the tab regains focus",
