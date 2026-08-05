@@ -247,13 +247,21 @@ export function RadiusScale({ tokens }: { tokens: Token[] }) {
 
 /* ── Size ───────────────────────────────────────────────────────────────── */
 
+/**
+ * The anchor out of a scaled value. This was matching `calc(<n>px` and these
+ * tokens ship rem, so the whole `calc(1.5rem * var(--db-sizing-scalar))` landed
+ * in a narrow column and wrapped to three lines. The scalar it drops is the
+ * subject of its own section.
+ */
+const anchor = (value: string) => value.match(/calc\(\s*([\d.]+(?:rem|px))/)?.[1] ?? value
+
 export function SizeScale({ tokens, kind }: { tokens: Token[]; kind: "element" | "icon" }) {
   return (
     <Panel>
       {tokens.map((t, i) => (
         <Row key={t.name} last={i === tokens.length - 1}>
           <Name>--db-{t.name}</Name>
-          <Value>{t.value.replace(/calc\((\d+px).*/, "$1")}</Value>
+          <Value>{anchor(t.value)}</Value>
           <span
             className={
               kind === "element"
