@@ -114,22 +114,6 @@ export default function Home() {
         </section>
 
       </main>
-
-      <footer className="border-t border-border-base">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-8">
-          <span className="type-hint text-text-subtle">
-            Databricks · design system for data and AI workbenches
-          </span>
-          <a
-            href="https://github.com/muditmittal/dbui"
-            target="_blank"
-            rel="noreferrer"
-            className="type-hint text-text-subtle no-underline hover:text-text-strong"
-          >
-            GitHub
-          </a>
-        </div>
-      </footer>
     </>
   )
 }

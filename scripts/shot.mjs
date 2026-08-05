@@ -123,9 +123,14 @@ try {
     last = h;
   }
 
-  // `--dark` shoots dark mode. The portal has no theme switch — DBUI keys dark
-  // off a `dark` class, and every token is a CSS variable under it, so setting
-  // the class is the whole toggle and needs no reload.
+  // `--dark` shoots dark mode. DBUI keys dark off a `dark` class and every token
+  // is a CSS variable under it, so setting the class is the whole toggle and
+  // needs no reload.
+  //
+  // The portal's own switch lives in the site footer and reads the class on
+  // mount, which happens before this runs — so a shot taken this way is dark
+  // with the control still showing light. Append `?theme=dark` to the URL
+  // instead when the control has to agree with the page.
   if (process.argv.includes("--dark")) {
     await send("Runtime.evaluate", {
       expression: "document.documentElement.classList.add('dark')",

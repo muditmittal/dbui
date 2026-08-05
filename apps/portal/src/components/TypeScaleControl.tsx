@@ -5,7 +5,7 @@ import * as React from "react"
 import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
 
 /**
- * Switches the docs between three multipliers over the shipped type ramp.
+ * Switches the whole site between three multipliers over the shipped type ramp.
  *
  * The multiplier is applied by `html[data-type-scale]` in globals.css, which
  * moves the root font size. Everything spatial is authored in rem against that
@@ -20,10 +20,27 @@ import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-c
 const SCALES = ["1", "1.2", "1.4"] as const
 type Scale = (typeof SCALES)[number]
 
-/** The multiplier the docs read at, and the one the attribute never spells out. */
+/** The multiplier the site reads at, and the one the attribute never spells out. */
 const DEFAULT_SCALE: Scale = "1.2"
 
 export const TYPE_SCALE_KEY = "dbui-type-scale"
+
+/**
+ * The glyph previews the step rather than naming it, which is what lets the
+ * control sit in a footer at the width of three characters. The style class
+ * goes on a span rather than on the item: `type-label` is already on the item
+ * and these utilities do not merge, so the later-defined one would win and the
+ * smallest step would silently render at the middle size.
+ *
+ * `title-4` is the top step because it is the only ramp style far enough above
+ * `label` to read as larger at this size. Its extra weight is doing work too —
+ * size alone across 12, 13 and 16 is too small a spread to see in a footer.
+ */
+const STEPS: Array<{ value: Scale; glyph: string; label: string }> = [
+  { value: "1", glyph: "type-hint", label: "1x" },
+  { value: "1.2", glyph: "type-label", label: "1.2x" },
+  { value: "1.4", glyph: "type-title-4", label: "1.4x" },
+]
 
 const isScale = (v: string | undefined): v is Scale => SCALES.includes(v as Scale)
 
@@ -51,21 +68,17 @@ export function TypeScaleControl() {
   }, [])
 
   return (
-    <div className="flex flex-col gap-2">
-      <span className="type-eyebrow px-2 text-text-subtle">Type scale</span>
-      <SegmentControl
-        className="flex w-full"
-        size="sm"
-        value={[scale]}
-        onValueChange={(next) => apply(isScale(next[0]) ? next[0] : "1")}
-        aria-label="Type scale"
-      >
-        {SCALES.map((value) => (
-          <SegmentControlItem key={value} value={value}>
-            {value}x
-          </SegmentControlItem>
-        ))}
-      </SegmentControl>
-    </div>
+    <SegmentControl
+      size="md"
+      value={[scale]}
+      onValueChange={(next) => apply(isScale(next[0]) ? next[0] : DEFAULT_SCALE)}
+      aria-label="Type scale"
+    >
+      {STEPS.map((step) => (
+        <SegmentControlItem key={step.value} value={step.value} aria-label={step.label}>
+          <span className={step.glyph}>A</span>
+        </SegmentControlItem>
+      ))}
+    </SegmentControl>
   )
 }
