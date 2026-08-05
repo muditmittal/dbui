@@ -1,6 +1,8 @@
 import * as React from "react"
 import Link from "next/link"
 
+import { Guidance } from "@/components/docs/Guidance"
+
 /**
  * Renderers for the Voice and tone page.
  *
@@ -40,6 +42,35 @@ export function AnchoredSubsection({ title, children }: { title: string; childre
     <section className="mt-8 flex flex-col gap-3">
       <h3 className="type-title-4 text-text-strong">{title}</h3>
       {children}
+    </section>
+  )
+}
+
+/**
+ * A principle is a short read, not a row. Four columns of principle, meaning,
+ * do and don't put four wrapped paragraphs beside each other and asked the
+ * reader to rebuild each rule by tracking across them, so each principle gets
+ * its own heading and the pair goes to `Guidance`, which is where every
+ * do-and-don't in these docs lives.
+ */
+export function PrincipleEntry({
+  name,
+  meaning,
+  write,
+  avoid,
+}: {
+  name: string
+  meaning: string
+  write: string
+  avoid: string
+}) {
+  return (
+    <section className="flex flex-col gap-3">
+      <div className="flex flex-col gap-1">
+        <h3 className="type-title-4 text-text-strong">{name}</h3>
+        <p className="type-paragraph text-text-subtle">{meaning}</p>
+      </div>
+      <Guidance dos={[write]} donts={[avoid]} />
     </section>
   )
 }

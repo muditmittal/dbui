@@ -1,5 +1,5 @@
 import { DocHeader, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
-import { AnchoredSection, JumpTo } from "@/components/docs/VoiceKit"
+import { AnchoredSection, JumpTo, PrincipleEntry } from "@/components/docs/VoiceKit"
 
 /**
  * The rendered view of `packages/dbui/docs/brandvoice.md`. Every rule on this
@@ -28,28 +28,28 @@ const SECTIONS = [
 
 const PRINCIPLES = [
   {
-    principle: "Clear over clever",
+    name: "Clear over clever",
     meaning: "Plain, precise words instead of marketing jargon",
-    do: "Query sample data",
-    dont: "Unleash insights",
+    write: "Query sample data",
+    avoid: "Unleash insights",
   },
   {
-    principle: "Direct and concise",
+    name: "Direct and concise",
     meaning: "Lead with the primary action, use the fewest words possible",
-    do: "Delete catalog",
-    dont: "Click here to delete the catalog",
+    write: "Delete catalog",
+    avoid: "Click here to delete the catalog",
   },
   {
-    principle: "Honest, not hype",
+    name: "Honest, not hype",
     meaning: "State what is true, including technical limits",
-    do: "Runs on serverless compute",
-    dont: "Blazing-fast compute",
+    write: "Runs on serverless compute",
+    avoid: "Blazing-fast compute",
   },
   {
-    principle: "Smart but approachable",
+    name: "Smart but approachable",
     meaning: "Assume competence; explain the new, not the obvious",
-    do: "Deleting removes all child objects",
-    dont: "Oops, careful",
+    write: "Deleting removes all child objects",
+    avoid: "Oops, careful",
   },
 ]
 
@@ -254,15 +254,11 @@ export function VoiceDoc() {
           approachable. American spelling throughout — color, behavior, optimize, canceled. This
           applies to code comments and token names as well as UI copy.
         </Para>
-        <RefTable
-          columns={[
-            { key: "principle", header: "Principle", width: "w-[22%]" },
-            { key: "meaning", header: "Meaning" },
-            { key: "do", header: "Do" },
-            { key: "dont", header: "Don't" },
-          ]}
-          rows={PRINCIPLES}
-        />
+        <div className="mt-2 flex flex-col gap-10">
+          {PRINCIPLES.map((principle) => (
+            <PrincipleEntry key={principle.name} {...principle} />
+          ))}
+        </div>
       </AnchoredSection>
 
       <AnchoredSection id="tone-scale" title="Voice and tone scale">
