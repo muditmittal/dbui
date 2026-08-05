@@ -198,7 +198,7 @@ export const PATTERNS: Pattern[] = [
       { component: "Tooltip", role: "One line, on an icon-only trigger" },
       { component: "DataTree", role: "Hierarchy, where expanding is the navigation" },
     ],
-    gap: "No disclosure primitive owns its own asynchronous content, so open-then-fill is written per surface. Open state is local to the component, so persisting it across a navigation is too. `Collapsible` is documented only as an inner primitive of `Accordion`.",
+    gap: "No disclosure primitive owns its own asynchronous content or persists its open state, so open-then-fill and remembering a region are written per surface. `Collapsible` is documented only as an inner primitive of `Accordion`.",
     dos: [
       "Name the contents in the trigger, so a closed region is still legible",
       "Open the region first and fill it second, with a skeleton between",
@@ -268,7 +268,7 @@ export const PATTERNS: Pattern[] = [
     intent:
       "Dropping a schema takes every table under it, every grant on them and an unknown number of dashboards downstream, none of which is on screen.",
     noSpecimen:
-      "The pattern is a ladder of thresholds rather than a moment, so the table below is the example. The one part that is temporal — an undo window closing — comes from the vendored toast library rather than from DBUI, so a demo would show behavior the system does not own.",
+      "The ladder below is the example. The one temporal part — an undo window closing — comes from the vendored toast library rather than from DBUI, so animating it would demonstrate behavior the system does not own.",
     states: {
       label: "The friction ladder",
       columns: ["When", "What the interface requires"],
@@ -299,7 +299,7 @@ export const PATTERNS: Pattern[] = [
       { component: "Table", role: "The dependency list, once it is longer than a sentence" },
       { component: "Sonner", role: "The undo window, where the act is reversible" },
     ],
-    gap: "There is no typed-confirmation composition. Undo is not a system capability either — `sonner.tsx` exports only the `Toaster`, so an action inside a toast comes from the vendored library and is neither wrapped nor documented. Nothing computes or renders a blast radius.",
+    gap: "There is no typed-confirmation composition and nothing computes a blast radius. Undo is not a capability either — `sonner.tsx` exports only the `Toaster`, so an action inside a toast comes from the vendored library, neither wrapped nor documented.",
     dos: [
       "Count what will be affected and break the count down by object type",
       "List what depends on it, or say the check could not run",
@@ -326,7 +326,7 @@ export const PATTERNS: Pattern[] = [
     intent:
       "Everything entered is provisional until the last step, so the whole question is where the commit point sits and what going back costs.",
     noSpecimen:
-      "DBUI has no step indicator, so the rail every wizard needs would have to be invented here. An example built out of parts the system does not ship is a proposal, not documentation.",
+      "No example. The rail every wizard needs does not exist in DBUI, so it would have to be invented here, and an example built from parts the system does not ship is a proposal rather than documentation.",
     anatomy: [
       { component: "Dialog", role: "The container when the flow returns the reader where they started" },
       { component: "PageHeader", role: "The container when the flow deserves its own URL" },
@@ -336,7 +336,7 @@ export const PATTERNS: Pattern[] = [
       { component: "KeyValuePair", role: "The review step, one row per decision" },
       { component: "AlertDialog", role: "The confirmation on abandoning entered data" },
     ],
-    gap: "There is no step indicator. `Progress` draws a bar toward a known endpoint but carries no step labels, no completed and remaining states and no way back to a finished step. This is the largest gap on the page. Draft persistence is not a system capability either.",
+    gap: "There is no step indicator. `Progress` draws a bar toward an endpoint but carries no step labels, no completed and remaining states and no way back to a finished step. This is the largest gap on the page. Draft persistence is not a capability either.",
     dos: [
       "Show the total number of steps before the reader commits to starting",
       "Validate on leaving a step, never on keystroke inside it, and block the move when it fails",
@@ -384,7 +384,7 @@ export const PATTERNS: Pattern[] = [
       { component: "Alert", role: "A failure that needs a decision rather than a glance" },
       { component: "Button", role: "A cancel that genuinely cancels, or no cancel at all" },
     ],
-    gap: "There is no run component. The composed object — a named operation with elapsed time, a cancel, a result link and a lifecycle — is rebuilt on every surface that has runs. `Spinner` and `Progress` have no built-in delay and no token defines the flicker threshold, so each surface picks its own. Nothing re-fetches on window focus.",
+    gap: "There is no run component, so a named operation with elapsed time, a cancel and a result link is rebuilt on every surface that has runs. `Spinner` and `Progress` have no built-in delay and no token defines the flicker threshold, so each surface picks its own. Nothing re-fetches on focus.",
     dos: [
       "Pick the indicator from what is known about the endpoint, not from how the wait feels",
       "Keep the trigger's width and label when it takes a busy state",
