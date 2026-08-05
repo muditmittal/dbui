@@ -20,7 +20,7 @@ export default function DocsOverview() {
   return (
     <>
       <h1 className="type-title-1 text-text-strong">Docs</h1>
-      <p className="type-paragraph mt-4 max-w-[68ch] text-text-subtle">
+      <p className="type-paragraph mt-4 text-text-subtle">
         DBUI is a design system for data and AI workbenches — catalogs, queries, runs, lineage,
         models, governance, and chat over data. It is built so that an agent and a person reading
         the same source arrive at the same UI.
@@ -54,7 +54,7 @@ export default function DocsOverview() {
       </div>
 
       <h2 className="type-title-3 mt-12 text-text-strong">How it stacks</h2>
-      <p className="type-body mt-3 max-w-[68ch] text-text-subtle">
+      <p className="type-body mt-3 text-text-subtle">
         Each layer depends only on the ones above it. That is what makes swapping a token set or an
         icon pack safe — everything below keeps working.
       </p>
@@ -96,7 +96,7 @@ export default function DocsOverview() {
       </div>
 
       <h2 className="type-title-3 mt-12 text-text-strong">Components</h2>
-      <p className="type-paragraph mt-3 max-w-[68ch] text-text-subtle">
+      <p className="type-paragraph mt-3 text-text-subtle">
         The component library lives in Storybook, where every variant, state and control is
         interactive.{" "}
         <Link href="/components" className="text-text-accent">

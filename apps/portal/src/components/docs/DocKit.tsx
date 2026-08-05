@@ -41,7 +41,7 @@ export function DocPage({ title, children }: { title: string; children: React.Re
     // `sb-unstyled` opts the whole page out of Storybook's docs stylesheet,
     // which otherwise overrides font-family on prose and code — docs rendered in
     // Storybook's font would misrepresent the type system they document.
-    <div className="flex w-full max-w-3xl flex-col gap-7 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
+    <div className="flex w-full flex-col gap-7 pb-16 [&_li]:m-0! [&_ol]:m-0! [&_p]:m-0! [&_pre]:m-0! [&_ul]:m-0!">
       <h1
         style={HEADING_RESET}
         className="type-title-1 text-text-strong"
@@ -80,7 +80,7 @@ export function ContentSummary({ children }: { children: React.ReactNode }) {
 
 export function Lede({ children }: { children: React.ReactNode }) {
   return (
-    <p style={RESET} className="max-w-[64ch] type-paragraph text-text-subtle">
+    <p style={RESET} className=" type-paragraph text-text-subtle">
       {children}
     </p>
   )
@@ -102,7 +102,7 @@ export function Section({ title, children }: { title: string; children: React.Re
 
 export function P({ children }: { children: React.ReactNode }) {
   return (
-    <p style={RESET} className="max-w-[64ch] type-paragraph text-text-base">
+    <p style={RESET} className=" type-paragraph text-text-base">
       {children}
     </p>
   )
@@ -155,7 +155,7 @@ export function CodeBlock({ children, caption }: { children: string; caption?: s
 /** A short list of what a page covers, shown directly under the lede. */
 export function Covers({ items }: { items: Array<[string, string]> }) {
   return (
-    <ul style={{ ...RESET, listStyle: "none" }} className="flex max-w-[64ch] flex-col gap-1.5">
+    <ul style={{ ...RESET, listStyle: "none" }} className="flex flex-col gap-1.5">
       {items.map(([name, why]) => (
         <li key={name} style={RESET} className="type-paragraph text-text-base">
           <span className="font-semibold text-text-strong">{name}</span>

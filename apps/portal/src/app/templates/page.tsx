@@ -14,9 +14,10 @@ export default function TemplatesPage() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto w-full max-w-6xl px-6 py-14 pb-24">
+      {/* Same measure as the docs column, so prose and cards share one edge. */}
+      <main className="mx-auto w-full max-w-[44rem] px-6 py-14 pb-24">
         <h1 className="type-title-1 text-text-strong">Templates</h1>
-        <p className="type-paragraph mt-4 max-w-[68ch] text-text-subtle">
+        <p className="type-paragraph mt-4 text-text-subtle">
           Five page shells. Every product page starts with one — choosing the frame before writing
           content is what stops a page from becoming a stack of cards. Each shell fixes its regions,
           how they scale, and which container owns the scroll.
@@ -35,7 +36,7 @@ export default function TemplatesPage() {
                 <h2 className="type-title-3 text-text-strong">{shell.name}</h2>
               </div>
 
-              <p className="type-body mt-2 max-w-[68ch] text-text-subtle">{shell.purpose}</p>
+              <p className="type-body mt-2 text-text-subtle">{shell.purpose}</p>
 
               <div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
@@ -75,7 +76,7 @@ export default function TemplatesPage() {
           ))}
         </div>
 
-        <p className="type-body mt-10 max-w-[68ch] text-text-subtle">
+        <p className="type-body mt-10 text-text-subtle">
           Agents get the same definitions from <code className="type-code">dbui shell</code>, parsed
           from <code className="type-code">composition.md</code> — so this page and the CLI cannot
           disagree.

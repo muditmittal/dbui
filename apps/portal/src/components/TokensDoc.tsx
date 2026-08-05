@@ -31,7 +31,7 @@ function Section({ title, lede, children }: { title: string; lede: string; child
     <section className="mt-16 flex flex-col gap-5">
       <div className="flex flex-col gap-2">
         <h2 className="type-title-3 text-text-strong">{title}</h2>
-        <p className="type-body max-w-[68ch] text-text-subtle">{lede}</p>
+        <p className="type-body text-text-subtle">{lede}</p>
       </div>
       {children}
     </section>
@@ -42,12 +42,12 @@ export function TokensDoc() {
   return (
     <>
       <h1 className="type-title-1 text-text-strong">Tokens</h1>
-      <p className="type-paragraph mt-4 max-w-[68ch] text-text-subtle">
+      <p className="type-paragraph mt-4 text-text-subtle">
         Every visual decision resolves to a token. One file — <code className="type-code">theme.config.mjs</code> —
         generates the CSS custom properties, the Tailwind utilities and the linter&rsquo;s allowlist,
         so a value cannot exist in code without existing in the system.
       </p>
-      <p className="type-body mt-4 max-w-[68ch] text-text-subtle">
+      <p className="type-body mt-4 text-text-subtle">
         Spatial values ship in <strong>rem</strong>, authored in px against a 16px root, so they
         follow a reader&rsquo;s browser font-size preference. Border width stays in px, because a
         hairline is a rendering fact rather than a proportion.
@@ -71,7 +71,7 @@ export function TokensDoc() {
           ))}
         </div>
 
-        <p className="type-body max-w-[68ch] text-text-subtle">
+        <p className="type-body text-text-subtle">
           So <code className="type-code">action-primary-hover</code> is the hover stop of the primary
           action fill, and <code className="type-code">text-subtle</code> is foreground that steps
           back. You never pick a color — you describe the job and the name follows.
@@ -79,7 +79,7 @@ export function TokensDoc() {
 
         <div className="rounded-md border border-border-base bg-surface-subtle p-4">
           <div className="type-label-bold text-text-strong">Surfaces and their text come in pairs</div>
-          <p className="type-body mt-1 max-w-[68ch] text-text-subtle">
+          <p className="type-body mt-1 text-text-subtle">
             Every surface has foreground colors that belong on it. Put{" "}
             <code className="type-code">text-base</code> on{" "}
             <code className="type-code">surface-base</code>, and{" "}
