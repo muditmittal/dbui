@@ -682,7 +682,7 @@ export const PATTERNS: Pattern[] = [
       {
         moment: "The work is canceled",
         does: "The run reads as canceled",
-        invariant: "Cancelled is a third outcome. It is neither a success nor an error and never renders as one",
+        invariant: "Canceled is a third outcome. It is neither a success nor an error and never renders as one",
       },
       {
         moment: "Cancellation is requested and cannot be honored",
