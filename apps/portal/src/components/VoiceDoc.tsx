@@ -1,7 +1,7 @@
 import { DocHeader, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
 import {
   AnchoredSection,
-  AnchoredSubsection,
+  Subsection,
   EntryList,
   JumpTo,
   PrincipleEntry,
@@ -323,7 +323,7 @@ export function VoiceDoc() {
       </AnchoredSection>
 
       <AnchoredSection {...S.checklists}>
-        <AnchoredSubsection title="Accessibility">
+        <Subsection title="Accessibility">
           <RefTable
             columns={[
               { key: "rule", header: "Rule", width: "w-[28%]" },
@@ -331,9 +331,9 @@ export function VoiceDoc() {
             ]}
             rows={ACCESSIBILITY}
           />
-        </AnchoredSubsection>
+        </Subsection>
 
-        <AnchoredSubsection title="Globalization">
+        <Subsection title="Globalization">
           <RefTable
             columns={[
               { key: "rule", header: "Rule", width: "w-[28%]" },
@@ -341,9 +341,9 @@ export function VoiceDoc() {
             ]}
             rows={GLOBALIZATION}
           />
-        </AnchoredSubsection>
+        </Subsection>
 
-        <AnchoredSubsection title="Content quality">
+        <Subsection title="Content quality">
           <RefTable
             columns={[
               { key: "rule", header: "Rule", width: "w-[28%]" },
@@ -351,7 +351,7 @@ export function VoiceDoc() {
             ]}
             rows={CONTENT_QUALITY}
           />
-        </AnchoredSubsection>
+        </Subsection>
       </AnchoredSection>
 
       <AnchoredSection {...S.terminology}>

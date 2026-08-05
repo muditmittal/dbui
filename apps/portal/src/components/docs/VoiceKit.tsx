@@ -39,7 +39,8 @@ export function AnchoredSection({
   )
 }
 
-export function AnchoredSubsection({ title, children }: { title: string; children: React.ReactNode }) {
+/** No anchor of its own. The jump list stops at the section above it. */
+export function Subsection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-8 flex flex-col gap-3">
       <h3 className="type-title-4 text-text-strong">{title}</h3>
@@ -82,7 +83,7 @@ export function PrincipleEntry({
  * rather than about it, so it is set apart as a specimen. Sized to its content:
  * a sample that stretches the full measure reads as a field to fill in.
  */
-export function Specimen({ children }: { children: React.ReactNode }) {
+function Specimen({ children }: { children: React.ReactNode }) {
   return (
     <span className="type-body w-fit max-w-full rounded-sm bg-surface-inset px-2 py-1 text-text-base">
       {children}
