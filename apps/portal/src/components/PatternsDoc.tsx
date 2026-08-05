@@ -56,10 +56,10 @@ export function PatternsDoc() {
       <DocSection title="What a pattern is here">
         <Para>
           A component is a thing. A pattern is a sequence. Nothing on this page can be settled by
-          looking at a screenshot, because the decisions live in the transitions — what shows at 400
-          milliseconds versus at ten seconds, what happens to a selection when the filter under it
-          changes, which of forty operations is allowed to fail without failing the other
-          thirty-nine.
+          looking at a screenshot, because the decisions live in the transitions — what shows while
+          a query is too slow to be instant but too fast to walk away from, what happens to a
+          selection when the filter under it changes, which of forty operations is allowed to fail
+          without failing the other thirty-nine.
         </Para>
         <Para>
           So every pattern is written as a state machine rather than a layout. The behavior table is

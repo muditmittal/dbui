@@ -567,4 +567,182 @@ export const PATTERNS: Pattern[] = [
       "Claim a saved draft the system does not store",
     ],
   },
+  {
+    id: "long-running-operations",
+    name: "Long-running operations",
+    group: "Work that outlives the click",
+    intent:
+      "A query runs for under a minute. A pipeline runs for most of an hour. A permission scan across a metastore runs for as long as it runs. General design systems treat this as a loading state and stop there, which is why it is the pattern most often rebuilt badly. The interface has three jobs: match the indicator to the wait, release the reader from watching, and still tell the truth when they come back to a tab they left open all afternoon.",
+    use: [
+      "The work continues after the click and the reader has no reason to sit and watch",
+      "The duration is unknown, or long enough that watching wastes their time",
+      "The work has an identity the reader can come back to",
+    ],
+    avoid: [
+      "The work finishes faster than an indicator can render. Show nothing",
+      "The flow genuinely cannot continue without the result. Block, but bound the block",
+      "Everything is fast and only the network is slow. That is a loading state inside one region",
+    ],
+    anatomy: [
+      { component: "Spinner", role: "Indeterminate work, once it has run past the flicker threshold" },
+      { component: "Progress", role: "Determinate work, and only where the endpoint is genuinely known" },
+      { component: "Skeleton", role: "The first paint of a region, before anything is on screen" },
+      { component: "Status", role: "The state of a named run, icon and label together" },
+      { component: "Badge", role: "How many are running, when there are several" },
+      { component: "Sonner", role: "The completion notice, for a reader who has moved on" },
+      { component: "Alert", role: "A failure that needs a decision rather than a glance" },
+      { component: "Button", role: "A cancel that genuinely cancels, or no cancel at all" },
+    ],
+    behavior: [
+      {
+        moment: "The work finishes before an indicator would be visible",
+        does: "Nothing. The result simply replaces what was there",
+        invariant: "An indicator that flashes costs more attention than the wait it covered",
+      },
+      {
+        moment: "Still running past the flicker threshold",
+        does: "The trigger takes a busy state where it stands",
+        invariant: "The trigger keeps its width and its label. A button that resizes moves the page under the cursor",
+      },
+      {
+        moment: "Running with no knowable endpoint",
+        does: "`Spinner` beside a label naming the work",
+        invariant: "Never `Progress`. A bar against an invented endpoint is a claim the reader can time",
+      },
+      {
+        moment: "Running with a real endpoint",
+        does: "`Progress` with the step count or percentage beside it",
+        invariant: "It never animates backwards and it never parks at the last percent waiting",
+      },
+      {
+        moment: "Running longer than anyone should watch",
+        does: "The work becomes a named run with a `Status`, and the reader is released",
+        invariant: "Navigating away does not cancel the work, and the interface says so before they navigate",
+      },
+      {
+        moment: "The reader returns to a tab left open",
+        does: "State is re-fetched on focus",
+        invariant: "A page left open for an hour shows now, not then. Stale optimism is the worst failure here",
+      },
+      {
+        moment: "The work finishes while the reader is elsewhere",
+        does: "`Sonner` names what finished and links to it",
+        invariant: "The toast is a courtesy, never the record. The run's own state is the record",
+      },
+      {
+        moment: "The work fails",
+        does: "`Alert` with what failed, why, and the next action",
+        invariant: "The inputs survive, so a failed run is re-runnable without re-entering anything",
+      },
+      {
+        moment: "The work is cancelled",
+        does: "The run reads as cancelled",
+        invariant: "Cancelled is a third outcome. It is neither a success nor an error and never renders as one",
+      },
+      {
+        moment: "Cancellation is requested and cannot be honored",
+        does: "The control says the work is past the point of cancelling",
+        invariant: "Never offer a cancel the system will not act on",
+      },
+      {
+        moment: "Many operations run at once",
+        does: "One summary carrying a count, with the detail one click away",
+        invariant: "A column of spinners tells the reader nothing they could not have counted",
+      },
+    ],
+    gap: "There is no run component. `Status` gives one state pill and `Progress` gives one bar, but the composed object — a named operation with elapsed time, a cancel, a result link and a lifecycle — is rebuilt on every surface that has runs. `Spinner` and `Progress` have no built-in delay and no token defines the flicker threshold, so each surface picks its own and they disagree. Nothing re-fetches on window focus.",
+    dos: [
+      "Pick the indicator from what is known about the endpoint, not from how the wait feels",
+      "Release the reader as soon as the work has an identity they can return to",
+      "Say plainly that the work continues after they navigate away",
+      "Keep cancelled distinct from failed everywhere the outcome is shown",
+    ],
+    donts: [
+      "Show a determinate bar for work with no knowable end",
+      "Trust state that was fetched before the tab lost focus",
+      "Offer a cancel control for work that cannot be cancelled",
+      "Make a toast the only place a completion was ever recorded",
+    ],
+  },
+  {
+    id: "partial-results",
+    name: "Partial results",
+    group: "Work that outlives the click",
+    intent:
+      "The most dangerous screen in a data product is the one that is subtly incomplete. A query that hit its row limit, a lineage graph missing the assets the reader has no grant on, a search that skipped a catalog it could not reach — each returns a plausible, well-formatted, wrong answer that looks exactly like a right one. Every rule below is the same rule in a different place: state the gap where the data is, not in a footnote under it.",
+    use: [
+      "The result is truncated, sampled, cached, stale or filtered by permission",
+      "One source failed and the others succeeded",
+      "A reader could act on the incomplete version without knowing it is incomplete",
+    ],
+    avoid: [
+      "The result is complete. Never hedge a good answer",
+      "Nothing is missing and the query is merely slow — that is a long-running operation",
+      "Everything failed. That is an error, not a partial result",
+    ],
+    anatomy: [
+      { component: "Alert", role: "The region-level statement of what is missing and why" },
+      { component: "Badge", role: "The marker on the result itself — sampled, truncated, cached" },
+      { component: "Status", role: "Per-source outcome, when a result is assembled from several" },
+      { component: "Tooltip", role: "One line of detail behind the marker" },
+      { component: "KeyValuePair", role: "Freshness and scope in a detail panel" },
+      { component: "Empty", role: "When the permission filter removed everything" },
+      { component: "Table", role: "The rows that did come back, rendered normally" },
+    ],
+    behavior: [
+      {
+        moment: "The result hit a row limit",
+        does: "A `Badge` on the result and the limit named where the count is",
+        invariant: "The number on screen is labeled as the limit. It is never presented as the total",
+      },
+      {
+        moment: "The result is a sample",
+        does: "The sampling is stated with the result, and every aggregate over it carries the same mark",
+        invariant: "A number derived from a sample never renders as a plain number",
+      },
+      {
+        moment: "Permission removed rows or columns",
+        does: "The result renders, with a statement that content was filtered out",
+        invariant: "Rows are never dropped silently. A quiet filter is how a wrong decision gets made confidently",
+      },
+      {
+        moment: "Permission removed everything",
+        does: "`Empty` naming the grant that is missing",
+        invariant: "No access and no data never share a state",
+      },
+      {
+        moment: "One source of several failed",
+        does: "The sources that worked render, and the one that failed is named",
+        invariant: "Name the source. “Some data may be missing” is what you write when you did not look",
+      },
+      {
+        moment: "The data is cached or stale",
+        does: "Freshness sits beside the data, with a refresh control",
+        invariant: "Freshness travels with the number, not with the page the number is on",
+      },
+      {
+        moment: "A partial result is exported or copied",
+        does: "The caveat goes with it",
+        invariant: "A number that leaves the screen loses its context, so the context has to leave with it",
+      },
+      {
+        moment: "The reader dismisses the notice",
+        does: "The banner closes and the inline markers stay",
+        invariant: "What is dismissible is the banner. The fact is not dismissible",
+      },
+    ],
+    gap: "Nothing in DBUI carries provenance. No component pairs a value with its freshness, its scope or its completeness — `Badge`, `Alert`, `Status` and `KeyValuePair` are the parts, and every surface assembles them differently, so a truncated result looks like a different thing in each product area. Of everything on this page, this is the widest distance between what the design principles ask for and what the components can do.",
+    dos: [
+      "State the gap at the number or the row, not only in a banner at the top of the page",
+      "Name which source failed and which ones did not",
+      "Mark every aggregate computed over a sample or a truncated set",
+      "Carry the caveat into exports, copies and anything an agent reads back",
+    ],
+    donts: [
+      "Filter rows for permission without saying that rows were filtered",
+      "Write “some data may be missing” when you know exactly what is missing",
+      "Let a dismissible banner be the only record that a result was incomplete",
+      "Show a truncated count where a total belongs",
+    ],
+  },
 ]
