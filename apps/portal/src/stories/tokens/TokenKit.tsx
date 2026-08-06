@@ -421,38 +421,44 @@ function HeadRow({ cells }: { cells: [string, string][] }) {
 }
 
 /**
- * How each family reaches code, in the order the page presents them.
+ * Whether a family reaches code, in three columns and no sentences.
  *
- * `reaches` is editorial — a sentence fragment naming the mechanism — and every
- * number beside it is measured. A family with no mechanism renders the em dash,
- * so the empty cell is the finding.
+ * The last column used to hold a paragraph explaining the mechanism, which made
+ * the one table an engineer scans the one table an engineer had to read. What is
+ * left is what the sentence was carrying: the namespace you write, and how many
+ * times the repo writes it. A family nothing reads shows the badge instead,
+ * because there is no namespace to name.
+ *
+ * Nothing here is typed. The namespace and both numbers come from the
+ * consumption scan, so a family that goes live changes this table by itself.
  */
-export function WiringTable({
-  families,
-  reaches,
-}: {
-  families: Family[]
-  reaches: Record<string, React.ReactNode>
-}) {
+export function WiringTable({ families }: { families: Family[] }) {
   return (
     <Panel>
       <HeadRow
         cells={[
-          ["Family", "w-24 shrink-0"],
-          ["Tokens", "w-12 shrink-0"],
+          ["Family", "w-28 shrink-0"],
+          ["Tokens", "w-16 shrink-0"],
           ["Reaches code as", "min-w-0 flex-1"],
-          ["Status", "w-24 shrink-0"],
         ]}
       />
       {families.map((f, i) => (
         <Row key={f.key} last={i === families.length - 1}>
-          <span className="type-label-bold w-24 shrink-0 text-text-strong">{f.label}</span>
-          <span className="type-hint w-12 shrink-0 tabular-nums text-text-subtle">{f.tokens}</span>
-          <span className="type-body min-w-0 flex-1 text-text-subtle">
-            {reaches[f.key] ?? <span aria-hidden="true">&mdash;</span>}
-          </span>
-          <span className="w-24 shrink-0">
-            <Wired live={f.live} />
+          <span className="type-label-bold w-28 shrink-0 text-text-strong">{f.label}</span>
+          <span className="type-hint w-16 shrink-0 tabular-nums text-text-subtle">{f.tokens}</span>
+          <span className="flex min-w-0 flex-1 items-baseline gap-3">
+            {f.bridge ? (
+              <>
+                <code className="type-code min-w-0 flex-1 truncate text-text-base">
+                  {f.bridge.namespace}
+                </code>
+                <span className="type-hint shrink-0 tabular-nums text-text-subtle">
+                  {f.bridge.uses} uses
+                </span>
+              </>
+            ) : (
+              <Wired live={f.live} />
+            )}
           </span>
         </Row>
       ))}
@@ -461,29 +467,17 @@ export function WiringTable({
 }
 
 /**
- * Whose value is in force. Replacing a Tailwind key and adding one to its
- * namespace are different facts, and the second is the more interesting: it means
- * a value is authored somewhere other than `theme.config.mjs`.
- */
-const ORIGIN: Record<string, string> = {
-  override: "DBUI overrides",
-  addition: "DBUI adds",
-  tailwind: "Tailwind default",
-  utility: "in the utility",
-}
-
-/**
- * The Tailwind theme namespaces the system actually depends on, with whose value
- * is in force. Sorted by use in the generator, so row order is the order in which
- * a rule about one would matter.
+ * Only the namespaces Tailwind owns outright.
  *
- * Two lines rather than four columns. The namespace is a long mono string and the
- * description is a sentence, and side by side in this measure the mono column
- * starved the sentence into an eight-line ribbon. Stacking gives the sentence the
- * full width and keeps the name and its numbers on one scannable line.
+ * Two filters, both derived rather than listed. A namespace with no uses is not
+ * a dependency. A namespace DBUI overrides or adds to is already a DBUI token
+ * wearing a Tailwind name, and the wiring table above is where it belongs —
+ * printing it here as well is what made this table read as an inventory of
+ * everything instead of an account of what the system does not own.
  *
- * Rows with no uses are dropped: a namespace nothing writes a class for is not a
- * dependency, and listing it would pad the one table whose length is the point.
+ * Deriving the cut from `origin` is the part that matters: when a namespace is
+ * folded into the config it leaves this table by itself, so the two tables
+ * cannot come to disagree about who owns a value.
  */
 export function TailwindTable({
   rows,
@@ -492,23 +486,26 @@ export function TailwindTable({
   rows: TailwindNamespace[]
   governs: Record<string, React.ReactNode>
 }) {
-  const used = rows.filter((r) => r.uses > 0)
+  const owned = rows.filter(
+    (r) => r.uses > 0 && r.origin !== "override" && r.origin !== "addition",
+  )
   return (
     <Panel>
-      {used.map((r, i) => (
-        <div
-          key={r.namespace}
-          className={`flex flex-col gap-1 px-4 py-3 ${i === used.length - 1 ? "" : "border-b border-border-subtle"}`}
-        >
-          <div className="flex items-baseline gap-3">
-            <code className="type-code min-w-0 flex-1 truncate text-text-base">{r.namespace}</code>
-            <span className="type-hint shrink-0 text-text-subtle">{ORIGIN[r.origin]}</span>
-            <span className="type-hint w-16 shrink-0 text-right tabular-nums text-text-subtle">
-              {r.uses} uses
-            </span>
-          </div>
-          <span className="type-body text-text-subtle">{governs[r.namespace]}</span>
-        </div>
+      <HeadRow
+        cells={[
+          ["Namespace", "min-w-0 flex-1"],
+          ["Why it is Tailwind's", "w-64 shrink-0"],
+          ["Uses", "w-16 shrink-0 text-right"],
+        ]}
+      />
+      {owned.map((r, i) => (
+        <Row key={r.namespace} last={i === owned.length - 1}>
+          <code className="type-code min-w-0 flex-1 truncate text-text-base">{r.namespace}</code>
+          <span className="type-hint w-64 shrink-0 text-text-subtle">{governs[r.namespace]}</span>
+          <span className="type-hint w-16 shrink-0 text-right tabular-nums text-text-subtle">
+            {r.uses}
+          </span>
+        </Row>
       ))}
     </Panel>
   )
