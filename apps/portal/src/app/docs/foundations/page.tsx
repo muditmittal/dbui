@@ -166,6 +166,7 @@ const AGENT_SURFACES = [
 const CROSS_CUTTING = [
   { label: "Design principles", href: "/docs/principles", what: "The calls the system makes before any component exists, and what each one costs." },
   { label: "Voice and tone", href: "/docs/voice", what: "How every string reads. Applies to a nav label and an error alike." },
+  { label: "Layout", href: "/docs/layout", what: "How a screen is framed before anything goes in it — regions, scroll and edges." },
   { label: "Patterns", href: "/docs/patterns", what: "Recurring behavior — what happens, in what order and what has to survive it." },
   { label: "Accessibility", href: "/docs/accessibility", what: "The checks that apply to every screen, and what the system does not do yet." },
 ]
