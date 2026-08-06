@@ -17,6 +17,7 @@ import {
 
 import { icons, iconCategories, type IconCategory } from "@/components/icon-data"
 import type { Glyph } from "@/components/icon-data/glyphs-object"
+import { StickyBar, anchorOffset } from "@/components/docs/StickyBar"
 
 /**
  * The icon browser on /docs/icons.
@@ -144,37 +145,45 @@ export function IconBrowser() {
   }
 
   return (
-    <div ref={top} className="mt-6 flex scroll-mt-20 flex-col gap-4">
+    <div ref={top} style={anchorOffset} className="mt-6 flex flex-col gap-4">
       {/*
-        The switcher takes the full measure on its own row. Five segments and a
-        field side by side overrun 44rem, and squeezing the segments is the worse
-        trade: the labels are the only thing telling a reader what a category is.
+        Pinned, because the table is the page. Scrolled a few hundred rows in,
+        switching category or clearing the search used to mean scrolling back to
+        the top first, which is the one thing a browser of 456 rows must not ask.
       */}
-      <SegmentControl
-        className="flex w-full"
-        value={[category]}
-        onValueChange={(next) => setCategory((next[0] as IconCategory | "all") ?? "all")}
-        aria-label="Icon category"
-      >
-        <SegmentControlItem value="all">All</SegmentControlItem>
-        {iconCategories.map((key) => (
-          <SegmentControlItem key={key} value={key}>
-            {CATEGORY_LABEL[key]}
-          </SegmentControlItem>
-        ))}
-      </SegmentControl>
+      <StickyBar className="flex flex-col gap-3 border-b border-border-base pt-1 pb-3">
+        {/*
+          The switcher takes the full measure on its own row. Five segments and a
+          field side by side overrun 44rem, and squeezing the segments is the
+          worse trade: the labels are the only thing telling a reader what a
+          category is.
+        */}
+        <SegmentControl
+          className="flex w-full"
+          value={[category]}
+          onValueChange={(next) => setCategory((next[0] as IconCategory | "all") ?? "all")}
+          aria-label="Icon category"
+        >
+          <SegmentControlItem value="all">All</SegmentControlItem>
+          {iconCategories.map((key) => (
+            <SegmentControlItem key={key} value={key}>
+              {CATEGORY_LABEL[key]}
+            </SegmentControlItem>
+          ))}
+        </SegmentControl>
 
-      <div className="flex items-center gap-4">
-        <Input
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search a name, a concept or a synonym"
-          aria-label="Search icons"
-        />
-        <span className="type-label shrink-0 text-text-subtle" aria-live="polite">
-          {matches.length} of {icons.length}
-        </span>
-      </div>
+        <div className="flex items-center gap-4">
+          <Input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search a name, a concept or a synonym"
+            aria-label="Search icons"
+          />
+          <span className="type-label shrink-0 text-text-subtle" aria-live="polite">
+            {matches.length} of {icons.length}
+          </span>
+        </div>
+      </StickyBar>
 
       {matches.length === 0 ? (
         <Empty className="border border-dashed border-border-base py-10">

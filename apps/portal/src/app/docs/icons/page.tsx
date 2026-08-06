@@ -16,6 +16,7 @@ import {
   SourceNote,
 } from "@/components/docs/Prose"
 import { CodeBlock } from "@/components/docs/CodeBlock"
+import { Figure, FigureRow, FigureLabel } from "@/components/docs/Diagram"
 import { Guidance } from "@/components/docs/Guidance"
 import { icons, iconCategories } from "@/components/icon-data"
 
@@ -24,33 +25,100 @@ import { IconBrowser } from "./IconBrowser"
 export const metadata = { title: "Icons — DBUI" }
 
 /**
- * Everything countable on this page is counted from the generated data, which
- * is read from the `use:` tag on each component. The page and the browser above
- * it therefore cannot disagree, and neither can be the surface that is wrong.
+ * The browser is the page. Everything under it is here because someone who has
+ * found their icon still gets it wrong without it: the category they crossed,
+ * the entity map they resolved by eye, the name they guessed.
  *
- * The maps the CLI reads hold fewer icons than the directory does.
- * `CONTRIBUTING.md` owns that gap and names the icons; the browser marks them.
+ * Everything countable is counted from the generated data, which is read from
+ * the `use:` tag on each component, so the page and the browser above it cannot
+ * disagree and neither can be the surface that is wrong.
+ *
+ * The prose was four sections of paragraphs explaining a tag that is one line
+ * long. It is a figure now, taken apart from a real record — the same visual
+ * grammar the Tokens page uses for a token name, because both are a string with
+ * fields and the reader's question is the same one.
  */
-const CATEGORY_MEANING: Record<(typeof iconCategories)[number], string> = {
-  object: "Names a thing — a catalog, a job, a model. Belongs where an entity is being identified.",
-  action: "Names a verb. Belongs where something happens on click.",
-  indicator: "Names a state. Belongs where a status is being reported.",
-  component: "Built into a control's own chrome, and used nowhere else.",
+const CATEGORY_MARKS: Record<(typeof iconCategories)[number], string> = {
+  object: "A thing — a catalog, a job, a model",
+  action: "A verb",
+  indicator: "A state",
+  component: "A control's own chrome",
+}
+
+const CATEGORY_BELONGS: Record<(typeof iconCategories)[number], string> = {
+  object: "An entity is being identified",
+  action: "Something happens on click",
+  indicator: "A status is being reported",
+  component: "Nowhere else",
 }
 
 const tagged = iconCategories.map((category) => ({
   category: <Code>{category}</Code>,
-  meaning: CATEGORY_MEANING[category],
+  marks: CATEGORY_MARKS[category],
+  belongs: CATEGORY_BELONGS[category],
   count: icons.filter((icon) => icon.category === category).length,
 }))
 
-/** The tag on a real icon, rebuilt from its record, so the shape is not a paraphrase. */
-const EXAMPLE = icons.find((icon) => icon.name === "Catalog")
-const exampleTag = EXAMPLE
-  ? `/** use:${EXAMPLE.category} ${[EXAMPLE.label, EXAMPLE.area, EXAMPLE.synonyms?.join(", ")]
-      .filter(Boolean)
-      .join(" | ")} */`
-  : null
+/** A real record, so the figure cannot take apart a tag no icon carries. */
+const EXAMPLE = icons.find((icon) => icon.name === "Catalog" && icon.area && icon.synonyms?.length)
+
+const GRID = "grid grid-cols-[8.5rem_9rem_10rem_1fr]"
+const CELL = "border-r border-border-subtle px-3 py-2.5 last:border-r-0"
+
+/**
+ * The tag, taken apart.
+ *
+ * Four fields, the question each answers directly beneath it, and the raw line
+ * as it appears above the component in the footer row — rebuilt from the record
+ * rather than quoted, so it cannot drift from the tag it describes.
+ *
+ * The last field is the one that makes the set searchable, which is why it gets
+ * the widest column: an icon with no synonyms is findable only by someone who
+ * already knows what it is called.
+ */
+function TagAnatomy() {
+  if (!EXAMPLE) return null
+  const synonyms = EXAMPLE.synonyms?.join(", ") ?? ""
+  const raw = `/** use:${EXAMPLE.category} ${EXAMPLE.label} | ${EXAMPLE.area} | ${synonyms} */`
+  return (
+    <Figure caption="One line above each icon component. The browser above reads all four fields, which is why a search finds an icon by a word that appears nowhere in its name.">
+      <FigureRow className="bg-surface-subtle">
+        <div className={GRID}>
+          <div className={`type-code ${CELL} text-text-strong`}>use:{EXAMPLE.category}</div>
+          <div className={`type-code ${CELL} text-text-strong`}>{EXAMPLE.label} |</div>
+          <div className={`type-code ${CELL} text-text-strong`}>{EXAMPLE.area} |</div>
+          <div className={`type-code ${CELL} text-text-strong`}>{synonyms}</div>
+        </div>
+      </FigureRow>
+      <FigureRow>
+        <div className={GRID}>
+          <div className={`${CELL} flex flex-col gap-1`}>
+            <FigureLabel>Category</FigureLabel>
+            <span className="type-hint text-text-subtle">Which of the four?</span>
+          </div>
+          <div className={`${CELL} flex flex-col gap-1`}>
+            <FigureLabel>Concept</FigureLabel>
+            <span className="type-hint text-text-subtle">What does it name?</span>
+          </div>
+          <div className={`${CELL} flex flex-col gap-1`}>
+            <FigureLabel>Area</FigureLabel>
+            <span className="type-hint text-text-subtle">Where does it belong?</span>
+          </div>
+          <div className={`${CELL} flex flex-col gap-1`}>
+            <FigureLabel>Synonyms</FigureLabel>
+            <span className="type-hint text-text-subtle">What would you search?</span>
+          </div>
+        </div>
+      </FigureRow>
+      <FigureRow className="bg-surface-subtle">
+        <div className={`${CELL} flex flex-col gap-1 border-r-0`}>
+          <FigureLabel>In source</FigureLabel>
+          <code className="type-code text-text-base">{raw}</code>
+        </div>
+      </FigureRow>
+    </Figure>
+  )
+}
 
 /**
  * Two columns of `type → Icon`. A table would be taller than the content
@@ -85,65 +153,43 @@ export default function IconsPage() {
 
       <DocSection title="Four categories">
         <Para>
-          Category is a claim about the icon&rsquo;s job rather than its drawing. The same shape can
-          be an object in a tree and an action in a toolbar, so the tag records which one it is.
+          Category is a claim about the icon&rsquo;s job, not its drawing, and crossing one is the
+          most common icon mistake. An action icon on a tree node reads as a button.
         </Para>
         <RefTable
           columns={[
-            { key: "category", header: "Category", width: "w-[128px]", mono: true },
-            { key: "meaning", header: "What it marks" },
-            { key: "count", header: "Tagged", width: "w-[88px]" },
+            { key: "category", header: "Category", width: "w-[116px]", mono: true },
+            { key: "marks", header: "Marks" },
+            { key: "belongs", header: "Belongs where" },
+            { key: "count", header: "Tagged", width: "w-[76px]" },
           ]}
           rows={tagged}
         />
-        <Para>
-          Crossing a category is the most common icon mistake. An action icon put on a tree node
-          reads as a button, and a status icon put on a button reads as a state the user cannot
-          change.
-        </Para>
       </DocSection>
 
-      <DocSection title="Every icon carries its own metadata">
+      <DocSection title="The tag is the metadata">
         <SourceNote>
-          <Code>packages/dbui/docs/icon-index.md</Code> decides which icon to pick, and it is the
-          only file that does. The metadata behind it lives on each icon component as a{" "}
-          <Code>use:</Code> tag, mirrored into <Code>classifications.ts</Code> and{" "}
-          <Code>descriptions.ts</Code>. When a tag and the index disagree, the tag wins.
+          <Code>packages/dbui/docs/icon-index.md</Code> decides which icon to pick. The{" "}
+          <Code>use:</Code> tag on the component is where the metadata behind it lives, mirrored into{" "}
+          <Code>classifications.ts</Code> and <Code>descriptions.ts</Code>. When they disagree, the
+          tag wins.
         </SourceNote>
+        <TagAnatomy />
         <Para>
-          The tag is one line above the component, and it holds four things — the category, the
-          concept the icon names, the product area it belongs to and the words someone might search
-          instead of the concept. The table above renders all four, which is why searching it finds
-          an icon by a word that appears nowhere in its name.
-        </Para>
-        {exampleTag ? <Command>{exampleTag}</Command> : null}
-        <Para>
-          The last field is the one that makes the set searchable. An icon with no synonyms is
-          findable only by someone who already knows what it is called.
-        </Para>
-        <Para>
-          A row marked as not in the maps has a tag but no entry in{" "}
-          <Code>classifications.ts</Code> or <Code>descriptions.ts</Code>. It is browsable here,
-          because this page reads the tag, and invisible to <Code>dbui icon</Code>, because the CLI
-          reads the maps. <Code>CONTRIBUTING.md</Code> lists every surface an icon has to land on
-          and names the ones that are behind.
-        </Para>
-      </DocSection>
-
-      <DocSection title="The same set, as data">
-        <Para>
-          The table is generated from the tags at build time, so an agent reads the same set without
-          a browser. Guessing a name is how the wrong icon gets shipped, so search the concept, read
-          what comes back, then import the exact name.
+          A row marked as not in the maps has a tag and no mirror, so it is browsable here and
+          invisible to <Code>dbui icon</Code>. <Code>CONTRIBUTING.md</Code> names them.
         </Para>
         <Command>yarn dbui search &lt;concept&gt;</Command>
+        <Para>
+          Search the concept, read what comes back, then import the exact name. Guessing a name is
+          how the wrong icon ships.
+        </Para>
       </DocSection>
 
       <DocSection title="Typed nodes resolve through a map">
         <Para>
-          A tree, a catalog browser and a search result all show the same table, so the icon has to
-          be a function of the entity type rather than a choice made at each call site. Three maps
-          hold those resolutions. Read the icon name from the map and import that component.
+          A tree, a catalog browser and a search result show the same table, so the icon has to be a
+          function of the entity type rather than a choice made at each call site.
         </Para>
         <CodeBlock caption="Read the name from the map, then import that component by path">
           {`import { dataEntityIcons } from "dbui/components/icons/entity-icons"
@@ -151,6 +197,10 @@ import { TableStream } from "dbui/components/icons/TableStream"
 
 dataEntityIcons.streamingTable // "TableStream"`}
         </CodeBlock>
+        <Para>
+          There is no barrel export, so a name from the map cannot be indexed into a namespace at
+          runtime. Import what a surface needs and build the lookup from those.
+        </Para>
 
         <DocSubsection title="Unity Catalog objects">
           <EntityMap map={dataEntityIcons} />
@@ -165,33 +215,20 @@ dataEntityIcons.streamingTable // "TableStream"`}
         </DocSubsection>
 
         <Para>
-          There is no barrel export, so a name from the map cannot be indexed into a namespace at
-          runtime. Import the components a surface needs and build the lookup from those. That is the
-          same constraint every icon import has, and it is what keeps a screen from pulling the whole
-          set into its bundle.
-        </Para>
-        <Para>
-          Where two types resolve to one icon, that is the map saying the distinction does not earn a
-          separate glyph. Do not add one locally to make a screen more precise — the same object
-          would then read differently in two places, which is the failure the map exists to prevent.
+          Where two types share an icon, the map is saying the distinction does not earn a glyph. Do
+          not add one locally — the same object would then read differently in two places.
         </Para>
       </DocSection>
 
       <DocSection title="Sizing">
         <Para>
-          Every icon takes a numeric <Code>size</Code> prop and renders a square at that size. The
-          default is a literal in each icon component, and it matches the <Code>md</Code> step of the
-          icon scale on the{" "}
-          <Link href="/docs/tokens" className="text-text-accent">
-            Tokens page
-          </Link>
-          .
-        </Para>
-        <Para>
-          That scale ships as CSS custom properties, but nothing consumes them. Components size
-          icons with Tailwind utilities and the numeric default is not wired to the token, so
-          changing the sizing scalar does not move an icon. Treat the scale as the set of sizes to
-          choose from rather than as a live dial.
+          Every icon takes a numeric <Code>size</Code> prop. The default is a literal in each
+          component and matches the <Code>md</Code> step of the icon scale, which{" "}
+          <Link href="/docs/tokens#size" className="text-text-accent">
+            Tokens
+          </Link>{" "}
+          reports as unconsumed — so treat the scale as the sizes to choose from rather than a live
+          dial.
         </Para>
       </DocSection>
 
