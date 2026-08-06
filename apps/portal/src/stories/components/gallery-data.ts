@@ -283,7 +283,7 @@ export const galleryGroups: GalleryGroup[] = [
       {
         "name": "Card",
         "slug": "card",
-        "useFor": "Bounded content surfaces with elevation (rounded-xl, shadow)",
+        "useFor": "Bounded content surfaces with elevation (rounded-4, shadow)",
         "storyId": "components-content-card--playground"
       },
       {
