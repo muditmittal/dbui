@@ -406,3 +406,77 @@ which is false. It is the most common icon size.
 3. Border width names — `none / thin / thick` kept, or `none / base / strong` with the class
    collision accepted.
 4. `rounded-full` binding, which is a bug fix rather than part of this proposal.
+
+## What actually shipped
+
+The proposal above is kept as written, because it is the argument. This section is the outcome, and
+where the two disagree the outcome is what is in the code.
+
+Four semantic families ship, not the seven the proposal sketched. `height`, `width` and the split
+`size` families collapsed into one `size`, because Tailwind reads `h-*`, `w-*` and `size-*` from
+three separate keys that one family can populate — the namespaces are Tailwind's, the family is
+ours. Named widths were not adopted; the bracket widths remain.
+
+| Family | Stops | Resolved |
+|---|---|---|
+| `--db-space-*` | 0, 0.5, 1, 2, 3, 4, 6, 8, 10 | 0, 2, 4, 8, 12, 16, 24, 32, 40px |
+| `--db-size-*` | 2, 3, 4, 6, 7, 8, 10 | 8, 12, 16, 24, 28, 32, 40px |
+| `--db-radius-*` | 0, 1, 2, 3, 4, 6, `full` | 0, 4, 8, 12, 16, 24px, pill |
+| `--db-border-*` | 0, 1, 2 | 0, 1, 2px — literal, never scaled |
+
+Differences from the proposed scale worth naming:
+
+- **Space gained 10 (40px) and lost 12 (48px).** 48px had no call site the 40px stop could not
+  serve, and ending the ladder at 10 keeps every stop a multiple the eye can count.
+- **Space kept 0.5 (2px).** It is the inset-track pattern on 42 sites — `p-0.5` on the toggle group,
+  `py-0.5` on badges — where a control sits in a groove one hairline wider than itself. It is the
+  only half step, and it is not a precedent.
+- **Space dropped 5 (20px), 7 (28px) and 12 (48px)** after they were briefly included. Their call
+  sites are handled by the snap pass below.
+- **Size kept 6 (24px)** against an earlier decision to drop it. 24px is the small control height —
+  `h-6` on the small button — and a size scale that cannot express the system's own button is not a
+  size scale. Note that 6 is a stop in both families and 7 is a stop in only one: `h-7` is
+  `--db-size-7`, `p-7` is still the multiplier.
+- **Elevation is untouched.** Not renamed, not revalued, no dark variants. The measured problems are
+  real and the change was declined as out of scope.
+- **The primitive scale does not ship.** Figma holds it as a `scale` collection that designers alias
+  into; React gets the four semantics only. There is no `--db-scale-*` in the generated CSS, which
+  mirrors how colour primitives already work. Asserted by L1 in `verify-spacing-scale.mjs`.
+- **The collection is called Dimensions.** "Scalar" now means a multiplier and nothing else.
+
+## The follow-up pass: snapping call sites
+
+**Nothing in this section is done.** It is the agreed plan for a separate, later change, recorded
+here so the rules survive the conversation that produced them.
+
+The scale above is narrower than the values components currently use. Tailwind's `--spacing`
+multiplier is deliberately left **on**, so a class like `p-5` still compiles to 20px off the
+multiplier rather than failing. Every off-scale call site therefore keeps rendering exactly what it
+renders today. That is what makes this change a no-op, and it is also what makes the snap pass
+necessary — until it runs, the scale is a recommendation rather than a constraint.
+
+Closing the multiplier (`--spacing: initial`) is the end state and is not part of this pass either.
+It only becomes safe once the values below are gone.
+
+### The rules
+
+| Current | Snaps to | Why |
+|---|---|---|
+| 6px | 8px | Menu and list-item padding. The densest surfaces in the product, and the largest single group |
+| 10px | 12px | |
+| 20px | 24px | With one exception, below |
+| 20px, Genie list indent | 16px | Down, not up. The indent reads as a nested-list marker, and 24px pushes it into looking like a second level of nesting |
+| 28px | — | No rule of its own |
+
+28px needs no rule because it is not an authored value. It is the menu text inset, computed as
+6 + 16 + 6 — padding, icon, gap. Apply the 6px rule to its two ends and it becomes 8 + 16 + 8 = 32px
+on its own. Writing a separate 28 → 32 rule would be describing the same decision twice.
+
+Each rule moves a value up to the nearest legal stop except the Genie indent, which moves down. Up
+is the default because shrinking padding is the change a person notices.
+
+### What to expect
+
+These are real visual changes, unlike everything in this round. Menus get 2px more padding on each
+side, which is the one to look at closely because it compounds across a list. The fingerprint
+harness will report a large diff and should — the point of that pass is that things move.

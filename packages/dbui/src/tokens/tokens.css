@@ -123,12 +123,9 @@
   --spacing-2: var(--db-space-2);
   --spacing-3: var(--db-space-3);
   --spacing-4: var(--db-space-4);
-  --spacing-5: var(--db-space-5);
   --spacing-6: var(--db-space-6);
-  --spacing-7: var(--db-space-7);
   --spacing-8: var(--db-space-8);
   --spacing-10: var(--db-space-10);
-  --spacing-12: var(--db-space-12);
   --size-2: var(--db-size-2);
   --size-3: var(--db-size-3);
   --size-4: var(--db-size-4);
@@ -176,12 +173,9 @@
   --db-space-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-space-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
   --db-space-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
-  --db-space-5: calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar));
   --db-space-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
-  --db-space-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-space-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
   --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
-  --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
 
   /* ── Radius (its own stops on the same grid; "full" is a pill sentinel) ── */
   --db-radius-0: 0;

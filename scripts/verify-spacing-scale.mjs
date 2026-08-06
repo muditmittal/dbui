@@ -144,7 +144,7 @@ const DB_TOKENS = `
   --db-space-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
   --db-space-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-space-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
-  --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
+  --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
   --db-control-sm: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-control-md: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-control-lg: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
@@ -182,7 +182,7 @@ const SPACING_SCALE = `@theme {
   --spacing-4: var(--db-space-4);
   --spacing-6: var(--db-space-6);
   --spacing-8: var(--db-space-8);
-  --spacing-12: var(--db-space-12);
+  --spacing-10: var(--db-space-10);
   --spacing-px: 1px;
 }`
 
@@ -193,7 +193,7 @@ ${DB_TOKENS}`
 console.log("\n── B. Constrained: --spacing: initial + explicit --spacing-N\n")
 {
   const defined = ["p-3", "p-2", "p-4", "gap-2", "px-3", "py-1", "mt-4", "p-px"]
-  const undef = ["p-5", "p-2.5", "p-7", "p-9", "gap-13", "mt-10", "p-0.5"]
+  const undef = ["p-5", "p-2.5", "p-7", "p-9", "gap-13", "mt-12", "p-0.5"]
   const css = await build(CONSTRAINED, [...defined, ...undef, "p-[13px]"])
   console.log("  DEFINED")
   show(css, defined, 10)
@@ -661,12 +661,9 @@ const SHIPPED = `@import "tailwindcss";
   --spacing-2: var(--db-space-2);
   --spacing-3: var(--db-space-3);
   --spacing-4: var(--db-space-4);
-  --spacing-5: var(--db-space-5);
   --spacing-6: var(--db-space-6);
-  --spacing-7: var(--db-space-7);
   --spacing-8: var(--db-space-8);
   --spacing-10: var(--db-space-10);
-  --spacing-12: var(--db-space-12);
   --size-2: var(--db-size-2);
   --size-4: var(--db-size-4);
   --size-6: var(--db-size-6);
@@ -693,12 +690,9 @@ const SHIPPED = `@import "tailwindcss";
   --db-space-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-space-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
   --db-space-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
-  --db-space-5: calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar));
   --db-space-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
-  --db-space-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-space-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
   --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
-  --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
   --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-size-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
   --db-size-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
@@ -714,12 +708,18 @@ const SHIPPED = `@import "tailwindcss";
 }`
 
 {
-  // `p-5` and `p-7` used to be the off-scale examples here. They are on the
-  // scale now, which is the point of this round, so the undeclared cases are the
-  // half steps and the two integers the ladder still skips.
-  const OFF_SCALE = ["p-1.5", "p-2.5", "p-9", "p-11", "gap-13"]
+  // Nine stops means most of the integer ladder is NOT ours. `p-5`, `p-7` and
+  // `p-12` are here deliberately: they are the three the scale dropped, they
+  // still have call sites, and this is the assertion that those call sites keep
+  // rendering until the snap pass moves them.
+  //
+  // `p-7` is the interesting one. 7 is a live SIZE stop — `h-7` is 28px off
+  // `--db-size-7` — but padding does not read the size namespace, so `p-7`
+  // falls to the multiplier while `h-7` does not. Same number, two families,
+  // two answers.
+  const OFF_SCALE = ["p-1.5", "p-2.5", "p-5", "p-7", "p-9", "p-11", "p-12", "gap-13"]
   const probes = [
-    "p-3", "gap-3", "mt-8", "p-0.5", "p-10", "p-5", "p-7",
+    "p-3", "gap-3", "mt-8", "p-0.5", "p-10",
     ...OFF_SCALE,
     "size-4", "size-6", "size-7", "h-6", "h-7", "w-7", "min-h-7", "max-h-7",
     "rounded-1", "rounded-2", "rounded-6", "rounded-0",
@@ -727,7 +727,7 @@ const SHIPPED = `@import "tailwindcss";
   ]
   const css = await build(SHIPPED, probes)
   console.log("  ours (explicit key must win)")
-  show(css, ["p-3", "gap-3", "mt-8", "p-0.5", "p-5", "p-7", "p-10", "size-4", "size-7", "h-7", "w-7"], 12)
+  show(css, ["p-3", "gap-3", "mt-8", "p-0.5", "p-10", "size-4", "size-7", "h-7", "w-7"], 12)
   console.log("  still Tailwind's, because the multiplier stays on")
   show(css, OFF_SCALE, 12)
   console.log("  radius and border")
@@ -735,7 +735,7 @@ const SHIPPED = `@import "tailwindcss";
 
   check(
     "K1 an explicit --spacing-N beats the live --spacing multiplier",
-    ["p-3", "gap-3", "mt-8", "p-0.5", "p-5", "p-7", "p-10"].every((c) => (ruleFor(css, c) ?? "").includes("--db-space-")),
+    ["p-3", "gap-3", "mt-8", "p-0.5", "p-10"].every((c) => (ruleFor(css, c) ?? "").includes("--db-space-")),
     `p-3 → ${ruleFor(css, "p-3")} — the multiplier is still declared and did not win.`
   )
   check(
@@ -759,6 +759,14 @@ const SHIPPED = `@import "tailwindcss";
   check(
     "K5 min-h-* and max-h-* inherit --height-*, so heights need one key not three",
     (ruleFor(css, "min-h-7") ?? "").includes("--db-size-7") && (ruleFor(css, "max-h-7") ?? "").includes("--db-size-7")
+  )
+  // 7 is a size stop and not a space stop. The two families answer the same
+  // number differently, and neither leaks into the other.
+  check(
+    "K5b the same integer resolves per family — h-7 is ours, p-7 is not",
+    (ruleFor(css, "h-7") ?? "").includes("--db-size-7") &&
+      !(ruleFor(css, "p-7") ?? "").includes("--db-space-7"),
+    `h-7 → ${ruleFor(css, "h-7")}   p-7 → ${ruleFor(css, "p-7")}`
   )
   // Precedence between the two namespaces that can both answer `h-N`. A height
   // utility reads `--height-*` FIRST, `--spacing-*` SECOND, and only reaches the
@@ -869,8 +877,8 @@ console.log("\n── K2. Old radius names closed rather than dropped\n")
  * actually ships, because the claim is about absence and a fixture cannot prove
  * absence in the real output.
  *
- * The scale is an authoring artifact: twelve stops in Figma and in
- * theme.config.mjs that space, size and radius are authored against. It is
+ * The scale is an authoring artifact: a ladder of multiples held in Figma as a
+ * `scale` collection, which space, size and radius are each authored against. It is
  * deliberately not a custom property, the same way the colour palette is not —
  * primitives resolve at build time and only semantics reach the browser. A
  * `--db-scale-*` appearing here would mean a component could reach past the

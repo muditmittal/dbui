@@ -289,11 +289,24 @@ export const scalars = {
  * would save three characters and leave space and size indistinguishable.
  */
 
-/* Space — padding, margin, gap. Twelve stops, the widest of the four families.
+/* Space — padding, margin, gap. Nine stops.
  *
- * 5 (20px) and 7 (28px) fill the two gaps that made the ladder skip. */
+ * The scale is deliberately sparse. It doubles from 1 to 2 to 4, then steps by
+ * two: 6, 8, 10. A scale that offers every integer offers no guidance, and the
+ * gaps are what make a choice a decision rather than a slider.
+ *
+ * `0-5` (2px) earns its place as the only half step: it is the inset-track
+ * pattern on 42 call sites — `p-0.5` on the toggle group, `py-0.5` on badges —
+ * where a control sits inside a groove one hairline wider than itself. 8 (32px)
+ * is here because the jump from 24 to 40 is too wide for section padding.
+ *
+ * 5, 7 and 12 were each considered and left out. Their call sites keep rendering
+ * off Tailwind's multiplier at the same values until the snap pass, which is
+ * sequenced separately — see the follow-up section in docs/token-simplification.md
+ * for the agreed rules. Note that 7 (28px) is still a SIZE stop; only spacing
+ * drops it. */
 export const space = {
-  0: 0, "0-5": 0.5, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 10: 10, 12: 12,
+  0: 0, "0-5": 0.5, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, 8: 8, 10: 10,
 }
 
 /* Radius — corners, on the same grid. `--db-radius-2` is 8px and the class is
@@ -335,7 +348,7 @@ export const bridge = {
     token: "spacing-unit",
     scalars: ["density-scalar"],
     family: "space",
-    steps: [0, "0.5", 1, 2, 3, 4, 5, 6, 7, 8, 10, 12],
+    steps: [0, "0.5", 1, 2, 3, 4, 6, 8, 10],
   },
   /* One family, three namespaces. Tailwind reads `size-*`, `h-*` and `w-*` from
    * separate keys, so the same stop has to be declared in each — but `--height-*`
