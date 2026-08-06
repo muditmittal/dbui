@@ -227,7 +227,7 @@ export const frame: { file: string; classes: string[]; scrolls: boolean } = {
 export const spacing: Spacing = {
   "tokenFamily": {
     "name": "--db-space-*",
-    "tokens": 12,
+    "tokens": 9,
     "live": true
   },
   "utility": {
