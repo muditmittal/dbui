@@ -296,6 +296,23 @@ export const NESTING: Array<{ container: string; never: string; failure: string 
 ]
 
 /**
+ * Which module implements which shell, where one does.
+ *
+ * Authored rather than derived, because the mapping is a judgment the export
+ * names do not carry: `FileTreeExplorer` is the rail Shell C docks on the left
+ * and not Shell C, and `Base` is the frame every shell sits in rather than a
+ * shell of its own. Keyed by shell id so the page can count against the shell
+ * list instead of a number written into a sentence.
+ */
+export const SHELL_MODULE: Record<string, string | null> = {
+  A: null,
+  B: "CatalogLayout",
+  C: null,
+  D: null,
+  E: null,
+}
+
+/**
  * What distinguishes one archetype from another, stated as the three questions
  * that actually separate them. Not what a screen looks like — a dashboard and a
  * catalog look nothing alike and are the same archetype, while a notebook and a

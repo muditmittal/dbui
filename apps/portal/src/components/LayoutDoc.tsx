@@ -13,6 +13,7 @@ import {
   RHYTHM_RULES,
   NESTING,
   ARCHETYPES,
+  SHELL_MODULE,
   type Rule,
 } from "@/components/layout-rules"
 
@@ -112,22 +113,23 @@ function Gap({ title, children }: { title: string; children: React.ReactNode }) 
  * who starts in the middle picks a shell before knowing what scrolls, which is
  * the decision that is expensive to undo.
  */
-const DECISIONS = [
+const DECISIONS: Array<{ question: string; answers: React.ReactNode }> = [
   {
     question: "What is the unit of content, and which container scrolls?",
-    answers: "The archetype. Five of them, below.",
+    answers: `The archetype. ${ARCHETYPES.length} of them, below.`,
   },
   {
     question: "Which shell already has those regions?",
-    answers: "One of the five in composition.md. If none fits, ask before inventing a sixth.",
+    answers: `One of the ${shells.length} in composition.md. If none of them fits, ask before inventing another.`,
   },
   {
     question: "Which optional regions does the page earn?",
-    answers: "Breadcrumb, tabs and featured band, each at a fixed slot.",
+    answers: "Breadcrumb, tabs and featured band, each at a fixed slot and none of them by default.",
   },
   {
     question: "Which edges hold a panel, and what is each one's state on load?",
-    answers: "One panel per edge. Left open, right and bottom closed.",
+    answers:
+      "Two ranks on the left, one on every other edge. The left opens with the page and the rest start closed.",
   },
 ]
 
@@ -135,6 +137,8 @@ export function LayoutDoc() {
   const columnScrolls = scrollOwners.filter((owner) => owner.kind === "column")
   const boundedScrolls = scrollOwners.filter((owner) => owner.kind === "bounded")
   const pageRegions = regions.filter((region) => region.scope === "region")
+  const shellsWithModule = shells.filter((shell) => SHELL_MODULE[shell.id])
+  const shellsWithoutModule = shells.filter((shell) => !SHELL_MODULE[shell.id])
 
   return (
     <>
@@ -328,13 +332,15 @@ export function LayoutDoc() {
         <RefTable
           columns={[
             { key: "id", header: "Shell", width: "w-16" },
-            { key: "name", header: "Name", width: "w-52" },
+            { key: "name", header: "Name", width: "w-48" },
             { key: "purpose", header: "For" },
+            { key: "module", header: "Start from", mono: true, width: "w-36" },
           ]}
           rows={shells.map((shell) => ({
             id: shell.id,
             name: shell.name,
             purpose: shell.purpose,
+            module: SHELL_MODULE[shell.id] ?? "—",
           }))}
         />
       </DocSection>
@@ -408,18 +414,20 @@ export function LayoutDoc() {
           past the edge rather than using it.
         </Para>
         <div className="flex flex-col">
-          <Gap title="Four shells have no module">
+          <Gap title="Most shells have no module">
             <>
-              Five shells are specified. <Code>dbui-shells</Code> exports{" "}
+              <Code>composition.md</Code> specifies {shells.length} shells and{" "}
+              <Code>dbui-shells</Code> exports{" "}
               {shellModules.map((name, i) => (
                 <React.Fragment key={name}>
                   {i > 0 ? ", " : ""}
                   <Code>{name}</Code>
                 </React.Fragment>
               ))}
-              . Only the catalog explorer among those is a shell, so a list, a workspace browser, an
-              editor or an asset detail is assembled from components each time and the scroll
-              contract is re-decided each time with it.
+              . Only {shellsWithModule.length} of them is a shell. Shell{" "}
+              {shellsWithoutModule.map((shell) => shell.id).join(", shell ")} are assembled from
+              components each page at a time, so the scroll contract is re-decided each time with
+              them.
             </>
           </Gap>
           <Gap title="No chat shell">
