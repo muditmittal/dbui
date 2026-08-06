@@ -3,6 +3,7 @@
 import {
   ColorSwatches, SpaceScale, RadiusScale, SizeScale, BorderScale,
   ElevationScale, MotionScale, ScalarList, TypeScale, WiringTable, TailwindTable, Wired,
+  SupersededNote, wiringOf,
 } from "@/stories/tokens/TokenKit"
 import {
   colorGroups, type as typeSteps, space, spaceInline, radius, sizeElement, sizeIcon,
@@ -15,6 +16,7 @@ import { RefTable, Code } from "@/components/docs/Prose"
 import { Figure, FigureRow, FigureLabel } from "@/components/docs/Diagram"
 import { SectionTabs } from "@/components/docs/StickyBar"
 import { anchorOffset } from "@/components/docs/anchor"
+import type { Wiring } from "@/stories/tokens/TokenKit"
 
 /**
  * A reference page for someone skimming, so the unit is a table or a preview and
@@ -70,7 +72,24 @@ const SECTIONS = [
 ]
 
 const family = (key: string) => families.find((f) => f.key === key)
-const isLive = (key: string) => family(key)?.live ?? false
+
+/**
+ * The section's badge, and the line that has to sit under a superseded one.
+ *
+ * A section heading reading `Elevation superseded` states half of a two-part
+ * fact. The other half — that Tailwind's shadow namespace is drawing every
+ * shadow in the product — is the half that stops the badge reading as a defect,
+ * so it is rendered from the scan rather than left to the badge to imply.
+ */
+const wiring = (key: string) => {
+  const f = family(key)
+  return f ? wiringOf(f) : "unread"
+}
+
+const supersededNote = (key: string) => {
+  const f = family(key)
+  return f?.superseded ? [<SupersededNote key="superseded" family={f} />] : []
+}
 
 /**
  * Why a namespace is Tailwind's and not ours — a few words, because the table it
@@ -83,6 +102,7 @@ const isLive = (key: string) => family(key)?.live ?? false
 const GOVERNS: Record<string, React.ReactNode> = {
   "--shadow-*": "Every shipped shadow. Elevation is not in this path.",
   "ring and outline width": "No v4 theme namespace. Baked into the utility.",
+  "border and divide width": "Every hairline. Border width is not in this path.",
   "--animate-*": "Keyframes, from Tailwind and tw-animate-css.",
   "z-index scale": "No v4 theme namespace. Stacking cannot be tokenized.",
   "--default-transition-duration": "What a bare transition-* takes.",
@@ -189,14 +209,14 @@ const JOBS = [
 function Section({
   id,
   title,
-  live,
+  state,
   scope,
   cautions,
   children,
 }: {
   id: string
   title: string
-  live?: boolean
+  state?: Wiring
   scope: React.ReactNode
   cautions?: React.ReactNode[]
   children: React.ReactNode
@@ -206,7 +226,7 @@ function Section({
       <div className="flex flex-col gap-1">
         <div className="flex items-baseline gap-3">
           <h2 className="type-title-3 text-text-strong">{title}</h2>
-          {live === undefined ? null : <Wired live={live} />}
+          {state === undefined ? null : <Wired state={state} />}
         </div>
         <p className="type-body text-text-subtle">{scope}</p>
       </div>
@@ -379,8 +399,12 @@ export function TokensDoc() {
         scope="Whether a line of code resolves to a family, measured against the repo rather than declared."
         cautions={[
           <>
-            An unconsumed family is still safe through <Code>var(--db-*)</Code>. It just stops
-            agreeing with the Tailwind utility beside it once a scalar leaves 1.
+            Superseded means the property renders everywhere, from Tailwind&rsquo;s namespace rather
+            than from ours. Unread means nothing renders it at all.
+          </>,
+          <>
+            Either way the names stay safe through <Code>var(--db-*)</Code>. They just stop agreeing
+            with the Tailwind utility beside them once a scalar leaves 1.
           </>,
         ]}
       >
@@ -390,7 +414,7 @@ export function TokensDoc() {
       <Section
         id="color"
         title="Color"
-        live={isLive("color")}
+        state={wiring("color")}
         scope="Every color that ships, light beside dark. Never a size, a radius or a shadow."
         cautions={[
           <>
@@ -412,7 +436,7 @@ export function TokensDoc() {
       <Section
         id="type"
         title="Type"
-        live={isLive("type")}
+        state={wiring("type")}
         scope="Family, size, leading, tracking, weight and case, as one class."
         cautions={[
           <>
@@ -434,9 +458,10 @@ export function TokensDoc() {
       <Section
         id="elevation"
         title="Elevation"
-        live={isLive("elevation")}
+        state={wiring("elevation")}
         scope="Shadows for surfaces that float."
         cautions={[
+          ...supersededNote("elevation"),
           <>Counts down. When two surfaces overlap, the one on top takes the lower number.</>,
         ]}
       >
@@ -461,9 +486,10 @@ export function TokensDoc() {
       <Section
         id="space"
         title="Space"
-        live={isLive("space")}
+        state={wiring("space")}
         scope="Named steps over the grid unit."
         cautions={[
+          ...supersededNote("space"),
           <>
             Every step restates a numeric utility — <Code>md</Code> is <Code>p-4</Code>. The names
             stay reachable through <Code>var(--db-space-*)</Code> so the system keeps one way to say
@@ -485,9 +511,10 @@ export function TokensDoc() {
       <Section
         id="size"
         title="Size"
-        live={isLive("size")}
+        state={wiring("size")}
         scope="Control heights and icon boxes."
         cautions={[
+          ...supersededNote("size"),
           <>
             Icon <Code>md</Code> matches the <Code>label</Code> line box. Moving either without the
             other breaks text and icon alignment in every row.
@@ -501,7 +528,7 @@ export function TokensDoc() {
       <Section
         id="radius"
         title="Radius"
-        live={isLive("radius")}
+        state={wiring("radius")}
         scope="Corners. Controls take sm, containers and popovers md, cards xl, pills full."
         cautions={[
           <>
@@ -516,8 +543,9 @@ export function TokensDoc() {
       <Section
         id="border"
         title="Border"
-        live={isLive("border")}
+        state={wiring("border")}
         scope="Hairline weights. The one family in px, because a scaled hairline blurs."
+        cautions={supersededNote("border")}
       >
         <BorderScale tokens={borderWidth} />
       </Section>
@@ -525,8 +553,9 @@ export function TokensDoc() {
       <Section
         id="motion"
         title="Motion"
-        live={isLive("motion")}
+        state={wiring("motion")}
         scope="Two duration bands and one easing curve."
+        cautions={supersededNote("motion")}
       >
         {/* Read from the generated data rather than retyped. The curve was
             written out here as a literal, which is the one thing a token page
@@ -562,7 +591,7 @@ export function TokensDoc() {
           </>,
           <>
             <Code>dbui check</Code> reads class strings, so it catches a hex, a px literal and a
-            primitive. It cannot see a token that is wired but unread, which is what the wiring
+            primitive. It cannot see a token that ships and nothing reads, which is what the wiring
             table is for. <Code>/docs/checks</Code> lists every rule.
           </>,
         ]}

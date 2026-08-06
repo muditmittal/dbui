@@ -433,12 +433,63 @@ export function TypeScale({ steps, use }: { steps: TypeStep[]; use: Record<strin
  * Whether anything resolves to a family. This is the one status on the page, and
  * it is measured rather than declared — `TRACKER.md` owns progress, but "does a
  * line of code read this" is a property of the current tree, not a milestone.
+ *
+ * Three states, because two were not enough. Every family that nothing reads
+ * used to read `unconsumed`, and a reader takes that as a statement about the
+ * product: Elevation unconsumed means nothing has a shadow. Popovers, dialogs
+ * and segment controls all have one, so the page was reporting a defect that
+ * does not exist and losing the reader's trust in the rest of the table.
+ *
+ * `superseded` splits the two claims apart. The property renders. Our token is
+ * not its source. Which of those a reader needs depends on what they are about
+ * to do, and both are on the row.
  */
-export function Wired({ live }: { live: boolean }) {
-  return live ? (
-    <Badge variant="outline">live</Badge>
-  ) : (
-    <Badge variant="warning">unconsumed</Badge>
+export type Wiring = "live" | "superseded" | "unread"
+
+/** Whether the family is read, and if not, whether anything else does its job. */
+export const wiringOf = (family: Family): Wiring =>
+  family.live ? "live" : family.superseded ? "superseded" : "unread"
+
+export function Wired({ state }: { state: Wiring }) {
+  if (state === "live") return <Badge variant="outline">live</Badge>
+  // Warning on both, because both are a gap between what ships and what renders.
+  // Superseded is the more serious of the two: the value exists and disagrees.
+  return <Badge variant="warning">{state === "superseded" ? "superseded" : "unread"}</Badge>
+}
+
+/**
+ * What took the job, on the row, so the badge is never the whole story.
+ *
+ * The namespace and the file count come from the scan. Nothing is claimed that
+ * is not currently written somewhere in the tree, so if the utilities go away
+ * the family falls back to reporting itself unread.
+ */
+export function SupersededBy({ family }: { family: Family }) {
+  if (!family.superseded) return null
+  return (
+    <>
+      <code className="type-code min-w-0 flex-1 truncate text-text-base">
+        {family.superseded.namespace}
+      </code>
+      <span className="type-hint shrink-0 tabular-nums text-text-subtle">
+        {family.superseded.uses} uses
+      </span>
+    </>
+  )
+}
+
+/**
+ * The sentence a section needs when its badge says superseded, because a badge
+ * cannot say what took over or admit that both facts are true at once.
+ */
+export function SupersededNote({ family }: { family: Family }) {
+  if (!family.superseded) return null
+  return (
+    <>
+      Tailwind&rsquo;s <code className="type-code">{family.superseded.namespace}</code> renders this
+      instead, in {family.superseded.files} files. The property is on screen. This family is not its
+      source.
+    </>
   )
 }
 
@@ -487,11 +538,15 @@ function Ships({ family }: { family: Family }) {
  *
  * The last column used to hold a paragraph explaining the mechanism, which made
  * the one table an engineer scans the one table an engineer had to read. What is
- * left is what the sentence was carrying: the namespace you write, and how many
- * times the repo writes it. A family nothing reads shows the badge instead,
- * because there is no namespace to name.
+ * left is the namespace you write and how many times the repo writes it.
  *
- * Nothing here is typed. The namespace and both numbers come from the
+ * The column is headed by what renders rather than by what our token reaches,
+ * because that is the only question all three states can answer. A live family
+ * names its own bridge. A superseded one names the Tailwind namespace that
+ * renders the property instead, with the badge marking whose value it is. An
+ * unread one has nothing to name, which is the whole of its answer.
+ *
+ * Nothing here is typed. The namespace and every number come from the
  * consumption scan, so a family that goes live changes this table by itself.
  */
 export function WiringTable({ families }: { families: Family[] }) {
@@ -501,29 +556,35 @@ export function WiringTable({ families }: { families: Family[] }) {
         cells={[
           ["Family", "w-28 shrink-0"],
           ["Ships", "w-28 shrink-0"],
-          ["Reaches code as", "min-w-0 flex-1"],
+          ["What renders it", "min-w-0 flex-1"],
         ]}
       />
-      {families.map((f, i) => (
-        <Row key={f.key} last={i === families.length - 1}>
-          <span className="type-label-bold w-28 shrink-0 text-text-strong">{f.label}</span>
-          <Ships family={f} />
-          <span className="flex min-w-0 flex-1 items-baseline gap-3">
-            {f.bridge ? (
-              <>
-                <code className="type-code min-w-0 flex-1 truncate text-text-base">
-                  {f.bridge.namespace}
-                </code>
-                <span className="type-hint shrink-0 tabular-nums text-text-subtle">
-                  {f.bridge.uses} uses
-                </span>
-              </>
-            ) : (
-              <Wired live={f.live} />
-            )}
-          </span>
-        </Row>
-      ))}
+      {families.map((f, i) => {
+        const state = wiringOf(f)
+        return (
+          <Row key={f.key} last={i === families.length - 1}>
+            <span className="type-label-bold w-28 shrink-0 text-text-strong">{f.label}</span>
+            <Ships family={f} />
+            <span className="flex min-w-0 flex-1 items-baseline gap-3">
+              {f.bridge ? (
+                <>
+                  <code className="type-code min-w-0 flex-1 truncate text-text-base">
+                    {f.bridge.namespace}
+                  </code>
+                  <span className="type-hint shrink-0 tabular-nums text-text-subtle">
+                    {f.bridge.uses} uses
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Wired state={state} />
+                  <SupersededBy family={f} />
+                </>
+              )}
+            </span>
+          </Row>
+        )
+      })}
     </Panel>
   )
 }
@@ -611,7 +672,10 @@ export function ScalarList({
             <span className="type-hint shrink-0 tabular-nums text-text-subtle">
               {t.px === null ? t.value : `${t.px}px`}
             </span>
-            <Wired live={live.get(`--db-${t.name}`) ?? false} />
+            {/* A dial has nothing to be superseded by. Turning it moves the
+                family it drives or it moves nothing, so two states is the whole
+                truth here. */}
+            <Wired state={live.get(`--db-${t.name}`) ? "live" : "unread"} />
           </div>
           <span className="type-body text-text-subtle">{drives[t.name]}</span>
         </div>

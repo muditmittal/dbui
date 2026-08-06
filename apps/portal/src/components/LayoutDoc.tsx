@@ -379,7 +379,7 @@ export function LayoutDoc() {
         </Para>
         <Para>
           Which scale those paddings are on is worth being exact about, because the system has two
-          and only one of them is live.
+          and only one of them is read.
         </Para>
 
         <RefTable
@@ -391,8 +391,12 @@ export function LayoutDoc() {
           rows={[
             {
               scale: spacing.tokenFamily.name,
-              state: spacing.tokenFamily.live ? "Live" : "Read by nothing",
-              what: `Generated from theme.config.mjs and shipped in tokens.css. No component and no page reads any of its ${spacing.tokenFamily.tokens} tokens.`,
+              // "Read by nothing" beside a page whose padding is visibly even
+              // reads as a claim about the page rather than about the token. The
+              // padding is real and comes from the row below, which is the half
+              // of the fact this cell was leaving out.
+              state: spacing.tokenFamily.live ? "Live" : "Superseded",
+              what: `Generated from theme.config.mjs and shipped in tokens.css. The padding you see comes from the utility below instead, so nothing reads any of these ${spacing.tokenFamily.tokens} steps.`,
             },
             {
               scale: spacing.utility.name,
