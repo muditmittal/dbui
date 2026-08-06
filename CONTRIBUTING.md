@@ -125,8 +125,14 @@ scan for call sites across `packages/`, `apps/`, and `figma/`.
 ```bash
 yarn design:lint:react <changed paths>   # must be clean
 yarn design:verify-sync                  # only if tokens changed; must report in sync
+node scripts/generate-layout-data.mjs    # only if a region inset, panel width or scroll container moved
 yarn workspace portal storybook          # visually confirm in light and dark
 ```
+
+`generate-layout-data.mjs` reads the region insets, the panel widths and every scroll container out
+of the components that own them, for the portal's Layout page. It fails loudly when a class string
+changes shape and goes quietly stale when only a value does, so run it after touching
+`page-header.tsx`, `controls-bar.tsx` or anything in `packages/dbui-shells/src/`.
 
 Then confirm:
 
