@@ -27,6 +27,10 @@ export const DOCS_NAV: DocsNavEntry[] = [
       { href: "/docs/tokens", label: "Tokens" },
       { href: "/docs/icons", label: "Icons" },
       { href: "/docs/components", label: "Components" },
+      // Above Patterns because it answers the earlier question. Layout settles
+      // the frame, the regions and which container scrolls; Patterns settles
+      // what happens inside them over time.
+      { href: "/docs/layout", label: "Layout" },
       { href: "/docs/patterns", label: "Patterns" },
       // Not "Accessibility and internationalization". That label wrapped to three
       // rail lines, and nobody scans a rail for a twenty-letter word. `/docs/foundations`
