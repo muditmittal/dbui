@@ -172,6 +172,12 @@ const bridgeLines = Object.entries(bridge ?? {})
     }
     // Numbered stops: the Tailwind step and the token stop are the same number.
     for (const step of spec.steps ?? []) out.push(`  --${ns}-${twKey(step)}: ${v(`${spec.family}-${tokenStop(step)}`)};`)
+    // Tailwind's own `--default-*` keys, which back the utility written with no
+    // step at all — a bare `border`. Not part of the namespace, so they are
+    // declared by name rather than derived from it.
+    for (const [key, step] of Object.entries(spec.defaults ?? {})) {
+      out.push(`  --${key}: ${v(`${spec.family}-${tokenStop(step)}`)};`)
+    }
     return out
   })
   .join("\n")
@@ -198,11 +204,13 @@ const typeLines = [
 
 const sizeLines = scaled("size", size)
 
-// Border width stays in px. A 1px hairline is a rendering fact, not a
-// proportion: at a 20px root it would become 1.25px and blur across a subpixel
-// boundary. Rules and dividers should stay crisp when everything else grows.
-const borderLines = Object.entries(border.width)
-  .map(([k, px]) => `  ${PREFIX}border-width-${k}: ${px}px;`)
+// Border width stays in px and is NOT run through `scaled()`. A 1px hairline is
+// a rendering fact, not a proportion: at a 20px root it would become 1.25px and
+// blur across a subpixel boundary. Rules and dividers should stay crisp when
+// everything else grows — which is also why the stop number here counts px
+// rather than units of the grid.
+const borderLines = Object.entries(border)
+  .map(([k, px]) => `  ${PREFIX}border-${k}: ${px}px;`)
   .join("\n")
 
 const motionLines = [

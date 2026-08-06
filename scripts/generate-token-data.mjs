@@ -48,14 +48,13 @@ const COLOR_GROUPS = [
   ["utility", "Utility", "Scrim and skeleton — surfaces that exist only to obscure or stand in."],
 ]
 
-/** Dimensional families whose names collide with a color prefix. */
-const NOT_COLOR = /^(border-width-|surface-)?$/
+/** A dimension under a color prefix: `border-1` is a width, `border-base` a color. */
+const NOT_COLOR = /^border-\d/
 
 const colorGroups = COLOR_GROUPS.map(([prefix, label, blurb]) => {
   const names = Object.keys(light).filter((n) => {
     if (!n.startsWith(prefix + "-")) return false
-    // `border-width-*` is a dimension, not a color, but shares the prefix.
-    if (n.startsWith("border-width-")) return false
+    if (NOT_COLOR.test(n)) return false
     // `border-*` must not swallow `input-border-*`; longest prefix wins.
     return !COLOR_GROUPS.some(([other]) => other !== prefix && other.length > prefix.length && n.startsWith(other + "-"))
   })
@@ -133,7 +132,10 @@ const data = {
   space: pick(/^space-/, { onGrid: true }),
   radius: pick(/^radius-/),
   size: pick(/^size-/, { onGrid: true }),
-  borderWidth: pick(/^border-width-/),
+  // Not `onGrid`: this family counts px, not units of the grid step, so a
+  // multiple would divide 1px by 4px and report 0.25 of a relationship that
+  // does not exist.
+  borderWidth: pick(NOT_COLOR),
   elevation: pick(/^elevation-/),
   duration: pick(/^duration-/),
   easing: pick(/^ease-/),

@@ -148,6 +148,10 @@
   --radius-3: var(--db-radius-3);
   --radius-4: var(--db-radius-4);
   --radius-6: var(--db-radius-6);
+  --border-width-0: var(--db-border-0);
+  --border-width-1: var(--db-border-1);
+  --border-width-2: var(--db-border-2);
+  --default-border-width: var(--db-border-1);
 }
 
 :root {
@@ -263,9 +267,9 @@
   --db-size-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
 
   /* ── Border width ── */
-  --db-border-width-none: 0px;
-  --db-border-width-thin: 1px;
-  --db-border-width-thick: 2px;
+  --db-border-0: 0px;
+  --db-border-1: 1px;
+  --db-border-2: 2px;
 
   /* ── Motion (two bands, one easing curve for the whole system) ── */
   --db-duration-fast-min: 130ms;

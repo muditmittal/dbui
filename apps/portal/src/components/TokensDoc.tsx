@@ -102,7 +102,6 @@ const supersededNote = (key: string) => {
 const GOVERNS: Record<string, React.ReactNode> = {
   "--shadow-*": "Every shipped shadow. Elevation is not in this path.",
   "ring and outline width": "No v4 theme namespace. Baked into the utility.",
-  "border and divide width": "Every hairline. Border width is not in this path.",
   "--animate-*": "Keyframes, from Tailwind and tw-animate-css.",
   "z-index scale": "No v4 theme namespace. Stacking cannot be tokenized.",
   "--default-transition-duration": "What a bare transition-* takes.",
@@ -548,7 +547,7 @@ export function TokensDoc() {
         id="border"
         title="Border"
         state={wiring("border")}
-        scope="Hairline weights. The one family in px, because a scaled hairline blurs."
+        scope="Hairline weights, and the one family whose number counts px rather than grid units — border-1 is 1px. A hairline is a rendering fact, not a proportion, so it is never scaled."
         cautions={supersededNote("border")}
       >
         <BorderScale tokens={borderWidth} />

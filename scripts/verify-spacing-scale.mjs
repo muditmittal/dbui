@@ -96,6 +96,22 @@ function rules(css) {
   return out
 }
 
+/**
+ * The whole `.cls { ... }` block, braces balanced, for the utilities that emit
+ * nested rules rather than a flat declaration list. `rules()` flattens, which
+ * loses exactly these.
+ */
+function blockFor(css, cls) {
+  const open = css.indexOf(`.${cls} {`)
+  if (open === -1) return null
+  let depth = 0
+  for (let i = open; i < css.length; i++) {
+    if (css[i] === "{") depth++
+    else if (css[i] === "}" && --depth === 0) return css.slice(open, i + 1).replace(/\s+/g, " ")
+  }
+  return null
+}
+
 /** The declarations for one utility class, or null when nothing was emitted. */
 function ruleFor(css, cls) {
   const r = rules(css)
@@ -750,6 +766,23 @@ const SHIPPED = `@import "tailwindcss";
     "K8 --border-width-N owns the numeric border classes",
     ["border-0", "border-1", "border-2"].every((c) => (ruleFor(css, c) ?? "").includes("--db-border-")),
     `border-2 → ${ruleFor(css, "border-2")}`
+  )
+  // Whether the divide utilities come along decides one line in the consumption
+  // report: if they do not, `divide-*` is a separate unowned Tailwind scale and
+  // has to keep saying so rather than being folded into the Border width family.
+  //
+  // `ruleFor` cannot answer this one. A divide utility emits a NESTED rule —
+  // `.divide-x { :where(& > :not(:last-child)) { ... } }` — so the outer rule has
+  // no declarations of its own and the inner one is keyed by a selector that
+  // names no class. Read the balanced block out of the raw CSS instead.
+  const divide = await build(SHIPPED, ["divide-x", "divide-y", "divide-x-2"])
+  for (const c of ["divide-x", "divide-y", "divide-x-2"]) {
+    console.log(`    ${c.padEnd(16)} ${(blockFor(divide, c) ?? "(nothing emitted)").slice(0, 92)}`)
+  }
+  check(
+    "K11 divide width rides on the same keys as border width",
+    ["divide-x", "divide-y", "divide-x-2"].every((c) => (blockFor(divide, c) ?? "").includes("--db-border-")),
+    "So the two are one family, and `divide and border width` stops being an unowned Tailwind scale."
   )
 }
 

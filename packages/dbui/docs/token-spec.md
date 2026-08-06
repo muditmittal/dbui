@@ -98,19 +98,16 @@ Scalars and the two `em` inline steps have no single px value by design.
 | `--db-viz-sequential-8` | Color | #085B6E |  | #A5E5F9 |
 | `--db-viz-sequential-9` | Color | #084150 |  | #D2F1FC |
 | `--db-density-scalar` | Density | 1 |  |  |
-| `--db-sizing-scalar` | Density | 1 |  |  |
 | `--db-space-0` | Density | 0 | 0px |  |
-| `--db-space-2xl` | Density | calc(var(--db-spacing-unit) * 12 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 48px |  |
-| `--db-space-2xs` | Density | calc(var(--db-spacing-unit) * 1 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 4px |  |
-| `--db-space-3xs` | Density | calc(var(--db-spacing-unit) * 0.5 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 2px |  |
-| `--db-space-inline-sm` | Density | 0.5em |  |  |
-| `--db-space-inline-xs` | Density | 0.25em |  |  |
-| `--db-space-lg` | Density | calc(var(--db-spacing-unit) * 6 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 24px |  |
-| `--db-space-md` | Density | calc(var(--db-spacing-unit) * 4 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 16px |  |
-| `--db-space-sm` | Density | calc(var(--db-spacing-unit) * 3 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 12px |  |
-| `--db-space-xl` | Density | calc(var(--db-spacing-unit) * 8 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 32px |  |
-| `--db-space-xs` | Density | calc(var(--db-spacing-unit) * 2 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 8px |  |
-| `--db-spacing-scalar` | Density | 1 |  |  |
+| `--db-space-0-5` | Density | calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar)) | 2px |  |
+| `--db-space-1` | Density | calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar)) | 4px |  |
+| `--db-space-10` | Density | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
+| `--db-space-12` | Density | calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar)) | 48px |  |
+| `--db-space-2` | Density | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
+| `--db-space-3` | Density | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
+| `--db-space-4` | Density | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
+| `--db-space-6` | Density | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
+| `--db-space-8` | Density | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
 | `--db-spacing-unit` | Density | 0.25rem | 4px |  |
 | `--db-type-scalar` | Density | 1 |  |  |
 | `--db-font-family` | Typography | "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif |  |  |
@@ -187,22 +184,23 @@ Scalars and the two `em` inline steps have no single px value by design.
 | `--db-line-height-title-3` | Typography | calc(1.75rem * var(--db-type-scalar)) | 28px |  |
 | `--db-line-height-title-4` | Typography | calc(1.5rem * var(--db-type-scalar)) | 24px |  |
 | `--db-mono-font-family` | Typography | "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace |  |  |
-| `--db-radius-2xl` | Radius | 1.5rem | 24px |  |
+| `--db-radius-0` | Radius | 0 | 0px |  |
+| `--db-radius-1` | Radius | calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar)) | 4px |  |
+| `--db-radius-2` | Radius | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
+| `--db-radius-3` | Radius | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
+| `--db-radius-4` | Radius | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
+| `--db-radius-6` | Radius | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
 | `--db-radius-full` | Radius | 999px | 999px |  |
-| `--db-radius-lg` | Radius | 0.75rem | 12px |  |
-| `--db-radius-md` | Radius | 0.5rem | 8px |  |
-| `--db-radius-sm` | Radius | 0.25rem | 4px |  |
-| `--db-radius-xl` | Radius | 1rem | 16px |  |
-| `--db-size-element-md` | Size | calc(2rem * var(--db-sizing-scalar)) | 32px |  |
-| `--db-size-element-sm` | Size | calc(1.5rem * var(--db-sizing-scalar)) | 24px |  |
-| `--db-size-icon-lg` | Size | calc(1.25rem * var(--db-sizing-scalar)) | 20px |  |
-| `--db-size-icon-md` | Size | calc(1rem * var(--db-sizing-scalar)) | 16px |  |
-| `--db-size-icon-sm` | Size | calc(0.875rem * var(--db-sizing-scalar)) | 14px |  |
-| `--db-size-icon-xl` | Size | calc(1.5rem * var(--db-sizing-scalar)) | 24px |  |
-| `--db-size-icon-xs` | Size | calc(0.75rem * var(--db-sizing-scalar)) | 12px |  |
-| `--db-border-width-none` | Border | 0px | 0px |  |
-| `--db-border-width-thick` | Border | 2px | 2px |  |
-| `--db-border-width-thin` | Border | 1px | 1px |  |
+| `--db-size-10` | Size | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
+| `--db-size-2` | Size | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
+| `--db-size-3` | Size | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
+| `--db-size-4` | Size | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
+| `--db-size-6` | Size | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
+| `--db-size-7` | Size | calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar)) | 28px |  |
+| `--db-size-8` | Size | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
+| `--db-border-0` | Border | 0px | 0px |  |
+| `--db-border-1` | Border | 1px | 1px |  |
+| `--db-border-2` | Border | 2px | 2px |  |
 | `--db-elevation-0` | Elevation | none |  |  |
 | `--db-elevation-1` | Elevation | 0 8px 40px rgba(0, 0, 0, 0.13) |  |  |
 | `--db-elevation-2` | Elevation | 0 2px 16px rgba(0, 0, 0, 0.08) |  |  |

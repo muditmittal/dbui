@@ -32,7 +32,7 @@ function categorize(name) {
   if (/^elevation-/.test(n)) return "Elevation"
   if (/^radius-/.test(n)) return "Radius"
   if (/^size-/.test(n)) return "Size"
-  if (/^border-width-/.test(n)) return "Border"
+  if (/^border-\d/.test(n)) return "Border"
   if (/^(duration-|ease-)/.test(n)) return "Motion"
   return "Other"
 }

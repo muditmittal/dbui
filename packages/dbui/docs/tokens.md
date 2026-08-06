@@ -39,8 +39,12 @@ node scripts/generate-token-data.mjs     # refresh the portal's Tokens page
    that is how Figma and designers think; the generator converts once, against a
    16px root. Radius is included — an input that grows taller while its corner
    stays frozen changes shape, not just size.
-7. **Border width stays in px.** A hairline is a rendering fact, not a proportion:
-   at a 20px root, 1px would become 1.25px and blur across a subpixel boundary.
+7. **Border width stays in px, and is the one family whose number is px.**
+   `--db-border-1` is 1px, not 4px. A hairline is a rendering fact, not a
+   proportion: at a 20px root, 1px would become 1.25px and blur across a subpixel
+   boundary. It is also the number an author already types — `border-2` is 2px in
+   stock Tailwind — so reading it as 8px would break the one expectation every
+   Tailwind user arrives with.
 
 ## Type
 
@@ -87,12 +91,17 @@ key for `p-4` and `gap-4`, so `--spacing` carries the grid unit and
 `--db-density-scalar` — the dial that means everything at once — and not
 `--db-spacing-scalar` or `--db-sizing-scalar`, each of which owns half that axis.
 
-Every dimensional stop is named after its **multiple of the grid unit**, and the
-bridge declares one Tailwind key per stop. That is what makes the number the same
-in both tools: the token, the Tailwind class and the Figma variable all carry the
-same digit, so nothing has to be looked up in either direction. A name like `md`
-could not do that — it was the fourth space step and the second radius step, and
-the two families disagreed about what `md` meant.
+Every dimensional stop is named after its **multiple of the family's unit**, and
+the bridge declares one Tailwind key per stop. That is what makes the number the
+same in both tools: the token, the Tailwind class and the Figma variable all carry
+the same digit, so nothing has to be looked up in either direction. A name like
+`md` could not do that — it was the fourth space step and the second radius step,
+and the two families disagreed about what `md` meant.
+
+For space, size and radius the unit is the 4px grid step, so `space-3` is 12px.
+For border the unit is 1px, per rule 7. That is the only place the two readings
+diverge, and it is stated on the family rather than left for a reader to infer
+from a value.
 
 An explicit key beats Tailwind's multiplier for the same step, which is what makes
 the bridge load-bearing rather than decorative. Tailwind's multiplier is still

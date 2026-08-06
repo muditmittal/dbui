@@ -793,19 +793,19 @@ export const size: Token[] = [
 
 export const borderWidth: Token[] = [
   {
-    "name": "border-width-none",
+    "name": "border-0",
     "value": "0px",
     "px": 0,
     "multiple": null
   },
   {
-    "name": "border-width-thin",
+    "name": "border-1",
     "value": "1px",
     "px": 1,
     "multiple": null
   },
   {
-    "name": "border-width-thick",
+    "name": "border-2",
     "value": "2px",
     "px": 2,
     "multiple": null

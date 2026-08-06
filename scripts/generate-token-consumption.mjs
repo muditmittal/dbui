@@ -175,7 +175,7 @@ const FAMILIES = [
     unit: "colors",
     // `--db-border-1` is a width and `--db-border-base` is a color, so border is
     // split on whether the suffix is a number rather than on the prefix.
-    match: (n) => !/^--db-(space|radius|size|border-(?:width-|\d)|elevation|duration|ease|font|line-height|letter-spacing|mono-font|spacing-unit|density-scalar|type-scalar)/.test(n),
+    match: (n) => !/^--db-(space|radius|size|border-\d|elevation|duration|ease|font|line-height|letter-spacing|mono-font|spacing-unit|density-scalar|type-scalar)/.test(n),
     bridge: { kind: "theme", namespace: "--color-*", file: TOKENS_CSS, utilities: /^(bg|text|border|ring|fill|stroke|outline|from|via|to|divide|placeholder|caret|accent|shadow|decoration)-/ },
   },
   {
@@ -236,11 +236,9 @@ const FAMILIES = [
     key: "border",
     label: "Border width",
     unit: "widths",
-    // A numeric suffix is a width; a word suffix is a color. `border-width-*` is
-    // the pre-rename spelling and is matched until that family is renamed.
-    match: (n) => /^--db-border-(?:width-|\d)/.test(n),
-    bridge: null,
-    supersededBy: "border and divide width",
+    // A numeric suffix is a width; a word suffix is a color.
+    match: (n) => /^--db-border-\d/.test(n),
+    bridge: { kind: "theme", namespace: "--border-width-*", file: TOKENS_CSS, utilities: bridgedUtilities(["border-width"]) },
   },
   {
     key: "motion",
@@ -255,7 +253,7 @@ const FAMILIES = [
   },
 ]
 
-/** Longest-prefix wins, so `--db-border-width-thin` lands on Border width. */
+/** Anything but color is matched first, so `--db-border-1` lands on Border width. */
 function familyOf(name) {
   const specific = FAMILIES.find((f) => f.key !== "color" && f.match(name))
   return specific ?? FAMILIES.find((f) => f.key === "color")
@@ -427,11 +425,12 @@ const TAILWIND = [
   // scale is baked into the utility, so there is nothing a token could override.
   { namespace: "z-index scale", probe: null, utilities: /^-?z-\d+$/ },
   { namespace: "ring and outline width", probe: null, utilities: /^(ring|outline|inset-ring)(-\d+)?$/ },
-  // Same shape, and it is the one the Border width family was meant to own. A
-  // bare `border` is Tailwind's 1px, not `--db-border-width-thin`, so every
-  // hairline in the system renders from a value no token governs. The color
-  // variants are excluded by requiring the class to end after the side or width.
-  { namespace: "border and divide width", probe: null, utilities: /^(border|divide)(-(x|y|t|r|b|l|s|e))?(-(0|2|4|8))?$/ },
+  // `border and divide width` used to sit here, as the scale the Border width
+  // family was named for and did not own: a bare `border` was Tailwind's 1px,
+  // not our token, so every hairline in the system rendered from a value no
+  // token governed. `--default-border-width` plus the `--border-width-*`
+  // namespace closes that, and the divide utilities read the same keys (K7, K8
+  // and K11 in verify-spacing-scale), so the row moved into the family table.
 ]
 
 const tailwind = TAILWIND.map((t) => {

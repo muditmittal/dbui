@@ -358,6 +358,26 @@ export const bridge = {
     steps: [0, 1, 2, 3, 4, 6],
     close: ["sm", "md", "lg", "xl", "2xl", "3xl"],
   },
+  /* Border is the family that most needed the numeric rename, because named
+   * steps here collide with the colors. `--border-width-strong` mints
+   * `border-strong`, a WIDTH, which would sit one letter away from
+   * `border-border-strong`, a color, in the same class list (I2 in
+   * verify-spacing-scale). `border-2` cannot be mistaken for a color.
+   *
+   * `defaults` is the second half. A bare `border` bakes Tailwind's own 1px into
+   * the utility and never reads the namespace, and a bare `border` is how nearly
+   * every hairline in the system is written — so without this line the family
+   * would be fully named and still not own the value anyone renders. Same value,
+   * 1px, now sourced from us.
+   *
+   * Nothing is closed. Tailwind mints `border-<n>` from the bare number for any
+   * n, so `border-4` still compiles at 4px — the same bargain spacing makes for
+   * `p-1.5`, and the multiplier stays on for both. */
+  "border-width": {
+    family: "border",
+    steps: [0, 1, 2],
+    defaults: { "default-border-width": 1 },
+  },
 }
 
 /* Type — anchored ramp. Each step is a hand-tuned PIXEL anchor for size,
@@ -460,8 +480,23 @@ export const elevation = {
  * number: a 24px control was `element-sm` and a 24px icon was `icon-xl`. */
 export const size = { 2: 2, 3: 3, 4: 4, 6: 6, 7: 7, 8: 8, 10: 10 }
 
-/* Border width. `thick` is the focus treatment on non-filled controls. */
-export const border = { width: { none: 0, thin: 1, thick: 2 } }
+/* Border width — the one numeric family whose number is NOT a multiple of the
+ * 4px unit. `--db-border-1` is 1px, not 4px.
+ *
+ * That looks like an inconsistency and is worth stating plainly, because the
+ * alternative is worse. The rule across these families is that the number is the
+ * multiple of the family's own unit, and border's unit is 1px: a hairline is a
+ * rendering fact rather than a proportion. At a 20px root a scaled 1px becomes
+ * 1.25px and blurs across a subpixel boundary, so rules and dividers stay crisp
+ * while everything around them grows. Nothing here is wrapped in the density
+ * calc for the same reason.
+ *
+ * The number also matches what an author already types: `border-2` is 2px in
+ * stock Tailwind, so reading it as 8px would break the one expectation every
+ * Tailwind user arrives with.
+ *
+ * 2 is the focus treatment on non-filled controls. */
+export const border = { 0: 0, 1: 1, 2: 2 }
 
 /* Motion — two bands, and exactly ONE easing curve for the whole system.
  * A single curve is a deliberate economy: systems that ship five easings mostly

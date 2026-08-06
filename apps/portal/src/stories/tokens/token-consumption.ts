@@ -255,17 +255,19 @@ export const families: Family[] = [
     "count": 3,
     "unit": "widths",
     "properties": 3,
-    "bridge": null,
-    "superseded": {
-      "namespace": "border and divide width",
-      "uses": 82,
-      "files": 44
+    "bridge": {
+      "namespace": "--border-width-*",
+      "kind": "theme",
+      "file": "packages/dbui/src/tokens/tokens.css",
+      "uses": 17,
+      "files": 10
     },
+    "superseded": null,
     "systemRefs": 0,
     "systemConsumers": [],
     "portalRefs": 0,
     "portalConsumers": [],
-    "live": false
+    "live": true
   },
   {
     "key": "motion",
@@ -348,16 +350,6 @@ export const tailwind: TailwindNamespace[] = [
     "origin": "tailwind",
     "uses": 83,
     "files": 33
-  },
-  {
-    "namespace": "border and divide width",
-    "probe": null,
-    "tailwindValue": null,
-    "overriddenIn": null,
-    "overriddenTo": null,
-    "origin": "utility",
-    "uses": 82,
-    "files": 44
   },
   {
     "namespace": "ring and outline width",
