@@ -369,7 +369,7 @@ export function MotionScale({ tokens, easing }: { tokens: Token[]; easing: strin
               <span
                 key={run}
                 className="absolute top-1 left-1 block size-4 rounded-xs bg-action-primary-base"
-                // Out and back, so the difference between 130ms and 550ms is
+                // Out and back, so the difference between 150ms and 450ms is
                 // legible as a difference in speed rather than end position.
                 style={{
                   animation: `dbui-token-slide var(--db-${t.name}) ${easing} 2 alternate both`,

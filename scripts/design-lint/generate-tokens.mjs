@@ -288,7 +288,7 @@ ${sizeLines}
   /* ── Border width (literal px, outside the scale, never touched by density) ── */
 ${borderLines}
 
-  /* ── Motion (two bands, one easing curve for the whole system) ── */
+  /* ── Motion (three durations, one easing curve for the whole system) ── */
 ${motionLines}
 
   /* ── Elevation ── */

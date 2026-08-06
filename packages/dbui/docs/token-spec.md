@@ -214,12 +214,9 @@ by design, and neither do the two `em` inline steps.
 | `--db-elevation-1` | Elevation | 0 8px 40px rgba(0, 0, 0, 0.13) |  |  |
 | `--db-elevation-2` | Elevation | 0 2px 16px rgba(0, 0, 0, 0.08) |  |  |
 | `--db-elevation-3` | Elevation | 0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05) |  |  |
-| `--db-duration-fast` | Motion | 175ms |  |  |
-| `--db-duration-fast-max` | Motion | 230ms |  |  |
-| `--db-duration-fast-min` | Motion | 130ms |  |  |
-| `--db-duration-medium` | Motion | 410ms |  |  |
-| `--db-duration-medium-max` | Motion | 550ms |  |  |
-| `--db-duration-medium-min` | Motion | 310ms |  |  |
+| `--db-duration-default` | Motion | 300ms |  |  |
+| `--db-duration-fast` | Motion | 150ms |  |  |
+| `--db-duration-slow` | Motion | 450ms |  |  |
 | `--db-ease-standard` | Motion | cubic-bezier(0.24, 1, 0.4, 1) |  |  |
 
 ## Type styles (composed)

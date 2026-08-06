@@ -509,22 +509,26 @@ export const size = { 2: 2, 3: 3, 4: 4, 6: 6, 7: 7, 8: 8, 10: 10 }
  * 2 is the focus treatment on non-filled controls. */
 export const border = { 0: 0, 1: 1, 2: 2 }
 
-/* Motion — two bands, and exactly ONE easing curve for the whole system.
+/* Motion — three durations, and exactly ONE easing curve for the whole system.
  * A single curve is a deliberate economy: systems that ship five easings mostly
- * ship five things nobody can choose between. Durations follow
- * min = base × 0.75, max = base ÷ 0.75, rounded to 5ms.
+ * ship five things nobody can choose between.
  *
- * There is deliberately no `slow` band. Astryx's runs 730–1300ms, which is wrong
- * for tooling that sits between someone and their data — anything approaching a
- * second reads as the product being slow, not as polish. */
+ * This used to be two BANDS of three — `fast-min`, `fast`, `fast-max` and the
+ * same for `medium`, derived as base × 0.75 and base ÷ 0.75. Six names for what
+ * an author experiences as two choices, and the four band members had zero
+ * consumers, because the question at a call site is "quick or considered", never
+ * "the fast band, three quarters of the way down". A band describes a permitted
+ * range, and no CSS property and no Tailwind namespace takes a range.
+ *
+ * 450 is a ceiling rather than a slow band in the usual sense. Astryx's runs
+ * 730–1300ms, which is wrong for tooling that sits between someone and their
+ * data — anything approaching a second reads as the product being slow, not as
+ * polish. Reserve it for something entering across a long distance. */
 export const motion = {
   duration: {
-    "fast-min": "130ms",
-    fast: "175ms",
-    "fast-max": "230ms",
-    "medium-min": "310ms",
-    medium: "410ms",
-    "medium-max": "550ms",
+    fast: "150ms",
+    default: "300ms",
+    slow: "450ms",
   },
   easing: { standard: "cubic-bezier(0.24, 1, 0.4, 1)" },
 }

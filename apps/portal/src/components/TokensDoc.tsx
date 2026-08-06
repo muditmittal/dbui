@@ -574,8 +574,15 @@ export function TokensDoc() {
         id="motion"
         title="Motion"
         state={wiring("motion")}
-        scope="Two duration bands and one easing curve."
-        cautions={supersededNote("motion")}
+        scope="Three durations and one easing curve."
+        cautions={[
+          ...supersededNote("motion"),
+          <>
+            This was two bands of three — a min, a base and a max each — and the four
+            band members had no consumers. The question at a call site is quick or
+            considered, never three quarters of the way down the fast band.
+          </>,
+        ]}
       >
         {/* Read from the generated data rather than retyped. The curve was
             written out here as a literal, which is the one thing a token page

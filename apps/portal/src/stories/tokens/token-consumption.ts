@@ -272,9 +272,9 @@ export const families: Family[] = [
   {
     "key": "motion",
     "label": "Motion",
-    "count": 7,
+    "count": 4,
     "unit": "values",
-    "properties": 7,
+    "properties": 4,
     "bridge": null,
     "superseded": {
       "namespace": "--default-transition-duration",

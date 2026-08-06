@@ -282,13 +282,10 @@
   --db-border-1: 1px;
   --db-border-2: 2px;
 
-  /* ── Motion (two bands, one easing curve for the whole system) ── */
-  --db-duration-fast-min: 130ms;
-  --db-duration-fast: 175ms;
-  --db-duration-fast-max: 230ms;
-  --db-duration-medium-min: 310ms;
-  --db-duration-medium: 410ms;
-  --db-duration-medium-max: 550ms;
+  /* ── Motion (three durations, one easing curve for the whole system) ── */
+  --db-duration-fast: 150ms;
+  --db-duration-default: 300ms;
+  --db-duration-slow: 450ms;
   --db-ease-standard: cubic-bezier(0.24, 1, 0.4, 1);
 
   /* ── Elevation ── */

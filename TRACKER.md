@@ -69,10 +69,13 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    against `surface-base` in dark — elevation is a single-mode token in a two-mode
    system. Deliberately untouched for now; the measurement stands, the change does
    not.
-   Motion is mis-shaped rather than mis-valued: `duration-*` and `ease-*` do resolve
-   from the theme, but the four `-min`/`-max` band members describe a permitted range,
-   and no CSS property and no Tailwind namespace takes one. Nothing in the product
-   renders a DBUI duration; every transition that ships takes Tailwind's default.
+   Motion is now the right shape and still unread. The four `-min`/`-max` band
+   members are gone and the three that remain are `fast 150`, `default 300`,
+   `slow 450`. Bridging them is one line — `--default-transition-duration:
+   var(--db-duration-fast)` — and it was deliberately NOT taken here: 29 call sites
+   write a bare `transition-*` at Tailwind's 150ms, so pointing the default at
+   anything but 150 changes how the product feels, which is outside a rename.
+   Pointing it at `fast` is now a true no-op and is the obvious next step.
 7. **`--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs`,**
    so its two widths are the only dimensional values outside the config. The radius
    and spacing bridges moved into the generator; this one did not.

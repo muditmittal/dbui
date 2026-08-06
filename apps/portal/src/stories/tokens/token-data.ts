@@ -853,38 +853,20 @@ export const elevation: Token[] = [
 
 export const duration: Token[] = [
   {
-    "name": "duration-fast-min",
-    "value": "130ms",
-    "px": null,
-    "multiple": null
-  },
-  {
     "name": "duration-fast",
-    "value": "175ms",
+    "value": "150ms",
     "px": null,
     "multiple": null
   },
   {
-    "name": "duration-fast-max",
-    "value": "230ms",
+    "name": "duration-default",
+    "value": "300ms",
     "px": null,
     "multiple": null
   },
   {
-    "name": "duration-medium-min",
-    "value": "310ms",
-    "px": null,
-    "multiple": null
-  },
-  {
-    "name": "duration-medium",
-    "value": "410ms",
-    "px": null,
-    "multiple": null
-  },
-  {
-    "name": "duration-medium-max",
-    "value": "550ms",
+    "name": "duration-slow",
+    "value": "450ms",
     "px": null,
     "multiple": null
   }
@@ -927,7 +909,7 @@ export const tokenCounts = {
   "size": 7,
   "borderWidth": 3,
   "elevation": 4,
-  "duration": 6,
+  "duration": 3,
   "easing": 1,
   "scalars": 3,
   "type": 14
