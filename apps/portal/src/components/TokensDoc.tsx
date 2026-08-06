@@ -45,19 +45,26 @@ import { anchorOffset } from "@/components/docs/anchor"
  * that no longer exists. Order is the reading order: how to read a name, then
  * whether names reach code, then the families themselves, then what the system
  * does not own, then the tools.
+ *
+ * The families run in the order they are decided in. Color and type carry the
+ * most decisions and are read first. Elevation comes next because it is the one
+ * families argue about. Scalars sit above the dimensional families because they
+ * set the unit those families are multiples of, so space, size, radius and
+ * border read as consequences of a dial rather than as four unrelated scales.
+ * Motion depends on none of them and goes last.
  */
 const SECTIONS = [
   { id: "name", label: "Name" },
   { id: "wiring", label: "Wiring" },
   { id: "color", label: "Color" },
   { id: "type", label: "Type" },
-  { id: "space", label: "Space" },
-  { id: "radius", label: "Radius" },
-  { id: "size", label: "Size" },
-  { id: "border", label: "Border" },
   { id: "elevation", label: "Elevation" },
-  { id: "motion", label: "Motion" },
   { id: "scalars", label: "Scalars" },
+  { id: "space", label: "Space" },
+  { id: "size", label: "Size" },
+  { id: "radius", label: "Radius" },
+  { id: "border", label: "Border" },
+  { id: "motion", label: "Motion" },
   { id: "tailwind", label: "Tailwind" },
   { id: "tools", label: "Tools" },
 ]
@@ -425,6 +432,33 @@ export function TokensDoc() {
       </Section>
 
       <Section
+        id="elevation"
+        title="Elevation"
+        live={isLive("elevation")}
+        scope="Shadows for surfaces that float."
+        cautions={[
+          <>Counts down. When two surfaces overlap, the one on top takes the lower number.</>,
+        ]}
+      >
+        <ElevationScale tokens={elevation} />
+      </Section>
+
+      <Section
+        id="scalars"
+        title="Scalars"
+        scope="Dials that re-tune a whole family from one number."
+        cautions={[
+          <>
+            For a roomier page, move the root font size rather than{" "}
+            <Code>--db-type-scalar</Code>. The root moves type, radius and every rem utility
+            together. The type scalar grows text inside boxes that stay put.
+          </>,
+        ]}
+      >
+        <ScalarList tokens={scalars} consumption={scalarConsumption} drives={DRIVES} />
+      </Section>
+
+      <Section
         id="space"
         title="Space"
         live={isLive("space")}
@@ -449,21 +483,6 @@ export function TokensDoc() {
       </Section>
 
       <Section
-        id="radius"
-        title="Radius"
-        live={isLive("radius")}
-        scope="Corners. Controls take sm, containers and popovers md, cards xl, pills full."
-        cautions={[
-          <>
-            <Code>rounded-3xl</Code> is the pill, not a step above 2xl. <Code>rounded-xs</Code> and{" "}
-            <Code>rounded-4xl</Code> are Tailwind&rsquo;s and are not on this scale.
-          </>,
-        ]}
-      >
-        <RadiusScale tokens={radius} />
-      </Section>
-
-      <Section
         id="size"
         title="Size"
         live={isLive("size")}
@@ -480,24 +499,27 @@ export function TokensDoc() {
       </Section>
 
       <Section
+        id="radius"
+        title="Radius"
+        live={isLive("radius")}
+        scope="Corners. Controls take sm, containers and popovers md, cards xl, pills full."
+        cautions={[
+          <>
+            <Code>rounded-3xl</Code> is the pill, not a step above 2xl. <Code>rounded-xs</Code> and{" "}
+            <Code>rounded-4xl</Code> are Tailwind&rsquo;s and are not on this scale.
+          </>,
+        ]}
+      >
+        <RadiusScale tokens={radius} />
+      </Section>
+
+      <Section
         id="border"
         title="Border"
         live={isLive("border")}
         scope="Hairline weights. The one family in px, because a scaled hairline blurs."
       >
         <BorderScale tokens={borderWidth} />
-      </Section>
-
-      <Section
-        id="elevation"
-        title="Elevation"
-        live={isLive("elevation")}
-        scope="Shadows for surfaces that float."
-        cautions={[
-          <>Counts down. When two surfaces overlap, the one on top takes the lower number.</>,
-        ]}
-      >
-        <ElevationScale tokens={elevation} />
       </Section>
 
       <Section
@@ -510,21 +532,6 @@ export function TokensDoc() {
             written out here as a literal, which is the one thing a token page
             must not do — a value restated is a value that goes stale. */}
         <MotionScale tokens={duration} easing={easing[0].value} />
-      </Section>
-
-      <Section
-        id="scalars"
-        title="Scalars"
-        scope="Dials that re-tune a whole family from one number."
-        cautions={[
-          <>
-            For a roomier page, move the root font size rather than{" "}
-            <Code>--db-type-scalar</Code>. The root moves type, radius and every rem utility
-            together. The type scalar grows text inside boxes that stay put.
-          </>,
-        ]}
-      >
-        <ScalarList tokens={scalars} consumption={scalarConsumption} drives={DRIVES} />
       </Section>
 
       <Section

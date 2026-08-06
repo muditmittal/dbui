@@ -3,6 +3,7 @@ import Link from "next/link"
 import { iconClassifications } from "@/components/icons/classifications"
 import { shells } from "@/components/shell-data"
 import { galleryGroups } from "@/stories/components/gallery-data"
+import { families as tokenFamilies } from "@/stories/tokens/token-consumption"
 import { DocHeader, DocSection, Para, Code } from "@/components/docs/Prose"
 import { Figure, FigureRow, FigureAside, FigureLabel, Terms, type Term } from "@/components/docs/Diagram"
 
@@ -25,22 +26,15 @@ export const metadata = { title: "Foundations — DBUI" }
 /**
  * The token families, in the order the Tokens page renders them.
  *
+ * Read from the consumption scan rather than listed, because this was a typed
+ * copy of that order and went stale the first time the Tokens page reordered.
+ *
  * Not linked to their anchors on that page, even though the anchors exist. The
  * whole diagram row is already a link and an anchor cannot contain another one,
  * and the Tokens page opens with jump controls that do this job properly. One
  * router per level: this page routes to the page, that page routes to a family.
  */
-const TOKEN_FAMILIES: Term[] = [
-  "color",
-  "type",
-  "space",
-  "radius",
-  "size",
-  "border",
-  "elevation",
-  "motion",
-  "scalars",
-].map((label) => ({ label }))
+const TOKEN_FAMILIES: Term[] = tokenFamilies.map((family) => ({ label: family.key }))
 
 /**
  * Declared order, filtered to what `classifications.ts` actually uses. Sorting
