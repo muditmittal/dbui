@@ -68,11 +68,11 @@ export function FacetedFilter({
   return (
     <div className={className}>
       {/* Search + Filter button row */}
-      <div className="group/ig flex items-center rounded-sm border border-transparent focus-within:border-input-border-hover focus-within:shadow-xs">
+      <div className="group/ig flex items-center rounded-1 border border-transparent focus-within:border-input-border-hover focus-within:shadow-xs">
         <input
           placeholder="Search"
           onChange={(e) => onSearch?.(e.target.value)}
-          className="h-8 flex-1 min-w-0 rounded-l-sm border-y border-l border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
+          className="h-8 flex-1 min-w-0 rounded-l-1 border-y border-l border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle group-focus-within/ig:border-transparent group-focus-within/ig:shadow-none"
         />
         {/* Filter button */}
         <Popover.Root
@@ -86,7 +86,7 @@ export function FacetedFilter({
             render={
               <button
                 aria-label="Filter"
-                className="flex size-8 shrink-0 items-center justify-center rounded-r-sm border border-input-border-base bg-surface-base shadow-xs text-text-subtle transition-colors hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base [&_svg]:size-4"
+                className="flex size-8 shrink-0 items-center justify-center rounded-r-1 border border-input-border-base bg-surface-base shadow-xs text-text-subtle transition-colors hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base [&_svg]:size-4"
               >
                 <Sliders />
               </button>
@@ -94,7 +94,7 @@ export function FacetedFilter({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
+              <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
 
                 {/* Root: facet categories */}
                 {!activeFacet && (
@@ -104,7 +104,7 @@ export function FacetedFilter({
                       return (
                         <button
                           key={facet}
-                          className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover cursor-default"
+                          className="flex w-full min-h-7 items-center gap-2 rounded-1 px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover cursor-default"
                           onClick={() => { setActiveFacet(facet); setSearch("") }}
                         >
                           <span className="flex-1 text-left">{facet}:</span>
@@ -114,7 +114,7 @@ export function FacetedFilter({
                       )
                     })}
                     <div className="-mx-1 my-1 h-px bg-border-base" />
-                    <label className="flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover">
+                    <label className="flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover">
                       <Switch checked={showCanUse} onCheckedChange={setShowCanUse} />
                       <span className="flex-1">Show can-use only</span>
                     </label>
@@ -151,7 +151,7 @@ export function FacetedFilter({
 
                         if (hasNested) {
                           return (
-                            <div key={value} className="flex w-full min-h-7 items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover cursor-default">
+                            <div key={value} className="flex w-full min-h-7 items-center gap-2 rounded-1 px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover cursor-default">
                               <Checkbox
                                 checked={checked}
                                 onCheckedChange={() => toggleValue(activeFacet, value)}
@@ -170,7 +170,7 @@ export function FacetedFilter({
                         return (
                           <label
                             key={value}
-                            className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover"
+                            className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover"
                           >
                             <Checkbox
                               checked={checked}
@@ -203,7 +203,7 @@ export function FacetedFilter({
             const facetValues = facets[facet]?.values || []
             return (
               <Popover.Root key={facet}>
-                <span className="inline-flex max-w-[200px] items-center gap-1 rounded-sm bg-action-selected-base px-1.5 py-0.5 text-[12px]">
+                <span className="inline-flex max-w-[200px] items-center gap-1 rounded-1 bg-action-selected-base px-1.5 py-0.5 text-[12px]">
                   <Popover.Trigger
                     render={
                       <button className="inline-flex items-center gap-1 min-w-0 hover:underline cursor-pointer">
@@ -214,7 +214,7 @@ export function FacetedFilter({
                     }
                   />
                   <button
-                    className="ml-0.5 shrink-0 rounded-sm p-0.5 text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press [&_svg]:size-3"
+                    className="ml-0.5 shrink-0 rounded-1 p-0.5 text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press [&_svg]:size-3"
                     onClick={() => {
                       setSelected((prev) => {
                         const next = { ...prev }
@@ -228,7 +228,7 @@ export function FacetedFilter({
                 </span>
                 <Popover.Portal>
                   <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                    <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
+                    <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
                       <div className="p-1">
                         <div className="px-1.5 py-1 text-[12px] text-text-subtle">{facet}</div>
                       </div>
@@ -238,7 +238,7 @@ export function FacetedFilter({
                           return (
                             <label
                               key={value}
-                              className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-sm px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover"
+                              className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-1.5 py-1 text-[13px] text-text-base hover:bg-action-default-hover"
                             >
                               <Checkbox
                                 checked={checked}

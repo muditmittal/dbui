@@ -18,7 +18,7 @@ export const Playground: StoryObj = {
     <div>
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>EditorTabs</h2>
 
-      <div className="w-[600px] bg-surface-subtle rounded-t-md">
+      <div className="w-[600px] bg-surface-subtle rounded-t-2">
         <EditorTabs>
           <EditorTab active>
             <EditorTabIcon><Notebook /></EditorTabIcon>

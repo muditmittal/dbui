@@ -20,7 +20,7 @@ import { toggleVariants } from "./toggle"
  *
  * Figma component: "Toggle Group" (2 variants × 2 sizes)
  *
- * Container: bg-surface-accent, p-0.5 (2px), rounded-sm
+ * Container: bg-surface-accent, p-0.5 (2px), rounded-1
  * Outline variant: + border-input-border-base on container
  * Selected item: bg-white, border-border-strong, shadow-xs, text-text-accent
  * Non-selected items: transparent, text-text-base
@@ -58,7 +58,7 @@ function ToggleGroup({
       data-spacing={spacing}
       data-orientation={orientation}
       className={cn(
-        "group/toggle-group inline-flex items-center rounded-sm bg-surface-accent p-0.5",
+        "group/toggle-group inline-flex items-center rounded-1 bg-surface-accent p-0.5",
         (variant as string) === "outline" && "border border-input-border-base",
         orientation === "vertical" && "flex-col items-stretch",
         className
@@ -89,7 +89,7 @@ function ToggleGroupItem({
       data-slot="toggle-group-item"
       className={cn(
         "inline-flex items-center justify-center gap-1",
-        "rounded-sm border border-transparent",
+        "rounded-1 border border-transparent",
         "type-label whitespace-nowrap",
         "transition-all outline-none select-none",
         "text-text-base",

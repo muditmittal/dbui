@@ -703,32 +703,38 @@ export const space: Token[] = [
 
 export const radius: Token[] = [
   {
-    "name": "radius-sm",
-    "value": "0.25rem",
+    "name": "radius-0",
+    "value": "0",
+    "px": 0,
+    "multiple": null
+  },
+  {
+    "name": "radius-1",
+    "value": "calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar))",
     "px": 4,
     "multiple": null
   },
   {
-    "name": "radius-md",
-    "value": "0.5rem",
+    "name": "radius-2",
+    "value": "calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar))",
     "px": 8,
     "multiple": null
   },
   {
-    "name": "radius-lg",
-    "value": "0.75rem",
+    "name": "radius-3",
+    "value": "calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar))",
     "px": 12,
     "multiple": null
   },
   {
-    "name": "radius-xl",
-    "value": "1rem",
+    "name": "radius-4",
+    "value": "calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar))",
     "px": 16,
     "multiple": null
   },
   {
-    "name": "radius-2xl",
-    "value": "1.5rem",
+    "name": "radius-6",
+    "value": "calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar))",
     "px": 24,
     "multiple": null
   },
@@ -905,7 +911,7 @@ export const scalars: Token[] = [
 export const tokenCounts = {
   "colorGroups": 85,
   "space": 10,
-  "radius": 6,
+  "radius": 7,
   "size": 7,
   "borderWidth": 3,
   "elevation": 4,

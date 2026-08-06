@@ -87,7 +87,7 @@ function Slot({ label, children }: { label: string; children: React.ReactNode })
  */
 function RuleList({ rules }: { rules: Rule[] }) {
   return (
-    <div className="overflow-hidden rounded-md border border-border-base">
+    <div className="overflow-hidden rounded-2 border border-border-base">
       {rules.map((rule) => (
         <div key={rule.id} className="flex flex-col gap-3 border-b border-border-base px-4 py-4 last:border-b-0">
           <div className="flex items-baseline gap-4">
@@ -192,7 +192,7 @@ export function LayoutDoc() {
           has to be rebuilt: picking the shell before knowing what scrolls commits you to a scroll
           contract you have not read.
         </Para>
-        <div className="overflow-hidden rounded-md border border-border-base">
+        <div className="overflow-hidden rounded-2 border border-border-base">
           {DECISIONS.map((decision, i) => (
             <div
               key={decision.question}

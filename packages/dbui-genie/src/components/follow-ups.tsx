@@ -46,7 +46,7 @@ function FollowUp({
       data-slot="follow-up"
       type="button"
       className={cn(
-        "flex w-full items-start gap-2 rounded-sm px-1 py-1 text-left type-body text-text-subtle outline-none",
+        "flex w-full items-start gap-2 rounded-1 px-1 py-1 text-left type-body text-text-subtle outline-none",
         "hover:bg-action-default-hover hover:text-text-base focus-visible:border focus-visible:border-focus-ring",
         className
       )}

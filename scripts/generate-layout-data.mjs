@@ -175,11 +175,12 @@ function scrollOwners() {
 }
 
 /**
- * What the spacing rules are actually stated against. The `space` family in
- * `theme.config.mjs` generates `--db-space-*` and nothing reads it; components
- * space themselves with Tailwind's `--spacing`. The guide has to say which one
- * a rule applies to, so it reads both out of the consumption measurement rather
- * than asserting either.
+ * What the spacing rules are actually stated against. `--db-space-*` now stands
+ * behind a Tailwind key per stop, so a `p-3` in a shell does resolve to a token
+ * — but the open-ended `--spacing` multiplier is still declared beside it, and
+ * an off-scale step like `p-1.5` resolves to nothing of ours. The guide has to
+ * say which one a rule applies to, so it reads both out of the consumption
+ * measurement rather than asserting either.
  */
 function spacingBasis() {
   const source = read("apps/portal/src/stories/tokens/token-consumption.ts")
@@ -187,8 +188,11 @@ function spacingBasis() {
   // the scalars export, and an unscoped match lands on that one first.
   const tailwindExport = source.slice(source.indexOf("export const tailwind"))
 
+  // `count` is the field the consumption generator emits. It was `tokens` once,
+  // and this probe kept looking for the old name — so the Layout page silently
+  // stopped regenerating rather than reporting a wrong number.
   const family = source.match(
-    /\{\s*"key":\s*"space",[\s\S]*?"tokens":\s*(\d+),[\s\S]*?"live":\s*(true|false)\s*\}/
+    /\{\s*"key":\s*"space",[\s\S]*?"count":\s*(\d+),[\s\S]*?"live":\s*(true|false)\s*\}/
   )
   const namespace = tailwindExport.match(
     /\{\s*"namespace":\s*"--spacing",[\s\S]*?"tailwindValue":\s*("[^"]*"|null),[\s\S]*?"overriddenTo":\s*("[^"]*"|null),\s*"origin":\s*"([^"]+)",\s*"uses":\s*(\d+),\s*"files":\s*(\d+)\s*\}/

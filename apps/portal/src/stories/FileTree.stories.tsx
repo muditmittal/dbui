@@ -111,7 +111,7 @@ export const Default: StoryObj = {
         Semantic L2 component. Each node's <code>kind</code> drives both its closed and open icons —
         regular folder, git folder, bundle folder, and pipeline folder all use distinct glyphs.
       </p>
-      <div className="w-[260px] border border-border-base rounded-md p-1">
+      <div className="w-[260px] border border-border-base rounded-2 p-1">
         <FileTree nodes={fileTreeNodes} />
       </div>
 

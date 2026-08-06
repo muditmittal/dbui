@@ -15,7 +15,7 @@ export function Guidance({ dos, donts }: { dos: string[]; donts: string[] }) {
   ]
 
   return (
-    <div className="overflow-hidden rounded-md border border-border-base">
+    <div className="overflow-hidden rounded-2 border border-border-base">
       {rows.map(({ text, tone }, i) => (
         <div
           key={text}

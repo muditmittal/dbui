@@ -68,7 +68,7 @@ function Reasoning({
       <Collapsible open={isOpen} onOpenChange={handleOpenChange}>
         <CollapsibleTrigger
           className={cn(
-            "flex items-center gap-1 rounded-sm type-label text-text-subtle outline-none",
+            "flex items-center gap-1 rounded-1 type-label text-text-subtle outline-none",
             "hover:text-text-base focus-visible:border focus-visible:border-focus-ring"
           )}
         >

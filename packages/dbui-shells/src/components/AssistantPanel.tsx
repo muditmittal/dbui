@@ -16,7 +16,7 @@ import { GenieCode } from "dbui/components/icons/GenieCode"
  */
 export function AssistantPanel({ onClose }: { onClose?: () => void }) {
   return (
-    <div className="flex w-[360px] shrink-0 flex-col border border-border-base bg-surface-base rounded-md" style={{ marginLeft: 4 }}>
+    <div className="flex w-[360px] shrink-0 flex-col border border-border-base bg-surface-base rounded-2" style={{ marginLeft: 4 }}>
       {/* Header */}
       <div className="flex items-center justify-between pl-2 pr-1 h-10">
         <div className="flex items-center gap-1">
@@ -42,7 +42,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
       <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
         {/* Large gradient icon */}
         <div
-          className="flex size-16 items-center justify-center rounded-xl"
+          className="flex size-16 items-center justify-center rounded-4"
           style={{ backgroundImage: "var(--ai-gradient)" }}
           aria-hidden
         >
@@ -75,7 +75,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
       {/* Input area */}
       <div className="px-3 pt-2">
         <div
-          className="rounded-md shadow-xs"
+          className="rounded-2 shadow-xs"
           style={{
             border: "1px solid transparent",
             backgroundImage:

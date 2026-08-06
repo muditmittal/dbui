@@ -85,7 +85,7 @@ export const layoutRules = {
   shell: {
     headerHeight: "h-12",     // 48px
     navbarWidth: "w-[180px]", // 180px fixed
-    contentRadius: "rounded-[8px]",
+    contentRadius: "rounded-2",
     contentMargin: "pb-2 pr-2", // 8px bottom and right
     shellBg: "bg-surface-subtle",
     contentBg: "bg-surface-base",

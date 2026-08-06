@@ -121,14 +121,7 @@ const scaled = (family, stops) =>
 
 const spaceLines = scaled("space", space)
 
-const radiusLines = Object.entries(radius)
-  .map(([k, val]) => {
-    // `full` is a pill sentinel, not a measurement — leave it alone.
-    const px = parseFloat(val)
-    const out = val.endsWith("px") && px < 100 ? rem(px) : val
-    return `  ${PREFIX}radius-${k}: ${out};`
-  })
-  .join("\n")
+const radiusLines = scaled("radius", radius)
 
 /**
  * The Tailwind bridge, emitted into the same @theme block as the colors so a
@@ -149,6 +142,20 @@ const radiusLines = Object.entries(radius)
  */
 const twKey = (step) => String(step).replace(".", "\\.")
 const tokenStop = (step) => String(step).replace(".", "-")
+
+/**
+ * Keys removed outright, in a plain @theme block because `initial` is a
+ * directive to the compiler rather than a value to inline.
+ *
+ * This is the safe half of a rename. The alternative — deleting the mapping and
+ * letting the key fall back to Tailwind's own value — fails silently, because
+ * Tailwind's radius scale disagrees with ours at every step. Closed, a name the
+ * codemod missed emits no declaration, so the corner goes square and someone
+ * sees it. Asserted as K9 in `scripts/verify-spacing-scale.mjs`.
+ */
+const closeLines = Object.entries(bridge ?? {})
+  .flatMap(([ns, spec]) => (spec.close ?? []).map((step) => `  --${ns}-${step}: initial;`))
+  .join("\n")
 
 const bridgeLines = Object.entries(bridge ?? {})
   .flatMap(([ns, spec]) => {
@@ -222,6 +229,13 @@ const css = `/* ─────────────────────�
  * dials so density/size/type can be re-tuned from a handful of numbers.
  * ───────────────────────────────────────────────────────────────────────────── */
 
+/* Keys this system does not have a step for. Removed rather than left to fall
+ * back, so a stale class name emits nothing instead of Tailwind's disagreeing
+ * value. Not inlined — "initial" is a compiler directive, not a value. */
+@theme {
+${closeLines}
+}
+
 @theme inline {
 ${theme}
 
@@ -236,7 +250,7 @@ ${scalarLines}
   /* ── Space (each stop is its multiple of the grid unit, scaled by density) ── */
 ${spaceLines}
 
-  /* ── Radius (fixed anchors) ── */
+  /* ── Radius (same grid as space; "full" is a pill sentinel) ── */
 ${radiusLines}
 
   /* ── Type (anchored ramp, scaled together by type-scalar) ── */

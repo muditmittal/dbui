@@ -82,7 +82,7 @@ Run this checklist before considering the screen complete:
 
 **Layout:**
 - [ ] Page wraps in `<Base>` from `dbui-shells`
-- [ ] Surfaces: shell background is `bg-surface-subtle`, content surface is `bg-surface-base border border-border-base rounded-md`
+- [ ] Surfaces: shell background is `bg-surface-subtle`, content surface is `bg-surface-base border border-border-base rounded-2`
 - [ ] Spacing uses 8/16/24 rhythm, not arbitrary values
 
 **Typography:**

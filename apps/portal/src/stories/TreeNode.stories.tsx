@@ -47,7 +47,7 @@ const Section: React.FC<{ title: string; description?: string; children: React.R
       </h3>
       {description && <p className="text-[12px] text-text-subtle">{description}</p>}
     </header>
-    <div className="w-[280px] rounded-md border border-border-base p-1">{children}</div>
+    <div className="w-[280px] rounded-2 border border-border-base p-1">{children}</div>
   </section>
 )
 

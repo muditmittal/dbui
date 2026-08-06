@@ -73,7 +73,7 @@ function DialogContent({
         data-slot="dialog-content"
         data-size={size}
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 rounded-md border border-border-base bg-surface-base type-body shadow-lg duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 rounded-2 border border-border-base bg-surface-base type-body shadow-lg duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}
@@ -132,7 +132,7 @@ function DialogHeaderIcon({
     <div
       data-slot="dialog-header-icon"
       className={cn(
-        "inline-flex size-10 items-center justify-center rounded-md bg-surface-subtle [&_svg:not([class*='size-'])]:size-6",
+        "inline-flex size-10 items-center justify-center rounded-2 bg-surface-subtle [&_svg:not([class*='size-'])]:size-6",
         className
       )}
       {...props}

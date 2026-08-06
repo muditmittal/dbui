@@ -113,7 +113,7 @@ function Skeleton({
       {/* One height for all four. Sizing each to its real proportions would make
           the editor the tallest and teach nothing — the comparison the reader is
           being asked to make is which band is filled, not how tall a pane is. */}
-      <div className="flex h-32 flex-col overflow-hidden rounded-sm border border-border-base">
+      <div className="flex h-32 flex-col overflow-hidden rounded-1 border border-border-base">
         {children}
       </div>
       <div className="flex flex-col gap-0.5">

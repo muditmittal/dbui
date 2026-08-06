@@ -74,7 +74,7 @@ function PageHeaderBack({
       data-slot="page-header-back"
       aria-label="Go back"
       className={cn(
-        "inline-flex size-8 shrink-0 items-center justify-center rounded-sm text-text-base hover:bg-action-default-hover",
+        "inline-flex size-8 shrink-0 items-center justify-center rounded-1 text-text-base hover:bg-action-default-hover",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

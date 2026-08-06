@@ -102,7 +102,7 @@ export default function Home() {
             <Link
               key={card.href}
               href={card.href}
-              className="group flex flex-col gap-1.5 rounded-md border border-border-base bg-surface-base p-5 no-underline transition-colors hover:border-border-strong hover:bg-surface-hover"
+              className="group flex flex-col gap-1.5 rounded-2 border border-border-base bg-surface-base p-5 no-underline transition-colors hover:border-border-strong hover:bg-surface-hover"
             >
               <span className="type-eyebrow text-text-subtle">{card.eyebrow}</span>
               <span className="type-title-4 text-text-strong group-hover:underline">

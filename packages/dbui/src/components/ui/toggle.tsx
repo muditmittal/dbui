@@ -28,7 +28,7 @@ import { cn } from "../../lib/utils"
 const toggleVariants = cva(
   [
     "group/toggle inline-flex items-center justify-center gap-1",
-    "rounded-sm border",
+    "rounded-1 border",
     "type-label whitespace-nowrap",
     "transition-all outline-none select-none",
     "text-text-base",
@@ -126,7 +126,7 @@ function FilterToggle({
           <path d="M3 8.5L6.5 12L13 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       ) : (
-        <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-sm border border-input-border-base" />
+        <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-1 border border-input-border-base" />
       )}
       {children}
     </TogglePrimitive>

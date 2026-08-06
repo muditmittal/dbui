@@ -528,11 +528,16 @@ export function TokensDoc() {
         id="radius"
         title="Radius"
         state={wiring("radius")}
-        scope="Corners. Controls take sm, containers and popovers md, cards xl, pills full."
+        scope="Corners, on the same grid. Controls take 1, containers and popovers 2, cards 4, pills full."
         cautions={[
           <>
-            <Code>rounded-3xl</Code> is the pill, not a step above 2xl. <Code>rounded-xs</Code> and{" "}
-            <Code>rounded-4xl</Code> are Tailwind&rsquo;s and are not on this scale.
+            The old <Code>sm</Code>/<Code>md</Code>/<Code>lg</Code> names are removed rather than
+            left pointing at Tailwind, whose scale disagrees with this one at every step. A stale
+            class emits no corner instead of a plausible wrong one.
+          </>,
+          <>
+            <Code>rounded-xs</Code> and <Code>rounded-4xl</Code> are Tailwind&rsquo;s and are not on
+            this scale. <Code>rounded-full</Code> is the pill and is still Tailwind&rsquo;s too.
           </>,
         ]}
       >

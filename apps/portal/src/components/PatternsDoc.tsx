@@ -90,7 +90,7 @@ function States({ states }: { states: NonNullable<Pattern["states"]> }) {
 /** What the system cannot do today. Every pattern states it or omits the slot. */
 function Gap({ children }: { children: string }) {
   return (
-    <div className="rounded-md border border-border-base bg-surface-subtle px-4 py-3">
+    <div className="rounded-2 border border-border-base bg-surface-subtle px-4 py-3">
       <div className="type-label-bold text-text-strong">Where DBUI stops</div>
       <p className="type-body mt-1 text-text-subtle">{ticks(children)}</p>
     </div>

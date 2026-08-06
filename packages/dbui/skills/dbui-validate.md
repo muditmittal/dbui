@@ -62,7 +62,7 @@ it wraps, `type-hint` for captions and helper text, `type-paragraph` for prose. 
 **Arbitrary values where tokens exist:**
 Scan className for bracket values and check if a token covers them:
 - `p-[13px]` → `p-3` (12px) or `p-4` (16px)
-- `rounded-[8px]` → `rounded-md`
+- `rounded-[8px]` → `rounded-2`
 - `shadow-[...]` → `shadow-xs`, `shadow-sm`, `shadow-md`, etc.
 Look up `./dbui/src/tokens/globals.css` and `./dbui/docs/component-rules.md` for the token scales.
 

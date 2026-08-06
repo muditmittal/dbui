@@ -27,7 +27,7 @@ const meta: Meta = {
 export default meta
 
 const surface = (children: React.ReactNode) => (
-  <div className="w-[1000px] overflow-hidden rounded-lg border border-border-base bg-surface-base">
+  <div className="w-[1000px] overflow-hidden rounded-3 border border-border-base bg-surface-base">
     {children}
   </div>
 )
@@ -129,7 +129,7 @@ export const WithBreadcrumb: StoryObj = {
         </div>
         <PageHeader>
           <PageHeaderTitle>
-            <span className="flex shrink-0 items-center rounded-sm bg-surface-subtle p-2">
+            <span className="flex shrink-0 items-center rounded-1 bg-surface-subtle p-2">
               <Notebook className="size-4" />
             </span>
             <PageTitle>customers_table</PageTitle>

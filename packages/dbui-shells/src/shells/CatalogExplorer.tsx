@@ -164,11 +164,11 @@ function CatalogTree({
           </Button>
         )}
 
-        {/* Root switcher chip — Figma: bg-surface-subtle, rounded-sm, py-1 px-1 pr-2, gap-1 */}
+        {/* Root switcher chip — Figma: bg-surface-subtle, rounded-1, py-1 px-1 pr-2, gap-1 */}
         <Popover.Root>
           <Popover.Trigger
             render={
-              <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-sm bg-surface-subtle px-1 pr-2 shadow-none hover:bg-action-default-hover active:bg-action-selected-press">
+              <Button variant="secondary" size="sm" className="min-w-0 justify-start gap-1 rounded-1 bg-surface-subtle px-1 pr-2 shadow-none hover:bg-action-default-hover active:bg-action-selected-press">
                 <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
                   <span className="type-code text-text-subtle">./</span>
                   {currentRoot?.icon ?? defaultIcon}
@@ -179,7 +179,7 @@ function CatalogTree({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-md bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden p-1">
+              <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden p-1">
                 {/* Path — default shows "Catalog" as root; when focused shows indented breadcrumb */}
                 {focusPath.length > 0 ? (
                   focusPath.map((entry, i) => {

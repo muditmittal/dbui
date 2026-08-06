@@ -42,7 +42,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`type-label rounded-sm px-2.5 py-1.5 no-underline transition-colors ${
+                className={`type-label rounded-1 px-2.5 py-1.5 no-underline transition-colors ${
                   active
                     ? "bg-surface-accent text-text-accent"
                     : "text-text-subtle hover:bg-action-default-hover hover:text-text-strong"

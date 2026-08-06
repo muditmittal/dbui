@@ -27,12 +27,12 @@ type SegmentControlVariantProps = {
  * Figma component: "Segment Control" (2 variants × 2 sizes)
  *
  * ── Default variant ──
- * Container: bg-surface-subtle, rounded-sm, p-1 (Default) / p-0.5 (Small), gap-1 / gap-0.5
- * Selected item: bg-surface-base, shadow-xs, NO border, rounded-sm
+ * Container: bg-surface-subtle, rounded-1, p-1 (Default) / p-0.5 (Small), gap-1 / gap-0.5
+ * Selected item: bg-surface-base, shadow-xs, NO border, rounded-1
  * Unselected items: transparent, no border, no shadow
  *
  * ── Outline variant ──
- * Container: bg-surface-base, rounded-sm, shadow-xs, p-0, gap-0
+ * Container: bg-surface-base, rounded-1, shadow-xs, p-0, gap-0
  * Selected item: bg-action-selected-base, border-border-strong (blue), NO rounded corners (flush)
  * Unselected items: no fill, border-input-border-base (grey dividers), shadow-xs, NO rounded corners
  *
@@ -96,7 +96,7 @@ function SegmentControl({
       data-orientation={orientation}
       onValueChange={handleValueChange}
       className={cn(
-        "group/segment-control inline-flex items-center rounded-sm",
+        "group/segment-control inline-flex items-center rounded-1",
         // Default variant: muted bg container with padding and gap
         variant !== "outline" && [
           "bg-surface-subtle",
@@ -145,7 +145,7 @@ function SegmentControlItem({
 
         // ── Default (slider) variant items: rounded pills, no border ──
         !isOutline && [
-          "rounded-sm text-text-subtle",
+          "rounded-1 text-text-subtle",
           "hover:text-text-base",
           "aria-pressed:bg-surface-base aria-pressed:shadow-xs aria-pressed:text-text-base",
         ],
@@ -159,8 +159,8 @@ function SegmentControlItem({
           "hover:bg-action-default-hover",
           "active:bg-action-selected-press",
           "not-first:-ml-px",
-          "first:rounded-l-sm",
-          "last:rounded-r-sm",
+          "first:rounded-l-1",
+          "last:rounded-r-1",
           "aria-pressed:bg-action-selected-base aria-pressed:border-border-strong aria-pressed:shadow-none aria-pressed:text-text-strong",
           "aria-pressed:relative aria-pressed:z-10 aria-pressed:not-last:-mr-px",
         ],

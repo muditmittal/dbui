@@ -38,7 +38,7 @@ function Tile({ item }: { item: GalleryItem }) {
       */}
       <div
         aria-hidden
-        className="pointer-events-none flex h-28 items-center justify-center overflow-hidden rounded-md border border-border-base bg-surface-subtle px-3 transition-colors group-hover:border-border-strong"
+        className="pointer-events-none flex h-28 items-center justify-center overflow-hidden rounded-2 border border-border-base bg-surface-subtle px-3 transition-colors group-hover:border-border-strong"
       >
         {demo ?? <span className="type-label text-text-subtle">{item.name}</span>}
       </div>
@@ -46,7 +46,7 @@ function Tile({ item }: { item: GalleryItem }) {
         {item.storyId ? (
           <Link
             href={`/components?path=/story/${item.storyId}`}
-            className="type-label text-text-strong no-underline after:absolute after:inset-0 after:rounded-md group-hover:text-text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus-ring"
+            className="type-label text-text-strong no-underline after:absolute after:inset-0 after:rounded-2 group-hover:text-text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus-ring"
           >
             {item.name}
           </Link>

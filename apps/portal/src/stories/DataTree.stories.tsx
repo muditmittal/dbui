@@ -135,7 +135,7 @@ export const Default: StoryObj = {
         Semantic L2 component. Nodes carry <code>kind</code> (catalog / schema / table / view / volume /
         model / function / column / folder / file) — icons resolve automatically.
       </p>
-      <div className="w-[280px] border border-border-base rounded-md p-1">
+      <div className="w-[280px] border border-border-base rounded-2 p-1">
         <DataTree sections={dataSections} />
       </div>
 

@@ -37,7 +37,7 @@ function ItemSeparator({
 }
 
 const itemVariants = cva(
-  "group/item flex w-full flex-wrap items-center rounded-lg border type-body transition-colors duration-100 outline-none focus-visible:border-focus-ring focus-visible:ring-[3px] focus-visible:ring-focus-ring/50 [a]:transition-colors [a]:hover:bg-surface-subtle",
+  "group/item flex w-full flex-wrap items-center rounded-3 border type-body transition-colors duration-100 outline-none focus-visible:border-focus-ring focus-visible:ring-[3px] focus-visible:ring-focus-ring/50 [a]:transition-colors [a]:hover:bg-surface-subtle",
   {
     variants: {
       variant: {
@@ -90,7 +90,7 @@ const itemMediaVariants = cva(
         default: "bg-transparent",
         icon: "[&_svg:not([class*='size-'])]:size-4",
         image:
-          "size-10 overflow-hidden rounded-sm group-data-[size=sm]/item:size-8 group-data-[size=xs]/item:size-6 [&_img]:size-full [&_img]:object-cover",
+          "size-10 overflow-hidden rounded-1 group-data-[size=sm]/item:size-8 group-data-[size=xs]/item:size-6 [&_img]:size-full [&_img]:object-cover",
       },
     },
     defaultVariants: {

@@ -67,7 +67,7 @@ export function Para({ children }: { children: React.ReactNode }) {
 /** Inline code, on the code text style. */
 export function Code({ children }: { children: React.ReactNode }) {
   return (
-    <code className="type-code rounded-sm bg-surface-inset px-1 py-0.5 text-text-base">
+    <code className="type-code rounded-1 bg-surface-inset px-1 py-0.5 text-text-base">
       {children}
     </code>
   )
@@ -130,7 +130,7 @@ export function RefTable({
  */
 export function SourceNote({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-md border border-border-base bg-surface-subtle px-4 py-3">
+    <div className="rounded-2 border border-border-base bg-surface-subtle px-4 py-3">
       <div className="type-label-bold text-text-strong">Source of truth</div>
       <p className="type-body mt-1 text-text-subtle">{children}</p>
     </div>
@@ -140,7 +140,7 @@ export function SourceNote({ children }: { children: React.ReactNode }) {
 /** A command to run, shown as the answer to "where do I get this as data?". */
 export function Command({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-md border border-border-base bg-surface-inset px-4 py-3">
+    <div className="rounded-2 border border-border-base bg-surface-inset px-4 py-3">
       <code className="type-code text-text-base">{children}</code>
     </div>
   )

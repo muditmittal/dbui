@@ -28,7 +28,7 @@ export function ShellPreview() {
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-lg border border-border-base bg-surface-base shadow-[var(--db-elevation-2)]"
+      className="overflow-hidden rounded-3 border border-border-base bg-surface-base shadow-[var(--db-elevation-2)]"
     >
       <div className="flex items-center gap-3 border-b border-border-base bg-surface-subtle px-4 py-2.5">
         <div className="flex gap-1.5">
@@ -36,7 +36,7 @@ export function ShellPreview() {
           <span className="block size-2.5 rounded-full bg-border-strong" />
           <span className="block size-2.5 rounded-full bg-border-strong" />
         </div>
-        <div className="type-hint flex-1 rounded-sm border border-border-base bg-surface-base px-3 py-1 text-text-subtle">
+        <div className="type-hint flex-1 rounded-1 border border-border-base bg-surface-base px-3 py-1 text-text-subtle">
           databricks.com
         </div>
       </div>

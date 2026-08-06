@@ -130,7 +130,7 @@ function TagAnatomy() {
  */
 function EntityMap({ map }: { map: Record<string, string> }) {
   return (
-    <div className="grid grid-cols-1 gap-x-10 overflow-hidden rounded-md border border-border-base p-4 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-x-10 overflow-hidden rounded-2 border border-border-base p-4 sm:grid-cols-2">
       {Object.entries(map).map(([type, icon]) => (
         <div key={type} className="flex items-baseline gap-2 py-1">
           <span className="type-code w-36 shrink-0 text-text-subtle">{type}</span>

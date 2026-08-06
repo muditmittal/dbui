@@ -41,6 +41,48 @@ import { fileURLToPath } from "node:url"
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join("/")
 
+/**
+ * The bridge, read from the config rather than restated here. A dimensional
+ * family is only bridged for the stops it declares — `p-3` resolves to a token
+ * and `p-1.5` does not — so the utilities that count as consumption have to be
+ * derived from the same list the CSS is generated from, or this scan starts
+ * crediting the family with uses it does not own.
+ */
+const { bridge: BRIDGE } = await import("../packages/dbui/src/tokens/theme.config.mjs")
+
+/**
+ * Which utility prefixes read which Tailwind namespace.
+ *
+ * `min-h` and `max-h` sit under height because they inherit `--height-*`, while
+ * `min-w` and `max-w` sit under spacing because `--width-*` does NOT reach them.
+ * That asymmetry is Tailwind's, measured in verify-spacing-scale (F7, F11), and
+ * getting it backwards would attribute a `min-w-3` to the wrong family.
+ */
+const NAMESPACE_UTILITIES = {
+  spacing: ["p", "px", "py", "pt", "pr", "pb", "pl", "ps", "pe", "m", "mx", "my", "mt", "mr", "mb", "ml", "ms", "me",
+    "gap", "gap-x", "gap-y", "space-x", "space-y", "inset", "inset-x", "inset-y",
+    "top", "right", "bottom", "left", "start", "end", "min-w", "max-w"],
+  size: ["size"],
+  height: ["h", "min-h", "max-h"],
+  width: ["w"],
+  radius: ["rounded", "rounded-t", "rounded-r", "rounded-b", "rounded-l", "rounded-s", "rounded-e",
+    "rounded-tl", "rounded-tr", "rounded-br", "rounded-bl"],
+  "border-width": ["border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y"],
+}
+
+const escape = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+
+/** One regex matching exactly the utilities a family's declared stops produce. */
+function bridgedUtilities(namespaces) {
+  const alternatives = namespaces.flatMap((ns) => {
+    const steps = BRIDGE[ns]?.steps ?? []
+    if (!steps.length) return []
+    const stepRe = steps.map(escape).join("|")
+    return [`(?:${NAMESPACE_UTILITIES[ns].map(escape).join("|")})-(?:${stepRe})`]
+  })
+  return new RegExp(`^(?:${alternatives.join("|")})$`)
+}
+
 const TOKENS_CSS = "packages/dbui/src/tokens/tokens.css"
 const TYPE_CSS = "packages/dbui/src/tokens/type.css"
 const PKG_GLOBALS = "packages/dbui/src/tokens/globals.css"
@@ -131,7 +173,9 @@ const FAMILIES = [
     key: "color",
     label: "Color",
     unit: "colors",
-    match: (n) => !/^--db-(space|radius|size|border-width|elevation|duration|ease|font|line-height|letter-spacing|mono-font|spacing-unit|density-scalar|spacing-scalar|sizing-scalar|type-scalar)/.test(n),
+    // `--db-border-1` is a width and `--db-border-base` is a color, so border is
+    // split on whether the suffix is a number rather than on the prefix.
+    match: (n) => !/^--db-(space|radius|size|border-(?:width-|\d)|elevation|duration|ease|font|line-height|letter-spacing|mono-font|spacing-unit|density-scalar|type-scalar)/.test(n),
     bridge: { kind: "theme", namespace: "--color-*", file: TOKENS_CSS, utilities: /^(bg|text|border|ring|fill|stroke|outline|from|via|to|divide|placeholder|caret|accent|shadow|decoration)-/ },
   },
   {
@@ -157,20 +201,20 @@ const FAMILIES = [
     key: "scalars",
     label: "Scalars",
     unit: "dials",
-    match: (n) => /^--db-(spacing-unit|density-scalar|spacing-scalar|sizing-scalar|type-scalar)$/.test(n),
+    match: (n) => /^--db-(spacing-unit|density-scalar|type-scalar)$/.test(n),
     bridge: null,
   },
-  // Deliberately unbridged. `--spacing` carries the grid unit and the density
-  // dial, which are scalars — not these eleven named steps. Crediting the row
-  // with those 818 utilities would claim `p-4` resolves to `--db-space-md`,
-  // and it does not: the two are separate vars that happen to agree at 1.
-  // Which is exactly why the row has to say the padding comes from somewhere.
+  // Bridged per stop, not wholesale. `--spacing` is still declared as an
+  // open-ended multiplier, so the 818 dimensional utilities in the tree do NOT
+  // all resolve to a token — only the ones whose step this scale defines. The
+  // regex is built from the config's own step list, so the gap between this
+  // number and the 818 in the Tailwind table is the off-scale remainder.
   {
     key: "space",
     label: "Space",
     unit: "steps",
     match: (n) => /^--db-space-/.test(n),
-    bridge: null,
+    bridge: { kind: "theme", namespace: "--spacing-*", file: TOKENS_CSS, utilities: bridgedUtilities(["spacing"]) },
     supersededBy: "--spacing",
   },
   {
@@ -178,7 +222,7 @@ const FAMILIES = [
     label: "Size",
     unit: "steps",
     match: (n) => /^--db-size-/.test(n),
-    bridge: null,
+    bridge: { kind: "theme", namespace: "--size-*, --height-*, --width-*", file: TOKENS_CSS, utilities: bridgedUtilities(["size", "height", "width"]) },
     supersededBy: "--spacing",
   },
   {
@@ -186,13 +230,15 @@ const FAMILIES = [
     label: "Radius",
     unit: "steps",
     match: (n) => /^--db-radius-/.test(n),
-    bridge: { kind: "theme", namespace: "--radius-*", file: TOKENS_CSS, utilities: /^rounded(-|$)/ },
+    bridge: { kind: "theme", namespace: "--radius-*", file: TOKENS_CSS, utilities: bridgedUtilities(["radius"]) },
   },
   {
     key: "border",
     label: "Border width",
     unit: "widths",
-    match: (n) => /^--db-border-width-/.test(n),
+    // A numeric suffix is a width; a word suffix is a color. `border-width-*` is
+    // the pre-rename spelling and is matched until that family is renamed.
+    match: (n) => /^--db-border-(?:width-|\d)/.test(n),
     bridge: null,
     supersededBy: "border and divide width",
   },

@@ -46,7 +46,7 @@ function MessageContent({
       className={cn(
         "min-w-0 type-body text-text-base",
         from === "user"
-          ? "max-w-[85%] rounded-md bg-surface-subtle px-3 py-2"
+          ? "max-w-[85%] rounded-2 bg-surface-subtle px-3 py-2"
           : "w-full",
         className
       )}

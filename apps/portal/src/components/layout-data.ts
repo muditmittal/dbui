@@ -82,7 +82,7 @@ export const regions: Region[] = [
       "min-h-0",
       "overflow-y-auto",
       "border-border-base",
-      "rounded-md"
+      "rounded-2"
     ]
   },
   {
@@ -164,7 +164,7 @@ export const panels: Panel[] = [
       "shrink-0",
       "flex-col",
       "border-border-base",
-      "rounded-md"
+      "rounded-2"
     ]
   }
 ]
@@ -197,7 +197,7 @@ export const scrollOwners: ScrollOwner[] = [
   },
   {
     "file": "packages/dbui-shells/src/shells/Base.tsx",
-    "classes": "flex-1 min-w-0 min-h-0 overflow-y-auto border-border-base rounded-md",
+    "classes": "flex-1 min-w-0 min-h-0 overflow-y-auto border-border-base rounded-2",
     "kind": "column"
   },
   {
@@ -227,8 +227,8 @@ export const frame: { file: string; classes: string[]; scrolls: boolean } = {
 export const spacing: Spacing = {
   "tokenFamily": {
     "name": "--db-space-*",
-    "tokens": 11,
-    "live": false
+    "tokens": 10,
+    "live": true
   },
   "utility": {
     "name": "--spacing",

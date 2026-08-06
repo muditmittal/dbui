@@ -292,8 +292,14 @@ export const scalars = {
 /* Space — padding, margin, gap. Scales with density. */
 export const space = { 0: 0, "0-5": 0.5, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, 8: 8, 10: 10, 12: 12 }
 
-/* Radius — fixed anchors (radius doesn't scale with density). */
-export const radius = { sm: "4px", md: "8px", lg: "12px", xl: "16px", "2xl": "24px", full: "999px" }
+/* Radius — corners, on the same grid. `--db-radius-2` is 8px and the class is
+ * `rounded-2`, which is what makes the corner scale readable next to the space
+ * scale rather than as its own vocabulary. It used to be the clearest case of
+ * the naming problem: `radius-lg` was 12px and `space-lg` was 24px, so `lg`
+ * meant two different things one section apart in the same file.
+ *
+ * `full` is a pill sentinel rather than a measurement, so it does not scale. */
+export const radius = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, full: "999px" }
 
 /* ══════════════════════════════════════════════════════════════════════════
  * BRIDGE — which Tailwind theme namespaces resolve to which DBUI tokens.
@@ -335,10 +341,23 @@ export const bridge = {
   size: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
   height: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
   width: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
-  /* Tailwind step → DBUI step. Ours runs one notch coarser than Tailwind's, and
-   * `full` is a pill sentinel with no counterpart, so `3xl` carries it. `xs` and
-   * `4xl` are left to Tailwind: this scale has no step there. */
-  radius: { steps: { sm: "sm", md: "md", lg: "lg", xl: "xl", "2xl": "2xl", "3xl": "full" } },
+  /* `close` writes `initial`, which removes the key and the class with it.
+   *
+   * Dropping these from the bridge instead would be the dangerous move: every
+   * one of them would fall back to Tailwind's own value, and Tailwind disagrees
+   * with us at every step — its `md` is 6px where ours was 8px. A call site the
+   * codemod missed would then render a plausible wrong corner forever. Closed,
+   * it renders no corner at all, which someone notices.
+   *
+   * `xs` and `4xl` stay open. They were never ours, nothing on this scale sits
+   * at 2px or 32px, and they are the radius equivalent of `p-1.5` — off-scale
+   * but still compiling, which is the same bargain spacing is making until the
+   * scale is closed. */
+  radius: {
+    family: "radius",
+    steps: [0, 1, 2, 3, 4, 6],
+    close: ["sm", "md", "lg", "xl", "2xl", "3xl"],
+  },
 }
 
 /* Type — anchored ramp. Each step is a hand-tuned PIXEL anchor for size,

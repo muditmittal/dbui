@@ -85,7 +85,7 @@ function IconGrid() {
     <div className="relative">
       {/* Toast */}
       {copied && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 rounded-md bg-text-base px-4 py-2 text-[13px] leading-[20px] text-surface-base shadow-lg">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 rounded-2 bg-text-base px-4 py-2 text-[13px] leading-[20px] text-surface-base shadow-lg">
           <span>Copied import for <span className="font-semibold">{copied}</span></span>
         </div>
       )}
@@ -96,7 +96,7 @@ function IconGrid() {
           placeholder="Search by name, concept, product area, or synonym..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="h-8 w-[400px] rounded-sm border border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle focus-visible:border-focus-ring"
+          className="h-8 w-[400px] rounded-1 border border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle focus-visible:border-focus-ring"
         />
         <span className="text-[12px] text-text-subtle">
           {totalFiltered} of {iconNames.length} icons
@@ -124,7 +124,7 @@ function IconGrid() {
                   return (
                     <div
                       key={name}
-                      className="flex flex-col gap-0 rounded-sm px-2 py-1.5 hover:bg-surface-subtle cursor-pointer"
+                      className="flex flex-col gap-0 rounded-1 px-2 py-1.5 hover:bg-surface-subtle cursor-pointer"
                       title={`Click to copy import path`}
                       onClick={() => {
                         const importStr = `import { ${name} } from "@/components/icons/${name}"`
@@ -135,7 +135,7 @@ function IconGrid() {
                     >
                       <div className="flex items-center gap-2">
                         <div className="flex size-5 shrink-0 items-center justify-center text-text-base">
-                          {Icon ? <Icon className="size-4" /> : <div className="size-4 rounded-sm bg-surface-subtle" />}
+                          {Icon ? <Icon className="size-4" /> : <div className="size-4 rounded-1 bg-surface-subtle" />}
                         </div>
                         <span className="truncate text-[13px] leading-[20px] text-text-base">
                           {copied === name ? "Copied!" : name}

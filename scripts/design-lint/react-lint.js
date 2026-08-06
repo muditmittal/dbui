@@ -184,7 +184,9 @@ function checkClassName(className, file, line, column, element) {
           violations.push({
             file, line, column, level: "warning", rule: "non-token-radius", element,
             message: `Border radius \`${whole}\` (${px}px) is not a DBUI token.`,
-            fix: `Use rounded-sm (4), rounded-md (8), rounded-lg (12), rounded-xl (16), rounded-2xl (24), or rounded-full.`,
+            // The step IS the multiple of the 4px unit, so the px is derivable
+            // rather than memorized: rounded-3 is three units, which is 12px.
+            fix: `Use rounded-N, where N is the multiple of the 4px unit — rounded-1 (4px), rounded-2 (8px), rounded-3 (12px), rounded-4 (16px), rounded-6 (24px) — or rounded-full.`,
             source: className,
           })
         }

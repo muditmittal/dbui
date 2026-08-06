@@ -45,7 +45,7 @@ import { Warning } from "dbui/components/icons/Warning"
 /** Static stand-in for components that only read correctly at full page width. */
 function Chrome({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full rounded-sm border border-border-base bg-surface-base px-2 py-1.5 text-[12px]">
+    <div className="w-full rounded-1 border border-border-base bg-surface-base px-2 py-1.5 text-[12px]">
       {children}
     </div>
   )
@@ -135,8 +135,8 @@ export const demos: Record<string, React.ReactNode> = {
   ),
   "Radio Tile": (
     <div className="flex gap-2">
-      <div className="rounded-sm border border-border-accent bg-action-selected-base px-3 py-2 text-[12px]">Serverless</div>
-      <div className="rounded-sm border border-border-base px-3 py-2 text-[12px]">Classic</div>
+      <div className="rounded-1 border border-border-accent bg-action-selected-base px-3 py-2 text-[12px]">Serverless</div>
+      <div className="rounded-1 border border-border-base px-3 py-2 text-[12px]">Classic</div>
     </div>
   ),
   "Segment Control": (
@@ -149,8 +149,8 @@ export const demos: Record<string, React.ReactNode> = {
 
   // Menu
   "Dropdown Menu": (
-    <div className="w-44 rounded-md border border-border-base bg-surface-base p-1 shadow-sm">
-      <div className="rounded-sm bg-action-default-hover px-2 py-1 text-[12px]">Open in new tab</div>
+    <div className="w-44 rounded-2 border border-border-base bg-surface-base p-1 shadow-sm">
+      <div className="rounded-1 bg-action-default-hover px-2 py-1 text-[12px]">Open in new tab</div>
       <div className="px-2 py-1 text-[12px]">Copy path</div>
       <Separator className="my-1" />
       <div className="px-2 py-1 text-[12px] text-text-subtle">Delete</div>
@@ -159,7 +159,7 @@ export const demos: Record<string, React.ReactNode> = {
 
   // Overlay
   "Alert Dialog": (
-    <div className="w-52 rounded-md border border-border-base bg-surface-base p-3 shadow-sm">
+    <div className="w-52 rounded-2 border border-border-base bg-surface-base p-3 shadow-sm">
       <div className="text-[13px] font-semibold text-text-strong">Delete table?</div>
       <div className="mt-3 flex justify-end gap-1.5">
         <Button size="sm" variant="ghost">
@@ -172,7 +172,7 @@ export const demos: Record<string, React.ReactNode> = {
     </div>
   ),
   Dialog: (
-    <div className="w-52 rounded-md border border-border-base bg-surface-base p-3 shadow-sm">
+    <div className="w-52 rounded-2 border border-border-base bg-surface-base p-3 shadow-sm">
       <div className="text-[13px] font-semibold text-text-strong">Create catalog</div>
       <div className="mt-2">
         <Input placeholder="Name" />
@@ -180,19 +180,19 @@ export const demos: Record<string, React.ReactNode> = {
     </div>
   ),
   Drawer: (
-    <div className="flex h-24 w-52 overflow-hidden rounded-sm border border-border-base">
+    <div className="flex h-24 w-52 overflow-hidden rounded-1 border border-border-base">
       <div className="flex-1 bg-surface-subtle" />
       <div className="w-20 border-l border-border-base bg-surface-base p-2 text-[12px]">Details</div>
     </div>
   ),
   "Hover Card": (
-    <div className="w-45 rounded-md border border-border-base bg-surface-base p-2.5 shadow-sm">
+    <div className="w-45 rounded-2 border border-border-base bg-surface-base p-2.5 shadow-sm">
       <div className="text-[12px] font-semibold">samples.nyctaxi</div>
       <div className="mt-0.5 text-[12px] text-text-subtle">Delta · 12 columns</div>
     </div>
   ),
   Popover: (
-    <div className="w-44 rounded-md border border-border-base bg-surface-base p-2.5 shadow-sm">
+    <div className="w-44 rounded-2 border border-border-base bg-surface-base p-2.5 shadow-sm">
       <div className="text-[13px] font-semibold text-text-strong">Filter</div>
       <div className="mt-1.5 flex items-center gap-1.5 text-[12px]">
         <Checkbox defaultChecked /> Tables only
@@ -202,7 +202,7 @@ export const demos: Record<string, React.ReactNode> = {
   // Overlays portal to the body when opened, which would escape the tile, so the
   // surface is reproduced with the same tokens the component itself uses.
   Tooltip: (
-    <div className="rounded-sm bg-text-base px-2 py-1 text-[12px] text-surface-base">Refresh schema</div>
+    <div className="rounded-1 bg-text-base px-2 py-1 text-[12px] text-surface-base">Refresh schema</div>
   ),
 
   // Navigation
@@ -220,8 +220,8 @@ export const demos: Record<string, React.ReactNode> = {
     </Breadcrumb>
   ),
   Navbar: (
-    <div className="w-40 rounded-sm border border-border-base bg-surface-base p-1.5">
-      <div className="rounded-sm bg-action-selected-base px-2 py-1 text-[12px]">Catalog</div>
+    <div className="w-40 rounded-1 border border-border-base bg-surface-base p-1.5">
+      <div className="rounded-1 bg-action-selected-base px-2 py-1 text-[12px]">Catalog</div>
       <div className="px-2 py-1 text-[12px] text-text-subtle">Workspace</div>
       <div className="px-2 py-1 text-[12px] text-text-subtle">Compute</div>
     </div>
@@ -330,7 +330,7 @@ export const demos: Record<string, React.ReactNode> = {
     </div>
   ),
   Table: (
-    <div className="w-55 overflow-hidden rounded-sm border border-border-base">
+    <div className="w-55 overflow-hidden rounded-1 border border-border-base">
       <Table>
         <TableHeader>
           <TableRow>
@@ -375,7 +375,7 @@ export const demos: Record<string, React.ReactNode> = {
     </div>
   ),
   "Aspect Ratio": (
-    <div className="h-18 w-32 rounded-sm border border-dashed border-border-base bg-surface-subtle text-center text-[12px] leading-18 text-text-subtle">
+    <div className="h-18 w-32 rounded-1 border border-dashed border-border-base bg-surface-subtle text-center text-[12px] leading-18 text-text-subtle">
       16 : 9
     </div>
   ),
@@ -407,7 +407,7 @@ export const demos: Record<string, React.ReactNode> = {
   "Controls Bar": (
     <Chrome>
       <div className="flex items-center gap-2">
-        <div className="flex-1 rounded-sm border border-border-base px-2 py-1 text-text-subtle">Filter</div>
+        <div className="flex-1 rounded-1 border border-border-base px-2 py-1 text-text-subtle">Filter</div>
         <Button size="sm" variant="outline">
           Sort
         </Button>
@@ -440,7 +440,7 @@ export const demos: Record<string, React.ReactNode> = {
   // Uncategorized
   "Editor Tabs": (
     <div className="flex w-52 items-end gap-0.5 border-b border-border-base text-[12px]">
-      <div className="rounded-t-sm border border-b-0 border-border-base bg-surface-base px-2 py-1">query.sql</div>
+      <div className="rounded-t-1 border border-b-0 border-border-base bg-surface-base px-2 py-1">query.sql</div>
       <div className="px-2 py-1 text-text-subtle">notebook.py</div>
     </div>
   ),
@@ -459,7 +459,7 @@ export const demos: Record<string, React.ReactNode> = {
     </div>
   ),
   Toast: (
-    <div className="flex w-52 items-center gap-2 rounded-md border border-border-base bg-surface-base px-2.5 py-2 shadow-sm">
+    <div className="flex w-52 items-center gap-2 rounded-2 border border-border-base bg-surface-base px-2.5 py-2 shadow-sm">
       <Status status="success" size="sm" />
       <span className="text-[12px]">Table refreshed</span>
     </div>
@@ -474,13 +474,13 @@ export const demos: Record<string, React.ReactNode> = {
   ),
   Tree: (
     <div className="w-44 text-[12px]">
-      <div className="flex items-center gap-1.5 rounded-sm px-1.5 py-1">
+      <div className="flex items-center gap-1.5 rounded-1 px-1.5 py-1">
         <ChevronDown className="size-3" /> main
       </div>
-      <div className="flex items-center gap-1.5 rounded-sm bg-action-selected-base px-1.5 py-1 pl-4">
+      <div className="flex items-center gap-1.5 rounded-1 bg-action-selected-base px-1.5 py-1 pl-4">
         <TableIcon className="size-3" /> nyctaxi
       </div>
-      <div className="flex items-center gap-1.5 rounded-sm px-1.5 py-1 pl-4">
+      <div className="flex items-center gap-1.5 rounded-1 px-1.5 py-1 pl-4">
         <TableIcon className="size-3" /> trips
       </div>
     </div>

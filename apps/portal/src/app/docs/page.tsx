@@ -98,7 +98,7 @@ export default function DocsIndex() {
           <a
             key={area.id}
             href={`#${area.id}`}
-            className="type-label rounded-sm border border-border-base px-2.5 py-1 text-text-base no-underline transition-colors hover:border-border-strong hover:bg-surface-hover"
+            className="type-label rounded-1 border border-border-base px-2.5 py-1 text-text-base no-underline transition-colors hover:border-border-strong hover:bg-surface-hover"
           >
             {area.title}
           </a>

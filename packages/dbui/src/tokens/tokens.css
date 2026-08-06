@@ -10,6 +10,18 @@
  * dials so density/size/type can be re-tuned from a handful of numbers.
  * ───────────────────────────────────────────────────────────────────────────── */
 
+/* Keys this system does not have a step for. Removed rather than left to fall
+ * back, so a stale class name emits nothing instead of Tailwind's disagreeing
+ * value. Not inlined — "initial" is a compiler directive, not a value. */
+@theme {
+  --radius-sm: initial;
+  --radius-md: initial;
+  --radius-lg: initial;
+  --radius-xl: initial;
+  --radius-2xl: initial;
+  --radius-3xl: initial;
+}
+
 @theme inline {
   --color-surface-base: var(--db-surface-base);
   --color-surface-subtle: var(--db-surface-subtle);
@@ -130,12 +142,12 @@
   --width-7: var(--db-size-7);
   --width-8: var(--db-size-8);
   --width-10: var(--db-size-10);
-  --radius-sm: var(--db-radius-sm);
-  --radius-md: var(--db-radius-md);
-  --radius-lg: var(--db-radius-lg);
-  --radius-xl: var(--db-radius-xl);
-  --radius-2xl: var(--db-radius-2xl);
-  --radius-3xl: var(--db-radius-full);
+  --radius-0: var(--db-radius-0);
+  --radius-1: var(--db-radius-1);
+  --radius-2: var(--db-radius-2);
+  --radius-3: var(--db-radius-3);
+  --radius-4: var(--db-radius-4);
+  --radius-6: var(--db-radius-6);
 }
 
 :root {
@@ -156,12 +168,13 @@
   --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
   --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
 
-  /* ── Radius (fixed anchors) ── */
-  --db-radius-sm: 0.25rem;
-  --db-radius-md: 0.5rem;
-  --db-radius-lg: 0.75rem;
-  --db-radius-xl: 1rem;
-  --db-radius-2xl: 1.5rem;
+  /* ── Radius (same grid as space; "full" is a pill sentinel) ── */
+  --db-radius-0: 0;
+  --db-radius-1: calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar));
+  --db-radius-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
+  --db-radius-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
+  --db-radius-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-radius-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-radius-full: 999px;
 
   /* ── Type (anchored ramp, scaled together by type-scalar) ── */

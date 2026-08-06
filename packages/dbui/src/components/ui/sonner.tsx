@@ -47,7 +47,7 @@ const Toaster = ({ theme = "system", ...props }: ToasterProps) => {
           "--normal-bg": "var(--db-surface-base)",
           "--normal-text": "var(--db-text-base)",
           "--normal-border": "var(--db-border-base)",
-          "--border-radius": "var(--radius-sm)",
+          "--border-radius": "var(--db-radius-1)",
           "--success-bg": "var(--db-status-surface-positive)",
           "--success-border": "var(--db-action-positive-base)",
           "--success-text": "var(--db-action-positive-base)",

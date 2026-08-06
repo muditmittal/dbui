@@ -44,7 +44,7 @@ export function ShowMore({
 export function Panel({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="overflow-hidden rounded-md border border-border-base bg-surface-base"
+      className="overflow-hidden rounded-2 border border-border-base bg-surface-base"
       style={{ margin: 0 }}
     >
       {children}
@@ -199,12 +199,12 @@ export function ColorSwatches({
               <Row key={t.name} last={i === arr.length - 1}>
                 <div className="flex shrink-0 gap-1">
                   <span
-                    className="block size-7 rounded-sm border border-border-base"
+                    className="block size-7 rounded-1 border border-border-base"
                     style={{ background: t.light }}
                     title={`light: ${t.light}`}
                   />
                   <span
-                    className="block size-7 rounded-sm border border-border-base"
+                    className="block size-7 rounded-1 border border-border-base"
                     style={{ background: t.dark }}
                     title={`dark: ${t.dark}`}
                   />
@@ -266,7 +266,7 @@ export function RadiusScale({ tokens }: { tokens: Token[] }) {
       {tokens.map((t) => (
         <div
           key={t.name}
-          className="flex flex-col items-center gap-2 rounded-md border border-border-base bg-surface-base p-4"
+          className="flex flex-col items-center gap-2 rounded-2 border border-border-base bg-surface-base p-4"
           title={t.value}
         >
           <span
@@ -321,7 +321,7 @@ export function BorderScale({ tokens }: { tokens: Token[] }) {
           <Name title={t.value}>--db-{t.name}</Name>
           <Px token={t} />
           <span
-            className="block h-8 w-24 rounded-sm border-border-strong bg-surface-base"
+            className="block h-8 w-24 rounded-1 border-border-strong bg-surface-base"
             style={{ borderWidth: `var(--db-${t.name})`, borderStyle: "solid" }}
           />
         </Row>
@@ -336,9 +336,9 @@ export function ElevationScale({ tokens }: { tokens: Token[] }) {
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4" style={{ margin: 0 }}>
       {tokens.map((t) => (
-        <div key={t.name} className="flex flex-col items-center gap-3 rounded-md bg-surface-subtle p-5">
+        <div key={t.name} className="flex flex-col items-center gap-3 rounded-2 bg-surface-subtle p-5">
           <span
-            className="block size-16 rounded-md bg-surface-base"
+            className="block size-16 rounded-2 bg-surface-base"
             style={{ boxShadow: `var(--db-${t.name})` }}
           />
           <code className="type-code text-text-base">{t.name.replace("elevation-", "")}</code>
@@ -365,7 +365,7 @@ export function MotionScale({ tokens, easing }: { tokens: Token[]; easing: strin
           <Row key={t.name} last={i === tokens.length - 1}>
             <Name>--db-{t.name}</Name>
             <Px token={t} />
-            <div className="relative h-6 flex-1 overflow-hidden rounded-sm bg-surface-subtle">
+            <div className="relative h-6 flex-1 overflow-hidden rounded-1 bg-surface-subtle">
               <span
                 key={run}
                 className="absolute top-1 left-1 block size-4 rounded-xs bg-action-primary-base"

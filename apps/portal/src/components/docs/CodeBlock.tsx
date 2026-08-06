@@ -20,7 +20,7 @@ function Frame({ caption, children }: { caption?: string; children: React.ReactN
   return (
     <div className="flex flex-col gap-1.5">
       {caption ? <span className="type-hint text-text-subtle">{caption}</span> : null}
-      <div className="overflow-x-auto rounded-md border border-border-base bg-surface-subtle px-4 py-3">
+      <div className="overflow-x-auto rounded-2 border border-border-base bg-surface-subtle px-4 py-3">
         {children}
       </div>
     </div>

@@ -33,7 +33,7 @@ export function Figure({
 }) {
   return (
     <figure className="m-0 flex flex-col gap-2">
-      <div className="overflow-hidden rounded-md border border-border-base">{children}</div>
+      <div className="overflow-hidden rounded-2 border border-border-base">{children}</div>
       {caption ? <figcaption className="type-hint text-text-subtle">{caption}</figcaption> : null}
     </figure>
   )

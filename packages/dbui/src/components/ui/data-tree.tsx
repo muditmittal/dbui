@@ -156,7 +156,7 @@ function TreeSection({
             case "ArrowLeft": { e.preventDefault(); if (expanded) setExpanded(false); break }
           }
         }}
-        className="flex h-7 items-center gap-1 rounded-sm px-1 type-hint text-text-subtle hover:text-text-base outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset"
+        className="flex h-7 items-center gap-1 rounded-1 px-1 type-hint text-text-subtle hover:text-text-base outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset"
         aria-expanded={expanded}
       >
         {expanded
@@ -363,7 +363,7 @@ function TreeNode({
         aria-selected={isSelected}
         aria-expanded={isExpandable ? isExpanded : undefined}
         className={cn(
-          "group/tree-item flex h-7 w-full items-center gap-1 rounded-sm px-1 type-label text-left transition-colors",
+          "group/tree-item flex h-7 w-full items-center gap-1 rounded-1 px-1 type-label text-left transition-colors",
           // Pointer-driven focus (mouse hover, programmatic focus from popups,
           // etc.) must not show a ring — only keyboard navigation should.
           "outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset",
@@ -441,7 +441,7 @@ function TreeNode({
              * leaves so e.g. you can't focus on a table or notebook. */}
             {(focusable ?? isExpandable) && (
               <button
-                className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset [&_svg]:size-4"
+                className="flex size-6 items-center justify-center rounded-1 text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset [&_svg]:size-4"
                 aria-label="Focus here"
                 title="Focus here"
                 onClick={(e) => {
@@ -453,7 +453,7 @@ function TreeNode({
               </button>
             )}
             <button
-              className="flex size-6 items-center justify-center rounded-sm text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset [&_svg]:size-4"
+              className="flex size-6 items-center justify-center rounded-1 text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset [&_svg]:size-4"
               aria-label="More options"
               title="More options"
               onClick={(e) => {

@@ -365,7 +365,7 @@ function TableSortButton({
       data-direction={sorted ? direction : undefined}
       aria-label="Sort column"
       className={cn(
-        "inline-flex size-5 items-center justify-center rounded-sm p-1 text-text-subtle hover:text-text-base",
+        "inline-flex size-5 items-center justify-center rounded-1 p-1 text-text-subtle hover:text-text-base",
         sorted && "text-text-base",
         className
       )}

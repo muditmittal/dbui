@@ -108,7 +108,7 @@ NavbarSectionHeader.displayName = "NavbarSectionHeader"
 
 /**
  * NavbarItem — single navigation item.
- * h-7 (28px), gap-2, px-2, rounded-sm.
+ * h-7 (28px), gap-2, px-2, rounded-1.
  * Active: bg-surface-accent, text-text-accent, font-semibold.
  */
 function NavbarItem({
@@ -121,7 +121,7 @@ function NavbarItem({
       data-slot="navbar-item"
       data-active={active || undefined}
       className={cn(
-        "flex h-7 w-full items-center gap-2 rounded-sm px-2 type-label text-text-base text-left",
+        "flex h-7 w-full items-center gap-2 rounded-1 px-2 type-label text-text-base text-left",
         "hover:bg-action-default-hover",
         active && "bg-surface-accent text-text-accent font-semibold [&_[data-slot=navbar-item-icon]]:text-text-accent",
         "[&_svg:not([class*='size-'])]:size-4",
@@ -156,7 +156,7 @@ function NavbarNewButton({ className, ...props }: React.ComponentProps<"button">
     <button
       data-slot="navbar-new-button"
       className={cn(
-        "flex h-8 w-full items-center gap-2 rounded-lg bg-surface-base px-3 shadow-md type-label-bold text-text-base",
+        "flex h-8 w-full items-center gap-2 rounded-3 bg-surface-base px-3 shadow-md type-label-bold text-text-base",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

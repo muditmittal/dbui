@@ -91,7 +91,7 @@ const CANNED_REPLY = `Here's the breakdown by region. \`us-east\` carries the la
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-[640px] w-full max-w-[760px] flex-col overflow-hidden rounded-md border border-border-base bg-surface-base">
+    <div className="flex h-[640px] w-full max-w-[760px] flex-col overflow-hidden rounded-2 border border-border-base bg-surface-base">
       {children}
     </div>
   )
@@ -380,7 +380,7 @@ WHERE risk_score > 0.8
           </PromptInput>
           <button
             type="button"
-            className="self-start rounded-sm border border-input-border-base px-2 py-1 text-[12px] text-text-base hover:bg-action-default-hover"
+            className="self-start rounded-1 border border-input-border-base px-2 py-1 text-[12px] text-text-base hover:bg-action-default-hover"
             onClick={() =>
               setStatus((prev) => (prev === "ready" ? "streaming" : "ready"))
             }
@@ -405,7 +405,7 @@ function Piece({
       <h3 className="mb-2 text-[13px] leading-[20px] font-semibold text-text-base">
         {title}
       </h3>
-      <div className="flex flex-col gap-3 rounded-md border border-border-base bg-surface-base p-4">
+      <div className="flex flex-col gap-3 rounded-2 border border-border-base bg-surface-base p-4">
         {children}
       </div>
     </section>

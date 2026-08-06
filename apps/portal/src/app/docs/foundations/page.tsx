@@ -186,7 +186,7 @@ function Destinations({ items }: { items: Array<{ label: string; href: string }>
  */
 function Directory({ items }: { items: Array<{ label: string; href: string; what: string }> }) {
   return (
-    <div className="overflow-hidden rounded-md border border-border-base">
+    <div className="overflow-hidden rounded-2 border border-border-base">
       {items.map((item) => (
         <Link
           key={item.href}

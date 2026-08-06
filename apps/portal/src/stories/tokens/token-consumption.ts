@@ -182,17 +182,19 @@ export const families: Family[] = [
     "count": 10,
     "unit": "steps",
     "properties": 10,
-    "bridge": null,
-    "superseded": {
-      "namespace": "--spacing",
-      "uses": 818,
-      "files": 78
+    "bridge": {
+      "namespace": "--spacing-*",
+      "kind": "theme",
+      "file": "packages/dbui/src/tokens/tokens.css",
+      "uses": 507,
+      "files": 67
     },
+    "superseded": null,
     "systemRefs": 0,
     "systemConsumers": [],
     "portalRefs": 0,
     "portalConsumers": [],
-    "live": false
+    "live": true
   },
   {
     "key": "size",
@@ -200,34 +202,49 @@ export const families: Family[] = [
     "count": 7,
     "unit": "steps",
     "properties": 7,
-    "bridge": null,
-    "superseded": {
-      "namespace": "--spacing",
-      "uses": 818,
-      "files": 78
-    },
-    "systemRefs": 0,
-    "systemConsumers": [],
-    "portalRefs": 0,
-    "portalConsumers": [],
-    "live": false
-  },
-  {
-    "key": "radius",
-    "label": "Radius",
-    "count": 6,
-    "unit": "steps",
-    "properties": 6,
     "bridge": {
-      "namespace": "--radius-*",
+      "namespace": "--size-*, --height-*, --width-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 134,
-      "files": 58
+      "uses": 149,
+      "files": 41
     },
     "superseded": null,
     "systemRefs": 0,
     "systemConsumers": [],
+    "portalRefs": 0,
+    "portalConsumers": [],
+    "live": true
+  },
+  {
+    "key": "radius",
+    "label": "Radius",
+    "count": 7,
+    "unit": "steps",
+    "properties": 7,
+    "bridge": {
+      "namespace": "--radius-*",
+      "kind": "theme",
+      "file": "packages/dbui/src/tokens/tokens.css",
+      "uses": 84,
+      "files": 49
+    },
+    "superseded": null,
+    "systemRefs": 5,
+    "systemConsumers": [
+      {
+        "file": "packages/dbui/src/components/ui/input-group.tsx",
+        "refs": 3
+      },
+      {
+        "file": "packages/dbui/src/components/ui/native-select.tsx",
+        "refs": 1
+      },
+      {
+        "file": "packages/dbui/src/components/ui/sonner.tsx",
+        "refs": 1
+      }
+    ],
     "portalRefs": 0,
     "portalConsumers": [],
     "live": true
@@ -275,7 +292,8 @@ export const scalars: Scalar[] = [
     "name": "--db-spacing-unit",
     "drives": [
       "space",
-      "size"
+      "size",
+      "radius"
     ],
     "bridges": [
       {
@@ -289,7 +307,8 @@ export const scalars: Scalar[] = [
     "name": "--db-density-scalar",
     "drives": [
       "space",
-      "size"
+      "size",
+      "radius"
     ],
     "bridges": [
       {
@@ -321,16 +340,6 @@ export const tailwind: TailwindNamespace[] = [
     "files": 78
   },
   {
-    "namespace": "--radius-*",
-    "probe": "--radius-md",
-    "tailwindValue": "0.375rem",
-    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
-    "overriddenTo": "var(--db-radius-md)",
-    "origin": "override",
-    "uses": 126,
-    "files": 56
-  },
-  {
     "namespace": "--shadow-*",
     "probe": "--shadow-lg",
     "tailwindValue": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
@@ -359,6 +368,16 @@ export const tailwind: TailwindNamespace[] = [
     "origin": "utility",
     "uses": 57,
     "files": 31
+  },
+  {
+    "namespace": "--radius-*",
+    "probe": "--radius-md",
+    "tailwindValue": "0.375rem",
+    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
+    "overriddenTo": "initial",
+    "origin": "override",
+    "uses": 43,
+    "files": 25
   },
   {
     "namespace": "--animate-*",
@@ -582,7 +601,7 @@ export const themeOverrides: ThemeOverride[] = [
 ]
 
 export const hardcoded: Hardcoded = {
-  "uses": 48,
+  "uses": 47,
   "files": [
     {
       "file": "packages/dbui-shells/src/shells/CatalogExplorer.tsx",
@@ -660,14 +679,6 @@ export const hardcoded: Hardcoded = {
       "samples": [
         "p-[3px]",
         "py-[2px]"
-      ]
-    },
-    {
-      "file": "packages/dbui/src/rules/layout-rules.ts",
-      "refs": 2,
-      "samples": [
-        "w-[180px]",
-        "rounded-[8px]"
       ]
     },
     {
@@ -753,6 +764,13 @@ export const hardcoded: Hardcoded = {
       "refs": 1,
       "samples": [
         "rounded-[2px]"
+      ]
+    },
+    {
+      "file": "packages/dbui/src/rules/layout-rules.ts",
+      "refs": 1,
+      "samples": [
+        "w-[180px]"
       ]
     },
     {

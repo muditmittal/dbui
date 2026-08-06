@@ -199,7 +199,7 @@ export function IconBrowser() {
           </EmptyHeader>
         </Empty>
       ) : (
-        <div className="overflow-hidden rounded-md border border-border-base">
+        <div className="overflow-hidden rounded-2 border border-border-base">
           <Table>
             <TableHeader>
               <TableRow>

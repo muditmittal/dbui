@@ -14,7 +14,7 @@ figma.connect(AspectRatio, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/
   },
   example: ({ ratio }) => (
     <AspectRatio ratio={ratio}>
-      <img src="/placeholder.jpg" alt="Image" className="size-full rounded-lg object-cover" />
+      <img src="/placeholder.jpg" alt="Image" className="size-full rounded-3 object-cover" />
     </AspectRatio>
   ),
 })

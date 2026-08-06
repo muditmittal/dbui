@@ -12,7 +12,7 @@ function NavLink({ item, indent }: { item: DocsNavItem; indent?: boolean }) {
   return (
     <Link
       href={item.href}
-      className={`type-label rounded-sm py-1.5 no-underline transition-colors ${
+      className={`type-label rounded-1 py-1.5 no-underline transition-colors ${
         indent ? "pr-2 pl-5" : "px-2"
       } ${
         active

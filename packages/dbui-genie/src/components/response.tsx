@@ -48,7 +48,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode {
       nodes.push(
         <code
           key={key}
-          className="rounded-sm bg-surface-inset px-1 py-0.5 type-code"
+          className="rounded-1 bg-surface-inset px-1 py-0.5 type-code"
         >
           {token.slice(1, -1)}
         </code>
@@ -148,7 +148,7 @@ function parseBlocks(markdown: string): React.ReactNode[] {
         <pre
           key={`b${key++}`}
           data-language={fence[1] || undefined}
-          className="overflow-x-auto rounded-md bg-surface-inset p-3"
+          className="overflow-x-auto rounded-2 bg-surface-inset p-3"
         >
           <code className="type-block whitespace-pre">
             {body.join("\n")}

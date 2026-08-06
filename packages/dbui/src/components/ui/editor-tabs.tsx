@@ -83,7 +83,7 @@ function EditorTabAddButton({ className, ...props }: React.ComponentProps<"butto
       data-slot="editor-tab-add"
       aria-label="Add tab"
       className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-sm p-2 text-text-subtle hover:text-text-base",
+        "flex size-8 shrink-0 items-center justify-center rounded-1 p-2 text-text-subtle hover:text-text-base",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

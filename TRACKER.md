@@ -32,15 +32,27 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.
-5. **Border width is read by nothing.** Space and size are done: their stops are now
-   named after their multiple of the grid unit and each one is bridged to a Tailwind
-   key, so `--db-space-3` is what `p-3` resolves to and `--db-size-8` is what `h-8`,
-   `w-8` and `size-8` resolve to. Border width still ships as named steps nothing
-   reads.
+5. **Border width is read by nothing.** Space, size and radius are done: their stops
+   are named after their multiple of the grid unit and each one is bridged to a
+   Tailwind key, so `--db-space-3` is what `p-3` resolves to, `--db-size-8` what
+   `h-8`/`w-8`/`size-8` resolve to, and `--db-radius-2` what `rounded-2` resolves to.
+   Border width still ships as named steps nothing reads.
    Tailwind's `--spacing` multiplier is still declared beside the explicit stops, on
    purpose: 106 call sites write a step the scale does not define, 45 of them at 6px
    in menus and pills. Snapping those to the nearest legal step is the open decision,
-   and closing the scale with `--spacing: initial` cannot land before it.
+   and closing the scale with `--spacing: initial` cannot land before it. The
+   consumption scan now measures the gap: 507 of the 818 dimensional utilities in the
+   tree resolve to a space token, and the rest come off the multiplier.
+
+8. **`cn()` is `clsx`, not `tailwind-merge`, so conflicting utilities both survive
+   and stylesheet order picks the winner.** Found by the radius rename: the control
+   inside an `InputGroup` carries the base `rounded-1` and the group's `rounded-none`,
+   and renaming the scale flipped which one Tailwind emits last. The rendered
+   difference was 1,061 of 3,360,000 pixels at 4x with a worst channel delta of 9/255,
+   because the element is transparent and borderless — but nothing about that outcome
+   was chosen. Any component composing a utility that its base also sets is resolved
+   by emission order today. Reproduce with
+   `node scripts/pixel-ab.mjs <url> <selector> <css>`.
 6. **Elevation and motion cannot be bridged without changing how the product looks
    and feels.** Measured on one card, `shadow-lg` reaches below it and nowhere above;
    `elevation-1` blooms on all four sides because it carries no negative spread, and

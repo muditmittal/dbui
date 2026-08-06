@@ -9,7 +9,7 @@ import { AssistantPanel } from "../components/AssistantPanel"
  * Provides:
  *   - Platform header (48px, bg-surface-subtle, fixed)
  *   - Sidebar nav (180px, collapsible)
- *   - Content surface (white, rounded-lg, scrollable)
+ *   - Content surface (white, rounded-3, scrollable)
  *
  * Usage:
  *   <Base defaultActive="catalog">
@@ -64,7 +64,7 @@ export function Base({
         )}
 
         {/* Content surface — no gap when nav open, 8px when collapsed */}
-        <main className={`flex-1 min-w-0 min-h-0 overflow-y-auto bg-surface-base border border-border-base rounded-md ${isCollapsed ? "ml-2" : ""}`}>
+        <main className={`flex-1 min-w-0 min-h-0 overflow-y-auto bg-surface-base border border-border-base rounded-2 ${isCollapsed ? "ml-2" : ""}`}>
           {children}
         </main>
 

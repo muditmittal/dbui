@@ -49,7 +49,7 @@ Anything else (what icon a slot uses, what hover color is applied, what a compon
   | E Asset Detail | visible |
 
 ### Content container
-- `bg-background` (white), rounded top-left corner (`rounded-tl-lg`)
+- `bg-background` (white), rounded top-left corner (`rounded-tl-3`)
 - **The only scroll container on the page.** Header and nav do not scroll.
 - Fills remaining space after header (top) and nav (left)
 

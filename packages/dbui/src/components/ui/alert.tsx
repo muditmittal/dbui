@@ -18,14 +18,14 @@ import { cn } from "../../lib/utils"
  * Figma component: "Alert" (4 variants × 2 layouts × removable)
  *
  * Structure: [Icon] [Content: Title + Description + Action(stacked)] [Action(inline)] [Close]
- * Layout: flex row, gap-sm (8px), p-mid (12px), rounded-md (8px)
+ * Layout: flex row, gap-sm (8px), p-mid (12px), rounded-2 (8px)
  *
  * Variants: danger, warning, info, success
  * Layouts: inline (action beside title), stacked (action below description)
  * Removable: optional close button
  */
 const alertVariants = cva(
-  "group/alert flex w-full items-start gap-2 rounded-md border p-3 type-body",
+  "group/alert flex w-full items-start gap-2 rounded-2 border p-3 type-body",
   {
     variants: {
       variant: {
@@ -138,7 +138,7 @@ function AlertClose({
       type="button"
       aria-label="Dismiss"
       className={cn(
-        "inline-flex size-6 shrink-0 items-center justify-center rounded-sm p-1 text-text-subtle hover:text-text-base [&_svg:not([class*='size-'])]:size-4",
+        "inline-flex size-6 shrink-0 items-center justify-center rounded-1 p-1 text-text-subtle hover:text-text-base [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

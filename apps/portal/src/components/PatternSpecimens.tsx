@@ -430,7 +430,7 @@ function ScopeRing({
 }) {
   return (
     <div
-      className={`flex flex-col gap-2 rounded-md border border-border-base p-3 ${
+      className={`flex flex-col gap-2 rounded-2 border border-border-base p-3 ${
         filled ? "bg-surface-subtle" : ""
       }`}
     >

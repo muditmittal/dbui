@@ -85,7 +85,7 @@ export function PrincipleEntry({
  */
 function Specimen({ children }: { children: React.ReactNode }) {
   return (
-    <span className="type-body w-fit max-w-full rounded-sm bg-surface-inset px-2 py-1 text-text-base">
+    <span className="type-body w-fit max-w-full rounded-1 bg-surface-inset px-2 py-1 text-text-base">
       {children}
     </span>
   )
@@ -133,7 +133,7 @@ export function ToneEntry({
 /** The bordered, divided container the entry lists share with `Guidance`. */
 export function EntryList({ children }: { children: React.ReactNode }) {
   return (
-    <div className="divide-y divide-border-base overflow-hidden rounded-md border border-border-base">
+    <div className="divide-y divide-border-base overflow-hidden rounded-2 border border-border-base">
       {children}
     </div>
   )
@@ -180,7 +180,7 @@ export function JumpTo({ sections }: { sections: Array<{ id: string; title: stri
   return (
     <nav
       aria-label="On this page"
-      className="rounded-md border border-border-base bg-surface-subtle px-4 py-3"
+      className="rounded-2 border border-border-base bg-surface-subtle px-4 py-3"
     >
       <div className="type-label-bold text-text-strong">On this page</div>
       <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">

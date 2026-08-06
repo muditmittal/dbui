@@ -62,7 +62,7 @@ export function DocPage({ title, children }: { title: string; children: React.Re
 export function ContentSummary({ children }: { children: React.ReactNode }) {
   return (
     <Collapsible defaultOpen={false}>
-      <div className="overflow-hidden rounded-md border border-border-base bg-surface-subtle">
+      <div className="overflow-hidden rounded-2 border border-border-base bg-surface-subtle">
         <CollapsibleTrigger className="group/summary flex w-full cursor-default items-center gap-2 px-4 py-2.5 text-left text-[13px] leading-[20px] font-semibold text-text-base outline-none hover:bg-action-default-hover focus-visible:shadow-focus [&_svg:not([class*='size-'])]:size-4">
           <ChevronDown className="shrink-0 text-text-subtle group-aria-expanded/summary:hidden" />
           <ChevronUp className="hidden shrink-0 text-text-subtle group-aria-expanded/summary:inline" />
@@ -111,7 +111,7 @@ export function P({ children }: { children: React.ReactNode }) {
 /** Inline code, on the Code text style — mono at the paragraph size. */
 export function C({ children }: { children: React.ReactNode }) {
   return (
-    <code className="rounded-sm bg-surface-inset px-1 py-0.5 font-mono text-[13px] leading-[20px] text-text-base">
+    <code className="rounded-1 bg-surface-inset px-1 py-0.5 font-mono text-[13px] leading-[20px] text-text-base">
       {children}
     </code>
   )

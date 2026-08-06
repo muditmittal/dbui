@@ -19,7 +19,7 @@ export const Playground: StoryObj = {
 
       {/* Static visual representation — not interactive */}
       <div
-        className="w-[640px] rounded-md bg-surface-base shadow-lg ring-1 ring-text-base/10"
+        className="w-[640px] rounded-2 bg-surface-base shadow-lg ring-1 ring-text-base/10"
         style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" }}
       >
         {/* Header */}
@@ -28,7 +28,7 @@ export const Playground: StoryObj = {
             <div className="text-[13px] font-semibold text-text-base">Dialog Title</div>
             <div className="text-[13px] text-text-subtle mt-0.5">This is a description of the dialog content.</div>
           </div>
-          <button className="inline-flex size-6 items-center justify-center rounded-sm text-text-subtle hover:text-text-base">
+          <button className="inline-flex size-6 items-center justify-center rounded-1 text-text-subtle hover:text-text-base">
             <CloseSmall />
           </button>
         </div>

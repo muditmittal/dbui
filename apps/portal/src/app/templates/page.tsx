@@ -27,10 +27,10 @@ export default function TemplatesPage() {
           {shells.map((shell) => (
             <section
               key={shell.id}
-              className="rounded-md border border-border-base bg-surface-base p-6"
+              className="rounded-2 border border-border-base bg-surface-base p-6"
             >
               <div className="flex items-baseline gap-3">
-                <span className="type-eyebrow rounded-sm bg-surface-accent px-2 py-0.5 text-text-accent">
+                <span className="type-eyebrow rounded-1 bg-surface-accent px-2 py-0.5 text-text-accent">
                   Shell {shell.id}
                 </span>
                 <h2 className="type-title-3 text-text-strong">{shell.name}</h2>

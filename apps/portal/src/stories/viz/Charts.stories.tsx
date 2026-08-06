@@ -35,7 +35,7 @@ function Section({
           {hint}
         </p>
       ) : null}
-      <div className="rounded-md border border-border-base bg-surface-base p-4">
+      <div className="rounded-2 border border-border-base bg-surface-base p-4">
         {children}
       </div>
     </section>

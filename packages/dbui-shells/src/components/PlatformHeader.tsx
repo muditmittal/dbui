@@ -120,7 +120,7 @@ export function PlatformHeader({
         <div className="flex items-center gap-1 shrink-0">
           <Button variant="ghost" size="icon-md" aria-label="Genie" onClick={onGenieToggle}>
             <span
-              className="flex size-4 items-center justify-center rounded-sm"
+              className="flex size-4 items-center justify-center rounded-1"
               style={{ backgroundImage: "var(--ai-gradient)" }}
               aria-hidden
             />

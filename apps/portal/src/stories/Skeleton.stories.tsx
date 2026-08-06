@@ -52,7 +52,7 @@ export const Playground: StoryObj = {
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12, verticalAlign: "top" }}>Rectangle (card)</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Skeleton className="h-[120px] w-[260px] rounded-xl" />
+              <Skeleton className="h-[120px] w-[260px] rounded-4" />
             </td>
           </tr>
         </tbody>

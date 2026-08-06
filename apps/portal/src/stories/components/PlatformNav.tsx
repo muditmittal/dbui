@@ -74,7 +74,7 @@ export function PlatformNav({ defaultActive = "catalog" }: { defaultActive?: str
   return (
     <nav className="w-[180px] shrink-0 overflow-y-auto">
       {/* New button — Figma: #FFF5F7 base + 4% black overlay, border #FDE2E8, radius 8, pad 10/12/10/16, gap 8, plus icon #E65B77 */}
-      <button className="flex h-10 w-full items-center gap-2 rounded-lg border border-[#FDE2E8] bg-[#F5ECEE] pl-3 pr-4 text-[13px] font-medium text-[#11171C]">
+      <button className="flex h-10 w-full items-center gap-2 rounded-3 border border-[#FDE2E8] bg-[#F5ECEE] pl-3 pr-4 text-[13px] font-medium text-[#11171C]">
         <Plus className="size-4 text-[#E65B77]" />
         New
       </button>
