@@ -39,11 +39,18 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    `--db-radius-2` what `rounded-2` resolves to, and `--db-border-1` what a bare
    `border` resolves to.
    The multiplier is still declared beside the explicit stops, on purpose: call sites
-   write steps the scale does not define — `p-1.5`, `p-9` — and those still compile.
-   Snapping them to the nearest legal step is the open decision, and closing the
-   scale with `--spacing: initial` cannot land before it. The consumption scan
-   measures the gap: 516 of the 818 dimensional utilities in the tree resolve to a
-   space token, and the rest come off the multiplier.
+   write steps the scale does not define — `p-1.5`, `p-9`, and now also `p-5`, `p-7`
+   and `p-12` — and those still compile at the same values. Snapping them to the
+   nearest legal step is a sequenced follow-up, and closing the scale with
+   `--spacing: initial` cannot land before it. The rules for that pass are agreed and
+   written down in `packages/dbui/docs/token-simplification.md`; nothing is done. The
+   consumption scan measures the gap: 507 of the 818 dimensional utilities in the tree
+   resolve to a space token, and the rest come off the multiplier.
+
+   Space is nine stops and size is seven, and they are deliberately not the same set.
+   7 is a size stop and not a space stop, so `h-7` is `--db-size-7` while `p-7` is the
+   multiplier — a family carries a stop when it has a use for it, not because a
+   sibling does. K5b pins that split.
 
    One hazard this leaves behind. A missing stop in `size` does not fail — a height
    utility reads `--height-*` first and `--spacing-*` second, so `h-6` renders 24px

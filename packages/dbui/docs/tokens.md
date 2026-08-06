@@ -47,9 +47,11 @@ node scripts/generate-token-data.mjs     # refresh the portal's Tokens page
    stock Tailwind — so reading it as 8px would break the one expectation every
    Tailwind user arrives with.
 8. **Dimensions is the collection** — space, size, radius, border. Each family
-   computes its own stops; none reads another. The twelve-stop scale they agree
-   on (0, 2, 4, 8, 12, 16, 20, 24, 28, 32, 40, 48) is an **authoring artifact**:
-   a Figma collection and a list in `theme.config.mjs`, deliberately not a custom
+   computes its own stops; none reads another, and no family is obliged to carry
+   a stop it has no use for. Space runs 0, 0.5, 1, 2, 3, 4, 6, 8, 10 and size
+   runs 2, 3, 4, 6, 7, 8, 10, so 7 is a height and never a padding. The ladder of
+   multiples they are all authored against is an **authoring artifact**: a Figma
+   collection and a list in `theme.config.mjs`, deliberately not a custom
    property. React ships semantics only, exactly as it does for color, where the
    palette resolves inline and only `--db-surface-base` reaches the browser.
    There is no `--db-scale-*`.

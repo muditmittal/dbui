@@ -127,13 +127,10 @@ by design, and neither do the two `em` inline steps.
 | `--db-space-0-5` | Dimensions | calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar)) | 2px |  |
 | `--db-space-1` | Dimensions | calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar)) | 4px |  |
 | `--db-space-10` | Dimensions | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
-| `--db-space-12` | Dimensions | calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar)) | 48px |  |
 | `--db-space-2` | Dimensions | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
 | `--db-space-3` | Dimensions | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
 | `--db-space-4` | Dimensions | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
-| `--db-space-5` | Dimensions | calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar)) | 20px |  |
 | `--db-space-6` | Dimensions | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
-| `--db-space-7` | Dimensions | calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar)) | 28px |  |
 | `--db-space-8` | Dimensions | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
 | `--db-spacing-unit` | Dimensions | 0.25rem | 4px |  |
 | `--db-font-family` | Typography | "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif |  |  |

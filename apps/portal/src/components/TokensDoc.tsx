@@ -473,10 +473,10 @@ export function TokensDoc() {
         scope="The collection: one grid unit, two scalars that multiply it, and the four families below — space, size, radius and border."
         cautions={[
           <>
-            Each family computes its own stops. Nothing reads another family, and the
-            twelve-stop scale they agree on is an authoring artifact that lives in Figma,
-            not a custom property — React ships semantics only, the same way it does for
-            color.
+            Each family computes its own stops and carries only the ones it uses, so 7 is
+            a height and never a padding. Nothing reads another family, and the ladder of
+            multiples they share is an authoring artifact that lives in Figma, not a
+            custom property — React ships semantics only, the same way it does for color.
           </>,
           <>
             Scalar means a multiplier here and nowhere else. <Code>--db-density-scalar</Code>{" "}
