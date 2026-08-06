@@ -3,6 +3,7 @@ import { Badge } from "dbui/components/ui/badge"
 
 import { galleryGroups, type GalleryItem } from "@/stories/components/gallery-data"
 import { demos } from "@/stories/components/gallery-demos"
+import { anchorOffset } from "@/components/docs/anchor"
 
 /**
  * The library's own claim about what it contains, and the only place that claim
@@ -12,7 +13,13 @@ import { demos } from "@/stories/components/gallery-demos"
  *
  * No state and no client bundle. Search would duplicate Storybook's, and the
  * category headings do the narrowing a search box would.
+ *
+ * The id on each group is what the sticky tabs above jump to, and it is built
+ * from the group key rather than written down, so a new category gets a tab
+ * without anyone remembering to add one.
  */
+
+export const groupId = (key: string) => `group-${key}`
 
 /**
  * The tile is the component itself on a quiet surface, never a picture of one —
@@ -57,9 +64,16 @@ function Tile({ item }: { item: GalleryItem }) {
 
 export function ComponentGallery() {
   return (
-    <div className="mt-10 flex flex-col gap-12">
+    // Marked as generated so the word count on this page can separate the
+    // editorial layer from 61 captions the CLI wrote.
+    <div data-doc-generated className="mt-8 flex flex-col gap-12">
       {galleryGroups.map((group) => (
-        <section key={group.key} className="flex flex-col gap-1">
+        <section
+          key={group.key}
+          id={groupId(group.key)}
+          style={anchorOffset}
+          className="flex flex-col gap-1"
+        >
           <h2 className="type-title-4 text-text-strong">{group.label}</h2>
           <p className="type-body text-text-subtle">{group.blurb}</p>
           <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-7 lg:grid-cols-3">

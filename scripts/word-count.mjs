@@ -2,11 +2,12 @@
 /**
  * Count the words a reader actually sees on a docs route.
  *
- * Two numbers, because one of them is misleading on its own. `article` counts
+ * Three numbers, because each one is misleading on its own. `article` counts
  * everything rendered, and on Icons and Components most of that is a generated
  * table — 456 icon labels are not prose and cutting them would remove the page.
- * `prose` counts only the paragraphs and list items, which is the editorial
- * layer a person writes and the only part an edit can shorten.
+ * `prose` counts the paragraphs and list items. `authored` drops the ones inside
+ * a `[data-doc-generated]` container, which is the only number an edit can move:
+ * 61 gallery captions are written by the CLI, not by whoever writes the page.
  *
  *   node scripts/word-count.mjs <url> [url...]
  */
@@ -44,8 +45,15 @@ const COUNT = `(() => {
   const words = (text) => (text || "").trim().split(/\\s+/).filter(Boolean).length
   const article = document.querySelector("article")
   if (!article) return { error: "no article" }
-  const prose = [...article.querySelectorAll("p, li")].reduce((n, el) => n + words(el.innerText), 0)
-  return { article: words(article.innerText), prose, paragraphs: article.querySelectorAll("p, li").length }
+  const blocks = [...article.querySelectorAll("p, li")]
+  const authored = blocks.filter((el) => !el.closest("[data-doc-generated]"))
+  const sum = (list) => list.reduce((n, el) => n + words(el.innerText), 0)
+  return {
+    article: words(article.innerText),
+    prose: sum(blocks),
+    authored: sum(authored),
+    blocks: authored.length,
+  }
 })()`;
 
 try {
@@ -93,7 +101,9 @@ try {
       returnByValue: true,
     }, sessionId);
     const v = result?.value ?? {};
-    console.log(`${url}  article=${v.article}  prose=${v.prose}  blocks=${v.paragraphs}`);
+    console.log(
+      `${url}  article=${v.article}  prose=${v.prose}  authored=${v.authored}  blocks=${v.blocks}`,
+    );
   }
   ws.close();
 } finally {

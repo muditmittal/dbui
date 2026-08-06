@@ -1,6 +1,8 @@
 import * as React from "react"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "dbui/components/ui/table"
 
+import { anchorOffset } from "./anchor"
+
 /**
  * Primitives for the docs pages written as React rather than MDX — Foundations,
  * Icons, Components, Accessibility. They match the principles and tokens pages,
@@ -26,10 +28,23 @@ export function DocHeader({ title, children }: { title: string; children: React.
 /**
  * Space goes between sections, not inside them. A heading, its opening sentence
  * and its table are one unit; the gap above separates that unit from the next.
+ *
+ * An `id` makes the section a jump target, and it brings the scroll margin with
+ * it. The offset is measured by the page's sticky bar rather than assumed, so a
+ * heading lands below the chrome at every type scale; without a bar the fallback
+ * still clears the site header.
  */
-export function DocSection({ title, children }: { title: string; children: React.ReactNode }) {
+export function DocSection({
+  id,
+  title,
+  children,
+}: {
+  id?: string
+  title: string
+  children: React.ReactNode
+}) {
   return (
-    <section className="mt-14 flex flex-col gap-4">
+    <section id={id} style={id ? anchorOffset : undefined} className="mt-14 flex flex-col gap-4">
       <h2 className="type-title-3 text-text-strong">{title}</h2>
       {children}
     </section>

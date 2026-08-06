@@ -17,7 +17,8 @@ import {
 
 import { icons, iconCategories, type IconCategory } from "@/components/icon-data"
 import type { Glyph } from "@/components/icon-data/glyphs-object"
-import { StickyBar, anchorOffset } from "@/components/docs/StickyBar"
+import { StickyBar } from "@/components/docs/StickyBar"
+import { anchorOffset } from "@/components/docs/anchor"
 
 /**
  * The icon browser on /docs/icons.
@@ -145,7 +146,9 @@ export function IconBrowser() {
   }
 
   return (
-    <div ref={top} style={anchorOffset} className="mt-6 flex flex-col gap-4">
+    // Marked as generated so the word count on this page can separate the
+    // editorial layer from 456 tags the icons wrote themselves.
+    <div ref={top} data-doc-generated style={anchorOffset} className="mt-6 flex flex-col gap-4">
       {/*
         Pinned, because the table is the page. Scrolled a few hundred rows in,
         switching category or clearing the search used to mean scrolling back to

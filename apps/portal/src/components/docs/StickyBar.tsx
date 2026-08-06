@@ -4,6 +4,8 @@ import * as React from "react"
 
 import { Button } from "dbui/components/ui/button"
 
+import { ANCHOR_OFFSET_VAR } from "./anchor"
+
 /**
  * The two things a docs page needs to keep a control reachable while the reader
  * scrolls: a bar that pins under the site header, and a strip of section links
@@ -14,20 +16,10 @@ import { Button } from "dbui/components/ui/button"
  * 56px at 1x and taller at 1.2x and 1.4x. A hardcoded `top-14` would leave a
  * gap at the smaller scale and hide the first line of the bar at the larger one.
  * Both are measured instead, and re-measured when either box changes size.
+ *
+ * One bar per page. Two would each publish an offset and the second would win,
+ * so the first bar's sections would scroll to the wrong place.
  */
-
-/**
- * How far an anchored heading has to clear: the header plus the bar pinned under
- * it. Written on the root element so a section anywhere on the page can consume
- * it without being handed a number.
- */
-const OFFSET_VAR = "--docs-anchor-offset"
-
-/**
- * Put this on anything a tab links to. The fallback covers the frame before the
- * bar has measured itself and the case where a page anchors without one.
- */
-export const anchorOffset = { scrollMarginTop: `var(${OFFSET_VAR}, 8rem)` } as const
 
 /** The one place that knows how to find the site header. */
 const headerEl = () =>
@@ -58,7 +50,7 @@ export function StickyBar({
       const headerHeight = header.getBoundingClientRect().height
       setTop(headerHeight)
       document.documentElement.style.setProperty(
-        OFFSET_VAR,
+        ANCHOR_OFFSET_VAR,
         `${headerHeight + el.getBoundingClientRect().height}px`,
       )
     }
@@ -69,7 +61,7 @@ export function StickyBar({
     observer.observe(el)
     return () => {
       observer.disconnect()
-      document.documentElement.style.removeProperty(OFFSET_VAR)
+      document.documentElement.style.removeProperty(ANCHOR_OFFSET_VAR)
     }
   }, [])
 

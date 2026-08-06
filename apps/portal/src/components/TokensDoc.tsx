@@ -13,7 +13,8 @@ import {
 } from "@/stories/tokens/token-consumption"
 import { RefTable, Code } from "@/components/docs/Prose"
 import { Figure, FigureRow, FigureLabel } from "@/components/docs/Diagram"
-import { SectionTabs, anchorOffset } from "@/components/docs/StickyBar"
+import { SectionTabs } from "@/components/docs/StickyBar"
+import { anchorOffset } from "@/components/docs/anchor"
 
 /**
  * A reference page for someone skimming, so the unit is a table or a preview and
