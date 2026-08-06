@@ -34,7 +34,8 @@ node scripts/generate-token-data.mjs     # refresh the portal's Tokens page
    `tokens.json`.
 4. **Figma Code Connect:** semantics carry `codeSyntax.WEB = var(--db-<name>)`;
    primitives have it cleared, since they do not ship.
-5. **Everything dimensional is scalar-tied.** One dial re-flows the system.
+5. **Everything dimensional is scalar-tied.** One dial re-flows the system. The
+   exception is border, per rule 7.
 6. **Spatial values ship in rem, authored in px.** The config stays in px because
    that is how Figma and designers think; the generator converts once, against a
    16px root. Radius is included — an input that grows taller while its corner
@@ -45,6 +46,21 @@ node scripts/generate-token-data.mjs     # refresh the portal's Tokens page
    boundary. It is also the number an author already types — `border-2` is 2px in
    stock Tailwind — so reading it as 8px would break the one expectation every
    Tailwind user arrives with.
+8. **Dimensions is the collection** — space, size, radius, border. Each family
+   computes its own stops; none reads another. The twelve-stop scale they agree
+   on (0, 2, 4, 8, 12, 16, 20, 24, 28, 32, 40, 48) is an **authoring artifact**:
+   a Figma collection and a list in `theme.config.mjs`, deliberately not a custom
+   property. React ships semantics only, exactly as it does for color, where the
+   palette resolves inline and only `--db-surface-base` reaches the browser.
+   There is no `--db-scale-*`.
+9. **"Scalar" means a multiplier and nothing else.** `--db-density-scalar` and
+   `--db-type-scalar` are the only two. The group is Dimensions, not Scalars and
+   not Numbers.
+10. **Type is independent of the scale.** Font sizes and line heights are their
+    own anchors on `--db-type-scalar`, so text and layout move separately. Ten of
+    the eleven line heights happen to land on multiples of 4; `block` and
+    `paragraph` at 22px do not. That is convergence, not a dependency, and the 22
+    is deliberate.
 
 ## Type
 

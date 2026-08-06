@@ -661,14 +661,18 @@ const SHIPPED = `@import "tailwindcss";
   --spacing-2: var(--db-space-2);
   --spacing-3: var(--db-space-3);
   --spacing-4: var(--db-space-4);
+  --spacing-5: var(--db-space-5);
   --spacing-6: var(--db-space-6);
+  --spacing-7: var(--db-space-7);
   --spacing-8: var(--db-space-8);
   --spacing-10: var(--db-space-10);
   --spacing-12: var(--db-space-12);
   --size-2: var(--db-size-2);
   --size-4: var(--db-size-4);
+  --size-6: var(--db-size-6);
   --size-7: var(--db-size-7);
   --size-10: var(--db-size-10);
+  --height-6: var(--db-size-6);
   --height-7: var(--db-size-7);
   --width-7: var(--db-size-7);
   --radius-0: var(--db-radius-0);
@@ -689,51 +693,58 @@ const SHIPPED = `@import "tailwindcss";
   --db-space-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-space-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
   --db-space-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-space-5: calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar));
   --db-space-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
+  --db-space-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-space-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
   --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
   --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
   --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-size-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-size-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-size-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-size-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
   --db-radius-0: 0;
-  --db-radius-1: 0.25rem;
-  --db-radius-2: 0.5rem;
-  --db-radius-6: 1.5rem;
+  --db-radius-1: calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar));
+  --db-radius-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
+  --db-radius-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-border-0: 0px;
   --db-border-1: 1px;
   --db-border-2: 2px;
 }`
 
 {
+  // `p-5` and `p-7` used to be the off-scale examples here. They are on the
+  // scale now, which is the point of this round, so the undeclared cases are the
+  // half steps and the two integers the ladder still skips.
+  const OFF_SCALE = ["p-1.5", "p-2.5", "p-9", "p-11", "gap-13"]
   const probes = [
-    "p-3", "gap-3", "mt-8", "p-0.5", "p-10",
-    "p-1.5", "p-2.5", "p-5", "p-7", "gap-13",
-    "size-4", "size-7", "h-7", "w-7", "min-h-7", "max-h-7",
+    "p-3", "gap-3", "mt-8", "p-0.5", "p-10", "p-5", "p-7",
+    ...OFF_SCALE,
+    "size-4", "size-6", "size-7", "h-6", "h-7", "w-7", "min-h-7", "max-h-7",
     "rounded-1", "rounded-2", "rounded-6", "rounded-0",
     "border", "border-2", "border-0", "border-1",
   ]
   const css = await build(SHIPPED, probes)
   console.log("  ours (explicit key must win)")
-  show(css, ["p-3", "gap-3", "mt-8", "p-0.5", "p-10", "size-4", "size-7", "h-7", "w-7"], 12)
+  show(css, ["p-3", "gap-3", "mt-8", "p-0.5", "p-5", "p-7", "p-10", "size-4", "size-7", "h-7", "w-7"], 12)
   console.log("  still Tailwind's, because the multiplier stays on")
-  show(css, ["p-1.5", "p-2.5", "p-5", "p-7", "gap-13"], 12)
+  show(css, OFF_SCALE, 12)
   console.log("  radius and border")
   show(css, ["rounded-0", "rounded-1", "rounded-2", "rounded-6", "border", "border-0", "border-1", "border-2"], 12)
 
   check(
     "K1 an explicit --spacing-N beats the live --spacing multiplier",
-    ["p-3", "gap-3", "mt-8", "p-0.5", "p-10"].every((c) => (ruleFor(css, c) ?? "").includes("--db-space-")),
+    ["p-3", "gap-3", "mt-8", "p-0.5", "p-5", "p-7", "p-10"].every((c) => (ruleFor(css, c) ?? "").includes("--db-space-")),
     `p-3 → ${ruleFor(css, "p-3")} — the multiplier is still declared and did not win.`
   )
   check(
     "K2 a step we did not declare still compiles off the multiplier",
-    ["p-1.5", "p-2.5", "p-5", "p-7", "gap-13"].every((c) => {
+    OFF_SCALE.every((c) => {
       const r = ruleFor(css, c) ?? ""
       return r && !r.includes("--db-space-")
     }),
-    "This is what keeps the 106 unsnapped call sites rendering. p-1.5 → " + ruleFor(css, "p-1.5")
+    "This is what keeps the unsnapped call sites rendering. p-1.5 → " + ruleFor(css, "p-1.5")
   )
   check(
     "K3 --size-N beats the multiplier, and an undeclared size step falls through",
@@ -748,6 +759,29 @@ const SHIPPED = `@import "tailwindcss";
   check(
     "K5 min-h-* and max-h-* inherit --height-*, so heights need one key not three",
     (ruleFor(css, "min-h-7") ?? "").includes("--db-size-7") && (ruleFor(css, "max-h-7") ?? "").includes("--db-size-7")
+  )
+  // Precedence between the two namespaces that can both answer `h-N`. A height
+  // utility reads `--height-*` FIRST, `--spacing-*` SECOND, and only reaches the
+  // multiplier when neither is declared.
+  //
+  // This is asserted because it is the fact that makes a missing size stop hard
+  // to notice. Size briefly lost its 6, and `h-6` went on rendering 24px off
+  // `--db-space-6` — right value, right density behaviour, wrong family. The 24px
+  // small control height was restored on that basis: whether a size decision can
+  // be written as one is the test, not whether the pixels match.
+  //
+  // `p-9` in the K2 list above is the case that has no key at either level and
+  // does reach the multiplier, which is what makes the two paths distinguishable.
+  const fellThrough = await build(
+    SHIPPED.replace("  --height-6: var(--db-size-6);\n", "").replace("  --size-6: var(--db-size-6);\n", ""),
+    ["h-6", "size-6"]
+  )
+  show(fellThrough, ["h-6", "size-6"], 12)
+  check(
+    "K12 --height-N wins over --spacing-N, and a missing size stop falls to space",
+    (ruleFor(css, "h-6") ?? "").includes("--db-size-6") &&
+      (ruleFor(fellThrough, "h-6") ?? "").includes("--db-space-6"),
+    `owned: h-6 → ${ruleFor(css, "h-6")}   unowned: h-6 → ${ruleFor(fellThrough, "h-6")}`
   )
   // The radius namespace is documented with named steps only. Numeric keys
   // being legal is the whole premise of `rounded-2`, so it is asserted rather
@@ -825,6 +859,40 @@ console.log("\n── K2. Old radius names closed rather than dropped\n")
     "K10 rounded-full and rounded-none survive as keywords",
     Boolean(ruleFor(css, "rounded-full")) && Boolean(ruleFor(css, "rounded-none")),
     `rounded-full → ${ruleFor(css, "rounded-full")} — left on Tailwind's value on purpose, see the report.`
+  )
+}
+
+/* ══ L. the scale does not ship ══════════════════════════════════════════ */
+
+/**
+ * Every assertion above builds synthetic CSS. This one reads the file that
+ * actually ships, because the claim is about absence and a fixture cannot prove
+ * absence in the real output.
+ *
+ * The scale is an authoring artifact: twelve stops in Figma and in
+ * theme.config.mjs that space, size and radius are authored against. It is
+ * deliberately not a custom property, the same way the colour palette is not —
+ * primitives resolve at build time and only semantics reach the browser. A
+ * `--db-scale-*` appearing here would mean a component could reach past the
+ * semantic families to the raw ladder, which is the thing the colour side
+ * already forbids.
+ */
+console.log("\n── L. No primitive scale in the shipped CSS\n")
+{
+  const shipped = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/tokens.css"), "utf8")
+  const leaked = [...shipped.matchAll(/--db-(scale|s)-[\w.-]+\s*:/g)].map((m) => m[0])
+  for (const n of ["--db-space-3", "--db-size-8", "--db-radius-2", "--db-border-1"]) {
+    console.log(`    ${n.padEnd(16)} ${shipped.includes(`${n}:`) ? "ships" : "MISSING"}`)
+  }
+  check(
+    "L1 no --db-scale-* or --db-s-* custom property is emitted",
+    leaked.length === 0,
+    leaked.length ? `found ${leaked.join(", ")}` : "The scale stays in Figma and theme.config.mjs, as colour primitives do."
+  )
+  check(
+    "L2 the four semantic families all ship",
+    ["--db-space-3", "--db-size-8", "--db-radius-2", "--db-border-1"].every((n) => shipped.includes(`${n}:`)),
+    "space, size, radius, border — the collection React consumes."
   )
 }
 

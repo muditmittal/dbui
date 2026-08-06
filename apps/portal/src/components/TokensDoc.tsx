@@ -50,10 +50,10 @@ import type { Wiring } from "@/stories/tokens/TokenKit"
  *
  * The families run in the order they are decided in. Color and type carry the
  * most decisions and are read first. Elevation comes next because it is the one
- * families argue about. Scalars sit above the dimensional families because they
- * set the unit those families are multiples of, so space, size, radius and
- * border read as consequences of a dial rather than as four unrelated scales.
- * Motion depends on none of them and goes last.
+ * families argue about. `Dimensions` opens the group it names: the grid unit and
+ * the two scalars that multiply it, then the four families built from them, so
+ * space, size, radius and border read as one collection rather than as four
+ * unrelated scales. Motion depends on none of them and goes last.
  */
 const SECTIONS = [
   { id: "name", label: "Name" },
@@ -61,7 +61,7 @@ const SECTIONS = [
   { id: "color", label: "Color" },
   { id: "type", label: "Type" },
   { id: "elevation", label: "Elevation" },
-  { id: "scalars", label: "Scalars" },
+  { id: "dimensions", label: "Dimensions" },
   { id: "space", label: "Space" },
   { id: "size", label: "Size" },
   { id: "radius", label: "Radius" },
@@ -468,10 +468,20 @@ export function TokensDoc() {
       </Section>
 
       <Section
-        id="scalars"
-        title="Scalars"
-        scope="Dials that re-tune a whole family from one number."
+        id="dimensions"
+        title="Dimensions"
+        scope="The collection: one grid unit, two scalars that multiply it, and the four families below — space, size, radius and border."
         cautions={[
+          <>
+            Each family computes its own stops. Nothing reads another family, and the
+            twelve-stop scale they agree on is an authoring artifact that lives in Figma,
+            not a custom property — React ships semantics only, the same way it does for
+            color.
+          </>,
+          <>
+            Scalar means a multiplier here and nowhere else. <Code>--db-density-scalar</Code>{" "}
+            and <Code>--db-type-scalar</Code> are the only two.
+          </>,
           <>
             For a roomier page, move the root font size rather than{" "}
             <Code>--db-type-scalar</Code>. The root moves type, radius and every rem utility
@@ -517,6 +527,13 @@ export function TokensDoc() {
             One stop drives three namespaces — <Code>size-8</Code>, <Code>h-8</Code> and{" "}
             <Code>w-8</Code> are all 32px. Control heights and icon boxes used to be separate
             families, which gave a 24px control and a 24px icon two different names.
+          </>,
+          <>
+            <Code>size-6</Code> is the small control height — the <Code>sm</Code> button and the{" "}
+            <Code>sm</Code> input are both <Code>h-6</Code>. It reads as droppable next to
+            space&rsquo;s own 6, and dropping it would not change a pixel, because a height
+            utility falls back to the spacing scale. It would only stop a control height from
+            being writable as one.
           </>,
         ]}
       >

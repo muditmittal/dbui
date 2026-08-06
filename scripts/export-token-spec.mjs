@@ -23,21 +23,30 @@ const typeCss = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/type.c
 const light = declarations(css, ":root")
 const dark = declarations(css, ".dark")
 
-/** Category, in the order engineering's sheet uses, extended with what we added. */
+/**
+ * Category, in the order engineering's sheet uses, extended with what we added.
+ *
+ * The four dimensional families are one category, `Dimensions`, because that is
+ * the name of the collection they form — the token's own name already says which
+ * family it is, so splitting `Radius`, `Size` and `Border` into three columns
+ * restated the prefix and hid the fact that they are one group.
+ *
+ * `Scalars` holds the two multipliers and nothing else. The word belongs to
+ * `--db-density-scalar` and `--db-type-scalar`; using it for the group as well
+ * would make "scalar" mean both the dial and the thing the dial moves.
+ */
 function categorize(name) {
   const n = name.replace("--db-", "")
   if (/^(surface|text|action|border-(base|subtle|strong|accent|inverse|disabled)|input-border|status|link|focus|viz|utility)/.test(n)) return "Color"
-  if (/scalar$|^spacing-unit$|^space-/.test(n)) return "Density"
+  if (/scalar$/.test(n)) return "Scalars"
+  if (/^(spacing-unit|space-|size-|radius-|border-\d)/.test(n)) return "Dimensions"
   if (/^(font-|mono-font-|line-height-|letter-spacing-)/.test(n)) return "Typography"
   if (/^elevation-/.test(n)) return "Elevation"
-  if (/^radius-/.test(n)) return "Radius"
-  if (/^size-/.test(n)) return "Size"
-  if (/^border-\d/.test(n)) return "Border"
   if (/^(duration-|ease-)/.test(n)) return "Motion"
   return "Other"
 }
 
-const ORDER = ["Color", "Density", "Typography", "Radius", "Size", "Border", "Elevation", "Motion", "Other"]
+const ORDER = ["Color", "Scalars", "Dimensions", "Typography", "Elevation", "Motion", "Other"]
 
 /** What the value renders at, at a 16px root with every scalar at 1. */
 const resolve = (value) => asPx(value, light)
@@ -86,7 +95,14 @@ Spatial values ship in **rem**, authored in px against a 16px root, so they foll
 a reader's browser font-size preference. The "At 16px root" column is what they
 render at the default. Border width stays px so hairlines stay crisp.
 
-Scalars and the two \`em\` inline steps have no single px value by design.
+**Dimensions** is the collection: space, size, radius and border, plus the grid
+unit they are multiples of. Each family computes its own stops — none of them
+reads another — and the scale they agree on is an authoring artifact that lives
+in Figma and in \`theme.config.mjs\`, not a custom property. React ships
+semantics only, the same way it does for colour.
+
+**Scalars** is the two multipliers, and only those. They have no single px value
+by design, and neither do the two \`em\` inline steps.
 
 `
 

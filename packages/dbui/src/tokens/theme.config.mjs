@@ -289,8 +289,12 @@ export const scalars = {
  * would save three characters and leave space and size indistinguishable.
  */
 
-/* Space — padding, margin, gap. Scales with density. */
-export const space = { 0: 0, "0-5": 0.5, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, 8: 8, 10: 10, 12: 12 }
+/* Space — padding, margin, gap. Twelve stops, the widest of the four families.
+ *
+ * 5 (20px) and 7 (28px) fill the two gaps that made the ladder skip. */
+export const space = {
+  0: 0, "0-5": 0.5, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 10: 10, 12: 12,
+}
 
 /* Radius — corners, on the same grid. `--db-radius-2` is 8px and the class is
  * `rounded-2`, which is what makes the corner scale readable next to the space
@@ -331,7 +335,7 @@ export const bridge = {
     token: "spacing-unit",
     scalars: ["density-scalar"],
     family: "space",
-    steps: [0, "0.5", 1, 2, 3, 4, 6, 8, 10, 12],
+    steps: [0, "0.5", 1, 2, 3, 4, 5, 6, 7, 8, 10, 12],
   },
   /* One family, three namespaces. Tailwind reads `size-*`, `h-*` and `w-*` from
    * separate keys, so the same stop has to be declared in each — but `--height-*`
@@ -475,6 +479,13 @@ export const elevation = {
  * 8 is a table rule, 12 a switch thumb, 16 an icon, 24 and 32 the two control
  * heights, 28 a menu row, 40 a table header. 16 matters most — it matches the
  * `label` line box (13/16), so text and icon align in a row without adjustment.
+ *
+ * 6 (24px) is not optional. It is the small control height — the `sm` button and
+ * the `sm` input are both `h-6` — so a size scale without it would refuse the
+ * system's own components. It is also the step most likely to look droppable
+ * from a list of numbers, since space carries a 6 too and `h-6` keeps rendering
+ * 24px either way (K12 in verify-spacing-scale explains why). Rendering the same
+ * is not the test; the test is whether a size decision can be written as one.
  *
  * Element and icon used to be separate sub-families, which put two names on one
  * number: a 24px control was `element-sm` and a 24px icon was `icon-xl`. */

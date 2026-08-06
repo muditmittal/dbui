@@ -11,6 +11,13 @@
  *        ▼
  *   Figma "Color: Primitive" + "Color: Semantic"   (design source of truth)
  *
+ * Only color is checked. The dimensional side has the same two-layer shape —
+ * Figma's "Dimensions" collection holds the twelve-stop scale that space, size
+ * and radius are authored against — but that scale is an authoring artifact and
+ * never becomes a custom property, so there is no CSS surface to compare it to.
+ * What could be checked is the family stops against their Figma aliases, and
+ * that is not built yet.
+ *
  * It reads:
  *   - packages/dbui/src/tokens/theme.config.mjs     (imported)
  *   - packages/dbui/src/tokens/tokens.css           (parsed live)

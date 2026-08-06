@@ -676,10 +676,22 @@ export const space: Token[] = [
     "multiple": 4
   },
   {
+    "name": "space-5",
+    "value": "calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar))",
+    "px": 20,
+    "multiple": 5
+  },
+  {
     "name": "space-6",
     "value": "calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar))",
     "px": 24,
     "multiple": 6
+  },
+  {
+    "name": "space-7",
+    "value": "calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar))",
+    "px": 28,
+    "multiple": 7
   },
   {
     "name": "space-8",
@@ -910,7 +922,7 @@ export const scalars: Token[] = [
 
 export const tokenCounts = {
   "colorGroups": 85,
-  "space": 10,
+  "space": 12,
   "radius": 7,
   "size": 7,
   "borderWidth": 3,

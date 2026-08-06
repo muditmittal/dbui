@@ -101,6 +101,17 @@ const v = (name) => `var(${PREFIX}${name})` // reference another --db-* token in
  * unit, left as a calc() so the browser resolves the density dial per render
  * rather than the generator freezing it at build time.
  *
+ * Every family computes its own value. None of them references another, and
+ * there is deliberately no primitive custom property behind them: the scale is
+ * an authoring artifact that lives in Figma and in this config, and React ships
+ * semantics only — the same split colour already makes, where the palette
+ * resolves at build time and only `--db-surface-base` reaches the browser.
+ *
+ * So `--db-size-8` and `--db-space-8` are two independent tokens that agree on
+ * 32px because they are both 8 units, not because one reads the other. That is
+ * the property worth keeping: a consumer of `h-8` is not coupled to a decision
+ * made about padding.
+ *
  * A string value is a sentinel rather than a multiple — `full` is 999px and
  * means "pill", not "249.75 units" — so it passes through untouched and does
  * not scale.
@@ -233,8 +244,14 @@ const css = `/* ─────────────────────�
  * Semantics only. Primitives are resolved inline (final hex/rgba) and are NOT
  * shipped as CSS vars — the palette lives in theme.config.mjs + Figma. Product
  * code consumes semantics via Tailwind utilities (bg-surface-base) or the raw
- * ${PREFIX}* var. Dimensions (space/radius/type/elevation) derive from the scalar
- * dials so density/size/type can be re-tuned from a handful of numbers.
+ * ${PREFIX}* var.
+ *
+ * Dimensions — space, size, radius, border — is the collection. Each family
+ * computes its own stops from the grid unit and the density scalar; none reads
+ * another, and the scale they agree on is an authoring artifact in Figma and in
+ * theme.config.mjs rather than a custom property. Border is the exception that
+ * proves it: literal px, never multiplied, because a hairline is a rendering
+ * fact. Type is on its own scalar so text and layout move independently.
  * ───────────────────────────────────────────────────────────────────────────── */
 
 /* Keys this system does not have a step for. Removed rather than left to fall
@@ -255,19 +272,20 @@ ${bridgeLines}
   /* ── Scalars — the density/size/type dials ── */
 ${scalarLines}
 
-  /* ── Space (each stop is its multiple of the grid unit, scaled by density) ── */
+  /* ── Space — padding, margin, gap. Each stop is its multiple of the grid
+     unit, scaled by density. ── */
 ${spaceLines}
 
-  /* ── Radius (same grid as space; "full" is a pill sentinel) ── */
+  /* ── Radius (its own stops on the same grid; "full" is a pill sentinel) ── */
 ${radiusLines}
 
   /* ── Type (anchored ramp, scaled together by type-scalar) ── */
 ${typeLines}
 
-  /* ── Size (width and height, on the same grid as space) ── */
+  /* ── Size (width and height; its own stops on the same grid) ── */
 ${sizeLines}
 
-  /* ── Border width ── */
+  /* ── Border width (literal px, outside the scale, never touched by density) ── */
 ${borderLines}
 
   /* ── Motion (two bands, one easing curve for the whole system) ── */

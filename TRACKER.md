@@ -9,7 +9,7 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
 
 | Layer | State |
 | --- | --- |
-| Tokens | Color, type, radius and the spacing grid live — size, elevation and motion unconsumed |
+| Tokens | Color, type and all four Dimensions families live and bridged — elevation and motion unconsumed |
 | Icons | Done |
 | Components | Done — 3 have no story, 1 has no `@guideline` |
 | Compositions | Partial — exist, not documented |
@@ -32,17 +32,24 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.
-5. **Border width is read by nothing.** Space, size and radius are done: their stops
-   are named after their multiple of the grid unit and each one is bridged to a
-   Tailwind key, so `--db-space-3` is what `p-3` resolves to, `--db-size-8` what
-   `h-8`/`w-8`/`size-8` resolve to, and `--db-radius-2` what `rounded-2` resolves to.
-   Border width still ships as named steps nothing reads.
-   Tailwind's `--spacing` multiplier is still declared beside the explicit stops, on
-   purpose: 106 call sites write a step the scale does not define, 45 of them at 6px
-   in menus and pills. Snapping those to the nearest legal step is the open decision,
-   and closing the scale with `--spacing: initial` cannot land before it. The
-   consumption scan now measures the gap: 507 of the 818 dimensional utilities in the
-   tree resolve to a space token, and the rest come off the multiplier.
+5. **The scale is closed only by convention, because Tailwind's multiplier is still
+   on.** All four Dimensions families are done: every stop is named after its
+   multiple of the grid unit and bridged to a Tailwind key, so `--db-space-3` is what
+   `p-3` resolves to, `--db-size-8` what `h-8`/`w-8`/`size-8` resolve to,
+   `--db-radius-2` what `rounded-2` resolves to, and `--db-border-1` what a bare
+   `border` resolves to.
+   The multiplier is still declared beside the explicit stops, on purpose: call sites
+   write steps the scale does not define — `p-1.5`, `p-9` — and those still compile.
+   Snapping them to the nearest legal step is the open decision, and closing the
+   scale with `--spacing: initial` cannot land before it. The consumption scan
+   measures the gap: 516 of the 818 dimensional utilities in the tree resolve to a
+   space token, and the rest come off the multiplier.
+
+   One hazard this leaves behind. A missing stop in `size` does not fail — a height
+   utility reads `--height-*` first and `--spacing-*` second, so `h-6` renders 24px
+   from `--db-space-6` whether or not size owns a 6. `size-6` was briefly dropped and
+   nothing moved; it was restored because it is the small control height, not because
+   a test caught it. K12 in `verify-spacing-scale.mjs` pins the precedence.
 
 8. **`cn()` is `clsx`, not `tailwind-merge`, so conflicting utilities both survive
    and stylesheet order picks the winner.** Found by the radius rename: the control
@@ -53,19 +60,19 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    was chosen. Any component composing a utility that its base also sets is resolved
    by emission order today. Reproduce with
    `node scripts/pixel-ab.mjs <url> <selector> <css>`.
-6. **Elevation and motion cannot be bridged without changing how the product looks
-   and feels.** Measured on one card, `shadow-lg` reaches below it and nowhere above;
-   `elevation-1` blooms on all four sides because it carries no negative spread, and
-   is roughly four times wider sideways. `elevation-3` peaks far darker than the
-   `shadow-xs` currently on 30 controls. Both scales are pure black with no dark
-   value, so neither draws anything against `surface-base` in dark — elevation is a
-   single-mode token in a two-mode system, and that is the first thing to fix.
+6. **Elevation and motion are still unconsumed, for different reasons.** Elevation
+   cannot be bridged without changing how the product looks: measured on one card,
+   `shadow-lg` reaches below it and nowhere above; `elevation-1` blooms on all four
+   sides because it carries no negative spread, and is roughly four times wider
+   sideways. `elevation-3` peaks far darker than the `shadow-xs` currently on 30
+   controls. Both scales are pure black with no dark value, so neither draws anything
+   against `surface-base` in dark — elevation is a single-mode token in a two-mode
+   system. Deliberately untouched for now; the measurement stands, the change does
+   not.
    Motion is mis-shaped rather than mis-valued: `duration-*` and `ease-*` do resolve
    from the theme, but the four `-min`/`-max` band members describe a permitted range,
    and no CSS property and no Tailwind namespace takes one. Nothing in the product
    renders a DBUI duration; every transition that ships takes Tailwind's default.
-   Either retune both families so the bridge is a no-op the way spacing and radius
-   were, or delete them and name Tailwind's scales as the system's.
 7. **`--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs`,**
    so its two widths are the only dimensional values outside the config. The radius
    and spacing bridges moved into the generator; this one did not.

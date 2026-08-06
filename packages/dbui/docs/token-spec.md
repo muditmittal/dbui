@@ -7,7 +7,14 @@ Spatial values ship in **rem**, authored in px against a 16px root, so they foll
 a reader's browser font-size preference. The "At 16px root" column is what they
 render at the default. Border width stays px so hairlines stay crisp.
 
-Scalars and the two `em` inline steps have no single px value by design.
+**Dimensions** is the collection: space, size, radius and border, plus the grid
+unit they are multiples of. Each family computes its own stops — none of them
+reads another — and the scale they agree on is an authoring artifact that lives
+in Figma and in `theme.config.mjs`, not a custom property. React ships
+semantics only, the same way it does for colour.
+
+**Scalars** is the two multipliers, and only those. They have no single px value
+by design, and neither do the two `em` inline steps.
 
 
 | Token | Category | Value | At 16px root | Dark |
@@ -97,19 +104,38 @@ Scalars and the two `em` inline steps have no single px value by design.
 | `--db-viz-sequential-7` | Color | #0F7B95 |  | #65D3F4 |
 | `--db-viz-sequential-8` | Color | #085B6E |  | #A5E5F9 |
 | `--db-viz-sequential-9` | Color | #084150 |  | #D2F1FC |
-| `--db-density-scalar` | Density | 1 |  |  |
-| `--db-space-0` | Density | 0 | 0px |  |
-| `--db-space-0-5` | Density | calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar)) | 2px |  |
-| `--db-space-1` | Density | calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar)) | 4px |  |
-| `--db-space-10` | Density | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
-| `--db-space-12` | Density | calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar)) | 48px |  |
-| `--db-space-2` | Density | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
-| `--db-space-3` | Density | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
-| `--db-space-4` | Density | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
-| `--db-space-6` | Density | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
-| `--db-space-8` | Density | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
-| `--db-spacing-unit` | Density | 0.25rem | 4px |  |
-| `--db-type-scalar` | Density | 1 |  |  |
+| `--db-density-scalar` | Scalars | 1 |  |  |
+| `--db-type-scalar` | Scalars | 1 |  |  |
+| `--db-border-0` | Dimensions | 0px | 0px |  |
+| `--db-border-1` | Dimensions | 1px | 1px |  |
+| `--db-border-2` | Dimensions | 2px | 2px |  |
+| `--db-radius-0` | Dimensions | 0 | 0px |  |
+| `--db-radius-1` | Dimensions | calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar)) | 4px |  |
+| `--db-radius-2` | Dimensions | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
+| `--db-radius-3` | Dimensions | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
+| `--db-radius-4` | Dimensions | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
+| `--db-radius-6` | Dimensions | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
+| `--db-radius-full` | Dimensions | 999px | 999px |  |
+| `--db-size-10` | Dimensions | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
+| `--db-size-2` | Dimensions | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
+| `--db-size-3` | Dimensions | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
+| `--db-size-4` | Dimensions | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
+| `--db-size-6` | Dimensions | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
+| `--db-size-7` | Dimensions | calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar)) | 28px |  |
+| `--db-size-8` | Dimensions | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
+| `--db-space-0` | Dimensions | 0 | 0px |  |
+| `--db-space-0-5` | Dimensions | calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar)) | 2px |  |
+| `--db-space-1` | Dimensions | calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar)) | 4px |  |
+| `--db-space-10` | Dimensions | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
+| `--db-space-12` | Dimensions | calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar)) | 48px |  |
+| `--db-space-2` | Dimensions | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
+| `--db-space-3` | Dimensions | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
+| `--db-space-4` | Dimensions | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
+| `--db-space-5` | Dimensions | calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar)) | 20px |  |
+| `--db-space-6` | Dimensions | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
+| `--db-space-7` | Dimensions | calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar)) | 28px |  |
+| `--db-space-8` | Dimensions | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
+| `--db-spacing-unit` | Dimensions | 0.25rem | 4px |  |
 | `--db-font-family` | Typography | "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif |  |  |
 | `--db-font-family-block` | Typography | var(--db-mono-font-family) |  |  |
 | `--db-font-family-body` | Typography | var(--db-font-family) |  |  |
@@ -184,23 +210,6 @@ Scalars and the two `em` inline steps have no single px value by design.
 | `--db-line-height-title-3` | Typography | calc(1.75rem * var(--db-type-scalar)) | 28px |  |
 | `--db-line-height-title-4` | Typography | calc(1.5rem * var(--db-type-scalar)) | 24px |  |
 | `--db-mono-font-family` | Typography | "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace |  |  |
-| `--db-radius-0` | Radius | 0 | 0px |  |
-| `--db-radius-1` | Radius | calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar)) | 4px |  |
-| `--db-radius-2` | Radius | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
-| `--db-radius-3` | Radius | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
-| `--db-radius-4` | Radius | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
-| `--db-radius-6` | Radius | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
-| `--db-radius-full` | Radius | 999px | 999px |  |
-| `--db-size-10` | Size | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
-| `--db-size-2` | Size | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
-| `--db-size-3` | Size | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
-| `--db-size-4` | Size | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
-| `--db-size-6` | Size | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
-| `--db-size-7` | Size | calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar)) | 28px |  |
-| `--db-size-8` | Size | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
-| `--db-border-0` | Border | 0px | 0px |  |
-| `--db-border-1` | Border | 1px | 1px |  |
-| `--db-border-2` | Border | 2px | 2px |  |
 | `--db-elevation-0` | Elevation | none |  |  |
 | `--db-elevation-1` | Elevation | 0 8px 40px rgba(0, 0, 0, 0.13) |  |  |
 | `--db-elevation-2` | Elevation | 0 2px 16px rgba(0, 0, 0, 0.08) |  |  |

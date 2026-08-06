@@ -179,14 +179,14 @@ export const families: Family[] = [
   {
     "key": "space",
     "label": "Space",
-    "count": 10,
+    "count": 12,
     "unit": "steps",
-    "properties": 10,
+    "properties": 12,
     "bridge": {
       "namespace": "--spacing-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 507,
+      "uses": 516,
       "files": 67
     },
     "superseded": null,

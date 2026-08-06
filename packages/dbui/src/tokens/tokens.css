@@ -6,8 +6,14 @@
  * Semantics only. Primitives are resolved inline (final hex/rgba) and are NOT
  * shipped as CSS vars — the palette lives in theme.config.mjs + Figma. Product
  * code consumes semantics via Tailwind utilities (bg-surface-base) or the raw
- * --db-* var. Dimensions (space/radius/type/elevation) derive from the scalar
- * dials so density/size/type can be re-tuned from a handful of numbers.
+ * --db-* var.
+ *
+ * Dimensions — space, size, radius, border — is the collection. Each family
+ * computes its own stops from the grid unit and the density scalar; none reads
+ * another, and the scale they agree on is an authoring artifact in Figma and in
+ * theme.config.mjs rather than a custom property. Border is the exception that
+ * proves it: literal px, never multiplied, because a hairline is a rendering
+ * fact. Type is on its own scalar so text and layout move independently.
  * ───────────────────────────────────────────────────────────────────────────── */
 
 /* Keys this system does not have a step for. Removed rather than left to fall
@@ -117,7 +123,9 @@
   --spacing-2: var(--db-space-2);
   --spacing-3: var(--db-space-3);
   --spacing-4: var(--db-space-4);
+  --spacing-5: var(--db-space-5);
   --spacing-6: var(--db-space-6);
+  --spacing-7: var(--db-space-7);
   --spacing-8: var(--db-space-8);
   --spacing-10: var(--db-space-10);
   --spacing-12: var(--db-space-12);
@@ -160,19 +168,22 @@
   --db-density-scalar: 1;
   --db-type-scalar: 1;
 
-  /* ── Space (each stop is its multiple of the grid unit, scaled by density) ── */
+  /* ── Space — padding, margin, gap. Each stop is its multiple of the grid
+     unit, scaled by density. ── */
   --db-space-0: 0;
   --db-space-0-5: calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar));
   --db-space-1: calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar));
   --db-space-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-space-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
   --db-space-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-space-5: calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar));
   --db-space-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
+  --db-space-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-space-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
   --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
   --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
 
-  /* ── Radius (same grid as space; "full" is a pill sentinel) ── */
+  /* ── Radius (its own stops on the same grid; "full" is a pill sentinel) ── */
   --db-radius-0: 0;
   --db-radius-1: calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar));
   --db-radius-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
@@ -257,7 +268,7 @@
   --db-font-weight: 400;
   --db-font-weight-bold: 600;
 
-  /* ── Size (width and height, on the same grid as space) ── */
+  /* ── Size (width and height; its own stops on the same grid) ── */
   --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-size-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
   --db-size-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
@@ -266,7 +277,7 @@
   --db-size-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
   --db-size-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
 
-  /* ── Border width ── */
+  /* ── Border width (literal px, outside the scale, never touched by density) ── */
   --db-border-0: 0px;
   --db-border-1: 1px;
   --db-border-2: 2px;
