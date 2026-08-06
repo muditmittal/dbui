@@ -89,6 +89,9 @@ classification entries — do not add a seventh.
 6. If the change alters the *reasoning* — not the value — update the relevant
    section of `packages/dbui/DESIGN.md`. It holds no values by design.
 7. Run `node scripts/generate-token-data.mjs` to refresh the portal's Tokens page.
+   Run `node scripts/generate-token-consumption.mjs` as well — it re-measures which
+   families anything actually reads, so a family that goes dead says so on the page
+   rather than waiting for someone to grep for it.
 8. Run `node scripts/export-token-spec.mjs --md --out packages/dbui/docs/token-spec.md`
    to refresh the spec engineering reviews.
 
