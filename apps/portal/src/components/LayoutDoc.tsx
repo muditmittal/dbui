@@ -40,10 +40,18 @@ import {
  * `app/docs/layout.tsx`.
  */
 
-/** Where the reader can see the rule was broken. Two answers, no third. */
+/**
+ * Where the rule can be seen to have been broken. Two answers, no third — and
+ * neither of them is the linter, which checks tokens, type and spacing rather
+ * than structure.
+ *
+ * Rendered on the statement row rather than as a fifth slot. As a slot it was a
+ * fourth labelled line repeating one of two strings under every rule on the
+ * page, which is the shape of information nobody reads after the third time.
+ */
 const CHECK_LABEL: Record<Rule["checked"], string> = {
-  screen: "Visible on the running page",
-  review: "Visible in the diff",
+  screen: "see it on screen",
+  review: "see it in the diff",
 }
 
 function Slot({ label, children }: { label: string; children: React.ReactNode }) {
@@ -70,13 +78,15 @@ function RuleList({ rules }: { rules: Rule[] }) {
         <div key={rule.id} className="flex flex-col gap-3 border-b border-border-base px-4 py-4 last:border-b-0">
           <div className="flex items-baseline gap-4">
             <span className="type-code w-8 shrink-0 text-text-subtle tabular-nums">{rule.id}</span>
-            <h4 className="type-label-bold m-0 text-text-strong">{rule.statement}</h4>
+            <h4 className="type-label-bold m-0 min-w-0 flex-1 text-text-strong">{rule.statement}</h4>
+            <span className="type-hint hidden shrink-0 text-text-subtle sm:block">
+              {CHECK_LABEL[rule.checked]}
+            </span>
           </div>
           <div className="flex flex-col gap-2 sm:pl-12">
             <Slot label="Default">{rule.fallback}</Slot>
             <Slot label="Exception">{rule.exception}</Slot>
             <Slot label="Broken when">{rule.broken}</Slot>
-            <Slot label="Check">{CHECK_LABEL[rule.checked]}</Slot>
           </div>
         </div>
       ))}
@@ -430,11 +440,19 @@ export function LayoutDoc() {
             The editor output pane is specified with a resize handle and a dismiss control, and no
             component implements it. The bottom edge in the diagram above is empty for that reason.
           </Gap>
+          <Gap title="The shell does not use the region components">
+            <>
+              The catalog explorer builds its own title row and filter row rather than composing{" "}
+              <Code>PageHeader</Code> and <Code>ControlsBar</Code>, and it sets a different
+              horizontal inset from the one those two carry. So the region rules above hold for a
+              page assembled from the components and are not enforced by the one shell that ships.
+            </>
+          </Gap>
           <Gap title="Panels do not persist">
             Nothing remembers whether a panel was open across navigation or a reload. Panel state is
             held in component state in the shell, so every page load returns to the defaults. The
-            rule that left panels open and right panels closed is therefore the only thing keeping
-            that from being noticeable.
+            rule that opens the left rail and closes everything else is what keeps that from being
+            noticeable, and it is the reason the right edge has to start closed.
           </Gap>
           <Gap title="Rails are not resizable">
             <>

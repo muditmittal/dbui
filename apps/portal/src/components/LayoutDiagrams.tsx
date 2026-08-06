@@ -65,11 +65,18 @@ function Band({
 export function DefaultPageFigure() {
   return (
     <Figure caption="Regions marked optional are absent unless the page has a reason for them. The filled band is the one container that scrolls.">
+      {/*
+        The chrome is not filled, even though chrome is darker than content in
+        the real interface. One fill, one meaning: on this page a fill says the
+        container scrolls, and a second fill for "this is chrome" would make the
+        reader work out which of the two a given band is claiming. The heavier
+        border already groups the frame away from the page's own regions.
+      */}
       <div className="flex flex-col">
-        <Band name="Platform header" note="fixed · 1 per app" className="bg-surface-subtle" />
+        <Band name="Platform header" note="fixed · 1 per app" />
 
         <div className="flex border-t border-border-base">
-          <div className="flex w-28 shrink-0 flex-col justify-between gap-6 border-r border-border-base bg-surface-subtle px-3 py-2 sm:w-36">
+          <div className="flex w-28 shrink-0 flex-col justify-between gap-6 border-r border-border-base px-3 py-2 sm:w-36">
             <span className="type-label text-text-strong">Product nav</span>
             <span className="type-hint text-text-subtle">left edge</span>
           </div>
@@ -103,7 +110,10 @@ function Skeleton({
 }) {
   return (
     <div className="flex min-w-0 flex-col gap-2">
-      <div className="flex flex-col overflow-hidden rounded-sm border border-border-base">
+      {/* One height for all four. Sizing each to its real proportions would make
+          the editor the tallest and teach nothing — the comparison the reader is
+          being asked to make is which band is filled, not how tall a pane is. */}
+      <div className="flex h-32 flex-col overflow-hidden rounded-sm border border-border-base">
         {children}
       </div>
       <div className="flex flex-col gap-0.5">
@@ -152,30 +162,30 @@ export function ScrollFigure() {
         <Skeleton title="List" note="One column. The content takes the remaining height.">
           <Slot label="Page header" className="border-b border-border-subtle" />
           <Slot label="Controls bar" className="border-b border-border-subtle" />
-          <Slot label="Records" scrolls className="min-h-16" />
+          <Slot label="Records" scrolls grow />
         </Skeleton>
 
         <Skeleton title="Detail" note="Two columns. Each one scrolls without moving the other.">
           <Slot label="Breadcrumb · title · tabs" className="border-b border-border-subtle" />
-          <div className="flex min-h-16">
+          <div className="flex flex-1">
             <Slot label="Main" scrolls grow className="border-r border-border-subtle" />
             <Slot label="Metadata" scrolls className="w-20 shrink-0" />
           </div>
         </Skeleton>
 
         <Skeleton title="Editor" note="No page scroll at all. Every pane absorbs its own.">
-          <div className="flex min-h-24">
+          <div className="flex flex-1">
             <Slot label="Tools" scrolls className="w-16 shrink-0 border-r border-border-subtle" />
             <div className="flex min-w-0 flex-1 flex-col">
               <Slot label="Tabs · toolbar" className="border-b border-border-subtle" />
               <Slot label="Editor" scrolls grow className="border-b border-border-subtle" />
-              <Slot label="Output" scrolls className="min-h-10" />
+              <Slot label="Output" scrolls className="h-10" />
             </div>
           </div>
         </Skeleton>
 
         <Skeleton title="Chat" note="The transcript scrolls from the bottom. The composer is outside it.">
-          <Slot label="Transcript" scrolls className="min-h-16 border-b border-border-subtle" />
+          <Slot label="Transcript" scrolls grow className="border-b border-border-subtle" />
           <Slot label="Composer" />
         </Skeleton>
       </div>
@@ -185,9 +195,13 @@ export function ScrollFigure() {
 
 /** The panels the system ships today, grouped by the edge they dock to. */
 const EDGES = [
-  { edge: "left" as const, means: "Where you are", state: "Open by default" },
-  { edge: "right" as const, means: "What is about this", state: "Closed by default" },
-  { edge: "bottom" as const, means: "What came out of this", state: "Closed by default" },
+  {
+    edge: "left" as const,
+    means: "Where you are",
+    state: "Two ranks, both open with the page",
+  },
+  { edge: "right" as const, means: "What is about this", state: "One, closed by default" },
+  { edge: "bottom" as const, means: "What came out of this", state: "One, closed by default" },
 ]
 
 /**
