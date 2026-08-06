@@ -179,7 +179,10 @@ export function ColorSwatches({
 }) {
   const hidden = Math.max(0, group.tokens.length - limit)
   return (
-    <ShowMore count={hidden ? group.tokens.length : 0} label={`${group.label.toLowerCase()} tokens`}>
+    // "colors" rather than "tokens", to match the unit the wiring table counts
+    // this family in. Two words for the same set invites the reader to wonder
+    // whether they are two sets.
+    <ShowMore count={hidden ? group.tokens.length : 0} label={`${group.label.toLowerCase()} colors`}>
       {(expanded) => (
         <Panel>
           {(expanded ? group.tokens : group.tokens.slice(0, limit)).map((t, i, arr) => {
