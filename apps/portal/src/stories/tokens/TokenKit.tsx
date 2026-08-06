@@ -243,9 +243,11 @@ export function SpaceScale({ tokens }: { tokens: Token[] }) {
           <Name title={t.value}>--db-{t.name}</Name>
           <Px token={t} />
           <Value>{t.multiple === null ? null : `${t.multiple} × unit`}</Value>
+          {/* No minimum width. The bar carried one so every row had something to
+              show, which drew a 1px mark beside a step that states 0px. */}
           <span
             className="block h-4 rounded-xs bg-action-primary-base"
-            style={{ width: `var(--db-${t.name})`, minWidth: 1 }}
+            style={{ width: `var(--db-${t.name})` }}
           />
         </Row>
       ))}
@@ -468,13 +470,26 @@ export function SupersededBy({ family }: { family: Family }) {
   if (!family.superseded) return null
   return (
     <>
-      <code className="type-code min-w-0 flex-1 truncate text-text-base">
-        {family.superseded.namespace}
-      </code>
+      <Namespace>{family.superseded.namespace}</Namespace>
       <span className="type-hint shrink-0 tabular-nums text-text-subtle">
         {family.superseded.uses} uses
       </span>
     </>
+  )
+}
+
+/**
+ * A namespace, allowed to wrap rather than truncate.
+ *
+ * `--default-transition-duration` is one character too long for the column and
+ * was arriving as `--default-transition-du…`, which is the one thing this row
+ * exists to say. Wrapping costs a second line on one row out of nine.
+ */
+function Namespace({ children }: { children: React.ReactNode }) {
+  return (
+    <code className="type-code min-w-0 flex-1 break-words text-text-base" style={{ margin: 0 }}>
+      {children}
+    </code>
   )
 }
 
@@ -568,9 +583,7 @@ export function WiringTable({ families }: { families: Family[] }) {
             <span className="flex min-w-0 flex-1 items-baseline gap-3">
               {f.bridge ? (
                 <>
-                  <code className="type-code min-w-0 flex-1 truncate text-text-base">
-                    {f.bridge.namespace}
-                  </code>
+                  <Namespace>{f.bridge.namespace}</Namespace>
                   <span className="type-hint shrink-0 tabular-nums text-text-subtle">
                     {f.bridge.uses} uses
                   </span>
