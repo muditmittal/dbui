@@ -84,7 +84,13 @@ const REACHES: Record<string, React.ReactNode> = {
       here.
     </>
   ),
-  scalars: <>Multiplied inside the generated CSS. Only one of the five turns a family anything reads.</>,
+  scalars: (
+    <>
+      Multiplied inside the generated CSS, so none of them is ever written by hand.{" "}
+      {scalarConsumption.filter((s) => s.live).length} of {scalarConsumption.length} reach something
+      that is read.
+    </>
+  ),
 }
 
 /** What each Tailwind namespace governs, and where it bites. */
@@ -92,7 +98,8 @@ const GOVERNS: Record<string, React.ReactNode> = {
   "--spacing": (
     <>
       Padding, margin, gap, inset and every numeric <Code>w-</Code>, <Code>h-</Code> and{" "}
-      <Code>size-</Code>. The spacing system in practice.
+      <Code>size-</Code>. The spacing system in practice, and now the grid unit and the density dial
+      behind it.
     </>
   ),
   "--radius-*": (
@@ -146,13 +153,28 @@ const TYPE_USE: Record<string, string> = {
 
 /**
  * What each dial multiplies, so its status reads as a consequence rather than a
- * verdict. The density note is the one that matters: the config calls it the
- * master dial, and in the shipped CSS it reaches space and nothing else.
+ * verdict. The split that matters is between the two dials that stand behind a
+ * Tailwind namespace and the two that only multiply tokens nothing reads.
  */
 const DRIVES: Record<string, React.ReactNode> = {
-  "spacing-unit": <>The grid step every space token multiplies.</>,
-  "density-scalar": <>Space. Described as the master dial, but space is all it reaches.</>,
-  "spacing-scalar": <>Space, alongside the density dial.</>,
+  "spacing-unit": (
+    <>
+      The grid step. Every space token multiplies it, and so does <Code>--spacing</Code>, which is
+      what puts it behind every numeric spacing utility.
+    </>
+  ),
+  "density-scalar": (
+    <>
+      The master dial, and it is one now: folded into <Code>--spacing</Code>, so it tightens padding,
+      gaps and control sizes together. It does not touch type.
+    </>
+  ),
+  "spacing-scalar": (
+    <>
+      Space, alongside the density dial. Not <Code>--spacing</Code> — Tailwind reads one key for both{" "}
+      <Code>p-4</Code> and <Code>gap-4</Code>, so a dial that means gaps only cannot ride it.
+    </>
+  ),
   "sizing-scalar": <>Control heights and icon boxes.</>,
   "type-scalar": <>The whole type ramp, proportionally.</>,
 }
@@ -390,9 +412,10 @@ export function TokensDoc() {
         }
         cautions={[
           <>
-            <Code>--spacing</Code> is rem-based, which is the only reason the system rescales under a
-            root font-size change. The right behavior, arriving from Tailwind rather than from the
-            space tokens.
+            <Code>--spacing</Code> is rem-based, which is why the system rescales under a root
+            font-size change. It now resolves through <Code>--db-spacing-unit</Code> and the density
+            dial, so the same rescaling arrives from the config rather than from Tailwind&rsquo;s
+            default.
           </>,
           <>
             <Code>--radius-*</Code> is mapped in {radiusFiles.length} files and only{" "}
@@ -478,9 +501,14 @@ export function TokensDoc() {
         id="space"
         title="Space"
         live={isLive("space")}
-        scope="Would govern gaps and padding. Governs nothing today — components spend Tailwind's scale instead."
+        scope="Named steps over the grid unit. The unit is wired; these eleven names are not — components spend Tailwind's numeric scale, which lands on the same pixels."
         cautions={[
           <>Coarse above the half step on purpose. A scale with every increment makes any value look defensible.</>,
+          <>
+            Every step restates a numeric utility — <Code>md</Code> is <Code>p-4</Code>. Naming them
+            as Tailwind keys would give two ways to say one thing, so the names stay available
+            through <Code>var(--db-space-*)</Code> and nothing spends them.
+          </>,
           <>
             <Code>inline-*</Code> is em-relative, so it tracks the text beside it rather than the
             grid. The only part of this family with no Tailwind equivalent.

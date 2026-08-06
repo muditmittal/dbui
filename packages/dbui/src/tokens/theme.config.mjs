@@ -289,6 +289,29 @@ export const space = {
 /* Radius — fixed anchors (radius doesn't scale with density). */
 export const radius = { sm: "4px", md: "8px", lg: "12px", xl: "16px", "2xl": "24px", full: "999px" }
 
+/* ══════════════════════════════════════════════════════════════════════════
+ * BRIDGE — which Tailwind theme namespaces resolve to which DBUI tokens.
+ *
+ * Authored here, emitted into the @theme block of tokens.css, so the mapping
+ * lives beside the values it points at. A bridge written by hand in globals.css
+ * is a second copy of the token, and the two copies drift: the portal's
+ * globals.css referenced the radius tokens while the package's still restated
+ * their px values, so anyone installing DBUI got frozen corners the portal did
+ * not have.
+ *
+ * `scalars` lists the dials folded into a Tailwind key. Tailwind's `--spacing`
+ * is one number that every dimensional utility multiplies — `p-4` and `gap-4`
+ * both read it — so only a dial with that same "everything at once" shape can
+ * ride it. `density-scalar` is that dial by definition. `spacing-scalar`
+ * (between elements) and `sizing-scalar` (inside them) each own half the axis,
+ * and Tailwind has nowhere to put a half, so wiring either one here would make
+ * it drive padding it does not own. They stay on --db-space-* and --db-size-*,
+ * which a call site can apply selectively.
+ * ══════════════════════════════════════════════════════════════════════════ */
+export const bridge = {
+  spacing: { token: "spacing-unit", scalars: ["density-scalar"] },
+}
+
 /* Type — anchored ramp. Each step is a hand-tuned PIXEL anchor for size,
  * line-height, and tracking (letter-spacing). All three are emitted as
  * `calc(<px> * var(--db-type-scalar))` so the entire ramp scales together from
@@ -410,4 +433,4 @@ export const motion = {
   easing: { standard: "cubic-bezier(0.24, 1, 0.4, 1)" },
 }
 
-export default { meta, primitives, semantics, scalars, space, radius, size, border, type, elevation, motion }
+export default { meta, primitives, semantics, scalars, space, radius, bridge, size, border, type, elevation, motion }

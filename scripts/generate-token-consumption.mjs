@@ -118,6 +118,10 @@ const FAMILIES = [
     match: (n) => /^--db-(font|line-height|letter-spacing|mono-font)/.test(n),
     bridge: { kind: "utility", namespace: "type-*", file: TYPE_CSS, utilities: /^type-/ },
   },
+  // Deliberately unbridged. `--spacing` carries the grid unit and the density
+  // dial, which are scalars — not these eleven named steps. Crediting the row
+  // with those 818 utilities would claim `p-4` resolves to `--db-space-md`,
+  // and it does not: the two are separate vars that happen to agree at 1.
   { key: "space", label: "Space", match: (n) => /^--db-space-/.test(n), bridge: null },
   {
     key: "radius",
@@ -148,12 +152,13 @@ for (const name of uniqueShipped) members[familyOf(name).key].push(name)
 
 /* ── who reads it ─────────────────────────────────────────────────────────── */
 
-/** Class-ish strings out of every quoted literal, variants stripped. */
-function classesIn(src) {
+/** Class-ish strings out of every quoted literal, variants stripped unless asked. */
+function classesIn(src, keepVariant = false) {
   const out = []
   for (const m of src.matchAll(/(["'`])([^"'`\n]*?)\1/g)) {
     for (const cls of m[2].split(/\s+/)) {
-      if (cls) out.push(cls.replace(/^(?:[a-z0-9@-]+:)+/, "").replace(/^!|!$/g, ""))
+      if (!cls) continue
+      out.push(keepVariant ? cls : cls.replace(/^(?:[a-z0-9@-]+:)+/, "").replace(/^!|!$/g, ""))
     }
   }
   return out
@@ -205,6 +210,21 @@ function bridgeUses(re, fileList) {
   return { uses, files: seen.size }
 }
 
+/**
+ * The same count for a Tailwind namespace. A variant (`md:`) is matched against
+ * the raw token, since stripping the prefix is what identifies it.
+ */
+function utilityUses(re, isVariant = false) {
+  let uses = 0
+  const seen = new Set()
+  for (const f of files.system) {
+    let n = 0
+    for (const cls of classesIn(codeOf(f), isVariant)) if (re.test(cls)) n++
+    if (n) { uses += n; seen.add(f) }
+  }
+  return { uses, files: seen.size }
+}
+
 const families = FAMILIES.map((f) => {
   const names = members[f.key]
   const system = directRefs(names, files.system)
@@ -238,42 +258,20 @@ for (const f of families) {
   f.live = f.systemRefs > 0 || (f.bridge?.uses ?? 0) > 0
 }
 
-/* ── scalars, resolved through what they drive ────────────────────────────── */
-
-const liveByKey = Object.fromEntries(families.map((f) => [f.key, f.live]))
-
-/**
- * A scalar's own reference count says nothing — it is multiplied inside the
- * generated CSS, never written by hand. What decides whether the dial does
- * anything is whether the family it multiplies is read.
- */
-const scalars = members.scalars.map((name) => {
-  // Which families' values contain this scalar inside their calc().
-  const drives = FAMILIES.filter((f) => f.key !== "scalars").filter((f) =>
-    members[f.key].some((token) => {
-      const m = tokensCss.match(new RegExp(`^\\s*${token}:\\s*([^;]+);`, "m"))
-      return m ? m[1].includes(`var(${name})`) : false
-    })
-  ).map((f) => f.key)
-  return { name, drives, live: drives.some((k) => liveByKey[k]) }
-})
-
-// The family row inherits from its members, or the Scalars section would report
-// dead while one of its dials demonstrably turns the type ramp.
-const scalarFamily = families.find((f) => f.key === "scalars")
-if (scalarFamily) scalarFamily.live = scalars.some((s) => s.live)
-
 /* ── Tailwind namespaces the system leans on ──────────────────────────────── */
-
 const twTheme = exists(TW_THEME) ? readFile(TW_THEME) : ""
 const twDefault = (key) => {
   const m = twTheme.match(new RegExp(`^\\s*${key.replace(/[-*]/g, (c) => (c === "*" ? "[a-z0-9-]+" : "\\-"))}:\\s*([^;]+);`, "m"))
   return m ? m[1].trim() : null
 }
 
-/** Where a Tailwind namespace is overridden, if it is, and to what. */
+/**
+ * Where a Tailwind namespace is set, if it is, and to what. The generated layer
+ * is checked first because that is where the bridge is authored — a hand-written
+ * copy in globals.css is the drift case, not the owner.
+ */
 function override(key) {
-  for (const f of BRIDGE_FILES) {
+  for (const f of [TOKENS_CSS, ...BRIDGE_FILES]) {
     const m = codeOf(f).match(new RegExp(`^\\s*${key.replace(/-/g, "\\-")}:\\s*([^;]+);`, "m"))
     if (m) return { file: f, value: m[1].trim() }
   }
@@ -314,20 +312,7 @@ const TAILWIND = [
 ]
 
 const tailwind = TAILWIND.map((t) => {
-  const re = t.utilities ?? t.variants
-  let uses = 0
-  const seen = new Set()
-  for (const f of files.system) {
-    let n = 0
-    for (const m of codeOf(f).matchAll(/(["'`])([^"'`\n]*?)\1/g)) {
-      for (const raw of m[2].split(/\s+/)) {
-        if (!raw) continue
-        const cls = t.variants ? raw : raw.replace(/^(?:[a-z0-9@-]+:)+/, "").replace(/^!|!$/g, "")
-        if (re.test(cls)) n++
-      }
-    }
-    if (n) { uses += n; seen.add(f) }
-  }
+  const { uses, files } = utilityUses(t.utilities ?? t.variants, Boolean(t.variants))
   const ov = t.probe ? override(t.probe) : null
   const tailwindValue = t.probe ? twDefault(t.probe) : null
   return {
@@ -340,13 +325,65 @@ const tailwind = TAILWIND.map((t) => {
     // are different claims, and the page has to be able to say which.
     origin: ov ? (tailwindValue ? "override" : "addition") : t.probe ? "tailwind" : "utility",
     uses,
-    files: seen.size,
+    files,
   }
 }).sort((a, b) => b.uses - a.uses)
 
+/* ── scalars, resolved through what they drive ────────────────────────────── */
+
+const liveByKey = Object.fromEntries(families.map((f) => [f.key, f.live]))
+
 /**
- * Every place a Tailwind namespace is set outside the generated layer, so a
- * reader can see that radius is defined twice from two different sources.
+ * The bridge lines in the generated @theme block. A scalar folded into one of
+ * Tailwind's own namespaces reaches every utility in it without ever appearing
+ * in a component, so it has to be read out of the mapping rather than counted.
+ * Colors are excluded — they carry no scalar.
+ */
+const themeBlock = tokensCss.slice(tokensCss.indexOf("@theme inline {"), tokensCss.indexOf(":root {"))
+const bridgeKeys = [...themeBlock.matchAll(/^\s*(--(?!color-)[a-z0-9-]+):\s*([^;]+);/gm)]
+  .map((m) => ({ key: m[1], value: m[2] }))
+
+/**
+ * A scalar's own reference count says nothing — it is multiplied inside the
+ * generated CSS, never written by hand. What decides whether the dial does
+ * anything is whether something downstream is read: a family whose tokens it
+ * multiplies, or a Tailwind namespace it stands behind.
+ */
+const scalars = members.scalars.map((name) => {
+  // Which families' values contain this scalar inside their calc().
+  const drives = FAMILIES.filter((f) => f.key !== "scalars").filter((f) =>
+    members[f.key].some((token) => {
+      const m = tokensCss.match(new RegExp(`^\\s*${token}:\\s*([^;]+);`, "m"))
+      return m ? m[1].includes(`var(${name})`) : false
+    })
+  ).map((f) => f.key)
+  // Which Tailwind namespaces resolve through it, and whether anything uses them.
+  const bridges = bridgeKeys
+    .filter((b) => b.value.includes(`var(${name})`))
+    .map((b) => {
+      const spec = TAILWIND.find((t) => t.probe === b.key || t.namespace === b.key)
+      return {
+        namespace: b.key,
+        uses: spec ? utilityUses(spec.utilities ?? spec.variants, Boolean(spec.variants)).uses : 0,
+      }
+    })
+  return {
+    name,
+    drives,
+    bridges,
+    live: drives.some((k) => liveByKey[k]) || bridges.some((b) => b.uses > 0),
+  }
+})
+
+// The family row inherits from its members, or the Scalars section would report
+// dead while one of its dials demonstrably turns the type ramp.
+const scalarFamily = families.find((f) => f.key === "scalars")
+if (scalarFamily) scalarFamily.live = scalars.some((s) => s.live)
+
+/**
+ * Every place a Tailwind namespace is set outside the generated layer. An entry
+ * here is a mapping the generator does not own, which is how radius came to be
+ * stated twice from two different sources.
  */
 const themeOverrides = BRIDGE_FILES.flatMap((f) => {
   const src = codeOf(f)
@@ -399,7 +436,13 @@ export type Family = {
   portalConsumers: Consumer[]
   live: boolean
 }
-export type Scalar = { name: string; drives: string[]; live: boolean }
+/** bridges = Tailwind namespaces whose value resolves through this dial. */
+export type Scalar = {
+  name: string
+  drives: string[]
+  bridges: Array<{ namespace: string; uses: number }>
+  live: boolean
+}
 export type TailwindNamespace = {
   namespace: string
   probe: string | null
@@ -441,7 +484,13 @@ for (const f of families) {
   )
 }
 console.log(`\nscalars`)
-for (const s of scalars) console.log(`  ${s.name.padEnd(24)} drives ${s.drives.join(", ") || "(nothing)"} — ${s.live ? "live" : "DEAD"}`)
+for (const s of scalars) {
+  const via = s.bridges.map((b) => `${b.namespace} (${b.uses} uses)`).join(", ")
+  console.log(
+    `  ${s.name.padEnd(24)} drives ${s.drives.join(", ") || "(nothing)"}` +
+    `${via ? ` · bridges ${via}` : ""} — ${s.live ? "live" : "DEAD"}`
+  )
+}
 console.log(`\ntailwind namespaces in use: ${tailwind.filter((t) => t.uses).length}`)
 for (const t of tailwind) console.log(`  ${t.namespace.padEnd(38)} ${String(t.uses).padStart(5)} uses  ${t.overriddenIn ? "overridden in " + t.overriddenIn : ""}`)
 console.log(`\npx/rem literals: ${hardcoded.uses} in ${hardcoded.files.length} files`)

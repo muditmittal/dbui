@@ -32,7 +32,14 @@ export type ScrollOwner = {
 
 export type Spacing = {
   tokenFamily: { name: string; tokens: number; live: boolean }
-  utility: { name: string; value: string | null; origin: string; uses: number; files: number }
+  utility: {
+    name: string
+    value: string | null
+    resolvesTo: string | null
+    origin: string
+    uses: number
+    files: number
+  }
 }
 
 export const regions: Region[] = [
@@ -226,7 +233,8 @@ export const spacing: Spacing = {
   "utility": {
     "name": "--spacing",
     "value": "0.25rem",
-    "origin": "tailwind",
+    "resolvesTo": "calc(var(--db-spacing-unit) * var(--db-density-scalar))",
+    "origin": "override",
     "uses": 818,
     "files": 78
   }

@@ -96,6 +96,9 @@
   --color-viz-sequential-8: var(--db-viz-sequential-8);
   --color-viz-sequential-9: var(--db-viz-sequential-9);
   --color-viz-sequential-10: var(--db-viz-sequential-10);
+
+  /* ── Tailwind bridge — the namespaces DBUI tokens stand behind ── */
+  --spacing: calc(var(--db-spacing-unit) * var(--db-density-scalar));
 }
 
 :root {

@@ -397,15 +397,16 @@ export function LayoutDoc() {
             {
               scale: spacing.utility.name,
               state: "Live",
-              what: `Tailwind's own step, ${spacing.utility.value}, left at its default. Every padding and gap in the system resolves through it — ${spacing.utility.uses} uses across ${spacing.utility.files} files.`,
+              what: `Tailwind's step, now resolving to ${spacing.utility.resolvesTo ?? spacing.utility.value}. Every padding and gap in the system resolves through it — ${spacing.utility.uses} uses across ${spacing.utility.files} files.`,
             },
           ]}
         />
 
         <Para>
-          So a spacing rule here is a rule about Tailwind&rsquo;s step, not about the space tokens.
-          Density still moves globally, through the scalars in <Code>theme.config.mjs</Code>, and a
-          page that hardcodes a padding to look denser opts out of that dial.
+          So a spacing rule here is a rule about Tailwind&rsquo;s step, not about the space tokens —
+          but that step is now the grid unit from <Code>theme.config.mjs</Code> multiplied by the
+          density dial, so turning the dial moves every padding and gap on the page. A page that
+          hardcodes a padding to look denser opts out of that.
         </Para>
 
         <RuleList rules={RHYTHM_RULES} />

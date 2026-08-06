@@ -7,7 +7,8 @@
  *
  *   1. packages/dbui/src/tokens/tokens.css   — shipped CSS
  *        • @theme inline: one Tailwind color utility per semantic
- *          (--color-surface-base → var(--db-surface-base))
+ *          (--color-surface-base → var(--db-surface-base)), plus the bridge
+ *          onto Tailwind's own namespaces (--spacing, --radius-*)
  *        • :root  — scalars, space/radius/type/elevation scale, LIGHT semantics
  *        • .dark  — DARK semantics
  *      Primitives are resolved INLINE (semantics carry final hex/rgba). They are
@@ -34,7 +35,7 @@ const TYPE_CSS = path.join(ROOT, "packages/dbui/src/tokens/type.css")
 const GLOBALS_CSS = path.join(ROOT, "packages/dbui/src/tokens/globals.css")
 const TOKENS_JSON = path.join(__dirname, "tokens.json")
 
-const { meta, primitives, semantics, scalars, space, radius, size, border, type, elevation, motion } = cfg
+const { meta, primitives, semantics, scalars, space, radius, bridge, size, border, type, elevation, motion } = cfg
 const PREFIX = `--${meta.prefix}-` // --db-
 
 // ── ref resolution ───────────────────────────────────────────────────────────
@@ -112,6 +113,25 @@ const radiusLines = Object.entries(radius)
   })
   .join("\n")
 
+/**
+ * The Tailwind bridge, emitted into the same @theme block as the colors so a
+ * mapping cannot be restated by hand somewhere the values do not live.
+ *
+ * `@theme inline` is what makes a scalar usable. Without it Tailwind writes
+ * `--spacing` into :root, where the calc() resolves once against :root's own
+ * scalars — a subtree that sets `--db-density-scalar` would inherit the already
+ * -computed number and nothing would move. Inlined, the calc() lands in the
+ * utility itself and resolves on the element, so the dial works wherever it is
+ * set. It is also why the colors use `inline`: same reason, one level down.
+ */
+const bridgeLines = Object.entries(bridge ?? {})
+  .map(([key, spec]) => {
+    const base = v(spec.token)
+    const value = spec.scalars?.length ? `calc(${[base, ...spec.scalars.map(v)].join(" * ")})` : base
+    return `  --${key}: ${value};`
+  })
+  .join("\n")
+
 /** '"Figtree", -apple-system, sans-serif' → ["Figtree", "-apple-system", "sans-serif"] */
 const splitFamily = (stack) =>
   stack.split(",").map((f) => f.trim().replace(/^["']|["']$/g, "")).filter(Boolean)
@@ -176,6 +196,9 @@ const css = `/* ─────────────────────�
 
 @theme inline {
 ${theme}
+
+  /* ── Tailwind bridge — the namespaces DBUI tokens stand behind ── */
+${bridgeLines}
 }
 
 :root {

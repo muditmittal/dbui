@@ -14,7 +14,13 @@ export type Family = {
   portalConsumers: Consumer[]
   live: boolean
 }
-export type Scalar = { name: string; drives: string[]; live: boolean }
+/** bridges = Tailwind namespaces whose value resolves through this dial. */
+export type Scalar = {
+  name: string
+  drives: string[]
+  bridges: Array<{ namespace: string; uses: number }>
+  live: boolean
+}
 export type TailwindNamespace = {
   namespace: string
   probe: string | null
@@ -218,20 +224,33 @@ export const scalars: Scalar[] = [
     "drives": [
       "space"
     ],
-    "live": false
+    "bridges": [
+      {
+        "namespace": "--spacing",
+        "uses": 818
+      }
+    ],
+    "live": true
   },
   {
     "name": "--db-density-scalar",
     "drives": [
       "space"
     ],
-    "live": false
+    "bridges": [
+      {
+        "namespace": "--spacing",
+        "uses": 818
+      }
+    ],
+    "live": true
   },
   {
     "name": "--db-spacing-scalar",
     "drives": [
       "space"
     ],
+    "bridges": [],
     "live": false
   },
   {
@@ -239,6 +258,7 @@ export const scalars: Scalar[] = [
     "drives": [
       "size"
     ],
+    "bridges": [],
     "live": false
   },
   {
@@ -246,6 +266,7 @@ export const scalars: Scalar[] = [
     "drives": [
       "type"
     ],
+    "bridges": [],
     "live": true
   }
 ]
@@ -255,9 +276,9 @@ export const tailwind: TailwindNamespace[] = [
     "namespace": "--spacing",
     "probe": "--spacing",
     "tailwindValue": "0.25rem",
-    "overriddenIn": null,
-    "overriddenTo": null,
-    "origin": "tailwind",
+    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
+    "overriddenTo": "calc(var(--db-spacing-unit) * var(--db-density-scalar))",
+    "origin": "override",
     "uses": 818,
     "files": 78
   },

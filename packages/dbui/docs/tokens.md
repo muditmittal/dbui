@@ -75,10 +75,21 @@ The scale counts **down**: `1` is the highest surface (dialogs), `3` the softest
 (toasts), `0` flat. Read the number as "how far from the page". If two surfaces
 overlap, the one on top takes the lower number.
 
-## Known gaps
+## The Tailwind bridge
 
-Space and radius are not wired into Tailwind `@theme` — `gap-md`/`rounded-md`
-would collide with Tailwind's defaults. Consume via `var(--db-space-md)`.
+`theme.config.mjs` names which Tailwind namespaces resolve to DBUI tokens, and
+the generator emits that map into `tokens.css`. Writing it by hand in
+`globals.css` is what let the shipped copy freeze radius at px while the portal's
+copy tracked the token.
+
+Only a dial shaped like the namespace may be folded into it. Tailwind reads one
+key for `p-4` and `gap-4`, so `--spacing` carries the grid unit and
+`--db-density-scalar` — the dial that means everything at once — and not
+`--db-spacing-scalar` or `--db-sizing-scalar`, each of which owns half that axis.
+
+The named space steps stay off the bridge. `--spacing-md` would give `p-md`
+beside a `p-4` that renders the same pixels, and the system has one way to say
+a thing. Consume them via `var(--db-space-md)`.
 
 See `TRACKER.md` for status. Nothing in this file describes progress.
 

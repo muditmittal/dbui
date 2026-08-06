@@ -183,12 +183,15 @@ function scrollOwners() {
  */
 function spacingBasis() {
   const source = read("apps/portal/src/stories/tokens/token-consumption.ts")
+  // Scoped to the tailwind export. `--spacing` also names a scalar's bridge in
+  // the scalars export, and an unscoped match lands on that one first.
+  const tailwindExport = source.slice(source.indexOf("export const tailwind"))
 
   const family = source.match(
     /\{\s*"key":\s*"space",[\s\S]*?"tokens":\s*(\d+),[\s\S]*?"live":\s*(true|false)\s*\}/
   )
-  const namespace = source.match(
-    /\{\s*"namespace":\s*"--spacing",[\s\S]*?"tailwindValue":\s*("[^"]*"|null),[\s\S]*?"origin":\s*"([^"]+)",\s*"uses":\s*(\d+),\s*"files":\s*(\d+)\s*\}/
+  const namespace = tailwindExport.match(
+    /\{\s*"namespace":\s*"--spacing",[\s\S]*?"tailwindValue":\s*("[^"]*"|null),[\s\S]*?"overriddenTo":\s*("[^"]*"|null),\s*"origin":\s*"([^"]+)",\s*"uses":\s*(\d+),\s*"files":\s*(\d+)\s*\}/
   )
 
   if (!family) problems.push("token-consumption.ts: no space family entry")
@@ -203,9 +206,12 @@ function spacingBasis() {
     utility: {
       name: "--spacing",
       value: namespace ? JSON.parse(namespace[1]) : null,
-      origin: namespace ? namespace[2] : "unknown",
-      uses: namespace ? Number(namespace[3]) : 0,
-      files: namespace ? Number(namespace[4]) : 0,
+      // What the key resolves to now, so the page can name the source of the
+      // step rather than assert that Tailwind's default still stands.
+      resolvesTo: namespace ? JSON.parse(namespace[2]) : null,
+      origin: namespace ? namespace[3] : "unknown",
+      uses: namespace ? Number(namespace[4]) : 0,
+      files: namespace ? Number(namespace[5]) : 0,
     },
   }
 }
@@ -314,7 +320,14 @@ export type ScrollOwner = {
 
 export type Spacing = {
   tokenFamily: { name: string; tokens: number; live: boolean }
-  utility: { name: string; value: string | null; origin: string; uses: number; files: number }
+  utility: {
+    name: string
+    value: string | null
+    resolvesTo: string | null
+    origin: string
+    uses: number
+    files: number
+  }
 }
 
 export const regions: Region[] = ${JSON.stringify(data.regions, null, 2)}
