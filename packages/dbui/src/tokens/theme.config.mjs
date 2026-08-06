@@ -272,7 +272,6 @@ export const semantics = {
 export const scalars = {
   "spacing-unit": "4px", // the base grid step; every dimensional token is a multiple
   "density-scalar": 1, // master dial — tightens/loosens EVERYTHING at once
-  "sizing-scalar": 1, // control heights and icon boxes, until size joins the ramp
   "type-scalar": 1, // nudges the whole type ramp together (anchored)
 }
 
@@ -328,6 +327,14 @@ export const bridge = {
     family: "space",
     steps: [0, "0.5", 1, 2, 3, 4, 6, 8, 10, 12],
   },
+  /* One family, three namespaces. Tailwind reads `size-*`, `h-*` and `w-*` from
+   * separate keys, so the same stop has to be declared in each — but `--height-*`
+   * also reaches `min-h-*` and `max-h-*`, which `--width-*` does not do for its
+   * siblings (F7 and F11 in verify-spacing-scale). `min-w-*` and `max-w-*` are
+   * left on the multiplier rather than given a fourth and fifth declaration. */
+  size: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
+  height: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
+  width: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
   /* Tailwind step → DBUI step. Ours runs one notch coarser than Tailwind's, and
    * `full` is a pill sentinel with no counterpart, so `3xl` carries it. `xs` and
    * `4xl` are left to Tailwind: this scale has no step there. */
@@ -422,15 +429,17 @@ export const elevation = {
   3: "0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05)",
 }
 
-/* Size — control heights and icon sizes, scaled by `sizing-scalar`.
- * Control heights are the 24/32px the components already use; naming them means
- * the sizing dial finally drives something instead of shipping as a dead knob.
- * Icon `md` is 16px on purpose: it matches the `label` line box (13/16), so text
- * and icon align in a row without adjustment. */
-export const size = {
-  element: { sm: 24, md: 32 },
-  icon: { xs: 12, sm: 14, md: 16, lg: 20, xl: 24 },
-}
+/* Size — width and height. Same grid, same naming, so `--db-size-8` is 32px and
+ * the class is `h-8`, `w-8` or `size-8`.
+ *
+ * The stops are the control heights and icon boxes the components already use:
+ * 8 is a table rule, 12 a switch thumb, 16 an icon, 24 and 32 the two control
+ * heights, 28 a menu row, 40 a table header. 16 matters most — it matches the
+ * `label` line box (13/16), so text and icon align in a row without adjustment.
+ *
+ * Element and icon used to be separate sub-families, which put two names on one
+ * number: a 24px control was `element-sm` and a 24px icon was `icon-xl`. */
+export const size = { 2: 2, 3: 3, 4: 4, 6: 6, 7: 7, 8: 8, 10: 10 }
 
 /* Border width. `thick` is the focus treatment on non-filled controls. */
 export const border = { width: { none: 0, thin: 1, thick: 2 } }

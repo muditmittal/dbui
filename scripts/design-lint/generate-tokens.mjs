@@ -189,16 +189,7 @@ const typeLines = [
   `  ${PREFIX}font-weight-bold: ${type.weight.bold};`,
 ].join("\n")
 
-// Size is the one family the sizing dial drives, which is what stops that
-// scalar from being a knob wired to nothing.
-const sizeLines = [
-  ...Object.entries(size.element).map(
-    ([k, px]) => `  ${PREFIX}size-element-${k}: calc(${rem(px)} * ${v("sizing-scalar")});`
-  ),
-  ...Object.entries(size.icon).map(
-    ([k, px]) => `  ${PREFIX}size-icon-${k}: calc(${rem(px)} * ${v("sizing-scalar")});`
-  ),
-].join("\n")
+const sizeLines = scaled("size", size)
 
 // Border width stays in px. A 1px hairline is a rendering fact, not a
 // proportion: at a 20px root it would become 1.25px and blur across a subpixel
@@ -251,7 +242,7 @@ ${radiusLines}
   /* ── Type (anchored ramp, scaled together by type-scalar) ── */
 ${typeLines}
 
-  /* ── Size (control heights + icon sizes, scaled by sizing-scalar) ── */
+  /* ── Size (width and height, on the same grid as space) ── */
 ${sizeLines}
 
   /* ── Border width ── */

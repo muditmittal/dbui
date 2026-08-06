@@ -160,9 +160,9 @@ export const families: Family[] = [
   {
     "key": "scalars",
     "label": "Scalars",
-    "count": 4,
+    "count": 3,
     "unit": "dials",
-    "properties": 4,
+    "properties": 3,
     "bridge": null,
     "superseded": null,
     "systemRefs": 0,
@@ -274,7 +274,8 @@ export const scalars: Scalar[] = [
   {
     "name": "--db-spacing-unit",
     "drives": [
-      "space"
+      "space",
+      "size"
     ],
     "bridges": [
       {
@@ -287,7 +288,8 @@ export const scalars: Scalar[] = [
   {
     "name": "--db-density-scalar",
     "drives": [
-      "space"
+      "space",
+      "size"
     ],
     "bridges": [
       {
@@ -296,14 +298,6 @@ export const scalars: Scalar[] = [
       }
     ],
     "live": true
-  },
-  {
-    "name": "--db-sizing-scalar",
-    "drives": [
-      "size"
-    ],
-    "bridges": [],
-    "live": false
   },
   {
     "name": "--db-type-scalar",

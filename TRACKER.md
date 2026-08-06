@@ -32,11 +32,11 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.
-5. **Size and border width are read by nothing.** Space is done: its stops are now
+5. **Border width is read by nothing.** Space and size are done: their stops are now
    named after their multiple of the grid unit and each one is bridged to a Tailwind
-   key, so `--db-space-3` is what `p-3` resolves to. Size and border width still
-   ship as named steps nothing reads. `sizing-scalar` is the dial behind size and is
-   dead with it.
+   key, so `--db-space-3` is what `p-3` resolves to and `--db-size-8` is what `h-8`,
+   `w-8` and `size-8` resolve to. Border width still ships as named steps nothing
+   reads.
    Tailwind's `--spacing` multiplier is still declared beside the explicit stops, on
    purpose: 106 call sites write a step the scale does not define, 45 of them at 6px
    in menus and pills. Snapping those to the nearest legal step is the open decision,

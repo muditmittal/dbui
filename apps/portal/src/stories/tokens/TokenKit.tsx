@@ -288,30 +288,22 @@ export function RadiusScale({ tokens }: { tokens: Token[] }) {
 /* ── Size ───────────────────────────────────────────────────────────────── */
 
 /**
- * The rem the value is authored against, dropping the scalar that multiplies it.
- * Secondary to the px now: the rem is what makes the box follow the reader's
- * font size, and the px is what the box is at the default.
+ * A stop is a square, because the family drives width and height from one
+ * number. It used to be two scales — a 120px-wide bar for control heights and a
+ * square for icon boxes — which put two names and two pictures on the same
+ * value: a 24px control was `element-sm` and a 24px icon was `icon-xl`.
  */
-const anchor = (value: string) => value.match(/calc\(\s*([\d.]+(?:rem|px))/)?.[1] ?? value
-
-export function SizeScale({ tokens, kind }: { tokens: Token[]; kind: "element" | "icon" }) {
+export function SizeScale({ tokens }: { tokens: Token[] }) {
   return (
     <Panel>
       {tokens.map((t, i) => (
         <Row key={t.name} last={i === tokens.length - 1}>
           <Name title={t.value}>--db-{t.name}</Name>
           <Px token={t} />
-          <Value>{anchor(t.value)}</Value>
+          <Value>{t.multiple === null ? null : `${t.multiple} × unit`}</Value>
           <span
-            className={
-              kind === "element"
-                ? "block rounded-sm border border-input-border-base bg-surface-base"
-                : "block rounded-xs bg-action-primary-base"
-            }
-            style={{
-              height: `var(--db-${t.name})`,
-              width: kind === "element" ? 120 : `var(--db-${t.name})`,
-            }}
+            className="block rounded-xs bg-action-primary-base"
+            style={{ height: `var(--db-${t.name})`, width: `var(--db-${t.name})` }}
           />
         </Row>
       ))}

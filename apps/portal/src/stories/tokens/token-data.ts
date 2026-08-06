@@ -740,51 +740,48 @@ export const radius: Token[] = [
   }
 ]
 
-export const sizeElement: Token[] = [
+export const size: Token[] = [
   {
-    "name": "size-element-sm",
-    "value": "calc(1.5rem * var(--db-sizing-scalar))",
-    "px": 24,
-    "multiple": null
+    "name": "size-2",
+    "value": "calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar))",
+    "px": 8,
+    "multiple": 2
   },
   {
-    "name": "size-element-md",
-    "value": "calc(2rem * var(--db-sizing-scalar))",
-    "px": 32,
-    "multiple": null
-  }
-]
-
-export const sizeIcon: Token[] = [
-  {
-    "name": "size-icon-xs",
-    "value": "calc(0.75rem * var(--db-sizing-scalar))",
+    "name": "size-3",
+    "value": "calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar))",
     "px": 12,
-    "multiple": null
+    "multiple": 3
   },
   {
-    "name": "size-icon-sm",
-    "value": "calc(0.875rem * var(--db-sizing-scalar))",
-    "px": 14,
-    "multiple": null
-  },
-  {
-    "name": "size-icon-md",
-    "value": "calc(1rem * var(--db-sizing-scalar))",
+    "name": "size-4",
+    "value": "calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar))",
     "px": 16,
-    "multiple": null
+    "multiple": 4
   },
   {
-    "name": "size-icon-lg",
-    "value": "calc(1.25rem * var(--db-sizing-scalar))",
-    "px": 20,
-    "multiple": null
-  },
-  {
-    "name": "size-icon-xl",
-    "value": "calc(1.5rem * var(--db-sizing-scalar))",
+    "name": "size-6",
+    "value": "calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar))",
     "px": 24,
-    "multiple": null
+    "multiple": 6
+  },
+  {
+    "name": "size-7",
+    "value": "calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar))",
+    "px": 28,
+    "multiple": 7
+  },
+  {
+    "name": "size-8",
+    "value": "calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar))",
+    "px": 32,
+    "multiple": 8
+  },
+  {
+    "name": "size-10",
+    "value": "calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar))",
+    "px": 40,
+    "multiple": 10
   }
 ]
 
@@ -898,12 +895,6 @@ export const scalars: Token[] = [
     "multiple": null
   },
   {
-    "name": "sizing-scalar",
-    "value": "1",
-    "px": null,
-    "multiple": null
-  },
-  {
     "name": "type-scalar",
     "value": "1",
     "px": null,
@@ -915,12 +906,11 @@ export const tokenCounts = {
   "colorGroups": 85,
   "space": 10,
   "radius": 6,
-  "sizeElement": 2,
-  "sizeIcon": 5,
+  "size": 7,
   "borderWidth": 3,
   "elevation": 4,
   "duration": 6,
   "easing": 1,
-  "scalars": 4,
+  "scalars": 3,
   "type": 14
 }

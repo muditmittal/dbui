@@ -6,7 +6,7 @@ import {
   SupersededNote, wiringOf,
 } from "@/stories/tokens/TokenKit"
 import {
-  colorGroups, type as typeSteps, space, radius, sizeElement, sizeIcon,
+  colorGroups, type as typeSteps, space, radius, size,
   borderWidth, elevation, duration, easing, scalars,
 } from "@/stories/tokens/token-data"
 import {
@@ -507,17 +507,21 @@ export function TokensDoc() {
         id="size"
         title="Size"
         state={wiring("size")}
-        scope="Control heights and icon boxes."
+        scope="Width and height. Same grid as space, so a stop is its multiple of the unit."
         cautions={[
           ...supersededNote("size"),
           <>
-            Icon <Code>md</Code> matches the <Code>label</Code> line box. Moving either without the
-            other breaks text and icon alignment in every row.
+            <Code>--db-size-4</Code> is 16px and matches the <Code>label</Code> line box. Moving
+            either without the other breaks text and icon alignment in every row.
+          </>,
+          <>
+            One stop drives three namespaces — <Code>size-8</Code>, <Code>h-8</Code> and{" "}
+            <Code>w-8</Code> are all 32px. Control heights and icon boxes used to be separate
+            families, which gave a 24px control and a 24px icon two different names.
           </>,
         ]}
       >
-        <SizeScale tokens={sizeElement} kind="element" />
-        <SizeScale tokens={sizeIcon} kind="icon" />
+        <SizeScale tokens={size} />
       </Section>
 
       <Section

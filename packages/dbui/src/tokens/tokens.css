@@ -109,6 +109,27 @@
   --spacing-8: var(--db-space-8);
   --spacing-10: var(--db-space-10);
   --spacing-12: var(--db-space-12);
+  --size-2: var(--db-size-2);
+  --size-3: var(--db-size-3);
+  --size-4: var(--db-size-4);
+  --size-6: var(--db-size-6);
+  --size-7: var(--db-size-7);
+  --size-8: var(--db-size-8);
+  --size-10: var(--db-size-10);
+  --height-2: var(--db-size-2);
+  --height-3: var(--db-size-3);
+  --height-4: var(--db-size-4);
+  --height-6: var(--db-size-6);
+  --height-7: var(--db-size-7);
+  --height-8: var(--db-size-8);
+  --height-10: var(--db-size-10);
+  --width-2: var(--db-size-2);
+  --width-3: var(--db-size-3);
+  --width-4: var(--db-size-4);
+  --width-6: var(--db-size-6);
+  --width-7: var(--db-size-7);
+  --width-8: var(--db-size-8);
+  --width-10: var(--db-size-10);
   --radius-sm: var(--db-radius-sm);
   --radius-md: var(--db-radius-md);
   --radius-lg: var(--db-radius-lg);
@@ -121,7 +142,6 @@
   /* ── Scalars — the density/size/type dials ── */
   --db-spacing-unit: 0.25rem;
   --db-density-scalar: 1;
-  --db-sizing-scalar: 1;
   --db-type-scalar: 1;
 
   /* ── Space (each stop is its multiple of the grid unit, scaled by density) ── */
@@ -220,14 +240,14 @@
   --db-font-weight: 400;
   --db-font-weight-bold: 600;
 
-  /* ── Size (control heights + icon sizes, scaled by sizing-scalar) ── */
-  --db-size-element-sm: calc(1.5rem * var(--db-sizing-scalar));
-  --db-size-element-md: calc(2rem * var(--db-sizing-scalar));
-  --db-size-icon-xs: calc(0.75rem * var(--db-sizing-scalar));
-  --db-size-icon-sm: calc(0.875rem * var(--db-sizing-scalar));
-  --db-size-icon-md: calc(1rem * var(--db-sizing-scalar));
-  --db-size-icon-lg: calc(1.25rem * var(--db-sizing-scalar));
-  --db-size-icon-xl: calc(1.5rem * var(--db-sizing-scalar));
+  /* ── Size (width and height, on the same grid as space) ── */
+  --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
+  --db-size-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
+  --db-size-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-size-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
+  --db-size-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
+  --db-size-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
+  --db-size-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
 
   /* ── Border width ── */
   --db-border-width-none: 0px;
