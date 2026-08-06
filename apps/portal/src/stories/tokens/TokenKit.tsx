@@ -421,6 +421,33 @@ function HeadRow({ cells }: { cells: [string, string][] }) {
 }
 
 /**
+ * What a family ships, counted in the unit a reader thinks in.
+ *
+ * This column said `74` for type, which is the number of CSS custom properties
+ * the ramp emits — five per style. The ramp has 14 styles, so the page was
+ * contradicting the thing it documents and inviting the reader to distrust the
+ * rest of the table. Every other family sets one property per thing and the two
+ * numbers agree, so nothing extra prints.
+ *
+ * Both numbers come from the scan. The unit is the only authored part, and it
+ * has to be, because no scan can know that five properties are one style.
+ */
+function Ships({ family }: { family: Family }) {
+  return (
+    <span className="flex w-28 shrink-0 flex-col">
+      <span className="type-hint tabular-nums text-text-base">
+        {family.count} {family.unit}
+      </span>
+      {family.properties === family.count ? null : (
+        <span className="type-hint tabular-nums text-text-subtle">
+          {family.properties} properties
+        </span>
+      )}
+    </span>
+  )
+}
+
+/**
  * Whether a family reaches code, in three columns and no sentences.
  *
  * The last column used to hold a paragraph explaining the mechanism, which made
@@ -438,14 +465,14 @@ export function WiringTable({ families }: { families: Family[] }) {
       <HeadRow
         cells={[
           ["Family", "w-28 shrink-0"],
-          ["Tokens", "w-16 shrink-0"],
+          ["Ships", "w-28 shrink-0"],
           ["Reaches code as", "min-w-0 flex-1"],
         ]}
       />
       {families.map((f, i) => (
         <Row key={f.key} last={i === families.length - 1}>
           <span className="type-label-bold w-28 shrink-0 text-text-strong">{f.label}</span>
-          <span className="type-hint w-16 shrink-0 tabular-nums text-text-subtle">{f.tokens}</span>
+          <Ships family={f} />
           <span className="flex min-w-0 flex-1 items-baseline gap-3">
             {f.bridge ? (
               <>

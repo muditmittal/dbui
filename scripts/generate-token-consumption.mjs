@@ -22,6 +22,16 @@
  * Liveness is therefore resolved through what a scalar drives, not by counting
  * its own references.
  *
+ * A family with neither can still be one of two very different things, and the
+ * page cannot say "nothing reads this" without saying which:
+ *   UNREAD      nothing renders the property at all.
+ *   SUPERSEDED  the property renders constantly, from a Tailwind namespace
+ *               rather than from our token. Shadows are the case that alarms
+ *               people: 83 shadow utilities ship and not one resolves to
+ *               `--db-elevation-*`.
+ * The namespace that took the job is declared per family and its uses are
+ * measured, so the claim disappears on its own if the utilities stop being used.
+ *
  *   node scripts/generate-token-consumption.mjs
  */
 import fs from "node:fs"
@@ -104,40 +114,98 @@ const uniqueShipped = [...new Set(shipped)]
  * Families in the order the page presents them. `match` decides which shipped
  * names belong to a family; `bridge` names the `@theme` or `@utility` layer that
  * turns them into a class, and is null when nothing does.
+ *
+ * `unit` is what a reader counts, and it is not always a custom property. Type
+ * ships 14 styles and emits 74 properties, because a style sets five of them —
+ * so a column headed with a property count answered a question nobody asked and
+ * contradicted the ramp. `count` overrides the member count for exactly that
+ * case. Every other family emits one property per thing, so the two agree and
+ * the page has nothing extra to show.
+ *
+ * `supersededBy` is the Tailwind namespace that does the job the family was
+ * meant to do. It is a claim about architecture, so it is declared here, but
+ * its weight is measured below against the same scan the Tailwind table uses.
  */
 const FAMILIES = [
   {
     key: "color",
     label: "Color",
+    unit: "colors",
     match: (n) => !/^--db-(space|radius|size|border-width|elevation|duration|ease|font|line-height|letter-spacing|mono-font|spacing-unit|density-scalar|spacing-scalar|sizing-scalar|type-scalar)/.test(n),
     bridge: { kind: "theme", namespace: "--color-*", file: TOKENS_CSS, utilities: /^(bg|text|border|ring|fill|stroke|outline|from|via|to|divide|placeholder|caret|accent|shadow|decoration)-/ },
   },
   {
     key: "type",
     label: "Type",
+    unit: "styles",
+    // The classes the ramp ships, which is the thing a reader picks from. Read
+    // out of the same file the bridge points at rather than divided out of the
+    // property count, so a step that stops shipping a property still counts once.
+    count: () => [...readFile(TYPE_CSS).matchAll(/@utility type-[a-z0-9-]+/g)].length,
     match: (n) => /^--db-(font|line-height|letter-spacing|mono-font)/.test(n),
     bridge: { kind: "utility", namespace: "type-*", file: TYPE_CSS, utilities: /^type-/ },
+  },
+  {
+    key: "elevation",
+    label: "Elevation",
+    unit: "levels",
+    match: (n) => /^--db-elevation-/.test(n),
+    bridge: null,
+    supersededBy: "--shadow-*",
+  },
+  {
+    key: "scalars",
+    label: "Scalars",
+    unit: "dials",
+    match: (n) => /^--db-(spacing-unit|density-scalar|spacing-scalar|sizing-scalar|type-scalar)$/.test(n),
+    bridge: null,
   },
   // Deliberately unbridged. `--spacing` carries the grid unit and the density
   // dial, which are scalars — not these eleven named steps. Crediting the row
   // with those 818 utilities would claim `p-4` resolves to `--db-space-md`,
   // and it does not: the two are separate vars that happen to agree at 1.
-  { key: "space", label: "Space", match: (n) => /^--db-space-/.test(n), bridge: null },
+  // Which is exactly why the row has to say the padding comes from somewhere.
+  {
+    key: "space",
+    label: "Space",
+    unit: "steps",
+    match: (n) => /^--db-space-/.test(n),
+    bridge: null,
+    supersededBy: "--spacing",
+  },
+  {
+    key: "size",
+    label: "Size",
+    unit: "steps",
+    match: (n) => /^--db-size-/.test(n),
+    bridge: null,
+    supersededBy: "--spacing",
+  },
   {
     key: "radius",
     label: "Radius",
+    unit: "steps",
     match: (n) => /^--db-radius-/.test(n),
     bridge: { kind: "theme", namespace: "--radius-*", file: TOKENS_CSS, utilities: /^rounded(-|$)/ },
   },
-  { key: "size", label: "Size", match: (n) => /^--db-size-/.test(n), bridge: null },
-  { key: "border", label: "Border width", match: (n) => /^--db-border-width-/.test(n), bridge: null },
-  { key: "elevation", label: "Elevation", match: (n) => /^--db-elevation-/.test(n), bridge: null },
-  { key: "motion", label: "Motion", match: (n) => /^--db-(duration|ease)-/.test(n), bridge: null },
   {
-    key: "scalars",
-    label: "Scalars",
-    match: (n) => /^--db-(spacing-unit|density-scalar|spacing-scalar|sizing-scalar|type-scalar)$/.test(n),
+    key: "border",
+    label: "Border width",
+    unit: "widths",
+    match: (n) => /^--db-border-width-/.test(n),
     bridge: null,
+    supersededBy: "border and divide width",
+  },
+  {
+    key: "motion",
+    label: "Motion",
+    unit: "values",
+    match: (n) => /^--db-(duration|ease)-/.test(n),
+    bridge: null,
+    // The dominant path by a wide margin: a bare `transition` takes Tailwind's
+    // default duration. `duration-*` is the smaller, more obvious case and the
+    // Tailwind table lists it in its own right.
+    supersededBy: "--default-transition-duration",
   },
 ]
 
@@ -240,8 +308,12 @@ const families = FAMILIES.map((f) => {
   return {
     key: f.key,
     label: f.label,
-    tokens: names.length,
+    count: f.count ? f.count() : names.length,
+    unit: f.unit,
+    properties: names.length,
     bridge,
+    // Filled from the Tailwind scan below, once the uses exist to measure.
+    superseded: null,
     systemRefs: system.reduce((n, c) => n + c.refs, 0),
     systemConsumers: system,
     portalRefs: portal.reduce((n, c) => n + c.refs, 0),
@@ -309,6 +381,11 @@ const TAILWIND = [
   // scale is baked into the utility, so there is nothing a token could override.
   { namespace: "z-index scale", probe: null, utilities: /^-?z-\d+$/ },
   { namespace: "ring and outline width", probe: null, utilities: /^(ring|outline|inset-ring)(-\d+)?$/ },
+  // Same shape, and it is the one the Border width family was meant to own. A
+  // bare `border` is Tailwind's 1px, not `--db-border-width-thin`, so every
+  // hairline in the system renders from a value no token governs. The color
+  // variants are excluded by requiring the class to end after the side or width.
+  { namespace: "border and divide width", probe: null, utilities: /^(border|divide)(-(x|y|t|r|b|l|s|e))?(-(0|2|4|8))?$/ },
 ]
 
 const tailwind = TAILWIND.map((t) => {
@@ -328,6 +405,22 @@ const tailwind = TAILWIND.map((t) => {
     files,
   }
 }).sort((a, b) => b.uses - a.uses)
+
+/* ── what took the job instead ────────────────────────────────────────────── */
+
+/**
+ * An unread family and a superseded one are both "nothing reads this", and only
+ * one of them means the UI has none of the thing. Attached only where the family
+ * is not live and the namespace is actually written, so the page never claims a
+ * usurper that does not exist.
+ */
+for (const f of families) {
+  const declared = FAMILIES.find((spec) => spec.key === f.key)?.supersededBy
+  if (!declared || f.live) continue
+  const row = tailwind.find((t) => t.namespace === declared)
+  if (!row || row.uses === 0) continue
+  f.superseded = { namespace: row.namespace, uses: row.uses, files: row.files }
+}
 
 /* ── scalars, resolved through what they drive ────────────────────────────── */
 
@@ -425,11 +518,20 @@ fs.writeFileSync(
 
 export type Consumer = { file: string; refs: number }
 export type Bridge = { namespace: string; kind: string; file: string; uses: number; files: number }
+/** The Tailwind namespace rendering what this family was meant to render. */
+export type Superseded = { namespace: string; uses: number; files: number }
 export type Family = {
   key: string
   label: string
-  tokens: number
+  /** How many of the thing a reader counts — styles for type, levels for elevation. */
+  count: number
+  /** The noun for that thing, so a bare number cannot be read as a property count. */
+  unit: string
+  /** CSS custom properties emitted. Larger than \`count\` only where one thing sets several. */
+  properties: number
   bridge: Bridge | null
+  /** Set only when the family is not live and something else does its job. */
+  superseded: Superseded | null
   systemRefs: number
   systemConsumers: Consumer[]
   portalRefs: number
@@ -477,10 +579,11 @@ export const tailwindVersion = ${JSON.stringify(payload.tailwindVersion)}
 )
 
 console.log(`wrote ${rel(OUT)}`)
-console.log(`\nfamily          tokens  system  bridge uses  live`)
+console.log(`\nfamily          ships           props  system  bridge uses  state`)
 for (const f of families) {
+  const state = f.live ? "live" : f.superseded ? `superseded by ${f.superseded.namespace}` : "UNREAD"
   console.log(
-    `${f.key.padEnd(15)} ${String(f.tokens).padStart(5)} ${String(f.systemRefs).padStart(7)} ${String(f.bridge?.uses ?? 0).padStart(11)}  ${f.live ? "yes" : "NO"}`
+    `${f.key.padEnd(15)} ${`${f.count} ${f.unit}`.padEnd(15)} ${String(f.properties).padStart(5)} ${String(f.systemRefs).padStart(7)} ${String(f.bridge?.uses ?? 0).padStart(11)}  ${state}`
   )
 }
 console.log(`\nscalars`)

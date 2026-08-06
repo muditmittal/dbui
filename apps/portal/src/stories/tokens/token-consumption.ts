@@ -3,11 +3,20 @@
 
 export type Consumer = { file: string; refs: number }
 export type Bridge = { namespace: string; kind: string; file: string; uses: number; files: number }
+/** The Tailwind namespace rendering what this family was meant to render. */
+export type Superseded = { namespace: string; uses: number; files: number }
 export type Family = {
   key: string
   label: string
-  tokens: number
+  /** How many of the thing a reader counts — styles for type, levels for elevation. */
+  count: number
+  /** The noun for that thing, so a bare number cannot be read as a property count. */
+  unit: string
+  /** CSS custom properties emitted. Larger than `count` only where one thing sets several. */
+  properties: number
   bridge: Bridge | null
+  /** Set only when the family is not live and something else does its job. */
+  superseded: Superseded | null
   systemRefs: number
   systemConsumers: Consumer[]
   portalRefs: number
@@ -44,7 +53,9 @@ export const families: Family[] = [
   {
     "key": "color",
     "label": "Color",
-    "tokens": 85,
+    "count": 85,
+    "unit": "colors",
+    "properties": 85,
     "bridge": {
       "namespace": "--color-*",
       "kind": "theme",
@@ -52,6 +63,7 @@ export const families: Family[] = [
       "uses": 1023,
       "files": 75
     },
+    "superseded": null,
     "systemRefs": 23,
     "systemConsumers": [
       {
@@ -95,7 +107,9 @@ export const families: Family[] = [
   {
     "key": "type",
     "label": "Type",
-    "tokens": 74,
+    "count": 14,
+    "unit": "styles",
+    "properties": 74,
     "bridge": {
       "namespace": "type-*",
       "kind": "utility",
@@ -103,6 +117,7 @@ export const families: Family[] = [
       "uses": 161,
       "files": 56
     },
+    "superseded": null,
     "systemRefs": 3,
     "systemConsumers": [
       {
@@ -120,60 +135,17 @@ export const families: Family[] = [
     "live": true
   },
   {
-    "key": "space",
-    "label": "Space",
-    "tokens": 11,
-    "bridge": null,
-    "systemRefs": 0,
-    "systemConsumers": [],
-    "portalRefs": 0,
-    "portalConsumers": [],
-    "live": false
-  },
-  {
-    "key": "radius",
-    "label": "Radius",
-    "tokens": 6,
-    "bridge": {
-      "namespace": "--radius-*",
-      "kind": "theme",
-      "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 134,
-      "files": 58
-    },
-    "systemRefs": 0,
-    "systemConsumers": [],
-    "portalRefs": 0,
-    "portalConsumers": [],
-    "live": true
-  },
-  {
-    "key": "size",
-    "label": "Size",
-    "tokens": 7,
-    "bridge": null,
-    "systemRefs": 0,
-    "systemConsumers": [],
-    "portalRefs": 0,
-    "portalConsumers": [],
-    "live": false
-  },
-  {
-    "key": "border",
-    "label": "Border width",
-    "tokens": 3,
-    "bridge": null,
-    "systemRefs": 0,
-    "systemConsumers": [],
-    "portalRefs": 0,
-    "portalConsumers": [],
-    "live": false
-  },
-  {
     "key": "elevation",
     "label": "Elevation",
-    "tokens": 4,
+    "count": 4,
+    "unit": "levels",
+    "properties": 4,
     "bridge": null,
+    "superseded": {
+      "namespace": "--shadow-*",
+      "uses": 83,
+      "files": 33
+    },
     "systemRefs": 0,
     "systemConsumers": [],
     "portalRefs": 1,
@@ -186,21 +158,13 @@ export const families: Family[] = [
     "live": false
   },
   {
-    "key": "motion",
-    "label": "Motion",
-    "tokens": 7,
-    "bridge": null,
-    "systemRefs": 0,
-    "systemConsumers": [],
-    "portalRefs": 0,
-    "portalConsumers": [],
-    "live": false
-  },
-  {
     "key": "scalars",
     "label": "Scalars",
-    "tokens": 5,
+    "count": 5,
+    "unit": "dials",
+    "properties": 5,
     "bridge": null,
+    "superseded": null,
     "systemRefs": 0,
     "systemConsumers": [],
     "portalRefs": 2,
@@ -211,6 +175,98 @@ export const families: Family[] = [
       }
     ],
     "live": true
+  },
+  {
+    "key": "space",
+    "label": "Space",
+    "count": 11,
+    "unit": "steps",
+    "properties": 11,
+    "bridge": null,
+    "superseded": {
+      "namespace": "--spacing",
+      "uses": 818,
+      "files": 78
+    },
+    "systemRefs": 0,
+    "systemConsumers": [],
+    "portalRefs": 0,
+    "portalConsumers": [],
+    "live": false
+  },
+  {
+    "key": "size",
+    "label": "Size",
+    "count": 7,
+    "unit": "steps",
+    "properties": 7,
+    "bridge": null,
+    "superseded": {
+      "namespace": "--spacing",
+      "uses": 818,
+      "files": 78
+    },
+    "systemRefs": 0,
+    "systemConsumers": [],
+    "portalRefs": 0,
+    "portalConsumers": [],
+    "live": false
+  },
+  {
+    "key": "radius",
+    "label": "Radius",
+    "count": 6,
+    "unit": "steps",
+    "properties": 6,
+    "bridge": {
+      "namespace": "--radius-*",
+      "kind": "theme",
+      "file": "packages/dbui/src/tokens/tokens.css",
+      "uses": 134,
+      "files": 58
+    },
+    "superseded": null,
+    "systemRefs": 0,
+    "systemConsumers": [],
+    "portalRefs": 0,
+    "portalConsumers": [],
+    "live": true
+  },
+  {
+    "key": "border",
+    "label": "Border width",
+    "count": 3,
+    "unit": "widths",
+    "properties": 3,
+    "bridge": null,
+    "superseded": {
+      "namespace": "border and divide width",
+      "uses": 82,
+      "files": 44
+    },
+    "systemRefs": 0,
+    "systemConsumers": [],
+    "portalRefs": 0,
+    "portalConsumers": [],
+    "live": false
+  },
+  {
+    "key": "motion",
+    "label": "Motion",
+    "count": 7,
+    "unit": "values",
+    "properties": 7,
+    "bridge": null,
+    "superseded": {
+      "namespace": "--default-transition-duration",
+      "uses": 29,
+      "files": 22
+    },
+    "systemRefs": 0,
+    "systemConsumers": [],
+    "portalRefs": 0,
+    "portalConsumers": [],
+    "live": false
   }
 ]
 
@@ -297,6 +353,16 @@ export const tailwind: TailwindNamespace[] = [
     "origin": "tailwind",
     "uses": 83,
     "files": 33
+  },
+  {
+    "namespace": "border and divide width",
+    "probe": null,
+    "tailwindValue": null,
+    "overriddenIn": null,
+    "overriddenTo": null,
+    "origin": "utility",
+    "uses": 82,
+    "files": 44
   },
   {
     "namespace": "ring and outline width",
