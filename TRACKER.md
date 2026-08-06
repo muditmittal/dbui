@@ -3,13 +3,13 @@
 Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
 `generate-token-consumption.mjs`. Anything those contradict is this file being wrong.
 
-**2026-08-05**
+**2026-08-06**
 
 ## Layers
 
 | Layer | State |
 | --- | --- |
-| Tokens | Color, type and radius live — the other dimensional families unconsumed |
+| Tokens | Color, type, radius and the spacing grid live — size, elevation and motion unconsumed |
 | Icons | Done |
 | Components | Done — 3 have no story, 1 has no `@guideline` |
 | Compositions | Partial — exist, not documented |
@@ -32,17 +32,30 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.
-5. **Space, size, border width, elevation and motion are read by nothing.** Components
-   spend Tailwind's own scales instead, so every scalar except `type-scalar` turns
-   nothing, and the system rescales under a root change only because Tailwind's
-   `--spacing` is rem-based. `generate-token-consumption.mjs` measures it and
-   `/docs/tokens` renders it. Wiring the families up is a migration across every
-   component, so decide whether these tokens are the intended contract before
-   spending it.
-6. **`--radius-*` is mapped from px in the package and from tokens in the portal.**
-   Identical at a 16px root, so nothing looks wrong here. A consumer copy freezes
-   corners while control heights scale. `--shadow-focus` has the same shape: authored
-   in `globals.css` rather than `theme.config.mjs`.
+5. **The named space steps, size and border width are read by nothing.** The grid unit
+   and the density dial now stand behind `--spacing`, so density re-flows the whole
+   system, but the eleven `--db-space-*` names remain unspent — each restates a
+   numeric utility, so exposing them as Tailwind keys would put `p-md` beside a `p-4`
+   that renders the same pixels. Decide whether the named scale is the intended
+   contract, or whether the unit and the dials are the whole family.
+   `spacing-scalar` and `sizing-scalar` cannot ride `--spacing`: Tailwind reads one
+   key for padding and gap, and each of those dials owns half that axis.
+6. **Elevation and motion cannot be bridged without changing how the product looks
+   and feels.** Measured on one card, `shadow-lg` reaches below it and nowhere above;
+   `elevation-1` blooms on all four sides because it carries no negative spread, and
+   is roughly four times wider sideways. `elevation-3` peaks far darker than the
+   `shadow-xs` currently on 30 controls. Both scales are pure black with no dark
+   value, so neither draws anything against `surface-base` in dark — elevation is a
+   single-mode token in a two-mode system, and that is the first thing to fix.
+   Motion is mis-shaped rather than mis-valued: `duration-*` and `ease-*` do resolve
+   from the theme, but the four `-min`/`-max` band members describe a permitted range,
+   and no CSS property and no Tailwind namespace takes one. Nothing in the product
+   renders a DBUI duration; every transition that ships takes Tailwind's default.
+   Either retune both families so the bridge is a no-op the way spacing and radius
+   were, or delete them and name Tailwind's scales as the system's.
+7. **`--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs`,**
+   so its two widths are the only dimensional values outside the config. The radius
+   and spacing bridges moved into the generator; this one did not.
 
 ## Small
 
