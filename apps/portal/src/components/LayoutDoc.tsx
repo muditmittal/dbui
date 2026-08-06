@@ -55,6 +55,19 @@ const CHECK_LABEL: Record<Rule["checked"], string> = {
   review: "see it in the diff",
 }
 
+/**
+ * An inline link inside prose. The docs pages style every link at the call site
+ * rather than setting a rule for `a`, so an unstyled `<Link>` in a paragraph
+ * renders as body text and stops being a link to anyone who is not hovering it.
+ */
+function DocLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link href={href} className="text-text-accent no-underline hover:underline">
+      {children}
+    </Link>
+  )
+}
+
 function Slot({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5 sm:flex-row sm:gap-4">
@@ -116,11 +129,11 @@ function Gap({ title, children }: { title: string; children: React.ReactNode }) 
 const DECISIONS: Array<{ question: string; answers: React.ReactNode }> = [
   {
     question: "What is the unit of content, and which container scrolls?",
-    answers: `The archetype. ${ARCHETYPES.length} of them, below.`,
+    answers: "The archetype, named below beside the container each one scrolls.",
   },
   {
     question: "Which shell already has those regions?",
-    answers: `One of the ${shells.length} in composition.md. If none of them fits, ask before inventing another.`,
+    answers: "One of the shells in composition.md. If none of them fits, ask before inventing another.",
   },
   {
     question: "Which optional regions does the page earn?",
@@ -160,6 +173,17 @@ export function LayoutDoc() {
           observation that proves it was ignored. A sentence that could not fill those slots is not
           here. That is why the panel section is long and the rhythm section is short.
         </Para>
+        <SourceNote>
+          <>
+            This page owns the rules that hold across every shell. <Code>composition.md</Code> owns
+            each shell&rsquo;s own regions, scaling and scroll contract and renders them on{" "}
+            <DocLink href="/templates">Templates</DocLink>. A component&rsquo;s constraints live in
+            its JSDoc and outrank anything here.{" "}
+            <DocLink href="/docs/patterns">Patterns</DocLink> owns what happens over time, and{" "}
+            <DocLink href="/docs/components">component rules</DocLink> owns cross-component spacing,
+            buttons and menus.
+          </>
+        </SourceNote>
       </div>
 
       <DocSection title="Decide in this order">
@@ -285,7 +309,7 @@ export function LayoutDoc() {
             Anything with a cancel button was a dialog all along.
           </Para>
           <Para>
-            Behavior belongs to <Link href="/docs/patterns">patterns</Link>, which owns what happens
+            Behavior belongs to <DocLink href="/docs/patterns">patterns</DocLink>, which owns what happens
             when one of these opens, closes or has to hold unsaved work.
           </Para>
         </DocSubsection>
@@ -325,7 +349,7 @@ export function LayoutDoc() {
 
         <Para>
           The regions, scaling and scroll contract of each shell live in{" "}
-          <Code>composition.md</Code> and render on <Link href="/templates">Templates</Link>. Agents
+          <Code>composition.md</Code> and render on <DocLink href="/templates">Templates</DocLink>. Agents
           read the same definitions from <Code>dbui shell</Code>. This page does not repeat them.
         </Para>
 
@@ -368,7 +392,7 @@ export function LayoutDoc() {
             {
               scale: spacing.tokenFamily.name,
               state: spacing.tokenFamily.live ? "Live" : "Read by nothing",
-              what: `Generated from theme.config.mjs and shipped in tokens.css. ${spacing.tokenFamily.tokens} tokens, and no component or page reads one.`,
+              what: `Generated from theme.config.mjs and shipped in tokens.css. No component and no page reads any of its ${spacing.tokenFamily.tokens} tokens.`,
             },
             {
               scale: spacing.utility.name,
@@ -481,18 +505,6 @@ export function LayoutDoc() {
         </div>
       </DocSection>
 
-      <DocSection title="Who owns what">
-        <SourceNote>
-          <>
-            This page owns the rules that hold across every shell. <Code>composition.md</Code> owns
-            each shell&rsquo;s own regions, scaling and scroll contract and renders them on{" "}
-            <Link href="/templates">Templates</Link>. A component&rsquo;s constraints live in its
-            JSDoc and outrank anything here. <Link href="/docs/patterns">Patterns</Link> owns what
-            happens over time, and <Link href="/docs/components">component rules</Link> owns
-            cross-component spacing, buttons and menus.
-          </>
-        </SourceNote>
-      </DocSection>
     </>
   )
 }
