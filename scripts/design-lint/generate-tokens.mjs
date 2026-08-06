@@ -125,10 +125,13 @@ const radiusLines = Object.entries(radius)
  * set. It is also why the colors use `inline`: same reason, one level down.
  */
 const bridgeLines = Object.entries(bridge ?? {})
-  .map(([key, spec]) => {
+  .flatMap(([key, spec]) => {
+    // A namespace with steps: one line per Tailwind step name.
+    if (spec.steps) {
+      return Object.entries(spec.steps).map(([tw, own]) => `  --${key}-${tw}: ${v(`${key}-${own}`)};`)
+    }
     const base = v(spec.token)
-    const value = spec.scalars?.length ? `calc(${[base, ...spec.scalars.map(v)].join(" * ")})` : base
-    return `  --${key}: ${value};`
+    return [`  --${key}: ${spec.scalars?.length ? `calc(${[base, ...spec.scalars.map(v)].join(" * ")})` : base};`]
   })
   .join("\n")
 

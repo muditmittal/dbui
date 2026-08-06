@@ -79,9 +79,9 @@ const REACHES: Record<string, React.ReactNode> = {
   ),
   radius: (
     <>
-      <Code>--radius-*</Code>, so <Code>rounded-*</Code> resolves to a token —{" "}
-      {family("radius")?.bridge?.uses} uses. Mapped twice, and only one of the two derives from
-      here.
+      <Code>--radius-*</Code> in the generated layer, so <Code>rounded-*</Code> resolves to a token —{" "}
+      {family("radius")?.bridge?.uses} uses. The step names do not line up with Tailwind&rsquo;s;
+      the map is in <Code>theme.config.mjs</Code>.
     </>
   ),
   scalars: (
@@ -342,13 +342,12 @@ function NameAnatomy() {
 const unconsumed = families.filter((f) => !f.live)
 
 /**
- * Radius is the one namespace mapped in more than one place, and the two do not
- * agree about where the value comes from. Counted rather than named so the claim
- * collapses on its own if someone reconciles them.
+ * Every theme key still set by hand. The generator owns the bridge now, so an
+ * entry here is a value it does not own — which is how radius came to be stated
+ * in two files that disagreed. Measured rather than named, so the list shrinks
+ * on its own as keys move into the config.
  */
-const radiusMappings = themeOverrides.filter((o) => o.key.startsWith("--radius"))
-const radiusFiles = [...new Set(radiusMappings.map((o) => o.file))]
-const radiusFromToken = [...new Set(radiusMappings.filter((o) => o.fromToken).map((o) => o.file))]
+const handMapped = [...new Set(themeOverrides.map((o) => o.key))].sort()
 
 /** Serial commas are out, so an inline run needs its own joiner. */
 function Run({ items }: { items: React.ReactNode[] }) {
@@ -418,9 +417,14 @@ export function TokensDoc() {
             default.
           </>,
           <>
-            <Code>--radius-*</Code> is mapped in {radiusFiles.length} files and only{" "}
-            {radiusFromToken.length} derives from these tokens. The other restates px, so a corner
-            that scales on this page stays frozen in a consumer copy.
+            <Code>--radius-*</Code> resolves to the radius tokens, so a corner scales with the root
+            the way a control height does. A px literal in its place holds at a 16px root and
+            freezes every corner above it.
+          </>,
+          <>
+            {handMapped.length} theme keys are still authored by hand in <Code>globals.css</Code>{" "}
+            rather than generated: <Run items={handMapped.map((k) => <Code key={k}>{k}</Code>)} />.
+            Each is a value the config does not own, so each can drift from one.
           </>,
           <>
             {hardcoded.uses} px and rem literals remain in {hardcoded.files.length} component files,

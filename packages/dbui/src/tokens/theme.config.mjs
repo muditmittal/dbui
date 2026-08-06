@@ -310,6 +310,10 @@ export const radius = { sm: "4px", md: "8px", lg: "12px", xl: "16px", "2xl": "24
  * ══════════════════════════════════════════════════════════════════════════ */
 export const bridge = {
   spacing: { token: "spacing-unit", scalars: ["density-scalar"] },
+  /* Tailwind step → DBUI step. Ours runs one notch coarser than Tailwind's, and
+   * `full` is a pill sentinel with no counterpart, so `3xl` carries it. `xs` and
+   * `4xl` are left to Tailwind: this scale has no step there. */
+  radius: { steps: { sm: "sm", md: "md", lg: "lg", xl: "xl", "2xl": "2xl", "3xl": "full" } },
 }
 
 /* Type — anchored ramp. Each step is a hand-tuned PIXEL anchor for size,

@@ -141,19 +141,14 @@ export const families: Family[] = [
     "bridge": {
       "namespace": "--radius-*",
       "kind": "theme",
-      "file": "apps/portal/src/app/globals.css",
+      "file": "packages/dbui/src/tokens/tokens.css",
       "uses": 134,
       "files": 58
     },
     "systemRefs": 0,
     "systemConsumers": [],
-    "portalRefs": 6,
-    "portalConsumers": [
-      {
-        "file": "apps/portal/src/app/globals.css",
-        "refs": 6
-      }
-    ],
+    "portalRefs": 0,
+    "portalConsumers": [],
     "live": true
   },
   {
@@ -212,8 +207,13 @@ export const families: Family[] = [
     "bridge": null,
     "systemRefs": 0,
     "systemConsumers": [],
-    "portalRefs": 0,
-    "portalConsumers": [],
+    "portalRefs": 2,
+    "portalConsumers": [
+      {
+        "file": "apps/portal/src/components/layout-data.ts",
+        "refs": 2
+      }
+    ],
     "live": true
   }
 ]
@@ -286,8 +286,8 @@ export const tailwind: TailwindNamespace[] = [
     "namespace": "--radius-*",
     "probe": "--radius-md",
     "tailwindValue": "0.375rem",
-    "overriddenIn": "packages/dbui/src/tokens/globals.css",
-    "overriddenTo": "8px",
+    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
+    "overriddenTo": "var(--db-radius-md)",
     "origin": "override",
     "uses": 126,
     "files": 56
@@ -484,42 +484,6 @@ export const themeOverrides: ThemeOverride[] = [
     "fromToken": true
   },
   {
-    "file": "packages/dbui/src/tokens/globals.css",
-    "key": "--radius-sm",
-    "value": "4px",
-    "fromToken": false
-  },
-  {
-    "file": "packages/dbui/src/tokens/globals.css",
-    "key": "--radius-md",
-    "value": "8px",
-    "fromToken": false
-  },
-  {
-    "file": "packages/dbui/src/tokens/globals.css",
-    "key": "--radius-lg",
-    "value": "12px",
-    "fromToken": false
-  },
-  {
-    "file": "packages/dbui/src/tokens/globals.css",
-    "key": "--radius-xl",
-    "value": "16px",
-    "fromToken": false
-  },
-  {
-    "file": "packages/dbui/src/tokens/globals.css",
-    "key": "--radius-2xl",
-    "value": "24px",
-    "fromToken": false
-  },
-  {
-    "file": "packages/dbui/src/tokens/globals.css",
-    "key": "--radius-3xl",
-    "value": "999px",
-    "fromToken": false
-  },
-  {
     "file": "apps/portal/src/app/globals.css",
     "key": "--color-icon-folder",
     "value": "var(--icon-folder)",
@@ -565,42 +529,6 @@ export const themeOverrides: ThemeOverride[] = [
     "file": "apps/portal/src/app/globals.css",
     "key": "--font-mono",
     "value": "var(--db-mono-font-family)",
-    "fromToken": true
-  },
-  {
-    "file": "apps/portal/src/app/globals.css",
-    "key": "--radius-sm",
-    "value": "var(--db-radius-sm)",
-    "fromToken": true
-  },
-  {
-    "file": "apps/portal/src/app/globals.css",
-    "key": "--radius-md",
-    "value": "var(--db-radius-md)",
-    "fromToken": true
-  },
-  {
-    "file": "apps/portal/src/app/globals.css",
-    "key": "--radius-lg",
-    "value": "var(--db-radius-lg)",
-    "fromToken": true
-  },
-  {
-    "file": "apps/portal/src/app/globals.css",
-    "key": "--radius-xl",
-    "value": "var(--db-radius-xl)",
-    "fromToken": true
-  },
-  {
-    "file": "apps/portal/src/app/globals.css",
-    "key": "--radius-2xl",
-    "value": "var(--db-radius-2xl)",
-    "fromToken": true
-  },
-  {
-    "file": "apps/portal/src/app/globals.css",
-    "key": "--radius-3xl",
-    "value": "var(--db-radius-full)",
     "fromToken": true
   }
 ]

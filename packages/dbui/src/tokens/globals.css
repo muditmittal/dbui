@@ -72,15 +72,9 @@
   --font-display: var(--db-font-family);
   --font-mono: var(--db-mono-font-family);
 
-
-  /* ─── Radius — DuBois values, mapped to shadcn usage ─── */
-  /* shadcn components use rounded-lg for buttons/inputs, rounded-md for inner elements */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-  --radius-3xl: 999px;
+  /* Radius and spacing are bridged in the generated layer, from the map in
+   * theme.config.mjs. They used to be restated here as px, which held at a 16px
+   * root and froze every corner above it while control heights kept growing. */
 }
 
 /* ─── Light mode — DuBois token values ─── */

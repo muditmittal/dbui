@@ -127,7 +127,7 @@ const FAMILIES = [
     key: "radius",
     label: "Radius",
     match: (n) => /^--db-radius-/.test(n),
-    bridge: { kind: "theme", namespace: "--radius-*", file: PORTAL_GLOBALS, utilities: /^rounded(-|$)/ },
+    bridge: { kind: "theme", namespace: "--radius-*", file: TOKENS_CSS, utilities: /^rounded(-|$)/ },
   },
   { key: "size", label: "Size", match: (n) => /^--db-size-/.test(n), bridge: null },
   { key: "border", label: "Border width", match: (n) => /^--db-border-width-/.test(n), bridge: null },

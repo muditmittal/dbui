@@ -76,18 +76,9 @@
   --font-display: var(--db-font-family);
   --font-mono: var(--db-mono-font-family);
 
-
-  /* ─── Radius — the shipped tokens, not a second copy of their values ───
-   * These were px literals restating tokens.css. Identical at 1x, but a px
-   * corner on a control whose height is in rem changes the control's shape
-   * as soon as the root moves, which is the case the rem radii exist for.
-   * `rounded-3xl` is the pill sentinel and stays on `full`. */
-  --radius-sm: var(--db-radius-sm);
-  --radius-md: var(--db-radius-md);
-  --radius-lg: var(--db-radius-lg);
-  --radius-xl: var(--db-radius-xl);
-  --radius-2xl: var(--db-radius-2xl);
-  --radius-3xl: var(--db-radius-full);
+  /* Radius and spacing are bridged in the generated layer, from the map in
+   * theme.config.mjs. They were mapped here too, and the two copies drifted:
+   * this one referenced the tokens while the shipped package's restated px. */
 }
 
 /* ─── Light mode — DuBois token values ─── */

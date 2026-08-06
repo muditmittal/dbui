@@ -99,6 +99,12 @@
 
   /* ── Tailwind bridge — the namespaces DBUI tokens stand behind ── */
   --spacing: calc(var(--db-spacing-unit) * var(--db-density-scalar));
+  --radius-sm: var(--db-radius-sm);
+  --radius-md: var(--db-radius-md);
+  --radius-lg: var(--db-radius-lg);
+  --radius-xl: var(--db-radius-xl);
+  --radius-2xl: var(--db-radius-2xl);
+  --radius-3xl: var(--db-radius-full);
 }
 
 :root {
