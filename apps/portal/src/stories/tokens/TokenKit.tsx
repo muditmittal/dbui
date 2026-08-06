@@ -62,9 +62,16 @@ function Row({ children, last }: { children: React.ReactNode; last?: boolean }) 
   )
 }
 
-function Name({ children }: { children: React.ReactNode }) {
+/**
+ * The token's name, with how it is written on hover.
+ *
+ * The expression has to stay reachable — someone will want to know that a space
+ * step is the grid unit times a scalar times the density dial — but it cannot be
+ * the reading. Printed in the row it wrapped to three lines and buried the value.
+ */
+function Name({ children, title }: { children: React.ReactNode; title?: string }) {
   return (
-    <code className="type-code w-60 shrink-0 text-text-base" style={{ margin: 0 }}>
+    <code className="type-code w-60 shrink-0 text-text-base" style={{ margin: 0 }} title={title}>
       {children}
     </code>
   )
@@ -74,6 +81,22 @@ function Value({ children }: { children: React.ReactNode }) {
   return (
     <span className="type-hint w-28 shrink-0 text-text-subtle" style={{ margin: 0 }}>
       {children}
+    </span>
+  )
+}
+
+/**
+ * What a token is worth, at the default root, resolved by the generator rather
+ * than here — the browser could compute it, but then the page and the spec an
+ * engineer reviews would each have their own answer.
+ *
+ * Falls back to the written value for the families that have no single px
+ * answer: a duration, a shadow, an em step, a multiplier.
+ */
+function Px({ token }: { token: Token }) {
+  return (
+    <span className="type-hint w-16 shrink-0 tabular-nums text-text-base" style={{ margin: 0 }}>
+      {token.px === null ? token.value : `${token.px}px`}
     </span>
   )
 }
@@ -201,22 +224,29 @@ export function ColorSwatches({
 
 /* ── Space ──────────────────────────────────────────────────────────────── */
 
-/** Rendered as a bar at its own width, so the steps are comparable at a glance. */
+/**
+ * A step, what it resolves to, and how many grid steps that is.
+ *
+ * The row used to print the step's own name back at the reader — `3xs` beside
+ * `--db-space-3xs` — which restated the token and left the value unstated. The
+ * value is four var() indirections deep, so nobody could tell whether the step
+ * was 2px or 20px without opening the CSS.
+ *
+ * The multiple is what turns nine numbers into a scale. It also shows where the
+ * value comes from: 0.5 of the grid unit is why `3xs` is what it is.
+ */
 export function SpaceScale({ tokens }: { tokens: Token[] }) {
   return (
     <Panel>
       {tokens.map((t, i) => (
         <Row key={t.name} last={i === tokens.length - 1}>
-          <Name>--db-{t.name}</Name>
-          <div className="flex flex-1 items-center gap-3">
-            <span
-              className="block h-4 rounded-xs bg-action-primary-base"
-              style={{ width: `var(--db-${t.name})`, minWidth: 1 }}
-            />
-            <span className="type-hint text-text-subtle">
-              {t.name === "space-0" ? "0" : `${t.name.replace("space-", "")}`}
-            </span>
-          </div>
+          <Name title={t.value}>--db-{t.name}</Name>
+          <Px token={t} />
+          <Value>{t.multiple === null ? null : `${t.multiple} × unit`}</Value>
+          <span
+            className="block h-4 rounded-xs bg-action-primary-base"
+            style={{ width: `var(--db-${t.name})`, minWidth: 1 }}
+          />
         </Row>
       ))}
     </Panel>
@@ -232,13 +262,18 @@ export function RadiusScale({ tokens }: { tokens: Token[] }) {
         <div
           key={t.name}
           className="flex flex-col items-center gap-2 rounded-md border border-border-base bg-surface-base p-4"
+          title={t.value}
         >
           <span
             className="block size-16 border-2 border-action-primary-base bg-surface-accent"
             style={{ borderRadius: `var(--db-${t.name})` }}
           />
           <code className="type-code text-text-base">{t.name.replace("radius-", "")}</code>
-          <span className="type-hint text-text-subtle">{t.value}</span>
+          {/* px rather than the shipped rem, so this scale and the space scale
+              beside it are read in the same unit. The rem is on the card. */}
+          <span className="type-hint tabular-nums text-text-subtle">
+            {t.px === null ? t.value : `${t.px}px`}
+          </span>
         </div>
       ))}
     </div>
@@ -248,10 +283,9 @@ export function RadiusScale({ tokens }: { tokens: Token[] }) {
 /* ── Size ───────────────────────────────────────────────────────────────── */
 
 /**
- * The anchor out of a scaled value. This was matching `calc(<n>px` and these
- * tokens ship rem, so the whole `calc(1.5rem * var(--db-sizing-scalar))` landed
- * in a narrow column and wrapped to three lines. The scalar it drops is the
- * subject of its own section.
+ * The rem the value is authored against, dropping the scalar that multiplies it.
+ * Secondary to the px now: the rem is what makes the box follow the reader's
+ * font size, and the px is what the box is at the default.
  */
 const anchor = (value: string) => value.match(/calc\(\s*([\d.]+(?:rem|px))/)?.[1] ?? value
 
@@ -260,7 +294,8 @@ export function SizeScale({ tokens, kind }: { tokens: Token[]; kind: "element" |
     <Panel>
       {tokens.map((t, i) => (
         <Row key={t.name} last={i === tokens.length - 1}>
-          <Name>--db-{t.name}</Name>
+          <Name title={t.value}>--db-{t.name}</Name>
+          <Px token={t} />
           <Value>{anchor(t.value)}</Value>
           <span
             className={
@@ -286,8 +321,8 @@ export function BorderScale({ tokens }: { tokens: Token[] }) {
     <Panel>
       {tokens.map((t, i) => (
         <Row key={t.name} last={i === tokens.length - 1}>
-          <Name>--db-{t.name}</Name>
-          <Value>{t.value}</Value>
+          <Name title={t.value}>--db-{t.name}</Name>
+          <Px token={t} />
           <span
             className="block h-8 w-24 rounded-sm border-border-strong bg-surface-base"
             style={{ borderWidth: `var(--db-${t.name})`, borderStyle: "solid" }}
@@ -332,7 +367,7 @@ export function MotionScale({ tokens, easing }: { tokens: Token[]; easing: strin
         {tokens.map((t, i) => (
           <Row key={t.name} last={i === tokens.length - 1}>
             <Name>--db-{t.name}</Name>
-            <Value>{t.value}</Value>
+            <Px token={t} />
             <div className="relative h-6 flex-1 overflow-hidden rounded-sm bg-surface-subtle">
               <span
                 key={run}
@@ -564,8 +599,18 @@ export function ScalarList({
           className={`flex flex-col gap-1 px-4 py-3 ${i === tokens.length - 1 ? "" : "border-b border-border-subtle"}`}
         >
           <div className="flex items-baseline gap-3">
-            <code className="type-code min-w-0 flex-1 truncate text-text-base">--db-{t.name}</code>
-            <span className="type-hint shrink-0 tabular-nums text-text-subtle">{t.value}</span>
+            <code
+              className="type-code min-w-0 flex-1 truncate text-text-base"
+              title={t.value}
+            >
+              --db-{t.name}
+            </code>
+            {/* The grid unit is a length and resolves; the four dials are bare
+                multipliers and have no px. Showing the unit in px is what makes
+                the space scale's "× unit" arithmetic checkable. */}
+            <span className="type-hint shrink-0 tabular-nums text-text-subtle">
+              {t.px === null ? t.value : `${t.px}px`}
+            </span>
             <Wired live={live.get(`--db-${t.name}`) ?? false} />
           </div>
           <span className="type-body text-text-subtle">{drives[t.name]}</span>

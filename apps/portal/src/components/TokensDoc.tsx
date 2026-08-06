@@ -5,7 +5,7 @@ import {
   ElevationScale, MotionScale, ScalarList, TypeScale, WiringTable, TailwindTable, Wired,
 } from "@/stories/tokens/TokenKit"
 import {
-  colorGroups, type as typeSteps, space, radius, sizeElement, sizeIcon,
+  colorGroups, type as typeSteps, space, spaceInline, radius, sizeElement, sizeIcon,
   borderWidth, elevation, duration, easing, scalars,
 } from "@/stories/tokens/token-data"
 import {
@@ -441,7 +441,11 @@ export function TokensDoc() {
           </>,
         ]}
       >
-        <SpaceScale tokens={space} />
+        {/* The inline steps are part of the family the wiring table counts, so
+            leaving them out of the preview showed nine of eleven with nothing
+            saying where the other two went. They have no px because em resolves
+            against the element, which is the point of them. */}
+        <SpaceScale tokens={[...space, ...spaceInline]} />
       </Section>
 
       <Section
