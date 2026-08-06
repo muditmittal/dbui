@@ -79,7 +79,7 @@ export const families: Family[] = [
         "refs": 1
       }
     ],
-    "portalRefs": 5,
+    "portalRefs": 4,
     "portalConsumers": [
       {
         "file": "apps/portal/src/app/globals.css",
@@ -88,10 +88,6 @@ export const families: Family[] = [
       {
         "file": "apps/portal/src/app/page.tsx",
         "refs": 2
-      },
-      {
-        "file": "apps/portal/src/components/TokensDoc.tsx",
-        "refs": 1
       }
     ],
     "live": true
