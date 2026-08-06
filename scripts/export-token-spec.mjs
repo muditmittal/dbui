@@ -14,29 +14,14 @@ import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
+import { declarations, asPx } from "./token-values.mjs"
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const css = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/tokens.css"), "utf8")
 const typeCss = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/type.css"), "utf8")
 
-function block(source, selector) {
-  const start = source.indexOf(selector)
-  if (start === -1) return {}
-  const open = source.indexOf("{", start)
-  let depth = 0
-  let end = open
-  for (let i = open; i < source.length; i++) {
-    if (source[i] === "{") depth++
-    else if (source[i] === "}" && --depth === 0) { end = i; break }
-  }
-  const out = {}
-  for (const m of source.slice(open, end).matchAll(/(--db-[a-z0-9-]+):\s*([^;]+);/g)) {
-    out[m[1]] = m[2].trim()
-  }
-  return out
-}
-
-const light = block(css, ":root")
-const dark = block(css, ".dark")
+const light = declarations(css, ":root")
+const dark = declarations(css, ".dark")
 
 /** Category, in the order engineering's sheet uses, extended with what we added. */
 function categorize(name) {
@@ -54,44 +39,8 @@ function categorize(name) {
 
 const ORDER = ["Color", "Density", "Typography", "Radius", "Size", "Border", "Elevation", "Motion", "Other"]
 
-/**
- * Resolve a calc() chain to what it actually renders at a 16px root with every
- * scalar at 1. A spec that reads `calc(var(--db-spacing-unit) * 4 * ...)` tells
- * a reviewer nothing; `16px` tells them whether it is right.
- */
-function resolve(value, seen = 0) {
-  if (!value || seen > 6) return ""
-  let v = value
-  // Substitute vars until none remain.
-  for (let i = 0; i < 6 && v.includes("var("); i++) {
-    v = v.replace(/var\((--db-[a-z0-9-]+)\)/g, (_, name) => light[name] ?? "1")
-  }
-  if (v.includes("var(")) return ""
-  const calc = v.match(/^calc\((.+)\)$/)
-  const expr = calc ? calc[1] : v
-
-  // A bare length resolves directly. `em` is relative to its own element, so it
-  // has no single px answer; unitless values are multipliers, not lengths.
-  const bare = expr.trim().match(/^([\d.]+)(rem|px)$/)
-  if (bare) {
-    const px = bare[2] === "rem" ? parseFloat(bare[1]) * 16 : parseFloat(bare[1])
-    return `${parseFloat(px.toFixed(4))}px`
-  }
-
-  if (!/^[\d.\srem px*+-]+$/i.test(expr) || !expr.includes("*")) return ""
-  const parts = expr.split("*").map((p) => p.trim())
-  let unit = ""
-  let n = 1
-  for (const p of parts) {
-    const m = p.match(/^([\d.]+)(rem|px)?$/)
-    if (!m) return ""
-    if (m[2]) unit = m[2]
-    n *= parseFloat(m[1])
-  }
-  if (!unit) return ""
-  const px = unit === "rem" ? n * 16 : n
-  return `${parseFloat(px.toFixed(4))}px`
-}
+/** What the value renders at, at a 16px root with every scalar at 1. */
+const resolve = (value) => asPx(value, light)
 
 const rows = Object.keys(light)
   .map((name) => ({

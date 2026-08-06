@@ -99,7 +99,7 @@ Scalars and the two `em` inline steps have no single px value by design.
 | `--db-viz-sequential-9` | Color | #084150 |  | #D2F1FC |
 | `--db-density-scalar` | Density | 1 |  |  |
 | `--db-sizing-scalar` | Density | 1 |  |  |
-| `--db-space-0` | Density | 0 |  |  |
+| `--db-space-0` | Density | 0 | 0px |  |
 | `--db-space-2xl` | Density | calc(var(--db-spacing-unit) * 12 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 48px |  |
 | `--db-space-2xs` | Density | calc(var(--db-spacing-unit) * 1 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 4px |  |
 | `--db-space-3xs` | Density | calc(var(--db-spacing-unit) * 0.5 * var(--db-spacing-scalar) * var(--db-density-scalar)) | 2px |  |
