@@ -270,21 +270,28 @@ export const semantics = {
  * re-flows via calc(). Defaults = 1 (no change from the hand-tuned anchors).
  * ══════════════════════════════════════════════════════════════════════════ */
 export const scalars = {
-  "spacing-unit": "4px", // the base grid step; every space token is a multiple
+  "spacing-unit": "4px", // the base grid step; every dimensional token is a multiple
   "density-scalar": 1, // master dial — tightens/loosens EVERYTHING at once
-  "spacing-scalar": 1, // gaps *between* elements (margins, gaps)
-  "sizing-scalar": 1, // space *inside* elements (padding, control heights)
+  "sizing-scalar": 1, // control heights and icon boxes, until size joins the ramp
   "type-scalar": 1, // nudges the whole type ramp together (anchored)
 }
 
-/* Space tokens — multiples of `spacing-unit`, scaled by spacing × density.
- * `inline-*` gaps are em-relative so they track the text size they sit beside. */
-export const space = {
-  // Half-step at the bottom only, for tight insets and icon nudges. The scale
-  // stays coarse above 8px on purpose: fewer steps is what makes it consistent.
-  units: { "0": 0, "3xs": 0.5, "2xs": 1, xs: 2, sm: 3, md: 4, lg: 6, xl: 8, "2xl": 12 },
-  inline: { xs: "0.25em", sm: "0.5em" },
-}
+/* ── The dimensional families ─────────────────────────────────────────────
+ *
+ * A stop is named after its MULTIPLE of `spacing-unit`, not its position in the
+ * list. `--db-space-3` is 12px and the class is `p-3`, so the number is the same
+ * in Figma, in the token and in the class. The previous `sm`/`md`/`lg` naming
+ * needed a lookup table to go one way and a memory to go the other, and the two
+ * disagreed the moment a step was inserted — `space-lg` was the sixth step and
+ * `radius-lg` was the third.
+ *
+ * The name is spelled out rather than abbreviated. It is read far more often
+ * than typed, because the thing an author types is the Tailwind class. `s-3`
+ * would save three characters and leave space and size indistinguishable.
+ */
+
+/* Space — padding, margin, gap. Scales with density. */
+export const space = { 0: 0, "0-5": 0.5, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, 8: 8, 10: 10, 12: 12 }
 
 /* Radius — fixed anchors (radius doesn't scale with density). */
 export const radius = { sm: "4px", md: "8px", lg: "12px", xl: "16px", "2xl": "24px", full: "999px" }
@@ -302,14 +309,25 @@ export const radius = { sm: "4px", md: "8px", lg: "12px", xl: "16px", "2xl": "24
  * `scalars` lists the dials folded into a Tailwind key. Tailwind's `--spacing`
  * is one number that every dimensional utility multiplies — `p-4` and `gap-4`
  * both read it — so only a dial with that same "everything at once" shape can
- * ride it. `density-scalar` is that dial by definition. `spacing-scalar`
- * (between elements) and `sizing-scalar` (inside them) each own half the axis,
- * and Tailwind has nowhere to put a half, so wiring either one here would make
- * it drive padding it does not own. They stay on --db-space-* and --db-size-*,
- * which a call site can apply selectively.
+ * ride it. `density-scalar` is that dial by definition.
+ *
+ * `steps` declares an explicit key per stop, which BEATS the multiplier for
+ * that step — asserted as K1 in `scripts/verify-spacing-scale.mjs`, not assumed.
+ *
+ * The multiplier itself deliberately stays declared. Removing it (`--spacing:
+ * initial`) is what makes the scale finite, and it refuses 106 call sites that
+ * compile today, 45 of them at 6px. Those get snapped to the nearest legal step
+ * as a separate decision. Until then a declared step resolves to our token and
+ * an undeclared one still renders off the multiplier, so nothing breaks on the
+ * day this lands.
  * ══════════════════════════════════════════════════════════════════════════ */
 export const bridge = {
-  spacing: { token: "spacing-unit", scalars: ["density-scalar"] },
+  spacing: {
+    token: "spacing-unit",
+    scalars: ["density-scalar"],
+    family: "space",
+    steps: [0, "0.5", 1, 2, 3, 4, 6, 8, 10, 12],
+  },
   /* Tailwind step → DBUI step. Ours runs one notch coarser than Tailwind's, and
    * `full` is a pill sentinel with no counterpart, so `3xl` carries it. `xs` and
    * `4xl` are left to Tailwind: this scale has no step there. */

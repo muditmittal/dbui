@@ -99,6 +99,16 @@
 
   /* ── Tailwind bridge — the namespaces DBUI tokens stand behind ── */
   --spacing: calc(var(--db-spacing-unit) * var(--db-density-scalar));
+  --spacing-0: var(--db-space-0);
+  --spacing-0\.5: var(--db-space-0-5);
+  --spacing-1: var(--db-space-1);
+  --spacing-2: var(--db-space-2);
+  --spacing-3: var(--db-space-3);
+  --spacing-4: var(--db-space-4);
+  --spacing-6: var(--db-space-6);
+  --spacing-8: var(--db-space-8);
+  --spacing-10: var(--db-space-10);
+  --spacing-12: var(--db-space-12);
   --radius-sm: var(--db-radius-sm);
   --radius-md: var(--db-radius-md);
   --radius-lg: var(--db-radius-lg);
@@ -111,22 +121,20 @@
   /* ── Scalars — the density/size/type dials ── */
   --db-spacing-unit: 0.25rem;
   --db-density-scalar: 1;
-  --db-spacing-scalar: 1;
   --db-sizing-scalar: 1;
   --db-type-scalar: 1;
 
-  /* ── Space (multiples of the grid unit, scaled by spacing × density) ── */
+  /* ── Space (each stop is its multiple of the grid unit, scaled by density) ── */
   --db-space-0: 0;
-  --db-space-3xs: calc(var(--db-spacing-unit) * 0.5 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-2xs: calc(var(--db-spacing-unit) * 1 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-xs: calc(var(--db-spacing-unit) * 2 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-sm: calc(var(--db-spacing-unit) * 3 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-md: calc(var(--db-spacing-unit) * 4 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-lg: calc(var(--db-spacing-unit) * 6 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-xl: calc(var(--db-spacing-unit) * 8 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-2xl: calc(var(--db-spacing-unit) * 12 * var(--db-spacing-scalar) * var(--db-density-scalar));
-  --db-space-inline-xs: 0.25em;
-  --db-space-inline-sm: 0.5em;
+  --db-space-0-5: calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar));
+  --db-space-1: calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar));
+  --db-space-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
+  --db-space-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
+  --db-space-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-space-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
+  --db-space-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
+  --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
+  --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
 
   /* ── Radius (fixed anchors) ── */
   --db-radius-sm: 0.25rem;

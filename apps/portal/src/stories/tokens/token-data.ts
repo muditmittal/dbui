@@ -646,67 +646,58 @@ export const space: Token[] = [
     "multiple": 0
   },
   {
-    "name": "space-3xs",
-    "value": "calc(var(--db-spacing-unit) * 0.5 * var(--db-spacing-scalar) * var(--db-density-scalar))",
+    "name": "space-0-5",
+    "value": "calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar))",
     "px": 2,
     "multiple": 0.5
   },
   {
-    "name": "space-2xs",
-    "value": "calc(var(--db-spacing-unit) * 1 * var(--db-spacing-scalar) * var(--db-density-scalar))",
+    "name": "space-1",
+    "value": "calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar))",
     "px": 4,
     "multiple": 1
   },
   {
-    "name": "space-xs",
-    "value": "calc(var(--db-spacing-unit) * 2 * var(--db-spacing-scalar) * var(--db-density-scalar))",
+    "name": "space-2",
+    "value": "calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar))",
     "px": 8,
     "multiple": 2
   },
   {
-    "name": "space-sm",
-    "value": "calc(var(--db-spacing-unit) * 3 * var(--db-spacing-scalar) * var(--db-density-scalar))",
+    "name": "space-3",
+    "value": "calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar))",
     "px": 12,
     "multiple": 3
   },
   {
-    "name": "space-md",
-    "value": "calc(var(--db-spacing-unit) * 4 * var(--db-spacing-scalar) * var(--db-density-scalar))",
+    "name": "space-4",
+    "value": "calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar))",
     "px": 16,
     "multiple": 4
   },
   {
-    "name": "space-lg",
-    "value": "calc(var(--db-spacing-unit) * 6 * var(--db-spacing-scalar) * var(--db-density-scalar))",
+    "name": "space-6",
+    "value": "calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar))",
     "px": 24,
     "multiple": 6
   },
   {
-    "name": "space-xl",
-    "value": "calc(var(--db-spacing-unit) * 8 * var(--db-spacing-scalar) * var(--db-density-scalar))",
+    "name": "space-8",
+    "value": "calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar))",
     "px": 32,
     "multiple": 8
   },
   {
-    "name": "space-2xl",
-    "value": "calc(var(--db-spacing-unit) * 12 * var(--db-spacing-scalar) * var(--db-density-scalar))",
-    "px": 48,
-    "multiple": 12
-  }
-]
-
-export const spaceInline: Token[] = [
-  {
-    "name": "space-inline-xs",
-    "value": "0.25em",
-    "px": null,
-    "multiple": null
+    "name": "space-10",
+    "value": "calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar))",
+    "px": 40,
+    "multiple": 10
   },
   {
-    "name": "space-inline-sm",
-    "value": "0.5em",
-    "px": null,
-    "multiple": null
+    "name": "space-12",
+    "value": "calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar))",
+    "px": 48,
+    "multiple": 12
   }
 ]
 
@@ -907,12 +898,6 @@ export const scalars: Token[] = [
     "multiple": null
   },
   {
-    "name": "spacing-scalar",
-    "value": "1",
-    "px": null,
-    "multiple": null
-  },
-  {
     "name": "sizing-scalar",
     "value": "1",
     "px": null,
@@ -928,8 +913,7 @@ export const scalars: Token[] = [
 
 export const tokenCounts = {
   "colorGroups": 85,
-  "space": 9,
-  "spaceInline": 2,
+  "space": 10,
   "radius": 6,
   "sizeElement": 2,
   "sizeIcon": 5,
@@ -937,6 +921,6 @@ export const tokenCounts = {
   "elevation": 4,
   "duration": 6,
   "easing": 1,
-  "scalars": 5,
+  "scalars": 4,
   "type": 14
 }

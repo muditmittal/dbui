@@ -95,14 +95,31 @@ const scalarLines = Object.entries(scalars)
   .join("\n")
 
 const v = (name) => `var(${PREFIX}${name})` // reference another --db-* token inside calc()
-const spaceLines = [
-  ...Object.entries(space.units).map(([k, mult]) =>
-    mult === 0
-      ? `  ${PREFIX}space-${k}: 0;`
-      : `  ${PREFIX}space-${k}: calc(${v("spacing-unit")} * ${mult} * ${v("spacing-scalar")} * ${v("density-scalar")});`,
-  ),
-  ...Object.entries(space.inline).map(([k, val]) => `  ${PREFIX}space-inline-${k}: ${val};`),
-].join("\n")
+
+/**
+ * Space, size and radius share one shape: a stop is its multiple of the grid
+ * unit, left as a calc() so the browser resolves the density dial per render
+ * rather than the generator freezing it at build time.
+ *
+ * A string value is a sentinel rather than a multiple — `full` is 999px and
+ * means "pill", not "249.75 units" — so it passes through untouched and does
+ * not scale.
+ */
+const scaled = (family, stops) =>
+  Object.entries(stops)
+    // JS orders integer-like keys before string keys, which puts the `0-5` half
+    // step after `12`. Sorted by the multiple so the file reads as a scale, with
+    // sentinels last.
+    .sort(([, a], [, b]) => (typeof a === "string") - (typeof b === "string") || a - b)
+    .map(([stop, mult]) => {
+      const name = `  ${PREFIX}${family}-${stop}: `
+      if (typeof mult === "string") return `${name}${mult};`
+      if (mult === 0) return `${name}0;`
+      return `${name}calc(${v("spacing-unit")} * ${mult} * ${v("density-scalar")});`
+    })
+    .join("\n")
+
+const spaceLines = scaled("space", space)
 
 const radiusLines = Object.entries(radius)
   .map(([k, val]) => {
@@ -124,14 +141,31 @@ const radiusLines = Object.entries(radius)
  * utility itself and resolves on the element, so the dial works wherever it is
  * set. It is also why the colors use `inline`: same reason, one level down.
  */
+/**
+ * The Tailwind key IS the class name, so a half step has to be written
+ * `--spacing-0\.5`. The token behind it does not have to carry that escape:
+ * `--db-space-0-5` stays readable from plain CSS, from StyleX or as a Figma
+ * variable name. Asserted as B5 in `scripts/verify-spacing-scale.mjs`.
+ */
+const twKey = (step) => String(step).replace(".", "\\.")
+const tokenStop = (step) => String(step).replace(".", "-")
+
 const bridgeLines = Object.entries(bridge ?? {})
-  .flatMap(([key, spec]) => {
-    // A namespace with steps: one line per Tailwind step name.
-    if (spec.steps) {
-      return Object.entries(spec.steps).map(([tw, own]) => `  --${key}-${tw}: ${v(`${key}-${own}`)};`)
+  .flatMap(([ns, spec]) => {
+    const out = []
+    // The open-ended multiplier, where the namespace has one.
+    if (spec.token) {
+      const base = v(spec.token)
+      out.push(`  --${ns}: ${spec.scalars?.length ? `calc(${[base, ...spec.scalars.map(v)].join(" * ")})` : base};`)
     }
-    const base = v(spec.token)
-    return [`  --${key}: ${spec.scalars?.length ? `calc(${[base, ...spec.scalars.map(v)].join(" * ")})` : base};`]
+    // A named step map, still used by radius until its stops are renamed.
+    if (spec.steps && !Array.isArray(spec.steps)) {
+      for (const [tw, own] of Object.entries(spec.steps)) out.push(`  --${ns}-${tw}: ${v(`${ns}-${own}`)};`)
+      return out
+    }
+    // Numbered stops: the Tailwind step and the token stop are the same number.
+    for (const step of spec.steps ?? []) out.push(`  --${ns}-${twKey(step)}: ${v(`${spec.family}-${tokenStop(step)}`)};`)
+    return out
   })
   .join("\n")
 
@@ -208,7 +242,7 @@ ${bridgeLines}
   /* ── Scalars — the density/size/type dials ── */
 ${scalarLines}
 
-  /* ── Space (multiples of the grid unit, scaled by spacing × density) ── */
+  /* ── Space (each stop is its multiple of the grid unit, scaled by density) ── */
 ${spaceLines}
 
   /* ── Radius (fixed anchors) ── */
@@ -374,6 +408,6 @@ fs.writeFileSync(TOKENS_JSON, JSON.stringify(out, null, 2) + "\n")
 // ── summary ────────────────────────────────────────────────────────────────
 const primCount = Object.values(primMap).reduce((n, r) => n + Object.keys(r).length, 0) + 2 // + base pair
 const alphaSem = names.filter((n) => isAlpha(semantics[n].light) || isAlpha(semantics[n].dark)).length
-console.log(`tokens.css   : ${names.length} semantics (light + dark), ${Object.keys(space.units).length + Object.keys(space.inline).length} space, ${Object.keys(radius).length} radius, ${Object.keys(type.scale).length} type steps (size+line+tracking, scalar-tied), ${Object.keys(elevation).length} elevation.`)
+console.log(`tokens.css   : ${names.length} semantics (light + dark), ${Object.keys(space).length} space, ${Object.keys(radius).length} radius, ${Object.keys(type.scale).length} type steps (size+line+tracking, scalar-tied), ${Object.keys(elevation).length} elevation.`)
 console.log(`tokens.json  : ${hexes.size} hex, ${alphas.size} alpha, ${primCount} primitives, ${names.length} semantic tokens (${alphaSem} carry alpha).`)
 console.log(`Primitives shipped as CSS vars: 0 (resolved inline — generator input only).`)

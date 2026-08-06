@@ -160,9 +160,9 @@ export const families: Family[] = [
   {
     "key": "scalars",
     "label": "Scalars",
-    "count": 5,
+    "count": 4,
     "unit": "dials",
-    "properties": 5,
+    "properties": 4,
     "bridge": null,
     "superseded": null,
     "systemRefs": 0,
@@ -179,9 +179,9 @@ export const families: Family[] = [
   {
     "key": "space",
     "label": "Space",
-    "count": 11,
+    "count": 10,
     "unit": "steps",
-    "properties": 11,
+    "properties": 10,
     "bridge": null,
     "superseded": {
       "namespace": "--spacing",
@@ -296,14 +296,6 @@ export const scalars: Scalar[] = [
       }
     ],
     "live": true
-  },
-  {
-    "name": "--db-spacing-scalar",
-    "drives": [
-      "space"
-    ],
-    "bridges": [],
-    "live": false
   },
   {
     "name": "--db-sizing-scalar",

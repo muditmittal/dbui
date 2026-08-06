@@ -87,9 +87,18 @@ key for `p-4` and `gap-4`, so `--spacing` carries the grid unit and
 `--db-density-scalar` — the dial that means everything at once — and not
 `--db-spacing-scalar` or `--db-sizing-scalar`, each of which owns half that axis.
 
-The named space steps stay off the bridge. `--spacing-md` would give `p-md`
-beside a `p-4` that renders the same pixels, and the system has one way to say
-a thing. Consume them via `var(--db-space-md)`.
+Every dimensional stop is named after its **multiple of the grid unit**, and the
+bridge declares one Tailwind key per stop. That is what makes the number the same
+in both tools: the token, the Tailwind class and the Figma variable all carry the
+same digit, so nothing has to be looked up in either direction. A name like `md`
+could not do that — it was the fourth space step and the second radius step, and
+the two families disagreed about what `md` meant.
+
+An explicit key beats Tailwind's multiplier for the same step, which is what makes
+the bridge load-bearing rather than decorative. Tailwind's multiplier is still
+declared, so a step DBUI has not defined keeps rendering off it. Removing the
+multiplier is what makes the scale finite, and it is a separate change that has to
+wait until the off-scale call sites are snapped to a legal step.
 
 See `TRACKER.md` for status. Nothing in this file describes progress.
 

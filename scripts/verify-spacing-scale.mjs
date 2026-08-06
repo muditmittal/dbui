@@ -615,6 +615,186 @@ console.log("\n── J. Removing a single step from an otherwise-owned namespac
   )
 }
 
+/* ══ K. the shape actually being shipped ═════════════════════════════════ */
+
+/**
+ * Everything above tests the END state, where `--spacing: initial` closes the
+ * scale. That step is deliberately NOT being taken yet: 106 call sites write a
+ * step the new scale refuses, 45 of them at 6px, and those get snapped as a
+ * separate decision. Landing the constraint first would break all 106 on the
+ * same day.
+ *
+ * So the shipped shape is the intermediate one: the multiplier stays ON, and
+ * explicit keys are declared beside it. That only works if an explicit key
+ * WINS over the multiplier for the same step. If the multiplier won instead,
+ * every token in the new families would be decorative — declared, bridged, and
+ * overridden by Tailwind's arithmetic.
+ *
+ * The values happen to agree today, so a loss here would be invisible in a
+ * screenshot and would surface the day the density scalar moves.
+ */
+console.log("\n── K. Explicit keys beside a live multiplier (the shipped shape)\n")
+
+/** Mirrors what theme.config.mjs now emits, at the same step values. */
+const SHIPPED = `@import "tailwindcss";
+@theme inline {
+  --spacing: calc(var(--db-spacing-unit) * var(--db-density-scalar));
+  --spacing-0: var(--db-space-0);
+  --spacing-0\\.5: var(--db-space-0-5);
+  --spacing-1: var(--db-space-1);
+  --spacing-2: var(--db-space-2);
+  --spacing-3: var(--db-space-3);
+  --spacing-4: var(--db-space-4);
+  --spacing-6: var(--db-space-6);
+  --spacing-8: var(--db-space-8);
+  --spacing-10: var(--db-space-10);
+  --spacing-12: var(--db-space-12);
+  --size-2: var(--db-size-2);
+  --size-4: var(--db-size-4);
+  --size-7: var(--db-size-7);
+  --size-10: var(--db-size-10);
+  --height-7: var(--db-size-7);
+  --width-7: var(--db-size-7);
+  --radius-0: var(--db-radius-0);
+  --radius-1: var(--db-radius-1);
+  --radius-2: var(--db-radius-2);
+  --radius-6: var(--db-radius-6);
+  --border-width-0: var(--db-border-0);
+  --border-width-1: var(--db-border-1);
+  --border-width-2: var(--db-border-2);
+  --default-border-width: var(--db-border-1);
+}
+:root {
+  --db-spacing-unit: 0.25rem;
+  --db-density-scalar: 1;
+  --db-space-0: 0;
+  --db-space-0-5: calc(var(--db-spacing-unit) * 0.5 * var(--db-density-scalar));
+  --db-space-1: calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar));
+  --db-space-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
+  --db-space-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
+  --db-space-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-space-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
+  --db-space-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
+  --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
+  --db-space-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
+  --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
+  --db-size-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-size-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
+  --db-size-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
+  --db-radius-0: 0;
+  --db-radius-1: 0.25rem;
+  --db-radius-2: 0.5rem;
+  --db-radius-6: 1.5rem;
+  --db-border-0: 0px;
+  --db-border-1: 1px;
+  --db-border-2: 2px;
+}`
+
+{
+  const probes = [
+    "p-3", "gap-3", "mt-8", "p-0.5", "p-10",
+    "p-1.5", "p-2.5", "p-5", "p-7", "gap-13",
+    "size-4", "size-7", "h-7", "w-7", "min-h-7", "max-h-7",
+    "rounded-1", "rounded-2", "rounded-6", "rounded-0",
+    "border", "border-2", "border-0", "border-1",
+  ]
+  const css = await build(SHIPPED, probes)
+  console.log("  ours (explicit key must win)")
+  show(css, ["p-3", "gap-3", "mt-8", "p-0.5", "p-10", "size-4", "size-7", "h-7", "w-7"], 12)
+  console.log("  still Tailwind's, because the multiplier stays on")
+  show(css, ["p-1.5", "p-2.5", "p-5", "p-7", "gap-13"], 12)
+  console.log("  radius and border")
+  show(css, ["rounded-0", "rounded-1", "rounded-2", "rounded-6", "border", "border-0", "border-1", "border-2"], 12)
+
+  check(
+    "K1 an explicit --spacing-N beats the live --spacing multiplier",
+    ["p-3", "gap-3", "mt-8", "p-0.5", "p-10"].every((c) => (ruleFor(css, c) ?? "").includes("--db-space-")),
+    `p-3 → ${ruleFor(css, "p-3")} — the multiplier is still declared and did not win.`
+  )
+  check(
+    "K2 a step we did not declare still compiles off the multiplier",
+    ["p-1.5", "p-2.5", "p-5", "p-7", "gap-13"].every((c) => {
+      const r = ruleFor(css, c) ?? ""
+      return r && !r.includes("--db-space-")
+    }),
+    "This is what keeps the 106 unsnapped call sites rendering. p-1.5 → " + ruleFor(css, "p-1.5")
+  )
+  check(
+    "K3 --size-N beats the multiplier, and an undeclared size step falls through",
+    (ruleFor(css, "size-4") ?? "").includes("--db-size-4") && (ruleFor(css, "size-7") ?? "").includes("--db-size-7"),
+    `size-4 → ${ruleFor(css, "size-4")}`
+  )
+  check(
+    "K4 --height-N and --width-N beat the multiplier too",
+    (ruleFor(css, "h-7") ?? "").includes("--db-size-7") && (ruleFor(css, "w-7") ?? "").includes("--db-size-7"),
+    `h-7 → ${ruleFor(css, "h-7")}   w-7 → ${ruleFor(css, "w-7")}`
+  )
+  check(
+    "K5 min-h-* and max-h-* inherit --height-*, so heights need one key not three",
+    (ruleFor(css, "min-h-7") ?? "").includes("--db-size-7") && (ruleFor(css, "max-h-7") ?? "").includes("--db-size-7")
+  )
+  // The radius namespace is documented with named steps only. Numeric keys
+  // being legal is the whole premise of `rounded-2`, so it is asserted rather
+  // than assumed.
+  check(
+    "K6 --radius-N is a legal key and mints rounded-N",
+    ["rounded-0", "rounded-1", "rounded-2", "rounded-6"].every((c) => (ruleFor(css, c) ?? "").includes("--db-radius-")),
+    `rounded-2 → ${ruleFor(css, "rounded-2")}`
+  )
+  check(
+    "K7 --default-border-width moves a bare `border` onto our token",
+    (ruleFor(css, "border") ?? "").includes("--db-border-1"),
+    `border → ${ruleFor(css, "border")}`
+  )
+  check(
+    "K8 --border-width-N owns the numeric border classes",
+    ["border-0", "border-1", "border-2"].every((c) => (ruleFor(css, c) ?? "").includes("--db-border-")),
+    `border-2 → ${ruleFor(css, "border-2")}`
+  )
+}
+
+/* ══ K2. closing the old radius names ════════════════════════════════════ */
+
+/**
+ * The radius codemod rewrites `rounded-md` to `rounded-2`. If the old key were
+ * simply dropped from the bridge, a missed call site would not fail — it would
+ * silently render Tailwind's own value, which disagrees with ours at every step
+ * (Tailwind md is 6px, ours was 8px). `initial` turns that silent wrong value
+ * into no class at all, which is the failure mode a review can actually see.
+ */
+console.log("\n── K2. Old radius names closed rather than dropped\n")
+{
+  const css = await build(
+    `@import "tailwindcss";
+@theme {
+  --radius-xs: initial;
+  --radius-sm: initial;
+  --radius-md: initial;
+  --radius-lg: initial;
+  --radius-xl: initial;
+  --radius-2xl: initial;
+  --radius-3xl: initial;
+  --radius-4xl: initial;
+}
+@theme inline {
+  --radius-2: var(--db-radius-2);
+}
+:root { --db-radius-2: 0.5rem; }`,
+    ["rounded-sm", "rounded-md", "rounded-lg", "rounded-xl", "rounded-2xl", "rounded-xs", "rounded-4xl", "rounded-2", "rounded-full", "rounded-none"]
+  )
+  show(css, ["rounded-sm", "rounded-md", "rounded-lg", "rounded-2", "rounded-full", "rounded-none"], 14)
+  check(
+    "K9 every old named radius step emits nothing once closed",
+    ["rounded-sm", "rounded-md", "rounded-lg", "rounded-xl", "rounded-2xl", "rounded-xs", "rounded-4xl"].every((c) => ruleFor(css, c) === null),
+    "A missed codemod site renders no radius at all, rather than Tailwind's disagreeing value."
+  )
+  check(
+    "K10 rounded-full and rounded-none survive as keywords",
+    Boolean(ruleFor(css, "rounded-full")) && Boolean(ruleFor(css, "rounded-none")),
+    `rounded-full → ${ruleFor(css, "rounded-full")} — left on Tailwind's value on purpose, see the report.`
+  )
+}
+
 /* ══ summary ═════════════════════════════════════════════════════════════ */
 
 const failed = results.filter((r) => !r.pass)

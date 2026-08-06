@@ -75,14 +75,13 @@ const UNIT_PX = resolvePx(declared["--db-spacing-unit"], declared)
  * written.
  *
  * `px` is the reading. A row that showed `calc(var(--db-spacing-unit) * 0.5 *
- * var(--db-spacing-scalar) * var(--db-density-scalar))` was accurate and told a
- * reader nothing about whether the step was 2px or 20px.
+ * var(--db-density-scalar))` was accurate and told a reader nothing about
+ * whether the step was 2px or 20px.
  *
  * `multiple` is the second half of the answer, and only the families built on
- * the grid step have one: it is what makes the sequence read as a scale rather
- * than as eleven unrelated numbers. Null where dividing by the grid step would
- * invent a relationship — an icon box is 14px because it matches a line box, not
- * because it is three and a half grid steps.
+ * the grid step have one. It now usually equals the stop in the name, which is
+ * the point of the numeric naming — where the two disagree, the name is lying.
+ * Null where dividing by the grid step would invent a relationship.
  */
 const pick = (re, { onGrid = false } = {}) =>
   Object.entries(light)
@@ -131,8 +130,7 @@ const typeSteps = [...typeCss.matchAll(/@utility type-([a-z0-9-]+)\s*\{([\s\S]*?
 
 const data = {
   colorGroups,
-  space: pick(/^space-(?!inline)/, { onGrid: true }),
-  spaceInline: pick(/^space-inline-/),
+  space: pick(/^space-/, { onGrid: true }),
   radius: pick(/^radius-/),
   sizeElement: pick(/^size-element-/),
   sizeIcon: pick(/^size-icon-/),

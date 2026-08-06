@@ -32,14 +32,15 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    messages under `paragraph`; the components ship `body`. Reconciling moves the
    whole conversational surface up two points, so it is a design call rather than a
    migration.
-5. **The named space steps, size and border width are read by nothing.** The grid unit
-   and the density dial now stand behind `--spacing`, so density re-flows the whole
-   system, but the eleven `--db-space-*` names remain unspent — each restates a
-   numeric utility, so exposing them as Tailwind keys would put `p-md` beside a `p-4`
-   that renders the same pixels. Decide whether the named scale is the intended
-   contract, or whether the unit and the dials are the whole family.
-   `spacing-scalar` and `sizing-scalar` cannot ride `--spacing`: Tailwind reads one
-   key for padding and gap, and each of those dials owns half that axis.
+5. **Size and border width are read by nothing.** Space is done: its stops are now
+   named after their multiple of the grid unit and each one is bridged to a Tailwind
+   key, so `--db-space-3` is what `p-3` resolves to. Size and border width still
+   ship as named steps nothing reads. `sizing-scalar` is the dial behind size and is
+   dead with it.
+   Tailwind's `--spacing` multiplier is still declared beside the explicit stops, on
+   purpose: 106 call sites write a step the scale does not define, 45 of them at 6px
+   in menus and pills. Snapping those to the nearest legal step is the open decision,
+   and closing the scale with `--spacing: initial` cannot land before it.
 6. **Elevation and motion cannot be bridged without changing how the product looks
    and feels.** Measured on one card, `shadow-lg` reaches below it and nowhere above;
    `elevation-1` blooms on all four sides because it carries no negative spread, and

@@ -31,3 +31,7 @@ apps/portal/out/
 
 # Storybook static build, emitted into the portal for /components
 apps/portal/public/storybook/
+
+# Computed-style snapshots from scripts/fingerprint.mjs. Megabytes each, and
+# only meaningful against the running portal that produced them.
+.fingerprints/

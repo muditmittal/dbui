@@ -6,7 +6,7 @@ import {
   SupersededNote, wiringOf,
 } from "@/stories/tokens/TokenKit"
 import {
-  colorGroups, type as typeSteps, space, spaceInline, radius, sizeElement, sizeIcon,
+  colorGroups, type as typeSteps, space, radius, sizeElement, sizeIcon,
   borderWidth, elevation, duration, easing, scalars,
 } from "@/stories/tokens/token-data"
 import {
@@ -264,7 +264,7 @@ const NAMES = [
   ["action", "primary", "hover"],
   ["status-surface", "warning"],
   ["text", "subtle"],
-  ["space", "md"],
+  ["space", "3"],
 ].filter((parts) => SHIPPED.has(parts.join("-")))
 
 /** The specimen is the one name that fills all three slots. */
@@ -487,25 +487,20 @@ export function TokensDoc() {
         id="space"
         title="Space"
         state={wiring("space")}
-        scope="Named steps over the grid unit."
+        scope="Padding, margin and gap. Each stop is its multiple of the grid unit."
         cautions={[
           ...supersededNote("space"),
           <>
-            Every step restates a numeric utility — <Code>md</Code> is <Code>p-4</Code>. The names
-            stay reachable through <Code>var(--db-space-*)</Code> so the system keeps one way to say
-            a thing.
+            The stop is the multiple, so the token and the class carry the same number —{" "}
+            <Code>--db-space-3</Code> is <Code>p-3</Code>. Nothing to look up in either direction.
           </>,
           <>
-            <Code>inline-*</Code> is em-relative, so it tracks the text beside it rather than the
-            grid. The only step with no Tailwind equivalent.
+            A step off this scale still compiles, because Tailwind&rsquo;s multiplier is still
+            declared. <Code>p-1.5</Code> renders 6px and no token stands behind it.
           </>,
         ]}
       >
-        {/* The inline steps are part of the family the wiring table counts, so
-            leaving them out of the preview showed nine of eleven with nothing
-            saying where the other two went. They have no px because em resolves
-            against the element, which is the point of them. */}
-        <SpaceScale tokens={[...space, ...spaceInline]} />
+        <SpaceScale tokens={space} />
       </Section>
 
       <Section
