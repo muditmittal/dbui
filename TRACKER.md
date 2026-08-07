@@ -1,7 +1,8 @@
 # Status
 
-Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
-`generate-token-consumption.mjs`. Anything those contradict is this file being wrong.
+Verify with `dbui doctor`, `verify-token-sync.mjs`, `audit-legacy-tokens.mjs`,
+`react-lint.js`, `generate-gallery.mjs`, `generate-token-consumption.mjs`.
+Anything those contradict is this file being wrong.
 
 **2026-08-06**
 
@@ -10,125 +11,141 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
 | Layer | State |
 | --- | --- |
 | Tokens | Color, type and all four Dimensions families live and bridged — elevation and motion unconsumed |
-| Icons | Done |
-| Components | Done — 3 have no story, 1 has no `@guideline` |
+| Icons | Done — some carry no metadata, so the index cannot see them. B3 |
+| Components | Done — Date Range, Aspect Ratio and Label have no story, Platform Header has no `@guideline` |
 | Compositions | Partial — exist, not documented |
-| Shells | Partial — 5 defined, asset detail templates not built |
+| Shells | Partial — defined, asset detail templates not built |
 | Portal | Done |
 | CLI + MCP | Done |
 | Figma | Stale — pre-migration token names |
 | Install | Works — registry points at the Databricks npm proxy |
 
-## Open
+## Register
 
-1. **Figma token migration.** Variables carry pre-migration names; Title 4 is now
-   16/24 and needs rebinding, `surface-hover` is new since, and `input-border-focus`
-   has been deleted from the config and still exists in Figma. `verify-token-sync`
-   already reports all of it — it names two semantics today, one missing each way.
-   The dump is left honest rather than hand-edited to match, because it is a
-   snapshot of Figma and not a second copy of the config. Do Figma and Code Connect
-   in one pass or they drift.
-2. **Portal build.** The Next.js site (`/`, `/docs`) needs the remaining doc pages
-   ported from the Storybook MDX. Storybook keeps `/components`.
-3. **Generate the token docs.** Four drifts in one session. Generate the derivable
-   blocks, check them in CI when CI exists.
-4. **Genie prose sits on `body`, not `paragraph`.** `theme.config.mjs` names chat
-   messages under `paragraph`; the components ship `body`. Reconciling moves the
-   whole conversational surface up two points, so it is a design call rather than a
-   migration.
-5. **The scale is closed only by convention, because Tailwind's multiplier is still
-   on.** All four Dimensions families are done: every stop is named after its
-   multiple of the grid unit and bridged to a Tailwind key, so `--db-space-3` is what
-   `p-3` resolves to, `--db-size-8` what `h-8`/`w-8`/`size-8` resolve to,
-   `--db-radius-2` what `rounded-2` resolves to, and `--db-border-1` what a bare
-   `border` resolves to.
-   The multiplier is still declared beside the explicit stops, on purpose: call sites
-   write steps the scale does not define — `p-1.5`, `p-9`, and now also `p-5`, `p-7`
-   and `p-12` — and those still compile at the same values. Snapping them to the
-   nearest legal step is a sequenced follow-up, and closing the scale with
-   `--spacing: initial` cannot land before it. The rules for that pass are agreed and
-   written down in `packages/dbui/docs/token-simplification.md`; nothing is done. The
-   consumption scan measures the gap: 507 of the 818 dimensional utilities in the tree
-   resolve to a space token, and the rest come off the multiplier.
+Every known defect and gap, triaged. Ranked within each group by what it costs.
 
-   Space and size are nine stops each and deliberately not the same nine. 5, 7 and 12
-   are size stops and not space stops, so `h-5` is `--db-size-5` while `p-5` is the
-   multiplier — a family carries a stop when it has a use for it, not because a
-   sibling does. K5b and K13b pin that split. The snap pass therefore touches
-   `p-5` and `p-12` and must leave `h-5` and `h-12` alone.
+`Fix` is the size of the change, not the size of the problem.
 
-   One hazard this leaves behind. A missing stop in `size` does not fail — a height
-   utility reads `--height-*` first and `--spacing-*` second, so `h-6` renders 24px
-   from `--db-space-6` whether or not size owns a 6. `size-6` was briefly dropped and
-   nothing moved; it was restored because it is the small control height, not because
-   a test caught it. K12 in `verify-spacing-scale.mjs` pins the precedence.
+- **line** — one or two lines, verifiable
+- **file** — one file, no other surface moves
+- **protocol** — several files that must move together, per `CONTRIBUTING.md`
+- **decision** — yours. A token, a public signature or a visual call
 
-8. **`cn()` is `clsx`, not `tailwind-merge`, so conflicting utilities both survive
-   and stylesheet order picks the winner.** Found by the radius rename: the control
-   inside an `InputGroup` carries the base `rounded-1` and the group's `rounded-none`,
-   and renaming the scale flipped which one Tailwind emits last. The rendered
-   difference was 1,061 of 3,360,000 pixels at 4x with a worst channel delta of 9/255,
-   because the element is transparent and borderless — but nothing about that outcome
-   was chosen. Any component composing a utility that its base also sets is resolved
-   by emission order today. Reproduce with
-   `node scripts/pixel-ab.mjs <url> <selector> <css>`.
-6. **Elevation and motion are still unconsumed, for different reasons.** Elevation
-   cannot be bridged without changing how the product looks: measured on one card,
-   `shadow-lg` reaches below it and nowhere above; `elevation-1` blooms on all four
-   sides because it carries no negative spread, and is roughly four times wider
-   sideways. `elevation-3` peaks far darker than the `shadow-xs` currently on 30
-   controls. Both scales are pure black with no dark value, so neither draws anything
-   against `surface-base` in dark — elevation is a single-mode token in a two-mode
-   system. Deliberately untouched for now; the measurement stands, the change does
-   not.
-   Motion is now the right shape and still unread. The four `-min`/`-max` band
-   members are gone and the three that remain are `fast 150`, `default 300`,
-   `slow 450`. Bridging them is one line — `--default-transition-duration:
-   var(--db-duration-fast)` — and it was deliberately NOT taken here: 29 call sites
-   write a bare `transition-*` at Tailwind's 150ms, so pointing the default at
-   anything but 150 changes how the product feels, which is outside a rename.
-   Pointing it at `fast` is now a true no-op and is the obvious next step.
-7. **`--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs`,**
-   so its two widths are the only dimensional values outside the config. The radius
-   and spacing bridges moved into the generator; this one did not.
-9. **Five action semantics are correct and unread, and the components are what is
-   wrong.** `action-default-base`, `action-default-press` and the whole
-   `action-label-*` triplet have no consumer outside the Tokens page. They were
-   kept at their current values on purpose — the fix is to rewire the controls onto
-   them, not to delete them. Nothing of that is done. Note the neighbours that are
-   live and must not be swept up: `action-default-hover` has consumers, and so does
-   the separate `action-label-inverse-*` family.
-10. **The React linter now reads every source tree, and its rules do not.** The
-   default scan covers the portal, the shells, the components, Genie and viz, and
-   `.ts` as well as `.tsx` — 679 files against 114, and 2,518 findings against
-   2,179. Every one of the 339 new findings is pre-existing and none was fixed.
-   The `.ts` half reports nothing at all, because every rule enters through a JSX
-   element, so a palette in an object literal comes back clean. The file that made
-   the point — the viz theme — no longer holds a color, but the blind spot is
-   unchanged and the next `.ts` palette will land in it. Teaching the color rules
-   to read an object literal is the next step and is a change to rule logic.
+### Broken — it produces the wrong thing today
 
-## Small
+| # | What | What it costs | Fix |
+| --- | --- | --- | --- |
+| B1 | `cn()` is `clsx` with no merge strategy, so a class a consumer passes does not override the base one. Stylesheet emission order picks the winner | Every composed component, silently. The winner flips when an unrelated rename reorders the sheet, which is how the radius rename moved `InputGroup` | decision — `tailwind-merge` is already a `dbui` dependency and vendored, so the swap is one line, but it changes what wins everywhere and needs a visual pass |
+| B2 | The CLI never reads `@deprecated`. `composition.md`, both build skills and `CLAUDE.md` still name `DataTreeView` and `FileTreeView` | Every agent surface recommends a deprecated alias. `CatalogExplorer` already uses one | decision then protocol — the envelope is a public shape and the four docs move with it |
+| B3 | `CircleSmall`, `Databricks`, `DatabricksLogo`, `DotsCircleSmall`, `RunningSmall` and `Slash` have no entry in `classifications.ts` or `descriptions.ts` | `dbui icon`, `dbui search` and `icon-index.md` cannot see them, and agents are told never to guess a name | protocol — five metadata surfaces each, and every one needs a category and a description |
+| B4 | `dbui search` does no tokenization. `confirm destructive` returns nothing where `confirm` returns Alert Dialog | The main discovery entry point fails on the natural phrasing | file — left alone here only because another agent is editing `search()` |
+| B5 | `min-w-*` and `max-w-*` reach no dimensional family and ride Tailwind's multiplier. `context-menu`, `dropdown-menu`, `kbd`, `menubar` and `segment-control` write `min-w-5` | Those widths do not move with the density dial and the scale cannot fail them | decision — a generator bridge, and the token tree is ask-first |
+| B6 | `AccordionTrigger` hardcodes `<h3>` through Base UI's `Accordion.Header`, which takes no level | `/docs/principles` puts one under its `<h1>`, so the outline reads h1 then h3 and a shipped page skips a level | decision — exposing a level is a public signature change |
+| B7 | `SegmentedBar` clamps the Vega view height to `barHeight` | `showLegend` is a prop that draws nothing | decision — the height prop is the contract and widening it moves every call site |
+| B8 | `--db-radius-0` is unreachable. Tailwind emits static utilities after functional ones, so `rounded-none` wins wherever both could apply | A stop that exists and cannot be used. `react-lint.js` already refuses to offer it | decision — delete the stop or document it as unreachable |
+| B9 | `yarn workspace portal lint` fails outright. `eslint-config-next` is installed and no `eslint.config.js` exists | The root `lint` script has never run | file, then triage of whatever it first reports |
+| B10 | `dbui doctor` describes itself as exiting non-zero on failure and exits 0. `cli.mjs` says `check` gates a commit "the way doctor does" | It cannot gate anything | line — same CLI file another agent holds |
 
-- `Platform Header` has no `@guideline` — the only real one. `doctor` reports 14, but
-  13 are marked excluded or internal, so the check should filter them.
-- `Date Range`, `Aspect Ratio`, `Label` have no story.
-- `SegmentedBar` clamps the Vega view height to `barHeight`, so a bottom legend
-  gets no room and never draws. Same defect the donut had on the other axis, but
-  the fix is not the same: the height prop is the component's contract, and
-  widening it moves every call site.
-- The viz semantics describe ten categorical steps and ten sequential steps, and
-  nothing else. A chart that means healthy or unhealthy borrows `status-text-*`,
-  and one that means no data borrows `text-disabled`, because every surface-role
-  semantic washes into the canvas at the size of a mark. A `viz` state and inert
-  set would close it. Adding tokens needs a decision, so nothing was added.
-- `packages/dbui/src/tokens/viz.css` is orphaned. Nothing reads `--viz-*` or its
-  `viz-<hue>` utilities any more and the portal no longer imports it, but the file
-  is under the frozen token tree so it was left in place to be deleted.
-- 9 components use raw `opacity-50` for disabled instead of the disabled tokens.
-- `doctor` promises "exits non-zero on failure" and exits 0.
-- Storybook 8.6 → 10.4. Two majors; v9 removed `addon-essentials` and moved
-  `@storybook/blocks`. Own branch. Now unblocked.
+### Missing — the system cannot do it
+
+| # | What | What it costs | Fix |
+| --- | --- | --- | --- |
+| M1 | No tests and no CI. The production build passes and nothing runs it | Every check is a person remembering | decision — where CI runs, and what gates |
+| M2 | Nothing carries provenance. No component pairs a value with its freshness, its scope or its completeness | A truncated result looks like a different thing on every surface. The widest distance on `/docs/patterns` between what the principles ask and what the components do | decision — new components |
+| M3 | No run component. A named operation with elapsed time, a cancel and a link to its result is rebuilt on every surface that has runs | The core object of a workbench has no primitive | decision — new component |
+| M4 | No step indicator and no draft persistence. `Progress` draws a bar and carries no step labels, no completed state and no way back | The largest single gap on `/docs/patterns` | decision — new component |
+| M5 | `Table` has no selection API. The checkbox column, the indeterminate header, persistence across pages and select-all-matching are hand-composed every time | The most repeated composition in the system | decision — a public API addition |
+| M6 | No filter-bar composition and no single-date picker. `ControlsBar` gives the row, the tag row, the clear-all, the result count and URL sync are rebuilt per surface | Correct per surface means different per surface | decision — new composition |
+| M7 | No typed-confirmation composition, nothing computes a blast radius and undo is not a capability. `sonner.tsx` exports only the `Toaster` | Destructive flows are improvised where they matter most | decision — new composition |
+| M8 | The layout gaps on `/docs/layout` — most shells have no module, no chat shell, no canvas shell, no bottom-edge panel, the shell does not use the region components, panels do not persist, rails do not resize, navigation closes rather than collapses and no linter reads structure | "Shell first" is a rule the shells cannot yet satisfy | decision — the shell set is curated |
+| M9 | No rule in `react-lint.js` fires on a `.ts` file, because every rule enters through a JSX element | A palette in an object literal comes back clean. The viz theme made the point and the blind spot is unchanged | file — teach the color rules to read an object literal |
+| M10 | No automated accessibility suite, no i18n framework and no screen reviewed right to left | Every accessibility check on `/docs/accessibility` is done by a person or not at all | decision — tooling and scope |
+| M11 | Elevation and motion are unconsumed. Both elevation scales are pure black with no dark value, so neither draws against `surface-base` in dark | Two token families the product cannot use | decision — see the measurements below |
+| M12 | `action-default-base`, `action-default-press` and the `action-label-*` triplet have no consumer. `action-default-hover` and `action-label-inverse-*` are live and must not be swept up | Semantics that are correct and that no control reads | decision — rewire the controls onto them, do not delete |
+| M13 | The viz semantics carry ten categorical steps and ten sequential steps and nothing else. A chart meaning healthy borrows `status-text-*` and one meaning no data borrows `text-disabled` | The chart layer contradicts constraint S3 in one direction | decision — a `viz` state and inert set |
+| M14 | `Empty` has no failure variant, and no disclosure primitive owns async content or persists its open state | An error in an empty region falls back to `Alert` and loses the composition | decision — new variants |
+| M15 | No `brand/*` token exists, so `DatabricksLogo` hardcodes its hex | The one place the system cannot follow its own no-hex rule | decision — a new token family |
+| M16 | Compositions exist and are not documented | An agent cannot pick what it cannot read | protocol — `composition.md` |
+
+### Inconsistent — two surfaces disagree
+
+| # | What | What it costs | Fix |
+| --- | --- | --- | --- |
+| I1 | Figma variables carry pre-migration names. `verify-token-sync` names one missing each way — `input-border-focus` in Figma and not the config, `surface-hover` in the config and not Figma | Code Connect and the library describe a system that no longer exists | protocol — Figma and Code Connect in one pass or they drift again |
+| I2 | The dimensional scale is closed by convention only. Tailwind's multiplier is still on, so `p-5`, `p-9` and `p-12` compile off it | The scale is a recommendation, not a constraint. `--spacing: initial` cannot land until the snap pass runs | decision — rules agreed in `docs/token-simplification.md`, nothing done |
+| I3 | Components dim a disabled control with `opacity-50` rather than the disabled tokens | The system breaks its own constraint S2, which forbids exactly this | file — but it is a visible change on every control it touches |
+| I4 | Genie prose sits on `body` and `theme.config.mjs` names chat messages under `paragraph` | Reconciling moves the whole conversational surface up two points | decision — a design call, not a migration |
+| I5 | `VizPaletteName` went from four hue names to ten numbered steps plus `positive` and `negative`, with no changelog. No `CHANGELOG.md` exists, though `CONTRIBUTING.md` requires an entry for any public API change | A breaking export change with no record. Every future one has nowhere to go | file — create it, backfill this entry |
+| I6 | Shipped components write 10px and 14px as `size-2.5`, `size-3.5`, `h-2.5`, `w-2.5` and `bottom-2.5`. The size family carries neither | Indicator dots and small icons sit off the scale and do not move with the dial | decision — add the stops or move the marks |
+| I7 | `chart.tsx`, `table.tsx` and `tooltip.tsx` write `rounded-[1px]` and `rounded-[2px]` | Sub-token radii on chart marks and the tooltip arrow | decision — the radius family starts above them |
+| I8 | `--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs` | Its two widths are the only dimensional values outside the config | file — the radius and spacing bridges already moved |
+| I9 | `packages/dbui/src/tokens/viz.css` is orphaned. Nothing reads `--viz-*` or its utilities and the portal no longer imports it | Dead file in the frozen token tree | decision — the token tree is ask-first |
+| I10 | `ProductAccountConsole.svg`, `ProductDatabricksOne.svg`, `ProductLakebase.svg` and `ProductLakehouse.svg` sit in the icons directory with no importer and no matching component | Either leftovers or product icons someone meant to convert. Nothing says which | decision — delete or convert |
+| I11 | `lucide-react` is declared in `apps/portal/package.json` and never imported, while `/docs/icons` tells readers not to install it | The portal ships the one dependency the system forbids. "Lucide icon pack" is on the not-started list, which may be why | decision — remove it or say what it is for |
+| I12 | `follow-ups.tsx` in Genie renders a raw `<button>` | The only non-negotiable rule broken in shipped code | file |
+| I13 | Storybook 8.6 against 10.4. v9 removed `addon-essentials` and moved `@storybook/blocks` | Two majors. Own branch. Now unblocked | protocol |
+| I14 | `component-index.md` and `icon-index.md` are hand-maintained and lag source | They should be generated from JSDoc and `classifications.ts` | file |
+
+### The React linter
+
+The total `react-lint.js` prints is not a count of problems. Run it for the current number
+and read the shape here.
+
+- Almost all of it is in Storybook stories. Portal chrome is a distant second and shipped
+  package code is the smallest slice by an order of magnitude
+- Two causes are most of the total: type written as a px literal and color written as a hex
+- Nearly half sit inside a `style={{}}` attribute — the table headers, row labels and grid
+  gaps that frame a specimen, not the component being specified
+- `text-[13px]` and `text-[12px]` are most of the type half. Both are values the ramp already
+  carries, so the swap to `type-label` and `type-body` is mechanical
+
+What lands in shipped code reduces to three rows above: I6, I7 and I12. The rest is story
+chrome, and `gallery-demos.tsx` is the one story file that also renders to users, on
+`/docs/components`.
+
+### First calls
+
+Four decisions gate the rest. Nothing else in the register is blocked on anything.
+
+- **B1, `cn()`.** Until it resolves, no override a consumer writes is reliable, so any
+  component work built on one is built on emission order.
+- **I2, close the multiplier.** B5, B8, I6 and I7 are all the same question asked four
+  ways. Snap the call sites and they collapse into one pass.
+- **B2, `@deprecated`.** Cheap once you say whether the envelope may grow a field.
+- **M1, CI.** Everything above regresses silently without it, including what was fixed today.
+
+## Measurements the open calls rest on
+
+Recorded because nothing else holds them and the calls cannot be made without them.
+
+- **Elevation cannot be bridged without changing how the product looks.** Measured on one
+  card, `shadow-lg` reaches below it and nowhere above. `elevation-1` blooms on all four
+  sides because it carries no negative spread and is roughly four times wider sideways.
+  `elevation-3` peaks far darker than the `shadow-xs` on the controls that use one.
+- **Motion is the right shape and still unread.** The three that remain are `fast 150`,
+  `default 300` and `slow 450`. Pointing `--default-transition-duration` at `fast` is a
+  true no-op and the obvious next step. Pointing it anywhere else changes how the product
+  feels, because the bare `transition-*` call sites run at Tailwind's 150ms.
+- **The `cn()` defect is reproducible.** `node scripts/pixel-ab.mjs <url> <selector> <css>`.
+  On `InputGroup` the rendered difference was small only because the element is transparent
+  and borderless. Nothing about that outcome was chosen.
+- **Space and size deliberately do not carry the same stops.** 5, 7 and 12 are size stops
+  and not space stops, so `h-5` is `--db-size-5` while `p-5` is the multiplier. The snap
+  pass touches `p-5` and `p-12` and must leave `h-5` and `h-12` alone. K5b and K13b pin it.
+- **A missing stop in `size` does not fail.** A height utility reads `--height-*` first and
+  `--spacing-*` second, so `h-6` renders from `--db-space-6` whether or not size owns a 6.
+  `size-6` was dropped once and nothing moved. K12 pins the precedence.
+- **The consumption scan measures the multiplier gap.** Run
+  `node scripts/generate-token-consumption.mjs` rather than quoting a ratio from here.
+
+## Done since the last entry
+
+- The CLI reads a JSDoc tag to its end. `@constraints` blocks, wrapped tags and the
+  summaries they were corrupting all print now, including Button's `aria-label` rule.
+- No doc states an icon or component total.
+- `audit-legacy-tokens.mjs` no longer reports live semantics as leftovers and exits clean.
+- `resizable.tsx` no longer carries `ring-offset-background`, a class Tailwind stopped
+  emitting when the migration deleted `background`.
 
 ## Not started
 
