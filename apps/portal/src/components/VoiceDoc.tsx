@@ -1,12 +1,15 @@
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "dbui/components/ui/tabs"
+
 import { DocHeader, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
+import { DocAccordion } from "@/components/docs/DocAccordion"
 import {
   AnchoredSection,
   Subsection,
-  EntryList,
-  JumpTo,
   PrincipleEntry,
   ToneEntry,
+  ToneScale,
   WordTable,
+  type Moment,
   type Tone,
 } from "@/components/docs/VoiceKit"
 
@@ -17,27 +20,23 @@ import {
  * only the portal knows about.
  *
  * The page is a reference rather than an essay. It is entered from a search or
- * a link, read one section deep and left, which is what the jump list and the
- * anchors are for.
+ * a link, read one section deep and left, which is why the long entries
+ * collapse and the three word lists share one set of tabs: the reader wants one
+ * answer, not the whole standard.
  */
 
 /**
- * One definition per section, used for both the heading and the jump list, so
- * a link can never name a heading that has since been reworded.
+ * One definition per section, used for the heading and the anchor, so a link
+ * can never name a heading that has since been reworded.
  */
 const S = {
-  principles: { id: "core-principles", title: "Core principles" },
-  scale: { id: "tone-scale", title: "Voice and tone scale" },
-  moments: { id: "tone-in-ui-context", title: "Tone in UI context" },
-  casing: { id: "casing", title: "Sentence casing and punctuation" },
-  grammar: { id: "grammar", title: "Grammar and mechanics" },
-  checklists: { id: "checklists", title: "Quality checklists" },
-  terminology: { id: "terminology", title: "Terminology" },
-  productNames: { id: "product-names", title: "Product names" },
+  principles: { id: "core-principles", title: "Voice principles" },
+  scale: { id: "tone-scale", title: "Tone scale" },
+  grammar: { id: "grammar", title: "Grammar" },
+  casing: { id: "casing", title: "Punctuation" },
+  reference: { id: "terminology", title: "Terminology and checks" },
   methodology: { id: "methodology", title: "Methodology and sources" },
 }
-
-const SECTIONS = Object.values(S)
 
 const PRINCIPLES = [
   {
@@ -88,8 +87,12 @@ const TONE_SCALE: Array<{ tone: Tone; term: string; guidance: string; example: s
   },
 ]
 
-/** The `term` of a moment is the kind of string being written. */
-const MOMENTS: Array<{ tone: Tone; term: string; guidance: string; example: string }> = [
+/**
+ * The `term` of a moment is the kind of string being written. Each moment names
+ * the tone that governs it, and the page groups on that field rather than
+ * repeating the list — a moment can belong to one tone and only one.
+ */
+const MOMENTS: Array<Moment & { tone: Tone }> = [
   {
     term: "Navigation label",
     tone: "Neutral",
@@ -138,6 +141,13 @@ const MOMENTS: Array<{ tone: Tone; term: string; guidance: string; example: stri
     guidance: "State the exact irreversible consequence",
     example: "This can't be undone.",
   },
+]
+
+/** Where each tone sits on the rail, in the order the rail runs. */
+const TONE_ZONES: Array<{ tone: Tone; where: string }> = [
+  { tone: "Warm", where: "Empty states" },
+  { tone: "Neutral", where: "Labels" },
+  { tone: "Cautious", where: "Error states" },
 ]
 
 const CASING = [
@@ -243,16 +253,29 @@ const SOURCES = [
   { source: "Brand Guidelines", covers: "Brand voice and punctuation" },
 ]
 
+const CHECKLIST_COLUMNS = [
+  { key: "rule", header: "Rule", width: "w-[28%]" },
+  { key: "guideline", header: "Guideline" },
+]
+
 export function VoiceDoc() {
   return (
     <>
-      <DocHeader title="Product UI: voice and tone">
+      <DocHeader title="Voice and tone">
         The standard for user-facing copy in the Databricks product UI. It governs navigation,
         titles, buttons, descriptions, tooltips, modals, empty states and errors, so the product
         reads as one cohesive, professional, task-oriented experience.
       </DocHeader>
 
-      <div className="mt-8 flex flex-col gap-4">
+      <img
+        src="/docs/voice-hero.png"
+        alt="Abstract mark for voice and tone: three overlapping profiles facing one way, with a blue spark and an orange stepped pattern."
+        width={864}
+        height={300}
+        className="mt-10 h-auto w-full rounded-2"
+      />
+
+      <div className="mt-8">
         <SourceNote>
           This page renders <Code>packages/dbui/docs/brandvoice.md</Code>, which the CLI and the MCP
           server serve to agents through <Code>dbui docs brandvoice</Code>. That file is the source
@@ -260,7 +283,6 @@ export function VoiceDoc() {
           Databricks content writers — the terminology and product-name tables are the most stable
           part.
         </SourceNote>
-        <JumpTo sections={SECTIONS} />
       </div>
 
       <AnchoredSection {...S.principles}>
@@ -269,11 +291,11 @@ export function VoiceDoc() {
           approachable. American spelling throughout — color, behavior, optimize, canceled. This
           applies to code comments and token names as well as UI copy.
         </Para>
-        <div className="mt-2 flex flex-col gap-10">
+        <DocAccordion variant="list">
           {PRINCIPLES.map((principle) => (
             <PrincipleEntry key={principle.name} {...principle} />
           ))}
-        </div>
+        </DocAccordion>
       </AnchoredSection>
 
       <AnchoredSection {...S.scale}>
@@ -281,19 +303,27 @@ export function VoiceDoc() {
           Voice is the constant personality of the product. Tone flexes with the user&rsquo;s
           context and the stakes involved.
         </Para>
-        <EntryList>
+        <ToneScale zones={TONE_ZONES} />
+        <DocAccordion variant="list">
           {TONE_SCALE.map((entry) => (
-            <ToneEntry key={entry.tone} {...entry} />
+            <ToneEntry
+              key={entry.tone}
+              {...entry}
+              moments={MOMENTS.filter((moment) => moment.tone === entry.tone)}
+            />
           ))}
-        </EntryList>
+        </DocAccordion>
       </AnchoredSection>
 
-      <AnchoredSection {...S.moments}>
-        <EntryList>
-          {MOMENTS.map((entry) => (
-            <ToneEntry key={entry.term} {...entry} />
-          ))}
-        </EntryList>
+      <AnchoredSection {...S.grammar}>
+        <RefTable
+          columns={[
+            { key: "category", header: "Category", width: "w-[20%]" },
+            { key: "rule", header: "Rule", width: "w-[24%]" },
+            { key: "guidance", header: "Guidance" },
+          ]}
+          rows={GRAMMAR}
+        />
       </AnchoredSection>
 
       <AnchoredSection {...S.casing}>
@@ -311,55 +341,49 @@ export function VoiceDoc() {
         />
       </AnchoredSection>
 
-      <AnchoredSection {...S.grammar}>
-        <RefTable
-          columns={[
-            { key: "category", header: "Category", width: "w-[20%]" },
-            { key: "rule", header: "Rule", width: "w-[24%]" },
-            { key: "guidance", header: "Guidance" },
-          ]}
-          rows={GRAMMAR}
-        />
-      </AnchoredSection>
+      {/*
+        Three lists the reader consults one at a time. Stacked, the terminology
+        table pushed the product names and the checklists below two screens of
+        rows nobody was reading on the way past, so they share one set of tabs.
+      */}
+      <AnchoredSection {...S.reference}>
+        <Para>
+          The word to reach for, the name the product goes by now, and the passes to make before a
+          string ships.
+        </Para>
+        <Tabs defaultValue="terminology" className="gap-4">
+          <TabsList>
+            <TabsTrigger value="terminology">Terminology</TabsTrigger>
+            <TabsTrigger value="names">Product names</TabsTrigger>
+            <TabsTrigger value="checks">Checks</TabsTrigger>
+          </TabsList>
 
-      <AnchoredSection {...S.checklists}>
-        <Subsection title="Accessibility">
-          <RefTable
-            columns={[
-              { key: "rule", header: "Rule", width: "w-[28%]" },
-              { key: "guideline", header: "Guideline" },
-            ]}
-            rows={ACCESSIBILITY}
-          />
-        </Subsection>
+          {/*
+            `keepMounted` on all three: a tab that mounts on click ships an
+            HTML document holding a third of the standard, and the two tabs
+            nobody clicked are missing from the source an agent or a crawler
+            reads.
+          */}
+          <TabsContent keepMounted value="terminology">
+            <WordTable rows={TERMINOLOGY} widths={["w-[25%]", "w-[33%]"]} />
+          </TabsContent>
 
-        <Subsection title="Globalization">
-          <RefTable
-            columns={[
-              { key: "rule", header: "Rule", width: "w-[28%]" },
-              { key: "guideline", header: "Guideline" },
-            ]}
-            rows={GLOBALIZATION}
-          />
-        </Subsection>
+          <TabsContent keepMounted value="names">
+            <WordTable rows={PRODUCT_NAMES} widths={["w-[27%]", "w-[35%]"]} />
+          </TabsContent>
 
-        <Subsection title="Content quality">
-          <RefTable
-            columns={[
-              { key: "rule", header: "Rule", width: "w-[28%]" },
-              { key: "guideline", header: "Guideline" },
-            ]}
-            rows={CONTENT_QUALITY}
-          />
-        </Subsection>
-      </AnchoredSection>
-
-      <AnchoredSection {...S.terminology}>
-        <WordTable rows={TERMINOLOGY} widths={["w-[25%]", "w-[33%]"]} />
-      </AnchoredSection>
-
-      <AnchoredSection {...S.productNames}>
-        <WordTable rows={PRODUCT_NAMES} widths={["w-[27%]", "w-[35%]"]} />
+          <TabsContent keepMounted value="checks">
+            <Subsection title="Accessibility">
+              <RefTable columns={CHECKLIST_COLUMNS} rows={ACCESSIBILITY} />
+            </Subsection>
+            <Subsection title="Globalization">
+              <RefTable columns={CHECKLIST_COLUMNS} rows={GLOBALIZATION} />
+            </Subsection>
+            <Subsection title="Content quality">
+              <RefTable columns={CHECKLIST_COLUMNS} rows={CONTENT_QUALITY} />
+            </Subsection>
+          </TabsContent>
+        </Tabs>
       </AnchoredSection>
 
       <AnchoredSection {...S.methodology}>

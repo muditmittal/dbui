@@ -1,7 +1,7 @@
 import * as React from "react"
-import Link from "next/link"
 import { Badge } from "dbui/components/ui/badge"
 
+import { DocAccordionItem } from "@/components/docs/DocAccordion"
 import { Guidance } from "@/components/docs/Guidance"
 import { RefTable } from "@/components/docs/Prose"
 
@@ -39,7 +39,7 @@ export function AnchoredSection({
   )
 }
 
-/** No anchor of its own. The jump list stops at the section above it. */
+/** No anchor of its own. The section above it owns the jump target. */
 export function Subsection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-8 flex flex-col gap-3">
@@ -52,9 +52,9 @@ export function Subsection({ title, children }: { title: string; children: React
 /**
  * A principle is a short read, not a row. Four columns of principle, meaning,
  * do and don't put four wrapped paragraphs beside each other and asked the
- * reader to rebuild each rule by tracking across them, so each principle gets
- * its own heading and the pair goes to `Guidance`, which is where every
- * do-and-don't in these docs lives.
+ * reader to rebuild each rule by tracking across them, so the name and the
+ * meaning become the disclosure header and the pair goes to `Guidance`, which
+ * is where every do-and-don't in these docs lives.
  */
 export function PrincipleEntry({
   name,
@@ -68,13 +68,18 @@ export function PrincipleEntry({
   avoid: string
 }) {
   return (
-    <section className="flex flex-col gap-3">
-      <div className="flex flex-col gap-1">
-        <h3 className="type-title-4 text-text-strong">{name}</h3>
-        <p className="type-paragraph text-text-subtle">{meaning}</p>
-      </div>
-      <Guidance dos={[write]} donts={[avoid]} />
-    </section>
+    <DocAccordionItem
+      variant="list"
+      value={name}
+      header={
+        <>
+          <span className="type-title-3 text-text-strong">{name}</span>
+          <span className="type-paragraph text-text-subtle">{meaning}</span>
+        </>
+      }
+    >
+      <Guidance dos={[write]} donts={[avoid]} header={{ rule: "Rules", example: "Example" }} />
+    </DocAccordionItem>
   )
 }
 
@@ -99,43 +104,124 @@ const TONE_VARIANT = {
 
 export type Tone = keyof typeof TONE_VARIANT
 
+export type Moment = { term: string; guidance: string; example: string }
+
+/**
+ * The scale as one object rather than three rows. Tone is a continuum and the
+ * table never said so — a reader met Warm, Neutral and Cautious as three
+ * unrelated labels and had to infer the axis they sit on.
+ *
+ * The rail is three token bands, not the mixed gradient the mock draws. Nine
+ * hand-mixed steps would be nine colors nothing else in the system declares,
+ * and a decorative ramp is not worth a private palette.
+ */
+export function ToneScale({ zones }: { zones: Array<{ tone: Tone; where: string }> }) {
+  const band = {
+    Warm: "bg-status-surface-info",
+    Neutral: "bg-surface-base",
+    Cautious: "bg-status-surface-warning",
+  } as const
+
+  return (
+    <div className="flex flex-col gap-4 rounded-2 bg-surface-subtle px-6 py-8">
+      <div className="flex">
+        {zones.map((zone) => (
+          <span
+            key={zone.tone}
+            className="type-label-bold flex-1 text-center text-text-strong"
+          >
+            {zone.where}
+          </span>
+        ))}
+      </div>
+      <div
+        aria-hidden="true"
+        className="flex h-12 overflow-hidden rounded-full border border-border-base"
+      >
+        {zones.map((zone) => (
+          <span key={zone.tone} className={`flex-1 ${band[zone.tone]}`} />
+        ))}
+      </div>
+      <div className="flex">
+        {zones.map((zone) => (
+          <span key={zone.tone} className="flex flex-1 justify-center">
+            <Badge variant={TONE_VARIANT[zone.tone]}>{zone.tone}</Badge>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/**
+ * The moments a tone governs, listed under the tone rather than in a table of
+ * their own. Read as one table of eight, a moment sat next to seven others it
+ * had nothing to do with and the tone column did all the sorting; read under
+ * its tone, the grouping is the point.
+ */
+function MomentList({ moments }: { moments: Moment[] }) {
+  return (
+    <div className="overflow-hidden rounded-2 border border-border-base">
+      {moments.map((moment, i) => (
+        <div
+          key={moment.term}
+          className={`flex flex-col items-start gap-1 px-4 py-3 ${
+            i < moments.length - 1 ? "border-b border-border-base" : ""
+          }`}
+        >
+          <span className="type-label-bold text-text-strong">{moment.term}</span>
+          <span className="type-body text-text-subtle">{moment.guidance}</span>
+          <Specimen>{moment.example}</Specimen>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /**
  * Tone, term, guidance and example were four columns and all four wrapped. The
  * tone is the one field with a fixed vocabulary, so it goes to a badge in a
- * fixed gutter — the same shape `Guidance` uses — and the rest stacks into one
- * column that reads top to bottom.
+ * fixed gutter — the same shape `Guidance` uses — and the rest becomes the
+ * disclosure header, with the tone's own example and the moments it governs
+ * behind it.
  */
 export function ToneEntry({
   tone,
   term,
   guidance,
   example,
+  moments,
 }: {
   tone: Tone
   term: string
   guidance: string
   example: string
+  moments: Moment[]
 }) {
   return (
-    <div className="flex items-start gap-4 px-4 py-3">
-      <span className="w-20 shrink-0 pt-0.5">
-        <Badge variant={TONE_VARIANT[tone]}>{tone}</Badge>
-      </span>
-      <div className="flex min-w-0 flex-col items-start gap-1.5">
-        <span className="type-label-bold text-text-strong">{term}</span>
-        <span className="type-body text-text-subtle">{guidance}</span>
+    <DocAccordionItem
+      variant="list"
+      value={tone}
+      header={
+        <span className="flex w-full items-start gap-4">
+          <span className="w-20 shrink-0">
+            <Badge variant={TONE_VARIANT[tone]}>{tone}</Badge>
+          </span>
+          <span className="flex min-w-0 flex-col items-start gap-1">
+            <span className="type-label-bold text-text-strong">{term}</span>
+            <span className="type-body text-text-subtle">{guidance}</span>
+          </span>
+        </span>
+      }
+    >
+      <div className="flex flex-col gap-4">
         <Specimen>{example}</Specimen>
+        <div className="flex flex-col gap-2">
+          <span className="type-eyebrow text-text-subtle">In UI context</span>
+          <MomentList moments={moments} />
+        </div>
       </div>
-    </div>
-  )
-}
-
-/** The bordered, divided container the entry lists share with `Guidance`. */
-export function EntryList({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="divide-y divide-border-base overflow-hidden rounded-2 border border-border-base">
-      {children}
-    </div>
+    </DocAccordionItem>
   )
 }
 
@@ -168,32 +254,5 @@ export function WordTable({
         reason: <span className="text-text-subtle">{row.reason}</span>,
       }))}
     />
-  )
-}
-
-/**
- * One wrapped row rather than a stacked list. The reader is picking a
- * destination, not reading the titles, and a vertical list of nine would cost
- * more height than the first section it is trying to reach.
- */
-export function JumpTo({ sections }: { sections: Array<{ id: string; title: string }> }) {
-  return (
-    <nav
-      aria-label="On this page"
-      className="rounded-2 border border-border-base bg-surface-subtle px-4 py-3"
-    >
-      <div className="type-label-bold text-text-strong">On this page</div>
-      <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
-        {sections.map((section) => (
-          <Link
-            key={section.id}
-            href={`#${section.id}`}
-            className="type-body text-text-accent no-underline hover:underline"
-          >
-            {section.title}
-          </Link>
-        ))}
-      </div>
-    </nav>
   )
 }
