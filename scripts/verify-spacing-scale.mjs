@@ -666,16 +666,21 @@ const SHIPPED = `@import "tailwindcss";
   --spacing-10: var(--db-space-10);
   --size-2: var(--db-size-2);
   --size-4: var(--db-size-4);
+  --size-5: var(--db-size-5);
   --size-6: var(--db-size-6);
   --size-7: var(--db-size-7);
   --size-10: var(--db-size-10);
+  --size-12: var(--db-size-12);
+  --height-5: var(--db-size-5);
   --height-6: var(--db-size-6);
   --height-7: var(--db-size-7);
+  --height-12: var(--db-size-12);
   --width-7: var(--db-size-7);
   --radius-0: var(--db-radius-0);
   --radius-1: var(--db-radius-1);
   --radius-2: var(--db-radius-2);
   --radius-6: var(--db-radius-6);
+  --radius-full: var(--db-radius-full);
   --border-width-0: var(--db-border-0);
   --border-width-1: var(--db-border-1);
   --border-width-2: var(--db-border-2);
@@ -695,13 +700,16 @@ const SHIPPED = `@import "tailwindcss";
   --db-space-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
   --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-size-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-size-5: calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar));
   --db-size-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-size-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-size-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
+  --db-size-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
   --db-radius-0: 0;
   --db-radius-1: calc(var(--db-spacing-unit) * 1 * var(--db-density-scalar));
   --db-radius-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-radius-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
+  --db-radius-full: 999px;
   --db-border-0: 0px;
   --db-border-1: 1px;
   --db-border-2: 2px;
@@ -713,25 +721,28 @@ const SHIPPED = `@import "tailwindcss";
   // still have call sites, and this is the assertion that those call sites keep
   // rendering until the snap pass moves them.
   //
-  // `p-7` is the interesting one. 7 is a live SIZE stop — `h-7` is 28px off
-  // `--db-size-7` — but padding does not read the size namespace, so `p-7`
-  // falls to the multiplier while `h-7` does not. Same number, two families,
-  // two answers.
+  // All three are the interesting case, because all three are live SIZE stops —
+  // `h-5` is 20px, `h-7` 28px and `h-12` 48px, each off `--db-size-*` — while
+  // padding does not read the size namespace, so `p-5`, `p-7` and `p-12` fall
+  // to the multiplier. Same number, two families, two answers.
   const OFF_SCALE = ["p-1.5", "p-2.5", "p-5", "p-7", "p-9", "p-11", "p-12", "gap-13"]
   const probes = [
     "p-3", "gap-3", "mt-8", "p-0.5", "p-10",
     ...OFF_SCALE,
-    "size-4", "size-6", "size-7", "h-6", "h-7", "w-7", "min-h-7", "max-h-7",
-    "rounded-1", "rounded-2", "rounded-6", "rounded-0",
+    "size-4", "size-5", "size-6", "size-7", "size-12",
+    "h-5", "h-6", "h-7", "h-12", "w-7", "min-h-7", "max-h-7", "min-h-12",
+    "rounded-1", "rounded-2", "rounded-6", "rounded-0", "rounded-full",
     "border", "border-2", "border-0", "border-1",
   ]
   const css = await build(SHIPPED, probes)
   console.log("  ours (explicit key must win)")
   show(css, ["p-3", "gap-3", "mt-8", "p-0.5", "p-10", "size-4", "size-7", "h-7", "w-7"], 12)
+  console.log("  the two stops size gained")
+  show(css, ["h-5", "size-5", "h-12", "size-12", "min-h-12"], 12)
   console.log("  still Tailwind's, because the multiplier stays on")
   show(css, OFF_SCALE, 12)
   console.log("  radius and border")
-  show(css, ["rounded-0", "rounded-1", "rounded-2", "rounded-6", "border", "border-0", "border-1", "border-2"], 12)
+  show(css, ["rounded-0", "rounded-1", "rounded-2", "rounded-6", "rounded-full", "border", "border-0", "border-1", "border-2"], 12)
 
   check(
     "K1 an explicit --spacing-N beats the live --spacing multiplier",
@@ -790,6 +801,51 @@ const SHIPPED = `@import "tailwindcss";
     (ruleFor(css, "h-6") ?? "").includes("--db-size-6") &&
       (ruleFor(fellThrough, "h-6") ?? "").includes("--db-space-6"),
     `owned: h-6 → ${ruleFor(css, "h-6")}   unowned: h-6 → ${ruleFor(fellThrough, "h-6")}`
+  )
+  // The two stops size gained. Neither number is a space stop, so before they
+  // were declared a height utility passed --height-* and --spacing-* alike and
+  // landed on the open multiplier. It rendered the right pixels, which is
+  // exactly why nothing caught it: 20px and 48px were values the product used
+  // and the system had not decided.
+  //
+  // The pair is asserted together with the p- form, because the whole claim is
+  // that the family answers and spacing does not.
+  const unowned512 = await build(
+    SHIPPED.replace("  --height-5: var(--db-size-5);\n", "")
+      .replace("  --size-5: var(--db-size-5);\n", "")
+      .replace("  --height-12: var(--db-size-12);\n", "")
+      .replace("  --size-12: var(--db-size-12);\n", ""),
+    ["h-5", "h-12", "size-5", "size-12"]
+  )
+  show(unowned512, ["h-5", "h-12", "size-5", "size-12"], 12)
+  check(
+    "K13 h-5 and h-12 resolve to --db-size-*, where they used to reach the multiplier",
+    ["h-5", "h-12", "size-5", "size-12", "min-h-12"].every((c) => (ruleFor(css, c) ?? "").includes("--db-size-")) &&
+      ["h-5", "h-12", "size-5", "size-12"].every((c) => {
+        const r = ruleFor(unowned512, c) ?? ""
+        return r && !r.includes("--db-size-")
+      }),
+    `owned: h-5 → ${ruleFor(css, "h-5")}   h-12 → ${ruleFor(css, "h-12")}` +
+      `\n      unowned: h-5 → ${ruleFor(unowned512, "h-5")}`
+  )
+  check(
+    "K13b and 5 and 12 stay out of spacing, so p-5 and p-12 are still the multiplier",
+    ["p-5", "p-12"].every((c) => {
+      const r = ruleFor(css, c) ?? ""
+      return r && !r.includes("--db-space-")
+    }),
+    `p-5 → ${ruleFor(css, "p-5")}   p-12 → ${ruleFor(css, "p-12")}`
+  )
+  // `rounded-full` is the one stop whose token shipped and whose bridge did
+  // not, so 39 call sites rendered Tailwind's own pill and --db-radius-full sat
+  // dead in :root. The two clip identically, which is why it went unnoticed —
+  // the reason to own it is that Figma cannot hold an infinity.
+  const unownedFull = await build(SHIPPED.replace("  --radius-full: var(--db-radius-full);\n", ""), ["rounded-full"])
+  check(
+    "K14 rounded-full resolves to --db-radius-full, not Tailwind's infinity",
+    (ruleFor(css, "rounded-full") ?? "").includes("--db-radius-full") &&
+      (ruleFor(unownedFull, "rounded-full") ?? "").includes("infinity"),
+    `owned: rounded-full → ${ruleFor(css, "rounded-full")}   unowned: ${ruleFor(unownedFull, "rounded-full")}`
   )
   // The radius namespace is documented with named steps only. Numeric keys
   // being legal is the whole premise of `rounded-2`, so it is asserted rather
@@ -864,9 +920,9 @@ console.log("\n── K2. Old radius names closed rather than dropped\n")
     "A missed codemod site renders no radius at all, rather than Tailwind's disagreeing value."
   )
   check(
-    "K10 rounded-full and rounded-none survive as keywords",
+    "K10 rounded-full and rounded-none survive when the named steps are closed",
     Boolean(ruleFor(css, "rounded-full")) && Boolean(ruleFor(css, "rounded-none")),
-    `rounded-full → ${ruleFor(css, "rounded-full")} — left on Tailwind's value on purpose, see the report.`
+    `rounded-full → ${ruleFor(css, "rounded-full")} — this fixture declares no --radius-full, so it shows Tailwind's value. K14 asserts what ships.`
   )
 }
 
@@ -901,6 +957,24 @@ console.log("\n── L. No primitive scale in the shipped CSS\n")
     "L2 the four semantic families all ship",
     ["--db-space-3", "--db-size-8", "--db-radius-2", "--db-border-1"].every((n) => shipped.includes(`${n}:`)),
     "space, size, radius, border — the collection React consumes."
+  )
+  // A stop can ship as a token and never reach a class, which is the state
+  // radius-full was in. Read both halves out of the file that ships, so a
+  // definition without a bridge cannot pass as done.
+  const bridged = (key, token) => new RegExp(`--${key}:\\s*var\\(--db-${token}\\)`).test(shipped)
+  const pairs = [
+    ["size-5", "size-5"], ["height-5", "size-5"], ["width-5", "size-5"],
+    ["size-12", "size-12"], ["height-12", "size-12"], ["width-12", "size-12"],
+    ["radius-full", "radius-full"],
+  ]
+  for (const [key, token] of pairs) {
+    console.log(`    --${key.padEnd(12)} → --db-${token.padEnd(10)} ${bridged(key, token) ? "bridged" : "NOT BRIDGED"}`)
+  }
+  check(
+    "L3 the new stops are defined AND bridged, in all three size namespaces",
+    ["--db-size-5", "--db-size-12", "--db-radius-full"].every((n) => shipped.includes(`${n}:`)) &&
+      pairs.every(([key, token]) => bridged(key, token)),
+    "A token with no @theme key is what left rounded-full on Tailwind's value for the whole radius rename."
   )
 }
 
