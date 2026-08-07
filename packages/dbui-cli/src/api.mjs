@@ -26,17 +26,30 @@ function parseJsdoc(src) {
       .replace(/^\/\*\*/, "")
       .replace(/\*\/$/, "")
       .replace(/^\s*\*\s?/gm, "");
+    // A tag runs to the next tag or the end of the block, so an indented line
+    // continues the tag above it and `@constraints` opens a list rather than
+    // naming one rule. Reading each line on its own truncated every wrapped
+    // tag, dropped all four `@constraints` blocks — including Button's
+    // aria-label requirement — and promoted the orphaned remainder to summary.
+    const prose = [];
+    let open = null;
+    const openTag = (list, text) => {
+      list.push(text);
+      open = list;
+    };
     for (const line of body.split("\n")) {
       const t = line.trim();
-      if (t.startsWith("@standard ")) out.standard = t.slice(10).trim();
-      else if (t.startsWith("@guideline ")) out.guidelines.push(t.slice(11).trim());
-      else if (t.startsWith("@constraint ")) out.constraints.push(t.slice(12).trim());
-      else if (t.startsWith("@figma ")) out.figma = t.slice(7).trim();
+      if (t.startsWith("@standard ")) (out.standard = t.slice(10).trim()), (open = null);
+      else if (t.startsWith("@guideline ")) openTag(out.guidelines, t.slice(11).trim());
+      else if (t.startsWith("@constraint ")) openTag(out.constraints, t.slice(12).trim());
+      else if (t === "@constraints") open = out.constraints;
+      else if (t.startsWith("@figma ")) (out.figma = t.slice(7).trim()), (open = null);
+      else if (t.startsWith("@")) open = null;
+      else if (open && t.startsWith("- ")) open.push(t.slice(2).trim());
+      else if (open && t && open.length && /^\s/.test(line)) open[open.length - 1] += ` ${t}`;
+      else if (t) (open = null), prose.push(t);
     }
-    if (!out.summary) {
-      const first = body.split("\n").map((l) => l.trim()).find((l) => l && !l.startsWith("@"));
-      if (first && !first.startsWith("use client")) out.summary = first;
-    }
+    if (!out.summary && prose[0] && !prose[0].startsWith("use client")) out.summary = prose[0];
   }
   return out;
 }
