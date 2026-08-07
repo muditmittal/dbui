@@ -40,7 +40,7 @@
 
 **Detail page with sidebar:** Main content `[gap-6]` sidebar. Sidebar sections separated by `gap-6`. Within each sidebar section: `gap-2`.
 
-**Form:** Field groups separated by `gap-4`. Label to input: `gap-1.5`. Input to helper text: `gap-1`.
+**Form:** Field groups separated by `gap-4`. Label to input: `gap-2`. Input to helper text: `gap-1`.
 
 ### Platform Shell
 

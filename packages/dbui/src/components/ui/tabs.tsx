@@ -78,7 +78,7 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
         // Default variant (lined): active tab gets primary bottom border
         "group-data-[variant=default]/tabs-list:data-active:border-b-action-primary-base group-data-[variant=default]/tabs-list:data-active:text-text-base",
         // Pill variant: active tab gets bg + shadow
-        "group-data-[variant=pill]/tabs-list:rounded-2 group-data-[variant=pill]/tabs-list:border-none group-data-[variant=pill]/tabs-list:px-1.5 group-data-[variant=pill]/tabs-list:py-0.5 group-data-[variant=pill]/tabs-list:data-active:bg-surface-base group-data-[variant=pill]/tabs-list:data-active:text-text-base group-data-[variant=pill]/tabs-list:data-active:shadow-sm",
+        "group-data-[variant=pill]/tabs-list:rounded-2 group-data-[variant=pill]/tabs-list:border-none group-data-[variant=pill]/tabs-list:px-2 group-data-[variant=pill]/tabs-list:py-0.5 group-data-[variant=pill]/tabs-list:data-active:bg-surface-base group-data-[variant=pill]/tabs-list:data-active:text-text-base group-data-[variant=pill]/tabs-list:data-active:shadow-sm",
         className
       )}
       {...props}

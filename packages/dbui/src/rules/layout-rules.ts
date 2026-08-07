@@ -112,7 +112,7 @@ export const layoutRules = {
     /** Form layout */
     form: {
       fieldGroups: "gap-4",       // 16px between field groups
-      labelToInput: "gap-1.5",    // 6px between label and input
+      labelToInput: "gap-2",      // 8px between label and input
       inputToHelper: "gap-1",     // 4px between input and helper text
     },
   },

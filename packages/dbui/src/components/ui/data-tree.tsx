@@ -565,7 +565,7 @@ function TreeNodeTag({
     <span
       data-slot="tree-node-tag"
       className={cn(
-        "inline-flex items-center gap-1 rounded bg-surface-subtle px-1.5 type-hint text-text-subtle",
+        "inline-flex items-center gap-1 rounded-1 bg-surface-subtle px-2 type-hint text-text-subtle",
         className
       )}
       {...props}
