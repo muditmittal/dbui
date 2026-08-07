@@ -138,14 +138,12 @@ function DocTile({ item }: { item: DocsNavItem }) {
 }
 
 /**
- * A group heads its own landing page, so the heading is that link — except for
- * `Docs`, whose landing page is this one. The two forms are identical at rest,
- * so the row reads as one kind of heading rather than two.
+ * A group heads its own landing page, so the heading is that link. `Docs` gets
+ * none: its landing page is this one, and the h1 above already names it, so a
+ * second `Docs` a line below would title the section after the page.
  */
 function GroupHeading({ entry }: { entry: DocsNavEntry }) {
-  if (entry.href === SELF) {
-    return <h2 className="type-title-3 text-text-strong">{entry.label}</h2>
-  }
+  if (entry.href === SELF) return null
 
   return (
     <h2 className="type-title-3">
