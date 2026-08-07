@@ -27,13 +27,30 @@ const ROOT = path.resolve(__dirname, "../../")
 const tokens = JSON.parse(fs.readFileSync(path.join(__dirname, "tokens.json"), "utf-8"))
 const components = JSON.parse(fs.readFileSync(path.join(__dirname, "dbui-components.json"), "utf-8"))
 
-const DBUI_COMPONENT_SET = new Set([...components.ui, ...components.shells])
-const ALWAYS_ALLOWED_TAGS = new Set(components.tagsAlwaysAllowed.always)
-const PREFER_WRAPPER_HINTS = components.tagsAlwaysAllowed["ok-but-prefer-wrapper"]
+// Every package, and the icons. The icons were the omission that mattered:
+// dbui-components.json held the string "$see icons.json" where the names should
+// have been, so 803 DBUI icons came back as unknown components.
+const DBUI_COMPONENT_SET = new Set([
+  ...components.ui,
+  ...components.shells,
+  ...components.genie,
+  ...components.viz,
+  ...components.icons,
+])
 
-// Interactive HTML tags are never allowed in portal stories or dbui-shells.
-// Use DBUI primitives instead (Button/Input/Select/Textarea/etc.).
-const FORBIDDEN_HTML_TAGS = new Set(["button", "input", "select", "textarea"])
+/* Interactive HTML tags, and what to reach for instead.
+ *
+ * This lives with the rule rather than in dbui-components.json, which is now
+ * generated end to end. A replacement suggestion is a judgement about the
+ * system, not a fact about its exports, and a generated file is the wrong place
+ * to keep a judgement — the next regeneration deletes it.
+ */
+const FORBIDDEN_HTML_TAGS = {
+  button: "Use <Button>, <Toggle> or <SplitButton>.",
+  input: "Use <Input>, <Textarea> or <InputGroupInput>.",
+  select: "Use <Select> or <Combobox>.",
+  textarea: "Use <Textarea>.",
+}
 
 const APPROVED_HEX = new Set([...tokens.colors.light, ...tokens.colors.dark])
 
@@ -361,14 +378,69 @@ function checkInlineStyle(node, file, line, column, element) {
   })
 }
 
-function checkElement(opening, sourceFile) {
+/* One edit apart, at five characters or more.
+ *
+ * Used only to phrase a "did you mean" once something is already known to be
+ * wrong. It is deliberately not a rule of its own: run over every local
+ * component it found one match on the whole tree, a docs helper called States
+ * sitting a letter from Status, and coincidence at that rate is noise. Against
+ * 844 export names almost any PascalCase word is two edits from something. */
+function withinOneEdit(a, b) {
+  if (Math.abs(a.length - b.length) > 1) return false
+  let i = 0
+  let j = 0
+  let edits = 0
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) { i++; j++; continue }
+    if (++edits > 1) return false
+    if (a.length > b.length) i++
+    else if (b.length > a.length) j++
+    else { i++; j++ }
+  }
+  return edits + (a.length - i) + (b.length - j) <= 1
+}
+
+const LOWER_TO_DBUI = new Map([...DBUI_COMPONENT_SET].map((n) => [n.toLowerCase(), n]))
+function nearestDbuiName(tagName) {
+  const exact = LOWER_TO_DBUI.get(tagName.toLowerCase())
+  if (exact) return exact
+  if (tagName.length < 5) return null
+  for (const known of DBUI_COMPONENT_SET) if (withinOneEdit(tagName, known)) return known
+  return null
+}
+
+/**
+ * Local tag name → what the DBUI package was asked for, for every name the file
+ * imports from one.
+ *
+ * The exported name and the local name come apart under an alias, and the
+ * allowlist only knows the exported one. `import { Table as TableIcon }` is a
+ * correct import of a real icon, so checking the tag name against the package
+ * would report four working call sites as broken.
+ */
+function dbuiImportsOf(sourceFile) {
+  const named = new Map()
+  for (const imp of sourceFile.getImportDeclarations()) {
+    const spec = imp.getModuleSpecifierValue()
+    if (!/^dbui(-shells|-genie|-viz)?(\/|$)/.test(spec)) continue
+    for (const ni of imp.getNamedImports()) {
+      const exported = ni.getNameNode().getText()
+      named.set((ni.getAliasNode() ?? ni.getNameNode()).getText(), { spec, exported })
+    }
+    const def = imp.getDefaultImport()
+    if (def) named.set(def.getText(), { spec, exported: def.getText() })
+  }
+  return named
+}
+
+function checkElement(opening, sourceFile, dbuiImports) {
   const tagName = opening.getTagNameNode().getText()
   const { line, column } = opening.getSourceFile().getLineAndColumnAtPos(opening.getStart())
 
   const isComponent = /^[A-Z]/.test(tagName)
   const isMember = tagName.includes(".")
 
-  if (!isComponent && FORBIDDEN_HTML_TAGS.has(tagName)) {
+  if (!isComponent && FORBIDDEN_HTML_TAGS[tagName]) {
     violations.push({
       file: sourceFile,
       line,
@@ -377,31 +449,36 @@ function checkElement(opening, sourceFile) {
       rule: "no-raw-interactive-html",
       element: tagName,
       message: `<${tagName}> is not allowed in DBUI-authored UI code.`,
-      fix: PREFER_WRAPPER_HINTS[tagName] || `Replace <${tagName}> with the DBUI equivalent.`,
+      fix: FORBIDDEN_HTML_TAGS[tagName],
       source: opening.getText().slice(0, 80),
     })
     // Still continue to check className/style for additional token violations.
   }
 
-  if (!isComponent && !ALWAYS_ALLOWED_TAGS.has(tagName)) {
-    const hint = PREFER_WRAPPER_HINTS[tagName]
-    if (hint) {
-      violations.push({
-        file: sourceFile, line, column, level: "warning", rule: "prefer-dbui-wrapper", element: tagName,
-        message: `<${tagName}> is allowed but a DBUI wrapper is usually preferred.`,
-        fix: hint,
-        source: opening.getText().slice(0, 80),
-      })
-    }
-  } else if (isComponent && !isMember) {
-    if (!DBUI_COMPONENT_SET.has(tagName)) {
-      violations.push({
-        file: sourceFile, line, column, level: "info", rule: "non-dbui-component", element: tagName,
-        message: `<${tagName}> is not a known DBUI component.`,
-        fix: `Verify this is intentional. If it should be DBUI, replace with a DBUI export. If it's local product code, this is fine.`,
-        source: opening.getText().slice(0, 80),
-      })
-    }
+  /* Only the shape that is actually a defect: a name taken from a DBUI package
+   * that the package does not export.
+   *
+   * The rule used to fire on every PascalCase element outside the allowlist,
+   * which in a repo that *is* the design system is most of them — 1010 findings
+   * whose own fix text ended "if it's local product code, this is fine". Three
+   * fifths were DBUI icons, because the icon names had never been loaded.
+   *
+   * Scoped to imports it means something a reader can act on, and it doubles as
+   * the guard on the allowlist itself: when it fires, either the import is
+   * broken or the generated list is behind, and both need fixing. It reports
+   * nothing on a tree where both are true, which is what a guard looks like. */
+  const imported = dbuiImports.get(tagName)
+  const resolvedName = imported ? imported.exported : tagName
+  if (isComponent && !isMember && imported && !DBUI_COMPONENT_SET.has(resolvedName)) {
+    const near = nearestDbuiName(resolvedName)
+    violations.push({
+      file: sourceFile, line, column, level: "error", rule: "non-dbui-component", element: tagName,
+      message: `\`${resolvedName}\` is imported from \`${imported.spec}\` but the package does not export it.`,
+      fix: near
+        ? `Did you mean ${near}? Otherwise re-run node scripts/design-lint/sync-components.mjs — the allowlist may be behind.`
+        : `Re-run node scripts/design-lint/sync-components.mjs. If the name is still unknown, the import is broken.`,
+      source: opening.getText().slice(0, 80),
+    })
   }
 
   for (const attr of opening.getAttributes()) {
@@ -563,11 +640,12 @@ function main() {
 
   for (const sourceFile of project.getSourceFiles()) {
     const filePath = path.relative(ROOT, sourceFile.getFilePath())
+    const dbuiImports = dbuiImportsOf(sourceFile)
     sourceFile.forEachDescendant((node) => {
       if (node.getKind() === SyntaxKind.JsxOpeningElement) {
-        checkElement(node.asKind(SyntaxKind.JsxOpeningElement), filePath)
+        checkElement(node.asKind(SyntaxKind.JsxOpeningElement), filePath, dbuiImports)
       } else if (node.getKind() === SyntaxKind.JsxSelfClosingElement) {
-        checkElement(node.asKind(SyntaxKind.JsxSelfClosingElement), filePath)
+        checkElement(node.asKind(SyntaxKind.JsxSelfClosingElement), filePath, dbuiImports)
       }
     })
   }
