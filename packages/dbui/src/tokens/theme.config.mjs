@@ -315,7 +315,13 @@ export const space = {
  * the naming problem: `radius-lg` was 12px and `space-lg` was 24px, so `lg`
  * meant two different things one section apart in the same file.
  *
- * `full` is a pill sentinel rather than a measurement, so it does not scale. */
+ * `full` is a pill sentinel rather than a measurement, so it does not scale.
+ * 999px is a number Figma can hold, which is the whole reason it is not
+ * infinity. Tailwind's own `rounded-full` is `calc(infinity * 1px)`, and no
+ * design tool has a variable for that, so the two surfaces could describe the
+ * same pill and never agree on paper. They clip identically in practice —
+ * either value exceeds every corner in the system — so the sentinel costs
+ * nothing at render and buys a value both tools can state. */
 export const radius = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, full: "999px" }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -369,10 +375,15 @@ export const bridge = {
    * `xs` and `4xl` stay open. They were never ours, nothing on this scale sits
    * at 2px or 32px, and they are the radius equivalent of `p-1.5` — off-scale
    * but still compiling, which is the same bargain spacing is making until the
-   * scale is closed. */
+   * scale is closed.
+   *
+   * `full` is a step here rather than a keyword. It is the one stop whose token
+   * existed and whose bridge did not, so every `rounded-full` in the tree read
+   * Tailwind's infinity and `--db-radius-full` was defined and dead. Declared,
+   * the pill is ours and Figma can hold the same number. */
   radius: {
     family: "radius",
-    steps: [0, 1, 2, 3, 4, 6],
+    steps: [0, 1, 2, 3, 4, 6, "full"],
     close: ["sm", "md", "lg", "xl", "2xl", "3xl"],
   },
   /* Border is the family that most needed the numeric rename, because named

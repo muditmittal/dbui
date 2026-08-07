@@ -159,6 +159,7 @@
   --radius-3: var(--db-radius-3);
   --radius-4: var(--db-radius-4);
   --radius-6: var(--db-radius-6);
+  --radius-full: var(--db-radius-full);
   --border-width-0: var(--db-border-0);
   --border-width-1: var(--db-border-1);
   --border-width-2: var(--db-border-2);
