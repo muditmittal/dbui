@@ -177,7 +177,7 @@ export function LayoutDoc() {
           <>
             This page owns the rules that hold across every shell. <Code>composition.md</Code> owns
             each shell&rsquo;s own regions, scaling and scroll contract and renders them on{" "}
-            <DocLink href="/templates">Templates</DocLink>. A component&rsquo;s constraints live in
+            <DocLink href="/docs/shells">Shells</DocLink>. A component&rsquo;s constraints live in
             its JSDoc and outrank anything here.{" "}
             <DocLink href="/docs/patterns">Patterns</DocLink> owns what happens over time, and{" "}
             <DocLink href="/docs/components">component rules</DocLink> owns cross-component spacing,
@@ -349,7 +349,7 @@ export function LayoutDoc() {
 
         <Para>
           The regions, scaling and scroll contract of each shell live in{" "}
-          <Code>composition.md</Code> and render on <DocLink href="/templates">Templates</DocLink>. Agents
+          <Code>composition.md</Code> and render on <DocLink href="/docs/shells">Shells</DocLink>. Agents
           read the same definitions from <Code>dbui shell</Code>. This page does not repeat them.
         </Para>
 

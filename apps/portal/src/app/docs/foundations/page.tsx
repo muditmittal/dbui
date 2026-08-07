@@ -7,7 +7,7 @@ import { families as tokenFamilies } from "@/stories/tokens/token-consumption"
 import { DocHeader, DocSection, Para, Code } from "@/components/docs/Prose"
 import { Figure, FigureRow, FigureAside, FigureLabel, Terms, type Term } from "@/components/docs/Diagram"
 
-export const metadata = { title: "Foundations — DBUI" }
+export const metadata = { title: "Design system — DBUI" }
 
 /**
  * The page is a map, not an explanation. Someone arrives not knowing how tokens,
@@ -132,7 +132,7 @@ const LAYERS = [
   },
   {
     name: "Shells",
-    href: "/templates",
+    href: "/docs/shells",
     parts: SHELL_NAMES,
     is: (
       <>
@@ -140,7 +140,7 @@ const LAYERS = [
         container owns the scroll, which is what stops a page becoming a stack of cards.
       </>
     ),
-    destinations: [{ label: "Templates", href: "/templates" }],
+    destinations: [{ label: "Shells", href: "/docs/shells" }],
   },
 ]
 
@@ -191,7 +191,7 @@ function Directory({ items }: { items: Array<{ label: string; href: string; what
         <Link
           key={item.href}
           href={item.href}
-          className="flex flex-col gap-1 border-b border-border-subtle px-4 py-3 no-underline transition-colors last:border-b-0 hover:bg-surface-hover sm:flex-row sm:gap-5"
+          className="flex flex-col gap-1 border-b border-border-subtle px-4 py-3 no-underline transition-colors last:border-b-0 hover:bg-surface-hover sm:flex-row sm:gap-6"
         >
           <span className="type-label-bold w-40 shrink-0 text-text-strong">{item.label}</span>
           <span className="type-body text-text-subtle">{item.what}</span>
@@ -223,7 +223,7 @@ function LayerStack() {
                 <span className="type-hint w-3 shrink-0 pt-0.5 text-text-subtle tabular-nums">
                   {i + 1}
                 </span>
-                <span className="flex min-w-0 flex-col gap-1.5">
+                <span className="flex min-w-0 flex-col gap-2">
                   <span className="type-label-bold text-text-strong">{layer.name}</span>
                   <Terms items={layer.parts} />
                 </span>
@@ -239,7 +239,7 @@ function LayerStack() {
             <FigureLabel>Agent surfaces</FigureLabel>
             <span className="type-hint text-text-subtle">Read every layer. Sit in none.</span>
           </div>
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             {AGENT_SURFACES.map((surface) => (
               <Link
                 key={surface.href}
@@ -259,7 +259,7 @@ function LayerStack() {
 export default function FoundationsPage() {
   return (
     <>
-      <DocHeader title="Foundations">
+      <DocHeader title="Design system">
         How the system is layered, what sits in each layer and which page owns each part.
       </DocHeader>
 
