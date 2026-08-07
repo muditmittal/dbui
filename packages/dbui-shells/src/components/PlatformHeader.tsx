@@ -89,7 +89,7 @@ export function PlatformHeader({
             {/* Search */}
             <div className="px-2 pb-2">
               <div className="relative">
-                <Search className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-text-subtle" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-text-subtle" />
                 <Input placeholder="Search workspaces" className="h-8 pl-8" />
               </div>
             </div>

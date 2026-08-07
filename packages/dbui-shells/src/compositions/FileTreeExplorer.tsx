@@ -129,7 +129,7 @@ export function FileTreeExplorer({
         (title || titleIcon || headerActions) && (
           <div className="flex h-10 items-center gap-2 px-2">
             {(title || titleIcon) && (
-              <div className="flex min-w-0 items-center gap-1.5 type-label-bold text-text-base">
+              <div className="flex min-w-0 items-center gap-2 type-label-bold text-text-base">
                 {titleIcon && (
                   <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">
                     {titleIcon}
@@ -148,7 +148,7 @@ export function FileTreeExplorer({
       {searchEnabled && (
         <div className="px-2 pb-2">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-text-subtle" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-text-subtle" />
             <Input
               size="default"
               placeholder={searchPlaceholder}

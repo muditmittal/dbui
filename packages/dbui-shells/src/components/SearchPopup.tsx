@@ -62,7 +62,7 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
         </div>
 
         {/* Filter toggles */}
-        <div className="flex items-center gap-1.5 px-3 py-2">
+        <div className="flex items-center gap-2 px-3 py-2">
           {filters.map((f) => {
             const Icon = f.icon
             const isActive = activeFilter === f.label

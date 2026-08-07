@@ -256,7 +256,7 @@ function parseBlocks(markdown: string): React.ReactNode[] {
           {
             key: listKey,
             className: cn(
-              "flex flex-col gap-1 pl-5",
+              "flex flex-col gap-1 pl-4",
               isUnordered ? "list-disc" : "list-decimal"
             ),
           },

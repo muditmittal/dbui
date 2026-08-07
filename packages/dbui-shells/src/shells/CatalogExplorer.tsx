@@ -201,7 +201,7 @@ function CatalogTree({
                     )
                   })
                 ) : (
-                  <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-1.5 py-1">
+                  <Button variant="ghost" className="h-7 w-full justify-start gap-2 bg-action-selected-base px-2 py-1">
                     <span className="flex shrink-0 items-center text-text-subtle [&_svg]:size-4">{defaultIcon}</span>
                     Catalog
                   </Button>
@@ -209,12 +209,12 @@ function CatalogTree({
 
                 {/* Go to section */}
                 <div className="my-1 h-px bg-border-base" />
-                <div className="px-1.5 py-1 type-hint text-text-subtle">Go to</div>
+                <div className="px-2 py-1 type-hint text-text-subtle">Go to</div>
                 {(goToItems ?? []).map((item) => (
                   <Button
                     key={item.id}
                     variant="ghost"
-                    className="h-7 w-full justify-start gap-2 px-1.5 py-1"
+                    className="h-7 w-full justify-start gap-2 px-2 py-1"
                     onClick={() => {
                       if (onFocusNode) onFocusNode(item.id, item.label, item.icon)
                     }}
@@ -244,7 +244,7 @@ function CatalogTree({
           <DropdownMenuContent align="start" className="w-[280px]">
             <div className="p-1">
               <div className="relative">
-                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-text-subtle" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-text-subtle" />
                 <Input placeholder="Search" className="pl-8 h-8" />
               </div>
             </div>

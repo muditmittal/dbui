@@ -109,7 +109,7 @@ export function FacetedFilter({
                         <Button
                           key={facet}
                           variant="ghost"
-                          className="h-7 w-full justify-start gap-2 px-1.5 py-1 text-text-base"
+                          className="h-7 w-full justify-start gap-2 px-2 py-1 text-text-base"
                           onClick={() => { setActiveFacet(facet); setSearch("") }}
                         >
                           <span className="flex-1 text-left">{facet}:</span>
@@ -119,7 +119,7 @@ export function FacetedFilter({
                       )
                     })}
                     <div className="-mx-1 my-1 h-px bg-border-base" />
-                    <label className="flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-1.5 py-1 type-label text-text-base hover:bg-action-default-hover">
+                    <label className="flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-2 py-1 type-label text-text-base hover:bg-action-default-hover">
                       <Switch checked={showCanUse} onCheckedChange={setShowCanUse} />
                       <span className="flex-1">Show can-use only</span>
                     </label>
@@ -131,7 +131,7 @@ export function FacetedFilter({
                   <div>
                     <Button
                       variant="ghost"
-                      className="h-auto w-full justify-start gap-1 px-1.5 py-1.5"
+                      className="h-auto w-full justify-start gap-1 px-2 py-2"
                       onClick={() => {
                         if (activeNested) { setActiveNested(null); setSearch("") }
                         else { setActiveFacet(null); setSearch("") }
@@ -157,7 +157,7 @@ export function FacetedFilter({
 
                         if (hasNested) {
                           return (
-                            <div key={value} className="flex w-full min-h-7 items-center gap-2 rounded-1 px-1.5 py-1 type-label text-text-base hover:bg-action-default-hover cursor-default">
+                            <div key={value} className="flex w-full min-h-7 items-center gap-2 rounded-1 px-2 py-1 type-label text-text-base hover:bg-action-default-hover cursor-default">
                               <Checkbox
                                 checked={checked}
                                 onCheckedChange={() => toggleValue(activeFacet, value)}
@@ -178,7 +178,7 @@ export function FacetedFilter({
                         return (
                           <label
                             key={value}
-                            className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-1.5 py-1 type-label text-text-base hover:bg-action-default-hover"
+                            className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-2 py-1 type-label text-text-base hover:bg-action-default-hover"
                           >
                             <Checkbox
                               checked={checked}
@@ -237,7 +237,7 @@ export function FacetedFilter({
                   <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
                     <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
                       <div className="p-1">
-                        <div className="px-1.5 py-1 type-hint text-text-subtle">{facet}</div>
+                        <div className="px-2 py-1 type-hint text-text-subtle">{facet}</div>
                       </div>
                       <div className="max-h-56 overflow-y-auto p-1 pt-0" role="group">
                         {facetValues.map((value) => {
@@ -245,7 +245,7 @@ export function FacetedFilter({
                           return (
                             <label
                               key={value}
-                              className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-1.5 py-1 type-label text-text-base hover:bg-action-default-hover"
+                              className="group/field flex w-full min-h-7 cursor-pointer items-center gap-2 rounded-1 px-2 py-1 type-label text-text-base hover:bg-action-default-hover"
                             >
                               <Checkbox
                                 checked={checked}

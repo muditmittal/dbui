@@ -87,7 +87,7 @@ function PropertyRow({
       <span data-slot="Label" className="w-[80px] shrink-0 text-text-subtle">
         {label}
       </span>
-      <div data-slot="Value" className="flex flex-1 min-w-0 items-center gap-1.5 text-text-base">
+      <div data-slot="Value" className="flex flex-1 min-w-0 items-center gap-2 text-text-base">
         {children}
       </div>
     </div>
