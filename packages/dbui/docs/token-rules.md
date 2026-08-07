@@ -111,12 +111,14 @@ Figma (Color: Primitive + Color: Semantic)   ← design source; kept in parity w
 
 
 Each rule states **what** is enforced, **why**, and **how a linter detects it**.
-`✅ live` = already checked by react-lint/figma-lint; `🔜 planned` = for the
-token-compliance linter.
+`✅ live` = already checked by react-lint/figma-lint; `◐ partial` = one shape of
+it is checked; `🔜 planned` = for the token-compliance linter. The rule names in
+the Status column are the react-lint rules — `scripts/design-lint/README.md`
+lists all nineteen with their severities.
 
 | # | Rule | Detection | Status |
 | --- | --- | --- | --- |
-| **R1** | **No raw color literals in product code.** No `#hex`, `rgb()`, `hsl()`, `oklch()` in `.tsx` (className arbitraries or inline `style`). Use a token. | Arbitrary value / inline style whose color isn't in `tokens.json` colors. | ✅ live (`no-arbitrary-color`, `inline-hardcoded-color`) |
+| **R1** | **No raw color literals in product code.** No `#hex`, `rgb()`, `hsl()`, `oklch()` anywhere in `.ts` or `.tsx` — className arbitraries, inline `style`, or a plain object in a module. Use a token. | Arbitrary value / inline style whose color isn't in `tokens.json` colors, plus any color literal outside a JSX attribute — allowlisted or not, since a value in a module cannot have two modes. | ✅ live (`no-arbitrary-color`, `no-hardcoded-hex`, `inline-hardcoded-color`, `no-module-color-literal`) |
 | **R2** | **Never consume primitives directly.** Product code uses semantics only; `--interface-*`, `--status-*`, `--viz-<hue>-*`, `--base-*` are off-limits (they aren't Tailwind utilities and shouldn't appear in `var()`/arbitraries). | `var(--interface-…)`, `bg-[var(--status-blue-600)]`, etc. in `.tsx`. | ✅ live (`no-primitive-token` in code; `primitive-bound-fill/stroke` in Figma) |
 | **R3** | **Use the role-correct token.** Fills use `surface/*` or `action/*`; text uses `text/*`/`action/label*`/`status/text-*`; borders use `border/*`/`input/*`/`status/border-*`. Don't cross roles (e.g. `text-border-base`). | Utility prefix (`bg-`/`text-`/`border-`) vs the token's role group. | 🔜 planned |
 | **R4** | **Only alpha semantics use an alpha ref.** The closed set is: `*/hover`, `*/press`, `action/selected/*`, `surface/inset`, `surface/disabled`, `border/disabled`, `text/disabled`, `utility/*`. Every other semantic **must reference a primitive** (`"interface.neutral.600"`), not an alpha `{ ref, a }`. | In `theme.config.mjs`, a semantic outside the set whose value is a `{ ref, a }` object instead of a dotted primitive path. | 🔜 planned |
@@ -125,7 +127,7 @@ token-compliance linter.
 | **R7** | **State vocabulary = base · hover · press.** No `active`, `focus`, `selected` as an action state suffix (`press` maps to CSS `:active`; focus is its own `focus/*` group; selection is `action/selected/*`). | Semantic name ending in a disallowed state suffix. | 🔜 planned |
 | **R8** | **Status vocabulary = info · negative · positive · warning**, each with the `surface`/`border`/`text` triplet. No `danger`/`error`/`success`/`confirm` names. | Status token whose sentiment word isn't in the allowed set, or a missing triplet member. | 🔜 planned |
 | **R9** | **Focus is `focus/ring` (+ `focus/ring-offset`).** Don't reuse `border/*` or `action/*` for focus rings. | Focus styling bound to a non-focus token. | 🔜 planned |
-| **R10** | **Charts use `viz/categorical/*` or `viz/sequential/*`.** Never hand-pick hue primitives for a series. | `viz/<hue>/<step>` referenced by chart code instead of a `viz/categorical`/`sequential` token. | 🔜 planned |
+| **R10** | **Charts use `viz/categorical/*` or `viz/sequential/*`.** Never hand-pick hue primitives for a series. | `viz/<hue>/<step>` referenced by chart code instead of a `viz/categorical`/`sequential` token. | ◐ partial (`no-module-color-literal` catches a hue resolved into a chart module, which is the form this took; naming the wrong *semantic* is still unchecked) |
 | **R11** | **Config ↔ tokens.css ↔ Figma parity.** Semantic Figma vars carry `codeSyntax.WEB = var(--db-<name>)`; every config semantic ships as a `--db-*` var and a `--color-*` utility; every shipped value round-trips from the config; no primitive leaks into `tokens.css`. | `verify-token-sync.mjs` diffs the config, `tokens.css`, and the `.figma-token-dump.json` snapshot. | ✅ live (`design:verify-sync`) |
 | **R12** | **Additive changes only.** New tokens are added; renames/removals require a documented deprecation. `tokens.css`/`tokens.json` are generated, never hand-edited. | PR diff removes a token name without a deprecation entry; manual edit to a generated file. | 🔜 planned (CI) |
 | **R13** | **Every semantic resolves.** No dangling primitive ref in the config; no primitive defined but unused-and-undocumented. | The generator throws on an unknown ref; resolve graph over `theme.config.mjs`. | ✅ authoring check (generator) |

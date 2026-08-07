@@ -14,74 +14,49 @@ description: Validate that code follows DBUI design system rules. Triggers when 
 
 ## Procedure
 
-Read the file(s) under review. For each file, check every rule below. Report violations grouped by severity.
+### 1. Run the linter first
 
-### Errors (must fix)
+```bash
+yarn dbui check <path>          # or: yarn design:lint:react <path>
+```
 
-**Raw HTML elements:**
-Scan for lowercase JSX tags that have DBUI equivalents:
-- `<button` → use `Button` from `dbui/components/ui/button`
-- `<input` → use `Input` from `dbui/components/ui/input`
-- `<select` → use `Select` from `dbui/components/ui/select`
-- `<textarea` → use `Textarea` from `dbui/components/ui/textarea`
-- `<dialog` → use `Dialog` from `dbui/components/ui/dialog`
-- `<details` / `<summary` → use `Accordion` or `Collapsible`
+Nineteen rules cover every token and composition rule that can be decided from
+the source: raw HTML, `asChild`, hardcoded and deleted colors, drift off the
+space, size, radius and type families, and type set outside the ramp. Each
+finding carries its own fix, generated from the shipped tokens, so the
+suggestion cannot name something that no longer exists.
 
-**Non-DBUI icon imports:**
-Scan import statements for:
-- `from "lucide-react"` or `from "lucide-react/*"`
-- `from "@heroicons/*"`
-- `from "react-icons/*"`
-- `from "@radix-ui/react-icons"`
-Replace with `from "dbui/components/icons/{Name}"`.
+**Do not re-derive what it checks.** Restating a rule here is how a second,
+disagreeing copy of it starts. `scripts/design-lint/README.md` lists all
+nineteen. Report what the linter reports, grouped by severity.
 
-**Hardcoded colors:**
-Scan className strings and style objects for:
-- `bg-[#` or `text-[#` → replace with semantic token (`bg-action-primary-base`, `text-text-base`, etc.)
-- `color: "#` or `background: "#` in style objects → replace with `var(--token-name)`
-Look up the closest token in `./dbui/src/tokens/globals.css`.
+### 2. Then check what it cannot see
 
-**asChild usage:**
-Scan for `asChild` prop on any Base UI primitive → replace with `render={<Component />}`.
+These need a reader. None is decidable from a class string.
 
-**Missing Base shell:**
-If the file exports a top-level page component (`export default function Page/App/Layout`), verify it wraps children in `<Base>` from `dbui-shells`.
+**Non-DBUI icon imports** — scan imports for `lucide-react`, `@heroicons/*`,
+`react-icons/*`, `@radix-ui/react-icons`. Replace with
+`from "dbui/components/icons/{Name}"`.
 
-### Warnings (should fix)
+**Missing Base shell** — if the file exports a top-level page component
+(`export default function Page/App/Layout`), verify it wraps children in
+`<Base>` from `dbui-shells`.
 
-**Typography drift:**
-- `text-sm`, `text-xs` or any `text-[Npx]` → should be a `type-*` class off the ramp
-- A `type-*` paired with `leading-`, `font-`, `tracking-` or `uppercase` → drop the
-  companion, the ramp class already carries it
-- `font-medium` on its own → should be `font-semibold` (Databricks uses weight 600, not 500)
+**A one-off that duplicates a component** — a locally defined thing that does
+what a DBUI export already does. The linter cannot judge this: name similarity
+turned out to be noise, and behavioral equivalence needs reading. Check
+`./dbui/docs/component-index.md` before accepting any new local component.
 
-Pick the step by what the text is: `type-label` for single-line UI, `type-body` when
-it wraps, `type-hint` for captions and helper text, `type-paragraph` for prose. See
-`./dbui/docs/tokens.md`.
+**Wrong ramp step** — the linter proves a `type-*` class is used and not
+patched, not that it is the right one. `type-label` is single-line by
+definition, so text that wraps takes `type-body`. That substitution is the most
+common mistake in the system and it looks correct in every diff.
 
-**Arbitrary values where tokens exist:**
-Scan className for bracket values and check if a token covers them:
-- `p-[13px]` → `p-3` (12px) or `p-4` (16px)
-- `rounded-[8px]` → `rounded-2`
-- `shadow-[...]` → `shadow-xs`, `shadow-sm`, `shadow-md`, etc.
-Look up `./dbui/src/tokens/globals.css` and `./dbui/docs/component-rules.md` for the token scales.
+**Inconsistent menu icons** — if one `DropdownMenuItem` in a group has a
+`DropdownMenuItemIcon`, all of them must.
 
-**Spacing rhythm violations:**
-Check gap/padding values against the 8/16/24 rhythm:
-- Inside a component: `gap-2` (8px)
-- Between form fields/sections: `gap-4` (16px)
-- Between major blocks: `gap-6` (24px)
-
-**Inconsistent menu icons:**
-If a `DropdownMenu` has one `DropdownMenuItem` with a `DropdownMenuItemIcon`, ALL items must have icons.
-
-### Info (nice to have)
-
-**Component not in DBUI:**
-If a PascalCase JSX tag is neither a DBUI component nor a project-local component, flag it as info: "Component `X` is not in DBUI — verify it's a project-specific component, not a third-party import that should be replaced."
-
-**Copy review:**
-For any user-facing string literal in JSX, check against `./dbui/docs/brandvoice.md`:
+**Copy review** — for any user-facing string literal, check against
+`./dbui/docs/brandvoice.md`:
 - Emoji → remove
 - Exclamation marks → remove
 - Banned words: "utilize", "leverage", "seamless", "robust", "simply", "just", "please", "kindly"
