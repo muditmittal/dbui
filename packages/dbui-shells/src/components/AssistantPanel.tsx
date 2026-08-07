@@ -85,7 +85,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
           }}
         >
           {/* Text input */}
-          <div className="px-3 py-2 min-h-[36px]">
+          <div className="px-3 py-2">
             <span className="type-label text-text-subtle">@ for objects, / for commands, ↑↓ for history</span>
           </div>
           {/* Toolbar */}

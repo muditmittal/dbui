@@ -108,9 +108,9 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
             Open search in a full page
           </Button>
           <div className="flex items-center gap-1 type-hint text-text-subtle">
-            <kbd className="px-1 py-0.5 rounded border border-border-base type-hint">⌘</kbd>
+            <kbd className="px-1 py-0.5 rounded-1 border border-border-base type-hint">⌘</kbd>
             <span>+</span>
-            <kbd className="px-1 py-0.5 rounded border border-border-base type-hint">Enter</kbd>
+            <kbd className="px-1 py-0.5 rounded-1 border border-border-base type-hint">Enter</kbd>
             <span className="ml-1">Open in a new tab</span>
           </div>
         </div>

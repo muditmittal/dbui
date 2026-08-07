@@ -121,9 +121,12 @@ function NavbarItem({
       data-slot="navbar-item"
       data-active={active || undefined}
       className={cn(
-        "flex h-7 w-full items-center gap-2 rounded-1 px-2 type-label text-text-base text-left",
+        "flex h-7 w-full items-center gap-2 rounded-1 px-2 text-text-base text-left",
         "hover:bg-action-default-hover",
-        active && "bg-surface-accent text-text-accent font-semibold [&_[data-slot=navbar-item-icon]]:text-text-accent",
+        // One ramp class, never two. Each is the whole style, and cn() joins
+        // rather than merges, so a second would be resolved by source order.
+        active ? "type-label-bold" : "type-label",
+        active && "bg-surface-accent text-text-accent [&_[data-slot=navbar-item-icon]]:text-text-accent",
         "[&_svg:not([class*='size-'])]:size-4",
         className
       )}

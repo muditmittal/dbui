@@ -70,7 +70,7 @@ export const buttonVariants = cva(
         ].join(" "),
         link: [
           "border-transparent text-link-base underline-offset-4",
-          "!h-auto !rounded-none !px-0 !shadow-none",
+          "!h-auto !rounded-0 !px-0 !shadow-none",
           "hover:underline hover:text-link-hover",
           "active:underline active:text-link-press",
           "focus-visible:border-focus-ring",

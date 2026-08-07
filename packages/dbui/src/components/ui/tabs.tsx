@@ -43,7 +43,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "gap-4 border-b border-border-base bg-transparent rounded-none",
+        default: "gap-4 border-b border-border-base bg-transparent rounded-0",
         /** @internal Use SegmentControl Slider variant instead */
         pill: "gap-1 rounded-2 bg-surface-subtle p-[3px]",
       },
