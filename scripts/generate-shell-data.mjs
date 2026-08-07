@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Emits the page shells for the portal's Templates page.
+ * Emits the page shells for the portal's Shells page.
  *
  * Read through the CLI API, which parses composition.md — the same source
  * agents get from `dbui shell`, so the page cannot describe a shell the system
