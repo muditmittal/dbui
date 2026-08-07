@@ -72,16 +72,18 @@ const spendBySerivce = [
   { x: "Aug", y: 12500, series: "Storage" },
 ]
 
+// Named steps for the tail, numbered steps for the real categories — the mix a
+// chart author actually writes.
 const assetMix = [
-  { label: "Tables", value: 4821, palette: "blue" as const },
-  { label: "Volumes", value: 1930, palette: "blueMedium" as const },
-  { label: "Models", value: 640, palette: "blueLight" as const },
+  { label: "Tables", value: 4821, palette: "categorical-1" as const },
+  { label: "Volumes", value: 1930, palette: "categorical-3" as const },
+  { label: "Models", value: 640, palette: "categorical-7" as const },
   { label: "Others", value: 210, palette: "neutral" as const },
 ]
 
 const healthMix = [
-  { label: "Healthy", value: 812, palette: "green" as const },
-  { label: "Unhealthy", value: 96, palette: "red" as const },
+  { label: "Healthy", value: 812, palette: "positive" as const },
+  { label: "Unhealthy", value: 96, palette: "negative" as const },
   { label: "Unknown", value: 142, palette: "neutral" as const },
 ]
 
@@ -145,11 +147,11 @@ export const Line: StoryObj = {
         </div>
       </Section>
 
-      <Section title="LineSeries — semantic palette">
+      <Section title="LineSeries — a series that means something">
         <LineSeries
           data={failuresByWeek}
           xType="ordinal"
-          palette="red"
+          palette="negative"
           label="Failures per week"
         />
       </Section>
@@ -171,7 +173,7 @@ export const Bars: StoryObj = {
         <BarChart
           data={failuresByWeek}
           orientation="horizontal"
-          palette="orange"
+          palette="categorical-8"
           label="Failures per week"
         />
       </Section>

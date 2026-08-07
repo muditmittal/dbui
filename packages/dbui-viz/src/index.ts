@@ -1,8 +1,10 @@
 // DBUI Viz — Vega data visualizations for Databricks UI
 //
-// Requires the dbui token layers to be loaded:
-//   @import "dbui/tokens/globals.css";
-//   @import "dbui/tokens/viz.css";
+// Requires the dbui token layer to be loaded:
+//   @import "dbui/tokens/tokens.css";
+//
+// Charts read the shipped --db-* semantics at runtime. There is no viz-only
+// token layer any more, and nothing here needs viz.css.
 
 export { LineSeries, type LinePoint, type LineSeriesProps } from "./components/line-series"
 export { BarChart, type BarDatum, type BarChartProps } from "./components/bar-chart"

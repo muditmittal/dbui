@@ -54,7 +54,7 @@ export interface BarChartProps
 function BarChart({
   data,
   label = "Bar chart",
-  palette = "blue",
+  palette = "categorical-1",
   orientation = "vertical",
   height = 172,
   showAxis = true,
@@ -132,7 +132,7 @@ function BarChart({
       mark: {
         type: "bar",
         cornerRadiusEnd: cornerRadius,
-        stroke: activePalette.border,
+        stroke: activePalette.solid,
         strokeWidth: 1,
         ...(colorEncoding ? {} : { fill: gradient }),
       },

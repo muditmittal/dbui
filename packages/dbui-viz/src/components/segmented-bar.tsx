@@ -18,7 +18,7 @@ import {
  * @standard Segmented Bar
  * @guideline Use for a part-to-whole breakdown in a single row — asset types, cost split, health mix
  * @guideline Keep to 5 segments or fewer; group the tail into an "Others" segment
- * @guideline Assign `palette` per segment for semantic meaning (green healthy, red unhealthy, neutral empty)
+ * @guideline Assign `palette` per segment when a segment means something — positive, negative or neutral for empty
  * @constraint Segments use solid palette fills, not gradients — at 12px tall a gradient reads as flat, and Vega cannot bind a gradient per datum
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
  */
@@ -26,7 +26,7 @@ import {
 export interface Segment {
   label: string
   value: number
-  /** Semantic color. Falls back to the standard series order. */
+  /** Segment color. Falls back to the standard series order. */
   palette?: VizPaletteName
 }
 

@@ -17,8 +17,9 @@ import { useVizTheme, VEGA_EMBED_OPTIONS, vizVegaConfig } from "../lib/theme"
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
  *
  * Ported from governance-hub-prototype `src/components/widgets/TreemapChart.tsx`
- * (Vega `stratify` + `treemap` transforms) with hardcoded blues replaced by
- * `--viz-treemap-*` tokens.
+ * (Vega `stratify` + `treemap` transforms). Every tile takes a step of the
+ * sequential scale — surfaces low, borders high — so the structure survives the
+ * ramp reversing under `.dark`.
  */
 
 export interface TreemapLeaf {

@@ -17,39 +17,51 @@ export const VEGA_EMBED_OPTIONS: EmbedOptions = {
  * Vega theming bridge for DBUI.
  *
  * Vega specs cannot read CSS custom properties, so this module resolves the
- * `--viz-*` tokens (plus the existing dbui semantic tokens for axes and text,
- * and the steps of the type ramp a chart is allowed to draw from) into concrete
- * values at runtime, and re-resolves them when light/dark flips.
+ * shipped `--db-*` semantics into concrete values at runtime, and re-resolves
+ * them when light/dark flips.
  *
- * Requires `dbui/tokens/viz.css` to be loaded. Fallbacks mirror the light-mode
- * token values so SSR and tests render sensibly without a stylesheet.
+ * No color is written here. This file used to carry its own palette behind a
+ * parallel `--viz-*` layer, which is why the charts rendered the same series
+ * colors in both modes: a value spelled out in a `.ts` file has no light and
+ * dark, and no linter rule reaches it either. Everything a chart draws now
+ * names a token and lets the browser resolve it.
  */
 
+/**
+ * The palettes a chart may draw from.
+ *
+ * A numbered step is an identity — which series this is — and carries no order
+ * and no magnitude. Reach for one whenever the series are peers.
+ *
+ * The three named ones say something about the datum rather than separating it
+ * from its neighbours, so they hold still while the numbered steps shift with
+ * the series count.
+ */
 export type VizPaletteName =
-  | "blue"
-  | "blueMedium"
-  | "blueLight"
-  | "orange"
-  | "orangeMedium"
-  | "orangeLight"
-  | "green"
-  | "red"
+  | "categorical-1"
+  | "categorical-2"
+  | "categorical-3"
+  | "categorical-4"
+  | "categorical-5"
+  | "categorical-6"
+  | "categorical-7"
+  | "categorical-8"
+  | "categorical-9"
+  | "categorical-10"
+  | "positive"
+  | "negative"
   | "neutral"
 
 export interface VizPalette {
-  /** Flat mark fill and legend swatch. */
+  /** Flat mark fill, mark stroke and legend swatch. */
   solid: string
-  /** 1px mark stroke. */
-  border: string
-  /** Gradient start — top of a vertical gradient. */
+  /** Gradient start — the full-strength end. */
   from: string
-  /** Gradient end — bottom of a vertical gradient. */
+  /** Gradient end — the same color faded into the canvas. */
   to: string
 }
 
 export interface VizTreemapTheme {
-  blueScale: string[]
-  orangeScale: string[]
   groupSurface: string
   groupSurfaceStrong: string
   groupSurfaceHover: string
@@ -101,64 +113,114 @@ const TYPE_STEPS: Record<keyof VizType, string> = {
   title3: "title-3",
 }
 
+/**
+ * Palette name → the semantic carrying its color.
+ *
+ * The numbered steps are the shipped categorical scale, one to one. The three
+ * named ones are borrowed, because the viz family has ten categorical steps and
+ * ten sequential steps and nothing else: it describes no state and no absence.
+ *
+ * `status` gives up its `text` step rather than its `border` step because only
+ * `text` moves between light and dark — `status-border-positive` is one value
+ * in both modes, so a chart built on it would inherit the very defect this file
+ * exists to remove.
+ *
+ * `neutral` takes `text-disabled` for that reason and one more. Every
+ * surface-role semantic is tuned to sit behind content, so at the size of a
+ * donut slice all of them wash out into the canvas — `surface-disabled` and
+ * `border-strong` both leave the wedge unreadable in either mode.
+ * `text-disabled` is the only semantic that means inactive and is still drawn
+ * to be seen against the page, which is the whole job of a mark.
+ */
 const PALETTE_VARS: Record<VizPaletteName, string> = {
-  blue: "--viz-blue",
-  blueMedium: "--viz-blue-medium",
-  blueLight: "--viz-blue-light",
-  orange: "--viz-orange",
-  orangeMedium: "--viz-orange-medium",
-  orangeLight: "--viz-orange-light",
-  green: "--viz-green",
-  red: "--viz-red",
-  neutral: "--viz-neutral",
+  "categorical-1": "--db-viz-categorical-1",
+  "categorical-2": "--db-viz-categorical-2",
+  "categorical-3": "--db-viz-categorical-3",
+  "categorical-4": "--db-viz-categorical-4",
+  "categorical-5": "--db-viz-categorical-5",
+  "categorical-6": "--db-viz-categorical-6",
+  "categorical-7": "--db-viz-categorical-7",
+  "categorical-8": "--db-viz-categorical-8",
+  "categorical-9": "--db-viz-categorical-9",
+  "categorical-10": "--db-viz-categorical-10",
+  positive: "--db-status-text-positive",
+  negative: "--db-status-text-negative",
+  neutral: "--db-text-disabled",
 }
 
+/**
+ * Treemap role → the sequential step it takes.
+ *
+ * A treemap is one hue at varying strength, which is what the sequential family
+ * is for. Reading it by step rather than by value is also what fixes dark mode
+ * for free: the ramp is authored in reverse under `.dark`, so a low step is
+ * near the canvas and a high step is far from it in both modes, and every
+ * surface here can stay low while every border stays high.
+ */
+const TREEMAP_VARS: Record<keyof VizTreemapTheme, string> = {
+  otherSurface: "--db-viz-sequential-1",
+  groupSurface: "--db-viz-sequential-2",
+  groupSurfaceStrong: "--db-viz-sequential-3",
+  leafSurface: "--db-viz-sequential-3",
+  groupSurfaceHover: "--db-viz-sequential-4",
+  otherBorder: "--db-viz-sequential-4",
+  leafSurfaceHover: "--db-viz-sequential-5",
+  groupBorder: "--db-viz-sequential-6",
+  leafBorderHover: "--db-viz-sequential-7",
+  groupBorderHover: "--db-viz-sequential-8",
+}
+
+/**
+ * What a chart draws when the token layer never loaded.
+ *
+ * A color here would be the palette coming back — the same value in both modes,
+ * unreachable by the linter, drifting from the token it copied. `currentColor`
+ * is a deferral rather than a value, so an unstyled chart renders as one
+ * legible monochrome shape instead of in colors that were right once.
+ */
+const UNRESOLVED_MARK = "currentColor"
+const UNRESOLVED_SURFACE = "transparent"
+
+/**
+ * How much of the mark survives at the far end of a gradient.
+ *
+ * Fading toward the canvas rather than toward a lighter hue is what lets one
+ * expression be right in both modes: the mark settles into the page it sits on,
+ * so the fade lightens on white and darkens on black. The old palette carried a
+ * hand-picked pair of stops per hue, which could only ever suit one mode.
+ *
+ * The amount is set to the depth the old pairs already had, read back off them
+ * as a mix toward white. A shallower fade would read as a flat bar, and a
+ * deeper one drops the foot of the bar to the contrast of the page.
+ */
+const GRADIENT_SURVIVES = "65%"
+
+/** Build a record over a known key set, so neither map below needs a cast. */
+function overKeys<K extends string, V>(
+  keys: readonly K[],
+  value: (key: K) => V
+): Record<K, V> {
+  const out = {} as Record<K, V>
+  for (const key of keys) out[key] = value(key)
+  return out
+}
+
+const PALETTE_NAMES = Object.keys(PALETTE_VARS) as VizPaletteName[]
+const TREEMAP_ROLES = Object.keys(TREEMAP_VARS) as (keyof VizTreemapTheme)[]
+
 const FALLBACK: VizTheme = {
-  palettes: {
-    blue: { solid: "#2f7fd3", border: "#2f7fd3", from: "#1f6fd1", to: "#4f9fe5" },
-    blueMedium: { solid: "#5aafea", border: "#5aafea", from: "#7cc5f3", to: "#3f9de6" },
-    blueLight: { solid: "#a7dcf9", border: "#a7dcf9", from: "#cfeaff", to: "#8fd0f5" },
-    orange: { solid: "#d86a1e", border: "#d86a1e", from: "#c45a10", to: "#e88a40" },
-    orangeMedium: { solid: "#f4a24a", border: "#f4a24a", from: "#e89840", to: "#f4b060" },
-    orangeLight: { solid: "#f9cc8e", border: "#f9cc8e", from: "#f5c070", to: "#fbdca0" },
-    green: {
-      solid: "#2faf67",
-      border: "#2faf67",
-      from: "rgba(47, 175, 103, 0.8)",
-      to: "rgba(91, 207, 142, 0.8)",
-    },
-    red: { solid: "#d94a3a", border: "#d94a3a", from: "#f08a7a", to: "#d94a3a" },
-    neutral: { solid: "#d1d9e1", border: "#d1d9e1", from: "#eff1f5", to: "#dde3e8" },
-  },
-  treemap: {
-    blueScale: ["#cfeaff", "#a7dcf9", "#7cc5f3", "#5aafea", "#3f9de6", "#2f7fd3", "#1f6fd1"],
-    orangeScale: [
-      "#fbdca0",
-      "#f9cc8e",
-      "#f5c070",
-      "#f4b060",
-      "#f4a24a",
-      "#e88a40",
-      "#d86a1e",
-      "#c45a10",
-    ],
-    groupSurface: "#e8f4fc",
-    groupSurfaceStrong: "#d7edfe",
-    groupSurfaceHover: "#c5e3f6",
-    groupBorder: "#4299e0",
-    groupBorderHover: "#0e538b",
-    leafSurface: "#d7edfe",
-    leafSurfaceHover: "#b8dcf8",
-    leafBorderHover: "#4299e0",
-    otherSurface: "#e6f4ff",
-    otherBorder: "#7ec4f0",
-  },
-  foreground: "#161616",
-  mutedForeground: "#6f6f6f",
-  border: "#ebebeb",
-  background: "#ffffff",
-  fontSans: '"SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif',
-  fontMono: '"SF Mono", SFMono-Regular, ui-monospace, monospace',
+  palettes: overKeys(PALETTE_NAMES, () => ({
+    solid: UNRESOLVED_MARK,
+    from: UNRESOLVED_MARK,
+    to: UNRESOLVED_MARK,
+  })),
+  treemap: overKeys(TREEMAP_ROLES, () => UNRESOLVED_SURFACE),
+  foreground: UNRESOLVED_MARK,
+  mutedForeground: UNRESOLVED_MARK,
+  border: UNRESOLVED_SURFACE,
+  background: UNRESOLVED_SURFACE,
+  fontSans: "inherit",
+  fontMono: "monospace",
   type: {
     hint: { size: 12, weight: 400 },
     title3: { size: 20, weight: 600 },
@@ -185,15 +247,73 @@ function readVar(
 }
 
 /**
- * Resolve the ramp steps in `TYPE_STEPS` to px.
+ * A throwaway element the browser resolves declarations against.
  *
- * `readVar` cannot do this. The ramp ships as `calc(<rem> * var(--db-type-scalar))`
- * and an unregistered custom property computes to that expression rather than to
- * a length, so `getPropertyValue` hands back the calc rather than a number.
- * Parsing it here would mean re-implementing the generator's arithmetic and
- * drifting the day the expression changes shape. A throwaway element carrying
- * the step as a real font-size makes the browser resolve it instead, which is
+ * `getPropertyValue` hands back the raw token stream rather than a value, so it
+ * can only read a custom property that happens to hold a literal. The ramp
+ * ships as `calc(<rem> * var(--db-type-scalar))` and comes back as the calc,
+ * and a gradient stop is a `color-mix()` that comes back as the mix. Setting
+ * each one as a real declaration makes the browser resolve it instead, which is
  * the only reading that cannot disagree with what the page renders.
+ *
+ * One probe serves the whole resolve, colors and type alike, so there is a
+ * single answer to "how does this package read a token".
+ */
+function createProbe(host: Element): HTMLSpanElement {
+  const probe = document.createElement("span")
+  probe.setAttribute("aria-hidden", "true")
+  probe.style.position = "absolute"
+  probe.style.visibility = "hidden"
+  probe.style.pointerEvents = "none"
+  host.appendChild(probe)
+  return probe
+}
+
+/**
+ * Re-emit a resolved color as rgb, whatever syntax the browser chose for it.
+ *
+ * A plain `var()` computes to `rgb()`, but a `color-mix()` computes to
+ * `color(srgb …)`, and Vega passes both into the SVG without reading them.
+ * Chrome paints either, so this is not about what renders today — it is that a
+ * gradient stop would otherwise be the one value in a chart whose syntax is the
+ * browser's choice rather than ours, and anything downstream that parses colors
+ * only has to know one of them.
+ */
+function toRgb(value: string): string {
+  const parsed = value.match(
+    /^color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\s*\)$/
+  )
+  if (!parsed) return value
+  const [r, g, b] = parsed.slice(1, 4).map((n) => Math.round(Number(n) * 255))
+  const alpha = parsed[4] === undefined ? 1 : Number(parsed[4])
+  return alpha === 1
+    ? `rgb(${r}, ${g}, ${b})`
+    : `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+/**
+ * Resolve one color expression through the probe.
+ *
+ * `token` is both what the expression reads and what proves the layer loaded.
+ * An absent token has to short-circuit: `color` would then fall back to the ink
+ * the probe inherited, which is a plausible color and not the token.
+ */
+function readColor(
+  probe: HTMLSpanElement | null,
+  styles: CSSStyleDeclaration | null,
+  token: string,
+  fallback: string,
+  expression = `var(${token})`
+): string {
+  if (!probe || !styles) return fallback
+  if (!readVar(styles, token, "")) return fallback
+  probe.style.color = ""
+  probe.style.color = expression
+  return toRgb(window.getComputedStyle(probe).color) || fallback
+}
+
+/**
+ * Resolve the ramp steps in `TYPE_STEPS` to px.
  *
  * Read once per theme resolve. A chart does not follow the root font size
  * afterwards — SVG text that reflowed under the reader would be worse than text
@@ -201,25 +321,15 @@ function readVar(
  * the value, not live scaling.
  */
 function resolveType(
-  styles: CSSStyleDeclaration | null,
-  scope?: Element | null
+  probe: HTMLSpanElement | null,
+  styles: CSSStyleDeclaration | null
 ): VizType {
-  const host = scope ?? (typeof document === "undefined" ? null : document.body)
-  if (!styles || !host) return FALLBACK.type
-
-  const probe = document.createElement("span")
-  probe.setAttribute("aria-hidden", "true")
-  probe.style.position = "absolute"
-  probe.style.visibility = "hidden"
-  probe.style.pointerEvents = "none"
-  host.appendChild(probe)
+  if (!probe || !styles) return FALLBACK.type
 
   const type = {} as VizType
   for (const key of Object.keys(TYPE_STEPS) as (keyof VizType)[]) {
     const step = TYPE_STEPS[key]
     const fallback = FALLBACK.type[key]
-    // An absent var means the tokens never loaded, and the probe would then
-    // report whatever it inherited — a plausible number that is not the ramp.
     if (!readVar(styles, `--db-font-size-${step}`, "")) {
       type[key] = fallback
       continue
@@ -234,84 +344,59 @@ function resolveType(
       weight: Number.isFinite(weight) && weight > 0 ? weight : fallback.weight,
     }
   }
-
-  probe.remove()
   return type
 }
 
-/** Resolve the current viz theme from CSS custom properties. */
+/** Resolve the current viz theme from the shipped semantics. */
 export function resolveVizTheme(scope?: Element | null): VizTheme {
   const styles = reader(scope)
-  if (!styles) return FALLBACK
+  const host = scope ?? (typeof document === "undefined" ? null : document.body)
+  if (!styles || !host) return FALLBACK
 
-  const palettes = {} as Record<VizPaletteName, VizPalette>
-  for (const name of Object.keys(PALETTE_VARS) as VizPaletteName[]) {
-    const prefix = PALETTE_VARS[name]
-    const base = FALLBACK.palettes[name]
-    palettes[name] = {
-      solid: readVar(styles, `${prefix}-solid`, base.solid),
-      border: readVar(styles, `${prefix}-border`, base.border),
-      from: readVar(styles, `${prefix}-from`, base.from),
-      to: readVar(styles, `${prefix}-to`, base.to),
+  const probe = createProbe(host)
+  try {
+    return {
+      palettes: overKeys(PALETTE_NAMES, (name) => {
+        const token = PALETTE_VARS[name]
+        const solid = readColor(probe, styles, token, UNRESOLVED_MARK)
+        return {
+          solid,
+          from: solid,
+          to: readColor(
+            probe,
+            styles,
+            token,
+            solid,
+            `color-mix(in srgb, var(${token}) ${GRADIENT_SURVIVES}, var(--db-surface-base))`
+          ),
+        }
+      }),
+      treemap: overKeys(TREEMAP_ROLES, (role) =>
+        readColor(probe, styles, TREEMAP_VARS[role], UNRESOLVED_SURFACE)
+      ),
+      foreground: readColor(probe, styles, "--db-text-base", UNRESOLVED_MARK),
+      mutedForeground: readColor(
+        probe,
+        styles,
+        "--db-text-subtle",
+        UNRESOLVED_MARK
+      ),
+      border: readColor(probe, styles, "--db-border-base", UNRESOLVED_SURFACE),
+      background: readColor(
+        probe,
+        styles,
+        "--db-surface-base",
+        UNRESOLVED_SURFACE
+      ),
+      fontSans: readVar(styles, "--font-sans", FALLBACK.fontSans),
+      fontMono: readVar(styles, "--font-mono", FALLBACK.fontMono),
+      type: resolveType(probe, styles),
+      isDark:
+        typeof document !== "undefined" &&
+        document.documentElement.classList.contains("dark"),
     }
-  }
-
-  const blueScale = FALLBACK.treemap.blueScale.map((fallbackColor, index) =>
-    readVar(styles, `--viz-treemap-blue-${index + 1}`, fallbackColor)
-  )
-  const orangeScale = FALLBACK.treemap.orangeScale.map((fallbackColor, index) =>
-    readVar(styles, `--viz-treemap-orange-${index + 1}`, fallbackColor)
-  )
-
-  return {
-    palettes,
-    treemap: {
-      blueScale,
-      orangeScale,
-      groupSurface: readVar(styles, "--viz-treemap-group-surface", FALLBACK.treemap.groupSurface),
-      groupSurfaceStrong: readVar(
-        styles,
-        "--viz-treemap-group-surface-strong",
-        FALLBACK.treemap.groupSurfaceStrong
-      ),
-      groupSurfaceHover: readVar(
-        styles,
-        "--viz-treemap-group-surface-hover",
-        FALLBACK.treemap.groupSurfaceHover
-      ),
-      groupBorder: readVar(styles, "--viz-treemap-group-border", FALLBACK.treemap.groupBorder),
-      groupBorderHover: readVar(
-        styles,
-        "--viz-treemap-group-border-hover",
-        FALLBACK.treemap.groupBorderHover
-      ),
-      leafSurface: readVar(styles, "--viz-treemap-leaf-surface", FALLBACK.treemap.leafSurface),
-      leafSurfaceHover: readVar(
-        styles,
-        "--viz-treemap-leaf-surface-hover",
-        FALLBACK.treemap.leafSurfaceHover
-      ),
-      leafBorderHover: readVar(
-        styles,
-        "--viz-treemap-leaf-border-hover",
-        FALLBACK.treemap.leafBorderHover
-      ),
-      otherSurface: readVar(styles, "--viz-treemap-other-surface", FALLBACK.treemap.otherSurface),
-      otherBorder: readVar(styles, "--viz-treemap-other-border", FALLBACK.treemap.otherBorder),
-    },
-    // These four were still reading the pre-migration variable names, which
-    // Stage C deleted — every chart was silently falling back to FALLBACK
-    // instead of following the theme.
-    foreground: readVar(styles, "--db-text-base", FALLBACK.foreground),
-    mutedForeground: readVar(styles, "--db-text-subtle", FALLBACK.mutedForeground),
-    border: readVar(styles, "--db-border-base", FALLBACK.border),
-    background: readVar(styles, "--db-surface-base", FALLBACK.background),
-    fontSans: readVar(styles, "--font-sans", FALLBACK.fontSans),
-    fontMono: readVar(styles, "--font-mono", FALLBACK.fontMono),
-    type: resolveType(styles, scope),
-    isDark:
-      typeof document !== "undefined" &&
-      document.documentElement.classList.contains("dark"),
+  } finally {
+    probe.remove()
   }
 }
 
@@ -370,17 +455,24 @@ export function horizontalGradient(palette: VizPalette) {
   }
 }
 
-/** Ordered palette used when a series has no explicit palette assignment. */
+/**
+ * The order a chart assigns colors in when a series carries none of its own.
+ *
+ * Numbered rather than named, so a chart cannot express a preference for a hue.
+ * The scale is an identity, and the first series being one color rather than
+ * another is a fact about its position and not about the data.
+ */
 export const VIZ_SERIES_ORDER: VizPaletteName[] = [
-  "blue",
-  "blueMedium",
-  "blueLight",
-  "orange",
-  "orangeMedium",
-  "orangeLight",
-  "green",
-  "red",
-  "neutral",
+  "categorical-1",
+  "categorical-2",
+  "categorical-3",
+  "categorical-4",
+  "categorical-5",
+  "categorical-6",
+  "categorical-7",
+  "categorical-8",
+  "categorical-9",
+  "categorical-10",
 ]
 
 /**
