@@ -5,9 +5,6 @@ import { DocHeader } from "@/components/docs/Prose"
 
 export const metadata = { title: "Docs — DBUI" }
 
-/** This page's own route. Its heading cannot link to the page it is on. */
-const SELF = "/docs"
-
 /**
  * A tile per page, in three bento grids that mirror the rail's three groups.
  *
@@ -23,12 +20,15 @@ const SELF = "/docs"
  * three groups. Do not bring either back.
  */
 
+/** This page's own route. Its heading cannot link to the page it is on. */
+const SELF = "/docs"
+
 /**
  * Each grid opens at the container width its own arrangement needs, so the
  * three do not all collapse at one point. The query is on the container rather
- * than the viewport because the rail eats 200px at `md` — the article is
- * narrower on a small laptop than on a large tablet, and a viewport breakpoint
- * gets that backwards.
+ * than the viewport because the rail takes its width out of the article from
+ * `md` up — the article is narrower on a small laptop than on a large tablet,
+ * and a viewport breakpoint gets that backwards.
  *
  * Every arrangement fills its rows exactly, so auto-placement leaves no holes
  * and nothing has to be reordered away from the rail's order.
