@@ -40,7 +40,10 @@ const approvedFonts = new Set([
   ...tokens.fonts.display.slice(0, 1),
   ...tokens.fonts.mono.slice(0, 1),
 ])
-const typeRamp = tokens.type.ramp.map(({ size, lineHeight, weight }) => ({ size, lineHeight, weight }))
+// The generator emits the field as `line`. Destructuring `lineHeight` handed
+// the runtime a ramp of undefined line heights, the same typo the React linter
+// carried, so the Figma side could not judge one either.
+const typeRamp = tokens.type.ramp.map(({ size, line, weight }) => ({ size, lineHeight: line, weight }))
 
 const runtime = fs.readFileSync(path.join(__dirname, "figma-lint.runtime.js"), "utf-8")
 

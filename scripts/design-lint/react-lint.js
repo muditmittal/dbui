@@ -165,6 +165,9 @@ const COLOR_PREFIXES = new Set([
 ])
 const FONT_SIZE_PREFIXES = new Set(["text"]) // text-[13px] is a size; text-[#abc] is a color
 const LEADING_PREFIXES = new Set(["leading"])
+// Deduplicated: six of the fourteen steps share a size/line pair with another,
+// and a fix string that lists 13/16 three times reads as a bug.
+const RAMP_PAIRS = [...new Set(tokens.type.ramp.map((r) => `${r.size}/${r.line}`))].join(", ")
 const RADIUS_PREFIXES = new Set(DIM.radius.reaches)
 // One rule per family, so a report can be scoped to a padding pass or a control
 // -height pass without reading every line of it.
@@ -255,13 +258,16 @@ function checkClassName(className, file, line, column, element) {
       }
 
       if (LEADING_PREFIXES.has(prefix)) {
-        // line-height — match to ramp.lineHeight values
-        const onRamp = tokens.type.ramp.some((r) => r.lineHeight === px)
+        // The generator emits the field as `line`. This read `lineHeight`, so
+        // the comparison was undefined === px on every step, the rule fired on
+        // 100% of leading-[Npx] including the correct ones, and printed
+        // `13/undefined` as its own advice.
+        const onRamp = tokens.type.ramp.some((r) => r.line === px)
         if (!onRamp) {
           violations.push({
             file, line, column, level: "warning", rule: "off-ramp-line-height", element,
             message: `Line-height \`${whole}\` (${px}px) is not on the DBUI type ramp.`,
-            fix: `Match the line-height to its ramp size: ${tokens.type.ramp.map((r) => `${r.size}/${r.lineHeight}`).join(", ")}.`,
+            fix: `Match the line-height to its ramp size: ${RAMP_PAIRS}.`,
             source: className,
           })
         }
