@@ -142,7 +142,9 @@ Recorded because nothing else holds them and the calls cannot be made without th
 
 - The CLI reads a JSDoc tag to its end. `@constraints` blocks, wrapped tags and the
   summaries they were corrupting all print now, including Button's `aria-label` rule.
-- No doc states an icon or component total.
+- `icon-index.md`, `component-rules.md` and `DESIGN.md` no longer count the icons or the
+  components. Three of those sentences were wrong, all understating by the six icons that
+  carry no metadata. `AGENTS.md` still counts and its numbers are right today.
 - `audit-legacy-tokens.mjs` no longer reports live semantics as leftovers and exits clean.
 - `resizable.tsx` no longer carries `ring-offset-background`, a class Tailwind stopped
   emitting when the migration deleted `background`.
