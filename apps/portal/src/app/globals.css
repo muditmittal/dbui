@@ -4,8 +4,6 @@
 @source "packages/dbui-viz/src/**/*.tsx";
 @source "packages/dbui-genie/src/**/*.tsx";
 @source "apps/portal/src/stories/**/*.tsx";
-/* viz token layer for the dbui-viz package (additive — defines --viz-* only) */
-@import "../../../../packages/dbui/src/tokens/viz.css";
 /* canonical DBUI tokens (--db-* semantics + scale) — GENERATED from
    theme.config.mjs by `yarn design:tokens`. Additive: does not touch the
    legacy shadcn-flat tokens below. */

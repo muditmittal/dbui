@@ -103,20 +103,28 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    `.ts` as well as `.tsx` — 679 files against 114, and 2,518 findings against
    2,179. Every one of the 339 new findings is pre-existing and none was fixed.
    The `.ts` half reports nothing at all, because every rule enters through a JSX
-   element: `packages/dbui-viz/src/lib/theme.ts` holds 63 literal hexes and comes
-   back clean. Teaching the color rules to read an object literal is the next step
-   and is a change to rule logic.
+   element, so a palette in an object literal comes back clean. The file that made
+   the point — the viz theme — no longer holds a color, but the blind spot is
+   unchanged and the next `.ts` palette will land in it. Teaching the color rules
+   to read an object literal is the next step and is a change to rule logic.
 
 ## Small
 
 - `Platform Header` has no `@guideline` — the only real one. `doctor` reports 14, but
   13 are marked excluded or internal, so the check should filter them.
 - `Date Range`, `Aspect Ratio`, `Label` have no story.
-- `LineSeries` draws no axis labels even with `showAxis` on. The end-dot layer
-  carries `axis: null` and Vega-Lite resolves axes across layers, so it strips the
-  axis from the whole view. Visible in the Charts story.
-- `DonutChart` clamps the Vega view width to its `size` prop, so a right-oriented
-  legend gets no room of its own and draws over the ring.
+- `SegmentedBar` clamps the Vega view height to `barHeight`, so a bottom legend
+  gets no room and never draws. Same defect the donut had on the other axis, but
+  the fix is not the same: the height prop is the component's contract, and
+  widening it moves every call site.
+- The viz semantics describe ten categorical steps and ten sequential steps, and
+  nothing else. A chart that means healthy or unhealthy borrows `status-text-*`,
+  and one that means no data borrows `text-disabled`, because every surface-role
+  semantic washes into the canvas at the size of a mark. A `viz` state and inert
+  set would close it. Adding tokens needs a decision, so nothing was added.
+- `packages/dbui/src/tokens/viz.css` is orphaned. Nothing reads `--viz-*` or its
+  `viz-<hue>` utilities any more and the portal no longer imports it, but the file
+  is under the frozen token tree so it was left in place to be deleted.
 - 9 components use raw `opacity-50` for disabled instead of the disabled tokens.
 - `doctor` promises "exits non-zero on failure" and exits 0.
 - Storybook 8.6 → 10.4. Two majors; v9 removed `addon-essentials` and moved
