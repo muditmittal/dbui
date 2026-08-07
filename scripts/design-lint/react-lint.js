@@ -176,11 +176,14 @@ const BARE_UTILITY_RE = new RegExp(
 
 // ─── Tailwind prefix → token category mapping ───
 // Each prefix maps to the category we should validate against.
-const COLOR_PREFIXES = new Set([
-  "bg", "border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y",
+// `text` belongs here. It was missing, which is the sort of omission that makes
+// a colour rule quietly half a rule — text-foreground is the single most common
+// legacy class there was.
+const COLOR_PREFIXES = [
+  "bg", "text", "border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y",
   "ring", "ring-offset", "fill", "stroke", "outline", "shadow", "decoration",
   "from", "to", "via", "placeholder", "divide", "accent", "caret",
-])
+]
 const FONT_SIZE_PREFIXES = new Set(["text"]) // text-[13px] is a size; text-[#abc] is a color
 const LEADING_PREFIXES = new Set(["leading"])
 /* Advice, generated. Six of the fourteen ramp steps share a size and line with
@@ -267,6 +270,46 @@ function pxTypeLiteral(whole, px, utility, className, file, line, column, elemen
     fix: `Use ${utility}, which carries the size, line height, tracking, weight and family together.`,
     source: className,
   })
+}
+
+/* The shadcn-flat colour layer the migration deleted.
+ *
+ * A class built from one of these compiles, resolves to nothing, and the
+ * property drops. The element still renders, just without the colour, which is
+ * why 474 of them survived the first migration pass — the verifier shared a
+ * list with the codemod and confidently reported zero. The names come from the
+ * generator, filtered against what actually shipped, so nothing here can
+ * accuse a token that came back.
+ *
+ * `border-border-base` must not match `border-border`, so the trailing guard
+ * rejects a hyphen as well as a word character.
+ */
+// Longest alternative first in both lists, so ring-offset beats ring and
+// sidebar-foreground beats sidebar.
+const longestFirst = (a, b) => b.length - a.length
+const LEGACY_NAMES = [...tokens.colors.deletedLegacy].sort(longestFirst).join("|")
+const LEGACY_CLASS_RE = new RegExp(
+  String.raw`(?<![\w-])(?:${[...COLOR_PREFIXES].sort(longestFirst).join("|")})-(${LEGACY_NAMES})(?![\w-])`,
+  "g"
+)
+const LEGACY_VAR_RE = new RegExp(String.raw`var\(\s*--(${LEGACY_NAMES})\s*[,)]`, "g")
+
+function checkLegacyTokens(text, file, line, column, element) {
+  for (const re of [LEGACY_CLASS_RE, LEGACY_VAR_RE]) {
+    re.lastIndex = 0
+    let m
+    while ((m = re.exec(text))) {
+      // The var() pattern has to consume the closing delimiter to know the name
+      // ended, so put it back rather than print `var(--primary`.
+      const found = m[0].endsWith(",") || m[0].endsWith(")") ? `${m[0].slice(0, -1).trimEnd()})` : m[0]
+      violations.push({
+        file, line, column, level: "error", rule: "no-legacy-token", element,
+        message: `\`${found}\` names \`${m[1]}\`, which the token migration deleted.`,
+        fix: `Nothing declares it, so the property drops silently. Use a semantic — bg-${EG_SURFACE}, text-${EG_TEXT}, border-${EG_BORDER}.`,
+        source: text.slice(0, 160),
+      })
+    }
+  }
 }
 
 /* Each `type-*` utility is the whole style — family, size, line height,
@@ -472,6 +515,7 @@ function checkClassName(className, file, line, column, element) {
   }
 
   checkBareUtilities(className, file, line, column, element)
+  checkLegacyTokens(className, file, line, column, element)
 
   // Raw-primitive var() usage (e.g. bg-[var(--interface-neutral-600)])
   checkVarRefs(className, file, line, column, element)
@@ -501,7 +545,10 @@ function checkInlineStyle(node, file, line, column, element) {
     const text = init.getText().replace(/^['"`]|['"`]$/g, "")
 
     // Raw-primitive var() usage in inline style (e.g. color: 'var(--status-blue-600)')
-    if (text.includes("var(--")) checkVarRefs(text, file, line, column, element, `${name}: ${text}`)
+    if (text.includes("var(--")) {
+      checkVarRefs(text, file, line, column, element, `${name}: ${text}`)
+      checkLegacyTokens(text, file, line, column, element)
+    }
 
     // Color check
     if (/^#[0-9a-fA-F]{3,8}$/.test(text)) {
