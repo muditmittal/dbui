@@ -4,7 +4,7 @@
 
 ## Lookup
 
-1. **Pick a category** from the table below — `action` (verb), `object` (entity), `indicator` (status), `component` (control chrome). This narrows from 450 icons to a much smaller set.
+1. **Pick a category** from the table below — `action` (verb), `object` (entity), `indicator` (status), `component` (control chrome). This narrows the set sharply.
 2. **Jump to that category's section** in the index and scan alphabetically by name, or grep within the section by concept/synonym.
 3. If no match, grep `packages/dbui/src/components/icons/` for the concept.
 

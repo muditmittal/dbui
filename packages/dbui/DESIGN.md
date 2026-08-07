@@ -126,7 +126,7 @@ is an error. A chevron is chrome and never represents a concept. All 456 are ind
 **Don't**
 
 - Use a raw HTML control when a component exists.
-- Install an icon library. All 456 icons ship with the system.
+- Install an icon library. The icon set ships with the system.
 - Write a hex value, an rgb value, or an arbitrary pixel value in a component.
 - Use `text-sm` or `font-medium`. The base is 13px and the emphasis weight is 600.
 - Wrap every record in a card. Card soup is the most common failure mode.

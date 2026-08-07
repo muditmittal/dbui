@@ -58,7 +58,7 @@
 
 ## Icon Selection Rules
 
-> 450 icons are tagged with semantic descriptions. **Read the description before inserting any icon.**
+> Icons are tagged with semantic descriptions. **Read the description before inserting any icon.**
 
 ### The tagging system
 
