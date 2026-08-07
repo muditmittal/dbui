@@ -44,7 +44,9 @@
     "design:lint:shells": "node scripts/design-lint/react-lint.js packages/dbui-shells/src",
     "design:lint:figma": "node scripts/design-lint/figma-lint.js",
     "design:tokens": "node scripts/design-lint/generate-tokens.mjs",
-    "design:verify-sync": "node scripts/design-lint/verify-token-sync.mjs"
+    "design:sync-components": "node scripts/design-lint/sync-components.mjs",
+    "design:verify-sync": "node scripts/design-lint/verify-token-sync.mjs",
+    "design:verify-rules": "node scripts/design-lint/verify-rules.mjs"
   },
   "packageManager": "yarn@4.13.0",
   "engines": {
