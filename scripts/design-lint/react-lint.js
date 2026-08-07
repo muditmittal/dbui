@@ -54,6 +54,24 @@ const FORBIDDEN_HTML_TAGS = {
 
 const APPROVED_HEX = new Set([...tokens.colors.light, ...tokens.colors.dark])
 
+/* Examples for the fix strings, read out of the shipped semantics.
+ *
+ * Three of them used to name text-foreground, bg-primary, bg-muted and
+ * var(--primary), all deleted by the token migration, and one named
+ * var(--surface-base) without the --db- prefix, which has never existed. An
+ * agent following any of them writes a class that resolves to nothing, so the
+ * element renders with no colour at all — a worse failure than the hardcoded
+ * hex the rule was objecting to, and harder to see.
+ *
+ * Derived, so the advice cannot outlive the token. */
+const roleExample = (group) => {
+  const list = tokens.colors.semanticTokens[group] ?? []
+  return list.find((n) => n.endsWith("-base")) ?? list[0]
+}
+const EG_SURFACE = roleExample("surface")
+const EG_TEXT = roleExample("text")
+const EG_BORDER = roleExample("border")
+
 /* ─── The dimensional families, as generated from theme.config.mjs ───
  *
  * `tokens.spacing.px` used to be the whole allowlist, and it was carried
@@ -92,7 +110,7 @@ function checkVarRefs(text, file, line, column, element, source) {
       violations.push({
         file, line, column, level: "error", rule: "no-primitive-token", element,
         message: `\`${name}\` is a raw primitive — product code must consume a semantic token, not the palette.`,
-        fix: `Use a semantic token (var(--surface-base), var(--text-subtle), …) or its utility (bg-surface-base).`,
+        fix: `Consume a semantic instead — bg-${EG_SURFACE}, text-${EG_TEXT}, or var(--db-${EG_SURFACE}) if a class will not do.`,
         source: source || text.slice(0, 80),
       })
     }
@@ -165,9 +183,26 @@ const COLOR_PREFIXES = new Set([
 ])
 const FONT_SIZE_PREFIXES = new Set(["text"]) // text-[13px] is a size; text-[#abc] is a color
 const LEADING_PREFIXES = new Set(["leading"])
-// Deduplicated: six of the fourteen steps share a size/line pair with another,
-// and a fix string that lists 13/16 three times reads as a bug.
+/* Advice, generated. Six of the fourteen ramp steps share a size and line with
+ * another, so an undeduplicated list says 13/16 three times and reads as a
+ * second bug. The radius list was prose with the stops typed into it, which
+ * survived the family being renumbered. */
 const RAMP_PAIRS = [...new Set(tokens.type.ramp.map((r) => `${r.size}/${r.line}`))].join(", ")
+// First wins, so 13px names type-label rather than type-code and 15px names
+// type-paragraph rather than type-paragraph-bold. The config's order is the
+// order of increasing specialness, so the first step at a size is the one an
+// author most likely wants.
+const RAMP_SIZES = (() => {
+  const bySize = new Map()
+  for (const r of tokens.type.ramp) if (!bySize.has(r.size)) bySize.set(r.size, `${r.size}px (type-${r.name})`)
+  return [...bySize.values()].join(", ")
+})()
+// rounded-0 is deliberately not offered. The token exists, but Tailwind emits
+// static utilities after functional ones, so rounded-none wins wherever both
+// could apply and rounded-0 only works where nothing else sets a radius.
+const RADIUS_STOPS = DIM.radius.steps
+  .map((step, i) => (step === 0 ? "rounded-none (0px)" : `rounded-${step} (${DIM.radius.px[i]}px)`))
+  .join(", ")
 const RADIUS_PREFIXES = new Set(DIM.radius.reaches)
 // One rule per family, so a report can be scoped to a padding pass or a control
 // -height pass without reading every line of it.
@@ -225,14 +260,14 @@ function checkClassName(className, file, line, column, element) {
         violations.push({
           file, line, column, level: "error", rule: "no-arbitrary-color", element,
           message: `Hardcoded color \`${whole}\` (${hex}) is not a DBUI token.`,
-          fix: `Use a token-bound class (text-foreground, bg-primary, border-border) or var(--token).`,
+          fix: `Use a semantic utility — bg-${EG_SURFACE}, text-${EG_TEXT}, border-${EG_BORDER}. See packages/dbui/docs/token-rules.md for the role each group covers.`,
           source: className,
         })
       } else {
         violations.push({
           file, line, column, level: "warning", rule: "prefer-token-class", element,
           message: `\`${whole}\` matches a DBUI hex but uses arbitrary syntax.`,
-          fix: `Replace with the named class (e.g. text-primary, bg-muted) instead of [${raw}].`,
+          fix: `Name the token instead of the value — bg-${EG_SURFACE} rather than [${raw}]. \`dbui token color\` prints every one.`,
           source: className,
         })
       }
@@ -250,7 +285,7 @@ function checkClassName(className, file, line, column, element) {
           violations.push({
             file, line, column, level: "error", rule: "off-ramp-type-size", element,
             message: `Font size \`${whole}\` (${px}px) is not on the DBUI type ramp.`,
-            fix: `Use a ramp value: ${tokens.type.ramp.map((r) => `${r.size}px (${r.name})`).join(", ")}.`,
+            fix: `Use a ramp step: ${RAMP_SIZES}.`,
             source: className,
           })
         }
@@ -279,9 +314,9 @@ function checkClassName(className, file, line, column, element) {
           violations.push({
             file, line, column, level: "warning", rule: "non-token-radius", element,
             message: `Border radius \`${whole}\` (${px}px) is not a DBUI token.`,
-            // The step IS the multiple of the 4px unit, so the px is derivable
+            // The step IS the multiple of the unit, so the px is derivable
             // rather than memorized: rounded-3 is three units, which is 12px.
-            fix: `Use rounded-N, where N is the multiple of the 4px unit — rounded-1 (4px), rounded-2 (8px), rounded-3 (12px), rounded-4 (16px), rounded-6 (24px) — or rounded-full.`,
+            fix: `Use a radius stop — ${RADIUS_STOPS}.`,
             source: className,
           })
         }
@@ -329,7 +364,7 @@ function checkClassName(className, file, line, column, element) {
       violations.push({
         file, line, column, level: "error", rule: "no-hardcoded-hex", element,
         message: `Hardcoded color ${hex} found in className.`,
-        fix: `Use a CSS token (var(--foreground), var(--primary), etc.) or a named utility.`,
+        fix: `Use a semantic utility — bg-${EG_SURFACE}, text-${EG_TEXT} — or var(--db-<name>) where a class cannot reach.`,
         source: className,
       })
     }
@@ -355,7 +390,7 @@ function checkInlineStyle(node, file, line, column, element) {
         violations.push({
           file, line, column, level: "error", rule: "inline-hardcoded-color", element,
           message: `Inline style \`${name}: '${text}'\` uses a non-token color.`,
-          fix: `Use Tailwind utility classes or a CSS variable.`,
+          fix: `Use a utility (bg-${EG_SURFACE}, text-${EG_TEXT}) so the value flips with the mode, or var(--db-<name>) if the style has to stay inline.`,
           source: `${name}: ${text}`,
         })
       }
