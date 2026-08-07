@@ -9,6 +9,7 @@
  *   node scripts/shot.mjs <url> <out.png> [width] [fullPage]
  *
  * Flags: --dark            shoot dark mode
+ *        --settle=<ms>     wait longer after the dark flip before capturing
  *        --band=<y>,<h>    capture one full-resolution slice of a tall page
  *        --click=<sel>     click something before capturing
  */
@@ -131,11 +132,19 @@ try {
   // mount, which happens before this runs — so a shot taken this way is dark
   // with the control still showing light. Append `?theme=dark` to the URL
   // instead when the control has to agree with the page.
+  //
+  // A page that only re-reads tokens in CSS is repainted by the time the class
+  // lands. A page that re-reads them in JS is not: the Vega charts resolve the
+  // palette on a MutationObserver and re-embed asynchronously, so the default
+  // wait catches them mid-swap and the shot comes back with empty chart boxes.
+  // `--settle` buys those pages the time to finish, so a dark shot shows what
+  // the page settles on rather than what it passes through.
   if (process.argv.includes("--dark")) {
+    const settleArg = process.argv.find((a) => a.startsWith("--settle="));
     await send("Runtime.evaluate", {
       expression: "document.documentElement.classList.add('dark')",
     }, sessionId);
-    await sleep(400);
+    await sleep(settleArg ? Number(settleArg.slice("--settle=".length)) : 400);
   }
 
   // A tall page is unreadable once scaled to fit, so `--band=<y>,<height>`
