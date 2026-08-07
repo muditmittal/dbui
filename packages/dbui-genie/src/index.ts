@@ -3,8 +3,8 @@
 // Requires the dbui token layer:
 //   @import "dbui/tokens/globals.css";
 //
-// Charts inside Genie widgets come from dbui-viz, which additionally needs
-// dbui/tokens/viz.css.
+// Charts inside Genie widgets come from dbui-viz, which needs no token layer
+// beyond the one above.
 
 export {
   Conversation,
