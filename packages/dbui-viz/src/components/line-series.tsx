@@ -18,7 +18,7 @@ import {
  * @standard Line Series
  * @guideline Use for any metric over time — usage, spend, failures, query counts
  * @guideline Omit axes (showAxis={false}) for an inline sparkline inside a card or table cell
- * @guideline Leave `palette` unset for the default ink line; set it only when a series needs semantic color
+ * @guideline Leave `palette` unset for the default ink line, and set it only when a series needs its own color
  * @constraint The end dot marks "latest value" — it is hidden automatically for multi-series charts
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
  */
@@ -37,7 +37,7 @@ export interface LineSeriesProps
   data: LinePoint[]
   /** Accessible description of the chart. */
   label?: string
-  /** Semantic color. Defaults to the foreground ink line used across GovernanceHub. */
+  /** Series color. Defaults to the foreground ink line used across GovernanceHub. */
   palette?: VizPaletteName
   /** Fill the area under the line. */
   area?: boolean
@@ -143,13 +143,14 @@ function LineSeries({
     })
 
     if (showEndDot && !isMultiSeries && data.length > 0) {
+      // The dot shares the layers' encodings rather than overriding the axis to
+      // null. Vega-Lite resolves axes across the whole view, so one layer
+      // asking for no axis takes the axis off every layer — which is why a
+      // chart with showAxis on still drew none.
       layers.push({
         data: { values: [data[data.length - 1]] },
         mark: { type: "point", filled: true, size: 40, fill: accent },
-        encoding: {
-          x: { ...xEncoding, axis: null },
-          y: { ...yEncoding, axis: null },
-        },
+        encoding: { x: xEncoding, y: yEncoding },
       })
     }
 

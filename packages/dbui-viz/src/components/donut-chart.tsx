@@ -26,7 +26,7 @@ import {
 export interface DonutSlice {
   label: string
   value: number
-  /** Semantic color. Falls back to the standard series order. */
+  /** Slice color. Falls back to the standard series order. */
   palette?: VizPaletteName
 }
 
@@ -130,7 +130,11 @@ function DonutChart({
     return {
       $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       config: vizVegaConfig(theme),
-      width: Math.max(Math.min(width, size), 0),
+      // A right-hand legend needs room of its own. Clamping the view to `size`
+      // gave it none, so it drew back over the ring. The ring is a fixed
+      // radius either way, so handing the view the measured width only widens
+      // what sits beside it.
+      width: Math.max(showLegend ? width : Math.min(width, size), 0),
       height: size,
       autosize: { type: "fit", contains: "padding" },
       data: { values: slices },
