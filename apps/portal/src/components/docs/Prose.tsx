@@ -124,13 +124,21 @@ export function RefTable({
 }
 
 /**
- * Names the file that owns what the page describes. Every page here renders a
- * source that lives elsewhere in the repo, and a reader who is about to change
- * something needs to know which file to open.
+ * Names the file that owns what the page describes. It goes last, because it is
+ * provenance and provenance follows the claim it vouches for — the reader who
+ * has to act on it is in the repo rather than on the page, and an agent reads
+ * the whole document whatever order it is in.
+ *
+ * A note that routes rather than vouches is not this. "Which file decides what
+ * to pick" is an instruction someone needs before they start, so it belongs in
+ * the page's opening prose and only the provenance half belongs here.
+ *
+ * The gap above is wider than the one `DocSection` opens with, so the note
+ * reads as a footnote under the page rather than as one more section of it.
  */
 export function SourceNote({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-2 border border-border-base bg-surface-subtle px-4 py-3">
+    <div className="mt-20 rounded-2 border border-border-base bg-surface-subtle px-4 py-3">
       <div className="type-label-bold text-text-strong">Source of truth</div>
       <p className="type-body mt-1 text-text-subtle">{children}</p>
     </div>

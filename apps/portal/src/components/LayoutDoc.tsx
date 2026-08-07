@@ -173,17 +173,6 @@ export function LayoutDoc() {
           observation that proves it was ignored. A sentence that could not fill those slots is not
           here. That is why the panel section is long and the rhythm section is short.
         </Para>
-        <SourceNote>
-          <>
-            This page owns the rules that hold across every shell. <Code>composition.md</Code> owns
-            each shell&rsquo;s own regions, scaling and scroll contract and renders them on{" "}
-            <DocLink href="/docs/shells">Shells</DocLink>. A component&rsquo;s constraints live in
-            its JSDoc and outrank anything here.{" "}
-            <DocLink href="/docs/patterns">Patterns</DocLink> owns what happens over time, and{" "}
-            <DocLink href="/docs/components">component rules</DocLink> owns cross-component spacing,
-            buttons and menus.
-          </>
-        </SourceNote>
       </div>
 
       <DocSection title="Decide in this order">
@@ -510,6 +499,17 @@ export function LayoutDoc() {
         </div>
       </DocSection>
 
+      <SourceNote>
+        <>
+          This page owns the rules that hold across every shell. <Code>composition.md</Code> owns
+          each shell&rsquo;s own regions, scaling and scroll contract and renders them on{" "}
+          <DocLink href="/docs/shells">Shells</DocLink>. A component&rsquo;s constraints live in its
+          JSDoc and outrank anything here. <DocLink href="/docs/patterns">Patterns</DocLink> owns
+          what happens over time, and{" "}
+          <DocLink href="/docs/components">component rules</DocLink> owns cross-component spacing,
+          buttons and menus.
+        </>
+      </SourceNote>
     </>
   )
 }

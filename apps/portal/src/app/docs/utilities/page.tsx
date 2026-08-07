@@ -108,14 +108,11 @@ export default function UtilitiesPage() {
         ))}
       </DocSection>
 
-      <DocSection title="Source of truth">
-        <SourceNote>
-          <Code>packages/dbui/src/lib/</Code> and the token layer&apos;s stylesheets own everything
-          on this page. <Code>scripts/generate-utility-data.mjs</Code> reads both into the module it
-          renders, so a helper added to <Code>lib/</Code> appears here without anyone editing the
-          page.
-        </SourceNote>
-      </DocSection>
+      <SourceNote>
+        <Code>packages/dbui/src/lib/</Code> and the token layer&apos;s stylesheets own everything on
+        this page. <Code>scripts/generate-utility-data.mjs</Code> reads both into the module it
+        renders, so a helper added to <Code>lib/</Code> appears here without anyone editing the page.
+      </SourceNote>
     </>
   )
 }

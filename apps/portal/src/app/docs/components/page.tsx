@@ -55,11 +55,6 @@ export default function ComponentsPage() {
       <ComponentGallery />
 
       <DocSection id="jsdoc" title="The rules live in the JSDoc">
-        <SourceNote>
-          <Code>packages/dbui/docs/component-index.md</Code> decides which component to pick. The
-          component&rsquo;s own JSDoc decides how to use the one you picked. When they disagree, the
-          JSDoc wins.
-        </SourceNote>
         <RefTable
           columns={[
             { key: "tag", header: "Tag", width: "w-[128px]", mono: true },
@@ -118,6 +113,12 @@ export default function ComponentsPage() {
           ]}
         />
       </DocSection>
+
+      <SourceNote>
+        <Code>packages/dbui/docs/component-index.md</Code> decides which component to pick. The
+        component&rsquo;s own JSDoc decides how to use the one you picked. When they disagree, the
+        JSDoc wins.
+      </SourceNote>
     </>
   )
 }

@@ -143,16 +143,6 @@ export default function ConstraintsPage() {
           closure it stops inventing. Every entry below exists to remove a decision rather than to
           inform one.
         </Para>
-        <SourceNote>
-          <>
-            Nothing here is new. Each constraint was mined from the invariants on{" "}
-            <DocLink href="/docs/patterns">Patterns</DocLink>, the <Code>@constraint</Code> JSDoc
-            across the packages, <Code>composition.md</Code>, <Code>DESIGN.md</Code> and the{" "}
-            <DocLink href="/docs/principles">principles</DocLink>. What this page owns is the form,
-            and the constraints that cross components, pages and time so no single file holds them.
-            Where one already has an owner it is cited rather than restated.
-          </>
-        </SourceNote>
       </div>
 
       <DocSection title="What counts as a constraint here">
@@ -326,6 +316,17 @@ export default function ConstraintsPage() {
           </Para>
         </DocSubsection>
       </DocSection>
+
+      <SourceNote>
+        <>
+          Nothing here is new. Each constraint was mined from the invariants on{" "}
+          <DocLink href="/docs/patterns">Patterns</DocLink>, the <Code>@constraint</Code> JSDoc
+          across the packages, <Code>composition.md</Code>, <Code>DESIGN.md</Code> and the{" "}
+          <DocLink href="/docs/principles">principles</DocLink>. What this page owns is the form,
+          and the constraints that cross components, pages and time so no single file holds them.
+          Where one already has an owner it is cited rather than restated.
+        </>
+      </SourceNote>
     </>
   )
 }

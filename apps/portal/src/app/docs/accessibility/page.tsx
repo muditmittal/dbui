@@ -65,18 +65,6 @@ export default function AccessibilityPage() {
         system does not check for you.
       </DocHeader>
 
-      <div className="mt-8">
-        <SourceNote>
-          <Code>packages/dbui/docs/brandvoice.md</Code> owns the Accessibility and Globalization
-          checklists, and the{" "}
-          <Link href="/docs/voice" className="text-text-accent">
-            Voice and tone page
-          </Link>{" "}
-          renders them. Change a rule there, not here. This page says what each one looks like in
-          code.
-        </SourceNote>
-      </div>
-
       <DocSection title="Controls">
         <Guidance
           dos={[
@@ -159,6 +147,16 @@ export default function AccessibilityPage() {
           rows={RELIANCE}
         />
       </DocSection>
+
+      <SourceNote>
+        <Code>packages/dbui/docs/brandvoice.md</Code> owns the Accessibility and Globalization
+        checklists, and the{" "}
+        <Link href="/docs/voice" className="text-text-accent">
+          Voice and tone page
+        </Link>{" "}
+        renders them. Change a rule there, not here. This page says what each one looks like in
+        code.
+      </SourceNote>
     </>
   )
 }

@@ -262,9 +262,7 @@ export function VoiceDoc() {
   return (
     <>
       <DocHeader title="Voice and tone">
-        The standard for user-facing copy in the Databricks product UI. It governs navigation,
-        titles, buttons, descriptions, tooltips, modals, empty states and errors, so the product
-        reads as one cohesive, professional, task-oriented experience.
+        One voice for every string, so a nav label and an error read as the same product.
       </DocHeader>
 
       <img
@@ -274,16 +272,6 @@ export function VoiceDoc() {
         height={300}
         className="mt-10 h-auto w-full rounded-2"
       />
-
-      <div className="mt-8">
-        <SourceNote>
-          This page renders <Code>packages/dbui/docs/brandvoice.md</Code>, which the CLI and the MCP
-          server serve to agents through <Code>dbui docs brandvoice</Code>. That file is the source
-          of truth for the content design linters, and it is a working draft maintained with
-          Databricks content writers — the terminology and product-name tables are the most stable
-          part.
-        </SourceNote>
-      </div>
 
       <AnchoredSection {...S.principles}>
         <Para>
@@ -401,6 +389,13 @@ export function VoiceDoc() {
           rows={SOURCES}
         />
       </AnchoredSection>
+
+      <SourceNote>
+        This page renders <Code>packages/dbui/docs/brandvoice.md</Code>, which the CLI and the MCP
+        server serve to agents through <Code>dbui docs brandvoice</Code>. That file is the source of
+        truth for the content design linters, and it is a working draft maintained with Databricks
+        content writers — the terminology and product-name tables are the most stable part.
+      </SourceNote>
     </>
   )
 }

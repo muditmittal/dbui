@@ -149,6 +149,18 @@ export default function IconsPage() {
         One set, tagged by concept, so the right icon can be found without knowing its name.
       </DocHeader>
 
+      {/*
+        Plain prose rather than the note at the foot, because this sentence
+        routes instead of vouching. It names the file that settles the choice,
+        which is something a reader needs before they open the browser rather
+        than a citation they check after they have read the page.
+      */}
+      <div className="mt-8">
+        <Para>
+          <Code>packages/dbui/docs/icon-index.md</Code> decides which icon to pick.
+        </Para>
+      </div>
+
       <IconBrowser />
 
       <DocSection title="Four categories">
@@ -168,12 +180,6 @@ export default function IconsPage() {
       </DocSection>
 
       <DocSection title="The tag is the metadata">
-        <SourceNote>
-          <Code>packages/dbui/docs/icon-index.md</Code> decides which icon to pick. The{" "}
-          <Code>use:</Code> tag on the component is where the metadata behind it lives, mirrored into{" "}
-          <Code>classifications.ts</Code> and <Code>descriptions.ts</Code>. When they disagree, the
-          tag wins.
-        </SourceNote>
         <TagAnatomy />
         <Para>
           A row marked as not in the maps has a tag and no mirror, so it is browsable here and
@@ -248,6 +254,12 @@ dataEntityIcons.streamingTable // "TableStream"`}
           ]}
         />
       </DocSection>
+
+      <SourceNote>
+        The <Code>use:</Code> tag on the component is where an icon&rsquo;s metadata lives, mirrored
+        into <Code>classifications.ts</Code> and <Code>descriptions.ts</Code>. When they disagree,
+        the tag wins.
+      </SourceNote>
     </>
   )
 }

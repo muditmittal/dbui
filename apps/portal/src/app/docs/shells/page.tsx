@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { DocHeader, DocSection, Para, Command, SourceNote } from "@/components/docs/Prose"
+import { Code, DocHeader, DocSection, Para, Command, SourceNote } from "@/components/docs/Prose"
 import { shells } from "@/components/shell-data"
 
 export const metadata = { title: "Shells — DBUI" }
@@ -89,12 +89,13 @@ export default function ShellsPage() {
           disagree.
         </Para>
         <Command>dbui shell</Command>
-        <SourceNote>
-          <code className="type-code">packages/dbui/composition.md</code> defines every shell.{" "}
-          <code className="type-code">scripts/generate-shell-data.mjs</code> parses it into the
-          module this page renders, so a shell edited in one place cannot go stale in the other.
-        </SourceNote>
       </DocSection>
+
+      <SourceNote>
+        <Code>packages/dbui/composition.md</Code> defines every shell.{" "}
+        <Code>scripts/generate-shell-data.mjs</Code> parses it into the module this page renders, so
+        a shell edited in one place cannot go stale in the other.
+      </SourceNote>
     </>
   )
 }
