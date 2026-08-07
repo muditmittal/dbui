@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const FaceSmile = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="currentColor" clipPath="url(#FaceSmileIcon_svg__a)">
+      <g fill="currentColor">
       <path
       fillRule="evenodd"
       d="M8 2.084a5.917 5.917 0 1 0 0 11.833A5.917 5.917 0 0 0 8 2.084M.583 8a7.417 7.417 0 1 1 14.834 0A7.417 7.417 0 0 1 .583 8"
@@ -17,11 +17,6 @@ const FaceSmile = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { si
       clipRule="evenodd"
       />
       </g>
-      <defs>
-      <clipPath>
-      <path fill="#fff" d="M0 0h16v16H0z" />
-      </clipPath>
-      </defs>
     </svg>
   )
 )

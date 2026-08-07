@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const Redo = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clipPath="url(#RedoIcon_svg__a)">
+      <g>
       <path
       fill="currentColor"
       fillRule="evenodd"
@@ -12,11 +12,6 @@ const Redo = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: 
       clipRule="evenodd"
       />
       </g>
-      <defs>
-      <clipPath>
-      <path fill="#fff" d="M0 16h16V0H0z" />
-      </clipPath>
-      </defs>
     </svg>
   )
 )

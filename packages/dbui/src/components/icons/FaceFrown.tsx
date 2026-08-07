@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const FaceFrown = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="currentColor" clipPath="url(#FaceFrownIcon_svg__a)">
+      <g fill="currentColor">
       <path d="M6 5.25a.75.75 0 0 0 0 1.5h.007a.75.75 0 0 0 0-1.5zM9.25 6a.75.75 0 0 1 .75-.75h.007a.75.75 0 0 1 0 1.5H10A.75.75 0 0 1 9.25 6M10.07 11.12a.75.75 0 0 0 1.197-.903l-.001-.001v-.001l-.003-.003-.005-.006-.015-.02a3 3 0 0 0-.217-.246 4.7 4.7 0 0 0-.626-.546C9.858 9 9.04 8.584 8 8.584s-1.858.416-2.4.81a4.7 4.7 0 0 0-.795.733l-.048.06-.015.019-.005.006-.002.003-.031.044.03-.042a.75.75 0 1 0 1.22.875q.032-.039.103-.115c.096-.1.24-.235.426-.37.375-.273.89-.523 1.517-.523s1.142.25 1.517.523a3.2 3.2 0 0 1 .529.485l.021.025z" />
       <path
       fillRule="evenodd"
@@ -12,11 +12,6 @@ const FaceFrown = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { si
       clipRule="evenodd"
       />
       </g>
-      <defs>
-      <clipPath>
-      <path fill="#fff" d="M0 0h16v16H0z" />
-      </clipPath>
-      </defs>
     </svg>
   )
 )

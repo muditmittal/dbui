@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const Function = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clipPath="url(#FunctionIcon_svg__a)">
+      <g>
       <path
       fill="currentColor"
       fillRule="evenodd"
@@ -12,11 +12,6 @@ const Function = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { siz
       clipRule="evenodd"
       />
       </g>
-      <defs>
-      <clipPath>
-      <path fill="#fff" d="M16 0H0v16h16z" />
-      </clipPath>
-      </defs>
     </svg>
   )
 )

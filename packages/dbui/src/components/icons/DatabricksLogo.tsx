@@ -20,7 +20,7 @@ export function DatabricksLogo(props: SVGProps<SVGSVGElement>) {
       </g>
       <defs>
         <clipPath id="clip0_dblogo">
-          <rect width="82" height="16" fill="white" transform="translate(36 8)"/>
+          <rect width="82" height="16" transform="translate(36 8)"/>
         </clipPath>
       </defs>
     </svg>

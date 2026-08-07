@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const FolderCloud = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="currentColor" clipPath="url(#FolderCloudIcon_svg__a)">
+      <g fill="currentColor">
       <path d="M.75 2a.75.75 0 0 0-.75.75v10.5c0 .414.336.75.75.75H3v-1.5H1.5v-9h3.172c.331 0 .649.132.883.366L6.97 5.28c.14.141.331.22.53.22h7V8H16V4.75a.75.75 0 0 0-.75-.75H7.81L6.617 2.805A2.75 2.75 0 0 0 4.672 2z" />
       <path
       fillRule="evenodd"
@@ -12,11 +12,6 @@ const FolderCloud = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { 
       clipRule="evenodd"
       />
       </g>
-      <defs>
-      <clipPath>
-      <path fill="#fff" d="M0 0h16v16H0z" />
-      </clipPath>
-      </defs>
     </svg>
   )
 )

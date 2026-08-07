@@ -4,6 +4,9 @@ import { forwardRef } from "react"
 const Token = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* The white here is a mask channel, not a paint. A luminance mask reads
+          white as "show this pixel", so currentColor would tie the notch to the
+          text color and erase it on a dark glyph. */}
       <mask id="TokenIcon_svg__a" fill="#fff">
       <path d="M5.596 10.799a5 5 0 1 0 .082-9.621l.258.94a4.025 4.025 0 1 1-.066 7.745z" />
       </mask>

@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const SortLetterHorizontalAscending = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="currentColor" clipPath="url(#SortLetterHorizontalAscendingIcon_svg__a)">
+      <g fill="currentColor">
       <path d="m14.06 4-4.03 4.03-1.06-1.06 2.22-2.22H5v-1.5h6.19L8.97 1.03l1.06-1.06z" />
       <path
       fillRule="evenodd"
@@ -13,11 +13,6 @@ const SortLetterHorizontalAscending = forwardRef<SVGSVGElement, React.SVGProps<S
       />
       <path d="M11.777 10.5H8.5V9h4.75a.75.75 0 0 1 .607 1.191l-3.134 4.31H14V16H9.25a.75.75 0 0 1-.607-1.192z" />
       </g>
-      <defs>
-      <clipPath>
-      <path fill="#fff" d="M0 0h16v16H0z" />
-      </clipPath>
-      </defs>
     </svg>
   )
 )

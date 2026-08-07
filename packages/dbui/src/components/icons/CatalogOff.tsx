@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 const CatalogOff = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { size?: number }>(
   ({ className, size = 16, ...props }, ref) => (
     <svg ref={ref} className={className} {...props} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="currentColor" clipPath="url(#CatalogOffIcon_svg__a)">
+      <g fill="currentColor">
       <path d="m14 11.94-1.5-1.5V5H7.061l-1.5-1.5h6.94v-2h-8c-.261 0-.499.1-.677.263L2.764.703A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75z" />
       <path
       fillRule="evenodd"
@@ -12,11 +12,6 @@ const CatalogOff = forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement> & { s
       clipRule="evenodd"
       />
       </g>
-      <defs>
-      <clipPath>
-      <path fill="#fff" d="M0 0h16v16H0z" />
-      </clipPath>
-      </defs>
     </svg>
   )
 )
