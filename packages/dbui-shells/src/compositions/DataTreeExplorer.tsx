@@ -429,7 +429,7 @@ export function DataTreeExplorer({
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="min-w-0 justify-start gap-1 rounded-1 bg-surface-subtle px-1 pr-2 shadow-none hover:bg-action-default-hover active:bg-action-selected-press"
+                  className="min-w-0 justify-start gap-1 rounded-1 px-1 pr-2 shadow-none"
                 >
                   <span className="flex shrink-0 items-center gap-0.5 text-text-subtle [&_svg]:size-4">
                     <span className="type-code text-text-subtle">./</span>

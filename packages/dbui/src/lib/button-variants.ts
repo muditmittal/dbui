@@ -16,8 +16,10 @@ import { cva } from "./cva"
  *
  * Token usage:
  * - Filled hover/press: action-primary-hover/-press, action-negative-hover/-press
- * - Non-filled hover/press bg: action-default-hover, action-selected-press
- * - Non-filled hover/press text: text-text-strong
+ * - Non-filled fill and states: action-default-base/-hover/-press. `selected` is a
+ *   state a control is in, not a state it passes through, so a press on an
+ *   unselected control reads the default family.
+ * - Non-filled label: action-label-base/-hover/-press
  * - Disabled: per-variant (filled → bg-surface-disabled + inverse label, non-filled → transparent + text-text-disabled)
  * - Focus: filled → shadow-focus (white gap + blue ring), non-filled → border-2 border-focus-ring
  * - Focus on Danger: uses border-focus-ring (blue) NOT border-action-negative-base — consistent system focus ring
@@ -45,24 +47,24 @@ export const buttonVariants = cva(
         ].join(" "),
         outline: [
           "shadow-xs border-input-border-base",
-          "hover:bg-action-default-hover hover:border-input-border-hover hover:text-text-strong",
-          "active:bg-action-selected-press active:border-focus-ring active:text-text-strong",
+          "hover:bg-action-default-hover hover:border-input-border-hover hover:text-action-label-hover",
+          "active:bg-action-default-press active:border-focus-ring active:text-action-label-press",
           "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
         secondary: [
           // Resting text color is set in compoundVariants so it never competes
           // with the muted icon-only treatment.
-          "shadow-xs border-transparent bg-surface-subtle",
-          "hover:bg-action-default-hover hover:text-text-strong",
-          "active:bg-action-selected-press active:text-text-strong",
+          "shadow-xs border-transparent bg-action-default-base",
+          "hover:bg-action-default-hover hover:text-action-label-hover",
+          "active:bg-action-default-press active:text-action-label-press",
           "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:bg-transparent disabled:text-text-disabled disabled:shadow-none",
         ].join(" "),
         ghost: [
           "border-transparent",
-          "hover:bg-action-default-hover hover:text-text-strong",
-          "active:bg-action-selected-press active:text-text-strong",
+          "hover:bg-action-default-hover hover:text-action-label-hover",
+          "active:bg-action-default-press active:text-action-label-press",
           "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:text-text-disabled",
         ].join(" "),
@@ -108,7 +110,7 @@ export const buttonVariants = cva(
       {
         variant: ["secondary", "ghost"],
         size: ["sm", "md"],
-        class: "text-text-base",
+        class: "text-action-label-base",
       },
       // Muted icon is the toolbar convention, but only on the neutral
       // non-filled variants. On a filled variant it would be a contrast
