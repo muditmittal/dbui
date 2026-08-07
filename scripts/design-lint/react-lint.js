@@ -647,7 +647,10 @@ function checkInlineStyle(node, file, line, column, element) {
       "gap", "rowGap", "columnGap", "top", "right", "bottom", "left",
     ])
     if (SPACING_PROPS.has(name)) {
-      const pxM = text.match(/^(\d+(?:\.\d+)?)px?$/)
+      // `px?` is an optional x after a required p, so this matched "6px" and
+      // "6p" and never the bare 6 that React inline styles are actually written
+      // with. The rule has been half-blind since it was written.
+      const pxM = text.match(/^(\d+(?:\.\d+)?)(?:px)?$/)
       if (pxM) {
         const px = parseFloat(pxM[1])
         if (!APPROVED_SPACING_PX.has(px)) {
