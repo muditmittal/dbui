@@ -12,7 +12,7 @@ import { Cmd } from "@/components/docs/CodeBlock"
 </Lede>
 
 <Covers items={[
-  ["React design lint", "13 rules over any React source, not only DBUI code"],
+  ["React design lint", "19 rules over any React source, not only DBUI code"],
   ["Figma design lint", "9 rules that run inside a Figma file via MCP"],
   ["Token pipeline", "the generator and the sync verifier that gates on drift"],
   ["Legacy token audit", "why a verifier must not share a list with what it verifies"],
@@ -24,16 +24,20 @@ import { Cmd } from "@/components/docs/CodeBlock"
 <Section title="React design lint">
 
 <P>
-  Scans <C>.tsx</C> with ts-morph and reports by severity. It runs against any React source, not
-  only code built with DBUI — that is the point, and it is the reason someone outside the team has
-  a reason to run it.
+  Scans <C>.ts</C> and <C>.tsx</C> with ts-morph and reports by severity. It runs against any React
+  source, not only code built with DBUI — that is the point, and it is the reason someone outside
+  the team has a reason to run it. Files carrying a generated header are skipped, because a file
+  nobody wrote is not a file anybody fixes.
 </P>
 
 <Cmd lines={[
   ["yarn design:lint:react <path>", "human output"],
   ["yarn design:lint:react <path> --json", "machine output"],
   ["yarn dbui check <path>", "same thing, through the CLI"],
+  ["yarn design:verify-rules", "prove every rule still fires, and still stays quiet"],
 ]} />
+
+<P>Components and composition.</P>
 
 <DocTable
   columns={[
@@ -41,27 +45,72 @@ import { Cmd } from "@/components/docs/CodeBlock"
     { key: "catches", header: "Catches" },
   ]}
   rows={[
-    { rule: "non-dbui-component", catches: "A component that is not a known DBUI export" },
-    { rule: "prefer-dbui-wrapper", catches: "Raw HTML where a DBUI component exists" },
-    { rule: "no-raw-interactive-html", catches: "button, input or select in authored UI" },
-    { rule: "no-arbitrary-color", catches: "Any color that is not a token" },
-    { rule: "no-hardcoded-hex", catches: "A hex literal in a className" },
-    { rule: "inline-hardcoded-color", catches: "The same in an inline style" },
-    { rule: "prefer-token-class", catches: "A raw value where a token utility exists" },
-    { rule: "off-scale-spacing", catches: "Spacing off the 4px scale" },
-    { rule: "inline-off-scale-spacing", catches: "The same in an inline style" },
-    { rule: "off-ramp-type-size", catches: "A font size outside the type scale" },
-    { rule: "off-ramp-line-height", catches: "A line height outside the scale" },
-    { rule: "non-token-radius", catches: "A radius that is not a token" },
-    { rule: "no-primitive-token", catches: "Reaching past the semantic layer into a primitive" },
+    { rule: "no-raw-interactive-html", catches: "button, input, select or textarea where a DBUI control exists" },
+    { rule: "no-as-child", catches: "asChild, which Base UI accepts and then drops. Use render" },
+    { rule: "non-dbui-component", catches: "A name imported from a DBUI package that it does not export" },
   ]}
 />
+
+<P>Color.</P>
+
+<DocTable
+  columns={[
+    { key: "rule", header: "Rule", width: "w-[260px]", mono: true },
+    { key: "catches", header: "Catches" },
+  ]}
+  rows={[
+    { rule: "no-arbitrary-color", catches: "Any color that is not a token" },
+    { rule: "no-hardcoded-hex", catches: "A hex inside a longer className value" },
+    { rule: "inline-hardcoded-color", catches: "The same in an inline style" },
+    { rule: "no-module-color-literal", catches: "A color written into a module, which has one value in both modes" },
+    { rule: "no-primitive-token", catches: "Reaching past the semantic layer into a primitive" },
+    { rule: "no-legacy-token", catches: "A name the token migration deleted, which now resolves to nothing" },
+  ]}
+/>
+
+<P>Dimensions. Space and size are separate families with different stops, so each has its own rule.</P>
+
+<DocTable
+  columns={[
+    { key: "rule", header: "Rule", width: "w-[260px]", mono: true },
+    { key: "catches", header: "Catches" },
+  ]}
+  rows={[
+    { rule: "off-scale-spacing", catches: "Padding, margin, gap or inset off the space family — gap-1.5 as well as gap-[6px]" },
+    { rule: "off-scale-size", catches: "A width, height or icon box off the size family" },
+    { rule: "inline-off-scale-spacing", catches: "The same in an inline style" },
+    { rule: "non-token-radius", catches: "A radius that is not a stop" },
+    { rule: "prefer-token-class", catches: "A value that is on a family but written as a bracket" },
+  ]}
+/>
+
+<P>Type.</P>
+
+<DocTable
+  columns={[
+    { key: "rule", header: "Rule", width: "w-[260px]", mono: true },
+    { key: "catches", header: "Catches" },
+  ]}
+  rows={[
+    { rule: "px-type-literal", catches: "text-[13px] — on the ramp, and still unable to follow it" },
+    { rule: "off-ramp-type-size", catches: "A font size outside the ramp" },
+    { rule: "off-ramp-line-height", catches: "A line height outside the ramp" },
+    { rule: "type-class-conflict", catches: "A type utility paired with leading-, font- or a case utility" },
+    { rule: "inline-type-literal", catches: "fontSize, lineHeight, fontWeight or fontFamily in an inline style" },
+  ]}
+/>
+
+<Note title="Why none of them holds a scale" variant="info">
+  Every family, ramp step and deleted name comes from <C>tokens.json</C>, generated from{" "}
+  <C>theme.config.mjs</C>. The allowlist used to be copied forward on each run instead, so it went
+  on approving stops the families had dropped, and the rules reading it reported clean through the
+  drift they existed to catch.
+</Note>
 
 <Note title="Reading it on DBUI itself" variant="info">
   Rules written for consumers necessarily fire on the primitives that implement them. <C>Button</C>{" "}
   contains a raw <C>&lt;button&gt;</C>, so <C>no-raw-interactive-html</C> reports it.{" "}
-  <C>dbui-shells</C> is the honest signal, because it composes rather than defines — it reports zero
-  errors.
+  <C>dbui-shells</C> is the honest signal, because it composes rather than defines.
 </Note>
 
 </Section>

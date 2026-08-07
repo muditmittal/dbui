@@ -46,8 +46,13 @@ import { DocPage, Lede, Section, P, C, DocTable, Note, Tag, Covers, ContentSumma
     },
     {
       tool: "React design lint",
-      what: "13 rules over the AST: raw HTML where a component exists, hardcoded color, off-scale spacing, non-token radii.",
+      what: "19 rules over the AST: raw HTML where a component exists, hardcoded color, drift off the space, size, radius and type families, and the non-negotiables.",
       run: "yarn design:lint:react",
+    },
+    {
+      tool: "Lint rule verifier",
+      what: "Plants one violation per rule and asserts each fires, then asserts none fire on the correct form.",
+      run: "yarn design:verify-rules",
     },
     {
       tool: "Figma design lint",
