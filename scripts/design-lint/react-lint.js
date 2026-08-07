@@ -247,6 +247,28 @@ function checkBareUtilities(className, file, line, column, element) {
   }
 }
 
+/**
+ * A px type literal that happens to land on the ramp.
+ *
+ * The two off-ramp rules only ever objected to the value. The documented rule
+ * bans the literal — "never reintroduce a text-[Npx] or leading-[Npx]" — because
+ * a px size does not move when the root font size does, so the box grows around
+ * a label that stays put. Being on the ramp today is not the property that
+ * matters; being unable to follow it is.
+ *
+ * This is the whole gap. Every one of the seven sites the last ramp pass fixed
+ * by hand was `text-[12px] leading-[16px]` or `text-[13px]` — on-ramp values,
+ * invisible to both rules, and one of them is still live in Popover.stories.
+ */
+function pxTypeLiteral(whole, px, utility, className, file, line, column, element) {
+  violations.push({
+    file, line, column, level: "error", rule: "px-type-literal", element,
+    message: `\`${whole}\` is ${px}px written as a literal. It is on the ramp, but it cannot follow it.`,
+    fix: `Use ${utility}, which carries the size, line height, tracking, weight and family together.`,
+    source: className,
+  })
+}
+
 function checkClassName(className, file, line, column, element) {
   let m
   ARBITRARY_VALUE_RE.lastIndex = 0
@@ -280,14 +302,16 @@ function checkClassName(className, file, line, column, element) {
       const px = parseFloat(pxM[1])
 
       if (FONT_SIZE_PREFIXES.has(prefix)) {
-        const onRamp = tokens.type.ramp.some((r) => r.size === px)
-        if (!onRamp) {
+        const step = tokens.type.ramp.find((r) => r.size === px)
+        if (!step) {
           violations.push({
             file, line, column, level: "error", rule: "off-ramp-type-size", element,
             message: `Font size \`${whole}\` (${px}px) is not on the DBUI type ramp.`,
             fix: `Use a ramp step: ${RAMP_SIZES}.`,
             source: className,
           })
+        } else {
+          pxTypeLiteral(whole, px, `type-${step.name}`, className, file, line, column, element)
         }
         continue
       }
@@ -297,14 +321,16 @@ function checkClassName(className, file, line, column, element) {
         // the comparison was undefined === px on every step, the rule fired on
         // 100% of leading-[Npx] including the correct ones, and printed
         // `13/undefined` as its own advice.
-        const onRamp = tokens.type.ramp.some((r) => r.line === px)
-        if (!onRamp) {
+        const step = tokens.type.ramp.find((r) => r.line === px)
+        if (!step) {
           violations.push({
             file, line, column, level: "warning", rule: "off-ramp-line-height", element,
             message: `Line-height \`${whole}\` (${px}px) is not on the DBUI type ramp.`,
             fix: `Match the line-height to its ramp size: ${RAMP_PAIRS}.`,
             source: className,
           })
+        } else {
+          pxTypeLiteral(whole, px, `type-${step.name}`, className, file, line, column, element)
         }
         continue
       }
