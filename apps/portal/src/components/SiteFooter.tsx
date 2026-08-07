@@ -32,14 +32,14 @@ export function SiteFooter() {
     // `mt-auto` against the column on <body>, so the footer sits at the bottom
     // of a short page instead of halfway up it.
     <footer className="mt-auto border-t border-border-base">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         {/* Wide enough that two segment controls with the same container fill
             read as two controls rather than as one five-segment group. */}
         <div className="flex items-center gap-4">
-          <TypeScaleControl />
           <ColorModeControl />
+          <TypeScaleControl />
         </div>
-        <nav className="flex items-center gap-5">
+        <nav className="flex items-center gap-6">
           {LINKS.map((link) =>
             link.external ? (
               <a
