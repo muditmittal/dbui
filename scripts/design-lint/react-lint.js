@@ -36,7 +36,18 @@ const PREFER_WRAPPER_HINTS = components.tagsAlwaysAllowed["ok-but-prefer-wrapper
 const FORBIDDEN_HTML_TAGS = new Set(["button", "input", "select", "textarea"])
 
 const APPROVED_HEX = new Set([...tokens.colors.light, ...tokens.colors.dark])
-const APPROVED_SPACING_PX = new Set(tokens.spacing.px)
+
+/* ─── The dimensional families, as generated from theme.config.mjs ───
+ *
+ * `tokens.spacing.px` used to be the whole allowlist, and it was carried
+ * forward untouched on every generator run, so it still approved 6, 10 and 14
+ * after the scale dropped them. It is now derived, and split by family: space
+ * and size are deliberately not the same nine stops, so a rule that judges
+ * `h-5` against the padding scale is asking the wrong question.
+ */
+const DIM = tokens.dimensions
+const APPROVED_SPACING_PX = new Set(DIM.space.px)
+const APPROVED_RADIUS = new Set(DIM.radius.px)
 
 // ─── Token-compliance (granular color system) ───
 // Primitives (interface/*, status/*, viz/<hue>/*, base/*) are the raw palette and
@@ -114,11 +125,7 @@ const SPACING_PREFIXES = new Set([
 ])
 const FONT_SIZE_PREFIXES = new Set(["text"]) // text-[13px] is a size; text-[#abc] is a color
 const LEADING_PREFIXES = new Set(["leading"])
-const RADIUS_PREFIXES = new Set([
-  "rounded", "rounded-t", "rounded-r", "rounded-b", "rounded-l",
-  "rounded-tl", "rounded-tr", "rounded-bl", "rounded-br",
-])
-const APPROVED_RADIUS = new Set([0, 4, 8, 12, 16, 24, 999])
+const RADIUS_PREFIXES = new Set(DIM.radius.reaches)
 
 function checkClassName(className, file, line, column, element) {
   let m

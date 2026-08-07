@@ -15,11 +15,12 @@
  *      NOT shipped as CSS vars — they're generator input only.
  *
  *   2. scripts/design-lint/tokens.json       — linter allowlist
- *        colors.{light,alpha,primitives,semanticTokens} regenerated from config;
- *        spacing/radius/fonts/type preserved from the previous tokens.json (they
- *        are the code-side Tailwind allowlists and stay stable during migration).
- *        Legacy hexes/alphas from globals.css are unioned in so existing
- *        (not-yet-migrated) components keep passing the linter.
+ *        colors.{light,alpha,primitives,semanticTokens}, dimensions, fonts and
+ *        type all regenerated from the config. Nothing is carried over from the
+ *        previous file: `spacing` and `radius` used to be, which is how the
+ *        linter kept allowing 6, 10 and 14 for eight months after the scale
+ *        dropped them. Legacy hexes/alphas from globals.css are unioned in so
+ *        existing (not-yet-migrated) components keep passing the linter.
  *
  * Usage:  node scripts/design-lint/generate-tokens.mjs
  */
@@ -346,8 +347,13 @@ ${typeUtilities}
 `
 )
 
-// ── tokens.json (linter allowlist) ─────────────────────────────────────────────
-const prev = JSON.parse(fs.readFileSync(TOKENS_JSON, "utf-8"))
+/* ── tokens.json (linter allowlist) ─────────────────────────────────────────
+ *
+ * The previous file is deliberately not read. Reading it is how an allowlist
+ * outlives the scale it describes: every run copied the last run's `spacing`
+ * and `radius` forward, so the linter went on approving 6, 10 and 14 long after
+ * the families stopped carrying them. Everything below comes from the config or
+ * from globals.css. */
 const globalsCss = fs.readFileSync(GLOBALS_CSS, "utf-8")
 
 const hexes = new Set()
@@ -383,6 +389,37 @@ for (const [famName, fam] of Object.entries(primitives)) {
   }
 }
 
+/* ── the deleted legacy layer ───────────────────────────────────────────────
+ *
+ * Every shadcn-flat color name globals.css used to declare. They are gone, so a
+ * class built from one now resolves to nothing and the property drops silently
+ * — worse than a wrong value, because the element still renders and only the
+ * colour is missing.
+ *
+ * This is the one list here that cannot be derived, because it describes what
+ * the source no longer contains. It lives beside the generator that deleted
+ * them, is filtered against what actually shipped, and is emitted into
+ * tokens.json so the linters and the migration audit read one copy rather than
+ * three. It only ever shrinks.
+ */
+const LEGACY_COLOR_NAMES = [
+  "background", "foreground", "card", "card-foreground", "popover", "popover-foreground",
+  "primary", "primary-foreground", "primary-hover", "primary-press",
+  "secondary", "secondary-foreground", "muted", "muted-foreground",
+  "accent", "accent-foreground", "destructive", "destructive-foreground",
+  "destructive-hover", "destructive-press", "warning", "warning-foreground",
+  "success", "success-foreground", "border", "input", "ring", "border-accessible",
+  "chart-1", "chart-2", "chart-3", "chart-4", "chart-5",
+  "hover", "press", "active", "disabled", "disabled-foreground",
+  "overlay", "code-background", "skeleton",
+  "surface-info", "surface-success", "surface-warning", "surface-danger",
+  "sidebar", "sidebar-foreground", "sidebar-primary", "sidebar-accent", "sidebar-border", "sidebar-ring",
+]
+// A name that came back as a semantic is not dead. Nothing is on both lists
+// today, but the filter is what stops a future rename from being reported as
+// drift the moment it lands.
+const deletedLegacy = LEGACY_COLOR_NAMES.filter((n) => !names.includes(n))
+
 // semantic token names grouped by first segment
 const semGroups = {}
 for (const n of names) {
@@ -390,6 +427,50 @@ for (const n of names) {
   ;(semGroups[group] ||= []).push(n)
 }
 for (const g of Object.keys(semGroups)) semGroups[g].sort()
+
+/* ── dimensions ────────────────────────────────────────────────────────────
+ *
+ * The four families as the linter needs to read them: which Tailwind step is
+ * legal, what it renders at, and which utilities route through it.
+ *
+ * These used to be copied forward from whatever the previous tokens.json held,
+ * which meant the allowlist described a scale that had not existed since the
+ * families were cut to nine stops. Derived, it cannot fall behind again.
+ *
+ * `reaches` is the one part that is not derivable from the config, because it
+ * is a fact about Tailwind rather than about us: a namespace backs a fixed set
+ * of utilities. Each list is asserted in scripts/verify-spacing-scale.mjs, and
+ * the assertion IDs are named on the family so a reader can check rather than
+ * trust. The notable asymmetry is that `--height-*` reaches min-h and max-h
+ * while `--width-*` reaches neither min-w nor max-w (F7, F11, K5).
+ */
+const GRID_PX = parseFloat(scalars["spacing-unit"])
+
+const familyOf = (stops, unitPx) =>
+  Object.entries(stops)
+    .map(([stop, mult]) => ({
+      // The token stop spells a half step `0-5`; the Tailwind class spells it
+      // `0.5`. The linter reads class names, so it wants the Tailwind spelling.
+      step: typeof mult === "string" ? stop : Number(String(stop).replace("-", ".")),
+      px: typeof mult === "string" ? parseFloat(mult) : mult * unitPx,
+    }))
+    .sort((a, b) => (typeof a.step === "string") - (typeof b.step === "string") || a.px - b.px)
+
+const dimensionFamily = (stops, unitPx, reaches, asserts) => {
+  const rows = familyOf(stops, unitPx)
+  const numeric = rows.filter((r) => typeof r.step === "number")
+  return {
+    unitPx,
+    steps: rows.map((r) => r.step),
+    px: rows.map((r) => r.px),
+    // A family carries a stop when it has a use for it, so a value outside the
+    // range is not a decision this family refused — it is one it never made.
+    // The linter only judges what falls between the ends.
+    range: [numeric[0].px, numeric[numeric.length - 1].px],
+    reaches,
+    $asserts: asserts,
+  }
+}
 
 const out = {
   $comment:
@@ -403,10 +484,33 @@ const out = {
     alpha: [...alphas].sort(),
     primitives: primMap,
     semanticTokens: semGroups,
-    legacyTokens: prev.colors?.legacyTokens ?? {},
+    deletedLegacy: [...deletedLegacy].sort(),
   },
-  spacing: prev.spacing,
-  radius: prev.radius,
+  dimensions: {
+    $comment:
+      "The four dimensional families, derived from theme.config.mjs. `steps` are the Tailwind class steps, `px` what each renders at a 16px root with every scalar at its default, `range` the ends the family declares, and `reaches` the utility prefixes that route through it.",
+    space: dimensionFamily(space, GRID_PX, [
+      "p", "px", "py", "pt", "pr", "pb", "pl", "ps", "pe",
+      "m", "mx", "my", "mt", "mr", "mb", "ml", "ms", "me",
+      "gap", "gap-x", "gap-y", "space-x", "space-y",
+      "inset", "inset-x", "inset-y", "top", "right", "bottom", "left", "start", "end",
+      // Unbridged: --width-* does not reach these two, so they ride Tailwind's
+      // multiplier and land on the spacing key rather than on a size stop.
+      "min-w", "max-w",
+    ], "K1, K13, F9"),
+    size: dimensionFamily(size, GRID_PX, ["size", "w", "h", "min-h", "max-h"], "F7, F8, K5, K13"),
+    radius: dimensionFamily(radius, GRID_PX, [
+      "rounded", "rounded-t", "rounded-r", "rounded-b", "rounded-l",
+      "rounded-tl", "rounded-tr", "rounded-bl", "rounded-br",
+      "rounded-s", "rounded-e", "rounded-ss", "rounded-se", "rounded-es", "rounded-ee",
+    ], "K9"),
+    // Border's unit is 1px, not the grid step — a hairline is a rendering fact
+    // rather than a proportion, so --db-border-1 is 1px and not 4px.
+    border: dimensionFamily(border, 1, [
+      "border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y",
+      "divide-x", "divide-y", "ring", "ring-offset", "outline",
+    ], "I2"),
+  },
   // Derived from theme.config.mjs so the linter's allowlist cannot fall behind
   // the shipped families. `legacy` stays allowed until every component stops
   // declaring SF Pro; drop it from the config once that migration lands.
@@ -418,9 +522,14 @@ const out = {
     mono: splitFamily(type.family.mono),
     legacy: type.legacy ?? {},
   },
-  // One role-named ramp; `ramp` stays the linter's allowed size/line set.
+  /* One role-named ramp; `ramp` stays the linter's allowed size/line set.
+   *
+   * Spread from the config and nothing else. It used to spread the previous
+   * file first, which kept a `reading` group alive — 16/26 and 14/24, sizes no
+   * step has carried since the ramp was rewritten. */
   type: {
-    ...prev.type,
+    $comment:
+      "The type ramp as the linter reads it. `size`/`line` are px anchors before --db-type-scalar. Only these combinations are approved, and each is the whole style — a call site names the utility, never the numbers.",
     scale: type.scale,
     ramp: Object.entries(type.scale).map(([name, s]) => ({
       name,

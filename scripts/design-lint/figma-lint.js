@@ -34,7 +34,7 @@ const components = JSON.parse(fs.readFileSync(path.join(__dirname, "dbui-compone
 
 const dbuiSet = new Set([...components.ui, ...components.shells])
 const approvedHex = new Set([...tokens.colors.light, ...tokens.colors.dark])
-const approvedSpacingPx = new Set(tokens.spacing.px)
+const approvedSpacingPx = new Set(tokens.dimensions.space.px)
 const approvedFonts = new Set([
   ...tokens.fonts.sans.slice(0, 1),
   ...tokens.fonts.display.slice(0, 1),
