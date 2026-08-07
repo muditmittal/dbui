@@ -53,9 +53,9 @@ export const families: Family[] = [
   {
     "key": "color",
     "label": "Color",
-    "count": 85,
+    "count": 84,
     "unit": "colors",
-    "properties": 85,
+    "properties": 84,
     "bridge": {
       "namespace": "--color-*",
       "kind": "theme",
@@ -199,15 +199,15 @@ export const families: Family[] = [
   {
     "key": "size",
     "label": "Size",
-    "count": 7,
+    "count": 9,
     "unit": "steps",
-    "properties": 7,
+    "properties": 9,
     "bridge": {
       "namespace": "--size-*, --height-*, --width-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 149,
-      "files": 41
+      "uses": 164,
+      "files": 47
     },
     "superseded": null,
     "systemRefs": 0,
@@ -226,8 +226,8 @@ export const families: Family[] = [
       "namespace": "--radius-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 84,
-      "files": 49
+      "uses": 116,
+      "files": 57
     },
     "superseded": null,
     "systemRefs": 5,

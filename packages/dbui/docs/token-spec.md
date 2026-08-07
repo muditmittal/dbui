@@ -49,7 +49,6 @@ by design, and neither do the two `em` inline steps.
 | `--db-focus-ring` | Color | #171717 |  | #D1D9E1 |
 | `--db-focus-ring-offset` | Color | #FFFFFF |  | #11171C |
 | `--db-input-border-base` | Color | #E5E5E5 |  | rgba(255, 255, 255, 0.15) |
-| `--db-input-border-focus` | Color | #171717 |  | #D1D9E1 |
 | `--db-input-border-hover` | Color | #A3A3A3 |  | #8396A5 |
 | `--db-link-base` | Color | #2272B4 |  | #8ACAFF |
 | `--db-link-hover` | Color | #0E538B |  | #BAE1FC |
@@ -117,9 +116,11 @@ by design, and neither do the two `em` inline steps.
 | `--db-radius-6` | Dimensions | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
 | `--db-radius-full` | Dimensions | 999px | 999px |  |
 | `--db-size-10` | Dimensions | calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar)) | 40px |  |
+| `--db-size-12` | Dimensions | calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar)) | 48px |  |
 | `--db-size-2` | Dimensions | calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar)) | 8px |  |
 | `--db-size-3` | Dimensions | calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar)) | 12px |  |
 | `--db-size-4` | Dimensions | calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar)) | 16px |  |
+| `--db-size-5` | Dimensions | calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar)) | 20px |  |
 | `--db-size-6` | Dimensions | calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar)) | 24px |  |
 | `--db-size-7` | Dimensions | calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar)) | 28px |  |
 | `--db-size-8` | Dimensions | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |

@@ -273,11 +273,6 @@ export const colorGroups: ColorGroup[] = [
         "name": "input-border-hover",
         "light": "#A3A3A3",
         "dark": "#8396A5"
-      },
-      {
-        "name": "input-border-focus",
-        "light": "#171717",
-        "dark": "#D1D9E1"
       }
     ]
   },
@@ -760,6 +755,12 @@ export const size: Token[] = [
     "multiple": 4
   },
   {
+    "name": "size-5",
+    "value": "calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar))",
+    "px": 20,
+    "multiple": 5
+  },
+  {
     "name": "size-6",
     "value": "calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar))",
     "px": 24,
@@ -782,6 +783,12 @@ export const size: Token[] = [
     "value": "calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar))",
     "px": 40,
     "multiple": 10
+  },
+  {
+    "name": "size-12",
+    "value": "calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar))",
+    "px": 48,
+    "multiple": 12
   }
 ]
 
@@ -885,10 +892,10 @@ export const scalars: Token[] = [
 ]
 
 export const tokenCounts = {
-  "colorGroups": 85,
+  "colorGroups": 84,
   "space": 9,
   "radius": 7,
-  "size": 7,
+  "size": 9,
   "borderWidth": 3,
   "elevation": 4,
   "duration": 3,
