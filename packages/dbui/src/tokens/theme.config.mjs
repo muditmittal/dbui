@@ -303,8 +303,8 @@ export const scalars = {
  * 5, 7 and 12 were each considered and left out. Their call sites keep rendering
  * off Tailwind's multiplier at the same values until the snap pass, which is
  * sequenced separately — see the follow-up section in docs/token-simplification.md
- * for the agreed rules. Note that 7 (28px) is still a SIZE stop; only spacing
- * drops it. */
+ * for the agreed rules. All three are SIZE stops and only spacing drops them, so
+ * `h-5` is 20px from `--db-size-5` while `p-5` is still the multiplier. */
 export const space = {
   0: 0, "0-5": 0.5, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, 8: 8, 10: 10,
 }
@@ -355,9 +355,9 @@ export const bridge = {
    * also reaches `min-h-*` and `max-h-*`, which `--width-*` does not do for its
    * siblings (F7 and F11 in verify-spacing-scale). `min-w-*` and `max-w-*` are
    * left on the multiplier rather than given a fourth and fifth declaration. */
-  size: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
-  height: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
-  width: { family: "size", steps: [2, 3, 4, 6, 7, 8, 10] },
+  size: { family: "size", steps: [2, 3, 4, 5, 6, 7, 8, 10, 12] },
+  height: { family: "size", steps: [2, 3, 4, 5, 6, 7, 8, 10, 12] },
+  width: { family: "size", steps: [2, 3, 4, 5, 6, 7, 8, 10, 12] },
   /* `close` writes `initial`, which removes the key and the class with it.
    *
    * Dropping these from the bridge instead would be the dangerous move: every
@@ -489,9 +489,25 @@ export const elevation = {
  * the class is `h-8`, `w-8` or `size-8`.
  *
  * The stops are the control heights and icon boxes the components already use:
- * 8 is a table rule, 12 a switch thumb, 16 an icon, 24 and 32 the two control
- * heights, 28 a menu row, 40 a table header. 16 matters most — it matches the
- * `label` line box (13/16), so text and icon align in a row without adjustment.
+ * 8px is a table rule, 12px a switch thumb, 16px an icon, 20px the chip, 24px
+ * and 32px the two control heights, 28px a menu row, 40px a table header and
+ * 48px the platform header. 16px matters most — it matches the `label` line box
+ * (13/16), so text and icon align in a row without adjustment.
+ *
+ * 5 (20px) is the chip height, declared by badge, tag, kbd, the shortcut slot
+ * in all three menu families, the small segment control, the small switch track
+ * and the avatar. A chip cannot take its height from its leading, because the
+ * divider inside it is the full chip height and would overflow a box sized that
+ * way — tag.tsx says so at the call site.
+ *
+ * 12 (48px) is the platform header. `src/rules/layout-rules.ts` already
+ * codifies it as the shell's `headerHeight`, and a region height the layout
+ * rules name is a size decision by definition.
+ *
+ * There is no 14 (56px). The single 56px in the tree was the textarea's
+ * `min-h`, a floor that grows with its content rather than a height the system
+ * sets, and it now rests on 12. A stop earns its place by being a height
+ * something declares, not by being a number something once reached.
  *
  * 6 (24px) is not optional. It is the small control height — the `sm` button and
  * the `sm` input are both `h-6` — so a size scale without it would refuse the
@@ -502,7 +518,7 @@ export const elevation = {
  *
  * Element and icon used to be separate sub-families, which put two names on one
  * number: a 24px control was `element-sm` and a 24px icon was `icon-xl`. */
-export const size = { 2: 2, 3: 3, 4: 4, 6: 6, 7: 7, 8: 8, 10: 10 }
+export const size = { 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 10: 10, 12: 12 }
 
 /* Border width — the one numeric family whose number is NOT a multiple of the
  * 4px unit. `--db-border-1` is 1px, not 4px.

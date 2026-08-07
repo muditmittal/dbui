@@ -129,24 +129,30 @@
   --size-2: var(--db-size-2);
   --size-3: var(--db-size-3);
   --size-4: var(--db-size-4);
+  --size-5: var(--db-size-5);
   --size-6: var(--db-size-6);
   --size-7: var(--db-size-7);
   --size-8: var(--db-size-8);
   --size-10: var(--db-size-10);
+  --size-12: var(--db-size-12);
   --height-2: var(--db-size-2);
   --height-3: var(--db-size-3);
   --height-4: var(--db-size-4);
+  --height-5: var(--db-size-5);
   --height-6: var(--db-size-6);
   --height-7: var(--db-size-7);
   --height-8: var(--db-size-8);
   --height-10: var(--db-size-10);
+  --height-12: var(--db-size-12);
   --width-2: var(--db-size-2);
   --width-3: var(--db-size-3);
   --width-4: var(--db-size-4);
+  --width-5: var(--db-size-5);
   --width-6: var(--db-size-6);
   --width-7: var(--db-size-7);
   --width-8: var(--db-size-8);
   --width-10: var(--db-size-10);
+  --width-12: var(--db-size-12);
   --radius-0: var(--db-radius-0);
   --radius-1: var(--db-radius-1);
   --radius-2: var(--db-radius-2);
@@ -266,10 +272,12 @@
   --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
   --db-size-3: calc(var(--db-spacing-unit) * 3 * var(--db-density-scalar));
   --db-size-4: calc(var(--db-spacing-unit) * 4 * var(--db-density-scalar));
+  --db-size-5: calc(var(--db-spacing-unit) * 5 * var(--db-density-scalar));
   --db-size-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-size-7: calc(var(--db-spacing-unit) * 7 * var(--db-density-scalar));
   --db-size-8: calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar));
   --db-size-10: calc(var(--db-spacing-unit) * 10 * var(--db-density-scalar));
+  --db-size-12: calc(var(--db-spacing-unit) * 12 * var(--db-density-scalar));
 
   /* ── Border width (literal px, outside the scale, never touched by density) ── */
   --db-border-0: 0px;
