@@ -86,7 +86,7 @@ const RULES = {
   ],
   "border-primary-press": [
     [isChecked, "border-action-primary-press"],
-    [null, "border-input-border-focus"],
+    [null, "border-focus-ring"],
   ],
   "outline-primary": [[null, "outline-focus-ring"]],
   // The active-tab underline is an indicator line, not a container edge. At 1px

@@ -23,7 +23,7 @@ function Textarea({
       data-slot="textarea"
       data-validation={validation}
       className={cn(
-        "flex field-sizing-content min-h-12 w-full rounded-1 border border-input-border-base bg-surface-base px-3 py-2 type-body shadow-xs transition-colors outline-none hover:border-input-border-hover active:border-input-border-focus placeholder:text-text-subtle focus-visible:border-focus-ring disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-action-negative-base data-[validation=warning]:border-status-border-warning data-[validation=success]:border-action-positive-base dark:bg-surface-strong/30 dark:disabled:bg-surface-strong/80 dark:aria-invalid:border-action-negative-base/50",
+        "flex field-sizing-content min-h-12 w-full rounded-1 border border-input-border-base bg-surface-base px-3 py-2 type-body shadow-xs transition-colors outline-none hover:border-input-border-hover active:border-focus-ring placeholder:text-text-subtle focus-visible:border-focus-ring disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-action-negative-base data-[validation=warning]:border-status-border-warning data-[validation=success]:border-action-positive-base dark:bg-surface-strong/30 dark:disabled:bg-surface-strong/80 dark:aria-invalid:border-action-negative-base/50",
         className
       )}
       {...props}

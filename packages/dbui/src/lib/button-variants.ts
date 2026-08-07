@@ -46,7 +46,7 @@ export const buttonVariants = cva(
         outline: [
           "shadow-xs border-input-border-base",
           "hover:bg-action-default-hover hover:border-input-border-hover hover:text-text-strong",
-          "active:bg-action-selected-press active:border-input-border-focus active:text-text-strong",
+          "active:bg-action-selected-press active:border-focus-ring active:text-text-strong",
           "focus-visible:border-2 focus-visible:border-focus-ring",
           "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),

@@ -202,10 +202,17 @@ export const semantics = {
   "action-label-inverse-hover": { light: { ref: "base.white", a: 0.8 }, dark: { ref: "base.black", a: 0.8 } },
   "action-label-inverse-press": { light: { ref: "base.white", a: 0.7 }, dark: { ref: "base.black", a: 0.7 } },
 
-  // ── Input ──
+  /* ── Input ──
+   *
+   * Two states, not three. There was an `input-border-focus` here carrying the
+   * same #171717 / #D1D9E1 pair as `focus-ring`, which made it a second name for
+   * one decision and put the system in breach of two of its own rules at once:
+   * R7 bars `focus` as a state suffix, and R9 says focus is a ring rather than a
+   * border. Its eleven call sites were all `active:`, which is `press` in this
+   * vocabulary — so the token was named for a state it never styled. They now
+   * read `focus-ring` directly. */
   "input-border-base": { light: "interface.neutral.200", dark: { ref: "base.white", a: 0.15 } },
   "input-border-hover": { light: "interface.neutral.400", dark: "interface.cool.500" },
-  "input-border-focus": { light: "interface.neutral.900", dark: "interface.cool.200" },
 
   // ── Focus ──
   "focus-ring": { light: "interface.neutral.900", dark: "interface.cool.200" },
