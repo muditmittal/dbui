@@ -535,7 +535,42 @@ function checkClassName(className, file, line, column, element) {
   }
 }
 
+/* Type set inline, in any of the six properties the ramp owns.
+ *
+ * A `type-*` utility is one class carrying all six together and reading the
+ * scalars, so an inline fontSize is outside the ramp twice over: it cannot move
+ * with --db-type-scalar, and it splits a decision the ramp makes as a whole.
+ * The story headers are the shape of it — fontFamily naming SF Pro, which
+ * Figtree replaced, at fontSize 22, which is not a step, with lineHeight and
+ * fontWeight hand-set beside them.
+ *
+ * The value is not judged. There is no correct inline font size, so checking
+ * the number against the ramp would only be a worse version of this rule.
+ *
+ * One finding per style object, not per property. Those four properties on one
+ * header are one decision and one edit, and reporting them separately turns 100
+ * sites into 276 lines of the same advice.
+ */
+const TYPE_PROPS = new Set([
+  "fontSize", "lineHeight", "fontWeight", "fontFamily", "letterSpacing", "textTransform",
+])
+
 function checkInlineStyle(node, file, line, column, element) {
+  const typeProps = []
+  node.forEachDescendant((c) => {
+    if (c.getKind() !== SyntaxKind.PropertyAssignment) return
+    const name = c.asKind(SyntaxKind.PropertyAssignment).getName()
+    if (TYPE_PROPS.has(name) && !typeProps.includes(name)) typeProps.push(name)
+  })
+  if (typeProps.length) {
+    violations.push({
+      file, line, column, level: "error", rule: "inline-type-literal", element,
+      message: `Inline style sets ${typeProps.join(", ")} — type outside the ramp cannot follow --db-type-scalar.`,
+      fix: `Use a type utility: type-label for single-line UI, type-body when it wraps, type-paragraph for prose, type-title-1 to -4 for headings.`,
+      source: node.getText().replace(/\s+/g, " ").slice(0, 120),
+    })
+  }
+
   node.forEachDescendant((c) => {
     if (c.getKind() !== SyntaxKind.PropertyAssignment) return
     const pa = c.asKind(SyntaxKind.PropertyAssignment)
