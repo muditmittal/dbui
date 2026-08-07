@@ -48,8 +48,9 @@ reference doc describes how far along anything is.
    rule surface — no other file may duplicate it.
 3. Add a row to `packages/dbui/docs/component-index.md`: category, what it is for, what to avoid it
    for, synonyms, Figma layer name.
-4. Add the export names to `scripts/design-lint/dbui-components.json` under `ui`, or the linter will
-   report it as a non-DBUI component.
+4. Run `yarn design:sync-components` to refresh `scripts/design-lint/dbui-components.json`, or the
+   linter reports the component as a name its package does not export. Never edit that file — it is
+   generated from each package's barrel.
 5. Add a Storybook story in `apps/portal/src/stories/`.
 6. Add or update the Code Connect file in `figma/<Name>.figma.tsx`, and add variant mappings to
    `apps/portal/src/stories/components/variant-mappings.json`.
@@ -125,6 +126,7 @@ scan for call sites across `packages/`, `apps/`, and `figma/`.
 ```bash
 yarn design:lint:react <changed paths>   # must be clean
 yarn design:verify-sync                  # only if tokens changed; must report in sync
+yarn design:verify-rules                 # only if scripts/design-lint/ changed; must pass
 node scripts/generate-layout-data.mjs    # only if a region inset, panel width or scroll container moved
 yarn workspace portal storybook          # visually confirm in light and dark
 ```
@@ -149,8 +151,9 @@ Fix these opportunistically when touching adjacent code, and delete the line whe
 
 - `component-index.md` and `icon-index.md` are hand-maintained and can lag source. They should be
   generated from JSDoc and `classifications.ts`; until then, treat source as authoritative.
-- `dbui-components.json` is hand-maintained. Its README references a `sync-components.ts` that does
-  not exist.
+- `scripts/migrations/audit-legacy-tokens.mjs` keeps its own copy of the deleted legacy names, and
+  two of them came back as semantics, so it reports six false positives. The generated list is in
+  `tokens.json` under `colors.deletedLegacy` — point the audit at it.
 - Six icon components have no `classifications.ts` entry: `CircleSmall`, `Databricks`,
   `DatabricksLogo`, `DotsCircleSmall`, `RunningSmall`, `Slash`.
 

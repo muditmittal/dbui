@@ -30,9 +30,11 @@ yarn dbui check <path>            # run the design linter
 yarn dbui doctor                  # diagnose the setup
 yarn workspace portal storybook   # dev surface, port 6006
 yarn design:tokens                # theme.config.mjs -> tokens.css + tokens.json
+yarn design:sync-components       # the packages -> dbui-components.json
 yarn design:verify-sync           # assert config <-> CSS <-> Figma parity
-yarn design:lint:react [path]     # 11 rules; add --json for machine output
+yarn design:lint:react [path]     # 19 rules; add --json for machine output
 yarn design:lint:shells           # same linter scoped to dbui-shells
+yarn design:verify-rules          # assert every lint rule fires, and only when it should
 yarn design:lint:figma --target <nodeId>   # emits JS to run via Figma MCP
 ```
 
@@ -74,6 +76,8 @@ Skills in `packages/dbui/skills/` cover the common workflows: `dbui-pick-compone
 **Always**
 - Run `yarn design:lint:react <path>` on any file you create or modify, and fix what it reports.
 - Run `yarn design:verify-sync` after touching anything under `packages/dbui/src/tokens/`.
+- Run `yarn design:verify-rules` after touching `scripts/design-lint/`. A rule that stops matching
+  fails there rather than going quiet.
 - Update the docs listed in `CONTRIBUTING.md` in the same change that alters behavior.
 
 **Ask first**
@@ -82,8 +86,8 @@ Skills in `packages/dbui/skills/` cover the common workflows: `dbui-pick-compone
 - Anything under `packages/dbui/src/tokens/` — a migration is in progress.
 
 **Never**
-- Edit generated files: `packages/dbui/src/tokens/tokens.css`, `scripts/design-lint/tokens.json`.
-  Edit `theme.config.mjs` and regenerate.
+- Edit generated files: `packages/dbui/src/tokens/tokens.css`, `scripts/design-lint/tokens.json`,
+  `scripts/design-lint/dbui-components.json`. Edit the source and regenerate.
 - Edit anything in `archive/`.
 - Add a dependency without asking. The system is deliberately close to zero-dependency.
 - Trust a count or a file path quoted in prose. Verify against the repo — docs have drifted before.
@@ -104,7 +108,7 @@ you should *act*:
   literal does not scale when the root font size does, so the box grows and the label does not.
 - **There is no published package.** Install is clone-and-copy per `packages/dbui/install.md`, and
   the npm registry is unreachable inside the corporate network.
-- **There are no tests and no CI.** The design linters and `dbui doctor` are the only automated
-  checks.
+- **There are no tests and no CI.** The design linters, their rule verifier and `dbui doctor` are
+  the only automated checks.
 - **`component-index.md` and `icon-index.md` are hand-maintained** and can lag the source. The
   component's own JSDoc is authoritative when they disagree.
