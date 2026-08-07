@@ -269,6 +269,100 @@ function pxTypeLiteral(whole, px, utility, className, file, line, column, elemen
   })
 }
 
+/* Each `type-*` utility is the whole style — family, size, line height,
+ * tracking, weight and case. Pairing one with a utility that sets a component
+ * of it is either redundant or a silent override, and which of the two depends
+ * on source order in the compiled sheet rather than on the class list.
+ *
+ * The three overriding families are the three tokens.md names: leading, font
+ * and the case utilities. Nothing wider, because tokens.md owns this rule and
+ * a linter that enforces more than the doc says is a second, disagreeing copy
+ * of it.
+ *
+ * `font-mono type-block` shipped and was removed by hand twice. The mono family
+ * is already in the style, so the class did nothing until the day the ramp
+ * changed which face `block` used, at which point it would have pinned it.
+ */
+const TYPE_UTILITY_RE = new RegExp(
+  String.raw`(?<![\w-])(type-(?:${tokens.type.ramp.map((r) => r.name).join("|")}))(?![\w-])`
+)
+const TYPE_OVERRIDE_RE =
+  /(?<![\w-])(leading-[\w[.-]+|font-[a-z]+|uppercase|lowercase|capitalize|normal-case)(?![\w-])/
+
+/**
+ * Every class list the expression can actually produce.
+ *
+ * A pairing rule cannot read the flattened source text. `c.mono ? "font-mono
+ * text-[13px]" : "type-paragraph"` has both halves in it and renders neither
+ * together — the branches are exclusive, and reporting it teaches a reader to
+ * ignore the rule. Walking the ternaries and the cn() arguments gives the sets
+ * an element can really carry.
+ *
+ * Capped, because a component with a dozen conditional classes has thousands of
+ * combinations. Past the cap the check is skipped rather than guessed at: a
+ * missed conflict costs less than a wrong one.
+ */
+const CANDIDATE_CAP = 64
+function classCandidates(node) {
+  if (!node) return [""]
+  const kind = node.getKind()
+  if (kind === SyntaxKind.StringLiteral || kind === SyntaxKind.NoSubstitutionTemplateLiteral) {
+    return [node.getLiteralText()]
+  }
+  if (kind === SyntaxKind.ConditionalExpression) {
+    const c = node.asKind(SyntaxKind.ConditionalExpression)
+    return [...classCandidates(c.getWhenTrue()), ...classCandidates(c.getWhenFalse())]
+  }
+  if (kind === SyntaxKind.BinaryExpression) {
+    // `flag && "x"` contributes "x" or nothing.
+    const b = node.asKind(SyntaxKind.BinaryExpression)
+    return [...classCandidates(b.getRight()), ""]
+  }
+  if (kind === SyntaxKind.ParenthesizedExpression) {
+    return classCandidates(node.asKind(SyntaxKind.ParenthesizedExpression).getExpression())
+  }
+  const parts =
+    kind === SyntaxKind.TemplateExpression
+      ? [
+          [node.asKind(SyntaxKind.TemplateExpression).getHead().getLiteralText()],
+          ...node
+            .asKind(SyntaxKind.TemplateExpression)
+            .getTemplateSpans()
+            .flatMap((s) => [classCandidates(s.getExpression()), [s.getLiteral().getLiteralText()]]),
+        ]
+      : kind === SyntaxKind.CallExpression
+        ? node.asKind(SyntaxKind.CallExpression).getArguments().map(classCandidates)
+        : null
+  if (!parts) return [""]
+  let out = [""]
+  for (const part of parts) {
+    if (out.length * part.length > CANDIDATE_CAP) return null
+    out = out.flatMap((a) => part.map((b) => `${a} ${b}`))
+  }
+  return out
+}
+
+function checkTypeClassConflict(node, file, line, column, element) {
+  const candidates = classCandidates(node)
+  if (!candidates) return
+  const seen = new Set()
+  for (const candidate of candidates) {
+    const type = candidate.match(TYPE_UTILITY_RE)
+    if (!type) continue
+    const override = candidate.match(TYPE_OVERRIDE_RE)
+    if (!override) continue
+    const key = `${type[1]}|${override[1]}`
+    if (seen.has(key)) continue
+    seen.add(key)
+    violations.push({
+      file, line, column, level: "error", rule: "type-class-conflict", element,
+      message: `\`${type[1]}\` is paired with \`${override[1]}\`, which sets part of the style the utility already owns.`,
+      fix: `Drop \`${override[1]}\`. If ${type[1]} is the wrong style, pick the ramp step that is right rather than patching this one.`,
+      source: candidate.trim().slice(0, 160),
+    })
+  }
+}
+
 function checkClassName(className, file, line, column, element) {
   let m
   ARBITRARY_VALUE_RE.lastIndex = 0
@@ -576,13 +670,20 @@ function checkElement(opening, sourceFile, dbuiImports) {
 
     if (attrName === "className") {
       let value = ""
+      let node = init
       if (init.getKind() === SyntaxKind.StringLiteral) {
         value = init.getText().replace(/^['"]|['"]$/g, "")
       } else if (init.getKind() === SyntaxKind.JsxExpression) {
         const expr = init.asKind(SyntaxKind.JsxExpression).getExpression()
-        if (expr) value = expr.getText()
+        if (expr) { value = expr.getText(); node = expr }
       }
-      if (value) checkClassName(value, sourceFile, line, column, tagName)
+      if (value) {
+        // Per-token rules read the flattened text, because a bad value is bad
+        // in whichever branch it sits. The pairing rule reads the tree, because
+        // two classes in exclusive branches never meet on an element.
+        checkClassName(value, sourceFile, line, column, tagName)
+        checkTypeClassConflict(node, sourceFile, line, column, tagName)
+      }
     }
     if (attrName === "style") {
       checkInlineStyle(ja, sourceFile, line, column, tagName)
