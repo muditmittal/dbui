@@ -526,6 +526,25 @@ function checkElement(opening, sourceFile, dbuiImports) {
     if (attr.getKind() !== SyntaxKind.JsxAttribute) continue
     const ja = attr.asKind(SyntaxKind.JsxAttribute)
     const attrName = ja.getNameNode().getText()
+
+    /* Non-negotiable 4. Base UI composes through `render`, and it does not
+     * recognise `asChild` — it accepts the prop, drops it, and renders its own
+     * element around the child. The markup compiles, TypeScript is satisfied,
+     * and what ships is one interactive element nested inside another. There
+     * is no runtime warning and nothing to see in a diff.
+     *
+     * Matched as a JSX attribute rather than as text, so the shim in
+     * dropdown-menu that swallows the prop, and the code sample on the docs
+     * page that shows the wrong form on purpose, both stay quiet. */
+    if (attrName === "asChild") {
+      violations.push({
+        file: sourceFile, line, column, level: "error", rule: "no-as-child", element: tagName,
+        message: `<${tagName} asChild> — Base UI has no asChild, so the prop is dropped and the trigger wraps its child.`,
+        fix: `Use render: <${tagName} render={<Button />}>. See non-negotiable 4 in AGENTS.md.`,
+        source: opening.getText().slice(0, 80),
+      })
+    }
+
     const init = ja.getInitializer()
     if (!init) continue
 
