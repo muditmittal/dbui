@@ -93,8 +93,8 @@ Icons are stroke-based, sit on a 16px grid, and inherit `currentColor`.
 
 ## Components
 
-61 components. The set is deliberately finite: if something is missing, that is a gap to report, not
-a component to invent.
+The set is deliberately finite: if something is missing, that is a gap to report, not a component to
+invent.
 
 Composition follows one pattern — a root plus named subcomponents that carry their own styling.
 `<Button>` with `<ButtonIcon>` and `<ButtonChevron>`, not a `Button` with twelve props.
@@ -107,7 +107,7 @@ where relevant. Focus is a visible ring on `focus-ring` with a `focus-ring-offse
 removed.
 
 Icons carry a semantic category — object, action, indicator, or component — and crossing categories
-is an error. A chevron is chrome and never represents a concept. All 456 are indexed in
+is an error. A chevron is chrome and never represents a concept. They are indexed in
 `docs/icon-index.md`. Never guess an icon name.
 
 ## Do's and don'ts
