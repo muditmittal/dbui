@@ -29,8 +29,10 @@ import { createJavaScriptRegexEngine } from "shiki/engine/javascript"
 import bash from "@shikijs/langs/bash"
 import json from "@shikijs/langs/json"
 
-const { primitives, semantics } = cfg as {
-  primitives: Record<string, never>
+// Through `unknown`, because the config's real shape is a deep literal type that
+// does not overlap the loose one this file walks with string keys.
+const { primitives, semantics } = cfg as unknown as {
+  primitives: Record<string, unknown>
   semantics: Record<string, { light: unknown; dark: unknown }>
 }
 

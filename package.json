@@ -54,6 +54,8 @@
   },
   "devDependencies": {
     "@figma/code-connect": "^1.4.2",
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "react-resizable-panels": "^4.7.3",
+    "recharts": "^2.15.4"
   }
 }

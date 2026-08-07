@@ -37,5 +37,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "//": "src/stories is Storybook's tree, built by Vite. It uses Vite-only syntax such as `?raw` imports that Next cannot resolve, so a Next production build must not typecheck it.",
+  "exclude": ["node_modules", "src/stories"]
 }

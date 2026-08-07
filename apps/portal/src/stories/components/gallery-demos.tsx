@@ -65,7 +65,7 @@ export const demos: Record<string, React.ReactNode> = {
     </div>
   ),
   "Split Button": (
-    <SplitButton size="sm" variant="outline">
+    <SplitButton>
       <SplitButtonText>Save</SplitButtonText>
       <SplitButtonSeparator />
       <ChevronDown />
@@ -140,7 +140,7 @@ export const demos: Record<string, React.ReactNode> = {
     </div>
   ),
   "Segment Control": (
-    <SegmentControl defaultValue="grid" size="sm">
+    <SegmentControl defaultValue={["grid"]} size="sm">
       <SegmentControlItem value="list">List</SegmentControlItem>
       <SegmentControlItem value="grid">Grid</SegmentControlItem>
       <SegmentControlItem value="table">Table</SegmentControlItem>
@@ -269,7 +269,7 @@ export const demos: Record<string, React.ReactNode> = {
   Badge: (
     <div className="flex items-center gap-2">
       <Badge>Default</Badge>
-      <Badge variant="secondary">Beta</Badge>
+      <Badge variant="fill">Beta</Badge>
       <Badge variant="outline">v2</Badge>
     </div>
   ),

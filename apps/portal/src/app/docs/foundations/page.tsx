@@ -41,7 +41,7 @@ const TOKEN_FAMILIES: Term[] = tokenFamilies.map((family) => ({ label: family.ke
  * the raw values alphabetically would put `action` before `object`, which
  * reverses the order the icon index and its page both read in.
  */
-const ICON_CATEGORIES: Term[] = ["object", "action", "indicator", "component"]
+const ICON_CATEGORIES: Term[] = (["object", "action", "indicator", "component"] as const)
   .filter((category) => Object.values(iconClassifications).includes(category))
   .map((label) => ({ label }))
 
