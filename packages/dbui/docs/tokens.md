@@ -48,8 +48,10 @@ node scripts/generate-token-data.mjs     # refresh the portal's Tokens page
    Tailwind user arrives with.
 8. **Dimensions is the collection** — space, size, radius, border. Each family
    computes its own stops; none reads another, and no family is obliged to carry
-   a stop it has no use for. Space runs 0, 0.5, 1, 2, 3, 4, 6, 8, 10 and size
-   runs 2, 3, 4, 6, 7, 8, 10, so 7 is a height and never a padding. The ladder of
+   a stop it has no use for. Space and size are both nine stops and deliberately
+   not the same nine: 5, 7 and 12 are heights and never paddings, and the half
+   step is a padding and never a height. A family carries a stop when it has a
+   use for it, not because a sibling does. The ladder of
    multiples they are all authored against is an **authoring artifact**: a Figma
    collection and a list in `theme.config.mjs`, deliberately not a custom
    property. React ships semantics only, exactly as it does for color, where the
@@ -120,6 +122,13 @@ For space, size and radius the unit is the 4px grid step, so `space-3` is 12px.
 For border the unit is 1px, per rule 7. That is the only place the two readings
 diverge, and it is stated on the family rather than left for a reader to infer
 from a value.
+
+Radius carries one stop that is not a multiple at all. `full` is a pill
+sentinel, and it goes through the bridge like every numbered step, because a
+stop the bridge skips is a token nothing can reach — that is what left every
+`rounded-full` in the tree rendering Tailwind's own pill while the token sat
+defined and unread. Ours is a finite number rather than an infinity for the
+same reason the config is authored in px: it has to be a value Figma can hold.
 
 An explicit key beats Tailwind's multiplier for the same step, which is what makes
 the bridge load-bearing rather than decorative. Tailwind's multiplier is still

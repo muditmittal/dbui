@@ -24,14 +24,17 @@
 
 ## 1. Architecture — two tiers, one legacy layer
 
+Counts are deliberately absent. `yarn design:verify-sync` prints both on every
+run and is the only place they cannot go stale.
+
 ```
-PRIMITIVES  (Figma "Color: Primitive", 182 vars)  ── raw palette, mode-agnostic
+PRIMITIVES  (Figma "Color: Primitive")            ── raw palette, mode-agnostic
     │  interface/{neutral,cool,warm}/{050…900}
     │  status/{red,yellow,green,blue}/{050…900}
     │  viz/{pink,plum,purple,indigo,cyan,teal,sage,lime,gold,orange,brown}/{050…900}
     │  base/{white,black}
     ▼  aliased by
-SEMANTICS   (Figma "Color: Semantic", 84 vars)    ── role tokens, Light + Dark modes
+SEMANTICS   (Figma "Color: Semantic")             ── role tokens, Light + Dark modes
     │  surface/* text/* border/* action/* input/* focus/* link/* status/* utility/* viz/*
     ▼  consumed by
 PRODUCT CODE (components, stories, compositions)
@@ -52,10 +55,11 @@ LEGACY      (globals.css: --background, --primary, --muted-foreground, …)
 - **Modes:** Light values live in `:root`, Dark in `.dark`. Dark solids move onto the
   `interface/cool/*` ramp; status/viz stay on their hued ramps; alpha tokens flip
   black↔white.
-- **Scale, too, is generated.** `theme.config.mjs` also defines the scalar dials
-  (`--db-density-scalar`, `--db-spacing-scalar`, `--db-sizing-scalar`, `--db-type-scalar`)
-  and the space / radius / type / elevation tokens that derive from them via `calc()`.
-  This doc covers colors; the same source and generator produce those.
+- **Dimensions, too, is generated.** `theme.config.mjs` also defines the two scalar
+  dials (`--db-density-scalar`, `--db-type-scalar`) and the space / size / radius /
+  border / type / elevation / motion tokens, the first four of which derive from the
+  grid unit and the density dial via `calc()`. This doc covers colors; the same source
+  and generator produce those. See `tokens.md` for the rules that govern them.
 
 ---
 
@@ -74,8 +78,8 @@ LEGACY      (globals.css: --background, --primary, --muted-foreground, …)
   — the `@theme` layer maps `--color-surface-base → var(--db-surface-base)`. So component
   code doesn't change shape; only the underlying var name gained a prefix.
 - **Code Connect:** every **semantic** Figma variable carries `codeSyntax.WEB =
-  var(--db-<hyphenated-name>)` (84/84). **Primitive** variables have their WEB codeSyntax
-  **cleared** (182/182) — they don't ship in code, so Dev Mode shows no misleading var.
+  var(--db-<hyphenated-name>)`. **Primitive** variables have their WEB codeSyntax
+  **cleared** — they don't ship in code, so Dev Mode shows no misleading var.
 - **Order convention:** group first, then modifier — `surface/accent`, `text/accent`,
   `border/accent` (never `accent/surface`). State suffix last — `action/primary/hover`.
 

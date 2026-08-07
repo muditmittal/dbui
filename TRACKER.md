@@ -22,8 +22,12 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
 ## Open
 
 1. **Figma token migration.** Variables carry pre-migration names; Title 4 is now
-   16/24 and needs rebinding, and `surface-hover` is new since. `verify-token-sync`
-   already reports the gap. Do Figma and Code Connect in one pass or they drift.
+   16/24 and needs rebinding, `surface-hover` is new since, and `input-border-focus`
+   has been deleted from the config and still exists in Figma. `verify-token-sync`
+   already reports all of it — it names two semantics today, one missing each way.
+   The dump is left honest rather than hand-edited to match, because it is a
+   snapshot of Figma and not a second copy of the config. Do Figma and Code Connect
+   in one pass or they drift.
 2. **Portal build.** The Next.js site (`/`, `/docs`) needs the remaining doc pages
    ported from the Storybook MDX. Storybook keeps `/components`.
 3. **Generate the token docs.** Four drifts in one session. Generate the derivable
@@ -47,10 +51,11 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
    consumption scan measures the gap: 507 of the 818 dimensional utilities in the tree
    resolve to a space token, and the rest come off the multiplier.
 
-   Space is nine stops and size is seven, and they are deliberately not the same set.
-   7 is a size stop and not a space stop, so `h-7` is `--db-size-7` while `p-7` is the
+   Space and size are nine stops each and deliberately not the same nine. 5, 7 and 12
+   are size stops and not space stops, so `h-5` is `--db-size-5` while `p-5` is the
    multiplier — a family carries a stop when it has a use for it, not because a
-   sibling does. K5b pins that split.
+   sibling does. K5b and K13b pin that split. The snap pass therefore touches
+   `p-5` and `p-12` and must leave `h-5` and `h-12` alone.
 
    One hazard this leaves behind. A missing stop in `size` does not fail — a height
    utility reads `--height-*` first and `--spacing-*` second, so `h-6` renders 24px
@@ -86,6 +91,21 @@ Verify with `dbui doctor`, `verify-token-sync.mjs`, `generate-gallery.mjs`,
 7. **`--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs`,**
    so its two widths are the only dimensional values outside the config. The radius
    and spacing bridges moved into the generator; this one did not.
+9. **Five action semantics are correct and unread, and the components are what is
+   wrong.** `action-default-base`, `action-default-press` and the whole
+   `action-label-*` triplet have no consumer outside the Tokens page. They were
+   kept at their current values on purpose — the fix is to rewire the controls onto
+   them, not to delete them. Nothing of that is done. Note the neighbours that are
+   live and must not be swept up: `action-default-hover` has consumers, and so does
+   the separate `action-label-inverse-*` family.
+10. **The React linter now reads every source tree, and its rules do not.** The
+   default scan covers the portal, the shells, the components, Genie and viz, and
+   `.ts` as well as `.tsx` — 679 files against 114, and 2,518 findings against
+   2,179. Every one of the 339 new findings is pre-existing and none was fixed.
+   The `.ts` half reports nothing at all, because every rule enters through a JSX
+   element: `packages/dbui-viz/src/lib/theme.ts` holds 63 literal hexes and comes
+   back clean. Teaching the color rules to read an object literal is the next step
+   and is a change to rule logic.
 
 ## Small
 
