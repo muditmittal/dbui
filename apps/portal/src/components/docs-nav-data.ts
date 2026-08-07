@@ -29,6 +29,13 @@ export const DOCS_NAV: DocsNavEntry[] = [
       { href: "/docs/principles", label: "Design principles" },
       { href: "/docs/voice", label: "Voice and tone" },
       { href: "/docs/constraints", label: "Constraints" },
+      // Not "Accessibility and internationalization". That label wrapped to
+      // three rail lines, and nobody scans a rail for a twenty-letter word. The
+      // language rules are announced in the page's own description.
+      //
+      // Sits here rather than under Tools because it is a standard you follow,
+      // like the principles and the voice guide. Tools holds machinery you run.
+      { href: "/docs/accessibility", label: "Accessibility" },
     ],
   },
   {
@@ -56,10 +63,6 @@ export const DOCS_NAV: DocsNavEntry[] = [
     href: "/docs/overview",
     label: "Tools",
     items: [
-      // Not "Accessibility and internationalization". That label wrapped to
-      // three rail lines, and nobody scans a rail for a twenty-letter word. The
-      // language rules are announced in the page's own description.
-      { href: "/docs/accessibility", label: "Accessibility" },
       { href: "/docs/cli", label: "CLI" },
       { href: "/docs/mcp", label: "MCP servers" },
       { href: "/docs/checks", label: "Checks" },
