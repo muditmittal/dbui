@@ -12,12 +12,14 @@ function NavLink({ item, indent }: { item: DocsNavItem; indent?: boolean }) {
   return (
     <Link
       href={item.href}
-      className={`type-label rounded-1 py-1.5 no-underline transition-colors ${
-        indent ? "pr-2 pl-5" : "px-2"
+      className={`rounded-1 py-1 no-underline transition-colors ${
+        indent ? "pr-2 pl-6" : "px-2"
       } ${
         active
-          ? "bg-surface-accent font-semibold text-text-accent"
-          : "text-text-base hover:bg-action-default-hover hover:text-text-strong"
+          ? // `label-bold` is the ramp's own step at this size — same 13/16 box,
+            // heavier weight — so the row does not move when a link goes active.
+            "type-label-bold bg-surface-accent text-text-accent"
+          : "type-label text-text-base hover:bg-action-default-hover hover:text-text-strong"
       }`}
     >
       {item.label}
@@ -27,26 +29,28 @@ function NavLink({ item, indent }: { item: DocsNavItem; indent?: boolean }) {
 
 export function DocsNav() {
   return (
-    // Wraps into rows on narrow screens, stacks into a rail from md up.
-    <nav className="flex flex-col gap-4">
-      <span className="type-eyebrow px-2 text-text-subtle">Docs</span>
-      <div className="flex flex-row flex-wrap gap-x-6 gap-y-4 md:flex-col md:gap-1">
-        {DOCS_NAV.map((entry) =>
-          entry.items ? (
-            // A group's own entry is its landing page, so it is a link like any
-            // other. The children are indented rather than given a separate
-            // heading, which would make the landing page unreachable.
-            <div key={entry.href} className="flex flex-col gap-1 md:mt-3 md:first:mt-0">
-              <NavLink item={entry} />
-              {entry.items.map((item) => (
-                <NavLink key={item.href} item={item} indent />
-              ))}
-            </div>
-          ) : (
-            <NavLink key={entry.href} item={entry} />
-          )
-        )}
-      </div>
+    // Wraps into rows on narrow screens, stacks into a rail from md up. The rail
+    // has no heading of its own: `Docs` is the first group's link, so a heading
+    // above it would be the same word twice, one of them dead.
+    <nav
+      aria-label="Docs"
+      className="flex flex-row flex-wrap gap-x-6 gap-y-4 md:flex-col md:gap-1"
+    >
+      {DOCS_NAV.map((entry) =>
+        entry.items ? (
+          // A group's own entry is its landing page, so it is a link like any
+          // other. The children are indented rather than given a separate
+          // heading, which would make the landing page unreachable.
+          <div key={entry.href} className="flex flex-col gap-1 md:mt-3 md:first:mt-0">
+            <NavLink item={entry} />
+            {entry.items.map((item) => (
+              <NavLink key={item.href} item={item} indent />
+            ))}
+          </div>
+        ) : (
+          <NavLink key={entry.href} item={entry} />
+        )
+      )}
     </nav>
   )
 }
