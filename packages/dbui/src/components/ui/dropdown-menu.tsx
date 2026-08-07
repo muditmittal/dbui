@@ -80,7 +80,7 @@ function DropdownMenuLabel({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn(
-        "px-2 py-1 type-hint text-text-subtle data-inset:pl-7",
+        "px-2 py-1 type-hint text-text-subtle data-inset:pl-8",
         className
       )}
       {...props}
@@ -110,7 +110,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "group/dropdown-menu-item relative flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-7 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative data-[variant=destructive]:focus:*:[svg]:text-action-label-inverse-base",
+        "group/dropdown-menu-item relative flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-8 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative data-[variant=destructive]:focus:*:[svg]:text-action-label-inverse-base",
         className
       )}
       {...props}
@@ -135,7 +135,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-7 data-popup-open:bg-action-default-hover data-open:bg-action-default-hover [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-8 data-popup-open:bg-action-default-hover data-open:bg-action-default-hover [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -157,7 +157,7 @@ function DropdownMenuSubContent({
   return (
     <DropdownMenuContent
       data-slot="dropdown-menu-sub-content"
-      className={cn("w-auto min-w-[96px] rounded-2 bg-surface-base p-1 text-text-base shadow-md ring-1 ring-text-base/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+      className={cn("w-auto min-w-24 rounded-2 bg-surface-base p-1 text-text-base shadow-md ring-1 ring-text-base/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
       align={align}
       alignOffset={alignOffset}
       side={side}
@@ -181,7 +181,7 @@ function DropdownMenuCheckboxItem({
       data-slot="dropdown-menu-checkbox-item"
       data-inset={inset}
       className={cn(
-        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 py-1 pl-1.5 pr-1.5 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
@@ -219,13 +219,13 @@ function DropdownMenuRadioItem({
       data-slot="dropdown-menu-radio-item"
       data-inset={inset}
       className={cn(
-        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 py-1 pl-7 pr-1.5 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 py-1 pr-2 pl-8 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
       <span
-        className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center"
+        className="pointer-events-none absolute left-2 flex size-4 items-center justify-center"
         data-slot="dropdown-menu-radio-item-indicator"
       >
         <MenuPrimitive.RadioItemIndicator>
@@ -332,7 +332,7 @@ function DropdownMenuItemBadge({
     <span
       data-slot="dropdown-menu-item-badge"
       className={cn(
-        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-1.5 type-label-bold text-text-subtle group-focus/dropdown-menu-item:bg-text-accent/10 group-focus/dropdown-menu-item:text-text-base",
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-2 type-label-bold text-text-subtle group-focus/dropdown-menu-item:bg-text-accent/10 group-focus/dropdown-menu-item:text-text-base",
         className
       )}
       {...props}

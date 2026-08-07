@@ -26,10 +26,10 @@ function NativeSelect({
       <select
         data-slot="native-select"
         data-size={size}
-        className="h-8 w-full min-w-0 appearance-none rounded-3 border border-input-border-base bg-transparent py-1 pr-8 pl-2.5 type-label transition-colors outline-none select-none selection:bg-action-primary-base selection:text-action-label-inverse-base placeholder:text-text-subtle focus-visible:border-focus-ring focus-visible:ring-3 focus-visible:ring-focus-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--db-radius-2),10px)] data-[size=sm]:py-0.5 dark:bg-surface-strong/30 dark:hover:bg-surface-strong/50 dark:aria-invalid:border-action-negative-base/50 dark:aria-invalid:ring-action-negative-base/40"
+        className="h-8 w-full min-w-0 appearance-none rounded-3 border border-input-border-base bg-transparent py-1 pr-8 pl-3 type-label transition-colors outline-none select-none selection:bg-action-primary-base selection:text-action-label-inverse-base placeholder:text-text-subtle focus-visible:border-focus-ring focus-visible:ring-3 focus-visible:ring-focus-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--db-radius-2),10px)] data-[size=sm]:py-0.5 dark:bg-surface-strong/30 dark:hover:bg-surface-strong/50 dark:aria-invalid:border-action-negative-base/50 dark:aria-invalid:ring-action-negative-base/40"
         {...props}
       />
-      <ChevronDown className="pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 text-text-subtle select-none" aria-hidden="true" data-slot="native-select-icon" />
+      <ChevronDown className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-text-subtle select-none" aria-hidden="true" data-slot="native-select-icon" />
     </div>
   )
 }

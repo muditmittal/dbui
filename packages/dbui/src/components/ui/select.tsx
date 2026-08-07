@@ -133,14 +133,14 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex min-h-7 w-full cursor-default items-center gap-1.5 rounded-1 py-1 pl-8 pr-1.5 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex min-h-7 w-full cursor-default items-center gap-2 rounded-1 py-1 pr-2 pl-8 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}
     >
       <SelectPrimitive.ItemIndicator
         render={
-          <span className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center" />
+          <span className="pointer-events-none absolute left-2 flex size-4 items-center justify-center" />
         }
       >
         <Check className="pointer-events-none" />

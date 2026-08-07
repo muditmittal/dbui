@@ -31,7 +31,7 @@ function Menubar({ className, ...props }: MenubarPrimitive.Props) {
     <MenubarPrimitive
       data-slot="menubar"
       className={cn(
-        "flex h-8 items-center gap-0.5 rounded-3 border p-[3px]",
+        "flex h-8 items-center gap-0.5 rounded-3 border p-1",
         className
       )}
       {...props}
@@ -63,7 +63,7 @@ function MenubarTrigger({
     <DropdownMenuTrigger
       data-slot="menubar-trigger"
       className={cn(
-        "flex items-center rounded-1 px-1.5 py-[2px] type-label-bold outline-hidden select-none hover:bg-surface-subtle aria-expanded:bg-surface-subtle",
+        "flex items-center rounded-1 px-2 py-0.5 type-label-bold outline-hidden select-none hover:bg-surface-subtle aria-expanded:bg-surface-subtle",
         className
       )}
       {...props}
@@ -102,7 +102,7 @@ function MenubarItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "group/menubar-item gap-1.5 rounded-1 px-1.5 py-1 type-label focus:bg-action-default-hover data-inset:pl-7 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:text-text-disabled [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative!",
+        "group/menubar-item gap-2 rounded-1 px-2 py-1 type-label focus:bg-action-default-hover data-inset:pl-8 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:text-text-disabled [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative!",
         className
       )}
       {...props}
@@ -124,7 +124,7 @@ function MenubarCheckboxItem({
       data-slot="menubar-checkbox-item"
       data-inset={inset}
       className={cn(
-        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 py-1 pl-1.5 pr-1.5 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
@@ -159,13 +159,13 @@ function MenubarRadioItem({
       data-slot="menubar-radio-item"
       data-inset={inset}
       className={cn(
-        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 py-1 pl-7 pr-1.5 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex min-h-7 cursor-default items-center gap-2 rounded-1 py-1 pr-2 pl-8 type-label outline-hidden select-none focus:bg-action-default-hover data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
     >
       <span
-        className="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center"
+        className="pointer-events-none absolute left-2 flex size-4 items-center justify-center"
         data-slot="menubar-radio-item-indicator"
       >
         <MenuPrimitive.RadioItemIndicator>
@@ -189,7 +189,7 @@ function MenubarLabel({
       data-slot="menubar-label"
       data-inset={inset}
       className={cn(
-        "px-1.5 py-1 type-hint text-text-subtle data-inset:pl-7",
+        "px-2 py-1 type-hint text-text-subtle data-inset:pl-8",
         className
       )}
       {...props}
@@ -244,7 +244,7 @@ function MenubarSubTrigger({
       data-slot="menubar-sub-trigger"
       data-inset={inset}
       className={cn(
-        "gap-1.5 rounded-1 px-1.5 py-1 type-label focus:bg-action-default-hover data-inset:pl-7 data-open:bg-action-default-hover [&_svg:not([class*='size-'])]:size-4",
+        "gap-2 rounded-1 px-2 py-1 type-label focus:bg-action-default-hover data-inset:pl-8 data-open:bg-action-default-hover [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -319,7 +319,7 @@ function MenubarItemBadge({
     <span
       data-slot="menubar-item-badge"
       className={cn(
-        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-1.5 type-label-bold text-text-subtle group-focus/menubar-item:bg-text-accent/10 group-focus/menubar-item:text-text-base",
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-2 type-label-bold text-text-subtle group-focus/menubar-item:bg-text-accent/10 group-focus/menubar-item:text-text-base",
         className
       )}
       {...props}
