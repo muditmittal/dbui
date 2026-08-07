@@ -837,9 +837,9 @@ const SHIPPED = `@import "tailwindcss";
     `p-5 → ${ruleFor(css, "p-5")}   p-12 → ${ruleFor(css, "p-12")}`
   )
   // `rounded-full` is the one stop whose token shipped and whose bridge did
-  // not, so 39 call sites rendered Tailwind's own pill and --db-radius-full sat
-  // dead in :root. The two clip identically, which is why it went unnoticed —
-  // the reason to own it is that Figma cannot hold an infinity.
+  // not, so every call site rendered Tailwind's own pill and --db-radius-full
+  // sat dead in :root. The two clip identically, which is why it went unnoticed
+  // — the reason to own it is that Figma cannot hold an infinity.
   const unownedFull = await build(SHIPPED.replace("  --radius-full: var(--db-radius-full);\n", ""), ["rounded-full"])
   check(
     "K14 rounded-full resolves to --db-radius-full, not Tailwind's infinity",
