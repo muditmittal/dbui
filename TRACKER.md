@@ -17,7 +17,7 @@ Anything those contradict is this file being wrong.
 | Shells | Partial — defined, asset detail templates not built |
 | Portal | Done |
 | CLI + MCP | Done |
-| Figma | Stale — pre-migration token names |
+| Figma | Being reconciled — I1 |
 | Install | Works — registry points at the Databricks npm proxy |
 
 ## Register
@@ -71,7 +71,7 @@ Every known defect and gap, triaged. Ranked within each group by what it costs.
 
 | # | What | What it costs | Fix |
 | --- | --- | --- | --- |
-| I1 | Figma variables carry pre-migration names. `verify-token-sync` names one missing each way — `input-border-focus` in Figma and not the config, `surface-hover` in the config and not Figma | Code Connect and the library describe a system that no longer exists | protocol — Figma and Code Connect in one pass or they drift again |
+| I1 | The Figma library and its Code Connect files were built before the token migration | Code Connect describes a system that no longer exists | protocol — a Figma pass is in flight. `verify-token-sync` is the check, and Figma and Code Connect move in one pass or they drift again |
 | I2 | The dimensional scale is closed by convention only. Tailwind's multiplier is still on, so `p-5`, `p-9` and `p-12` compile off it | The scale is a recommendation, not a constraint. `--spacing: initial` cannot land until the snap pass runs | decision — rules agreed in `docs/token-simplification.md`, nothing done |
 | I3 | Components dim a disabled control with `opacity-50` rather than the disabled tokens | The system breaks its own constraint S2, which forbids exactly this | file — but it is a visible change on every control it touches |
 | I4 | Genie prose sits on `body` and `theme.config.mjs` names chat messages under `paragraph` | Reconciling moves the whole conversational surface up two points | decision — a design call, not a migration |
