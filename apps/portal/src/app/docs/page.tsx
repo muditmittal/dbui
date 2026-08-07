@@ -71,7 +71,7 @@ const TILES: Record<string, Tile> = {
   },
 
   "/docs/tokens": {
-    what: "Every value the system can express, and the one file that generates them.",
+    what: "Every value the system can express, and the one file they all come from.",
   },
   "/docs/icons": {
     span: "@2xl:col-span-2",
@@ -113,6 +113,11 @@ const TILES: Record<string, Tile> = {
  * `surface-hover` rather than the control hover. A tile is a large target, and
  * the same alpha that reads as a tint on a button reads as a fill across a
  * card — the reasoning is written beside the token in `theme.config.mjs`.
+ *
+ * A tile that spans rows is taller than its content, so the two lines hold the
+ * ends rather than stacking at the top and leaving the box looking unfinished.
+ * The title still sits on the same line as its neighbors' titles, which is what
+ * `justify-end` would have cost.
  */
 function DocTile({ item }: { item: DocsNavItem }) {
   const tile = TILES[item.href]
@@ -120,7 +125,7 @@ function DocTile({ item }: { item: DocsNavItem }) {
   return (
     <Link
       href={item.href}
-      className={`group flex flex-col gap-2 rounded-2 border border-border-base bg-surface-base p-4 no-underline transition-colors hover:border-border-strong hover:bg-surface-hover ${tile?.span ?? ""}`}
+      className={`group flex flex-col justify-between gap-2 rounded-2 border border-border-base bg-surface-base p-4 no-underline transition-colors hover:border-border-strong hover:bg-surface-hover ${tile?.span ?? ""}`}
     >
       <span
         className={`${tile?.lead ? "type-title-4" : "type-body-bold"} text-text-strong group-hover:underline`}
