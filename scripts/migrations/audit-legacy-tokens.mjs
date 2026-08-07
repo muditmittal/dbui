@@ -32,6 +32,17 @@ const PREFIXES = [
   "border-t", "border-b", "border-l", "border-r", "border-x", "border-y",
 ];
 
+// A prefix and a deleted name can spell a token that shipped later: `text-` +
+// `disabled` is `text-disabled`, a live semantic rather than a leftover. Both
+// are the same string in the source, so the generated semantics are the only
+// thing that tells them apart.
+const LIVE = new Set(
+  Object.values(
+    JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/design-lint/tokens.json"), "utf8"))
+      .colors.semanticTokens,
+  ).flat(),
+);
+
 const files = [];
 const walk = (d) => {
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -48,6 +59,7 @@ for (const f of files) {
   for (const pre of PREFIXES) {
     for (const tok of LEGACY) {
       const cls = `${pre}-${tok}`;
+      if (LIVE.has(cls)) continue;
       const re = new RegExp(`(?<![a-zA-Z0-9-])${cls}(?![a-zA-Z0-9-])`, "g");
       const m = src.match(re);
       if (m) {

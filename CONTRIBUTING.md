@@ -151,9 +151,6 @@ Fix these opportunistically when touching adjacent code, and delete the line whe
 
 - `component-index.md` and `icon-index.md` are hand-maintained and can lag source. They should be
   generated from JSDoc and `classifications.ts`; until then, treat source as authoritative.
-- `scripts/migrations/audit-legacy-tokens.mjs` keeps its own copy of the deleted legacy names, and
-  two of them came back as semantics, so it reports six false positives. The generated list is in
-  `tokens.json` under `colors.deletedLegacy` — point the audit at it.
 - Six icon components have no `classifications.ts` entry: `CircleSmall`, `Databricks`,
   `DatabricksLogo`, `DotsCircleSmall`, `RunningSmall`, `Slash`.
 
