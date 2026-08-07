@@ -177,8 +177,8 @@ export default function ConstraintsPage() {
           ]}
         />
         <Para>
-          Applying that cut left {CONSTRAINTS.length}. The candidates that did not survive are
-          worth naming, because the cut is the argument.
+          Applying that cut left {CONSTRAINTS.length} constraints. The candidates that did not
+          survive are worth naming, because the cut is the argument.
         </Para>
         <RefTable
           columns={[
@@ -191,8 +191,8 @@ export default function ConstraintsPage() {
 
       <DocSection title="Structure is settled somewhere else">
         <Para>
-          The brief for this page named three areas — interaction, page layout and product behavior.
-          Page layout is not below, and that is a decision rather than an omission.{" "}
+          Constraints fall into three areas — interaction, page layout and product behavior. Page
+          layout is not below, and that is a decision rather than an omission.{" "}
           <DocLink href="/docs/layout">Layout</DocLink> already carries {layoutRuleCount} rules in
           exactly this shape: a statement, a default, the one exception and the observation that
           proves it was ignored. Moving them would take a set that works away from the page a person
@@ -207,9 +207,16 @@ export default function ConstraintsPage() {
           <Code>button.tsx</Code> the component half.
         </Para>
         <Para>
-          A fourth group appeared that the brief did not name, and it goes first. The closed sets
+          A fourth group appeared that those three do not name, and it goes first. The closed sets
           are the constraint the other two depend on: nothing about how a control behaves can hold
           while the vocabulary it is written in keeps growing.
+        </Para>
+        <Para>
+          Each constraint carries two words on its right. The first is the aspect of the{" "}
+          <DocLink href="/docs/principles">principle</DocLink> it serves, and the second is where a
+          violation can be seen. I4 is the only one with no principle beside it, because none of the
+          six says anything about input — a reader who can only use a keyboard is not somebody the
+          principles have met.
         </Para>
       </DocSection>
 
