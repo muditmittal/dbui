@@ -108,9 +108,10 @@ import { Cmd } from "@/components/docs/CodeBlock"
 </Note>
 
 <Note title="Reading it on DBUI itself" variant="info">
-  Rules written for consumers necessarily fire on the primitives that implement them. <C>Button</C>{" "}
-  contains a raw <C>&lt;button&gt;</C>, so <C>no-raw-interactive-html</C> reports it.{" "}
-  <C>dbui-shells</C> is the honest signal, because it composes rather than defines.
+  <C>packages/dbui/src/components/ui/</C> is exempt from <C>no-raw-interactive-html</C> alone.{" "}
+  <C>Button</C> is a <C>&lt;button&gt;</C>, and so are the tree item, the editor tab and the sort
+  header — a raw control there is DBUI defining what it exports. The shells, Genie, viz and the
+  portal compose rather than define, so all four are still judged.
 </Note>
 
 </Section>

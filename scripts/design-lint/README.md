@@ -41,7 +41,7 @@ yarn design:lint:figma --target 3247:5956 > /tmp/figma-lint.js
 
 | Rule | Level | What it catches |
 |---|---|---|
-| `no-raw-interactive-html` | error | `<button>`, `<input>`, `<select>` or `<textarea>` where a DBUI control exists. |
+| `no-raw-interactive-html` | error | `<button>`, `<input>`, `<select>` or `<textarea>` where a DBUI control exists. `packages/dbui/src/components/ui/` is exempt from this rule alone — `Button` is a `<button>`, and a raw control there is DBUI defining what it exports. |
 | `no-as-child` | error | `asChild` on any element. Base UI has no such prop — it accepts it, drops it, and renders its own element around the child. Use `render`. |
 | `non-dbui-component` | error | A name imported from a DBUI package that the package does not export. Either the import is broken or `dbui-components.json` is stale. |
 

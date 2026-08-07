@@ -38,6 +38,20 @@ const DBUI_COMPONENT_SET = new Set([
   ...components.icons,
 ])
 
+/**
+ * The one directory where a raw control is the answer rather than the problem.
+ *
+ * `Button` is a `<button>`. So are the tree item, the editor tab, the navbar
+ * item, the sort header, the tag remove and the alert close — every raw tag in
+ * there carries a `data-slot`, and every one of them is DBUI defining what it
+ * exports. Reporting them made 17 of the rule's 36 findings unactionable and
+ * gave the whole rule an asterisk in the docs.
+ *
+ * Scoped to `ui/`, so the shells, Genie, viz and the portal are all still
+ * consumers and still judged.
+ */
+const isPrimitiveSource = (file) => file.startsWith("packages/dbui/src/components/ui/")
+
 /* Interactive HTML tags, and what to reach for instead.
  *
  * This lives with the rule rather than in dbui-components.json, which is now
@@ -728,7 +742,7 @@ function checkElement(opening, sourceFile, dbuiImports) {
   const isComponent = /^[A-Z]/.test(tagName)
   const isMember = tagName.includes(".")
 
-  if (!isComponent && FORBIDDEN_HTML_TAGS[tagName]) {
+  if (!isComponent && FORBIDDEN_HTML_TAGS[tagName] && !isPrimitiveSource(sourceFile)) {
     violations.push({
       file: sourceFile,
       line,
