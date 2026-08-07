@@ -53,6 +53,10 @@ description: Find the right DBUI component for a use case. Triggers when you nee
 | Hierarchical data (catalog, files) | `DataTreeView` or `FileTreeView` | Nested divs or NavbarItems |
 | Three-dot menu | `DropdownMenu` | `Popover` (for rich content, not menus) |
 
+## Translating from Figma
+
+Figma components are deeply nested on purpose — one `Dropdown Menu` covers every row a menu can hold. A nested layer is **not** a component you need to build, and a Figma variant is often a different child subtree rather than a prop. Read `./dbui/docs/figma-mapping.md` before you conclude something is missing, or run `dbui composition <name>` for the worked recipes.
+
 ## If nothing fits
 
 Flag the gap. Do NOT build a one-off component from raw HTML. Say: "DBUI doesn't have a component for [X] — this is a gap to flag to the design system team." Then compose from the closest available primitives as an interim.

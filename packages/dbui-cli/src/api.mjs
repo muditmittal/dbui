@@ -119,6 +119,96 @@ function parseVariants(src) {
 /** Compare component names without case or separators ("Toggle Button" → "togglebutton"). */
 const handle = (s) => String(s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
 
+/* -------------------------------------------------------- compositions --- */
+
+/**
+ * Worked compositions out of figma-mapping.md, keyed by component slug.
+ *
+ * A Figma variant switcher often maps to a different subtree rather than a
+ * prop, and a prop list cannot say so — which is how an agent ends up building
+ * a one-off instead of composing what exists. The doc owns the recipes; this
+ * parser is the only thing that reads them, so the CLI and the MCP server both
+ * serve the same text.
+ *
+ * Shape the doc must keep: `## Title · \`slug\`` opens a family, `#### Name`
+ * followed by a tsx fence is one recipe.
+ */
+let _compositions = null;
+export function compositions() {
+  requireRepo();
+  if (_compositions) return _compositions;
+  const md = read(path.join(PATHS.docs, "figma-mapping.md")) ?? "";
+  const lines = md.split("\n");
+  const out = {};
+  let slug = null;
+  let recipe = null;
+  for (let i = 0; i < lines.length; i++) {
+    const family = lines[i].match(/^##\s+.+?·\s*`([a-z0-9-]+)`/);
+    if (family) {
+      slug = family[1];
+      recipe = null;
+      continue;
+    }
+    // Any other h2 closes the family. `###`/`####` do not match: the character
+    // after `##` has to be whitespace.
+    if (/^##\s/.test(lines[i])) {
+      slug = null;
+      recipe = null;
+      continue;
+    }
+    const head = lines[i].match(/^####\s+(.+?)\s*$/);
+    if (head) {
+      recipe = head[1];
+      continue;
+    }
+    if (slug && recipe && lines[i].trim() === "```tsx") {
+      const body = [];
+      for (i += 1; i < lines.length && lines[i].trim() !== "```"; i++) body.push(lines[i]);
+      (out[slug] ??= []).push({ name: recipe, code: body.join("\n").trim() });
+      recipe = null;
+    }
+  }
+  _compositions = out;
+  return out;
+}
+
+export function compositionList() {
+  const all = compositions();
+  return envelope("composition.list", {
+    total: Object.values(all).reduce((a, r) => a + r.length, 0),
+    families: Object.entries(all).map(([slug, recipes]) => ({
+      slug,
+      recipes: recipes.map((r) => r.name),
+    })),
+  });
+}
+
+export function composition(name, recipe) {
+  const all = compositions();
+  const key = handle(name);
+  const slug = Object.keys(all).find((s) => handle(s) === key);
+  if (!slug) {
+    throw new DbuiError(
+      `No compositions for "${name}"`,
+      "ERR_UNKNOWN_COMPOSITION",
+      similar(name, Object.keys(all)),
+    );
+  }
+  let recipes = all[slug];
+  if (recipe) {
+    const want = handle(recipe);
+    recipes = recipes.filter((r) => handle(r.name).includes(want));
+    if (!recipes.length) {
+      throw new DbuiError(
+        `No composition named "${recipe}" under ${slug}`,
+        "ERR_UNKNOWN_COMPOSITION",
+        all[slug].map((r) => ({ name: r.name, reason: "available recipe" })),
+      );
+    }
+  }
+  return envelope("composition.detail", { slug, recipes });
+}
+
 /** The discovery table — category, what to use it for, what not to. */
 function indexRows() {
   const md = read(path.join(PATHS.docs, "component-index.md"));
@@ -150,6 +240,7 @@ export function components() {
   if (_components) return _components;
   const rows = indexRows();
   const rowsByHandle = new Map(Object.entries(rows).map(([k, v]) => [handle(k), v]));
+  const recipes = compositions();
   const out = {};
   for (const file of listFiles(PATHS.ui)) {
     const slug = file.replace(/\.tsx$/, "");
@@ -185,6 +276,7 @@ export function components() {
       figma: doc.figma,
       figmaLayer: meta.figmaLayer ?? null,
       variants: { ...parseVariants(variantSrc), ...parseVariants(src) },
+      compositions: recipes[slug] ?? [],
       importPath: `dbui/components/ui/${slug}`,
       sourcePath: path.relative(PATHS.root, path.join(PATHS.ui, file)),
     };
@@ -356,6 +448,7 @@ const DOC_TOPICS = {
   "token-rules": () => ({ file: path.join(PATHS.docs, "token-rules.md"), title: "Token contract" }),
   "component-index": () => ({ file: path.join(PATHS.docs, "component-index.md"), title: "Component index" }),
   "icon-index": () => ({ file: path.join(PATHS.docs, "icon-index.md"), title: "Icon index" }),
+  "figma-mapping": () => ({ file: path.join(PATHS.docs, "figma-mapping.md"), title: "Figma layer to React composition" }),
 };
 
 export function docsList() {
@@ -399,6 +492,15 @@ export function search(query, { type, limit = 20 } = {}) {
       if (!hay.includes(q)) continue;
       const exact = i.name.toLowerCase() === q;
       push("icon", i.name, `${i.category ?? "?"} — ${i.label}`, `dbui icon ${i.name}`, exact ? 0 : i.name.toLowerCase().includes(q) ? 1 : 3);
+    }
+  }
+  if (!type || type === "composition") {
+    for (const [slug, recipes] of Object.entries(compositions())) {
+      for (const r of recipes) {
+        const hay = `${slug} ${r.name} ${r.code}`.toLowerCase();
+        if (!hay.includes(q)) continue;
+        push("composition", `${slug} — ${r.name}`, "worked composition", `dbui composition ${slug} "${r.name}"`, r.name.toLowerCase().includes(q) ? 0 : 2);
+      }
     }
   }
   if (!type || type === "shell") {

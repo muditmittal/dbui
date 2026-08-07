@@ -33,6 +33,7 @@ For each region of the identified shell, determine which DBUI component fills it
 1. Read `./dbui/docs/component-index.md` and search by the region's purpose.
 2. Use the `dbui-pick-component` skill if you're uncertain about a specific region.
 3. Use the `dbui-pick-icon` skill for every icon — never guess.
+4. Working from a Figma file rather than a screenshot? Read `./dbui/docs/figma-mapping.md`. Nested Figma layers are slots, not missing components, and a Figma variant is often a different child subtree rather than a prop.
 
 **Common region → component mappings:**
 

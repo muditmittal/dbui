@@ -4,6 +4,7 @@ import { DbuiError } from "./repo.mjs";
 
 const COMMANDS = [
   { name: "component", args: "[name]", description: "List components or print one in full", json: true },
+  { name: "composition", args: "[name] [recipe]", description: "Print worked compositions for a Figma-nested family", json: true },
   { name: "icon", args: "[name]", description: "List icons by category or print one", json: true },
   { name: "shell", args: "[id]", description: "List page shells or print one with its regions", json: true },
   { name: "token", args: "[group]", description: "List token groups or print one with light and dark values", json: true },
@@ -26,13 +27,14 @@ Flags
   --json          Typed JSON envelope: { apiVersion, type, data }
   --dense         Compressed text, for pasting into an AI context window
   --category <c>  Filter (icon)
-  --type <t>      Restrict search to component | icon | shell | doc
+  --type <t>      Restrict search to component | composition | icon | shell | doc
   --limit <n>     Cap search results
 
 Start here
-  dbui search table          find anything by concept
-  dbui shell                 pick a page shell before writing UI
-  dbui component Button      read a component's rules before using it
+  dbui search table              find anything by concept
+  dbui shell                     pick a page shell before writing UI
+  dbui component Button          read a component's rules before using it
+  dbui composition dropdown-menu translate Figma nesting into React
 `;
 
 export async function run(argv) {
@@ -70,6 +72,9 @@ export async function run(argv) {
   switch (command) {
     case "component":
       env = rest[0] ? api.component(rest[0]) : api.componentList();
+      break;
+    case "composition":
+      env = rest[0] ? api.composition(rest[0], rest.slice(1).join(" ") || null) : api.compositionList();
       break;
     case "icon":
       env = rest[0] ? api.icon(rest[0]) : api.iconList(flags.category);

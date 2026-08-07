@@ -7,8 +7,19 @@
 const bullet = (s) => `  - ${s}`;
 const heading = (s) => `\n${s}\n${"─".repeat(s.length)}`;
 
+/**
+ * Recipes print in full in both modes. A prop list cannot say that a Figma
+ * variant is a different subtree rather than a prop, and that is the gap an
+ * agent fills by writing a one-off. Only the families in figma-mapping.md
+ * carry any, so the cost lands where it pays.
+ */
+function recipes(list) {
+  return list.flatMap((r) => [`\n— ${r.name}`, "", r.code, ""]);
+}
+
 function componentDetail(c, dense) {
   const out = [];
+  const compositions = c.compositions ?? [];
   if (dense) {
     out.push(`${c.name} (${c.category ?? "?"}) import { ${c.exports.slice(0, 4).join(", ")} } from "${c.importPath}"`);
     if (c.useFor) out.push(`USE: ${c.useFor}`);
@@ -16,6 +27,11 @@ function componentDetail(c, dense) {
     for (const g of c.guidelines) out.push(`G: ${g}`);
     for (const k of c.constraints) out.push(`C: ${k}`);
     for (const [axis, vals] of Object.entries(c.variants)) out.push(`${axis}: ${vals.join("|")}`);
+    if (compositions.length) {
+      out.push("COMPOSITIONS (Figma nesting resolves to these — do not build a one-off):");
+      out.push(...recipes(compositions));
+      out.push("Full Figma layer map: dbui docs figma-mapping");
+    }
     return out.join("\n");
   }
   out.push(heading(c.name));
@@ -36,6 +52,12 @@ function componentDetail(c, dense) {
   if (c.constraints.length) {
     out.push(heading("Constraints"));
     out.push(...c.constraints.map(bullet));
+  }
+  if (compositions.length) {
+    out.push(heading("Compositions"));
+    out.push("Figma nesting resolves to these. Do not build a one-off.");
+    out.push(...recipes(compositions));
+    out.push("Full Figma layer map: dbui docs figma-mapping");
   }
   if (c.exports.length > 6) out.push(heading("All exports"), `  ${c.exports.join(", ")}`);
   if (c.figma) out.push(heading("Figma"), `  ${c.figma}`);
@@ -78,6 +100,19 @@ export function render(env, { dense = false } = {}) {
     }
     case "component.detail":
       return componentDetail(d, dense);
+
+    case "composition.list": {
+      const lines = [`${d.total} compositions\n`];
+      for (const f of d.families) {
+        lines.push(`  ${f.slug}`);
+        for (const r of f.recipes) lines.push(`      ${r}`);
+        lines.push("");
+      }
+      lines.push("  dbui composition <slug> [recipe]");
+      return lines.join("\n");
+    }
+    case "composition.detail":
+      return [heading(d.slug), ...recipes(d.recipes)].join("\n");
 
     case "icon.list": {
       const lines = [`${d.total} icons\n`];
