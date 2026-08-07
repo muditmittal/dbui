@@ -14,7 +14,8 @@ const NAV = [
   { href: "/", label: "Home", exact: true },
   { href: "/docs", label: "Docs", exact: true },
   { href: "/components", label: "Components" },
-  { href: "/templates", label: "Templates" },
+  // No Templates entry. The shells are documented at /docs/shells, reached from
+  // the docs rail — a second top-level door to one page is how two pages start.
   // /install redirects to the install guide the agent fetches.
   { href: "/install", label: "Install", exact: true },
 ]
@@ -42,7 +43,9 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`type-label rounded-1 px-2.5 py-1.5 no-underline transition-colors ${
+                // 24px tall on the size scale, matching the `sm` button at the
+                // other end of the same row.
+                className={`type-label rounded-1 px-3 py-1 no-underline transition-colors ${
                   active
                     ? "bg-surface-accent text-text-accent"
                     : "text-text-subtle hover:bg-action-default-hover hover:text-text-strong"
