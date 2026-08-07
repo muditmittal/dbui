@@ -1,3 +1,4 @@
+import { DocAccordion, DocAccordionItem } from "@/components/docs/DocAccordion"
 import { Guidance } from "@/components/docs/Guidance"
 
 type Principle = {
@@ -10,11 +11,13 @@ type Principle = {
 
 /**
  * Six principles, in the order they build on each other: who we serve, then how
- * the interface looks, speaks and restrains itself, then what it does with
- * automation and evidence.
+ * the interface looks, speaks and structures itself, then what it asks the
+ * reader to trust and what it tells them back.
  *
- * Each list carries three independent points rather than three mirrored pairs,
- * and the last don't in each set is the thing the principle gives up. A
+ * `aspect` names the dimension of the system the principle governs rather than
+ * the virtue it praises, so two principles can be told apart by what they
+ * decide. Each list carries three independent points rather than three mirrored
+ * pairs, and the last don't in each set is the thing the principle gives up. A
  * principle nobody would argue against cannot settle a disagreement.
  */
 const PRINCIPLES: Principle[] = [
@@ -68,7 +71,7 @@ const PRINCIPLES: Principle[] = [
   },
   {
     name: "Every element earns its place",
-    aspect: "Restraint",
+    aspect: "Structure",
     meaning:
       "The test is subtraction: remove it, and if nothing breaks and nobody notices, it had not earned its place. Time counts too — a spinner that flashes costs more than it saves.",
     dos: [
@@ -84,7 +87,7 @@ const PRINCIPLES: Principle[] = [
   },
   {
     name: "Automate the work, surface the decision",
-    aspect: "Automation",
+    aspect: "Trust",
     meaning:
       "The platform removes repetitive work so attention goes to judgment. Automation earns its place by handing the decision back, visibly, where thinking is required.",
     dos: [
@@ -100,7 +103,7 @@ const PRINCIPLES: Principle[] = [
   },
   {
     name: "Show the trace, not just the outcome",
-    aspect: "Evidence",
+    aspect: "Feedback",
     meaning:
       "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads as confidently as a right one — the trace is what tells them apart.",
     dos: [
@@ -116,34 +119,56 @@ const PRINCIPLES: Principle[] = [
   },
 ]
 
+/**
+ * Each principle collapses to its claim and opens to its evidence. The trigger
+ * keeps the number, the dimension, the name and the meaning, so a page nobody
+ * has clicked still states all six in full; only the do-and-don't rows, which
+ * are read when settling a specific argument, wait behind the disclosure.
+ */
 export function PrinciplesDoc() {
   return (
     <>
       <h1 className="type-title-1 text-text-strong">Design principles</h1>
-      <p className="type-paragraph mt-4 text-text-subtle">
+      <p className="type-paragraph mt-2 text-text-subtle">
         When two designs both look reasonable, these decide which one ships.
       </p>
 
-      <div className="mt-12 flex flex-col gap-12">
-        {PRINCIPLES.map((p, i) => (
-          <section key={p.name} style={{ margin: 0 }}>
-            <div className="type-eyebrow flex items-baseline gap-2 text-text-subtle">
-              <span style={{ fontVariantNumeric: "tabular-nums" }}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span>{p.aspect}</span>
-            </div>
+      <img
+        src="/docs/principles-hero.png"
+        alt="Abstract mark for the design principles: a dark cog with an open eye at its center, resolving into a red stepped pattern."
+        width={864}
+        height={300}
+        className="mt-10 h-auto w-full rounded-2"
+      />
 
-            <h2 className="type-title-3 mt-2 text-text-strong">{p.name}</h2>
-            <p className="type-paragraph mt-2 text-text-subtle">{p.meaning}</p>
-
-            <div className="mt-6">
-              <Guidance dos={p.dos} donts={p.donts} />
-            </div>
-          </section>
+      <DocAccordion variant="card" className="mt-10">
+        {PRINCIPLES.map((principle, i) => (
+          <DocAccordionItem
+            key={principle.aspect}
+            variant="card"
+            value={principle.aspect}
+            header={
+              <>
+                <span className="type-eyebrow flex items-baseline gap-2 text-text-subtle">
+                  {/* Tabular figures keep the six numbers in one column. */}
+                  <span style={{ fontVariantNumeric: "tabular-nums" }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{principle.aspect}</span>
+                </span>
+                <span className="type-title-3 text-text-strong">{principle.name}</span>
+                <span className="type-paragraph text-text-subtle">{principle.meaning}</span>
+              </>
+            }
+          >
+            <Guidance
+              dos={principle.dos}
+              donts={principle.donts}
+              header={{ rule: "Rules", example: "Example" }}
+            />
+          </DocAccordionItem>
         ))}
-      </div>
-
+      </DocAccordion>
     </>
   )
 }
