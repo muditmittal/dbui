@@ -233,8 +233,8 @@ export default function ConstraintsPage() {
 
       <DocSection title="Where the system cannot hold its own constraints">
         <Para>
-          {unheld.length} of the {CONSTRAINTS.length} above carry a system gap, and they are marked
-          in place. These are the wider holes underneath them.
+          Of the {CONSTRAINTS.length} constraints above, {unheld.length} carry a system gap and are
+          marked in place. These are the wider holes underneath them.
         </Para>
         <div className="flex flex-col">
           <Gap title="Interaction is the thinnest layer">
@@ -253,7 +253,7 @@ export default function ConstraintsPage() {
           <Gap title="Nothing here is machine-checked">
             The React linter reads tokens, type and spacing. No rule reads structure, behavior or
             interaction, which is why every constraint above names where a person can see it
-            instead. Three of them are statically checkable today and are proposed below.
+            instead. Two of them are statically checkable today and are proposed below.
           </Gap>
           <Gap title="Four components' constraints reach no agent">
             <>
@@ -319,11 +319,10 @@ export default function ConstraintsPage() {
             what did I get wrong into what should I look at before saying this is done.
           </Para>
           <Para>
-            Three of the constraints above are checkable in the linter as it stands, and each would
+            Two of the constraints above are checkable in the linter as it stands, and either would
             be the first rule it has that is not about a token: an opacity utility on something that
-            holds text (S2), a second filled button in one surface (I6) and a removed focus outline
-            with nothing replacing it. The rest need a person, and the record should say so rather
-            than imply a coverage the system does not have.
+            holds text (S2), and a second filled button on one surface (I6). The rest need a person,
+            and the record should say so rather than imply a coverage the system does not have.
           </Para>
         </DocSubsection>
       </DocSection>
