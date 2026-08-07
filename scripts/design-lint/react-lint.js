@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * react-design-lint — checks .tsx files for DBUI compliance.
+ * react-design-lint — checks .ts and .tsx files for DBUI compliance.
  *
  * Lints two things:
  *   1. Component compliance — every JSX element is either:
@@ -349,6 +349,35 @@ function checkElement(opening, sourceFile) {
   }
 }
 
+/**
+ * Every source tree that ships UI, not just the two that consume it.
+ *
+ * The default scan used to be the portal and the shells — the surfaces that
+ * compose DBUI — which left the components, the charts and the Genie primitives
+ * unread by the check written to police them. A rule that never runs on the
+ * library it describes only ever measures its callers.
+ */
+const SCAN_ROOTS = [
+  "apps/portal/src",
+  "packages/dbui-shells/src",
+  "packages/dbui/src",
+  "packages/dbui-genie/src",
+  "packages/dbui-viz/src",
+]
+
+/**
+ * `.ts` as well as `.tsx`. A CVA variant table and a chart palette are both
+ * plain modules, so an extension filter that stops at `.tsx` cannot see them.
+ * `.d.ts` stays out: it declares types and styles nothing.
+ *
+ * Reading them is only half of it, and the half that is done. Every rule below
+ * enters through a JsxOpeningElement, so a module with no JSX is parsed and
+ * yields nothing — `packages/dbui-viz/src/lib/theme.ts` holds 63 literal hexes
+ * and still reports clean. Teaching the color rules to read an object literal
+ * is a change to rule logic and is deliberately not made here.
+ */
+const isLintable = (f) => (f.endsWith(".ts") || f.endsWith(".tsx")) && !f.endsWith(".d.ts")
+
 function gatherFiles(args) {
   if (args.length > 0 && !args[0].startsWith("--")) {
     const out = []
@@ -356,7 +385,7 @@ function gatherFiles(args) {
       const p = path.resolve(a)
       if (fs.existsSync(p) && fs.statSync(p).isDirectory()) {
         walk(p, (f) => {
-          if (f.endsWith(".tsx") && !f.endsWith(".d.ts")) out.push(f)
+          if (isLintable(f)) out.push(f)
         })
       } else {
         out.push(p)
@@ -365,9 +394,9 @@ function gatherFiles(args) {
     return out
   }
   const candidates = []
-  for (const dir of [path.join(ROOT, "apps/portal/src"), path.join(ROOT, "packages/dbui-shells/src")]) {
+  for (const dir of SCAN_ROOTS.map((d) => path.join(ROOT, d))) {
     if (fs.existsSync(dir)) walk(dir, (f) => {
-      if (f.endsWith(".tsx") && !f.endsWith(".d.ts")) candidates.push(f)
+      if (isLintable(f)) candidates.push(f)
     })
   }
   return candidates
@@ -447,7 +476,7 @@ function main() {
   const json = args.includes("--json")
   const files = gatherFiles(args.filter((a) => !a.startsWith("--")))
   if (files.length === 0) {
-    console.error("No .tsx files found.")
+    console.error("No .ts or .tsx files found.")
     process.exit(1)
   }
 

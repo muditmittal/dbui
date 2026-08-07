@@ -2,7 +2,10 @@
 
 Two linters that enforce DBUI compliance:
 
-- **react-lint** — scans `.tsx` files for non-DBUI components and arbitrary token values
+- **react-lint** — scans `.ts` and `.tsx` files for non-DBUI components and arbitrary token values.
+  With no path it reads every source tree that ships UI: the portal, the shells, the components,
+  Genie and viz. Its rules enter through a JSX element, so a module with no JSX is parsed and
+  reports nothing
 - **figma-lint** — scans a Figma frame/page/component for non-DBUI instances and unbound colors/spacing/fonts/radii
 
 Both produce a markdown report listing **violations + recommended fixes**.
