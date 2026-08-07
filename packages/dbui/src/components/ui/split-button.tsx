@@ -22,9 +22,9 @@ const splitButtonVariants = cva(
     variants: {
       orientation: {
         horizontal:
-          "*:data-slot:rounded-r-0 [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-1! [&>[data-slot]~[data-slot]]:rounded-l-0 [&>[data-slot]~[data-slot]]:-ml-px has-[>[data-slot]:hover]:*:data-slot:border-input-border-hover",
+          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-1! [&>[data-slot]~[data-slot]]:rounded-l-none [&>[data-slot]~[data-slot]]:-ml-px has-[>[data-slot]:hover]:*:data-slot:border-input-border-hover",
         vertical:
-          "flex-col *:data-slot:rounded-b-0 [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-1! [&>[data-slot]~[data-slot]]:rounded-t-0 [&>[data-slot]~[data-slot]]:border-t-0",
+          "flex-col *:data-slot:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-1! [&>[data-slot]~[data-slot]]:rounded-t-none [&>[data-slot]~[data-slot]]:border-t-0",
       },
     },
     defaultVariants: {

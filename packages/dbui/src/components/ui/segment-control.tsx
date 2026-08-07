@@ -155,7 +155,7 @@ function SegmentControlItem({
         // Pressed item also overlaps -1px on the RIGHT and gets z-10 so its 4 blue
         // borders sit on top of the adjacent grey ones at every edge.
         isOutline && [
-          "rounded-0 border border-input-border-base shadow-xs",
+          "rounded-none border border-input-border-base shadow-xs",
           "hover:bg-action-default-hover",
           "active:bg-action-selected-press",
           "not-first:-ml-px",

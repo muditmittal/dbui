@@ -73,7 +73,7 @@ export function FacetedFilter({
       <div className="group/ig flex items-center rounded-1 border border-transparent focus-within:border-input-border-hover focus-within:shadow-xs">
         <Input
           placeholder="Search"
-          className="h-8 flex-1 min-w-0 rounded-l-1 rounded-r-0 shadow-xs focus-visible:border-transparent focus-visible:shadow-none"
+          className="h-8 flex-1 min-w-0 rounded-l-1 rounded-r-none shadow-xs focus-visible:border-transparent focus-visible:shadow-none"
           onChange={(e) => onSearch?.(e.target.value)}
         />
         {/* Filter button */}
@@ -90,7 +90,7 @@ export function FacetedFilter({
                 aria-label="Filter"
                 variant="ghost"
                 size="icon-md"
-                className="rounded-l-0 rounded-r-1 border border-input-border-base bg-surface-base shadow-xs text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base [&_svg]:size-4"
+                className="rounded-l-none rounded-r-1 border border-input-border-base bg-surface-base shadow-xs text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base [&_svg]:size-4"
               >
                 <Sliders />
               </Button>

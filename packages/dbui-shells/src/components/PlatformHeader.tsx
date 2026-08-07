@@ -138,7 +138,7 @@ export function PlatformHeader({
                 { icon: <DatabricksLogo className="h-8 w-auto" />, title: "Lakebase", desc: "Operational databases for applications" },
                 { icon: <DatabricksLogo className="h-8 w-auto" />, title: "Account Console", desc: "Governance, observability, and settings", badge: "BETA" },
               ].map((item) => (
-                <DropdownMenuItem key={item.title} className="!p-0 rounded-0" style={{ gap: 8 }}>
+                <DropdownMenuItem key={item.title} className="!p-0 rounded-none" style={{ gap: 8 }}>
                     <div className="shrink-0">
                       {item.icon}
                     </div>
