@@ -103,6 +103,12 @@ const APPROVED_RADIUS = new Set(DIM.radius.px)
 // must NEVER be consumed directly in product code — only semantics may be.
 // tokens.json carries the ramp names so we recognize a primitive var by shape.
 const PRIMITIVE_RAMPS = new Set(Object.keys(tokens.colors.primitives || {}))
+// Resolved hex → the primitive it is, so a palette value pasted into a class
+// can be named rather than described as "a DBUI hex".
+const PRIMITIVE_HEX = new Map()
+for (const [ramp, steps] of Object.entries(tokens.colors.primitives || {})) {
+  for (const [step, hex] of Object.entries(steps)) PRIMITIVE_HEX.set(hex.toUpperCase(), `${ramp}-${step}`)
+}
 function isPrimitiveVar(rawName) {
   const n = rawName.replace(/^--/, "")
   if (/^base-(white|black)$/.test(n)) return true
@@ -478,10 +484,22 @@ function checkClassName(className, file, line, column, element) {
           fix: `Use a semantic utility — bg-${EG_SURFACE}, text-${EG_TEXT}, border-${EG_BORDER}. See packages/dbui/docs/token-rules.md for the role each group covers.`,
           source: className,
         })
+      } else if (PRIMITIVE_HEX.has(hex)) {
+        /* On the allowlist and still not consumable. The allowlist is the union
+         * of primitives and resolved semantics, so a palette value passes the
+         * hex check — and there is no named class behind it, because primitives
+         * ship in no CSS at all (R2). Telling the author to "use the named
+         * class" names something that cannot exist. */
+        violations.push({
+          file, line, column, level: "error", rule: "no-primitive-token", element,
+          message: `\`${whole}\` is the resolved value of the primitive \`${PRIMITIVE_HEX.get(hex)}\`, which ships in no CSS.`,
+          fix: `Pick the semantic for the role instead — bg-${EG_SURFACE}, text-${EG_TEXT}, border-${EG_BORDER}. A primitive has no utility by construction.`,
+          source: className,
+        })
       } else {
         violations.push({
           file, line, column, level: "warning", rule: "prefer-token-class", element,
-          message: `\`${whole}\` matches a DBUI hex but uses arbitrary syntax.`,
+          message: `\`${whole}\` is a shipped semantic value written as a hex.`,
           fix: `Name the token instead of the value — bg-${EG_SURFACE} rather than [${raw}]. \`dbui token color\` prints every one.`,
           source: className,
         })
@@ -576,8 +594,14 @@ function checkClassName(className, file, line, column, element) {
   // Raw-primitive var() usage (e.g. bg-[var(--interface-neutral-600)])
   checkVarRefs(className, file, line, column, element)
 
-  // Hex-in-string check (rare but possible in cn() calls)
-  const hexMatches = className.match(/#[0-9a-fA-F]{3,8}\b/g) || []
+  /* Hex anywhere else in the class value — inside a shadow, inside a cn() arm.
+   *
+   * Attribute-selector values are stripped first. A Tailwind arbitrary variant
+   * like `[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border-base`
+   * names the colour Recharts already emits in order to override it, so the hex
+   * is a match target rather than a value this code sets. There is nothing to
+   * tokenise — the selector has to say what the third-party markup says. */
+  const hexMatches = className.replace(/=\s*['"][^'"]*['"]/g, "").match(/#[0-9a-fA-F]{3,8}\b/g) || []
   for (const hexRaw of hexMatches) {
     const hex = parseHex(hexRaw)
     if (hex && !APPROVED_HEX.has(hex)) {
