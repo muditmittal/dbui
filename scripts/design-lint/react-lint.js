@@ -94,20 +94,50 @@ function parseHex(value) {
 
 const ARBITRARY_VALUE_RE = /\b([a-z]+(?:-[a-z]+)*)-\[([^\]]+)\]/g
 
-function nearestSpacing(px) {
-  let best = APPROVED_SPACING_PX.has(0) ? 0 : 4
-  let bestDiff = Infinity
-  for (const v of APPROVED_SPACING_PX) {
-    const diff = Math.abs(px - v)
-    if (diff < bestDiff) { bestDiff = diff; best = v }
-  }
-  return best
+/* ─── Family lookup ───
+ *
+ * Which family a prefix belongs to is generated, so the two answers the linter
+ * gives — is this legal, and what should it be instead — come from the same
+ * place the CSS does.
+ */
+const FAMILY_OF_PREFIX = new Map()
+for (const [name, fam] of Object.entries(DIM)) {
+  if (name.startsWith("$")) continue
+  for (const prefix of fam.reaches) FAMILY_OF_PREFIX.set(prefix, { name, ...fam })
 }
 
-function suggestSpacingClass(prefix, px) {
-  const t = px === 0 ? 0 : px === 2 ? 0.5 : px / 4
-  return `${prefix}-${t}`
-}
+// Ties go up. 6px sits exactly between 4 and 8 and 10px between 8 and 12, which
+// is most of the drift there is, and the snap pass resolved both upward — see
+// the rules recorded in docs/token-simplification.md. Advice that disagrees
+// with the decision already taken is advice nobody follows.
+const nearestStop = (px, fam) =>
+  fam.px.reduce((best, v) => (Math.abs(px - v) <= Math.abs(px - best) ? v : best), fam.px[0])
+const stepAt = (px, fam) => fam.steps[fam.px.indexOf(px)]
+const suggestClass = (prefix, px, fam) => `${prefix}-${stepAt(nearestStop(px, fam), fam)}`
+
+// A family carries a stop when it has a use for it, so a value past either end
+// is not a decision it refused — the multiplier is still declared and a page
+// margin of 48px was never a padding step. Only what falls between the ends is
+// a claim the family can be wrong about.
+const inRange = (px, fam) => px >= fam.range[0] && px <= fam.range[1]
+
+/* Every bare numeric utility on a family's namespace: `gap-1.5`, `-mt-3`,
+ * `hover:size-3.5`, `group-data-[open]:py-2.5`.
+ *
+ * This is the half of the rule that was missing. `off-scale-spacing` only ever
+ * read bracket values, so it saw `p-[6px]` and was blind to `p-1.5`, which is
+ * the same six pixels written the way people actually write them — none of the
+ * 64 six-pixel sites the snap pass fixed had a bracket. Longest prefix first,
+ * so `space-y` wins over `space`. The trailing guard rejects `w-1/2` and
+ * `basis-1.5xl`, and the leading one rejects the `h-1` inside `aspect-h-1`.
+ */
+const NUMERIC_PREFIXES = [...FAMILY_OF_PREFIX.keys()]
+  .filter((p) => p !== "border" && !p.startsWith("rounded") && !p.startsWith("divide") && p !== "outline")
+  .sort((a, b) => b.length - a.length)
+const BARE_UTILITY_RE = new RegExp(
+  String.raw`(?<![\w-])-?(${NUMERIC_PREFIXES.join("|")})-(\d+(?:\.\d+)?)(?![\w./-])`,
+  "g"
+)
 
 // ─── Tailwind prefix → token category mapping ───
 // Each prefix maps to the category we should validate against.
@@ -116,16 +146,51 @@ const COLOR_PREFIXES = new Set([
   "ring", "ring-offset", "fill", "stroke", "outline", "shadow", "decoration",
   "from", "to", "via", "placeholder", "divide", "accent", "caret",
 ])
-const SPACING_PREFIXES = new Set([
-  "p", "pt", "pr", "pb", "pl", "px", "py", "ps", "pe",
-  "m", "mt", "mr", "mb", "ml", "mx", "my", "ms", "me",
-  "gap", "gap-x", "gap-y", "space-x", "space-y",
-  "top", "right", "bottom", "left", "inset", "inset-x", "inset-y",
-  "w", "h", "min-w", "min-h", "max-w", "max-h", "size",
-])
 const FONT_SIZE_PREFIXES = new Set(["text"]) // text-[13px] is a size; text-[#abc] is a color
 const LEADING_PREFIXES = new Set(["leading"])
 const RADIUS_PREFIXES = new Set(DIM.radius.reaches)
+// One rule per family, so a report can be scoped to a padding pass or a control
+// -height pass without reading every line of it.
+const OFF_SCALE_RULE = { space: "off-scale-spacing", size: "off-scale-size" }
+
+/**
+ * The bare form of the same question the bracket scan asks.
+ *
+ * `p-1.5` and `p-[6px]` are one defect written two ways, and only one of them
+ * was being read. The bare form is the common one — the whole 64-site six-pixel
+ * drift was written as `gap-1.5` and `py-2.5`, and the linter reported clean
+ * through all of it.
+ *
+ * Values outside the family's range are left alone. Tailwind's multiplier is
+ * still declared on purpose, so `mt-12` compiles at 48px and is a page distance
+ * rather than a space stop the family refused. Closing the scale is a separate
+ * decision with its own call-site cost.
+ */
+function checkBareUtilities(className, file, line, column, element) {
+  BARE_UTILITY_RE.lastIndex = 0
+  let m
+  while ((m = BARE_UTILITY_RE.exec(className))) {
+    const [whole, prefix, rawStep] = m
+    const fam = FAMILY_OF_PREFIX.get(prefix)
+    if (!fam) continue
+    const step = parseFloat(rawStep)
+    if (fam.steps.includes(step)) continue
+    const px = step * fam.unitPx
+    if (!inRange(px, fam)) continue
+    // min-w and max-w read Tailwind's spacing key rather than --width-*, which
+    // is the one asymmetry in the bridge (F11). Worth saying at the call site,
+    // because the author almost always meant the size family.
+    const unbridged = prefix === "min-w" || prefix === "max-w"
+    violations.push({
+      file, line, column, level: "error", rule: OFF_SCALE_RULE[fam.name], element,
+      message: `\`${whole.replace(/^-/, "")}\` is ${px}px, which the ${fam.name} family does not carry.`,
+      fix:
+        `Nearest stop is ${nearestStop(px, fam)}px — ${suggestClass(prefix, px, fam)}.` +
+        (unbridged ? ` ${prefix}-* is not bridged, so it rides Tailwind's multiplier rather than a size stop.` : ""),
+      source: className,
+    })
+  }
+}
 
 function checkClassName(className, file, line, column, element) {
   let m
@@ -200,19 +265,23 @@ function checkClassName(className, file, line, column, element) {
         continue
       }
 
-      if (SPACING_PREFIXES.has(prefix)) {
-        if (!APPROVED_SPACING_PX.has(px)) {
+      const fam = FAMILY_OF_PREFIX.get(prefix)
+      if (fam && (fam.name === "space" || fam.name === "size")) {
+        // Same range guard as the bare form: a 400px panel is a layout
+        // dimension, not a size stop the family declined to carry.
+        if (!fam.px.includes(px) && !inRange(px, fam)) continue
+        if (!fam.px.includes(px)) {
           violations.push({
-            file, line, column, level: "error", rule: "off-scale-spacing", element,
-            message: `Spacing \`${whole}\` (${px}px) is not on the 4px scale.`,
-            fix: `Use the nearest scale value: ${nearestSpacing(px)}px → ${suggestSpacingClass(prefix, nearestSpacing(px))}.`,
+            file, line, column, level: "error", rule: OFF_SCALE_RULE[fam.name], element,
+            message: `\`${whole}\` is ${px}px, which the ${fam.name} family does not carry.`,
+            fix: `Nearest stop is ${nearestStop(px, fam)}px — ${suggestClass(prefix, px, fam)}.`,
             source: className,
           })
         } else {
           violations.push({
             file, line, column, level: "warning", rule: "prefer-token-class", element,
-            message: `\`${whole}\` is on-scale but arbitrary — prefer the named utility.`,
-            fix: `Replace with ${suggestSpacingClass(prefix, px)}.`,
+            message: `\`${whole}\` is on the ${fam.name} family but written as an arbitrary value.`,
+            fix: `Replace with ${suggestClass(prefix, px, fam)}.`,
             source: className,
           })
         }
@@ -223,6 +292,8 @@ function checkClassName(className, file, line, column, element) {
       continue
     }
   }
+
+  checkBareUtilities(className, file, line, column, element)
 
   // Raw-primitive var() usage (e.g. bg-[var(--interface-neutral-600)])
   checkVarRefs(className, file, line, column, element)
@@ -280,8 +351,8 @@ function checkInlineStyle(node, file, line, column, element) {
         if (!APPROVED_SPACING_PX.has(px)) {
           violations.push({
             file, line, column, level: "warning", rule: "inline-off-scale-spacing", element,
-            message: `Inline style \`${name}: '${text}'\` is not on the 4px scale.`,
-            fix: `Use ${nearestSpacing(px)}px or replace with a Tailwind utility class.`,
+            message: `Inline style \`${name}: '${text}'\` is not a stop on the space family.`,
+            fix: `Use ${nearestStop(px, DIM.space)}px, or better, a utility class so the density dial reaches it.`,
             source: `${name}: ${text}`,
           })
         }
