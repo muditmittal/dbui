@@ -2,9 +2,13 @@ import { Meta } from "@storybook/blocks"
 
 {/*
   Storybook's landing entry. It used to hold a second copy of the gallery grid;
-  the grid now lives once, on /docs/components, and this page exists only to say
+  the grid now lives once, on /components, and this page exists only to say
   where. A reader who lands here is looking for the catalog and would otherwise
   hunt for it in the sidebar.
+
+  `target="_top"` because Storybook is framed by that same route when it is
+  reached through a gallery tile. Without it the portal would load inside its
+  own iframe.
 */}
 
 <Meta title="Components/Components" />
@@ -14,7 +18,7 @@ import { Meta } from "@storybook/blocks"
   <p className="type-paragraph mt-3 max-w-xl text-text-subtle">
     One component at a time, with every variant and its controls. Pick one from the sidebar, or
     browse the whole set as a grid in the{" "}
-    <a href="/docs/components" target="_top" className="text-text-accent">
+    <a href="/components" target="_top" className="text-text-accent">
       component gallery
     </a>
     , where each tile links back here.

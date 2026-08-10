@@ -24,7 +24,7 @@ const config: StorybookConfig = {
         ...config.resolve.alias,
         // Listed before "dbui" so the longer package names win.
         "dbui-viz": path.resolve(__dirname, "../../../packages/dbui-viz/src"),
-        "dbui-genie": path.resolve(__dirname, "../../../packages/dbui-genie/src"),
+        "dbui-chat": path.resolve(__dirname, "../../../packages/dbui-chat/src"),
         "dbui": path.resolve(__dirname, "../../../packages/dbui/src"),
         // Subpath aliases match the new src/{shells,compositions,components}/ folders
         "dbui-shells/shell": path.resolve(__dirname, "../../../packages/dbui-shells/src/shells/Base.tsx"),

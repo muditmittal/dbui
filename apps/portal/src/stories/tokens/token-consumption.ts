@@ -53,18 +53,18 @@ export const families: Family[] = [
   {
     "key": "color",
     "label": "Color",
-    "count": 84,
+    "count": 90,
     "unit": "colors",
-    "properties": 84,
+    "properties": 90,
     "bridge": {
       "namespace": "--color-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 1023,
-      "files": 75
+      "uses": 1018,
+      "files": 76
     },
     "superseded": null,
-    "systemRefs": 23,
+    "systemRefs": 24,
     "systemConsumers": [
       {
         "file": "packages/dbui/src/components/ui/sonner.tsx",
@@ -79,7 +79,7 @@ export const families: Family[] = [
         "refs": 2
       },
       {
-        "file": "packages/dbui-genie/src/components/prompt-input.tsx",
+        "file": "packages/dbui-chat/src/components/prompt-input.tsx",
         "refs": 2
       },
       {
@@ -89,10 +89,18 @@ export const families: Family[] = [
       {
         "file": "packages/dbui/src/components/ui/dialog.tsx",
         "refs": 1
+      },
+      {
+        "file": "packages/dbui-viz/src/lib/theme.ts",
+        "refs": 1
       }
     ],
-    "portalRefs": 4,
+    "portalRefs": 58,
     "portalConsumers": [
+      {
+        "file": "apps/portal/src/components/utility-data.ts",
+        "refs": 54
+      },
       {
         "file": "apps/portal/src/app/globals.css",
         "refs": 2
@@ -109,7 +117,7 @@ export const families: Family[] = [
     "label": "Type",
     "count": 14,
     "unit": "styles",
-    "properties": 74,
+    "properties": 21,
     "bridge": {
       "namespace": "type-*",
       "kind": "utility",
@@ -125,11 +133,11 @@ export const families: Family[] = [
         "refs": 3
       }
     ],
-    "portalRefs": 5,
+    "portalRefs": 3,
     "portalConsumers": [
       {
         "file": "apps/portal/src/app/globals.css",
-        "refs": 5
+        "refs": 3
       }
     ],
     "live": true
@@ -137,15 +145,17 @@ export const families: Family[] = [
   {
     "key": "elevation",
     "label": "Elevation",
-    "count": 4,
+    "count": 5,
     "unit": "levels",
-    "properties": 4,
-    "bridge": null,
-    "superseded": {
+    "properties": 5,
+    "bridge": {
       "namespace": "--shadow-*",
-      "uses": 83,
-      "files": 33
+      "kind": "theme",
+      "file": "packages/dbui/src/tokens/tokens.css",
+      "uses": 50,
+      "files": 32
     },
+    "superseded": null,
     "systemRefs": 0,
     "systemConsumers": [],
     "portalRefs": 1,
@@ -155,7 +165,7 @@ export const families: Family[] = [
         "refs": 1
       }
     ],
-    "live": false
+    "live": true
   },
   {
     "key": "scalars",
@@ -165,8 +175,13 @@ export const families: Family[] = [
     "properties": 3,
     "bridge": null,
     "superseded": null,
-    "systemRefs": 0,
-    "systemConsumers": [],
+    "systemRefs": 1,
+    "systemConsumers": [
+      {
+        "file": "packages/dbui-viz/src/lib/theme.ts",
+        "refs": 1
+      }
+    ],
     "portalRefs": 2,
     "portalConsumers": [
       {
@@ -186,7 +201,7 @@ export const families: Family[] = [
       "namespace": "--spacing-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 507,
+      "uses": 570,
       "files": 67
     },
     "superseded": null,
@@ -206,7 +221,7 @@ export const families: Family[] = [
       "namespace": "--size-*, --height-*, --width-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 164,
+      "uses": 165,
       "files": 47
     },
     "superseded": null,
@@ -226,8 +241,8 @@ export const families: Family[] = [
       "namespace": "--radius-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 116,
-      "files": 57
+      "uses": 60,
+      "files": 37
     },
     "superseded": null,
     "systemRefs": 5,
@@ -300,7 +315,7 @@ export const scalars: Scalar[] = [
     "bridges": [
       {
         "namespace": "--spacing",
-        "uses": 818
+        "uses": 819
       }
     ],
     "live": true
@@ -315,7 +330,7 @@ export const scalars: Scalar[] = [
     "bridges": [
       {
         "namespace": "--spacing",
-        "uses": 818
+        "uses": 819
       }
     ],
     "live": true
@@ -338,18 +353,18 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": "packages/dbui/src/tokens/tokens.css",
     "overriddenTo": "calc(var(--db-spacing-unit) * var(--db-density-scalar))",
     "origin": "override",
-    "uses": 818,
+    "uses": 819,
     "files": 78
   },
   {
     "namespace": "--shadow-*",
     "probe": "--shadow-lg",
     "tailwindValue": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-    "overriddenIn": null,
-    "overriddenTo": null,
-    "origin": "tailwind",
-    "uses": 83,
-    "files": 33
+    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
+    "overriddenTo": "var(--db-elevation-lg)",
+    "origin": "override",
+    "uses": 81,
+    "files": 32
   },
   {
     "namespace": "ring and outline width",
@@ -358,18 +373,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "utility",
-    "uses": 57,
+    "uses": 56,
     "files": 31
-  },
-  {
-    "namespace": "--radius-*",
-    "probe": "--radius-md",
-    "tailwindValue": "0.375rem",
-    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
-    "overriddenTo": "initial",
-    "origin": "override",
-    "uses": 43,
-    "files": 25
   },
   {
     "namespace": "--animate-*",
@@ -378,7 +383,7 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "tailwind",
-    "uses": 40,
+    "uses": 37,
     "files": 18
   },
   {
@@ -388,8 +393,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "utility",
-    "uses": 34,
-    "files": 20
+    "uses": 36,
+    "files": 22
   },
   {
     "namespace": "--default-transition-duration",
@@ -402,24 +407,14 @@ export const tailwind: TailwindNamespace[] = [
     "files": 22
   },
   {
-    "namespace": "duration-* and ease-*",
-    "probe": null,
-    "tailwindValue": null,
-    "overriddenIn": null,
-    "overriddenTo": null,
-    "origin": "utility",
-    "uses": 14,
-    "files": 10
-  },
-  {
-    "namespace": "--font-weight-*",
-    "probe": "--font-weight-semibold",
-    "tailwindValue": "600",
-    "overriddenIn": null,
-    "overriddenTo": null,
-    "origin": "tailwind",
-    "uses": 14,
-    "files": 11
+    "namespace": "--radius-*",
+    "probe": "--radius-md",
+    "tailwindValue": "0.375rem",
+    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
+    "overriddenTo": "initial",
+    "origin": "override",
+    "uses": 17,
+    "files": 1
   },
   {
     "namespace": "--breakpoint-*",
@@ -430,6 +425,26 @@ export const tailwind: TailwindNamespace[] = [
     "origin": "tailwind",
     "uses": 13,
     "files": 4
+  },
+  {
+    "namespace": "--font-weight-*",
+    "probe": "--font-weight-semibold",
+    "tailwindValue": "600",
+    "overriddenIn": null,
+    "overriddenTo": null,
+    "origin": "tailwind",
+    "uses": 13,
+    "files": 10
+  },
+  {
+    "namespace": "duration-* and ease-*",
+    "probe": null,
+    "tailwindValue": null,
+    "overriddenIn": null,
+    "overriddenTo": null,
+    "origin": "utility",
+    "uses": 12,
+    "files": 9
   },
   {
     "namespace": "--shadow-focus",
@@ -593,7 +608,7 @@ export const themeOverrides: ThemeOverride[] = [
 ]
 
 export const hardcoded: Hardcoded = {
-  "uses": 47,
+  "uses": 35,
   "files": [
     {
       "file": "packages/dbui-shells/src/shells/CatalogExplorer.tsx",
@@ -602,16 +617,6 @@ export const hardcoded: Hardcoded = {
         "w-[280px]",
         "w-[240px]",
         "w-[220px]"
-      ]
-    },
-    {
-      "file": "packages/dbui/src/components/ui/input-group.tsx",
-      "refs": 4,
-      "samples": [
-        "has-[>button]:ml-[-0.3rem]",
-        "has-[>kbd]:ml-[-0.15rem]",
-        "has-[>button]:mr-[-0.3rem]",
-        "has-[>kbd]:mr-[-0.15rem]"
       ]
     },
     {
@@ -666,43 +671,6 @@ export const hardcoded: Hardcoded = {
       ]
     },
     {
-      "file": "packages/dbui/src/components/ui/menubar.tsx",
-      "refs": 2,
-      "samples": [
-        "p-[3px]",
-        "py-[2px]"
-      ]
-    },
-    {
-      "file": "packages/dbui-shells/src/components/AssistantPanel.tsx",
-      "refs": 2,
-      "samples": [
-        "w-[360px]",
-        "min-h-[36px]"
-      ]
-    },
-    {
-      "file": "packages/dbui/src/components/ui/checkbox.tsx",
-      "refs": 1,
-      "samples": [
-        "rounded-[4px]"
-      ]
-    },
-    {
-      "file": "packages/dbui/src/components/ui/combobox.tsx",
-      "refs": 1,
-      "samples": [
-        "max-w-[160px]"
-      ]
-    },
-    {
-      "file": "packages/dbui/src/components/ui/dropdown-menu.tsx",
-      "refs": 1,
-      "samples": [
-        "min-w-[96px]"
-      ]
-    },
-    {
       "file": "packages/dbui/src/components/ui/hover-card.tsx",
       "refs": 1,
       "samples": [
@@ -738,20 +706,6 @@ export const hardcoded: Hardcoded = {
       ]
     },
     {
-      "file": "packages/dbui/src/components/ui/table.tsx",
-      "refs": 1,
-      "samples": [
-        "rounded-[1px]"
-      ]
-    },
-    {
-      "file": "packages/dbui/src/components/ui/tabs.tsx",
-      "refs": 1,
-      "samples": [
-        "p-[3px]"
-      ]
-    },
-    {
       "file": "packages/dbui/src/components/ui/tooltip.tsx",
       "refs": 1,
       "samples": [
@@ -763,6 +717,13 @@ export const hardcoded: Hardcoded = {
       "refs": 1,
       "samples": [
         "w-[180px]"
+      ]
+    },
+    {
+      "file": "packages/dbui-shells/src/components/AssistantPanel.tsx",
+      "refs": 1,
+      "samples": [
+        "w-[360px]"
       ]
     },
     {
@@ -798,15 +759,15 @@ export const hardcoded: Hardcoded = {
     "w-[280px]",
     "w-[240px]",
     "w-[220px]",
-    "has-[>button]:ml-[-0.3rem]",
-    "has-[>kbd]:ml-[-0.15rem]",
-    "has-[>button]:mr-[-0.3rem]",
-    "has-[>kbd]:mr-[-0.15rem]",
     "rounded-[2px]",
     "border-[1.5px]",
     "data-[size=normal]:sm:max-w-[640px]",
     "data-[size=wide]:sm:max-w-[880px]",
-    "data-[size=extrawide]:sm:max-w-[1200px]"
+    "data-[size=extrawide]:sm:max-w-[1200px]",
+    "data-[vaul-drawer-direction=left]:sm:max-w-[360px]",
+    "data-[vaul-drawer-direction=right]:sm:max-w-[360px]",
+    "w-[100px]",
+    "max-w-[240px]"
   ]
 }
 

@@ -26,7 +26,11 @@ export const Playground: StoryObj = {
       <h2 style={{ fontFamily: "'SF Pro Display', -apple-system, sans-serif", fontSize: 22, fontWeight: 600, lineHeight: "28px", margin: "0 0 24px 0", color: "#161616" }}>Drawer</h2>
 
       <Drawer>
-        <DrawerTrigger render={<Button variant="outline">Open Drawer</Button>} />
+        {/* Drawer wraps vaul, not Base UI, so it composes through `asChild`.
+            `render` is dropped there and ships a trigger with no children. */}
+        <DrawerTrigger asChild>
+          <Button variant="outline">Open Drawer</Button>
+        </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
             <DrawerTitle>Edit cluster</DrawerTitle>

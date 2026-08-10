@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { PlatformNav } from "./components/PlatformNav"
+import { PlatformNav } from "dbui-shells/components/PlatformNav"
 
 const meta: Meta = {
   title: "Components/Compositions/Platform Nav",

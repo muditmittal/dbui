@@ -341,13 +341,17 @@
   "badge": {
     "figmaCode": {
       "Variant": {
-        "figma": ["Fill", "Outline"],
-        "code": ["variant='fill'", "variant='outline'"]
+        "figma": ["Fill", "Outline", "Positive", "Negative", "Warning", "Info"],
+        "code": ["variant='fill'", "variant='outline'", "variant='positive'", "variant='negative'", "variant='warning'", "variant='info'"]
       }
     },
     "production": [
       { "variant": "Fill", "dbui": "<Badge variant=\"fill\">", "dubois": null },
-      { "variant": "Outline", "dbui": "<Badge variant=\"outline\">", "dubois": null }
+      { "variant": "Outline", "dbui": "<Badge variant=\"outline\">", "dubois": null },
+      { "variant": "Positive", "dbui": "<Badge variant=\"positive\">", "dubois": null },
+      { "variant": "Negative", "dbui": "<Badge variant=\"negative\">", "dubois": null },
+      { "variant": "Warning", "dbui": "<Badge variant=\"warning\">", "dubois": null },
+      { "variant": "Info", "dbui": "<Badge variant=\"info\">", "dubois": null }
     ]
   },
   "breadcrumb": {
@@ -482,7 +486,7 @@
   "tabs": {
     "figmaCode": {
       "Variant": {
-        "figma": ["Default", "Pill (internal)"],
+        "figma": ["Default", "Pill"],
         "code": ["default", "pill"]
       }
     },

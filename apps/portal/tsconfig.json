@@ -23,8 +23,8 @@
       "@/*": ["./src/*"],
       "dbui-viz": ["../../packages/dbui-viz/src"],
       "dbui-viz/*": ["../../packages/dbui-viz/src/*"],
-      "dbui-genie": ["../../packages/dbui-genie/src"],
-      "dbui-genie/*": ["../../packages/dbui-genie/src/*"],
+      "dbui-chat": ["../../packages/dbui-chat/src"],
+      "dbui-chat/*": ["../../packages/dbui-chat/src/*"],
       "dbui": ["../../packages/dbui/src"],
       "dbui/*": ["../../packages/dbui/src/*"]
     }

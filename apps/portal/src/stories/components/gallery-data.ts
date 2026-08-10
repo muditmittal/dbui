@@ -28,6 +28,12 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-actions-button--playground"
       },
       {
+        "name": "Segment Control",
+        "slug": "segment-control",
+        "useFor": "Single-value selection in toolbars (2–5 single-word items)",
+        "storyId": "components-actions-segmentcontrol--playground"
+      },
+      {
         "name": "Split Button",
         "slug": "split-button",
         "useFor": "A primary action with related alternatives in a dropdown (3–5 alternatives)",
@@ -42,9 +48,9 @@ export const galleryGroups: GalleryGroup[] = [
     ]
   },
   {
-    "key": "input",
-    "label": "Input",
-    "blurb": "Collects a value the screen reads later",
+    "key": "controls",
+    "label": "Controls",
+    "blurb": "Collects or changes a value the screen reads later",
     "items": [
       {
         "name": "Checkbox",
@@ -59,16 +65,34 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-controls-combobox--playground"
       },
       {
-        "name": "Date Range",
-        "slug": "date-range",
-        "useFor": "Pair of start + end date fields (run history, audit windows, time-window filters)",
-        "storyId": null
+        "name": "Dropdown Menu",
+        "slug": "dropdown-menu",
+        "useFor": "Click-triggered action menus, kebab/overflow menus, item-level menus",
+        "storyId": "components-controls-dropdownmenu--playground"
       },
       {
         "name": "Input",
         "slug": "input",
         "useFor": "Single-line text fields, numbers, search, email — md size by default",
         "storyId": "components-controls-input--playground"
+      },
+      {
+        "name": "Input Group",
+        "slug": "input-group",
+        "useFor": "Attach icons, buttons, or text addons to an Input (e.g. search + clear, prefix/suffix)",
+        "storyId": "components-controls-inputgroup--playground"
+      },
+      {
+        "name": "Radio",
+        "slug": "radio-group",
+        "useFor": "One-of-many choice for 2–7 options with text labels",
+        "storyId": "components-controls-radiogroup--playground"
+      },
+      {
+        "name": "Radio Tile",
+        "slug": "radio-tile",
+        "useFor": "Visual one-of-many with icon + title + description (2–5 options)",
+        "storyId": "components-controls-radiotile--playground"
       },
       {
         "name": "Select",
@@ -97,97 +121,28 @@ export const galleryGroups: GalleryGroup[] = [
     ]
   },
   {
-    "key": "selection",
-    "label": "Selection",
-    "blurb": "Picks one of a few choices that are already on screen",
+    "key": "content",
+    "label": "Content",
+    "blurb": "Shows what the screen already has, and arranges it",
     "items": [
       {
-        "name": "Radio",
-        "slug": "radio-group",
-        "useFor": "One-of-many choice for 2–7 options with text labels",
-        "storyId": "components-controls-radiogroup--playground"
+        "name": "Accordion",
+        "slug": "accordion",
+        "useFor": "Settings panels, filter groups, FAQ-style content",
+        "storyId": "components-content-accordion--playground"
       },
       {
-        "name": "Radio Tile",
-        "slug": "radio-tile",
-        "useFor": "Visual one-of-many with icon + title + description (2–5 options)",
-        "storyId": "components-controls-radiotile--playground"
+        "name": "Aspect Ratio",
+        "slug": "aspect-ratio",
+        "useFor": "Lock image/video proportions inside cards and grids",
+        "storyId": null
       },
       {
-        "name": "Segment Control",
-        "slug": "segment-control",
-        "useFor": "Single-value selection in toolbars (2–5 single-word items)",
-        "storyId": "components-actions-segmentcontrol--playground"
-      }
-    ]
-  },
-  {
-    "key": "menu",
-    "label": "Menu",
-    "blurb": "Holds actions in a list that opens from a trigger",
-    "items": [
-      {
-        "name": "Dropdown Menu",
-        "slug": "dropdown-menu",
-        "useFor": "Click-triggered action menus, kebab/overflow menus, item-level menus",
-        "storyId": "components-controls-dropdownmenu--playground"
-      }
-    ]
-  },
-  {
-    "key": "overlay",
-    "label": "Overlay",
-    "blurb": "Puts content above the page and takes focus with it",
-    "items": [
-      {
-        "name": "Alert Dialog",
-        "slug": "alert-dialog",
-        "useFor": "Confirming destructive or irreversible actions",
-        "storyId": "components-overlays-alertdialog--playground"
+        "name": "Avatar",
+        "slug": "avatar",
+        "useFor": "User identity (image, fallback initials, default icon)",
+        "storyId": "components-content-avatar--playground"
       },
-      {
-        "name": "Dialog",
-        "slug": "dialog",
-        "useFor": "Focused tasks and forms in an overlay (max one open at a time)",
-        "storyId": "components-overlays-dialog--playground"
-      },
-      {
-        "name": "Drawer",
-        "slug": "drawer",
-        "useFor": "Detail panels, settings, secondary content sliding in from the right",
-        "storyId": "components-overlays-drawer--playground"
-      },
-      {
-        "name": "Hover Card",
-        "slug": "hover-card",
-        "useFor": "Rich preview content on hover (user profiles, link previews)",
-        "storyId": "components-overlays-hovercard--playground"
-      },
-      {
-        "name": "Popover",
-        "slug": "popover",
-        "useFor": "Date pickers, color pickers, mini-forms, rich tooltips with content",
-        "storyId": "components-overlays-popover--playground"
-      },
-      {
-        "name": "Toast",
-        "slug": "sonner",
-        "useFor": "Transient feedback toasts after an action (save, copy, delete)",
-        "storyId": "components-overlays-toast--playground"
-      },
-      {
-        "name": "Tooltip",
-        "slug": "tooltip",
-        "useFor": "One-line hover hints, especially on icon-only buttons (size=\"icon-md\")",
-        "storyId": "components-overlays-tooltip--playground"
-      }
-    ]
-  },
-  {
-    "key": "navigation",
-    "label": "Navigation",
-    "blurb": "Moves the reader between views",
-    "items": [
       {
         "name": "Breadcrumb",
         "slug": "breadcrumb",
@@ -195,10 +150,28 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-content-breadcrumb--playground"
       },
       {
+        "name": "Card",
+        "slug": "card",
+        "useFor": "Bounded content surfaces with elevation (rounded-4, shadow)",
+        "storyId": "components-content-card--playground"
+      },
+      {
         "name": "Editor Tabs",
         "slug": "editor-tabs",
         "useFor": "Code-editor style closeable tabs with file-type icons",
         "storyId": "components-content-editortabs--playground"
+      },
+      {
+        "name": "Key Value Pair",
+        "slug": "key-value-pair",
+        "useFor": "Metadata in detail panels and sidebars, key beside value by default",
+        "storyId": "components-content-keyvaluepair--playground"
+      },
+      {
+        "name": "Label",
+        "slug": "label",
+        "useFor": "The name of a form field",
+        "storyId": null
       },
       {
         "name": "Navbar",
@@ -213,10 +186,34 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-content-pagination--playground"
       },
       {
+        "name": "Separator",
+        "slug": "separator",
+        "useFor": "Visual divider between content groups",
+        "storyId": "components-content-separator--playground"
+      },
+      {
+        "name": "Table",
+        "slug": "table",
+        "useFor": "Structured data with sortable columns, row hover, optional row actions",
+        "storyId": "components-content-table--playground"
+      },
+      {
         "name": "Tabs",
         "slug": "tabs",
         "useFor": "Switch between sibling content panels of equal importance (2–7 tabs)",
         "storyId": "components-content-tabs--playground"
+      },
+      {
+        "name": "Tag",
+        "slug": "tag",
+        "useFor": "Removable filter chips, key:value labels in faceted filters",
+        "storyId": "components-content-tag--playground"
+      },
+      {
+        "name": "Tree",
+        "slug": "data-tree",
+        "useFor": "Hierarchical data browsing (catalogs, schemas, tables) — every node has a typed icon",
+        "storyId": "components-content-tree-data-tree--default"
       }
     ]
   },
@@ -266,105 +263,80 @@ export const galleryGroups: GalleryGroup[] = [
         "slug": "status",
         "useFor": "Status with icon + label (running, error, success, online, …)",
         "storyId": "components-content-status--playground"
+      },
+      {
+        "name": "Toast",
+        "slug": "sonner",
+        "useFor": "Transient feedback toasts after an action (save, copy, delete)",
+        "storyId": "components-overlays-toast--playground"
       }
     ]
   },
   {
-    "key": "display",
-    "label": "Display",
-    "blurb": "Shows data the screen already has",
+    "key": "overlays",
+    "label": "Overlays",
+    "blurb": "Puts content above the page and takes focus with it",
     "items": [
       {
-        "name": "Avatar",
-        "slug": "avatar",
-        "useFor": "User identity (image, fallback initials, default icon)",
-        "storyId": "components-content-avatar--playground"
+        "name": "Alert Dialog",
+        "slug": "alert-dialog",
+        "useFor": "Confirming destructive or irreversible actions",
+        "storyId": "components-overlays-alertdialog--playground"
       },
       {
-        "name": "Card",
-        "slug": "card",
-        "useFor": "Bounded content surfaces with elevation (rounded-4, shadow)",
-        "storyId": "components-content-card--playground"
+        "name": "Dialog",
+        "slug": "dialog",
+        "useFor": "Focused tasks and forms in an overlay (max one open at a time)",
+        "storyId": "components-overlays-dialog--playground"
       },
       {
-        "name": "Key Value Pair",
-        "slug": "key-value-pair",
-        "useFor": "Metadata in detail sidebars (key uses muted-foreground; value uses foreground)",
-        "storyId": "components-content-keyvaluepair--playground"
+        "name": "Drawer",
+        "slug": "drawer",
+        "useFor": "Detail panels, settings, secondary content sliding in from the right",
+        "storyId": "components-overlays-drawer--playground"
       },
       {
-        "name": "Table",
-        "slug": "table",
-        "useFor": "Structured data with sortable columns, row hover, optional row actions",
-        "storyId": "components-content-table--playground"
+        "name": "Hover Card",
+        "slug": "hover-card",
+        "useFor": "Rich preview content on hover (user profiles, link previews)",
+        "storyId": "components-overlays-hovercard--playground"
       },
       {
-        "name": "Tag",
-        "slug": "tag",
-        "useFor": "Removable filter chips, key:value labels in faceted filters",
-        "storyId": "components-content-tag--playground"
+        "name": "Popover",
+        "slug": "popover",
+        "useFor": "Date pickers, color pickers, mini-forms, rich tooltips with content",
+        "storyId": "components-overlays-popover--playground"
       },
       {
-        "name": "Tree",
-        "slug": "data-tree",
-        "useFor": "Hierarchical data browsing (catalogs, schemas, tables) — every node has a typed icon",
-        "storyId": "components-content-tree-data-tree--default"
+        "name": "Tooltip",
+        "slug": "tooltip",
+        "useFor": "One-line hover hints, especially on icon-only buttons (size=\"icon-md\")",
+        "storyId": "components-overlays-tooltip--playground"
       }
     ]
   },
   {
-    "key": "layout",
-    "label": "Layout",
-    "blurb": "Arranges other components and carries no content of its own",
-    "items": [
-      {
-        "name": "Accordion",
-        "slug": "accordion",
-        "useFor": "Settings panels, filter groups, FAQ-style content",
-        "storyId": "components-content-accordion--playground"
-      },
-      {
-        "name": "Aspect Ratio",
-        "slug": "aspect-ratio",
-        "useFor": "Lock image/video proportions inside cards and grids",
-        "storyId": null
-      },
-      {
-        "name": "Input Group",
-        "slug": "input-group",
-        "useFor": "Attach icons, buttons, or text addons to an Input (e.g. search + clear, prefix/suffix)",
-        "storyId": "components-controls-inputgroup--playground"
-      },
-      {
-        "name": "Label",
-        "slug": "label",
-        "useFor": "The name of a form field",
-        "storyId": null
-      },
-      {
-        "name": "Separator",
-        "slug": "separator",
-        "useFor": "Visual divider between content groups",
-        "storyId": "components-content-separator--playground"
-      }
-    ]
-  },
-  {
-    "key": "chrome",
-    "label": "Chrome",
+    "key": "compositions",
+    "label": "Compositions",
     "blurb": "Frames the page, so a screen takes it from a shell rather than building one",
     "items": [
       {
         "name": "Controls Bar",
         "slug": "controls-bar",
         "useFor": "Filter / search / sort row below PageHeader (Shell A list pages, etc.)",
-        "storyId": "components-compositions-controls-bar--filtersonly"
+        "storyId": "components-compositions-controls-bar--filters-only"
+      },
+      {
+        "name": "Date Range",
+        "slug": "date-range",
+        "useFor": "Pair of start + end date fields (run history, audit windows, time-window filters)",
+        "storyId": null
       },
       {
         "name": "Page Header",
         "slug": "page-header",
         "useFor": "Top of every content surface — title row + optional Tabs row",
-        "storyId": "components-compositions-page-header--titleonly"
+        "storyId": "components-compositions-page-header--title-only"
       },
       {
         "name": "Platform Header",

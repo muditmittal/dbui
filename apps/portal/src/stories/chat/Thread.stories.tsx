@@ -25,7 +25,7 @@ import {
   Action,
   Loader,
   type ChatStatus,
-} from "dbui-genie"
+} from "dbui-chat"
 import { At } from "dbui/components/icons/At"
 import { Paperclip } from "dbui/components/icons/Paperclip"
 import { Copy } from "dbui/components/icons/Copy"
@@ -36,7 +36,7 @@ import { SparkleFill } from "dbui/components/icons/SparkleFill"
 import { GenieCode } from "dbui/components/icons/GenieCode"
 
 const meta: Meta = {
-  title: "Components/Genie/Thread",
+  title: "Components/Chat/Thread",
   parameters: { layout: "padded" },
 }
 

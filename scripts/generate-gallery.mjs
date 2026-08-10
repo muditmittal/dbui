@@ -1,17 +1,24 @@
 #!/usr/bin/env node
 /**
- * Generates the data behind the Components gallery on /docs/components.
+ * Generates the data behind the Components gallery on /components.
  *
  * The gallery must never be a hand-maintained list — it is the public claim
  * about what the library contains, so it is derived from the same CLI API that
  * agents read. Run after adding, renaming or recategorising a component.
  *
- *   node scripts/generate-gallery.mjs
+ *   node scripts/generate-gallery.mjs [--verify] [--storybook=<url>]
+ *
+ * `--verify` hands the ids computed below to `verify-story-ids.mjs`, which
+ * asserts them — and every id written by hand elsewhere in the portal — against
+ * a running Storybook. The ids here are built by reimplementing Storybook's own
+ * rule, so nothing else catches a link that is well-formed and points at
+ * nothing. The same check runs on its own as `yarn design:verify-story-ids`.
  */
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { componentList } from "../packages/dbui-cli/src/api.mjs"
+import { storybookUrlFrom, verifyStoryIds } from "./verify-story-ids.mjs"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const STORIES = path.join(ROOT, "apps/portal/src/stories")
@@ -42,7 +49,42 @@ const sanitize = (s) =>
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "")
 
+/**
+ * The display name Storybook derives from an export identifier. `@storybook/csf`
+ * runs `storyNameFromExport`, which is lodash `startCase` — it splits the
+ * identifier into words before anything sanitizes it.
+ *
+ * Skipping this step is invisible rather than loud, which is why it survived:
+ * `FiltersOnly` sanitizes straight to a perfectly well-formed `filtersonly`,
+ * and nothing about that string says no story answers to it. Storybook reads
+ * the same export as "Filters Only" and files it under `filters-only`, so the
+ * two only disagree on components whose export name has a second word.
+ *
+ * The four substitutions are lodash's word boundaries: camel case, an acronym
+ * followed by a word, and either side of a digit run. Case is then cosmetic —
+ * `sanitize` lowercases everything — but `upperFirst` per word is what the real
+ * function does, and a reimplementation that quietly differs is the bug again.
+ */
+const startCase = (key) =>
+  key
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/([A-Za-z])(\d)/g, "$1 $2")
+    .replace(/(\d)([A-Za-z])/g, "$1 $2")
+    .split(/[^A-Za-z0-9]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+
 const storyId = (title, name) => `${sanitize(title)}--${sanitize(name)}`
+
+/**
+ * A `name` on the story object does not enter this. It relabels the row in
+ * Storybook's sidebar and nothing else — `DataTreeExplorerStory` named
+ * "Data Tree Explorer" is still filed under `data-tree-explorer-story`. The id
+ * is the export identifier, always, which is the whole reason the transform
+ * above is the only step that matters.
+ */
 
 /** Collect every story title in the Components root, keyed by its leaf name. */
 function indexStories() {
@@ -65,7 +107,7 @@ function indexStories() {
       const leaf = title.split("/").pop()
       found.set(leaf.toLowerCase().replace(/[^a-z0-9]/g, ""), {
         title,
-        id: storyId(title, story),
+        id: storyId(title, startCase(story)),
       })
     }
   }
@@ -84,18 +126,26 @@ const ALIASES = {
 
 const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "")
 
-/** Category display order — action-first, matching how a builder reaches for them. */
+/**
+ * Category display order.
+ *
+ * The first four are Figma's own component groups, in Figma's order, so the
+ * gallery and the design file index the set the same way. Feedback and
+ * Compositions follow: Figma has neither as a group of its own — it scatters the
+ * feedback components across Content and Overlays, and files page chrome under
+ * Compositions — so they sit after the four rather than interleaved with them.
+ *
+ * A category the index gains but this list does not name still renders, at the
+ * end, with its key title-cased. That is the fallback that carried the six new
+ * groups on the first run of this generator and put Content ahead of Action.
+ */
 const ORDER = [
   ["action", "Action"],
-  ["input", "Input"],
-  ["selection", "Selection"],
-  ["menu", "Menu"],
-  ["overlay", "Overlay"],
-  ["navigation", "Navigation"],
+  ["controls", "Controls"],
+  ["content", "Content"],
   ["feedback", "Feedback"],
-  ["display", "Display"],
-  ["layout", "Layout"],
-  ["chrome", "Chrome"],
+  ["overlays", "Overlays"],
+  ["compositions", "Compositions"],
 ]
 
 const stories = indexStories()
@@ -178,4 +228,14 @@ if (unlinked) {
 }
 if (undescribed.length) {
   console.log(`  no Categories row in component-index.md: ${undescribed.join(", ")}`)
+}
+
+// Opt-in, so the generator still runs with no server. Verifying here rather
+// than only in the standalone command is worth the flag: this is the moment the
+// ids change, and the file it writes is on disk by now for the scan to read.
+if (process.argv.includes("--verify")) {
+  await verifyStoryIds({
+    extra: [...stories.values()],
+    url: storybookUrlFrom(process.argv),
+  })
 }

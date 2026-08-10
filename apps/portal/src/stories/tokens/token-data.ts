@@ -13,8 +13,26 @@ export type Token = {
   px: number | null
   multiple: number | null
 }
-export type ColorToken = { name: string; light: string; dark: string }
-export type ColorGroup = { key: string; label: string; blurb: string; tokens: ColorToken[] }
+/**
+ * A token that ships two values, one per color mode. Both are read out of the
+ * CSS rather than derived, because neither is a transform of the other.
+ */
+export type ModeToken = { name: string; light: string; dark: string }
+export type ColorToken = ModeToken
+export type ColorGroup = {
+  key: string
+  label: string
+  blurb: string
+  /** Which of the four families the group belongs to. Never part of a token name. */
+  family: string
+  tokens: ColorToken[]
+}
+/**
+ * The four families the semantic color layer is organized into. A grouping
+ * only — `structure` and `interaction` appear in no token name, no CSS
+ * variable and no Tailwind utility.
+ */
+export type ColorFamily = { key: string; label: string; blurb: string; groups: ColorGroup[] }
 /** One step of the ramp. `size` and `line` are px at a 16px root. */
 export type TypeStep = {
   name: string
@@ -25,11 +43,544 @@ export type TypeStep = {
   uppercase: boolean
 }
 
+export const colorFamilies: ColorFamily[] = [
+  {
+    "key": "structure",
+    "label": "Structure",
+    "blurb": "The substrate a screen is made of.",
+    "groups": [
+      {
+        "key": "surface",
+        "label": "Surface",
+        "blurb": "Backgrounds. Every surface has a text color that belongs on it.",
+        "family": "structure",
+        "tokens": [
+          {
+            "name": "surface-base",
+            "light": "#FFFFFF",
+            "dark": "#11171C"
+          },
+          {
+            "name": "surface-subtle",
+            "light": "#FAFAFA",
+            "dark": "#1F272D"
+          },
+          {
+            "name": "surface-strong",
+            "light": "#F5F5F5",
+            "dark": "#2B343D"
+          },
+          {
+            "name": "surface-inverse",
+            "light": "#171717",
+            "dark": "#F6F7F9"
+          },
+          {
+            "name": "surface-accent",
+            "light": "#D7EDFE",
+            "dark": "#021E38"
+          },
+          {
+            "name": "surface-hover",
+            "light": "rgba(0, 0, 0, 0.03)",
+            "dark": "rgba(255, 255, 255, 0.04)"
+          },
+          {
+            "name": "surface-inset",
+            "light": "rgba(0, 0, 0, 0.08)",
+            "dark": "rgba(255, 255, 255, 0.08)"
+          },
+          {
+            "name": "surface-disabled",
+            "light": "rgba(0, 0, 0, 0.12)",
+            "dark": "rgba(255, 255, 255, 0.12)"
+          }
+        ]
+      },
+      {
+        "key": "text",
+        "label": "Text",
+        "blurb": "Foreground colors. Base is the default, subtle steps back, inverse sits on dark surfaces.",
+        "family": "structure",
+        "tokens": [
+          {
+            "name": "text-base",
+            "light": "#262626",
+            "dark": "#E8ECF0"
+          },
+          {
+            "name": "text-strong",
+            "light": "#171717",
+            "dark": "#FFFFFF"
+          },
+          {
+            "name": "text-subtle",
+            "light": "#525252",
+            "dark": "#92A4B3"
+          },
+          {
+            "name": "text-inverse",
+            "light": "#FFFFFF",
+            "dark": "#11171C"
+          },
+          {
+            "name": "text-disabled",
+            "light": "rgba(0, 0, 0, 0.38)",
+            "dark": "rgba(255, 255, 255, 0.38)"
+          },
+          {
+            "name": "text-accent",
+            "light": "#0E538B",
+            "dark": "#8ACAFF"
+          }
+        ]
+      },
+      {
+        "key": "border",
+        "label": "Border",
+        "blurb": "Decorative dividers and outlines. Form controls use the separate input-border set.",
+        "family": "structure",
+        "tokens": [
+          {
+            "name": "border-base",
+            "light": "#E5E5E5",
+            "dark": "rgba(255, 255, 255, 0.1)"
+          },
+          {
+            "name": "border-strong",
+            "light": "#D4D4D4",
+            "dark": "rgba(255, 255, 255, 0.15)"
+          },
+          {
+            "name": "border-subtle",
+            "light": "#F5F5F5",
+            "dark": "rgba(255, 255, 255, 0.06)"
+          },
+          {
+            "name": "border-inverse",
+            "light": "#404040",
+            "dark": "#C0CDD8"
+          },
+          {
+            "name": "border-disabled",
+            "light": "rgba(0, 0, 0, 0.12)",
+            "dark": "rgba(255, 255, 255, 0.12)"
+          },
+          {
+            "name": "border-accent",
+            "light": "#2272B4",
+            "dark": "#4299E0"
+          }
+        ]
+      },
+      {
+        "key": "utility",
+        "label": "Utility",
+        "blurb": "Scrim and skeleton — surfaces that exist only to obscure or stand in.",
+        "family": "structure",
+        "tokens": [
+          {
+            "name": "utility-scrim",
+            "light": "rgba(0, 0, 0, 0.72)",
+            "dark": "rgba(0, 0, 0, 0.85)"
+          },
+          {
+            "name": "utility-surface-skeleton",
+            "light": "rgba(0, 0, 0, 0.12)",
+            "dark": "rgba(255, 255, 255, 0.12)"
+          },
+          {
+            "name": "utility-text-skeleton",
+            "light": "rgba(0, 0, 0, 0.2)",
+            "dark": "rgba(255, 255, 255, 0.2)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "interaction",
+    "label": "Interaction",
+    "blurb": "What you operate, and how it responds.",
+    "groups": [
+      {
+        "key": "action",
+        "label": "Action",
+        "blurb": "Interactive fills and their labels. Hover and press are separate stops, not opacity tricks.",
+        "family": "interaction",
+        "tokens": [
+          {
+            "name": "action-default-base",
+            "light": "#FAFAFA",
+            "dark": "#1F272D"
+          },
+          {
+            "name": "action-default-hover",
+            "light": "rgba(0, 0, 0, 0.06)",
+            "dark": "rgba(255, 255, 255, 0.08)"
+          },
+          {
+            "name": "action-default-press",
+            "light": "rgba(0, 0, 0, 0.1)",
+            "dark": "rgba(255, 255, 255, 0.12)"
+          },
+          {
+            "name": "action-primary-base",
+            "light": "#171717",
+            "dark": "#D1D9E1"
+          },
+          {
+            "name": "action-primary-hover",
+            "light": "rgba(23, 23, 23, 0.9)",
+            "dark": "rgba(209, 217, 225, 0.9)"
+          },
+          {
+            "name": "action-primary-press",
+            "light": "rgba(23, 23, 23, 0.8)",
+            "dark": "rgba(209, 217, 225, 0.8)"
+          },
+          {
+            "name": "action-selected-base",
+            "light": "rgba(0, 0, 0, 0.08)",
+            "dark": "rgba(255, 255, 255, 0.1)"
+          },
+          {
+            "name": "action-selected-hover",
+            "light": "rgba(0, 0, 0, 0.12)",
+            "dark": "rgba(255, 255, 255, 0.14)"
+          },
+          {
+            "name": "action-selected-press",
+            "light": "rgba(0, 0, 0, 0.14)",
+            "dark": "rgba(255, 255, 255, 0.16)"
+          },
+          {
+            "name": "action-positive-base",
+            "light": "#277C43",
+            "dark": "#3BA65E"
+          },
+          {
+            "name": "action-positive-hover",
+            "light": "#115026",
+            "dark": "#8DDDA8"
+          },
+          {
+            "name": "action-positive-press",
+            "light": "#093919",
+            "dark": "#B1ECC5"
+          },
+          {
+            "name": "action-negative-base",
+            "light": "#C82D4C",
+            "dark": "#E65B77"
+          },
+          {
+            "name": "action-negative-hover",
+            "light": "#9E102C",
+            "dark": "#F792A6"
+          },
+          {
+            "name": "action-negative-press",
+            "light": "#630316",
+            "dark": "#FBD0D8"
+          },
+          {
+            "name": "action-label-base",
+            "light": "#262626",
+            "dark": "#F6F7F9"
+          },
+          {
+            "name": "action-label-hover",
+            "light": "#171717",
+            "dark": "#FFFFFF"
+          },
+          {
+            "name": "action-label-press",
+            "light": "#000000",
+            "dark": "#FFFFFF"
+          },
+          {
+            "name": "action-label-inverse-base",
+            "light": "#FFFFFF",
+            "dark": "#11171C"
+          },
+          {
+            "name": "action-label-inverse-hover",
+            "light": "rgba(255, 255, 255, 0.8)",
+            "dark": "rgba(0, 0, 0, 0.8)"
+          },
+          {
+            "name": "action-label-inverse-press",
+            "light": "rgba(255, 255, 255, 0.7)",
+            "dark": "rgba(0, 0, 0, 0.7)"
+          }
+        ]
+      },
+      {
+        "key": "input-border",
+        "label": "Input border",
+        "blurb": "Form control borders — darker than decorative borders so fields read as editable.",
+        "family": "interaction",
+        "tokens": [
+          {
+            "name": "input-border-base",
+            "light": "#E5E5E5",
+            "dark": "rgba(255, 255, 255, 0.15)"
+          },
+          {
+            "name": "input-border-hover",
+            "light": "#A3A3A3",
+            "dark": "#8396A5"
+          }
+        ]
+      },
+      {
+        "key": "focus",
+        "label": "Focus",
+        "blurb": "The focus ring and its offset. Never suppress these.",
+        "family": "interaction",
+        "tokens": [
+          {
+            "name": "focus-ring",
+            "light": "#404040",
+            "dark": "#F6F7F9"
+          },
+          {
+            "name": "focus-ring-offset",
+            "light": "#FFFFFF",
+            "dark": "#11171C"
+          }
+        ]
+      },
+      {
+        "key": "link",
+        "label": "Link",
+        "blurb": "Link states. Visited is separate so long documents stay navigable.",
+        "family": "interaction",
+        "tokens": [
+          {
+            "name": "link-base",
+            "light": "#2272B4",
+            "dark": "#8ACAFF"
+          },
+          {
+            "name": "link-hover",
+            "light": "#0E538B",
+            "dark": "#BAE1FC"
+          },
+          {
+            "name": "link-press",
+            "light": "#04355D",
+            "dark": "#D7EDFE"
+          },
+          {
+            "name": "link-visited",
+            "light": "#04355D",
+            "dark": "#D7EDFE"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "status",
+    "label": "Status",
+    "blurb": "Feedback about what happened.",
+    "groups": [
+      {
+        "key": "status",
+        "label": "Status",
+        "blurb": "Positive, negative, warning and info, each with a surface, a border and a text color.",
+        "family": "status",
+        "tokens": [
+          {
+            "name": "status-surface-info",
+            "light": "#F0F8FF",
+            "dark": "#021E38"
+          },
+          {
+            "name": "status-surface-negative",
+            "light": "#FFF5F7",
+            "dark": "#3A010B"
+          },
+          {
+            "name": "status-surface-positive",
+            "light": "#F3FCF6",
+            "dark": "#04220E"
+          },
+          {
+            "name": "status-surface-warning",
+            "light": "#FFF9EB",
+            "dark": "#381001"
+          },
+          {
+            "name": "status-border-info",
+            "light": "#0E538B",
+            "dark": "#4299E0"
+          },
+          {
+            "name": "status-border-negative",
+            "light": "#9E102C",
+            "dark": "#E65B77"
+          },
+          {
+            "name": "status-border-positive",
+            "light": "#3BA65E",
+            "dark": "#3BA65E"
+          },
+          {
+            "name": "status-border-warning",
+            "light": "#DE7921",
+            "dark": "#DE7921"
+          },
+          {
+            "name": "status-text-info",
+            "light": "#2272B4",
+            "dark": "#8ACAFF"
+          },
+          {
+            "name": "status-text-negative",
+            "light": "#C82D4C",
+            "dark": "#F792A6"
+          },
+          {
+            "name": "status-text-positive",
+            "light": "#277C43",
+            "dark": "#8DDDA8"
+          },
+          {
+            "name": "status-text-warning",
+            "light": "#BE501E",
+            "dark": "#F2BE88"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "viz",
+    "label": "Viz",
+    "blurb": "Data encoded as color.",
+    "groups": [
+      {
+        "key": "viz",
+        "label": "Data visualisation",
+        "blurb": "Categorical for unordered series, sequential for ordered magnitude.",
+        "family": "viz",
+        "tokens": [
+          {
+            "name": "viz-categorical-1",
+            "light": "#9575CD",
+            "dark": "#8555C9"
+          },
+          {
+            "name": "viz-categorical-2",
+            "light": "#FFD54F",
+            "dark": "#BD7C30"
+          },
+          {
+            "name": "viz-categorical-3",
+            "light": "#6CD7D2",
+            "dark": "#2C8985"
+          },
+          {
+            "name": "viz-categorical-4",
+            "light": "#F06292",
+            "dark": "#A11E4E"
+          },
+          {
+            "name": "viz-categorical-5",
+            "light": "#D4E157",
+            "dark": "#9E9D00"
+          },
+          {
+            "name": "viz-categorical-6",
+            "light": "#A1887F",
+            "dark": "#A8796D"
+          },
+          {
+            "name": "viz-categorical-7",
+            "light": "#90A0E0",
+            "dark": "#4E62BA"
+          },
+          {
+            "name": "viz-categorical-8",
+            "light": "#EF9B80",
+            "dark": "#CC471F"
+          },
+          {
+            "name": "viz-categorical-9",
+            "light": "#96BEB5",
+            "dark": "#217766"
+          },
+          {
+            "name": "viz-categorical-10",
+            "light": "#AD6DAD",
+            "dark": "#97409A"
+          },
+          {
+            "name": "viz-sequential-1",
+            "light": "#E8ECF0",
+            "dark": "#0A2C36"
+          },
+          {
+            "name": "viz-sequential-2",
+            "light": "#D2F1FC",
+            "dark": "#084150"
+          },
+          {
+            "name": "viz-sequential-3",
+            "light": "#A5E5F9",
+            "dark": "#085B6E"
+          },
+          {
+            "name": "viz-sequential-4",
+            "light": "#65D3F4",
+            "dark": "#0F7B95"
+          },
+          {
+            "name": "viz-sequential-5",
+            "light": "#22BFE5",
+            "dark": "#169DBD"
+          },
+          {
+            "name": "viz-sequential-6",
+            "light": "#169DBD",
+            "dark": "#22BFE5"
+          },
+          {
+            "name": "viz-sequential-7",
+            "light": "#0F7B95",
+            "dark": "#65D3F4"
+          },
+          {
+            "name": "viz-sequential-8",
+            "light": "#085B6E",
+            "dark": "#A5E5F9"
+          },
+          {
+            "name": "viz-sequential-9",
+            "light": "#084150",
+            "dark": "#D2F1FC"
+          },
+          {
+            "name": "viz-sequential-10",
+            "light": "#0A2C36",
+            "dark": "#F6F7F9"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+/** The same groups, flat, for anything that wants every color without the split. */
 export const colorGroups: ColorGroup[] = [
   {
     "key": "surface",
     "label": "Surface",
     "blurb": "Backgrounds. Every surface has a text color that belongs on it.",
+    "family": "structure",
     "tokens": [
       {
         "name": "surface-base",
@@ -77,6 +628,7 @@ export const colorGroups: ColorGroup[] = [
     "key": "text",
     "label": "Text",
     "blurb": "Foreground colors. Base is the default, subtle steps back, inverse sits on dark surfaces.",
+    "family": "structure",
     "tokens": [
       {
         "name": "text-base",
@@ -111,9 +663,71 @@ export const colorGroups: ColorGroup[] = [
     ]
   },
   {
+    "key": "border",
+    "label": "Border",
+    "blurb": "Decorative dividers and outlines. Form controls use the separate input-border set.",
+    "family": "structure",
+    "tokens": [
+      {
+        "name": "border-base",
+        "light": "#E5E5E5",
+        "dark": "rgba(255, 255, 255, 0.1)"
+      },
+      {
+        "name": "border-strong",
+        "light": "#D4D4D4",
+        "dark": "rgba(255, 255, 255, 0.15)"
+      },
+      {
+        "name": "border-subtle",
+        "light": "#F5F5F5",
+        "dark": "rgba(255, 255, 255, 0.06)"
+      },
+      {
+        "name": "border-inverse",
+        "light": "#404040",
+        "dark": "#C0CDD8"
+      },
+      {
+        "name": "border-disabled",
+        "light": "rgba(0, 0, 0, 0.12)",
+        "dark": "rgba(255, 255, 255, 0.12)"
+      },
+      {
+        "name": "border-accent",
+        "light": "#2272B4",
+        "dark": "#4299E0"
+      }
+    ]
+  },
+  {
+    "key": "utility",
+    "label": "Utility",
+    "blurb": "Scrim and skeleton — surfaces that exist only to obscure or stand in.",
+    "family": "structure",
+    "tokens": [
+      {
+        "name": "utility-scrim",
+        "light": "rgba(0, 0, 0, 0.72)",
+        "dark": "rgba(0, 0, 0, 0.85)"
+      },
+      {
+        "name": "utility-surface-skeleton",
+        "light": "rgba(0, 0, 0, 0.12)",
+        "dark": "rgba(255, 255, 255, 0.12)"
+      },
+      {
+        "name": "utility-text-skeleton",
+        "light": "rgba(0, 0, 0, 0.2)",
+        "dark": "rgba(255, 255, 255, 0.2)"
+      }
+    ]
+  },
+  {
     "key": "action",
     "label": "Action",
     "blurb": "Interactive fills and their labels. Hover and press are separate stops, not opacity tricks.",
+    "family": "interaction",
     "tokens": [
       {
         "name": "action-default-base",
@@ -147,13 +761,13 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "action-selected-base",
-        "light": "rgba(0, 0, 0, 0.06)",
-        "dark": "rgba(255, 255, 255, 0.08)"
+        "light": "rgba(0, 0, 0, 0.08)",
+        "dark": "rgba(255, 255, 255, 0.1)"
       },
       {
         "name": "action-selected-hover",
-        "light": "rgba(0, 0, 0, 0.1)",
-        "dark": "rgba(255, 255, 255, 0.12)"
+        "light": "rgba(0, 0, 0, 0.12)",
+        "dark": "rgba(255, 255, 255, 0.14)"
       },
       {
         "name": "action-selected-press",
@@ -223,46 +837,10 @@ export const colorGroups: ColorGroup[] = [
     ]
   },
   {
-    "key": "border",
-    "label": "Border",
-    "blurb": "Decorative dividers and outlines. Form controls use the separate input-border set.",
-    "tokens": [
-      {
-        "name": "border-base",
-        "light": "#E5E5E5",
-        "dark": "rgba(255, 255, 255, 0.1)"
-      },
-      {
-        "name": "border-strong",
-        "light": "#D4D4D4",
-        "dark": "rgba(255, 255, 255, 0.15)"
-      },
-      {
-        "name": "border-subtle",
-        "light": "#F5F5F5",
-        "dark": "rgba(255, 255, 255, 0.06)"
-      },
-      {
-        "name": "border-inverse",
-        "light": "#404040",
-        "dark": "#C0CDD8"
-      },
-      {
-        "name": "border-disabled",
-        "light": "rgba(0, 0, 0, 0.12)",
-        "dark": "rgba(255, 255, 255, 0.12)"
-      },
-      {
-        "name": "border-accent",
-        "light": "#2272B4",
-        "dark": "#4299E0"
-      }
-    ]
-  },
-  {
     "key": "input-border",
     "label": "Input border",
     "blurb": "Form control borders — darker than decorative borders so fields read as editable.",
+    "family": "interaction",
     "tokens": [
       {
         "name": "input-border-base",
@@ -277,9 +855,56 @@ export const colorGroups: ColorGroup[] = [
     ]
   },
   {
+    "key": "focus",
+    "label": "Focus",
+    "blurb": "The focus ring and its offset. Never suppress these.",
+    "family": "interaction",
+    "tokens": [
+      {
+        "name": "focus-ring",
+        "light": "#404040",
+        "dark": "#F6F7F9"
+      },
+      {
+        "name": "focus-ring-offset",
+        "light": "#FFFFFF",
+        "dark": "#11171C"
+      }
+    ]
+  },
+  {
+    "key": "link",
+    "label": "Link",
+    "blurb": "Link states. Visited is separate so long documents stay navigable.",
+    "family": "interaction",
+    "tokens": [
+      {
+        "name": "link-base",
+        "light": "#2272B4",
+        "dark": "#8ACAFF"
+      },
+      {
+        "name": "link-hover",
+        "light": "#0E538B",
+        "dark": "#BAE1FC"
+      },
+      {
+        "name": "link-press",
+        "light": "#04355D",
+        "dark": "#D7EDFE"
+      },
+      {
+        "name": "link-visited",
+        "light": "#04355D",
+        "dark": "#D7EDFE"
+      }
+    ]
+  },
+  {
     "key": "status",
     "label": "Status",
     "blurb": "Positive, negative, warning and info, each with a surface, a border and a text color.",
+    "family": "status",
     "tokens": [
       {
         "name": "status-surface-info",
@@ -344,53 +969,10 @@ export const colorGroups: ColorGroup[] = [
     ]
   },
   {
-    "key": "link",
-    "label": "Link",
-    "blurb": "Link states. Visited is separate so long documents stay navigable.",
-    "tokens": [
-      {
-        "name": "link-base",
-        "light": "#2272B4",
-        "dark": "#8ACAFF"
-      },
-      {
-        "name": "link-hover",
-        "light": "#0E538B",
-        "dark": "#BAE1FC"
-      },
-      {
-        "name": "link-press",
-        "light": "#04355D",
-        "dark": "#D7EDFE"
-      },
-      {
-        "name": "link-visited",
-        "light": "#04355D",
-        "dark": "#D7EDFE"
-      }
-    ]
-  },
-  {
-    "key": "focus",
-    "label": "Focus",
-    "blurb": "The focus ring and its offset. Never suppress these.",
-    "tokens": [
-      {
-        "name": "focus-ring",
-        "light": "#171717",
-        "dark": "#D1D9E1"
-      },
-      {
-        "name": "focus-ring-offset",
-        "light": "#FFFFFF",
-        "dark": "#11171C"
-      }
-    ]
-  },
-  {
     "key": "viz",
     "label": "Data visualisation",
     "blurb": "Categorical for unordered series, sequential for ordered magnitude.",
+    "family": "viz",
     "tokens": [
       {
         "name": "viz-categorical-1",
@@ -493,40 +1075,10 @@ export const colorGroups: ColorGroup[] = [
         "dark": "#F6F7F9"
       }
     ]
-  },
-  {
-    "key": "utility",
-    "label": "Utility",
-    "blurb": "Scrim and skeleton — surfaces that exist only to obscure or stand in.",
-    "tokens": [
-      {
-        "name": "utility-scrim",
-        "light": "rgba(0, 0, 0, 0.72)",
-        "dark": "rgba(0, 0, 0, 0.85)"
-      },
-      {
-        "name": "utility-surface-skeleton",
-        "light": "rgba(0, 0, 0, 0.12)",
-        "dark": "rgba(255, 255, 255, 0.12)"
-      },
-      {
-        "name": "utility-text-skeleton",
-        "light": "rgba(0, 0, 0, 0.2)",
-        "dark": "rgba(255, 255, 255, 0.2)"
-      }
-    ]
   }
 ]
 
 export const type: TypeStep[] = [
-  {
-    "name": "type-hint",
-    "size": 12,
-    "line": 16,
-    "weight": "400",
-    "mono": false,
-    "uppercase": false
-  },
   {
     "name": "type-eyebrow",
     "size": 11,
@@ -534,6 +1086,14 @@ export const type: TypeStep[] = [
     "weight": "600",
     "mono": false,
     "uppercase": true
+  },
+  {
+    "name": "type-hint",
+    "size": 12,
+    "line": 16,
+    "weight": "400",
+    "mono": false,
+    "uppercase": false
   },
   {
     "name": "type-label",
@@ -576,7 +1136,7 @@ export const type: TypeStep[] = [
     "uppercase": false
   },
   {
-    "name": "type-block",
+    "name": "type-code-block",
     "size": 14,
     "line": 22,
     "weight": "400",
@@ -630,6 +1190,175 @@ export const type: TypeStep[] = [
     "weight": "600",
     "mono": false,
     "uppercase": false
+  }
+]
+
+/**
+ * One context's measurements. A context turns on one way and one way only —
+ * the attribute below — because nothing activates from viewport width. There is
+ * no ambient context to follow.
+ */
+export type TypeContext = {
+  name: string
+  steps: { name: string; size: number | null; line: number | null }[]
+}
+
+/** Set this attribute on any element to force a context inside another. */
+export const typeContextAttribute = "data-type-context"
+
+/** What a document that sets no attribute renders, at every width. */
+export const typeContextDefault = "desktop"
+
+export const typeContexts: TypeContext[] = [
+  {
+    "name": "desktop",
+    "steps": [
+      {
+        "name": "type-eyebrow",
+        "size": 11,
+        "line": 16
+      },
+      {
+        "name": "type-hint",
+        "size": 12,
+        "line": 16
+      },
+      {
+        "name": "type-label",
+        "size": 13,
+        "line": 16
+      },
+      {
+        "name": "type-label-bold",
+        "size": 13,
+        "line": 16
+      },
+      {
+        "name": "type-body",
+        "size": 13,
+        "line": 20
+      },
+      {
+        "name": "type-body-bold",
+        "size": 13,
+        "line": 20
+      },
+      {
+        "name": "type-code",
+        "size": 13,
+        "line": 20
+      },
+      {
+        "name": "type-code-block",
+        "size": 14,
+        "line": 22
+      },
+      {
+        "name": "type-paragraph",
+        "size": 15,
+        "line": 22
+      },
+      {
+        "name": "type-paragraph-bold",
+        "size": 15,
+        "line": 22
+      },
+      {
+        "name": "type-title-4",
+        "size": 16,
+        "line": 24
+      },
+      {
+        "name": "type-title-3",
+        "size": 20,
+        "line": 28
+      },
+      {
+        "name": "type-title-2",
+        "size": 24,
+        "line": 32
+      },
+      {
+        "name": "type-title-1",
+        "size": 32,
+        "line": 40
+      }
+    ]
+  },
+  {
+    "name": "mobile",
+    "steps": [
+      {
+        "name": "type-eyebrow",
+        "size": 12,
+        "line": 20
+      },
+      {
+        "name": "type-hint",
+        "size": 13,
+        "line": 20
+      },
+      {
+        "name": "type-label",
+        "size": 15,
+        "line": 20
+      },
+      {
+        "name": "type-label-bold",
+        "size": 15,
+        "line": 20
+      },
+      {
+        "name": "type-body",
+        "size": 15,
+        "line": 22
+      },
+      {
+        "name": "type-body-bold",
+        "size": 15,
+        "line": 22
+      },
+      {
+        "name": "type-code",
+        "size": 15,
+        "line": 22
+      },
+      {
+        "name": "type-code-block",
+        "size": 16,
+        "line": 24
+      },
+      {
+        "name": "type-paragraph",
+        "size": 17,
+        "line": 24
+      },
+      {
+        "name": "type-paragraph-bold",
+        "size": 17,
+        "line": 24
+      },
+      {
+        "name": "type-title-4",
+        "size": 18,
+        "line": 24
+      },
+      {
+        "name": "type-title-3",
+        "size": 20,
+        "line": 28
+      },
+      {
+        "name": "type-title-2",
+        "size": 24,
+        "line": 32
+      },
+      {
+        "name": "type-title-1",
+        "size": 28,
+        "line": 36
+      }
+    ]
   }
 ]
 
@@ -813,30 +1542,31 @@ export const borderWidth: Token[] = [
   }
 ]
 
-export const elevation: Token[] = [
+export const elevation: ModeToken[] = [
   {
-    "name": "elevation-0",
-    "value": "none",
-    "px": null,
-    "multiple": null
+    "name": "elevation-xs",
+    "light": "0 1px 0 0 rgba(0, 0, 0, 0.05)",
+    "dark": "0 1px 0 0 rgba(0, 0, 0, 0.45)"
   },
   {
-    "name": "elevation-1",
-    "value": "0 8px 40px rgba(0, 0, 0, 0.13)",
-    "px": null,
-    "multiple": null
+    "name": "elevation-sm",
+    "light": "0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02)",
+    "dark": "0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26)"
   },
   {
-    "name": "elevation-2",
-    "value": "0 2px 16px rgba(0, 0, 0, 0.08)",
-    "px": null,
-    "multiple": null
+    "name": "elevation-md",
+    "light": "0 3px 6px 0 rgba(0, 0, 0, 0.05)",
+    "dark": "0 3px 6px 0 rgba(0, 0, 0, 0.45)"
   },
   {
-    "name": "elevation-3",
-    "value": "0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05)",
-    "px": null,
-    "multiple": null
+    "name": "elevation-lg",
+    "light": "0 2px 16px 0 rgba(0, 0, 0, 0.08)",
+    "dark": "0 2px 16px 0 rgba(0, 0, 0, 0.61)"
+  },
+  {
+    "name": "elevation-xl",
+    "light": "0 8px 40px 0 rgba(0, 0, 0, 0.13)",
+    "dark": "0 8px 40px 0 rgba(0, 0, 0, 0.87)"
   }
 ]
 
@@ -897,9 +1627,10 @@ export const tokenCounts = {
   "radius": 7,
   "size": 9,
   "borderWidth": 3,
-  "elevation": 4,
+  "elevation": 5,
   "duration": 3,
   "easing": 1,
   "scalars": 3,
-  "type": 14
+  "type": 14,
+  "typeContexts": 2
 }

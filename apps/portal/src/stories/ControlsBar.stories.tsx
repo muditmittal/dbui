@@ -4,11 +4,6 @@ import {
   ControlsBarFilters,
   ControlsBarActions,
 } from "dbui/components/ui/controls-bar"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "dbui/components/ui/input-group"
 import { Input } from "dbui/components/ui/input"
 import {
   Select,
@@ -46,12 +41,10 @@ function SearchInput({
   width?: number
 }) {
   return (
-    <InputGroup style={{ width }}>
-      <InputGroupAddon>
-        <Search />
-      </InputGroupAddon>
-      <InputGroupInput placeholder={placeholder} />
-    </InputGroup>
+    <div className="relative" style={{ width }}>
+      <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-text-subtle" />
+      <Input placeholder={placeholder} className="pl-8" />
+    </div>
   )
 }
 
