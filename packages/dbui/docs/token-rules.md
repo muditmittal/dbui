@@ -35,7 +35,10 @@ PRIMITIVES  (Figma "Color: Primitive")            ── raw palette, mode-agnos
     │  base/{white,black}
     ▼  aliased by
 SEMANTICS   (Figma "Color: Semantic")             ── role tokens, Light + Dark modes
-    │  surface/* text/* border/* action/* input/* focus/* link/* status/* utility/* viz/*
+    │  structure     surface/*  text/*  border/*  utility/*
+    │  interaction   action/*   input/* focus/*   link/*
+    │  status        status/*
+    │  viz           viz/*
     ▼  consumed by
 PRODUCT CODE (components, stories, compositions)
 
@@ -60,6 +63,56 @@ LEGACY      (globals.css: --background, --primary, --muted-foreground, …)
   border / type / elevation / motion tokens, the first four of which derive from the
   grid unit and the density dial via `calc()`. This doc covers colors; the same source
   and generator produce those. See `tokens.md` for the rules that govern them.
+- **Type is the one layer whose stops ship.** "Primitives never ship" is a color
+  rule, and type is a deliberate exception rather than a violation: a type context
+  changes what a style measures *after* the class is on the element, and a custom
+  property is the only thing that can be swapped that late. Color has nothing
+  equivalent to swap, so nothing here is relaxed. `tokens.md` owns the type rules.
+
+### The four families
+
+The semantic layer is organized into four families. A family answers one
+question — **what does this color?** — and each of the four answers is
+something positive, so no family is defined by what it is not.
+
+| Family | What it colors | Prefixes |
+| --- | --- | --- |
+| `structure` | The substrate a screen is made of | `surface/` `text/` `border/` `utility/` |
+| `interaction` | What you operate, and how it responds | `action/` `input/` `focus/` `link/` |
+| `status` | Feedback about what happened | `status/` |
+| `viz` | Data encoded as color | `viz/` |
+
+**A family is a grouping, never a prefix.** No token name carries one.
+`surface/base` is not `structure/surface/base`. The family exists in the
+section structure of `theme.config.mjs`, in this table, and on the portal's
+Tokens page — and nowhere in a name, a CSS variable, or a Tailwind utility.
+See R14.
+
+**How a family is named:** one holding a single prefix takes that prefix's
+name; one holding several takes a superset name that is none of them. This is
+what rules out the two names the taxonomy nearly shipped with. `action` would
+have named a four-prefix family after one of its four, leaving `focus/ring`,
+`input/border/hover` and `link/base` reading as filed elsewhere. `base` would
+have named the structure family with a word that `-base` already spends as the
+resting-variant suffix in `surface/base` and `action/primary/base`. Both are
+one word carrying two meanings at two levels — the exact ambiguity the family
+layer exists to remove.
+
+Three placements are worth stating because the obvious reading is wrong:
+
+- **`input/`** is a border and still `interaction`. The state ladder decides
+  it: no `border/*` token has a hover and both input tokens do. A decorative
+  rule is drawn once; a field border lightens under the pointer so the field
+  reads as operable.
+- **`utility/`** is `structure`. A scrim is a layer over the substrate, and the
+  two skeletons are placeholders shaped like the surface and the line of text
+  they stand in for. `status` is the tempting alternative, since a skeleton
+  does say "loading" — but status is closed at four sentiments per R8 and
+  loading is not one of them.
+- **A sentiment word means different things in different families.**
+  `action/positive/base` fills the button that confirms; `status/text/positive`
+  reports that something succeeded. Collapsing the two is what a single
+  catch-all family made easy.
 
 ---
 
@@ -131,6 +184,7 @@ lists all nineteen with their severities.
 | **R11** | **Config ↔ tokens.css ↔ Figma parity.** Semantic Figma vars carry `codeSyntax.WEB = var(--db-<name>)`; every config semantic ships as a `--db-*` var and a `--color-*` utility; every shipped value round-trips from the config; no primitive leaks into `tokens.css`. | `verify-token-sync.mjs` diffs the config, `tokens.css`, and the `.figma-token-dump.json` snapshot. | ✅ live (`design:verify-sync`) |
 | **R12** | **Additive changes only.** New tokens are added; renames/removals require a documented deprecation. `tokens.css`/`tokens.json` are generated, never hand-edited. | PR diff removes a token name without a deprecation entry; manual edit to a generated file. | 🔜 planned (CI) |
 | **R13** | **Every semantic resolves.** No dangling primitive ref in the config; no primitive defined but unused-and-undocumented. | The generator throws on an unknown ref; resolve graph over `theme.config.mjs`. | ✅ authoring check (generator) |
+| **R14** | **A family is never a prefix.** The four families group the semantic layer and do not appear in any name. `status` and `viz` are prefixes *as well as* families and stay so; `structure` and `interaction` are families only. | A semantic name beginning `structure-` or `interaction-`, in the config, `tokens.css` or a Figma variable path. | 🔜 planned |
 
 ### Figma-side (figma-lint, ✅ live)
 - `non-token-fill` / `non-token-stroke` — every fill/stroke must be **bound to a

@@ -19,6 +19,13 @@ render on the portal's Tokens page, and print from `dbui token`.
 Every color is a semantic token, generated from primitives that never ship.
 Components never reference a primitive or a hex value.
 
+**Color is organized into four families** — structure, interaction, status and
+viz. Each says what it colors rather than what it is not, which is the whole
+reason there are four rather than three: the group that would have held status
+alongside everything non-interactive could only be described by exclusion. The
+family is a grouping and never appears in a token name. `docs/token-rules.md`
+holds the mapping.
+
 **Chrome is darker than content.** Application chrome sits on the stronger
 surface, the content panel on the lightest. That inversion is what makes the
 working area read as the focus.
@@ -40,13 +47,20 @@ Every token has a real dark value, not a computed inversion.
 
 ## Typography
 
-**13px is the base and it is not negotiable.** It is the single most common thing
-a model gets wrong, because 14px and 16px are the web defaults. Weight jumps 400
-to 600; there is no 500.
+**The base is smaller than the web default and it is not negotiable.** It is the
+single most common thing a model gets wrong, because 14px and 16px are what the
+web assumes and a data workbench packs more into a row than a web page does.
+Weight jumps 400 to 600; there is no 500.
 
-**The label/body split is the one to understand.** Both are 13px. A label is
-single-line, so its line box matches the icon box and they align in a row
+**The label/body split is the one to understand.** They are the same size. A label
+is single-line, so its line box matches the icon box and they align in a row
 without adjustment. Body wraps, so it takes more leading.
+
+**A style is a name, not a measurement.** The 14 style names hold still; what they
+measure comes from shared stops that carry one value per context, so the same
+`type-label` is one size on a workbench and another on a phone. That is why a call
+site must never write the number — it would be right in one context and wrong in
+the other. `docs/tokens.md` owns the rules; the values print on the Tokens page.
 
 Each `type-*` class is the whole style. Never pair one with `leading-`, `font-`
 or `uppercase`. Numbers in a table use `<TableCell numeric>`.
@@ -76,9 +90,21 @@ behind a confirmation.
 
 DBUI is nearly flat. Depth separates layers of interaction, never decorates.
 
-The scale counts **down**: level 1 is the highest surface, and the numbers grow
-as the surface settles toward the page. Read the number as "how far from the
-page". If two surfaces overlap, the one on top takes the lower number.
+The scale counts **up**, and it is DuBois's: `xs` is an edge on a control that
+still belongs to the page, and `xl` is a dialog that has taken the page over.
+Read the step as "how far off the page". If two surfaces overlap, the one on top
+takes the larger step — a dialog outranks a menu, and a menu outranks the
+tooltip it opened.
+
+This direction is the reverse of the numbered scale DBUI used before, where `1`
+was the highest surface. Anything still reasoning in those numbers is reading a
+scale that no longer exists.
+
+Depth is also mode-dependent, which is the one place elevation stops behaving
+like the other dimensional families. A shadow is black against the surface
+behind it, so the alpha that reads as a lift on white disappears on a dark page.
+Each step therefore carries two values, and the step name is what you write —
+never a mode-specific one.
 
 Borders do the work shadows do in other systems. If a shadow and a border would
 both work, use the border.
@@ -105,6 +131,13 @@ That is the authoritative source; `docs/component-index.md` is only for discover
 Interactive states are mandatory and uniform: default, hover, press, focus, disabled, and loading
 where relevant. Focus is a visible ring on `focus-ring` with a `focus-ring-offset` gap; it is never
 removed.
+
+The washes those states paint form **one ladder, not two**. Hovering something unselected must never
+reach the value a selected thing rests at — `unselected hover < selected rest < selected hover <
+selected press` — because a control that changes under the pointer and a control that is chosen are
+different facts and the eye reads them off the same axis. The ladder is ordered by composited
+lightness rather than authored alpha, since two families of wash over two different surfaces do not
+compare as the numbers they were written as.
 
 Icons carry a semantic category — object, action, indicator, or component — and crossing categories
 is an error. A chevron is chrome and never represents a concept. They are indexed in

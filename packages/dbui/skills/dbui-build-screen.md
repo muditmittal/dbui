@@ -40,7 +40,7 @@ For each region of the identified shell, determine which DBUI component fills it
 | You see in the screenshot | Region | DBUI component |
 |---|---|---|
 | Left sidebar with product icons | Nav | `Navbar` + `NavbarItem` (every item MUST have an icon) |
-| Expandable tree (catalogs, files) | Tree panel | `DataTreeView` or `FileTreeView` + entity icons from `entity-icons.ts` |
+| Expandable tree (catalogs, files) | Tree panel | `DataTree` or `FileTree` + entity icons from `entity-icons.ts` |
 | Tabs below a title | Content header | `Tabs` + `TabsList` + `TabsTrigger` |
 | Data table with headers | Content body | `Table` + `TableHeader` + `TableBody` |
 | Right sidebar with metadata | Metadata panel | `KeyValuePair` + `Separator` sections, 13px semibold headers |
@@ -66,7 +66,9 @@ For each region of the identified shell, determine which DBUI component fills it
 
 3. **Use semantic tokens only.** `bg-action-primary-base`, `text-text-base`, `border-border-base`. Never hardcode hex.
 
-4. **Use the named type ramp, not pixel values.** Each `type-*` class is the whole style — family, size, line-height, weight and case — so never pair it with `leading-`, `font-` or `uppercase`. Single-line UI (buttons, menu items, cells): `type-label`, or `type-label-bold` for column headers and form labels. Text that wraps (descriptions, helper blocks): `type-body`. Anything read as language (chat messages, docs, empty states): `type-paragraph`. Captions: `type-hint`. Overlines: `type-eyebrow` (it already applies caps). Code: `type-code` inline, `type-block` for blocks.
+4. **Use the named type ramp, not pixel values.** Each `type-*` class is the whole style — family, size, line-height, weight and case — so never pair it with `leading-`, `font-` or `uppercase`. Single-line UI (buttons, menu items, cells): `type-label`, or `type-label-bold` for column headers and form labels. Text that wraps (descriptions, helper blocks): `type-body`. Anything read as language (chat messages, docs, empty states): `type-paragraph`. Captions: `type-hint`. Overlines: `type-eyebrow` (it already applies caps). Code: `type-code` inline, `type-code-block` for blocks.
+
+   A px literal is not just off-system, it is now unanswerable: a style resolves to different measurements per type **context**, so a number that matches on a desktop workbench is wrong on a phone. Name the style and both are right. You never declare a context — the ramp switches itself on viewport width.
 
 5. **Spacing rhythm: 8 / 16 / 24.** Inside a component: `gap-2`. Between fields: `gap-4`. Between blocks: `gap-6`. Page padding: `px-6 py-4`.
 

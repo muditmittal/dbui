@@ -57,7 +57,7 @@ function ContextMenuContent({
       >
         <ContextMenuPrimitive.Popup
           data-slot="context-menu-content"
-          className={cn("z-50 max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-2 bg-surface-base p-1 text-text-base shadow-md ring-1 ring-text-base/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+          className={cn("z-50 max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
           {...props}
         />
       </ContextMenuPrimitive.Positioner>
@@ -105,8 +105,11 @@ function ContextMenuItem({
       data-slot="context-menu-item"
       data-inset={inset}
       data-variant={variant}
+      // Descendant selector, not `*:[svg]:` — see DropdownMenuItem, which
+      // carries the same rules and the reasoning. ContextMenuItemIcon wraps the
+      // icon in a span, so a direct-child selector cannot reach it.
       className={cn(
-        "group/context-menu-item relative flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-8 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative",
+        "group/context-menu-item relative flex min-h-7 cursor-default items-center gap-2 rounded-1 px-2 py-1 type-label outline-hidden select-none focus:bg-action-default-hover data-inset:pl-8 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:pointer-events-none data-disabled:text-text-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:[&_svg]:text-status-text-negative data-[variant=destructive]:focus:[&_svg]:text-action-label-inverse-base",
         className
       )}
       {...props}
@@ -312,7 +315,7 @@ function ContextMenuItemBadge({
     <span
       data-slot="context-menu-item-badge"
       className={cn(
-        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-2 type-label-bold text-text-subtle group-focus/context-menu-item:bg-text-accent/10 group-focus/context-menu-item:text-text-base",
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center shape-pill bg-surface-subtle px-2 type-label-bold text-text-subtle group-focus/context-menu-item:bg-text-accent/10 group-focus/context-menu-item:text-text-base",
         className
       )}
       {...props}

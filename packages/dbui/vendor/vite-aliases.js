@@ -12,7 +12,16 @@ import { resolve } from "path"
  */
 const vendor = (...segments) => resolve(process.cwd(), "dbui", "vendor", ...segments)
 
+/**
+ * Vite matches a string alias by prefix in insertion order, so the two named
+ * subpath exports have to precede the bare `dbui-shells` entry. Behind it they
+ * would resolve to `src/shell` and `src/catalog`, neither of which exists.
+ * These two mirror the `exports` map in `dbui-shells/package.json`; every other
+ * subpath already lines up with the `src` layout.
+ */
 export const dbuiAliases = {
+  "dbui-shells/shell": resolve(process.cwd(), "dbui-shells", "src", "shells", "Base"),
+  "dbui-shells/catalog": resolve(process.cwd(), "dbui-shells", "src", "shells", "CatalogExplorer"),
   "dbui": resolve(process.cwd(), "dbui", "src"),
   "dbui-shells": resolve(process.cwd(), "dbui-shells", "src"),
 
@@ -30,4 +39,5 @@ export const dbuiAliases = {
   "tailwind-merge": vendor("tailwind-merge"),
   "sonner": vendor("sonner"),
   "vaul": vendor("vaul"),
+  "reselect": vendor("reselect"),
 }

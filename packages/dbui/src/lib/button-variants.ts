@@ -28,7 +28,7 @@ import { cva } from "./cva"
 export const buttonVariants = cva(
   [
     "group/button inline-flex shrink-0 items-center justify-center",
-    "rounded-1 border",
+    "border",
     "type-label whitespace-nowrap",
     "transition-all outline-none select-none",
     "disabled:pointer-events-none",
@@ -70,7 +70,7 @@ export const buttonVariants = cva(
         ].join(" "),
         link: [
           "border-transparent text-link-base underline-offset-4",
-          "!h-auto !rounded-none !px-0 !shadow-none",
+          "!h-auto !shape-square !px-0 !shadow-none",
           "hover:underline hover:text-link-hover",
           "active:underline active:text-link-press",
           "focus-visible:border-focus-ring",
@@ -91,22 +91,27 @@ export const buttonVariants = cva(
           "disabled:border-border-disabled disabled:text-text-disabled disabled:bg-transparent disabled:shadow-none",
         ].join(" "),
       },
+      // The corner lives here rather than in the base, because it is a decision
+      // about a control of THIS height. `round-control-sm` and `round-control-md`
+      // both resolve to 4px today, so moving it moves nothing — and it is what
+      // lets Core make the 32px button a pill by editing one line of
+      // theme.config.mjs instead of every size key in this file.
       size: {
-        sm: "h-6 gap-1 px-2",
-        md: "h-8 gap-1 px-3",
+        sm: "h-6 gap-1 px-2 shape-control",
+        md: "h-8 gap-1 px-3 shape-control-lg",
         // No color here. An icon-only button's icon color depends on the
         // variant it sits in, so it is set in compoundVariants below. Setting it
-        // on the size would emit two competing text-* classes, and cn() joins
-        // rather than merges, so CSS source order — not authoring order — would
-        // decide the winner.
-        "icon-sm": "size-6",
-        "icon-md": "size-8",
+        // on the size would emit two competing text-* classes; cn() now resolves
+        // those to the later one, which is the size — the opposite of what the
+        // variant means.
+        "icon-sm": "size-6 shape-control",
+        "icon-md": "size-8 shape-control-lg",
       },
     },
     compoundVariants: [
-      // Exactly one resting text color is ever emitted, because cn() joins
-      // rather than merges — two competing text-* classes would be resolved by
-      // CSS source order instead of by intent.
+      // Exactly one resting text color is ever emitted. cn() would resolve two
+      // to the later one, and later here means whichever key cva happens to
+      // visit second — an ordering nothing in this file states.
       {
         variant: ["secondary", "ghost"],
         size: ["sm", "md"],

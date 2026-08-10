@@ -1,6 +1,6 @@
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "../../lib/cva"
+import { cva } from "../../lib/cva"
 
 import { cn } from "../../lib/utils"
 import { Separator } from "./separator"
@@ -16,34 +16,19 @@ import { Separator } from "./separator"
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=580-527
  */
 
+// A split button is a row. The vertical stack that used to sit on an
+// `orientation` axis here had no call site in the repo and no counterpart in
+// the Figma component set, so the seam rules are the base string now.
 const splitButtonVariants = cva(
-  "flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=split-button]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-1 [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
-  {
-    variants: {
-      orientation: {
-        horizontal:
-          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-1! [&>[data-slot]~[data-slot]]:rounded-l-none [&>[data-slot]~[data-slot]]:-ml-px has-[>[data-slot]:hover]:*:data-slot:border-input-border-hover",
-        vertical:
-          "flex-col *:data-slot:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-1! [&>[data-slot]~[data-slot]]:rounded-t-none [&>[data-slot]~[data-slot]]:border-t-0",
-      },
-    },
-    defaultVariants: {
-      orientation: "horizontal",
-    },
-  }
+  "flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=split-button]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-1 [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 *:data-slot:shape-r-square [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-1! [&>[data-slot]~[data-slot]]:shape-l-square [&>[data-slot]~[data-slot]]:-ml-px has-[>[data-slot]:hover]:*:data-slot:border-input-border-hover"
 )
 
-function SplitButton({
-  className,
-  orientation,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof splitButtonVariants>) {
+function SplitButton({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       role="group"
       data-slot="split-button"
-      data-orientation={orientation}
-      className={cn(splitButtonVariants({ orientation }), className)}
+      className={cn(splitButtonVariants(), className)}
       {...props}
     />
   )

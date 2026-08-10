@@ -1,10 +1,9 @@
 # DBUI
 
 > An AI-first design system for data and AI workbench UIs — catalogs, queries, runs, lineage,
-> models, governance, and chat over data. React 19, Tailwind v4, Base UI. 61 components, 456
-> semantically classified icons, 84 semantic color tokens with full light/dark parity, and five
-> documented page shells. Built for dense enterprise applications used by data engineers, data
-> scientists, and analysts.
+> models, governance, and chat over data. React 19, Tailwind v4, Base UI. Semantically classified
+> icons, semantic color tokens with full light/dark parity, and documented page shells. Built for
+> dense enterprise applications used by data engineers, data scientists, and analysts.
 
 Read `DESIGN.md` for the visual language and `composition.md` for page structure before generating
 any UI. Per-component rules live in each component's JSDoc, not in a central file.
@@ -49,5 +48,5 @@ Procedures an agent loads when a task matches.
 
 - [packages/dbui-shells/src/index.ts](packages/dbui-shells/src/index.ts): Shell and composition exports.
 - [packages/dbui-viz/src/index.ts](packages/dbui-viz/src/index.ts): Chart components and the Vega theme bridge.
-- [packages/dbui-genie/src/index.ts](packages/dbui-genie/src/index.ts): Conversational-analytics primitives.
+- [packages/dbui-chat/src/index.ts](packages/dbui-chat/src/index.ts): Conversational-analytics primitives.
 - [scripts/design-lint/README.md](scripts/design-lint/README.md): The React and Figma design linters and their rule sets.

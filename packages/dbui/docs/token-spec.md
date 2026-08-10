@@ -11,7 +11,7 @@ render at the default. Border width stays px so hairlines stay crisp.
 unit they are multiples of. Each family computes its own stops — none of them
 reads another — and the scale they agree on is an authoring artifact that lives
 in Figma and in `theme.config.mjs`, not a custom property. React ships
-semantics only, the same way it does for colour.
+semantics only, the same way it does for color.
 
 **Scalars** is the two multipliers, and only those. They have no single px value
 by design, and neither do the two `em` inline steps.
@@ -37,8 +37,8 @@ by design, and neither do the two `em` inline steps.
 | `--db-action-primary-base` | Color | #171717 |  | #D1D9E1 |
 | `--db-action-primary-hover` | Color | rgba(23, 23, 23, 0.9) |  | rgba(209, 217, 225, 0.9) |
 | `--db-action-primary-press` | Color | rgba(23, 23, 23, 0.8) |  | rgba(209, 217, 225, 0.8) |
-| `--db-action-selected-base` | Color | rgba(0, 0, 0, 0.06) |  | rgba(255, 255, 255, 0.08) |
-| `--db-action-selected-hover` | Color | rgba(0, 0, 0, 0.1) |  | rgba(255, 255, 255, 0.12) |
+| `--db-action-selected-base` | Color | rgba(0, 0, 0, 0.08) |  | rgba(255, 255, 255, 0.1) |
+| `--db-action-selected-hover` | Color | rgba(0, 0, 0, 0.12) |  | rgba(255, 255, 255, 0.14) |
 | `--db-action-selected-press` | Color | rgba(0, 0, 0, 0.14) |  | rgba(255, 255, 255, 0.16) |
 | `--db-border-accent` | Color | #2272B4 |  | #4299E0 |
 | `--db-border-base` | Color | #E5E5E5 |  | rgba(255, 255, 255, 0.1) |
@@ -135,83 +135,31 @@ by design, and neither do the two `em` inline steps.
 | `--db-space-8` | Dimensions | calc(var(--db-spacing-unit) * 8 * var(--db-density-scalar)) | 32px |  |
 | `--db-spacing-unit` | Dimensions | 0.25rem | 4px |  |
 | `--db-font-family` | Typography | "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif |  |  |
-| `--db-font-family-block` | Typography | var(--db-mono-font-family) |  |  |
-| `--db-font-family-body` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-body-bold` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-code` | Typography | var(--db-mono-font-family) |  |  |
-| `--db-font-family-eyebrow` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-hint` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-label` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-label-bold` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-paragraph` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-paragraph-bold` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-title-1` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-title-2` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-title-3` | Typography | var(--db-font-family) |  |  |
-| `--db-font-family-title-4` | Typography | var(--db-font-family) |  |  |
-| `--db-font-size-block` | Typography | calc(0.875rem * var(--db-type-scalar)) | 14px |  |
-| `--db-font-size-body` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
-| `--db-font-size-body-bold` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
-| `--db-font-size-code` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
-| `--db-font-size-eyebrow` | Typography | calc(0.6875rem * var(--db-type-scalar)) | 11px |  |
-| `--db-font-size-hint` | Typography | calc(0.75rem * var(--db-type-scalar)) | 12px |  |
-| `--db-font-size-label` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
-| `--db-font-size-label-bold` | Typography | calc(0.8125rem * var(--db-type-scalar)) | 13px |  |
-| `--db-font-size-paragraph` | Typography | calc(0.9375rem * var(--db-type-scalar)) | 15px |  |
-| `--db-font-size-paragraph-bold` | Typography | calc(0.9375rem * var(--db-type-scalar)) | 15px |  |
-| `--db-font-size-title-1` | Typography | calc(2rem * var(--db-type-scalar)) | 32px |  |
-| `--db-font-size-title-2` | Typography | calc(1.5rem * var(--db-type-scalar)) | 24px |  |
-| `--db-font-size-title-3` | Typography | calc(1.25rem * var(--db-type-scalar)) | 20px |  |
-| `--db-font-size-title-4` | Typography | calc(1rem * var(--db-type-scalar)) | 16px |  |
-| `--db-font-weight` | Typography | 400 |  |  |
-| `--db-font-weight-block` | Typography | 400 |  |  |
-| `--db-font-weight-body` | Typography | 400 |  |  |
-| `--db-font-weight-body-bold` | Typography | 600 |  |  |
-| `--db-font-weight-bold` | Typography | 600 |  |  |
-| `--db-font-weight-code` | Typography | 400 |  |  |
-| `--db-font-weight-eyebrow` | Typography | 600 |  |  |
-| `--db-font-weight-hint` | Typography | 400 |  |  |
-| `--db-font-weight-label` | Typography | 400 |  |  |
-| `--db-font-weight-label-bold` | Typography | 600 |  |  |
-| `--db-font-weight-paragraph` | Typography | 400 |  |  |
-| `--db-font-weight-paragraph-bold` | Typography | 600 |  |  |
-| `--db-font-weight-title-1` | Typography | 600 |  |  |
-| `--db-font-weight-title-2` | Typography | 600 |  |  |
-| `--db-font-weight-title-3` | Typography | 600 |  |  |
-| `--db-font-weight-title-4` | Typography | 600 |  |  |
-| `--db-letter-spacing-block` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-body` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-body-bold` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-code` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-eyebrow` | Typography | calc(0.03125rem * var(--db-type-scalar)) | 0.5px |  |
-| `--db-letter-spacing-hint` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-label` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-label-bold` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-paragraph` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-paragraph-bold` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-title-1` | Typography | calc(-0.025rem * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-title-2` | Typography | calc(-0.0125rem * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-title-3` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-letter-spacing-title-4` | Typography | calc(0 * var(--db-type-scalar)) |  |  |
-| `--db-line-height-block` | Typography | calc(1.375rem * var(--db-type-scalar)) | 22px |  |
-| `--db-line-height-body` | Typography | calc(1.25rem * var(--db-type-scalar)) | 20px |  |
-| `--db-line-height-body-bold` | Typography | calc(1.25rem * var(--db-type-scalar)) | 20px |  |
-| `--db-line-height-code` | Typography | calc(1.25rem * var(--db-type-scalar)) | 20px |  |
-| `--db-line-height-eyebrow` | Typography | calc(1rem * var(--db-type-scalar)) | 16px |  |
-| `--db-line-height-hint` | Typography | calc(1rem * var(--db-type-scalar)) | 16px |  |
-| `--db-line-height-label` | Typography | calc(1rem * var(--db-type-scalar)) | 16px |  |
-| `--db-line-height-label-bold` | Typography | calc(1rem * var(--db-type-scalar)) | 16px |  |
-| `--db-line-height-paragraph` | Typography | calc(1.375rem * var(--db-type-scalar)) | 22px |  |
-| `--db-line-height-paragraph-bold` | Typography | calc(1.375rem * var(--db-type-scalar)) | 22px |  |
-| `--db-line-height-title-1` | Typography | calc(2.5rem * var(--db-type-scalar)) | 40px |  |
-| `--db-line-height-title-2` | Typography | calc(2rem * var(--db-type-scalar)) | 32px |  |
-| `--db-line-height-title-3` | Typography | calc(1.75rem * var(--db-type-scalar)) | 28px |  |
-| `--db-line-height-title-4` | Typography | calc(1.5rem * var(--db-type-scalar)) | 24px |  |
+| `--db-font-size-2xl` | Typography | 1.25rem | 20px |  |
+| `--db-font-size-2xs` | Typography | 0.6875rem | 11px |  |
+| `--db-font-size-3xl` | Typography | 1.5rem | 24px |  |
+| `--db-font-size-4xl` | Typography | 2rem | 32px |  |
+| `--db-font-size-lg` | Typography | 0.9375rem | 15px |  |
+| `--db-font-size-md` | Typography | 0.875rem | 14px |  |
+| `--db-font-size-sm` | Typography | 0.8125rem | 13px |  |
+| `--db-font-size-xl` | Typography | 1rem | 16px |  |
+| `--db-font-size-xs` | Typography | 0.75rem | 12px |  |
+| `--db-letter-spacing-eyebrow` | Typography | 0.03125rem | 0.5px |  |
+| `--db-letter-spacing-title-1` | Typography | -0.025rem |  |  |
+| `--db-letter-spacing-title-2` | Typography | -0.0125rem |  |  |
+| `--db-line-height-flush` | Typography | 1rem | 16px |  |
+| `--db-line-height-read` | Typography | 1.375rem | 22px |  |
+| `--db-line-height-title-1` | Typography | 2.5rem | 40px |  |
+| `--db-line-height-title-2` | Typography | 2rem | 32px |  |
+| `--db-line-height-title-3` | Typography | 1.75rem | 28px |  |
+| `--db-line-height-title-4` | Typography | 1.5rem | 24px |  |
+| `--db-line-height-wrap` | Typography | 1.25rem | 20px |  |
 | `--db-mono-font-family` | Typography | "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace |  |  |
-| `--db-elevation-0` | Elevation | none |  |  |
-| `--db-elevation-1` | Elevation | 0 8px 40px rgba(0, 0, 0, 0.13) |  |  |
-| `--db-elevation-2` | Elevation | 0 2px 16px rgba(0, 0, 0, 0.08) |  |  |
-| `--db-elevation-3` | Elevation | 0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05) |  |  |
+| `--db-elevation-lg` | Elevation | 0 2px 16px 0 rgba(0, 0, 0, 0.08) |  | 0 2px 16px 0 rgba(0, 0, 0, 0.61) |
+| `--db-elevation-md` | Elevation | 0 3px 6px 0 rgba(0, 0, 0, 0.05) |  | 0 3px 6px 0 rgba(0, 0, 0, 0.45) |
+| `--db-elevation-sm` | Elevation | 0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02) |  | 0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26) |
+| `--db-elevation-xl` | Elevation | 0 8px 40px 0 rgba(0, 0, 0, 0.13) |  | 0 8px 40px 0 rgba(0, 0, 0, 0.87) |
+| `--db-elevation-xs` | Elevation | 0 1px 0 0 rgba(0, 0, 0, 0.05) |  | 0 1px 0 0 rgba(0, 0, 0, 0.45) |
 | `--db-duration-default` | Motion | 300ms |  |  |
 | `--db-duration-fast` | Motion | 150ms |  |  |
 | `--db-duration-slow` | Motion | 450ms |  |  |
@@ -219,19 +167,23 @@ by design, and neither do the two `em` inline steps.
 
 ## Type styles (composed)
 
-| Utility | Size | Line height | Weight | Family | Case |
-| --- | --- | --- | --- | --- | --- |
-| `type-hint` | 12px | 16px | 400 | sans |  |
-| `type-eyebrow` | 11px | 16px | 600 | sans | uppercase |
-| `type-label` | 13px | 16px | 400 | sans |  |
-| `type-label-bold` | 13px | 16px | 600 | sans |  |
-| `type-body` | 13px | 20px | 400 | sans |  |
-| `type-body-bold` | 13px | 20px | 600 | sans |  |
-| `type-code` | 13px | 20px | 400 | mono |  |
-| `type-block` | 14px | 22px | 400 | mono |  |
-| `type-paragraph` | 15px | 22px | 400 | sans |  |
-| `type-paragraph-bold` | 15px | 22px | 600 | sans |  |
-| `type-title-4` | 16px | 24px | 600 | sans |  |
-| `type-title-3` | 20px | 28px | 600 | sans |  |
-| `type-title-2` | 24px | 32px | 600 | sans |  |
-| `type-title-1` | 32px | 40px | 600 | sans |  |
+A style names a stop rather than a number, so the same 14 utilities resolve to a
+different set of measurements per context. Weight, family and case are
+context-independent. A context is opt-in. Set `data-type-context="<name>"` on the document or on any subtree to turn `mobile` on; nothing activates from the viewport, so a document that sets nothing renders `desktop` at every width.
+
+| Utility | Size | Line height | mobile size | mobile line height | Weight | Family | Case |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `type-eyebrow` | 11px | 16px | 12px | 20px | 600 | sans | uppercase |
+| `type-hint` | 12px | 16px | 13px | 20px | 400 | sans | none |
+| `type-label` | 13px | 16px | 15px | 20px | 400 | sans | none |
+| `type-label-bold` | 13px | 16px | 15px | 20px | 600 | sans | none |
+| `type-body` | 13px | 20px | 15px | 22px | 400 | sans | none |
+| `type-body-bold` | 13px | 20px | 15px | 22px | 600 | sans | none |
+| `type-code` | 13px | 20px | 15px | 22px | 400 | mono | none |
+| `type-code-block` | 14px | 22px | 16px | 24px | 400 | mono | none |
+| `type-paragraph` | 15px | 22px | 17px | 24px | 400 | sans | none |
+| `type-paragraph-bold` | 15px | 22px | 17px | 24px | 600 | sans | none |
+| `type-title-4` | 16px | 24px | 18px | 24px | 600 | sans | none |
+| `type-title-3` | 20px | 28px | 20px | 28px | 600 | sans | none |
+| `type-title-2` | 24px | 32px | 24px | 32px | 600 | sans | none |
+| `type-title-1` | 32px | 40px | 28px | 36px | 600 | sans | none |

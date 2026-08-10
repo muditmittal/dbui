@@ -1,14 +1,14 @@
 import figma from "@figma/code-connect"
-import { Tree, Section, TreeNode } from "../components/ui/data-tree"
+import { Tree, TreeSection, TreeNode } from "../components/ui/data-tree"
 import { Catalog } from "../components/icons/Catalog"
 import { Database } from "../components/icons/Database"
 
-// Figma: Tree (3211:5106) — composed of .TreeNode instances with type variants
-// (Header, Open folder, Focused folder)
-figma.connect(Tree, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3211-5106", {
+// Figma: .TreeNode (3179:24295) — the row primitive the whole tree is built
+// from, with Type variants (Header, Open folder, File, Focused folder).
+figma.connect(Tree, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3179-24295", {
   example: () => (
     <Tree>
-      <Section>Workspace</Section>
+      <TreeSection>Workspace</TreeSection>
       <TreeNode id="catalog-1" label="main" icon={<Catalog />} defaultExpanded>
         <TreeNode id="catalog-1-schema-1" label="default" icon={<Database />}>
           <TreeNode id="catalog-1-schema-1-table-1" label="users" />

@@ -124,7 +124,7 @@ export function PreviewPopup({
     <div
       data-slot="preview-popup"
       className={cn(
-        "flex flex-col gap-3 rounded-2 border border-border-base bg-surface-base py-3 px-4 shadow-md",
+        "flex flex-col gap-3 shape-container border border-border-base bg-surface-base py-3 px-4 shadow-lg",
         className
       )}
       style={{ width }}
@@ -217,7 +217,7 @@ export function PreviewPopup({
             <PropertyRow slot="Quality" label="Quality">
               <span
                 className={cn(
-                  "inline-block size-2 rounded-full shrink-0",
+                  "inline-block size-2 shape-pill shrink-0",
                   QUALITY_DOT_CLASS[quality.status ?? "unknown"]
                 )}
                 aria-hidden

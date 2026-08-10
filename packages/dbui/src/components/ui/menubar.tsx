@@ -84,7 +84,12 @@ function MenubarContent({
       align={align}
       alignOffset={alignOffset}
       sideOffset={sideOffset}
-      className={cn("min-w-36 rounded-2 bg-surface-base p-1 text-text-base shadow-md ring-1 ring-text-base/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95", className )}
+      // Only the override. Surface, padding, shadow, ring and the side
+      // animations all come from DropdownMenuContent, which this renders —
+      // restating them changed nothing and meant every sweep across the popup
+      // family had to edit menubar as a second copy. A menubar menu is wider
+      // than a dropdown, which is the one thing that is genuinely different.
+      className={cn("min-w-36", className)}
       {...props}
     />
   )
@@ -101,10 +106,18 @@ function MenubarItem({
       data-slot="menubar-item"
       data-inset={inset}
       data-variant={variant}
-      className={cn(
-        "group/menubar-item gap-2 rounded-1 px-2 py-1 type-label focus:bg-action-default-hover data-inset:pl-8 data-[variant=destructive]:text-status-text-negative data-[variant=destructive]:focus:bg-action-negative-base data-[variant=destructive]:focus:text-action-label-inverse-base dark:data-[variant=destructive]:focus:bg-action-negative-base data-disabled:text-text-disabled [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-status-text-negative!",
-        className
-      )}
+      // Only the group name, which MenubarItemIcon and MenubarShortcut hang
+      // their focus rules on. Everything else came from DropdownMenuItem
+      // already.
+      //
+      // The dropped `…text-status-text-negative!` was not redundant, it was
+      // wrong. tailwind-merge does not treat `x` and `x!` as the same utility,
+      // so both survived the merge and the important one outranked
+      // DropdownMenuItem's `data-[variant=destructive]:focus:*:[svg]:…-inverse`
+      // whatever the order. A focused destructive item kept a red icon on the
+      // red focus fill — measured at rgb(200,45,76) on rgb(200,45,76), which is
+      // not low contrast but none.
+      className={cn("group/menubar-item", className)}
       {...props}
     />
   )
@@ -188,10 +201,7 @@ function MenubarLabel({
     <DropdownMenuLabel
       data-slot="menubar-label"
       data-inset={inset}
-      className={cn(
-        "px-2 py-1 type-hint text-text-subtle data-inset:pl-8",
-        className
-      )}
+      className={className}
       {...props}
     />
   )
@@ -204,7 +214,7 @@ function MenubarSeparator({
   return (
     <DropdownMenuSeparator
       data-slot="menubar-separator"
-      className={cn("-mx-1 my-1 h-px bg-border-base", className)}
+      className={className}
       {...props}
     />
   )
@@ -217,10 +227,10 @@ function MenubarShortcut({
   return (
     <DropdownMenuShortcut
       data-slot="menubar-shortcut"
-      className={cn(
-        "ml-auto type-hint text-text-subtle group-focus/menubar-item:text-text-subtle",
-        className
-      )}
+      // The menubar-scoped focus rule only. DropdownMenuShortcut carries the
+      // same declaration keyed to its own group, and the item is in both
+      // groups, so this is belt and braces rather than the belt.
+      className={cn("group-focus/menubar-item:text-text-subtle", className)}
       {...props}
     />
   )
@@ -243,10 +253,7 @@ function MenubarSubTrigger({
     <DropdownMenuSubTrigger
       data-slot="menubar-sub-trigger"
       data-inset={inset}
-      className={cn(
-        "gap-2 rounded-1 px-2 py-1 type-label focus:bg-action-default-hover data-inset:pl-8 data-open:bg-action-default-hover [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
+      className={className}
       {...props}
     />
   )
@@ -259,7 +266,8 @@ function MenubarSubContent({
   return (
     <DropdownMenuSubContent
       data-slot="menubar-sub-content"
-      className={cn("min-w-32 rounded-2 bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+      // Only the override — DropdownMenuSubContent's floor is min-w-24.
+      className={cn("min-w-32", className)}
       {...props}
     />
   )
@@ -319,7 +327,7 @@ function MenubarItemBadge({
     <span
       data-slot="menubar-item-badge"
       className={cn(
-        "ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-surface-subtle px-2 type-label-bold text-text-subtle group-focus/menubar-item:bg-text-accent/10 group-focus/menubar-item:text-text-base",
+        "ml-auto inline-flex h-5 min-w-5 items-center justify-center shape-pill bg-surface-subtle px-2 type-label-bold text-text-subtle group-focus/menubar-item:bg-text-accent/10 group-focus/menubar-item:text-text-base",
         className
       )}
       {...props}

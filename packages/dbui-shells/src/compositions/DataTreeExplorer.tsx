@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Popover } from "@base-ui/react/popover"
 import { DataTree, type DataTreeSection, type DataTreeNode } from "dbui/components/ui/data-tree"
-import { Button, ButtonChevron } from "dbui/components/ui/button"
+import { Button } from "dbui/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -330,7 +330,7 @@ export function DataTreeExplorer({
                   <Button variant="ghost" size="icon-md" aria-label="Warehouse">
                     <span
                       className={cn(
-                        "inline-block size-2 rounded-full",
+                        "inline-block size-2 shape-pill",
                         warehouses.find((w) => w.selected)?.status === "stopped"
                           ? "bg-text-subtle"
                           : "bg-action-positive-base"
@@ -353,7 +353,7 @@ export function DataTreeExplorer({
                       {w.selected ? <Check className="size-4" /> : <span className="size-4" />}
                       <span
                         className={cn(
-                          "inline-block size-2 rounded-full",
+                          "inline-block size-2 shape-pill",
                           w.status === "stopped" ? "bg-text-subtle" : "bg-action-positive-base"
                         )}
                       />
@@ -441,7 +441,7 @@ export function DataTreeExplorer({
             />
             <Popover.Portal>
               <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden p-1">
+                <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden p-1">
                   {/* Path */}
                   {focusPath.length > 0 ? (
                     focusPath.map((entry, i) => {

@@ -785,7 +785,7 @@ const SHIPPED = `@import "tailwindcss";
   //
   // This is asserted because it is the fact that makes a missing size stop hard
   // to notice. Size briefly lost its 6, and `h-6` went on rendering 24px off
-  // `--db-space-6` — right value, right density behaviour, wrong family. The 24px
+  // `--db-space-6` — right value, right density behavior, wrong family. The 24px
   // small control height was restored on that basis: whether a size decision can
   // be written as one is the test, not whether the pixels match.
   //
@@ -935,10 +935,10 @@ console.log("\n── K2. Old radius names closed rather than dropped\n")
  *
  * The scale is an authoring artifact: a ladder of multiples held in Figma as a
  * `scale` collection, which space, size and radius are each authored against. It is
- * deliberately not a custom property, the same way the colour palette is not —
+ * deliberately not a custom property, the same way the color palette is not —
  * primitives resolve at build time and only semantics reach the browser. A
  * `--db-scale-*` appearing here would mean a component could reach past the
- * semantic families to the raw ladder, which is the thing the colour side
+ * semantic families to the raw ladder, which is the thing the color side
  * already forbids.
  */
 console.log("\n── L. No primitive scale in the shipped CSS\n")
@@ -951,7 +951,7 @@ console.log("\n── L. No primitive scale in the shipped CSS\n")
   check(
     "L1 no --db-scale-* or --db-s-* custom property is emitted",
     leaked.length === 0,
-    leaked.length ? `found ${leaked.join(", ")}` : "The scale stays in Figma and theme.config.mjs, as colour primitives do."
+    leaked.length ? `found ${leaked.join(", ")}` : "The scale stays in Figma and theme.config.mjs, as color primitives do."
   )
   check(
     "L2 the four semantic families all ship",

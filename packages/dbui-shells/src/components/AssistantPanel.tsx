@@ -1,4 +1,3 @@
-import React from "react"
 import { Button, ButtonChevron } from "dbui/components/ui/button"
 import { Close } from "dbui/components/icons/Close"
 import { Send } from "dbui/components/icons/Send"
@@ -16,7 +15,7 @@ import { GenieCode } from "dbui/components/icons/GenieCode"
  */
 export function AssistantPanel({ onClose }: { onClose?: () => void }) {
   return (
-    <div className="flex w-[360px] shrink-0 flex-col border border-border-base bg-surface-base rounded-2" style={{ marginLeft: 4 }}>
+    <div className="flex w-[360px] shrink-0 flex-col border border-border-base bg-surface-base shape-container" style={{ marginLeft: 4 }}>
       {/* Header */}
       <div className="flex items-center justify-between pl-2 pr-1 h-10">
         <div className="flex items-center gap-1">
@@ -42,7 +41,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
       <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
         {/* Large gradient icon */}
         <div
-          className="flex size-16 items-center justify-center rounded-4"
+          className="flex size-16 items-center justify-center shape-container-lg"
           style={{ backgroundImage: "var(--ai-gradient)" }}
           aria-hidden
         >
@@ -75,7 +74,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
       {/* Input area */}
       <div className="px-3 pt-2">
         <div
-          className="rounded-2 shadow-xs"
+          className="shape-container shadow-xs"
           style={{
             border: "1px solid transparent",
             backgroundImage:

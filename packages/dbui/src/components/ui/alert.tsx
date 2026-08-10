@@ -25,7 +25,7 @@ import { cn } from "../../lib/utils"
  * Removable: optional close button
  */
 const alertVariants = cva(
-  "group/alert flex w-full items-start gap-2 rounded-2 border p-3 type-body",
+  "group/alert flex w-full items-start gap-2 shape-container border p-3 type-body",
   {
     variants: {
       variant: {

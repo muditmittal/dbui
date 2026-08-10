@@ -61,19 +61,36 @@ node scripts/generate-token-data.mjs     # refresh the portal's Tokens page
    `--db-type-scalar` are the only two. The group is Dimensions, not Scalars and
    not Numbers.
 10. **Type is independent of the scale.** Font sizes and line heights are their
-    own anchors on `--db-type-scalar`, so text and layout move separately. Ten of
-    the eleven line heights happen to land on multiples of 4; `block` and
-    `paragraph` at 22px do not. That is convergence, not a dependency, and the 22
-    is deliberate.
+    own stops on `--db-type-scalar`, so text and layout move separately. Most
+    line heights happen to land on multiples of 4; `read` does not. That is
+    convergence, not a dependency, and the odd one is deliberate.
+11. **Type stops ship as custom properties. Color primitives do not.** This is
+    the one place the two layers disagree, and it is not an oversight. A type
+    context has to change what a style measures *after* the class is already on
+    the element, and a custom property is the only thing that can be swapped
+    that late. A color primitive has nothing equivalent to swap, so it resolves
+    inline and never reaches the browser.
 
 ## Type
 
 Named by what the text *is*, not how big it is.
 
-**`label` vs `body` is the split that matters.** Both are 13px. A label is
-single-line by definition, so its line box is 16px — equal to the icon box, which
-is what lets text and icon align in a row without adjustment. Body wraps, so it
-takes 20px. Using `label` for text that wraps is the most common mistake.
+**A style names a stop, not a number.** The 14 style names are the API and never
+move. What a style measures comes from three families of shared stops — sizes,
+t-shirt named; line heights, role named; tracking, style named — and each stop
+holds one value per **context**. `theme.config.mjs` holds the table; the portal's
+Tokens page and `docs/token-spec.md` print it.
+
+The three vocabularies are deliberately different. If sizes and line heights both
+read `sm`/`md`/`lg`, a reader would infer that `line.md` belongs to `size.md`, and
+they do not correspond.
+
+**`label` vs `body` is the split that matters.** They share a size stop. A label
+is single-line by definition, so it takes the `flush` line box — the one that
+equals the icon box, which is what lets text and icon align in a row without
+adjustment. Body wraps, so it takes `wrap`. Using `label` for text that wraps is
+the most common mistake, and naming the stops is what makes the shared size
+visible rather than a coincidence of two equal numbers.
 
 **Each class is the whole style** — family, size, line-height, tracking, weight
 and case. Never pair one with `leading-`, `font-` or `uppercase`.
@@ -90,14 +107,73 @@ style can express. Outside a table, apply `tabular-nums` directly.
 
 **`code` has no bold.** Code emphasis is carried by color, never weight.
 
-**Density is not a second ramp.** `--db-type-scalar` scales the whole ramp from
-one dial. A parallel "comfortable" ramp would inflate controls along with prose.
+## Type contexts
+
+A context is a whole column of stop values. `desktop` is the default and lives in
+`:root`, so a document that declares nothing has a whole ramp at every viewport.
+
+Mobile is **not** desktop times a number. It grows interface and reading text and
+*shrinks* the largest display step, because a display line that does not fit a
+phone measure wraps to three lines and stops reading as a heading. That is why a
+scalar could not have done this job.
+
+**A context is opt-in, and only the app can declare one.** Set
+`data-type-context="mobile"` on `<html>` and the whole document switches; set it
+on a subtree and one context renders inside the other, which is how the Tokens
+page shows both ramps on one desktop page. Setting it back to `"desktop"` inside
+a `"mobile"` subtree works too — every context gets a block, including the
+default. The blocks follow `:root` and win at equal specificity on source order.
+
+**Nothing activates from viewport width, deliberately.** A media query inside an
+iframe measures that iframe, and these components spend most of their life inside
+one — a story canvas, the `/components` embed, a shell preview, a narrow panel. A
+width trigger therefore gives the phone ramp to a component preview on a desktop
+screen, which is a regression this system has already shipped once. The app knows
+whether it is a phone; a box inside it does not.
+
+**Contexts and the scalar are different mechanisms.** `--db-type-scalar` is one
+multiplier a reader sets over whatever context is active — the answer to "roomier
+everywhere". A context is the answer to "different here". A stop carries its plain
+value and the utility applies the scalar, so the multiplication resolves on the
+element and a subtree that sets the scalar actually moves. Do not confuse either
+with `data-type-scale`, which is the portal's own root-font-size dial.
+
+## Surface
+
+Which step to reach for is `DESIGN.md`'s to say. One mechanical fact belongs
+here, because it is the one that bites.
+
+The ramp runs in **opposite luminance directions per mode**, and that is
+correct. Relative luminance, light: `base` 1.00000, `subtle` 0.95597, `strong`
+0.91310. Dark: `base` 0.00816, `subtle` 0.01932, `strong` 0.03306. Both are
+monotonic, so the family is not defective and there is nothing to fix in
+`theme.config.mjs`.
+
+The consequence is that **`surface-base` means "the page", not "raised"**. On a
+`surface-subtle` backdrop it sits above under light and below under dark, so an
+element whose fill is the only thing lifting it inverts between modes — a card
+in one and a well in the other. Give it a border or a ring, which most of the
+system does, or step the fill with `dark:bg-surface-strong`.
+
+A shadow will not cover the gap on its own. Elevation ships per mode and the
+dark values are black at high opacity, so over a near-black backdrop a DBUI
+shadow deepens the recess rather than lifting the element out of it.
 
 ## Elevation
 
-The scale counts **down**: `1` is the highest surface (dialogs), `3` the softest
-(toasts), `0` flat. Read the number as "how far from the page". If two surfaces
-overlap, the one on top takes the lower number.
+What the steps mean and which way they run is `DESIGN.md`'s to say. Two
+mechanical facts belong here instead.
+
+Elevation is the only dimensional family that ships **per mode**. Every other
+family resolves to one value; an elevation step resolves to one value in `:root`
+and another under `.dark`, the same way a semantic color does. It is not a
+color and cannot ride the semantics table, so the generator emits it into both
+blocks itself.
+
+It is also bridged, so the step name is the Tailwind class: `shadow-lg` reads
+`--db-elevation-lg` rather than Tailwind's own scale. Before that bridge existed
+the family was generated and read by nothing, and every shadow in the system
+rendered Tailwind's values while the tokens described DuBois's.
 
 ## The Tailwind bridge
 

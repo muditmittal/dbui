@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Button } from "dbui/components/ui/button"
 import { Input } from "dbui/components/ui/input"
 import { FilterToggle } from "dbui/components/ui/toggle"
@@ -43,7 +43,7 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
       <div className="fixed inset-0 z-40" onClick={onClose} />
       {/* Popup anchored to search input width */}
       <div
-        className="absolute left-0 right-0 top-0 z-50 bg-surface-base border border-border-base rounded-2 shadow-lg overflow-hidden"
+        className="absolute left-0 right-0 top-0 z-50 bg-surface-base border border-border-base shape-container shadow-lg overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input */}

@@ -3,7 +3,7 @@
 > Seeing this file means DBUI is installed. `./dbui/` and `./dbui-shells/` hold the
 > components, icons and tokens. Read this before writing any UI code.
 >
-> Not installed? https://dbuidesign.vercel.app/install
+> Not installed? https://dbuidesign.vercel.app/install.md
 
 ## Rules
 
@@ -17,7 +17,7 @@
 5. **Base UI `render`, not Radix `asChild`.**
    `<DialogTrigger render={<Button />}>Open</DialogTrigger>`
 6. **Shell first.** Every page starts with `<Base>`. Never build chrome from scratch.
-7. **Tree for hierarchies.** `<DataTreeView>` or `<FileTreeView>` — never nested divs.
+7. **Tree for hierarchies.** `<DataTree>` or `<FileTree>` — never nested divs.
 
 ## Where to look
 
@@ -50,5 +50,5 @@ One component per path. There is no barrel import.
 
 ## Updating
 
-Re-run https://dbuidesign.vercel.app/install. It is the same URL for install and
+Re-run https://dbuidesign.vercel.app/install.md. It is the same URL for install and
 update.

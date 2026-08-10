@@ -16,7 +16,7 @@
  * The selector is scrolled into view and asserted present first, because two
  * identical screenshots of a page that never showed the element prove nothing.
  *
- *   node scripts/pixel-ab.mjs http://localhost:3100/docs/components \
+ *   node scripts/pixel-ab.mjs http://localhost:3100/components \
  *     '[data-slot=input-group-control]' 'border-radius:0.25rem'
  */
 import { spawn } from "node:child_process"

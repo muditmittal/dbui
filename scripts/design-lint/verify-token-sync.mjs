@@ -11,12 +11,28 @@
  *        ▼
  *   Figma "Color: Primitive" + "Color: Semantic"   (design source of truth)
  *
- * Only color is checked. The dimensional side has the same two-layer shape —
- * Figma's "Dimensions" collection holds the ladder of multiples that space, size
- * and radius are authored against — but that scale is an authoring artifact and
- * never becomes a custom property, so there is no CSS surface to compare it to.
- * What could be checked is the family stops against their Figma aliases, and
- * that is not built yet.
+ * ## What it does and does not compare, stated because it used to imply more
+ *
+ * This printed "✅ In sync" while comparing Figma by NAME ONLY. Check 6 is a
+ * config↔CSS round-trip; nothing read a Figma value, so four alphas could sit
+ * at their old values in Figma and the check that `CONTRIBUTING.md` makes
+ * mandatory before landing a token change reported agreement. A verifier that
+ * overstates its coverage is worse than one that has none, because the second
+ * sends you to look.
+ *
+ * Two things changed. The dump can now carry values, and when it does they are
+ * compared (check 7). When it does not, the headline says so rather than saying
+ * "in sync" — and `--strict` turns that into a failure for a gate that must not
+ * pass on an unverifiable dump.
+ *
+ * Coverage today:
+ *   color names    config ↔ Figma      compared
+ *   color values   config ↔ CSS        compared
+ *   color values   config ↔ Figma      compared IF the dump carries values
+ *   dimensions      config ↔ Figma      NOT compared — the dump holds the two
+ *                                       color collections and nothing else, so
+ *                                       space, size, radius, border and the
+ *                                       shape roles have no Figma side here
  *
  * It reads:
  *   - packages/dbui/src/tokens/theme.config.mjs     (imported)
@@ -24,16 +40,39 @@
  *   - scripts/design-lint/.figma-token-dump.json    (a Figma snapshot)
  *
  * The Figma snapshot is refreshed by running this use_figma dump and pasting the
- * result into .figma-token-dump.json:
+ * result into .figma-token-dump.json. It emits values as well as names, in the
+ * same spelling the config resolves to — uppercase hex, or `rgba(r, g, b, a)`
+ * when alpha is below 1 — so the two are comparable without normalizing rules
+ * that could hide a real difference:
  *
  *   const cols=await figma.variables.getLocalVariableCollectionsAsync();
  *   const prim=cols.find(c=>c.name==='Color: Primitive');
  *   const sem=cols.find(c=>c.name==='Color: Semantic');
  *   const all=await figma.variables.getLocalVariablesAsync();
- *   const P=[],S=[]; for(const v of all){const h=v.name.replace(/\//g,'-');
- *     if(v.variableCollectionId===prim.id)P.push(h);
- *     else if(v.variableCollectionId===sem.id)S.push(h);}
- *   return {primitive:P.sort(), semantic:S.sort()};
+ *   const n=x=>Math.round(x*255);
+ *   const val=c=>c.a!=null&&c.a<1
+ *     ?`rgba(${n(c.r)}, ${n(c.g)}, ${n(c.b)}, ${c.a})`
+ *     :'#'+[c.r,c.g,c.b].map(x=>n(x).toString(16).padStart(2,'0')).join('').toUpperCase();
+ *   const P=[],S=[],V={};
+ *   for(const v of all){
+ *     const h=v.name.replace(/\//g,'-');
+ *     const coll=v.variableCollectionId===prim.id?prim:(v.variableCollectionId===sem.id?sem:null);
+ *     if(!coll) continue;
+ *     (coll===prim?P:S).push(h);
+ *     const byMode={};
+ *     for(const [id,raw] of Object.entries(v.valuesByMode)){
+ *       if(raw&&typeof raw==='object'&&'r' in raw){
+ *         const m=(coll.modes.find(x=>x.modeId===id)||{}).name||id;
+ *         byMode[m.toLowerCase()]=val(raw);
+ *       }
+ *     }
+ *     V[h]=byMode;
+ *   }
+ *   return {primitive:P.sort(), semantic:S.sort(), values:V};
+ *
+ * A variable that ALIASES another has no literal `{r,g,b}` and is skipped, so a
+ * fully aliased semantic layer yields no comparable values and reports as such
+ * rather than as agreement.
  *
  * Checks (exit 1 if any fail):
  *   1. Primitive parity   — config primitives === Figma primitives
@@ -44,8 +83,11 @@
  *                             utility (primitives are generator input only)
  *   6. Value round-trip   — tokens.css light/dark values === generator resolution
  *                             of the config (config → CSS is faithful)
+ *   7. Figma value parity — Figma's light/dark values === the same resolution,
+ *                             when the dump carries values
  *
- * Usage:  node scripts/design-lint/verify-token-sync.mjs
+ * Usage:  node scripts/design-lint/verify-token-sync.mjs [--strict]
+ *         --strict also fails when Figma values cannot be compared at all.
  */
 import fs from "node:fs"
 import path from "node:path"
@@ -161,18 +203,77 @@ for (const name of cfgSemantics) {
 }
 note("value drift (regenerate with `yarn design:tokens`)", mismatch)
 
+/* 7. Figma value parity.
+ *
+ * The check this file was named for and did not perform. Names matching proves
+ * both sides have a token called `action-selected-base`; only the value proves
+ * they mean the same color by it, and a token change alters nothing else.
+ *
+ * Compared per mode rather than per token, because a semantic drifting in dark
+ * alone is the common case and a token-level comparison would report it as one
+ * failure with no side named. */
+const STRICT = process.argv.includes("--strict")
+const figValues = figma.values && typeof figma.values === "object" ? figma.values : null
+const figDrift = []
+let figCompared = 0
+
+if (figValues) {
+  for (const name of cfgSemantics) {
+    const got = figValues[name]
+    if (!got || typeof got !== "object") continue
+    for (const [mode, want] of [["light", semantics[name].light], ["dark", semantics[name].dark]]) {
+      const have = got[mode]
+      if (have == null) continue
+      figCompared++
+      const resolved = resolve(want)
+      // Case is the only spelling difference worth absorbing — the dump emits
+      // uppercase hex and so does the config, but a hand-edited dump may not.
+      // Anything beyond that is a real difference and stays one.
+      if (String(have).toUpperCase() !== String(resolved).toUpperCase()) {
+        figDrift.push(`${name} ${mode}: figma=${have} config=${resolved}`)
+      }
+    }
+  }
+  note("Figma value drift (Figma and the config disagree)", figDrift)
+  if (figCompared === 0) {
+    problems.push(
+      "the dump carries a `values` block and nothing in it is comparable — every variable is an alias, or the modes are not named light/dark"
+    )
+  }
+} else if (STRICT) {
+  problems.push(
+    "the Figma dump carries names only, so no value could be compared. Refresh it with the dump in this file's header."
+  )
+}
+
 // ── report ──
 const pass = problems.length === 0
+const figValueLine = figValues
+  ? `${figCompared} value${figCompared === 1 ? "" : "s"} compared`
+  : "NOT COMPARED — dump carries names only"
+
 console.log("# Token sync — theme.config.mjs ↔ tokens.css ↔ Figma\n")
 console.log(`config:    ${cfgPrimitives.size} primitive · ${cfgSemantics.size} semantic`)
 console.log(`tokens.css: ${Object.keys(rootDb).filter(isPrimitiveName).length} primitive vars · ${shippedLight.size} semantic (light) · ${shippedDark.size} (dark)`)
-console.log(`@theme:    ${themeUtils.size} Tailwind color utilities\n`)
+console.log(`@theme:    ${themeUtils.size} Tailwind color utilities`)
+console.log(`figma:     ${figPrim.size} primitive · ${figSem.size} semantic names · ${figValueLine}\n`)
 
 if (pass) {
-  console.log("✅ In sync. Config primitive + semantic sets match Figma, every semantic")
-  console.log("   ships in both modes with exactly one Tailwind utility, no primitive")
-  console.log("   leaks into code, and every shipped value round-trips from the config.")
-  console.log("   (Figma codeSyntax.WEB = var(--db-<name>) for semantics.)")
+  console.log("Names match across config, tokens.css and Figma. Every semantic ships in")
+  console.log("both modes with exactly one Tailwind utility, no primitive leaks into code,")
+  console.log("and every shipped value round-trips from the config.\n")
+  if (figValues) {
+    console.log(`✅ In sync, values included — ${figCompared} Figma values agree with the config.`)
+  } else {
+    /* Deliberately not "in sync". The dump holds no values, so the one thing a
+     * token change actually alters is the one thing that was not checked. */
+    console.log("⚠️  Figma VALUES were not compared. The dump carries names only, so a")
+    console.log("   token whose value moved in code and not in Figma passes this check.")
+    console.log("   Refresh the dump with the snippet in this file's header, or run")
+    console.log("   `--strict` to make an unverifiable dump a failure.")
+  }
+  console.log("\nNot covered either way: space, size, radius, border and the shape roles.")
+  console.log("The dump holds the two color collections and nothing else.")
   process.exit(0)
 }
 

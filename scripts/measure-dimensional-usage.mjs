@@ -56,7 +56,7 @@ function walk(dir, out = []) {
 }
 
 /** The shipped design system. Portal is docs, and a swatch is not a consumer. */
-const SYSTEM = ["packages/dbui/src", "packages/dbui-shells/src", "packages/dbui-viz/src", "packages/dbui-genie/src"]
+const SYSTEM = ["packages/dbui/src", "packages/dbui-shells/src", "packages/dbui-viz/src", "packages/dbui-chat/src"]
 const files = SYSTEM.flatMap((r) => walk(path.join(ROOT, r))).map(rel).filter((f) => !NOT_SOURCE.has(f))
 
 const cache = new Map()
@@ -479,11 +479,14 @@ const PLAN = {
   "--db-duration-medium-max": { verb: "delete", note: "band member, zero consumers" },
   "--db-ease-standard": { verb: "keep", note: "bridged to --ease-standard, which mints the class" },
 
-  // Elevation — renamed, revalued to what already renders, dark added.
+  // Elevation — SHIPPED, and onto DuBois's values rather than Tailwind's. This
+  // entry proposed adopting whatever already rendered; the decision went the
+  // other way, so the names below are the ones that shipped and the values come
+  // from the production DuBois library. Kept so the measurement still resolves.
   "--db-elevation-0": { verb: "delete", note: "shadow-none is a Tailwind keyword and needs no token" },
-  "--db-elevation-1": { verb: "rename", to: "--db-elevation-lg", after: "0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1)", note: "re-valued to the shadow-lg that renders today" },
-  "--db-elevation-2": { verb: "rename", to: "--db-elevation-md", after: "0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1)", note: "re-valued to the shadow-md that renders today" },
-  "--db-elevation-3": { verb: "rename", to: "--db-elevation-sm", after: "0 1px 2px 0 rgb(0 0 0 / .05)", note: "re-valued to the shadow-xs that renders today" },
+  "--db-elevation-1": { verb: "rename", to: "--db-elevation-xl", after: "0 8px 40px 0 rgba(0, 0, 0, 0.13)", note: "the highest step keeps the highest name — DuBois xl" },
+  "--db-elevation-2": { verb: "rename", to: "--db-elevation-lg", after: "0 2px 16px 0 rgba(0, 0, 0, 0.08)", note: "the menu step — DuBois lg" },
+  "--db-elevation-3": { verb: "rename", to: "--db-elevation-sm", after: "0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02)", note: "re-valued onto DuBois sm" },
 }
 
 /** Tokens the proposal adds. Kept beside PLAN so both sides of the diff are here. */
@@ -496,7 +499,8 @@ const ADDED = [
   ["--db-size-10", "40px", "avatar lg, item media — 3 sites"],
   ["--db-width-rail", "240px", "replaces w-[240px] — 6 sites"],
   ["--db-width-panel", "280px", "replaces w-[280px] — 6 sites"],
-  ["--db-elevation-xl", "see elevation table", "the one shadow-xl site finally has a token"],
+  ["--db-elevation-xs", "0 1px 0 0 rgba(0, 0, 0, 0.05)", "DuBois carries an xs, so the shadow-xs sites keep their class"],
+  ["--db-elevation-md", "0 3px 6px 0 rgba(0, 0, 0, 0.05)", "between a resting surface and a floating one"],
 ]
 
 const changed = inventory.filter((t) => PLAN[t.name])

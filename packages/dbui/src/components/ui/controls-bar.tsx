@@ -22,13 +22,18 @@ import { cn } from "../../lib/utils"
  *   - Filters only → left-aligned (one child collapses justify-between to flex-start).
  *   - Filters + actions → first cluster left, last cluster right.
  *
+ * A search field here is an Input with a leading icon, not an InputGroup. The group
+ * is for a field with its own control attached — a trailing button or a unit suffix.
+ * Spending it on a decorative icon buys a second bordered cell, a seam and a focus
+ * scope the field does not need.
+ *
  * Usage (filters only):
  *   <ControlsBar>
  *     <ControlsBarFilters>
- *       <InputGroup>
- *         <InputGroupAddon><Search /></InputGroupAddon>
- *         <InputGroupInput placeholder="Filter" />
- *       </InputGroup>
+ *       <div className="relative w-45">
+ *         <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-text-subtle" />
+ *         <Input placeholder="Filter tables" className="pl-8" />
+ *       </div>
  *       <Select>...</Select>
  *     </ControlsBarFilters>
  *   </ControlsBar>
@@ -36,7 +41,7 @@ import { cn } from "../../lib/utils"
  * Usage (filters + actions):
  *   <ControlsBar>
  *     <ControlsBarFilters>
- *       <InputGroup>...</InputGroup>
+ *       <Input ... />
  *       <Select>...</Select>
  *     </ControlsBarFilters>
  *     <ControlsBarActions>

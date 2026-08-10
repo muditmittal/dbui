@@ -470,54 +470,131 @@ export function docs(topic) {
 
 /* -------------------------------------------------------------- search --- */
 
+/**
+ * Words that carry no discriminating power in a query about a design system.
+ * Dropped so `pick a date` searches for `pick` and `date` rather than failing on
+ * the `a`, and so a stray article cannot turn an all-terms match into a partial.
+ */
+const SEARCH_STOPWORDS = new Set([
+  "a", "an", "the", "of", "for", "to", "in", "on", "with", "and", "or",
+  "my", "your", "that", "this", "is", "are", "be", "it", "as", "at", "by",
+]);
+
+/** A query, split into the terms worth matching. */
+function searchTerms(query) {
+  return query
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((t) => t.length >= 2 && !SEARCH_STOPWORDS.has(t));
+}
+
+/**
+ * One term against one haystack, tolerant of a trailing plural.
+ *
+ * `breadcrumbs` should find `Breadcrumb` and `tab` should find `Tabs`, and
+ * neither is worth a stemmer: the whole vocabulary is component and icon names,
+ * where the only inflection that occurs is a plural s.
+ */
+function hasTerm(hay, term) {
+  if (hay.includes(term)) return true;
+  if (term.endsWith("s") && hay.includes(term.slice(0, -1))) return true;
+  if (!term.endsWith("s") && hay.includes(`${term}s`)) return true;
+  return false;
+}
+
+/**
+ * Search across every kind of thing the system publishes.
+ *
+ * ## Why the query is tokenized
+ *
+ * This matched the whole query as one substring, so it answered a question
+ * nobody asks. `table` returned 30 results and `data table` returned none —
+ * not because the system has no table, but because no single field contains
+ * that exact pair of words. Five of seven natural phrasings returned nothing:
+ * `delete confirmation`, `loading state`, `pick a date`.
+ *
+ * That is the worst possible failure for the main discovery entry point,
+ * because "No results" is a stronger claim than silence. An agent that asks for
+ * a data table, is told the system has none, and builds one out of divs has
+ * behaved reasonably on the evidence it was given.
+ *
+ * ## All terms, then any term
+ *
+ * A result must match every term to rank as a full hit. If nothing matches
+ * every term, the same candidates are ranked by how many they do match and
+ * returned as partial, so the caller sees the near misses rather than a dead
+ * end. Precision when it exists, a direction when it does not — never nothing.
+ */
 export function search(query, { type, limit = 20 } = {}) {
   requireRepo();
   const q = query.toLowerCase();
+  const terms = searchTerms(query);
+  // A query of nothing but stopwords still has to mean something.
+  const needles = terms.length ? terms : [q].filter(Boolean);
+
   const results = [];
-  const push = (kind, name, description, command, score) =>
-    results.push({ type: kind, name, description, command, score });
+  /**
+   * `rank` orders within a match quality; `hits` is how many terms landed.
+   * Sorting on hits first keeps a full match above a better-ranked partial.
+   */
+  const consider = (kind, name, description, command, hay, rank) => {
+    const lower = hay.toLowerCase();
+    const hits = needles.filter((t) => hasTerm(lower, t)).length;
+    if (hits === 0) return;
+    results.push({ type: kind, name, description, command, score: rank, hits });
+  };
 
   if (!type || type === "component") {
     for (const c of Object.values(components())) {
-      const hay = [c.name, c.slug, c.useFor ?? "", ...c.synonyms, ...c.exports].join(" ").toLowerCase();
-      if (!hay.includes(q)) continue;
+      const hay = [c.name, c.slug, c.useFor ?? "", c.summary ?? "", ...c.synonyms, ...c.exports].join(" ");
       const exact = c.name.toLowerCase() === q || c.slug === q;
-      const nameHit = c.name.toLowerCase().includes(q);
-      push("component", c.name, c.useFor || c.summary || "", `dbui component ${c.slug}`, exact ? 0 : nameHit ? 1 : 2);
+      const nameHit = needles.every((t) => hasTerm(c.name.toLowerCase(), t));
+      consider("component", c.name, c.useFor || c.summary || "", `dbui component ${c.slug}`, hay, exact ? 0 : nameHit ? 1 : 2);
     }
   }
   if (!type || type === "icon") {
     for (const i of Object.values(icons())) {
-      const hay = [i.name, i.label, ...i.synonyms].join(" ").toLowerCase();
-      if (!hay.includes(q)) continue;
+      const hay = [i.name, i.label, ...i.synonyms].join(" ");
       const exact = i.name.toLowerCase() === q;
-      push("icon", i.name, `${i.category ?? "?"} — ${i.label}`, `dbui icon ${i.name}`, exact ? 0 : i.name.toLowerCase().includes(q) ? 1 : 3);
+      const nameHit = needles.every((t) => hasTerm(i.name.toLowerCase(), t));
+      consider("icon", i.name, `${i.category ?? "?"} — ${i.label}`, `dbui icon ${i.name}`, hay, exact ? 0 : nameHit ? 1 : 3);
     }
   }
   if (!type || type === "composition") {
     for (const [slug, recipes] of Object.entries(compositions())) {
       for (const r of recipes) {
-        const hay = `${slug} ${r.name} ${r.code}`.toLowerCase();
-        if (!hay.includes(q)) continue;
-        push("composition", `${slug} — ${r.name}`, "worked composition", `dbui composition ${slug} "${r.name}"`, r.name.toLowerCase().includes(q) ? 0 : 2);
+        const hay = `${slug} ${r.name} ${r.code}`;
+        const nameHit = needles.every((t) => hasTerm(r.name.toLowerCase(), t));
+        consider("composition", `${slug} — ${r.name}`, "worked composition", `dbui composition ${slug} "${r.name}"`, hay, nameHit ? 0 : 2);
       }
     }
   }
   if (!type || type === "shell") {
     for (const s of Object.values(shells())) {
-      const hay = `${s.id} ${s.name} ${s.purpose ?? ""}`.toLowerCase();
-      if (hay.includes(q)) push("shell", `Shell ${s.id} — ${s.name}`, s.purpose ?? "", `dbui shell ${s.id}`, 1);
+      const hay = `${s.id} ${s.name} ${s.purpose ?? ""}`;
+      consider("shell", `Shell ${s.id} — ${s.name}`, s.purpose ?? "", `dbui shell ${s.id}`, hay, 1);
     }
   }
   if (!type || type === "doc") {
     for (const [topic, fn] of Object.entries(DOC_TOPICS)) {
       const { title } = fn();
-      if (`${topic} ${title}`.toLowerCase().includes(q)) push("doc", topic, title, `dbui docs ${topic}`, 2);
+      consider("doc", topic, title, `dbui docs ${topic}`, `${topic} ${title}`, 2);
     }
   }
 
-  results.sort((a, b) => a.score - b.score || a.name.localeCompare(b.name));
-  return envelope("search", { query, total: results.length, results: results.slice(0, limit) });
+  const full = results.filter((r) => r.hits === needles.length);
+  const kept = full.length ? full : results;
+  kept.sort((a, b) => b.hits - a.hits || a.score - b.score || a.name.localeCompare(b.name));
+
+  return envelope("search", {
+    query,
+    terms: needles,
+    // `partial` tells the caller these matched some terms and not all, so a
+    // reader knows the difference between "here it is" and "nearest thing".
+    matched: full.length ? "all" : "partial",
+    total: kept.length,
+    results: kept.slice(0, limit).map(({ hits, ...r }) => r),
+  });
 }
 
 /* --------------------------------------------------------------- check --- */

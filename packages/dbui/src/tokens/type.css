@@ -4,118 +4,140 @@
  * Regenerate: yarn design:tokens
  *
  * Each utility is the WHOLE style — family, size, line-height, tracking, weight
- * and numeric variant. Never pair one with `leading-*` or `font-*`.
+ * and case. Never pair one with `leading-*` or `font-*`.
+ *
+ * Size, line-height and tracking read a STOP, so the active type context
+ * decides what they measure and the same class serves every context. The
+ * `--db-type-scalar` multiplication is here rather than on the stop so it
+ * resolves on the element, which is what lets a subtree set it.
+ *
+ * Tracking and case are declared on every style, including the ones with
+ * nothing to say, because both inherit: a style nested inside another has to
+ * clear what it did not ask for.
  * ───────────────────────────────────────────────────────────────────────────── */
-
-@utility type-hint {
-  font-family: var(--db-font-family);
-  font-size: var(--db-font-size-hint);
-  line-height: var(--db-line-height-hint);
-  letter-spacing: var(--db-letter-spacing-hint);
-  font-weight: var(--db-font-weight-hint);
-}
 
 @utility type-eyebrow {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-eyebrow);
-  line-height: var(--db-line-height-eyebrow);
-  letter-spacing: var(--db-letter-spacing-eyebrow);
-  font-weight: var(--db-font-weight-eyebrow);
+  font-size: calc(var(--db-font-size-2xs) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
+  letter-spacing: calc(var(--db-letter-spacing-eyebrow) * var(--db-type-scalar));
+  font-weight: 600;
   text-transform: uppercase;
+}
+
+@utility type-hint {
+  font-family: var(--db-font-family);
+  font-size: calc(var(--db-font-size-xs) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 400;
+  text-transform: none;
 }
 
 @utility type-label {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-label);
-  line-height: var(--db-line-height-label);
-  letter-spacing: var(--db-letter-spacing-label);
-  font-weight: var(--db-font-weight-label);
+  font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 400;
+  text-transform: none;
 }
 
 @utility type-label-bold {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-label-bold);
-  line-height: var(--db-line-height-label-bold);
-  letter-spacing: var(--db-letter-spacing-label-bold);
-  font-weight: var(--db-font-weight-label-bold);
+  font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: none;
 }
 
 @utility type-body {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-body);
-  line-height: var(--db-line-height-body);
-  letter-spacing: var(--db-letter-spacing-body);
-  font-weight: var(--db-font-weight-body);
+  font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-wrap) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 400;
+  text-transform: none;
 }
 
 @utility type-body-bold {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-body-bold);
-  line-height: var(--db-line-height-body-bold);
-  letter-spacing: var(--db-letter-spacing-body-bold);
-  font-weight: var(--db-font-weight-body-bold);
+  font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-wrap) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: none;
 }
 
 @utility type-code {
   font-family: var(--db-mono-font-family);
-  font-size: var(--db-font-size-code);
-  line-height: var(--db-line-height-code);
-  letter-spacing: var(--db-letter-spacing-code);
-  font-weight: var(--db-font-weight-code);
+  font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-wrap) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 400;
+  text-transform: none;
 }
 
-@utility type-block {
+@utility type-code-block {
   font-family: var(--db-mono-font-family);
-  font-size: var(--db-font-size-block);
-  line-height: var(--db-line-height-block);
-  letter-spacing: var(--db-letter-spacing-block);
-  font-weight: var(--db-font-weight-block);
+  font-size: calc(var(--db-font-size-md) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-read) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 400;
+  text-transform: none;
 }
 
 @utility type-paragraph {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-paragraph);
-  line-height: var(--db-line-height-paragraph);
-  letter-spacing: var(--db-letter-spacing-paragraph);
-  font-weight: var(--db-font-weight-paragraph);
+  font-size: calc(var(--db-font-size-lg) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-read) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 400;
+  text-transform: none;
 }
 
 @utility type-paragraph-bold {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-paragraph-bold);
-  line-height: var(--db-line-height-paragraph-bold);
-  letter-spacing: var(--db-letter-spacing-paragraph-bold);
-  font-weight: var(--db-font-weight-paragraph-bold);
+  font-size: calc(var(--db-font-size-lg) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-read) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: none;
 }
 
 @utility type-title-4 {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-title-4);
-  line-height: var(--db-line-height-title-4);
-  letter-spacing: var(--db-letter-spacing-title-4);
-  font-weight: var(--db-font-weight-title-4);
+  font-size: calc(var(--db-font-size-xl) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-title-4) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: none;
 }
 
 @utility type-title-3 {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-title-3);
-  line-height: var(--db-line-height-title-3);
-  letter-spacing: var(--db-letter-spacing-title-3);
-  font-weight: var(--db-font-weight-title-3);
+  font-size: calc(var(--db-font-size-2xl) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-title-3) * var(--db-type-scalar));
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: none;
 }
 
 @utility type-title-2 {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-title-2);
-  line-height: var(--db-line-height-title-2);
-  letter-spacing: var(--db-letter-spacing-title-2);
-  font-weight: var(--db-font-weight-title-2);
+  font-size: calc(var(--db-font-size-3xl) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-title-2) * var(--db-type-scalar));
+  letter-spacing: calc(var(--db-letter-spacing-title-2) * var(--db-type-scalar));
+  font-weight: 600;
+  text-transform: none;
 }
 
 @utility type-title-1 {
   font-family: var(--db-font-family);
-  font-size: var(--db-font-size-title-1);
-  line-height: var(--db-line-height-title-1);
-  letter-spacing: var(--db-letter-spacing-title-1);
-  font-weight: var(--db-font-weight-title-1);
+  font-size: calc(var(--db-font-size-4xl) * var(--db-type-scalar));
+  line-height: calc(var(--db-line-height-title-1) * var(--db-type-scalar));
+  letter-spacing: calc(var(--db-letter-spacing-title-1) * var(--db-type-scalar));
+  font-weight: 600;
+  text-transform: none;
 }

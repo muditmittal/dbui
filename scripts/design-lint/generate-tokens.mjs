@@ -10,9 +10,13 @@
  *          (--color-surface-base → var(--db-surface-base)), plus the bridge
  *          onto Tailwind's own namespaces (--spacing, --radius-*)
  *        • :root  — scalars, space/radius/type/elevation scale, LIGHT semantics
- *        • .dark  — DARK semantics
- *      Primitives are resolved INLINE (semantics carry final hex/rgba). They are
- *      NOT shipped as CSS vars — they're generator input only.
+ *        • .dark  — DARK semantics, and the elevation scale at its dark alphas
+ *        • type contexts — the type stops again at their other values, behind
+ *          the context attribute. Opt-in only; no media query.
+ *      Color primitives are resolved INLINE (semantics carry final hex/rgba).
+ *      They are NOT shipped as CSS vars — they're generator input only. Type
+ *      stops are the deliberate exception: a context has to swap a value under a
+ *      style that is already applied, and only a custom property can be swapped.
  *
  *   2. scripts/design-lint/tokens.json       — linter allowlist
  *        colors.{light,alpha,primitives,semanticTokens}, dimensions, fonts and
@@ -36,7 +40,7 @@ const TYPE_CSS = path.join(ROOT, "packages/dbui/src/tokens/type.css")
 const GLOBALS_CSS = path.join(ROOT, "packages/dbui/src/tokens/globals.css")
 const TOKENS_JSON = path.join(__dirname, "tokens.json")
 
-const { meta, primitives, semantics, scalars, space, radius, bridge, size, border, type, elevation, motion } = cfg
+const { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion } = cfg
 const PREFIX = `--${meta.prefix}-` // --db-
 
 // ── ref resolution ───────────────────────────────────────────────────────────
@@ -105,7 +109,7 @@ const v = (name) => `var(${PREFIX}${name})` // reference another --db-* token in
  * Every family computes its own value. None of them references another, and
  * there is deliberately no primitive custom property behind them: the scale is
  * an authoring artifact that lives in Figma and in this config, and React ships
- * semantics only — the same split colour already makes, where the palette
+ * semantics only — the same split color already makes, where the palette
  * resolves at build time and only `--db-surface-base` reaches the browser.
  *
  * So `--db-size-8` and `--db-space-8` are two independent tokens that agree on
@@ -156,6 +160,56 @@ const twKey = (step) => String(step).replace(".", "\\.")
 const tokenStop = (step) => String(step).replace(".", "-")
 
 /**
+ * The shape roles. A role ALIASES a stop rather than restating its value, so a
+ * corner is written down once and the density dial reaches the role through the
+ * scale it points at rather than needing its own calc().
+ *
+ * This is the one dimensional family that is not a measurement, which is why it
+ * does not go through `scaled()`: `shape-container` has no multiple of its own.
+ * It is a decision about which multiple a card gets, and it is the layer a theme
+ * reassigns without touching a component.
+ */
+const shapeLines = Object.entries(shape ?? {})
+  .map(([role, stop]) => `  ${PREFIX}shape-${role}: ${v(`radius-${tokenStop(stop)}`)};`)
+  .join("\n")
+
+/**
+ * Roles mint their OWN utility rather than a key in Tailwind's radius namespace,
+ * so the class and the token are the same word: `shape-container`, not
+ * `rounded-container`. Bridging into `--radius-*` produced `rounded-square`,
+ * which is a contradiction, and left the system with two words for one idea.
+ * `type.css` already sets this precedent for the ramp.
+ *
+ * Sides are emitted because a drawer rounds one edge and a grouped control
+ * squares one. Corner-level forms are not emitted until something needs them.
+ */
+/**
+ * A square corner is the system default, and flush groups depend on it being
+ * exactly zero — a grouped button whose inner edge rounds stops butting against
+ * its neighbor. Asserted rather than trusted, because it is the one role a
+ * theme could plausibly reach for and get wrong.
+ */
+if (shape && shape.square !== 0) {
+  throw new Error(`shape.square must be 0 — it is the default corner and flush control groups depend on it. Got ${shape.square}.`)
+}
+
+const SHAPE_SIDES = {
+  "": ["border-radius"],
+  "t-": ["border-top-left-radius", "border-top-right-radius"],
+  "r-": ["border-top-right-radius", "border-bottom-right-radius"],
+  "b-": ["border-bottom-right-radius", "border-bottom-left-radius"],
+  "l-": ["border-top-left-radius", "border-bottom-left-radius"],
+}
+const shapeUtilities = Object.keys(shape ?? {})
+  .flatMap((role) =>
+    Object.entries(SHAPE_SIDES).map(([side, props]) => {
+      const body = props.map((p) => `  ${p}: ${v(`shape-${role}`)};`).join("\n")
+      return `@utility shape-${side}${role} {\n${body}\n}`
+    })
+  )
+  .join("\n")
+
+/**
  * Keys removed outright, in a plain @theme block because `initial` is a
  * directive to the compiler rather than a value to inline.
  *
@@ -198,21 +252,88 @@ const bridgeLines = Object.entries(bridge ?? {})
 const splitFamily = (stack) =>
   stack.split(",").map((f) => f.trim().replace(/^["']|["']$/g, "")).filter(Boolean)
 
+/* ── Type: stops, not styles ─────────────────────────────────────────────────
+ *
+ * What ships is the three STOP families plus the two root faces — not one
+ * property per style. Fourteen styles share nine sizes, seven line heights and
+ * three trackings, so a per-style property emitted the same number under
+ * fourteen names and made a context override fourteen edits instead of one.
+ *
+ * A stop carries its PLAIN value. The `--db-type-scalar` multiplication happens
+ * in the utility body instead, and that placement is the fix for a real defect:
+ * a calc() sitting in `:root` resolves once against `:root`'s own scalar, so a
+ * subtree that set `--db-type-scalar` inherited an already-computed number and
+ * nothing moved. Resolved on the element, the dial works wherever it is set —
+ * the same reason `@theme inline` is what makes the density scalar work one
+ * level down.
+ *
+ * It is also what makes contexts possible: a mode block swaps the plain stop
+ * underneath, and every style reading that stop follows without the utility
+ * changing at all.
+ */
+const stopFamilies = [
+  ["font-size", type.stops.size],
+  ["line-height", type.stops.line],
+  // Named for the property rather than for `tracking`, so all three families
+  // read `<css-property>-<stop>` and the CSS name says what it feeds.
+  ["letter-spacing", type.stops.tracking],
+]
+
+const contexts = type.contexts
+const DEFAULT_CONTEXT = type.defaultContext
+if (!contexts.includes(DEFAULT_CONTEXT)) {
+  throw new Error(`type.defaultContext "${DEFAULT_CONTEXT}" is not one of type.contexts (${contexts.join(", ")})`)
+}
+
+/** What one stop measures, in px, in a context. The px the config authored. */
+const stopPx = (family, stop, context = DEFAULT_CONTEXT) => {
+  const px = type.stops[family]?.[stop]?.[context]
+  if (px === undefined) throw new Error(`type.stops.${family}.${stop} has no "${context}" value`)
+  return px
+}
+
+/** Every stop declaration for one context, at a given indent. */
+const stopLines = (context, pad = "  ") =>
+  stopFamilies
+    .map(([prop, stops]) =>
+      Object.entries(stops)
+        .map(([stop, byContext]) => {
+          const px = byContext[context]
+          if (px === undefined) throw new Error(`${prop}-${stop} has no value for context "${context}"`)
+          return `${pad}${PREFIX}${prop}-${stop}: ${rem(px)};`
+        })
+        .join("\n"),
+    )
+    .join("\n")
+
 const typeLines = [
   `  ${PREFIX}font-family: ${type.family.text};`,
   `  ${PREFIX}mono-font-family: ${type.family.mono};`,
-  // size, line-height AND tracking all scale together via --db-type-scalar.
-  // Weight and family are fixed — they are what the style *is*, not how big it is.
-  ...Object.entries(type.scale).flatMap(([k, s]) => [
-    `  ${PREFIX}font-size-${k}: calc(${rem(s.size)} * ${v("type-scalar")});`,
-    `  ${PREFIX}line-height-${k}: calc(${rem(s.line)} * ${v("type-scalar")});`,
-    `  ${PREFIX}letter-spacing-${k}: calc(${rem(s.tracking)} * ${v("type-scalar")});`,
-    `  ${PREFIX}font-weight-${k}: ${s.weight ?? type.weight.normal};`,
-    `  ${PREFIX}font-family-${k}: ${v(s.family === "mono" ? "mono-font-family" : "font-family")};`,
-  ]),
-  `  ${PREFIX}font-weight: ${type.weight.normal};`,
-  `  ${PREFIX}font-weight-bold: ${type.weight.bold};`,
+  stopLines(DEFAULT_CONTEXT),
 ].join("\n")
+
+/**
+ * One attribute block per context — the default included, since forcing
+ * `desktop` back on inside a subtree that set `mobile` is a case a
+ * default-only-in-`:root` emission cannot serve.
+ *
+ * No media block accompanies them, and that is the mechanism, not an omission.
+ * A context is opt-in: the app declares one, and a document that declares
+ * nothing keeps `:root`. See the reasoning in `theme.config.mjs` — a media query
+ * inside an iframe measures the iframe, so every story canvas and preview embed
+ * narrower than the threshold used to render the phone ramp on a desktop.
+ *
+ * The blocks come after `:root` and win at equal specificity on source order —
+ * `[data-type-context="x"]` is one attribute selector against one pseudo-class,
+ * so nothing but order separates them.
+ *
+ * Unprefixed by `:root` on purpose. The attribute then matches any element, and
+ * the stops inherit, which is how one context renders inside the other — the
+ * Tokens page shows the mobile ramp beside the desktop one on a desktop page.
+ */
+const contextBlocks = contexts
+  .map((name) => `[${type.contextAttr}="${name}"] {\n${stopLines(name)}\n}`)
+  .join("\n\n")
 
 const sizeLines = scaled("size", size)
 
@@ -230,8 +351,16 @@ const motionLines = [
   ...Object.entries(motion.easing).map(([k, val]) => `  ${PREFIX}ease-${k}: ${val};`),
 ].join("\n")
 
+// Elevation is the one dimensional family that ships per mode. It is not a
+// color, so it cannot ride the semantics table, but a black shadow tuned for
+// white draws nothing on a dark surface — so the stop name has to resolve to a
+// different alpha under `.dark`, exactly as a semantic does.
 const elevationLines = Object.entries(elevation)
-  .map(([k, v]) => `  ${PREFIX}elevation-${k}: ${v};`)
+  .map(([k, v]) => `  ${PREFIX}elevation-${k}: ${v.light};`)
+  .join("\n")
+
+const elevationDarkLines = Object.entries(elevation)
+  .map(([k, v]) => `  ${PREFIX}elevation-${k}: ${v.dark};`)
   .join("\n")
 
 const lightSemantics = names.map((n) => `  ${varName(n)}: ${resolve(semantics[n].light)};`).join("\n")
@@ -267,7 +396,12 @@ ${theme}
 
   /* ── Tailwind bridge — the namespaces DBUI tokens stand behind ── */
 ${bridgeLines}
+
 }
+
+/* ── Shape roles — one utility per decision, named exactly like its token.
+   A corner with no shape class is square, which is the system default. ── */
+${shapeUtilities}
 
 :root {
   /* ── Scalars — the density/size/type dials ── */
@@ -280,7 +414,13 @@ ${spaceLines}
   /* ── Radius (its own stops on the same grid; "full" is a pill sentinel) ── */
 ${radiusLines}
 
-  /* ── Type (anchored ramp, scaled together by type-scalar) ── */
+  /* ── Shape — the corner ROLES. A measurement above, a decision here. These are
+     what components bind, and the only dimensional layer a theme reassigns. ── */
+${shapeLines}
+
+  /* ── Type — the two faces and the three stop families, in the default
+     context. A style names a stop; the stop holds the value. The type scalar is
+     applied in the utility body, not here, so it resolves on the element. ── */
 ${typeLines}
 
   /* ── Size (width and height; its own stops on the same grid) ── */
@@ -302,11 +442,27 @@ ${lightSemantics}
 }
 
 .dark {
+  /* ── Elevation — same geometry as light, heavier alpha. ── */
+${elevationDarkLines}
+
   /* ══════════════════════════════════════════════════════════════════════════
    * SEMANTICS — DARK.
    * ══════════════════════════════════════════════════════════════════════════ */
 ${darkSemantics}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * TYPE CONTEXTS — the same stops at other values.
+ *
+ * Only the stops move. The 14 style names, their weights, faces and cases are
+ * context-independent, so nothing below repeats a style.
+ *
+ * Opt-in only. A context activates when something sets the attribute, never
+ * from the viewport, and these blocks follow the :root declarations so they win
+ * at equal specificity on source order. A document that sets nothing gets the
+ * default at every width.
+ * ══════════════════════════════════════════════════════════════════════════ */
+${contextBlocks}
 `
 
 fs.writeFileSync(TOKENS_CSS, css)
@@ -317,17 +473,36 @@ fs.writeFileSync(TOKENS_CSS, css)
 // overloaded for color, so `text-text-subtle` (a color) sitting beside a
 // size named `text-text` would be genuinely ambiguous. `type-*` keeps the two
 // axes legible — `class="type-paragraph text-text-subtle"` reads correctly.
+/**
+ * The utility is where the style is assembled: a stop reference for each of the
+ * three measured properties, and a literal for the three that do not measure
+ * anything.
+ *
+ * Every declaration is present on every style, including the ones with nothing
+ * to say, because `letter-spacing` and `text-transform` INHERIT. Emitting them
+ * only where they are non-default is how a `type-label` nested inside a
+ * `type-title-1` kept the title's tighter tracking and how one inside a
+ * `type-eyebrow` rendered in caps — the class stops being the whole style the
+ * moment it sits inside another. A zero needs no stop and no scalar, so it is
+ * written literally.
+ *
+ * The scalar multiplication lives here rather than in the stop, so it resolves
+ * on the element. That is what makes `--db-type-scalar` work on a subtree, and
+ * it is what leaves the stop free to be swapped by a context.
+ */
+const stopCalc = (prop, stop) => `calc(${v(`${prop}-${stop}`)} * ${v("type-scalar")})`
+
 const typeUtilities = Object.entries(type.scale)
   .map(([k, s]) => {
     const lines = [
       `  font-family: ${v(s.family === "mono" ? "mono-font-family" : "font-family")};`,
-      `  font-size: ${v(`font-size-${k}`)};`,
-      `  line-height: ${v(`line-height-${k}`)};`,
-      `  letter-spacing: ${v(`letter-spacing-${k}`)};`,
-      `  font-weight: ${v(`font-weight-${k}`)};`,
+      `  font-size: ${stopCalc("font-size", s.size)};`,
+      `  line-height: ${stopCalc("line-height", s.line)};`,
+      `  letter-spacing: ${s.tracking ? stopCalc("letter-spacing", s.tracking) : "0"};`,
+      `  font-weight: ${s.weight ?? type.weight.normal};`,
+      // Eyebrow carries its caps in the style, so no call site retypes it.
+      `  text-transform: ${s.transform ?? "none"};`,
     ]
-    // Eyebrow carries its caps in the style, so no call site retypes it.
-    if (s.transform) lines.push(`  text-transform: ${s.transform};`)
     return `@utility type-${k} {\n${lines.join("\n")}\n}`
   })
   .join("\n\n")
@@ -340,7 +515,16 @@ fs.writeFileSync(
  * Regenerate: yarn design:tokens
  *
  * Each utility is the WHOLE style — family, size, line-height, tracking, weight
- * and numeric variant. Never pair one with \`leading-*\` or \`font-*\`.
+ * and case. Never pair one with \`leading-*\` or \`font-*\`.
+ *
+ * Size, line-height and tracking read a STOP, so the active type context
+ * decides what they measure and the same class serves every context. The
+ * \`--db-type-scalar\` multiplication is here rather than on the stop so it
+ * resolves on the element, which is what lets a subtree set it.
+ *
+ * Tracking and case are declared on every style, including the ones with
+ * nothing to say, because both inherit: a style nested inside another has to
+ * clear what it did not ask for.
  * ───────────────────────────────────────────────────────────────────────────── */
 
 ${typeUtilities}
@@ -394,7 +578,7 @@ for (const [famName, fam] of Object.entries(primitives)) {
  * Every shadcn-flat color name globals.css used to declare. They are gone, so a
  * class built from one now resolves to nothing and the property drops silently
  * — worse than a wrong value, because the element still renders and only the
- * colour is missing.
+ * color is missing.
  *
  * This is the one list here that cannot be derived, because it describes what
  * the source no longer contains. It lives beside the generator that deleted
@@ -510,6 +694,32 @@ const out = {
       "border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y",
       "divide-x", "divide-y", "ring", "ring-offset", "outline",
     ], "I2"),
+    /* The role layer, and the one family whose steps are words rather than
+     * multiples. It is emitted separately from `radius` because the two answer
+     * different questions: `radius` is the set of corners that exist, `shape` is
+     * which of them a kind of object gets. A linter that only knows `radius`
+     * can say 8px is a legal corner and cannot say a dialog should have asked
+     * for `shape-container` instead.
+     *
+     * `aliases` is what makes the role checkable in both directions: it maps
+     * each role to the radius stop it points at, so a rule can resolve
+     * `shape-container` to its px, and can also see that `rounded-2` is a
+     * measurement written where a role exists.
+     *
+     * No `range`. A role set is closed by enumeration rather than by ends —
+     * there is no value "between" container and pill — so the membership test
+     * is the whole test. */
+    shape: {
+      $comment:
+        "Corner ROLES, from theme.config.mjs `shape`. Steps are role names, `px` what each renders at a 16px root, and `aliases` the radius stop each role points at. Components bind the role; `radius` remains the measurement it resolves to.",
+      steps: Object.keys(shape ?? {}),
+      px: Object.values(shape ?? {}).map((stop) =>
+        typeof stop === "string" ? parseFloat(radius[stop]) : radius[stop] * GRID_PX
+      ),
+      aliases: Object.fromEntries(Object.entries(shape ?? {}).map(([role, stop]) => [role, stop])),
+      reaches: ["shape", "shape-t", "shape-r", "shape-b", "shape-l"],
+      $asserts: "K9",
+    },
   },
   // Derived from theme.config.mjs so the linter's allowlist cannot fall behind
   // the shipped families. `legacy` stays allowed until every component stops
@@ -526,20 +736,74 @@ const out = {
    *
    * Spread from the config and nothing else. It used to spread the previous
    * file first, which kept a `reading` group alive — 16/26 and 14/24, sizes no
-   * step has carried since the ramp was rewritten. */
+   * step has carried since the ramp was rewritten.
+   *
+   * `scale` and `ramp` are RESOLVED TO PX, in the default context, even though
+   * the config now names stops. That is deliberate: five linter rules read
+   * `ramp[].size` and `ramp[].line` as numbers to decide whether a `text-[13px]`
+   * literal is on the ramp, and the Figma linter serializes the same three
+   * fields into its runtime. Handing them stop names would not fail — it would
+   * compare a number against a string, match nothing, and go quiet, which is
+   * exactly the failure `verify-rules` exists to catch.
+   *
+   * Only the default context is offered as the allowlist. A second context adds
+   * legal px values, and admitting them would let more literals through the very
+   * rules that exist to stop literals — the point is that a call site names the
+   * utility, so no context's numbers should be spellable. `contexts` below
+   * carries the other sets for anything that needs to read them. */
   type: {
     $comment:
-      "The type ramp as the linter reads it. `size`/`line` are px anchors before --db-type-scalar. Only these combinations are approved, and each is the whole style — a call site names the utility, never the numbers.",
-    scale: type.scale,
+      "The type ramp as the linter reads it. `size`/`line` are px anchors in the default context, before --db-type-scalar. Only these combinations are approved, and each is the whole style — a call site names the utility, never the numbers. `contexts` holds the per-context stop values; `ramp` intentionally lists only the default so no context's numbers become spellable.",
+    scale: Object.fromEntries(
+      Object.entries(type.scale).map(([name, s]) => [
+        name,
+        {
+          size: stopPx("size", s.size),
+          line: stopPx("line", s.line),
+          tracking: s.tracking ? stopPx("tracking", s.tracking) : 0,
+          weight: s.weight ?? type.weight.normal,
+          family: s.family ?? "text",
+          ...(s.transform ? { transform: s.transform } : {}),
+        },
+      ]),
+    ),
     ramp: Object.entries(type.scale).map(([name, s]) => ({
       name,
       utility: `type-${name}`,
-      size: s.size,
-      line: s.line,
+      size: stopPx("size", s.size),
+      line: stopPx("line", s.line),
       weight: s.weight ?? type.weight.normal,
       family: s.family ?? "text",
       transform: s.transform ?? "none",
     })),
+    // What a style is made of, so a reader can see the sharing the px table
+    // flattens away: `label` and `body` are one size stop and two line stops.
+    stops: Object.fromEntries(
+      Object.entries(type.scale).map(([name, s]) => [
+        name,
+        { size: s.size, line: s.line, tracking: s.tracking ?? null },
+      ]),
+    ),
+    // A context activates only when something sets `attribute`. There is no
+    // query field because there is no viewport trigger — `defaultContext` is
+    // what a document that sets nothing renders, at every width.
+    attribute: type.contextAttr,
+    defaultContext: DEFAULT_CONTEXT,
+    contexts: Object.fromEntries(
+      contexts.map((context) => [
+        context,
+        {
+          size: Object.fromEntries(Object.entries(type.stops.size).map(([k, byCtx]) => [k, byCtx[context]])),
+          line: Object.fromEntries(Object.entries(type.stops.line).map(([k, byCtx]) => [k, byCtx[context]])),
+          tracking: Object.fromEntries(Object.entries(type.stops.tracking).map(([k, byCtx]) => [k, byCtx[context]])),
+          ramp: Object.entries(type.scale).map(([name, s]) => ({
+            name,
+            size: stopPx("size", s.size, context),
+            line: stopPx("line", s.line, context),
+          })),
+        },
+      ]),
+    ),
   },
 }
 
@@ -548,6 +812,8 @@ fs.writeFileSync(TOKENS_JSON, JSON.stringify(out, null, 2) + "\n")
 // ── summary ────────────────────────────────────────────────────────────────
 const primCount = Object.values(primMap).reduce((n, r) => n + Object.keys(r).length, 0) + 2 // + base pair
 const alphaSem = names.filter((n) => isAlpha(semantics[n].light) || isAlpha(semantics[n].dark)).length
-console.log(`tokens.css   : ${names.length} semantics (light + dark), ${Object.keys(space).length} space, ${Object.keys(radius).length} radius, ${Object.keys(type.scale).length} type steps (size+line+tracking, scalar-tied), ${Object.keys(elevation).length} elevation.`)
+const typeProps = 2 + stopFamilies.reduce((n, [, stops]) => n + Object.keys(stops).length, 0)
+console.log(`tokens.css   : ${names.length} semantics (light + dark), ${Object.keys(space).length} space, ${Object.keys(radius).length} radius, ${Object.keys(elevation).length} elevation.`)
+console.log(`type         : ${Object.keys(type.scale).length} styles over ${typeProps} properties (2 faces + ${stopFamilies.map(([, s]) => Object.keys(s).length).join(" + ")} stops), ${contexts.length} contexts (${contexts.join(", ")}, ${DEFAULT_CONTEXT} in :root, attribute-only).`)
 console.log(`tokens.json  : ${hexes.size} hex, ${alphas.size} alpha, ${primCount} primitives, ${names.length} semantic tokens (${alphaSem} carry alpha).`)
 console.log(`Primitives shipped as CSS vars: 0 (resolved inline — generator input only).`)

@@ -35,7 +35,7 @@ const OUT = path.join(__dirname, "dbui-components.json")
 const PACKAGES = [
   { key: "ui", barrel: "packages/dbui/src/index.ts" },
   { key: "shells", barrel: "packages/dbui-shells/src/index.ts" },
-  { key: "genie", barrel: "packages/dbui-genie/src/index.ts" },
+  { key: "chat", barrel: "packages/dbui-chat/src/index.ts" },
   { key: "viz", barrel: "packages/dbui-viz/src/index.ts" },
 ]
 const ICON_DIR = "packages/dbui/src/components/icons"

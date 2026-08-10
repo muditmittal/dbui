@@ -44,7 +44,7 @@ export interface BarChartProps
   showAxis?: boolean
   showXAxis?: boolean
   showYAxis?: boolean
-  /** Normalise stacked bars to 100%. */
+  /** Normalize stacked bars to 100%. */
   normalize?: boolean
   xType?: "temporal" | "ordinal" | "quantitative"
   yTickCount?: number

@@ -1,13 +1,12 @@
-import React, { useState } from "react"
-import { Button, ButtonChevron } from "dbui/components/ui/button"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuItemIcon, DropdownMenuItemDescription, DropdownMenuSeparator, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "dbui/components/ui/dropdown-menu"
+import { useState } from "react"
+import { Button } from "dbui/components/ui/button"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "dbui/components/ui/dropdown-menu"
 import { Input } from "dbui/components/ui/input"
 import { Badge } from "dbui/components/ui/badge"
 import { SidebarOpen } from "dbui/components/icons/SidebarOpen"
 import { SidebarClosed } from "dbui/components/icons/SidebarClosed"
 import { Search } from "dbui/components/icons/Search"
 import { App } from "dbui/components/icons/App"
-import { GenieCode } from "dbui/components/icons/GenieCode"
 import { ChevronDown } from "dbui/components/icons/ChevronDown"
 import { DatabricksLogo } from "dbui/components/icons/DatabricksLogo"
 import { SearchPopup } from "./SearchPopup"
@@ -138,7 +137,7 @@ export function PlatformHeader({
                 { icon: <DatabricksLogo className="h-8 w-auto" />, title: "Lakebase", desc: "Operational databases for applications" },
                 { icon: <DatabricksLogo className="h-8 w-auto" />, title: "Account Console", desc: "Governance, observability, and settings", badge: "BETA" },
               ].map((item) => (
-                <DropdownMenuItem key={item.title} className="!p-0 rounded-none" style={{ gap: 8 }}>
+                <DropdownMenuItem key={item.title} className="!p-0 shape-square" style={{ gap: 8 }}>
                     <div className="shrink-0">
                       {item.icon}
                     </div>
@@ -148,7 +147,7 @@ export function PlatformHeader({
                         {item.badge && (
                           <Badge
                             variant="outline"
-                            className="type-label-bold bg-status-surface-info text-link-base border-transparent px-2 py-0 rounded-full"
+                            className="type-label-bold bg-status-surface-info text-link-base border-transparent px-2 py-0 shape-pill"
                           >
                             {item.badge}
                           </Badge>
@@ -163,7 +162,7 @@ export function PlatformHeader({
           <DropdownMenu>
             <DropdownMenuTrigger render={
               <Button variant="ghost" size="icon-md" aria-label="Profile menu">
-                <span className="flex size-6 items-center justify-center rounded-full bg-action-primary-base type-label-bold text-action-label-inverse-base">
+                <span className="flex size-6 items-center justify-center shape-pill bg-action-primary-base type-label-bold text-action-label-inverse-base">
                   {avatarInitial}
                 </span>
               </Button>

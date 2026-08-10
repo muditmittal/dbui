@@ -196,7 +196,7 @@ A different export plus a wrapper that has no Figma node. Radio items outside a 
 <DropdownMenuLabel>Sort by</DropdownMenuLabel>
 ```
 
-Use `DropdownMenuGroup` around the labelled rows to associate them. It has no Figma node.
+Use `DropdownMenuGroup` around the labeled rows to associate them. It has no Figma node.
 
 #### Separator
 

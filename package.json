@@ -40,13 +40,22 @@
     "preview": "concurrently -n portal,storybook -c blue,magenta \"yarn dev\" \"yarn workspace portal storybook\"",
     "dbui": "node packages/dbui-cli/bin/dbui.mjs",
     "mcp": "node packages/dbui-mcp/src/server.mjs",
+    "design:generate": "node scripts/design-lint/generate-tokens.mjs && node scripts/design-lint/sync-components.mjs && node scripts/generate-token-data.mjs && node scripts/generate-token-consumption.mjs && node scripts/generate-icon-data.mjs && node scripts/generate-gallery.mjs && node scripts/generate-layout-data.mjs && node scripts/generate-shell-data.mjs && node scripts/generate-utility-data.mjs",
+    "design:audit": "node scripts/design-lint/verify-token-sync.mjs && node scripts/design-lint/verify-rules.mjs && node scripts/verify-spacing-scale.mjs && node scripts/verify-spelling.mjs && node scripts/design-lint/react-lint.js",
+    "design:spelling": "node scripts/verify-spelling.mjs",
+    "design:measure": "node scripts/audit-component-tokens.mjs && node scripts/audit-token-parity.mjs && node scripts/audit-token-orphans.mjs && node scripts/measure-dimensional-usage.mjs",
     "design:lint:react": "node scripts/design-lint/react-lint.js",
     "design:lint:shells": "node scripts/design-lint/react-lint.js packages/dbui-shells/src",
     "design:lint:figma": "node scripts/design-lint/figma-lint.js",
     "design:tokens": "node scripts/design-lint/generate-tokens.mjs",
+    "design:audit-tokens": "node scripts/audit-component-tokens.mjs",
+    "design:audit-figma": "node scripts/design-lint/figma-token-audit.js",
+    "design:audit-parity": "node scripts/audit-token-parity.mjs",
+    "design:audit-orphans": "node scripts/audit-token-orphans.mjs",
     "design:sync-components": "node scripts/design-lint/sync-components.mjs",
     "design:verify-sync": "node scripts/design-lint/verify-token-sync.mjs",
-    "design:verify-rules": "node scripts/design-lint/verify-rules.mjs"
+    "design:verify-rules": "node scripts/design-lint/verify-rules.mjs",
+    "design:verify-story-ids": "node scripts/verify-story-ids.mjs"
   },
   "packageManager": "yarn@4.13.0",
   "engines": {

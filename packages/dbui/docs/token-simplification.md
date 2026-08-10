@@ -118,7 +118,7 @@ going to hold them.
 |---|---|---|---|
 | border-width | 3 | 3 | unchanged |
 | color | 85 | 85 | unchanged |
-| elevation | 4 | 4 | unchanged |
+| elevation | 4 | 5 | +1 |
 | height | — | 7 | +7 |
 | motion | 7 | 3 | -4 |
 | radius | 6 | 6 | unchanged |
@@ -129,7 +129,7 @@ going to hold them.
 | width | — | 2 | +2 |
 | **total** | **202** | **199** | **-3** |
 
-Four dark elevation values are added to the `.dark` block, which does not currently carry any.
+Five dark elevation values are added to the `.dark` block, which did not previously carry any.
 
 ## Every token that changes
 
@@ -171,8 +171,8 @@ Generated from the shipped CSS. Resolved at a 16px root with every scalar at 1.
 | `--db-duration-medium-max` | `550ms` | — | — | — | Deleted — band member, zero consumers |
 | `--db-ease-standard` | `cubic-bezier(0.24, 1, 0.4, 1)` | — | `--db-ease-standard` | unchanged | Kept — bridged to `--ease-standard`, which mints the class |
 | `--db-elevation-0` | `none` | — | — | — | Deleted — `shadow-none` is a keyword and needs no token |
-| `--db-elevation-1` | `0 8px 40px rgba(0,0,0,.13)` | — | `--db-elevation-lg` | see elevation | Renamed and re-valued |
-| `--db-elevation-2` | `0 2px 16px rgba(0,0,0,.08)` | — | `--db-elevation-md` | see elevation | Renamed and re-valued |
+| `--db-elevation-1` | `0 8px 40px rgba(0,0,0,.13)` | — | `--db-elevation-xl` | see elevation | Renamed — the highest step keeps the highest name |
+| `--db-elevation-2` | `0 2px 16px rgba(0,0,0,.08)` | — | `--db-elevation-lg` | see elevation | Renamed |
 | `--db-elevation-3` | `0 2px 3px rgba(0,0,0,.1), 0 1px 0 rgba(0,0,0,.05)` | — | `--db-elevation-sm` | see elevation | Renamed and re-valued |
 
 Added:
@@ -187,7 +187,8 @@ Added:
 | `--db-size-10` | 40px | avatar lg — 3 sites |
 | `--db-width-rail` | 240px | replaces `w-[240px]` — 6 sites |
 | `--db-width-panel` | 280px | replaces `w-[280px]` — 6 sites |
-| `--db-elevation-xl` | see elevation | the one `shadow-xl` site finally has a token |
+| `--db-elevation-xs` | see elevation | DuBois carries an `xs`, so the 47 `shadow-xs` sites keep their class |
+| `--db-elevation-md` | see elevation | the step between a resting surface and a floating one |
 
 Type and color are untouched.
 
@@ -261,30 +262,28 @@ class. Presented as decided either way.
 Separately: `border-subtle`, `border-inverse` and `border-accent` have zero uses in system code.
 Flagged, not proposed.
 
-## Elevation
+## Elevation — SHIPPED, and not as proposed here
 
-Adopt what already renders, so the light values are a no-op.
+This section is superseded. It proposed adopting **Tailwind's** values, on the reasoning that
+they were already what rendered, so light would be a no-op. What shipped instead adopts
+**DuBois's** values from the production library, which is the set Databricks ships today —
+so light is not a no-op, and the geometry differs at every step.
 
-| Step | Light — the Tailwind value already on screen | Dark — new |
-|---|---|---|
-| `sm` | `0 1px 2px 0 rgb(0 0 0 / .05)` | `0 1px 2px 0 rgb(0 0 0 / .4)` |
-| `md` | `0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1)` | `0 4px 6px -1px rgb(0 0 0 / .5), 0 2px 4px -2px rgb(0 0 0 / .4)` |
-| `lg` | `0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1)` | `0 10px 15px -3px rgb(0 0 0 / .55), 0 4px 6px -4px rgb(0 0 0 / .45)` |
-| `xl` | `0 20px 25px -5px rgb(0 0 0 / .1), 0 8px 10px -6px rgb(0 0 0 / .1)` | `0 20px 25px -5px rgb(0 0 0 / .6), 0 8px 10px -6px rgb(0 0 0 / .5)` |
+Two other things came out differently, and they are worth keeping because the reasoning above
+was sound and the conclusion still wrong:
 
-The current values are wrong for the job. `elevation-1` and `elevation-2` have no negative spread,
-so they bloom outward as glows rather than lifts, and all four are pure `rgba(0,0,0,…)` with no dark
-variant, so on `#11171C` they draw almost nothing.
+- **The mapping.** This section proposed `1 → lg`, `2 → md`. Shipped is `1 → xl`, `2 → lg`.
+  Both scales were being read at once — DBUI's numbers descend and DuBois's t-shirts ascend —
+  and the proposed mapping quietly demoted the dialog a step.
+- **`shadow-xs` was not rewritten.** DuBois carries its own `xs`, so the 47 sites keep their
+  class and change value. The rewrite proposed here existed only to close a gap Tailwind's
+  scale had and DuBois's does not.
 
-Call sites:
+The diagnosis that stood: the old values bloom as glows rather than lifts, and carry no dark
+variant, so on `#11171C` they drew almost nothing. Dark is now generated.
 
-| Class | Uses | After |
-|---|---|---|
-| `shadow-none` | 35 | Unchanged, a keyword |
-| `shadow-xs` | 31 | **Rewrite to `shadow-sm`.** Pixel-identical, but it is a code change on 18 files |
-| `shadow-md` | 15 | Unchanged, identical value |
-| `shadow-lg` | 6 | Unchanged, identical value |
-| `shadow-focus` | 5 | Untouched, authored in `globals.css` |
+`theme.config.mjs` is the source of truth for the values, `DESIGN.md` for what the steps mean.
+Neither is restated here.
 | `shadow-xl` | 1 | Unchanged, identical value |
 | `shadow-sm` | 1 | **Changes appearance.** `tabs.tsx` pill, currently Tailwind's `sm`, becomes our lighter `sm` |
 
@@ -454,7 +453,7 @@ Differences from the proposed scale worth naming:
   real and the change was declined as out of scope.
 - **The primitive scale does not ship.** Figma holds it as a `scale` collection that designers alias
   into; React gets the four semantics only. There is no `--db-scale-*` in the generated CSS, which
-  mirrors how colour primitives already work. Asserted by L1 in `verify-spacing-scale.mjs`.
+  mirrors how color primitives already work. Asserted by L1 in `verify-spacing-scale.mjs`.
 - **The collection is called Dimensions.** "Scalar" now means a multiplier and nothing else.
 
 ## The follow-up pass: snapping call sites

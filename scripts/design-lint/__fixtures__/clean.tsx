@@ -51,6 +51,54 @@ export function Clean() {
 
       {/* A semantic read through var(), where a class cannot reach */}
       <div style={{ background: "var(--db-surface-subtle)" }} />
+
+      {/* A scroll container with a gutter for the focus ring. Every edge: the
+          declared axis does not clip harder than the one CSS forces, so `px`
+          alone leaves the first and last child's ring against the clip. */}
+      <div className="h-40 overflow-y-auto p-1" />
+      <div className="overflow-x-auto p-1" />
+      <div className="overflow-y-auto pr-2 pl-2 pt-2 pb-2" />
+
+      {/* The nav rail's shape, the one that read as safe while it clipped 3px
+          off the bottom of every ring Tab scrolled to. Narrowing this rule back
+          to the horizontal axis turns this line green again. */}
+      <div className="w-[180px] shrink-0 overflow-y-auto px-3 py-1" />
+
+      {/* The docs rail's shape: the container scrolls only from md up, and the
+          gutter is declared at the same breakpoint. A rule that read the
+          utility without its variant would report this, so it is here to keep
+          that from regressing unnoticed. */}
+      <div className="md:overflow-y-auto md:py-1 md:px-1" />
+
+      {/* An unconditional gutter covers a conditional scroll container */}
+      <div className="p-2 md:overflow-y-auto" />
+
+      {/* Clipping on purpose, with the rows flush and the ring moved inside —
+          DocAccordion's list variant. Not this rule's business. */}
+      <div className="overflow-hidden rounded-2 border border-border-base" />
+
+      {/* An icon-only control that names the action rather than the glyph */}
+      <Button size="icon-md" aria-label="Close" />
+
+      {/* A labeled control needs no aria-label — the text is the name */}
+      <Button size="md">Save</Button>
+
+      {/* Decorative, and explicit about it. Absence is the defect, not emptiness. */}
+      <img src="/docs/texture.png" alt="" width={864} height={300} />
+
+      {/* The two tabIndex values that do not reorder the page */}
+      <div tabIndex={0} />
+      <div tabIndex={-1} />
+
+      {/* Hidden from assistive tech AND out of the tab order — the pair that
+          makes aria-hidden correct rather than a trap */}
+      <div aria-hidden="true" tabIndex={-1} />
+
+      {/* A deliberate custom control says so: a role and a tab stop together */}
+      <div onClick={() => {}} role="button" tabIndex={0} />
+
+      {/* A click on a host that is not pretending to be a control */}
+      <div onClick={() => {}} role="presentation" />
     </div>
   )
 }

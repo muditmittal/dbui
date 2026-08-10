@@ -26,7 +26,7 @@ function Card({
       data-size={size}
       data-type={type}
       className={cn(
-        "group/card flex flex-col gap-4 overflow-hidden rounded-4 bg-surface-base py-4 type-body text-text-base ring-1 ring-text-base/10 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-3 *:[img:last-child]:rounded-b-3",
+        "group/card flex flex-col gap-4 overflow-hidden shape-container-lg bg-surface-base py-4 type-body text-text-base ring-1 ring-text-base/10 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-3 *:[img:last-child]:rounded-b-3",
         className
       )}
       {...props}

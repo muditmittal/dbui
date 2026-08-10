@@ -22,11 +22,11 @@ import { cn } from "../../lib/utils"
  * Figma component: "Toggle Button" (4 variants × 2 sizes × 5 states)
  *
  * Variants: default (no border), filter (border-input-border-base + shadow), pill (shadow + checkbox pattern), icon (icon-only)
- * Sizes:    sm (24px), md (32px) — matches Button sizing
+ * Sizes: sm (24px), md (32px) — matches Button sizing
  * States:   Default, Hover, Press, Selected, Disabled
  */
 const toggleVariants = cva(
-  [
+ [
     "group/toggle inline-flex items-center justify-center gap-1",
     "rounded-1 border",
     "type-label whitespace-nowrap",
@@ -34,7 +34,7 @@ const toggleVariants = cva(
     "text-text-base",
     "hover:bg-action-default-hover",
     "active:bg-action-selected-press",
-    "focus-visible:border-2 focus-visible:border-focus-ring",
+    "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:shadow-focus",
     "disabled:pointer-events-none disabled:text-text-disabled",
     "aria-pressed:bg-action-selected-base aria-pressed:hover:bg-action-selected-hover aria-pressed:active:bg-action-selected-press aria-pressed:border-border-strong aria-pressed:text-text-strong",
     "data-[state=on]:bg-action-selected-base data-[state=on]:border-border-strong data-[state=on]:text-text-strong",
@@ -42,44 +42,44 @@ const toggleVariants = cva(
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ].join(" "),
   {
-    variants: {
-      variant: {
-        default: "border-transparent bg-transparent",
-        filter:
+ variants: {
+ variant: {
+ default: "border-transparent bg-transparent",
+ filter:
           "border-input-border-base shadow-xs hover:border-input-border-hover disabled:border-border-disabled disabled:shadow-none aria-pressed:border-border-strong data-[state=on]:border-border-strong",
-        pill: [
-          "shadow-xs border-input-border-base bg-transparent gap-2 rounded-full",
+ pill: [
+          "shadow-xs border-input-border-base bg-transparent gap-2 shape-pill",
           "hover:bg-action-default-hover hover:border-input-border-hover",
           "aria-pressed:bg-action-selected-base aria-pressed:hover:bg-action-selected-hover aria-pressed:active:bg-action-selected-press aria-pressed:text-text-strong aria-pressed:border-border-strong aria-pressed:shadow-none",
           "data-[state=on]:bg-action-selected-base data-[state=on]:text-text-strong data-[state=on]:border-border-strong data-[state=on]:shadow-none",
           "disabled:border-border-disabled disabled:shadow-none",
         ].join(" "),
-        icon: "border-transparent bg-transparent",
+ icon: "border-transparent bg-transparent",
       },
-      size: {
-        sm: "h-6 min-w-6 px-2",
-        md: "h-8 min-w-8 px-3",
+ size: {
+ sm: "h-6 min-w-6 px-2",
+ md: "h-8 min-w-8 px-3",
         "icon-sm": "size-6",
         "icon-md": "size-8",
       },
     },
-    defaultVariants: {
-      variant: "default",
-      size: "md",
+ defaultVariants: {
+ variant: "default",
+ size: "md",
     },
   }
 )
 
 function Toggle({
-  className,
-  variant = "default",
-  size = "md",
+ className,
+ variant = "default",
+ size = "md",
   ...props
 }: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
-  return (
+ return (
     <TogglePrimitive
-      data-slot="toggle"
-      className={cn(toggleVariants({ variant, size, className }))}
+ data-slot="toggle"
+ className={cn(toggleVariants({ variant, size, className }))}
       {...props}
     />
   )
@@ -95,30 +95,30 @@ function Toggle({
  * Usage: <FilterToggle>Filter label</FilterToggle>
  */
 function FilterToggle({
-  className,
-  size = "md",
-  children,
-  defaultPressed,
-  pressed: controlledPressed,
-  onPressedChange,
+ className,
+ size = "md",
+ children,
+ defaultPressed,
+ pressed: controlledPressed,
+ onPressedChange,
   ...props
 }: Omit<TogglePrimitive.Props, "children"> &
   Pick<VariantProps<typeof toggleVariants>, "size"> & {
-    children?: React.ReactNode
+ children?: React.ReactNode
   }) {
-  const [internalPressed, setInternalPressed] = React.useState(defaultPressed ?? false)
-  const isPressed = controlledPressed ?? internalPressed
+ const [internalPressed, setInternalPressed] = React.useState(defaultPressed ?? false)
+ const isPressed = controlledPressed ?? internalPressed
 
-  return (
+ return (
     <TogglePrimitive
-      data-slot="toggle"
-      pressed={controlledPressed}
-      defaultPressed={defaultPressed}
-      onPressedChange={(pressed, event) => {
-        setInternalPressed(pressed)
-        onPressedChange?.(pressed, event)
+ data-slot="toggle"
+ pressed={controlledPressed}
+ defaultPressed={defaultPressed}
+ onPressedChange={(pressed, event) => {
+ setInternalPressed(pressed)
+ onPressedChange?.(pressed, event)
       }}
-      className={cn(toggleVariants({ variant: "filter", size }), className)}
+ className={cn(toggleVariants({ variant: "filter", size }), className)}
       {...props}
     >
       {isPressed ? (

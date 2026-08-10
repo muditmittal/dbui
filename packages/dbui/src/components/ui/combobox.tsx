@@ -4,7 +4,6 @@ import * as React from "react"
 import { Combobox as ComboboxPrimitive } from "@base-ui/react"
 
 import { cn } from "../../lib/utils"
-import { Button } from "./button"
 import { ChevronDown } from "../icons/ChevronDown"
 import { Close } from "../icons/Close"
 import { Check } from "../icons/Check"
@@ -18,7 +17,38 @@ import { Check } from "../icons/Check"
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=811-976
  */
 
-const Combobox = ComboboxPrimitive.Root
+/**
+ * Where the popup measures itself from.
+ *
+ * The guideline above promises the popup matches the trigger width, and it did
+ * not. Base UI anchors to its own `Input`, which is the `flex-1` child inside the
+ * wrapper — so the popup came out narrower than the visible control by exactly
+ * the width of the clear and trigger buttons: 158px under a 208px field.
+ *
+ * The wrapper is what a reader sees as the control, so `ComboboxInput` registers
+ * it here and `ComboboxContent` anchors to it. A call site that passes its own
+ * `anchor` still wins, which is how the chips variant points at its own shell.
+ */
+const ComboboxAnchorContext = React.createContext<React.RefObject<HTMLDivElement | null> | null>(
+  null
+)
+
+/**
+ * Generics are forwarded rather than collapsed: `Root` is generic over the value
+ * and over whether it is multiple, and both feed the types a call site gets for
+ * `items`, `value` and `onValueChange`. Aliasing it as a bare re-export used to
+ * preserve them for free; wrapping it has to do so on purpose.
+ */
+function Combobox<Value, Multiple extends boolean | undefined = false>(
+  props: ComboboxPrimitive.Root.Props<Value, Multiple>
+) {
+  const anchor = React.useRef<HTMLDivElement | null>(null)
+  return (
+    <ComboboxAnchorContext.Provider value={anchor}>
+      <ComboboxPrimitive.Root {...props} />
+    </ComboboxAnchorContext.Provider>
+  )
+}
 
 function ComboboxValue({ ...props }: ComboboxPrimitive.Value.Props) {
   return <ComboboxPrimitive.Value data-slot="combobox-value" {...props} />
@@ -66,11 +96,14 @@ function ComboboxInput({
   showClear?: boolean
   inputSize?: "sm" | "default"
 }) {
+  const anchor = React.useContext(ComboboxAnchorContext)
+
   return (
     <div
+      ref={anchor}
       data-slot="combobox-input-wrapper"
       className={cn(
-        "flex w-full items-center rounded-1 border border-input-border-base bg-surface-base shadow-xs transition-colors hover:border-input-border-hover has-[:focus-visible]:border-focus-ring has-[:disabled]:bg-surface-subtle has-[:disabled]:border-border-disabled has-[:disabled]:shadow-none has-[:disabled]:pointer-events-none has-[[aria-invalid=true]]:border-action-negative-base",
+        "flex w-full items-center rounded-1 border border-input-border-base bg-surface-base shadow-xs transition-colors hover:border-input-border-hover has-[:focus-visible]:border-focus-ring has-[:focus-visible]:shadow-focus has-[:disabled]:bg-surface-subtle has-[:disabled]:border-border-disabled has-[:disabled]:shadow-none has-[:disabled]:pointer-events-none has-[[aria-invalid=true]]:border-action-negative-base",
         inputSize === "default" && "h-8 gap-2 px-3",
         inputSize === "sm" && "h-6 gap-1 px-2",
         className
@@ -106,6 +139,10 @@ function ComboboxContent({
     ComboboxPrimitive.Positioner.Props,
     "side" | "align" | "sideOffset" | "alignOffset" | "anchor"
   >) {
+  // Falls back to the input wrapper, so the width guarantee holds without every
+  // call site wiring a ref of its own.
+  const inputAnchor = React.useContext(ComboboxAnchorContext)
+
   return (
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Positioner
@@ -113,13 +150,13 @@ function ComboboxContent({
         sideOffset={sideOffset}
         align={align}
         alignOffset={alignOffset}
-        anchor={anchor}
+        anchor={anchor ?? inputAnchor ?? undefined}
         className="isolate z-50"
       >
         <ComboboxPrimitive.Popup
           data-slot="combobox-content"
           data-chips={!!anchor}
-          className={cn("group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-(--anchor-width) origin-(--transform-origin) overflow-hidden rounded-2 bg-surface-base p-1 text-text-base shadow-md ring-1 ring-text-base/10 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:mb-1 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input-border-base/30 *:data-[slot=input-group]:bg-border-strong/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+          className={cn("group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-(--anchor-width) origin-(--transform-origin) overflow-hidden shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:mb-1 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input-border-base/30 *:data-[slot=input-group]:bg-border-strong/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
           {...props}
         />
       </ComboboxPrimitive.Positioner>
@@ -230,7 +267,7 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
       className={cn(
-        "flex min-h-8 flex-wrap items-center gap-1 rounded-1 border border-input-border-base bg-transparent bg-clip-padding px-3 py-1 type-label shadow-xs transition-colors focus-within:border-focus-ring has-aria-invalid:border-action-negative-base has-data-[slot=combobox-chip]:px-2 has-data-[slot=combobox-chip]:py-0.5 dark:bg-surface-strong/30 dark:has-aria-invalid:border-action-negative-base/50 dark:has-aria-invalid:ring-action-negative-base/40",
+        "flex min-h-8 flex-wrap items-center gap-1 rounded-1 border border-input-border-base bg-transparent bg-clip-padding px-3 py-1 type-label shadow-xs transition-colors focus-within:border-focus-ring focus-within:shadow-focus has-aria-invalid:border-action-negative-base has-data-[slot=combobox-chip]:px-2 has-data-[slot=combobox-chip]:py-0.5 dark:bg-surface-strong/30 dark:has-aria-invalid:border-action-negative-base/50 dark:has-aria-invalid:ring-action-negative-base/40",
         className
       )}
       {...props}

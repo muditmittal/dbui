@@ -27,7 +27,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 const SCAN_ROOTS = [
   "packages/dbui/src",
   "packages/dbui-shells/src",
-  "packages/dbui-genie/src",
+  "packages/dbui-chat/src",
   "packages/dbui-viz/src",
   "apps/portal/src/stories",
 ];
@@ -55,7 +55,7 @@ const RULES = {
   "bg-primary-foreground": [[null, "bg-action-label-inverse-base"]],
   "text-primary-foreground": [[null, "text-action-label-inverse-base"]],
   // Blue text becomes a link role rather than a brand role — except where it is
-  // labelling a selected control, which goes neutral with the rest of selection.
+  // labeling a selected control, which goes neutral with the rest of selection.
   "text-primary": [
     [isPressed, "text-text-strong"],
     [isChecked, "text-text-strong"],

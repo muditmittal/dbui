@@ -2,10 +2,9 @@ import React, { useState, useMemo } from "react"
 import { Popover } from "@base-ui/react/popover"
 import { Button } from "dbui/components/ui/button"
 import { ButtonIcon } from "dbui/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCellTitle, TableCellIcon, TableCellTitleContent, TableCellMeta } from "dbui/components/ui/table"
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "dbui/components/ui/table"
 import { DataTreeView, type TreeSectionData, type TreeNodeData } from "dbui/components/ui/data-tree"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuGroup, DropdownMenuItemIcon, DropdownMenuItemDescription, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "dbui/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItemIcon, DropdownMenuItemDescription, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "dbui/components/ui/dropdown-menu"
 import { Input } from "dbui/components/ui/input"
 import { Badge } from "dbui/components/ui/badge"
 import { ChevronDown } from "dbui/components/icons/ChevronDown"
@@ -21,14 +20,10 @@ import { Models } from "dbui/components/icons/Models"
 import { Function } from "dbui/components/icons/Function"
 import { FolderCloud } from "dbui/components/icons/FolderCloud"
 import { Key } from "dbui/components/icons/Key"
-import { Shield } from "dbui/components/icons/Shield"
-import { Tag } from "dbui/components/icons/Tag"
 import { Search } from "dbui/components/icons/Search"
 import { PlusSquare } from "dbui/components/icons/PlusSquare"
 import { Ingestion } from "dbui/components/icons/Ingestion"
 import { CloudUpload } from "dbui/components/icons/CloudUpload"
-import { ArrowsConnect } from "dbui/components/icons/ArrowsConnect"
-import { Share } from "dbui/components/icons/Share"
 import { Globe } from "dbui/components/icons/Globe"
 import { Check } from "dbui/components/icons/Check"
 import { UserGroup } from "dbui/components/icons/UserGroup"
@@ -126,8 +121,6 @@ function filterSections(sections: TreeSectionData[], query: string): TreeSection
 
 function CatalogTree({
   sections,
-  allSections,
-  focusedNodeId,
   focusPath,
   goToItems,
   onSelect,
@@ -136,8 +129,6 @@ function CatalogTree({
   filter,
 }: {
   sections: TreeSectionData[]
-  allSections: TreeSectionData[]
-  focusedNodeId: string | null
   focusPath: BreadcrumbEntry[]
   goToItems?: BreadcrumbEntry[]
   onSelect?: (id: string) => void
@@ -179,7 +170,7 @@ function CatalogTree({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden p-1">
+              <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden p-1">
                 {/* Path — default shows "Catalog" as root; when focused shows indented breadcrumb */}
                 {focusPath.length > 0 ? (
                   focusPath.map((entry, i) => {
@@ -238,7 +229,7 @@ function CatalogTree({
         <DropdownMenu>
           <DropdownMenuTrigger render={
             <Button variant="ghost" size="icon-md" aria-label="Warehouse">
-              <span className="inline-block size-2 rounded-full bg-action-positive-base" />
+              <span className="inline-block size-2 shape-pill bg-action-positive-base" />
             </Button>
           } />
           <DropdownMenuContent align="start" className="w-[280px]">
@@ -252,14 +243,14 @@ function CatalogTree({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Check className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
+                <span className="inline-block size-2 shape-pill bg-action-positive-base" />
                 <span className="flex-1">Shared SQL Warehouse</span>
                 <Badge variant="outline">Serverless</Badge>
                 <span className="type-hint text-text-subtle">M</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
+                <span className="inline-block size-2 shape-pill bg-action-positive-base" />
                 <span className="flex-1">ML Data</span>
                 <Badge variant="outline">Serverless</Badge>
                 <span className="type-hint text-text-subtle">S</span>
@@ -269,13 +260,13 @@ function CatalogTree({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <span className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
+                <span className="inline-block size-2 shape-pill bg-action-positive-base" />
                 <span className="flex-1">Pro warehouse 1</span>
                 <span className="type-hint text-text-subtle">M</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span className="size-4" />
-                <span className="inline-block size-2 rounded-full bg-action-positive-base" />
+                <span className="inline-block size-2 shape-pill bg-action-positive-base" />
                 <span className="flex-1">Pro warehouse 2</span>
                 <span className="type-hint text-text-subtle">S</span>
               </DropdownMenuItem>
@@ -549,7 +540,7 @@ export function CatalogLayout({
     onTreeSearch?.(query)
   }
 
-  const handleFocus = (id: string, label: string, icon?: React.ReactNode) => {
+  const handleFocus = (id: string, _label: string, _icon?: React.ReactNode) => {
     setFocusedNodeId(id)
   }
 
@@ -570,8 +561,6 @@ export function CatalogLayout({
     <div className="flex h-full">
       <CatalogTree
         sections={displaySections}
-        allSections={sections}
-        focusedNodeId={focusedNodeId}
         focusPath={focusPath}
         goToItems={goToItems}
         onSelect={onTreeSelect}

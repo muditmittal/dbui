@@ -2,18 +2,19 @@
 
 > Audience: an AI coding agent (Cursor, Claude Code, Isaac, Copilot, etc.) setting up DBUI in a user's project.
 > Goal: install DBUI into a React + Tailwind v4 project. Read top to bottom. No `npm install` of DBUI itself.
+> Humans: https://dbuidesign.vercel.app/install
 
 ## What DBUI is
 
-DBUI is Databricks' component library — 46 components, 451 icons, 162 design tokens. Built on shadcn/ui + Base UI + Tailwind CSS v4 with DuBois tokens.
+DBUI is Databricks' component library — components, icons, and design tokens. Built on shadcn/ui + Base UI + Tailwind CSS v4 with DuBois tokens.
 
-Distribution: **clone + copy + tsconfig alias**. All runtime deps (Base UI, CVA, clsx, tailwind-merge, sonner, vaul, and their transitive deps) ship vendored inside `./dbui/vendor/`. The consumer's tsconfig extends a provided paths file that maps everything.
+Distribution: **clone + copy + tsconfig alias**. All runtime deps (Base UI, CVA, clsx, tailwind-merge, sonner, vaul, reselect, and their transitive deps) ship vendored inside `./dbui/vendor/`. The consumer's tsconfig extends a provided paths file that maps everything.
 
 ---
 
 ## Preflight — STOP if any check fails
 
-Run all six checks before any action. Each check has an explicit decision. Do not improvise.
+Run all checks before any action. Each check has an explicit decision. Do not improvise.
 
 ### 1. Confirm target folder
 
@@ -24,53 +25,73 @@ Ask the user verbatim:
 - `no` or unknown → STOP.
 - different path → `cd` there and restart preflight from step 1.
 
-### 2. Existing project?
+### 2. Package registry (Databricks managed machines)
+
+On Databricks-managed Macs, Jamf redirects `registry.npmjs.org` and `registry.yarnpkg.com` to `127.0.0.1`. Public npm hangs. Point every package manager at the sanctioned mirror **before** any `npm` / `yarn` / `pnpm` command in this flow:
+
+```bash
+# npm — one-shot
+npm_config_registry=https://npm-proxy.dev.databricks.com <command>
+
+# npm — project .npmrc (preferred for ongoing work)
+echo 'registry=https://npm-proxy.dev.databricks.com' >> .npmrc
+
+# yarn — .yarnrc.yml
+# npmRegistryServer: "https://npm-proxy.dev.databricks.com"
+```
+
+DBUI itself still needs no `npm install`. This step only unblocks scaffolding and the project's own deps. Skip it only when `npm view react version` already succeeds without a custom registry.
+
+### 3. Existing project?
 
 Does `./package.json` exist at the target folder?
 
-- **YES** → continue to check 3.
+- **YES** → continue to check 4.
 - **NO** → ask the user verbatim:
 
   > "There is no `package.json` here. Should I create a new React + Tailwind v4 project? (yes / no / different path)"
 
-  - `yes` → run:
+  - `yes` → run (with the registry from check 2 if needed):
     ```bash
     npm create vite@latest . -- --template react-ts
+    npm install
     npm install tailwindcss @tailwindcss/vite
     ```
-    This is the ONLY `npm install` in the entire flow. It may hang behind corporate firewalls or TLS-inspected VPNs (Palo Alto GlobalProtect, Zscaler, Netskope). If it hangs, abort and tell the user.
+    This is the ONLY `npm install` in the entire flow. If it hangs, verify check 2 — do not abort silently.
+
+    The Vite template ships its own `src/index.css` and does not wire Tailwind, so the scaffold is not finished yet. Replace `src/index.css` with `@import "tailwindcss";` and add `tailwindcss()` to `plugins` in `vite.config.ts` before continuing. Check 5 tests exactly this.
   - `no` → STOP.
   - different path → `cd` there and restart preflight from step 1.
 
-### 3. React version
+### 4. React version
 
 Read `./package.json`. Confirm `react` and `react-dom` resolve to `>=18.0.0`.
 
 - Both present and `>=18` → continue.
 - Missing or older → STOP. Tell the user: "DBUI requires React 18+. Upgrade first, then re-run install."
 
-### 4. Tailwind v4 (not v3)
+### 5. Tailwind v4 (not v3)
 
 Check two things:
 - `tailwindcss` is in `./package.json` at version `>=4`.
-- A CSS file under `./src/` contains `@import "tailwindcss"`.
+- The project's root CSS file contains `@import "tailwindcss"`. Usually `./src/index.css`, `./src/app/globals.css` or `./app/globals.css`.
 
 - Both true → continue.
-- On v3 or missing → STOP. Tell the user: "DBUI requires Tailwind v4. Migrate using https://tailwindcss.com/docs/upgrade-guide, then re-run install."
+- Version is `>=4` and only the import is missing, because check 3 just scaffolded this project → finish the scaffold as check 3 describes, then re-run this check. Never send someone to a migration guide for a project this install created.
+- On v3, or `tailwindcss` absent → STOP. Tell the user: "DBUI requires Tailwind v4. Migrate using https://tailwindcss.com/docs/upgrade-guide, then re-run install."
 
-### 5. Existing `./CLAUDE.md`?
+### 6. Existing `./CLAUDE.md`?
 
 Does a `CLAUDE.md` exist at the project root?
 
 - YES → in Install step 5, APPEND the DBUI block. Do not overwrite.
 - NO → in Install step 5, copy `./dbui/CLAUDE.md` verbatim.
 
-### 6. Existing tsconfig path aliases?
+### 7. Which tsconfig owns app source?
 
-Read `./tsconfig.json` (and any referenced `tsconfig.app.json` / `tsconfig.base.json`). Look for `compilerOptions.paths`.
+Find the tsconfig that owns `compilerOptions` for app source — `./tsconfig.app.json` in current Vite templates, `./tsconfig.json` elsewhere. Note which one it is. Install step 2 merges into that file, whether or not it already has `paths`.
 
-- Exists → in Install step 2, MERGE paths from `./dbui/vendor/tsconfig-paths.json` into the existing `paths` object. Do not use `extends`.
-- Missing → in Install step 2, use `"extends": "./dbui/vendor/tsconfig-paths.json"`.
+**Never use `"extends": "./dbui/vendor/tsconfig-paths.json"`.** Relative `paths` resolve against the directory of the config that declares them, so through `extends` every alias would point inside `./dbui/vendor/` and nothing would resolve. Merging is the only route that works.
 
 ### Do not install any of these
 
@@ -81,7 +102,7 @@ None of the following are DBUI dependencies. Do not add them proactively. If the
 - Databases / ORMs: Prisma, Drizzle, Convex, Supabase, Neon, Turso.
 - State / data: Redux, Zustand, Jotai, React Query, SWR, Apollo.
 - AI SDKs: Vercel AI SDK, LangChain, OpenAI SDK.
-- Icon packs: lucide-react, @heroicons/react, react-icons. DBUI already has 451 icons.
+- Icon packs: lucide-react, `@heroicons/react`, react-icons. DBUI already ships its icon set.
 - UI libs: shadcn CLI, Radix, Mantine, Chakra, MUI. DBUI replaces these.
 
 ---
@@ -102,38 +123,40 @@ cp -r ~/dbui/packages/dbui-shells ./dbui-shells
 
 Idempotent. Same block handles first install AND every update.
 
-### Step 2 — Path aliases
+### Step 2 — Path aliases and bundler config
 
-DBUI vendors all its deps inside `./dbui/vendor/`. No `npm install`.
+DBUI vendors all its deps inside `./dbui/vendor/`. No `npm install` of those packages.
 
-Based on Preflight check 6:
+In the tsconfig identified by Preflight check 7, copy every entry from `./dbui/vendor/tsconfig-paths.json` into `compilerOptions.paths`, keeping any entries already there. No `baseUrl` is needed — the paths resolve against the tsconfig's own directory, and `baseUrl` is deprecated in current TypeScript.
 
-- **No existing paths** → edit `./tsconfig.json`:
-  ```json
-  { "extends": "./dbui/vendor/tsconfig-paths.json" }
-  ```
-- **Existing paths** → read `./dbui/vendor/tsconfig-paths.json` and merge each entry into the project's existing `compilerOptions.paths`. Do not use `extends` (it replaces, doesn't merge).
-
-**For Vite projects**, also update `vite.config.ts`:
+**For Vite projects**, update `vite.config.ts` to include DBUI aliases **and** the Tailwind v4 plugin:
 
 ```ts
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import tailwindcss from "@tailwindcss/vite"
 import { dbuiAliases } from "./dbui/vendor/vite-aliases.js"
 
 export default defineConfig({
-  resolve: { alias: { ...dbuiAliases, ...yourExistingAliases } },
+  plugins: [react(), tailwindcss()],
+  resolve: { alias: { ...dbuiAliases, /* ...yourExistingAliases */ } },
 })
 ```
+
+Installing `tailwindcss` and `@tailwindcss/vite` is not enough — the plugin must be in `plugins`.
 
 **For Next.js / Webpack / Rspack**, add the same aliases to `resolve.alias`. The full list lives in `./dbui/vendor/tsconfig-paths.json`.
 
 ### Step 3 — Import tokens
 
-Add to the project's root CSS (usually `./src/index.css` or `./src/app/globals.css`):
+Add to the project's root CSS (usually `./src/index.css` or `./src/app/globals.css`). The path is **relative to the CSS file**, not the project root:
 
 ```css
 @import "tailwindcss";
-@import "./dbui/src/tokens/globals.css";
+@import "../dbui/src/tokens/globals.css";
 ```
+
+If the CSS file lives at the project root instead of under `./src/`, use `./dbui/src/tokens/globals.css`.
 
 ### Step 4 — Install DBUI skills (Cursor users)
 
@@ -146,7 +169,7 @@ Re-run after every DBUI update to refresh skills. Claude Code users can skip thi
 
 ### Step 5 — Wire up AI rules
 
-Based on Preflight check 5:
+Based on Preflight check 6:
 
 - **No `./CLAUDE.md`** → `cp ./dbui/CLAUDE.md ./CLAUDE.md`.
 - **Existing `./CLAUDE.md`** → APPEND this block to it. Do not overwrite.
@@ -208,10 +231,11 @@ Run each check. If any fails, the install is incomplete.
 1. `./dbui/src/components/ui/button.tsx` exists.
 2. `./dbui-shells/src/shells/Base.tsx` exists.
 3. `./CLAUDE.md` mentions DBUI.
-4. `./tsconfig.json` either `extends` `./dbui/vendor/tsconfig-paths.json` OR has its paths merged.
-5. The project's root CSS imports `./dbui/src/tokens/globals.css`.
-6. Dev server starts without import errors.
-7. The home page renders the Databricks Base Shell (header at 48px, sidebar at 180px, content surface in the center).
+4. The app tsconfig has every path from `./dbui/vendor/tsconfig-paths.json` merged into `compilerOptions.paths`, including `reselect`, and does not `extends` that file.
+5. The project's root CSS imports `dbui/src/tokens/globals.css` with a path that resolves from that CSS file.
+6. Vite projects: `vite.config.ts` includes `tailwindcss()` and `dbuiAliases`.
+7. Dev server starts without import errors.
+8. The home page renders the Databricks Base Shell (header at 48px, sidebar at 180px, content surface in the center).
 
 ---
 
@@ -248,5 +272,5 @@ Do **not** auto-overwrite `./CLAUDE.md` on update — the user may have customiz
 Not yet in DBUI — compose from primitives as interim:
 
 - DatePicker, Stepper, Banner, CodeBlock, Virtualized lists.
-- Chart (`recharts` not bundled — non-critical).
-- Resizable / ResizablePanel (`react-resizable-panels` not bundled — non-critical).
+
+`Chart` and `Resizable` are the two components the vendor folder does not cover. They are declared as peer dependencies, so a project that uses either has to install it — `recharts` for `Chart`, `react-resizable-panels` for `Resizable`. Every other component works with no `npm install`. Import them only after installing the peer, since a bare import fails to type-check.

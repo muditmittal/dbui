@@ -94,8 +94,12 @@ export function PlatformNav({
     )
   }
 
+  // px-3 keeps a focus ring off the left and right edges. `overflow-y-auto`
+  // clips on both axes though, and the first and last items have nowhere
+  // further to scroll past their `scroll-my-1`, so py-1 is the same gutter on
+  // the axis this rail was losing 3px to.
   return (
-    <nav className="w-[180px] shrink-0 overflow-y-auto px-3">
+    <nav className="w-[180px] shrink-0 overflow-y-auto px-3 py-1">
       {/* New button */}
       <NavbarNewButton>
         <Plus className="text-link-base" />

@@ -114,7 +114,7 @@ const BATCHES = [
     match: (p) => /^packages\/dbui\/src\/components\/ui\/.+\.tsx$/.test(p),
   },
   { n: 6, name: "Shells", match: (p) => p.startsWith("packages/dbui-shells/src/") },
-  { n: 7, name: "Genie", match: (p) => p.startsWith("packages/dbui-genie/src/") },
+  { n: 7, name: "Chat", match: (p) => p.startsWith("packages/dbui-chat/src/") },
   // Exported rule definitions. Not components, but they quote utility names
   // to consumers, so a stale one is a documented lie.
   { n: 8, name: "Exported rule definitions", match: (p) => p.startsWith("packages/dbui/src/rules/") },
@@ -126,7 +126,7 @@ const BATCHES = [
 const SCAN_ROOTS = [
   "packages/dbui/src",
   "packages/dbui-shells/src",
-  "packages/dbui-genie/src",
+  "packages/dbui-chat/src",
   "packages/dbui-viz/src",
   "apps/portal/src/stories",
 ];

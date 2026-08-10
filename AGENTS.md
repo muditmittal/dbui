@@ -9,16 +9,17 @@ This file is the entry point. It tells you where to look; it does not repeat wha
 
 | Path | What |
 |---|---|
-| `packages/dbui/` | 61 components, 456 icons, tokens, docs, skills. The core. |
+| `packages/dbui/` | Components, icons, tokens, docs, skills. The core. Counts: `yarn dbui doctor`. |
 | `packages/dbui-cli/` | The machine-readable surface. `--json` for typed envelopes. |
 | `packages/dbui-mcp/` | MCP server over the same API. Wired in `.cursor/mcp.json`. |
 | `packages/dbui-shells/` | Page shells and compositions. Every screen starts here. |
 | `packages/dbui-viz/` | 5 Vega-Lite charts. |
-| `packages/dbui-genie/` | 9 conversational-analytics primitives. |
+| `packages/dbui-chat/` | 9 conversational-analytics primitives. |
 | `apps/portal/` | Storybook. The only running UI surface today. |
 | `scripts/design-lint/` | Token generator, sync verifier, React + Figma linters. |
 | `figma/` | Code Connect files (`*.figma.tsx`). |
 | `archive/` | Past research and maintainer notes. Reference only — never cite as current. |
+| `notes/` | Working material cut from a published page. Not documentation, not published. |
 
 ## Commands
 
@@ -35,6 +36,7 @@ yarn design:verify-sync           # assert config <-> CSS <-> Figma parity
 yarn design:lint:react [path]     # 19 rules; add --json for machine output
 yarn design:lint:shells           # same linter scoped to dbui-shells
 yarn design:verify-rules          # assert every lint rule fires, and only when it should
+yarn design:verify-story-ids      # assert every story id the portal links to resolves; needs 6006
 yarn design:lint:figma --target <nodeId>   # emits JS to run via Figma MCP
 ```
 
@@ -50,6 +52,13 @@ Storybook command instead.
 4. **Base UI `render`, not Radix `asChild`.** `<DialogTrigger render={<Button />}>`
 5. **Shell first.** Every page starts from a shell in `dbui-shells`. Never rebuild chrome.
 6. **Sentence case, no emoji, no exclamation marks** in any user-facing copy.
+7. **Reach for the prop first. `className` is a real override, not a workaround.** `cn()` resolves
+   Tailwind conflicts, so a class you pass wins over the component's own — its JSDoc in
+   `packages/dbui/src/lib/utils.ts` says what it still does not resolve. Prefer the prop anyway:
+   it is the surface the JSDoc, the CLI and Code Connect describe, and it survives a refactor of
+   the component's internals that a `className` naming one of them does not. `!` stays wrong from
+   outside — it beats every variant of that property, not the one you looked at. If no prop covers
+   what you need, flag the gap.
 
 ## Where to look
 
@@ -106,8 +115,9 @@ you should *act*:
   `font-` or `uppercase`. Numbers in a table use `<TableCell numeric>`, not a type class.
 - **Components are on the ramp.** Never reintroduce a `text-[Npx]` or `leading-[Npx]` literal — a px
   literal does not scale when the root font size does, so the box grows and the label does not.
-- **There is no published package.** Install is clone-and-copy per `packages/dbui/install.md`, and
-  the npm registry is unreachable inside the corporate network.
+- **There is no published package.** Install is clone-and-copy per `packages/dbui/install.md`.
+  On Databricks-managed machines, point npm/yarn at `https://npm-proxy.dev.databricks.com`
+  before scaffolding — Jamf blocks public npm. Human overview: `/install`; agent fetch: `/install.md`.
 - **There are no tests and no CI.** The design linters, their rule verifier and `dbui doctor` are
   the only automated checks.
 - **`component-index.md` and `icon-index.md` are hand-maintained** and can lag the source. The

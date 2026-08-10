@@ -7,17 +7,72 @@ import { cn } from "../../lib/utils"
 /**
  * @standard Table
  * @guideline Use for structured data with sortable columns
- * @guideline Row hover uses muted/50 background
+ * @guideline Framed by default — outer border, rounded corners, filled header —
+ *   so tabular content reads as one unit rather than rows adrift on the page.
+ * @guideline The header pins while the table scrolls and releases as the last row
+ *   passes. Default, not opt-in: nothing to pass per call site.
+ * @guideline A page that pins its own chrome above the scrollport publishes that
+ *   chrome's height as `--db-sticky-offset` on any ancestor, and the header pins
+ *   below it. Unset means flush to the top of whatever scrolls, which is what a
+ *   shell's content container wants.
+ * @guideline `unframed` drops the border and the corners, for a table whose
+ *   surroundings already draw them — inside a Card, a panel, a preview tile.
+ *   Reach for it when a second border would nest inside the first, not when the
+ *   frame merely feels heavy for the number of rows.
+ * @constraint `unframed` takes the border and the corners and nothing else. The
+ *   container still clips and still isolates, and the header still pins — an
+ *   unframed table is no less likely to scroll than a framed one, so it needs
+ *   the pinned header just as much.
+ * @constraint `unframed` does not remove the header fill. The fill belongs to
+ *   the pinning, not to the frame: a header with nothing behind it shows the
+ *   rows traveling underneath whether or not there is a border around them.
+ * @constraint Never wrap a Table in a scroll container. `overflow-x: auto` forces
+ *   the block axis to `auto` as well, and that scrollport — exactly the table's
+ *   own height — becomes what the header pins against, so it can never travel.
+ *   Scroll belongs to the region; `composition.md` owns which one.
+ * @constraint The header fill stays opaque. Rows pass under it, and any alpha
+ *   below 1 shows them through.
  * @constraint Don't use for layout — Tables are for data only
  * @constraint Header cells use font-semibold, body cells use font-normal
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3157-2794
  */
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+function Table({
+  className,
+  unframed,
+  ...props
+}: React.ComponentProps<"table"> & { unframed?: boolean }) {
   return (
     <div
+      // The frame. Three parts of this are load-bearing and none are decorative:
+      //
+      // `w-fit min-w-full` — the frame hugs the table instead of the container.
+      // Cells are `whitespace-nowrap`, so a catalog listing or a query result is
+      // routinely wider than the space it is given; a `w-full` frame would have
+      // the table cross its own right border. Sized to content, the border stays
+      // around the table at any width and the region scrolls to reach the rest.
+      //
+      // `overflow-clip`, not `overflow-hidden`. Both clip the header's fill to
+      // the rounded corners — which a collapsed table cannot do for itself,
+      // since `border-radius` does not apply to cells under `border-collapse:
+      // collapse` — but `hidden` creates a scroll container and `clip` does not.
+      // A scroll container here is what the sticky header would pin against, and
+      // it is exactly the table's height, so the header would never move.
+      //
+      // `isolate` makes this a stacking context, so the header's `z-index` is
+      // spent inside the frame. It cannot reach the page's own pinned chrome
+      // however high it climbs, which is what keeps a table off the site header.
+      //
+      // Which is why `unframed` leaves all three alone. They are the structure
+      // the pinned header is built on, and a table that has given up its border
+      // has given up none of its need for a header that stays put. The border
+      // and the corners are what is left to drop.
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      data-unframed={unframed ? "" : undefined}
+      className={cn(
+        "relative isolate w-fit min-w-full overflow-clip",
+        !unframed && "shape-container border border-border-base"
+      )}
     >
       <table
         data-slot="table"
@@ -32,7 +87,23 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
-      className={cn("[&_tr]:border-b", className)}
+      // Sticky is clamped to its containing block, so the release the header has
+      // to perform — letting go once the last row is past — is the geometry
+      // rather than something to script.
+      //
+      // The offset is a variable because the component cannot know the page. A
+      // shell's content container has nothing pinned above it and wants 0; a
+      // docs page has a site header and possibly a bar under it. `0px` is the
+      // fallback rather than a guess at somebody's chrome, and it is the answer
+      // for every consumer that scrolls a region rather than a document.
+      //
+      // `z-1` clears the rows, which is not free: a cell may hold something
+      // positioned — `Avatar` is `position: relative` — and a positioned box in
+      // a later row outranks a `z-index: auto` header on document order alone.
+      className={cn(
+        "sticky top-[var(--db-sticky-offset,0px)] z-1 bg-surface-subtle [&_tr]:border-b",
+        className
+      )}
       {...props}
     />
   )
@@ -337,7 +408,7 @@ function TableCellTime({
       {...props}
     >
       <span
-        className="h-2 shrink-0 rounded-[1px] bg-text-accent"
+        className="h-2 shrink-0 bg-text-accent"
         style={{ width: barWidth }}
       />
       {children}

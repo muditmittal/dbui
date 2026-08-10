@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "paths": {
+      "dbui": ["./dbui/src"],
       "dbui/*": ["./dbui/src/*"],
+      "dbui-shells": ["./dbui-shells/src"],
+      "dbui-shells/shell": ["./dbui-shells/src/shells/Base"],
+      "dbui-shells/catalog": ["./dbui-shells/src/shells/CatalogExplorer"],
       "dbui-shells/*": ["./dbui-shells/src/*"],
 
       "@base-ui/react": ["./dbui/vendor/@base-ui/react"],
@@ -28,7 +32,9 @@
       "sonner": ["./dbui/vendor/sonner"],
       "sonner/*": ["./dbui/vendor/sonner/*"],
       "vaul": ["./dbui/vendor/vaul"],
-      "vaul/*": ["./dbui/vendor/vaul/*"]
+      "vaul/*": ["./dbui/vendor/vaul/*"],
+      "reselect": ["./dbui/vendor/reselect"],
+      "reselect/*": ["./dbui/vendor/reselect/*"]
     }
   }
 }

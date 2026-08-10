@@ -5,7 +5,13 @@ import { cn } from "../../lib/utils"
 /**
  * @standard Key Value Pair
  * @guideline Use for metadata display in detail panels and sidebars
- * @guideline Key uses muted-foreground; value uses foreground
+ * @guideline Key is de-emphasized, value is primary — read the arrangement, not a color name
+ * @guideline `horizontal` is the default: key beside value, on a fixed key column. Reach for
+ *   `vertical` only when the value is too long to sit beside its key, and `flexible` when the
+ *   value is a figure that should align to the right edge.
+ * @constraint `layout` does not cascade. KeyValueItem and KeyValueKey each read their own prop,
+ *   so a non-default arrangement must be passed to both — passing it only to KeyValuePair
+ *   changes the container width and nothing else.
  * @constraint Keep keys short — they're labels, not sentences
  * @constraint Don't use for editable fields — use Form Input
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3178-3901
@@ -13,15 +19,17 @@ import { cn } from "../../lib/utils"
 
 /**
  * KeyValuePair — container for key-value rows.
- * Maps to Figma .Key Value (Type: Horizontal/Vertical/Flexible).
+ * Maps to Figma Key Value Pair (Layout: Horizontal/Vertical), whose two variants differ
+ * only in width — which is all this component's `layout` controls.
  *
- * - horizontal: key (120px fixed) + value, side by side
- * - vertical: key (12px Hint) above value
- * - flexible: key + value share space equally, value right-aligned
+ * - horizontal, flexible: fills its container
+ * - vertical: the fixed sidebar column width
+ *
+ * The arrangement inside each row is set on KeyValueItem and KeyValueKey, not here.
  */
 function KeyValuePair({
   className,
-  layout = "vertical",
+  layout = "horizontal",
   ...props
 }: React.ComponentProps<"div"> & {
   layout?: "horizontal" | "vertical" | "flexible"
@@ -53,9 +61,17 @@ function KeyValueTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * KeyValueItem — one row. Sets the arrangement.
+ * Maps to Figma .Key Value (Type: Horizontal/Vertical/Flexible).
+ *
+ * - horizontal: key beside value
+ * - vertical: key above value
+ * - flexible: key beside value, both sharing the row
+ */
 function KeyValueItem({
   className,
-  layout = "vertical",
+  layout = "horizontal",
   ...props
 }: React.ComponentProps<"div"> & {
   layout?: "horizontal" | "vertical" | "flexible"
@@ -75,6 +91,14 @@ function KeyValueItem({
   )
 }
 
+/**
+ * KeyValueKey — the label. Must be given the same `layout` as its KeyValueItem.
+ *
+ * - horizontal: fixed key column, so keys line up down the panel and values start on one edge
+ * - vertical: full width above the value, on the smaller Hint step — a stacked key reads as a
+ *   caption to its value, where a beside key reads as one column of a two-column table
+ * - flexible: shares the row with the value instead of holding a fixed column
+ */
 function KeyValueKey({
   className,
   layout = "horizontal",

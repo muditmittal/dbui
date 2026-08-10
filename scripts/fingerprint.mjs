@@ -26,7 +26,15 @@ import path from "node:path"
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 const BASE = process.env.PORTAL ?? "http://localhost:3100"
 
-/** Every route the portal serves. A family that only shows on one page still gets read. */
+/**
+ * Every route the portal serves. A family that only shows on one page still gets
+ * read.
+ *
+ * A redirect earns a place only when it is the sole way in: `/templates` is
+ * listed because nothing else here reaches `/docs/shells`. `/docs/components`
+ * is not, because it redirects to `/components`, which is already above it —
+ * two names for one capture, and a diff that reports every difference twice.
+ */
 const ROUTES = [
   "/",
   "/components",
@@ -35,7 +43,6 @@ const ROUTES = [
   "/docs/accessibility",
   "/docs/checks",
   "/docs/cli",
-  "/docs/components",
   "/docs/foundations",
   "/docs/icons",
   "/docs/layout",

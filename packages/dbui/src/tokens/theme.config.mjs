@@ -132,8 +132,53 @@ export const primitives = {
  * SEMANTICS — role-based tokens that ship. Flat map: <name> → { light, dark }.
  * Names are 1:1 with Figma "Color: Semantic" (slash→hyphen). Order here is the
  * order they emit in tokens.css.
+ *
+ * ── The four families ─────────────────────────────────────────────────────
+ *
+ * The sub-groups below are organized into four families. A family answers one
+ * question — what does this color? — and each answer is something positive:
+ *
+ *   STRUCTURE     the substrate a screen is made of      surface- text- border- utility-
+ *   INTERACTION   what you operate, and how it responds  action- input- focus- link-
+ *   STATUS        feedback about what happened           status-
+ *   VIZ           data encoded as color                 viz-
+ *
+ * A family is a SECTION, NOT A PREFIX. `surface-base` does not become
+ * `structure-surface-base`, and nothing in this map is renamed to carry one.
+ * The family lives in these headings, in `docs/token-rules.md` and on the
+ * portal's Tokens page, and nowhere in a token name.
+ *
+ * ── How a family is named ─────────────────────────────────────────────────
+ *
+ * A family holding ONE prefix takes that prefix's name. A family holding
+ * SEVERAL takes a superset name that is none of them.
+ *
+ * That rule is what rules out the two names this taxonomy nearly shipped with.
+ * `action` would have named a four-prefix family after one of its four, so
+ * `focus-ring`, `input-border-hover` and `link-base` would each read as filed
+ * somewhere else. `base` would have named the structure family with a word
+ * `-base` already spends as the resting-variant suffix in `surface-base` and
+ * `action-primary-base`. Both are the same failure — one word carrying two
+ * meanings at two levels of the same taxonomy — and it is the failure the
+ * family layer exists to remove.
+ *
+ * `interaction` is also the more accurate word for what is in there. Most of
+ * that family is STATES rather than actions: `action-default-hover`,
+ * `action-selected-press`, `input-border-hover`, `focus-ring`. Focus is not an
+ * action and neither is a text field.
  * ══════════════════════════════════════════════════════════════════════════ */
 export const semantics = {
+  /* ══ STRUCTURE — the substrate a screen is made of ══════════════════════════
+   * surface-  text-  border-  utility-
+   *
+   * Surfaces, the text and rules drawn on them, and the layers that stand in
+   * for them or cover them.
+   *
+   * `surface-hover` belongs here, and is why this family is not called
+   * `static`. A substrate reacting to a pointer is still the substrate — the
+   * family names what a token colors, not whether it holds still, and a family
+   * named for a non-behavior was falsified by its own first member. */
+
   // ── Surface ──
   "surface-base": { light: "base.white", dark: "interface.cool.900" },
   "surface-subtle": { light: "interface.neutral.050", dark: "interface.cool.800" },
@@ -167,7 +212,26 @@ export const semantics = {
   "border-disabled": { light: { ref: "base.black", a: 0.12 }, dark: { ref: "base.white", a: 0.12 } },
   "border-accent": { light: "status.blue.600", dark: "status.blue.500" },
 
-  // ── Action / Default (subtle secondary control) ──
+  /* ══ INTERACTION — what you operate, and how it responds ════════════════════
+   * action-  input-  focus-  link-
+   *
+   * Controls and their labels, the fields you type into, the ring that marks
+   * where you are, and links. Four prefixes, so the family takes a superset
+   * name rather than the name of any one of them — `action` would have made the
+   * other three read as filed elsewhere.
+   *
+   * A sentiment word means different things in different families and the two
+   * readings must not be collapsed: `action-positive-base` fills the button
+   * that confirms, `status-text-positive` reports that something succeeded.
+   * That distinction is the reason `status` is a family of its own rather than
+   * a member of this one. */
+
+  /* ── Action / Default (subtle secondary control) ──
+   *
+   * Untouched by the ladder fix below, on purpose. `default-hover` is the wash
+   * almost every control in the system reads, so moving it to make room for the
+   * selected family would have repainted the whole surface to fix one rung. The
+   * selected family moved instead. */
   "action-default-base": { light: "interface.neutral.050", dark: "interface.cool.800" },
   "action-default-hover": { light: { ref: "base.black", a: 0.06 }, dark: { ref: "base.white", a: 0.08 } },
   "action-default-press": { light: { ref: "base.black", a: 0.1 }, dark: { ref: "base.white", a: 0.12 } },
@@ -177,9 +241,41 @@ export const semantics = {
   "action-primary-hover": { light: { ref: "interface.neutral.900", a: 0.9 }, dark: { ref: "interface.cool.200", a: 0.9 } },
   "action-primary-press": { light: { ref: "interface.neutral.900", a: 0.8 }, dark: { ref: "interface.cool.200", a: 0.8 } },
 
-  // ── Action / Selected ──
-  "action-selected-base": { light: { ref: "base.black", a: 0.06 }, dark: { ref: "base.white", a: 0.08 } },
-  "action-selected-hover": { light: { ref: "base.black", a: 0.1 }, dark: { ref: "base.white", a: 0.12 } },
+  /* ── Action / Selected ──
+   *
+   * These are washes of the same ink as `action-default-*`, so the only thing
+   * telling a selected control from a hovered one is where it sits on the alpha
+   * ladder. Until now nothing did: `selected-base` and `default-hover` were the
+   * same 0.06, and `selected-hover` and `default-press` the same 0.10. Two of
+   * the three selected stops had no value of their own, so pointing at an
+   * unselected control painted it the exact fill of a selected one — measured
+   * identical, `#F0F0F0` light and `#242A2E` dark, 0.00 L* apart. That is B13 on
+   * the nav rail and B15 on the pill tabs, and it is one defect.
+   *
+   * The ladder now reads, as composited lightness rather than authored alpha:
+   *
+   *   light   page 100.00  hover 94.69  SELECTED 92.91  press 91.12  sel-hover 89.32  sel-press 87.51
+   *   dark    page   7.37  hover 16.50  SELECTED 18.69  press 20.84  sel-hover 22.96  sel-press 25.05
+   *
+   * The rung that had to move is `selected-base`, and it moved just past
+   * `default-hover` — 1.78 L* in light, 2.19 in dark. Small, deliberately: the
+   * fill is one of three cues on every control that spends it, alongside a
+   * weight step and `text-strong`, so it needs to stop being identical rather
+   * than start carrying the state alone.
+   *
+   * The two families interleave — `default-press` lands between the selected
+   * rest and the selected hover — and that is fine rather than a second
+   * collision. Press exists only while the pointer is held on that one element,
+   * so the deeper of the two is always the one under the finger. There is no
+   * moment where a reader has to tell those two apart.
+   *
+   * `selected-press` did not move, and the reason is a wart worth knowing: it is
+   * the generic press wash for eight controls with no selected state at all —
+   * `Checkbox`, `RadioGroup`, `Switch`, `ToggleGroup`, the tree chevrons,
+   * `FacetedFilter`, `InputGroup`. Deepening it would repaint all of them for a
+   * gap nobody reads. Logged rather than fixed. */
+  "action-selected-base": { light: { ref: "base.black", a: 0.08 }, dark: { ref: "base.white", a: 0.1 } },
+  "action-selected-hover": { light: { ref: "base.black", a: 0.12 }, dark: { ref: "base.white", a: 0.14 } },
   "action-selected-press": { light: { ref: "base.black", a: 0.14 }, dark: { ref: "base.white", a: 0.16 } },
 
   // ── Action / Positive (filled) ──
@@ -204,6 +300,12 @@ export const semantics = {
 
   /* ── Input ──
    *
+   * A border, and INTERACTION rather than STRUCTURE. The state ladder decides
+   * it: no `border-*` token has a hover and both of these do. A decorative rule
+   * is drawn once and never reacts; a field border is darker than a decorative
+   * one and lightens under the pointer precisely so the field reads as
+   * operable. Shape says border, behavior says interaction.
+   *
    * Two states, not three. There was an `input-border-focus` here carrying the
    * same #171717 / #D1D9E1 pair as `focus-ring`, which made it a second name for
    * one decision and put the system in breach of two of its own rules at once:
@@ -214,15 +316,53 @@ export const semantics = {
   "input-border-base": { light: "interface.neutral.200", dark: { ref: "base.white", a: 0.15 } },
   "input-border-hover": { light: "interface.neutral.400", dark: "interface.cool.500" },
 
-  // ── Focus ──
-  "focus-ring": { light: "interface.neutral.900", dark: "interface.cool.200" },
+  /* ── Focus ──
+   *
+   * A ring is not an action, which is what made this sub-group awkward while
+   * the family was called `action`. It is plainly an interaction state, so
+   * under INTERACTION it needs no argument.
+   *
+   * One residue worth knowing: `focus-ring-offset` carries the same pair as
+   * `surface-base` and reads like a structure value. It is not one. Its job is
+   * the gap inside the treatment, and the two tokens are one treatment that
+   * cannot be split across families.
+   *
+   * Two stops off the end of each ramp rather than at it. The ring used to sit on
+   * `neutral.900` and `cool.200`, which are the exact values `action-primary-base`
+   * carries in the same mode — so the most important control in the system had a
+   * focus ring the same color as its own fill, and the treatment disappeared on
+   * the one button most likely to be tabbed to. The 1px offset was the only thing
+   * separating them, and an offset is a gap, not a ring.
+   *
+   * The ramps run opposite ways, so contrast means opposite directions: light
+   * steps back from #171717 to #404040, dark steps forward from #D1D9E1 to
+   * #F6F7F9. Both stay well clear of the fill and still read as a focus ring
+   * against a page surface. */
+  "focus-ring": { light: "interface.neutral.700", dark: "interface.cool.050" },
   "focus-ring-offset": { light: "base.white", dark: "interface.cool.900" },
 
-  // ── Link ──
+  /* ── Link ──
+   *
+   * Text you click, and INTERACTION rather than STRUCTURE: what a token is made
+   * of is not what it is for, and this one carries the full base/hover/press
+   * ladder. `link-visited` is the only token here that records history rather
+   * than describing a state — a property of navigation, not a second family. */
   "link-base": { light: "status.blue.600", dark: "status.blue.400" },
   "link-hover": { light: "status.blue.700", dark: "status.blue.300" },
   "link-press": { light: "status.blue.800", dark: "status.blue.200" },
   "link-visited": { light: "status.blue.800", dark: "status.blue.200" },
+
+  /* ══ STATUS — feedback about what happened ══════════════════════════════════
+   * status-
+   *
+   * A strict four-way sentiment vocabulary, each word carrying the
+   * surface/border/text triplet. One prefix, so the family takes the prefix's
+   * own name and nothing has to be invented.
+   *
+   * Promoted out of the old catch-all, which could only be named for what it
+   * was not. `function` was the alternative and is worse than the problem: a
+   * "functional color" conventionally means a status color, so the name would
+   * have described one member of the group it was covering. */
 
   // ── Status / Surface ──
   "status-surface-info": { light: "status.blue.100", dark: "status.blue.900" },
@@ -242,10 +382,31 @@ export const semantics = {
   "status-text-positive": { light: "status.green.600", dark: "status.green.400" },
   "status-text-warning": { light: "status.yellow.600", dark: "status.yellow.400" },
 
+  /* ══ STRUCTURE, continued ═══════════════════════════════════════════════════
+   *
+   * Utility is structure. A scrim is a layer laid over the substrate, and the
+   * two skeletons are placeholders shaped like the surface and the line of text
+   * they stand in for — each is named after the structure sub-group it covers
+   * or replaces. Status is the tempting alternative reading, since a skeleton
+   * does say "loading", but status is a closed four-way sentiment vocabulary
+   * and loading is not one of the four.
+   *
+   * It emits here rather than beside Surface because key order in this object
+   * is the emission order of tokens.css. Moving it would rewrite a generated
+   * file to make a heading contiguous. */
+
   // ── Utility ──
   "utility-scrim": { light: { ref: "base.black", a: 0.72 }, dark: { ref: "base.black", a: 0.85 } },
   "utility-surface-skeleton": { light: { ref: "base.black", a: 0.12 }, dark: { ref: "base.white", a: 0.12 } },
   "utility-text-skeleton": { light: { ref: "base.black", a: 0.2 }, dark: { ref: "base.white", a: 0.2 } },
+
+  /* ══ VIZ — data encoded as color ═══════════════════════════════════════════
+   * viz-
+   *
+   * The one family where the color IS the value — a series index or a
+   * magnitude — rather than a role something plays. Every other family names a
+   * job and lets the value follow; here a reader decodes the swatch itself.
+   * One prefix, so the family takes the prefix's own name. */
 
   // ── Viz / Categorical (distinct hues) ──
   "viz-categorical-1": { light: "viz.purple.400", dark: "viz.purple.500" },
@@ -331,6 +492,88 @@ export const space = {
  * nothing at render and buys a value both tools can state. */
 export const radius = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, full: "999px" }
 
+/* Shape — the corner ROLES, and the only dimensional layer a theme reassigns.
+ *
+ * `radius` above is a measurement: `radius-2` is 8px and says nothing about when
+ * to reach for it. `shape` is a decision: `shape-container` is whatever this
+ * theme makes a dialog's corner. Components bind the role and never the
+ * measurement, which is the split color has made since the migration — a
+ * component reads `surface-base`, not `grey-100`.
+ *
+ * Named `shape` rather than `round` because the set has a SQUARE stop in it and
+ * `round-square` is an oxymoron. It also leaves room for a corner treatment that
+ * is not a radius at all. The Tailwind class is unaffected either way: the bridge
+ * keys off the role, so `shape-container` still mints `rounded-container`.
+ *
+ * That split is the whole reason shape can be themed. Omnigent wants pill
+ * controls and DuBois wants 4px ones; with components bound to `radius-1` that
+ * is an edit to every control in the library, and with them bound to
+ * `round-control-*` it is two lines in a theme.
+ *
+ * Roles are named for the job and NOT for a stop size, for the reason written two
+ * comments up: `radius-lg` was 12px while `space-lg` was 24px, so `lg` meant two
+ * different things in one file. A `shape-sm/md/lg` set would bring that back and
+ * add a second fault — the radius bridge deliberately CLOSES Tailwind's `sm`,
+ * `md` and `lg` keys so a class the codemod missed renders square instead of
+ * plausibly wrong, and those names would reopen every one of them. `-lg` appears
+ * only as the second tier of a named family, where it modifies a job rather than
+ * naming a measurement.
+ *
+ * `control` is split by control height because that is a real decision and not a
+ * theme one: a 24px control and a 32px control can want different corners inside
+ * the same theme. Core makes the tall one a pill and the short one 4px. A theme
+ * that disagrees sets both and the components do not move. One role could not
+ * express that at all, which is the whole requirement.
+ *
+ * `square` is a role and not a bare `radius-0` so the vocabulary is complete: a
+ * designer picks from `shape/*` for every corner, and "never bind radius/* on a
+ * component" becomes a rule that can be stated and linted. Naming it `none`
+ * would have collided with Tailwind's own `rounded-none` key and made "no
+ * rounding" themeable, which is nonsense.
+ *
+ * Values are radius STOPS rather than multiples, so a role resolves through the
+ * scale. The density dial reaches it for free and a corner value is written down
+ * in exactly one place.
+ *
+ * `control-md` and `pill` both land on `full` in Core. They are two decisions
+ * that agree today, the way a text color and a grey stop agree, and DuBois is
+ * the theme that pulls them apart. Collapsing them would lose that. */
+export const shape = {
+  square: 0,
+  control: 1,
+  /* Core intends `full` here — a 32px control is a pill and a 24px one is 4px.
+   * Held at 1 so the components could be repointed onto the roles without moving
+   * a single pixel, which is the only way a rebind of this size can be verified
+   * as a no-op. Flipping it to "full" is then a one-line change with a visible
+   * diff, made on purpose rather than smuggled in with the indirection. That is
+   * the role layer earning its keep on the first day it exists. */
+  "control-lg": 1,
+  /* Two container roles, because the code already made the distinction and only
+   * the aggregate hid it. `container` is what floats above the page — dialog,
+   * popover, menu, select, combobox, hover card, the table wrapper. `container-lg`
+   * is what IS the page: a card, a drawer, an empty state. 21 files sit at 8px and
+   * 4 sit at 16px, and counting components made the first look like a majority the
+   * second should join. They are different objects and a theme can reshape one
+   * without the other.
+   *
+   * The real distinction is KIND rather than size — a dialog floats and a card
+   * sits — so `-lg` undersells it. It still beats calling the second one
+   * `surface`, which would put a shape role one word from `surface-base` and the
+   * rest of the color family, the same collision this file already documents for
+   * `border-2` against `border-strong`.
+   *
+   * Naming them apart is also what keeps this a no-op: every component keeps the
+   * corner it has today, so there is nothing to review and nothing to regress.
+   *
+   * The 12px band is deliberately absent. It is not a third tier — it is a card's
+   * INNER corners, which are 12px because they nest inside a 16px one, plus the
+   * grouped-control corners in button-group and split-button. Neither is a
+   * container decision, so neither gets a container role. */
+  container: 2,
+  "container-lg": 4,
+  pill: "full",
+}
+
 /* ══════════════════════════════════════════════════════════════════════════
  * BRIDGE — which Tailwind theme namespaces resolve to which DBUI tokens.
  *
@@ -413,76 +656,217 @@ export const bridge = {
     steps: [0, 1, 2],
     defaults: { "default-border-width": 1 },
   },
+  /* Elevation is the family that was authored, generated, documented and read by
+   * nothing. Every `shadow-*` in the tree resolved to Tailwind's own scale, so
+   * the tokens described one system and the screen rendered another — the whole
+   * reason DBUI's overlays never matched DuBois. This line is what closes that:
+   * the stop names are shared, so `shadow-lg` finally reads `--db-elevation-lg`.
+   *
+   * Nothing is closed. `2xs`, `2xl` and `inner` have no call sites, and leaving
+   * them on Tailwind's values keeps this change to elevation rather than turning
+   * it into a refusal of classes nobody writes. */
+  shadow: { family: "elevation", steps: ["xs", "sm", "md", "lg", "xl"] },
 }
 
-/* Type — anchored ramp. Each step is a hand-tuned PIXEL anchor for size,
- * line-height, and tracking (letter-spacing). All three are emitted as
- * `calc(<px> * var(--db-type-scalar))` so the entire ramp scales together from
- * one dial — text stays proportional when the page is zoomed or scaled.
- * `weight` and `family` don't scale, so they're fixed. Anchors mirror the
- * DuBois ramp (hint 12/16, body 13/20, section 16/22, heading 22/28, display
- * 32/40); larger steps get slightly negative tracking for optical tightness. */
+/* Type — 14 named styles over three families of shared stops.
+ *
+ * A style does not hold numbers. It names a size stop, a line stop and (for the
+ * three that need one) a tracking stop, and each stop holds one value per
+ * CONTEXT. That indirection is the whole point: the style names are the API and
+ * must never move, while what `label` measures is allowed to differ between a
+ * desktop workbench and a phone.
+ *
+ * The stops ship as custom properties, which is the opposite of the rule color
+ * follows — there, primitives resolve inline and only semantics reach the
+ * browser. Type cannot do that. A context override has to swap the value
+ * underneath a style that is already applied, and the only thing that can be
+ * swapped after the fact is a custom property. Resolving stops inline would
+ * bake one context into the utility and make a second one impossible.
+ *
+ * `weight` and `family` stay literal on the style. Neither varies by context,
+ * and neither is a measurement — weight is what a style *is*, not how big.
+ * Anchors mirror the DuBois ramp; the larger display steps get a slightly
+ * negative tracking for optical tightness. */
 export const type = {
   family: {
     text: '"Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     mono: '"Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace',
   },
-  /* One ramp, named by what the text is. The split that matters most is
-   * label vs body: both are 13px, but a label is single-line by definition and
-   * body wraps, so they take different leading.
+
+  /* ── Contexts ─────────────────────────────────────────────────────────────
    *
-   *   hint      — captions, helper text, timestamps
-   *   eyebrow   — overlines; carries its own caps and tracking
-   *   label     — single-line UI: buttons, menu items, cells, form labels
-   *   body      — wrapping 13px: descriptions, helper blocks
-   *   code      — inline mono: identifiers, paths
-   *   block     — mono blocks
-   *   paragraph — read as language: chat messages, docs, empty states
-   *   title     — headings, 4 → 1
+   * A context is a complete set of values for the three stop families below.
+   * Adding one is adding a column, never a style.
+   *
+   * `defaultContext` names the one whose values land in `:root`, so a document
+   * that declares nothing still has a whole ramp — at every viewport.
+   *
+   * A context activates ONE way: `[data-type-context="mobile"]` on the document
+   * or on any subtree. It is opt-in, and there is deliberately nowhere here to
+   * put a media query.
+   *
+   * A viewport query cannot be the trigger for a component library. A media
+   * query inside an iframe measures THAT IFRAME, not the reader's screen, and
+   * these components spend most of their life in one: a Storybook story canvas,
+   * the `/components` embed, a shell preview, a split panel, a narrow container.
+   * `mobile` did carry a width query for one day, and every one of those boxes
+   * narrower than the threshold rendered the phone ramp while the reader sat at
+   * a desktop — the story canvas being the one almost every component is looked
+   * at through. The app knows whether it is a phone; a box inside it does not,
+   * and cannot be given a way to guess.
+   *
+   * This is NOT `--db-type-scalar`, and the two compose rather than compete.
+   * The scalar is one multiplier a reader sets over whatever context is active.
+   * A context is a non-uniform value set — mobile grows interface and reading
+   * text while SHRINKING display — and no single multiplier can express a
+   * change that moves two groups in opposite directions.
+   *
+   * The attribute is deliberately not `data-type-scale`, which the portal
+   * already uses for the root font size — a different dial with a different
+   * job. It is unprefixed by `:root` when emitted, so it matches any element
+   * and the stops inherit, which is what lets one context render inside the
+   * other. */
+  contextAttr: "data-type-context",
+  defaultContext: "desktop",
+  contexts: ["desktop", "mobile"],
+
+  /* ── Stops ────────────────────────────────────────────────────────────────
+   *
+   * Three families, three vocabularies, on purpose.
+   *
+   * SIZE is t-shirt named, nine stops. The names carry no unit and no role, so
+   * a size can be shared by styles that have nothing else in common — `sm` is
+   * `label`, `body` and `code`.
+   *
+   * LINE is ROLE named, seven stops, and deliberately not a second t-shirt
+   * scale. If both families read `sm`/`md`/`lg` a reader would infer that
+   * `line.md` belongs to `size.md`, and they do not correspond: `sm` takes
+   * `flush` in `label` and `wrap` in `body`. Different vocabularies make that
+   * mismatch unreadable as a mistake.
+   *
+   * TRACKING is style named, three stops, because only three styles carry an
+   * optical correction and a stop that serves exactly one style may as well say
+   * which. The other eleven emit a literal zero — see the note in the generator
+   * for why the declaration cannot simply be dropped.
+   *
+   * Every stop states both contexts on one line. The alternative — a whole
+   * desktop block then a whole mobile block — puts a stop's two values screens
+   * apart, and the thing most worth seeing here is exactly how they differ. */
+  stops: {
+    size: {
+      "2xs": { desktop: 11, mobile: 12 },
+      xs: { desktop: 12, mobile: 13 },
+      sm: { desktop: 13, mobile: 15 },
+      md: { desktop: 14, mobile: 16 },
+      lg: { desktop: 15, mobile: 17 },
+      xl: { desktop: 16, mobile: 18 },
+      "2xl": { desktop: 20, mobile: 20 },
+      "3xl": { desktop: 24, mobile: 24 },
+      // The one size that gets SMALLER on mobile. A 32px display line does not
+      // fit a phone measure, and a heading that wraps to three lines stops
+      // reading as a heading.
+      "4xl": { desktop: 32, mobile: 28 },
+    },
+    line: {
+      // 16px equals the icon box, so single-line text and an icon align in a
+      // row without adjustment. Mobile gives it 20px: touch rows are taller and
+      // nothing is trying to sit flush with a 16px glyph at that width.
+      flush: { desktop: 16, mobile: 20 },
+      wrap: { desktop: 20, mobile: 22 },
+      read: { desktop: 22, mobile: 24 },
+      "title-4": { desktop: 24, mobile: 24 },
+      "title-3": { desktop: 28, mobile: 28 },
+      "title-2": { desktop: 32, mobile: 32 },
+      "title-1": { desktop: 40, mobile: 36 },
+    },
+    tracking: {
+      eyebrow: { desktop: 0.5, mobile: 0.5 },
+      "title-2": { desktop: -0.2, mobile: -0.2 },
+      "title-1": { desktop: -0.4, mobile: -0.4 },
+    },
+  },
+  /* One ramp, named by what the text is, in three groups named for how the
+   * reader takes it in. The split that matters most is label vs body: they share
+   * a size stop, but a label is single-line by definition and body wraps, so
+   * they take different leading. Naming the stops rather than the numbers is
+   * what makes that sharing visible — `label` and `body` are both `sm`, and no
+   * context can accidentally pull them apart.
+   *
+   * Interface — glanced at, a piece at a time
+   *   eyebrow    — overlines; carries its own caps and tracking
+   *   hint       — captions, helper text, timestamps
+   *   label      — single-line UI: buttons, menu items, cells, form labels
+   *   body       — the same size, set to wrap: descriptions, helper blocks
+   *   code       — inline mono: identifiers, paths
+   *
+   * Reading — read straight through, line after line
+   *   code-block — mono blocks
+   *   paragraph  — read as language: chat messages, docs, empty states
+   *
+   * Display
+   *   title      — headings, 4 → 1
+   *
+   * Inline `code` is an identifier inside a sentence, so it belongs to the
+   * interface register; a fenced block is read, so `code-block` sits in Reading
+   * beside `paragraph` rather than beside the style it shares a face with.
    *
    * There is deliberately no `data` style. Tabular figures are a correctness
    * property, not a look — a reader never sees "tabular", only misalignment
    * when it is missing — and a numeric cell also needs right alignment, which
    * no type style can express. It lives on `<TableCell numeric>` instead.
    *
-   * Density is NOT expressed here. `--db-type-scalar` scales the whole ramp from
-   * one dial, which is the right mechanism for "roomier everywhere" — a second
+   * Density is NOT expressed here either. `--db-type-scalar` scales whatever
+   * context is active from one dial, which is the right mechanism for "roomier
+   * everywhere"; a context is the mechanism for "different here". A third
    * parallel ramp would inflate controls along with prose.
    *
-   * name → { size, line, tracking, weight, family, transform }; px values scale. */
+   * name → { size, line, tracking?, weight, family, transform? }. `size`, `line`
+   * and `tracking` name a stop above; they are not numbers. A style with no
+   * `tracking` key emits a literal zero rather than nothing. */
   scale: {
-    hint: { size: 12, line: 16, tracking: 0, weight: 400, family: "text" },
+    // ── Interface ──
     // Caps and tracking live in the style so nobody re-types them per use.
-    // 11px is the only sub-12 size in the ramp, and it is an optical correction
-    // rather than a new step: capitals have no descenders and fill the whole
-    // x-height band, so all-caps at 12px reads noticeably larger than 12px
-    // sentence case sitting beside it.
-    eyebrow: { size: 11, line: 16, tracking: 0.5, weight: 600, family: "text", transform: "uppercase" },
+    // `2xs` is the only sub-`xs` size in the ramp, and it is an optical
+    // correction rather than a new step: capitals have no descenders and fill
+    // the whole x-height band, so all-caps at `xs` reads noticeably larger than
+    // `xs` sentence case sitting beside it.
+    eyebrow: { size: "2xs", line: "flush", tracking: "eyebrow", weight: 600, family: "text", transform: "uppercase" },
+    hint: { size: "xs", line: "flush", weight: 400, family: "text" },
 
-    // 13/16 — the line box equals the 16px icon box, so text and icon align in a
-    // row without adjustment, and a 24px control gets 4px of breathing room
-    // instead of 2px. Single-line by definition; anything that wraps uses `body`.
-    label: { size: 13, line: 16, tracking: 0, weight: 400, family: "text" },
-    "label-bold": { size: 13, line: 16, tracking: 0, weight: 600, family: "text" },
+    // `flush` is the line box that equals the 16px icon box, so text and icon
+    // align in a row without adjustment, and a 24px control gets 4px of
+    // breathing room instead of 2px. Single-line by definition; anything that
+    // wraps uses `body`.
+    label: { size: "sm", line: "flush", weight: 400, family: "text" },
+    "label-bold": { size: "sm", line: "flush", weight: 600, family: "text" },
 
-    // 13/20 — same size, loose enough to wrap. Descriptions inside Alert, Empty,
-    // RadioTile, Card, DropdownMenu and Item all live here.
-    body: { size: 13, line: 20, tracking: 0, weight: 400, family: "text" },
-    "body-bold": { size: 13, line: 20, tracking: 0, weight: 600, family: "text" },
+    // Same size, `wrap` leading — loose enough to run to a second line.
+    // Descriptions inside Alert, Empty, RadioTile, Card, DropdownMenu and Item
+    // all live here.
+    body: { size: "sm", line: "wrap", weight: 400, family: "text" },
+    "body-bold": { size: "sm", line: "wrap", weight: 600, family: "text" },
 
     // Mono steps down against the sans it sits beside: at equal size it reads
     // larger. No `-bold` — code emphasis is carried by color, never weight.
-    code: { size: 13, line: 20, tracking: 0, weight: 400, family: "mono" },
-    block: { size: 14, line: 22, tracking: 0, weight: 400, family: "mono" },
+    code: { size: "sm", line: "wrap", weight: 400, family: "mono" },
+
+    // ── Reading ──
+
+    // Shares paragraph's line box one size stop smaller, so a fenced block keeps
+    // the rhythm of the prose around it without mono's wider face outrunning it.
+    "code-block": { size: "md", line: "read", weight: 400, family: "mono" },
 
     // Genie renders markdown, and `**bold**` inside a message lands on -bold.
-    paragraph: { size: 15, line: 22, tracking: 0, weight: 400, family: "text" },
-    "paragraph-bold": { size: 15, line: 22, tracking: 0, weight: 600, family: "text" },
+    paragraph: { size: "lg", line: "read", weight: 400, family: "text" },
+    "paragraph-bold": { size: "lg", line: "read", weight: 600, family: "text" },
 
-    "title-4": { size: 16, line: 24, tracking: 0, weight: 600, family: "text" },
-    "title-3": { size: 20, line: 28, tracking: 0, weight: 600, family: "text" },
-    "title-2": { size: 24, line: 32, tracking: -0.2, weight: 600, family: "text" },
-    "title-1": { size: 32, line: 40, tracking: -0.4, weight: 600, family: "text" },
+    // ── Display ──
+    // The four title line stops are style-named because a heading's leading is
+    // not shared with anything else — no interface style wants 28px.
+    "title-4": { size: "xl", line: "title-4", weight: 600, family: "text" },
+    "title-3": { size: "2xl", line: "title-3", weight: 600, family: "text" },
+    "title-2": { size: "3xl", line: "title-2", tracking: "title-2", weight: 600, family: "text" },
+    "title-1": { size: "4xl", line: "title-1", tracking: "title-1", weight: 600, family: "text" },
   },
   weight: { normal: 400, bold: 600 },
   // Legacy families kept in the linter allowlist during migration (components
@@ -494,13 +878,48 @@ export const type = {
   },
 }
 
-/* Elevation — 0 (flat) → 3 (soft). Follows Jeremy's coarse scale:
- * 1 = highest (dialogs), 2 = medium (menus/dropdowns), 3 = soft (toasts). */
+/* Elevation — DuBois's five stops, ascending. `xs` is an edge, `xl` is a dialog.
+ *
+ * Read from the production DuBois library's `Elevation/Light/*` and
+ * `Elevation/Dark/*` effect styles, which is the set Databricks ships today.
+ *
+ * The scale used to run the other way — four stops numbered 0–3 with 1 as the
+ * HIGHEST — so a step-for-step rename onto t-shirt names inverts every shadow
+ * in the system. The old 1, 2 and 3 are this table's `xl`, `lg` and `sm`. Keep
+ * that direction in mind before touching a call site: a bigger name is now a
+ * bigger lift. `0` is gone because `shadow-none` is a CSS keyword and never
+ * needed a token behind it.
+ *
+ * Each stop carries both modes because these are opaque-black shadows against a
+ * surface, not a themeable color. The light alphas are tuned for white and draw
+ * essentially nothing on `surface-base` in dark, which is why DuBois authors a
+ * second set rather than reusing one. Same geometry in both; only alpha moves.
+ *
+ * Multi-layer stops are written soft-layer-first, which is CSS paint order —
+ * Figma lists effects back-to-front, so its panel shows them reversed. At these
+ * alphas the two orders composite identically; the order is documented because
+ * the next person reading the Figma panel will see them the other way round. */
 export const elevation = {
-  0: "none",
-  1: "0 8px 40px rgba(0, 0, 0, 0.13)",
-  2: "0 2px 16px rgba(0, 0, 0, 0.08)",
-  3: "0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05)",
+  xs: {
+    light: "0 1px 0 0 rgba(0, 0, 0, 0.05)",
+    dark: "0 1px 0 0 rgba(0, 0, 0, 0.45)",
+  },
+  sm: {
+    light: "0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02)",
+    dark: "0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26)",
+  },
+  md: {
+    light: "0 3px 6px 0 rgba(0, 0, 0, 0.05)",
+    dark: "0 3px 6px 0 rgba(0, 0, 0, 0.45)",
+  },
+  lg: {
+    light: "0 2px 16px 0 rgba(0, 0, 0, 0.08)",
+    dark: "0 2px 16px 0 rgba(0, 0, 0, 0.61)",
+  },
+  xl: {
+    light: "0 8px 40px 0 rgba(0, 0, 0, 0.13)",
+    dark: "0 8px 40px 0 rgba(0, 0, 0, 0.87)",
+  },
 }
 
 /* Size — width and height. Same grid, same naming, so `--db-size-8` is 32px and
@@ -580,4 +999,4 @@ export const motion = {
   easing: { standard: "cubic-bezier(0.24, 1, 0.4, 1)" },
 }
 
-export default { meta, primitives, semantics, scalars, space, radius, bridge, size, border, type, elevation, motion }
+export default { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion }

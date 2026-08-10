@@ -75,6 +75,46 @@ export function Violations() {
 
       {/* inline-type-literal */}
       <div style={{ fontSize: 22, lineHeight: "28px" }} />
+
+      {/* scroll-container-gutter — clips on all four edges, nothing for a ring
+          to draw into */}
+      <div className="h-40 overflow-y-auto" />
+
+      {/* scroll-container-gutter — a gutter on one edge is half an indicator */}
+      <div className="overflow-x-auto pl-2" />
+
+      {/* scroll-container-gutter — B14, the exact shape of the nav rail before
+          it was fixed. A horizontal gutter and nothing on the axis CSS forces,
+          which is where the bottom 3px of the ring was going. This is the line
+          the first version of the rule called clean. */}
+      <div className="w-[180px] shrink-0 overflow-y-auto px-3" />
+
+      {/* scroll-container-gutter — the mirror: the vertical axis covered and
+          the declared one bare */}
+      <div className="overflow-x-auto py-2" />
+
+      {/* a11y-icon-control-no-name — an icon-only size renders no text, so the
+          glyph is the whole control and there is nothing to announce. This is
+          the shape the shipped Dialog close button had. */}
+      <Button size="icon-md" />
+
+      {/* a11y-img-no-alt — absent, not empty. `alt=""` is the correct way to
+          say decorative and is in clean.tsx. */}
+      <img src="/docs/hero.png" width={864} height={300} />
+
+      {/* a11y-positive-tabindex — lifts one element out of document order and
+          pushes every other focusable thing on the page behind it */}
+      <div tabIndex={3} />
+
+      {/* a11y-aria-hidden-focusable — Tab reaches it and nothing describes it.
+          No tabIndex, so it is focusable because of what it is: the tag path,
+          which `tabIndex={-1}` in clean.tsx is the counterpart to. */}
+      <input aria-hidden="true" />
+
+      {/* a11y-click-no-semantics — the hand-rolled button: a click handler on a
+          host with no role and no tab stop, so the action exists for a mouse
+          and for nothing else */}
+      <div onClick={() => {}} />
     </div>
   )
 }

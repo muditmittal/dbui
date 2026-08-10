@@ -34,7 +34,7 @@ export const VEGA_EMBED_OPTIONS: EmbedOptions = {
  * and no magnitude. Reach for one whenever the series are peers.
  *
  * The three named ones say something about the datum rather than separating it
- * from its neighbours, so they hold still while the numbered steps shift with
+ * from its neighbors, so they hold still while the numbered steps shift with
  * the series count.
  */
 export type VizPaletteName =
@@ -107,11 +107,28 @@ export interface VizTheme {
   isDark: boolean
 }
 
-/** VizType key → the ramp step name the token vars are suffixed with. */
-const TYPE_STEPS: Record<keyof VizType, string> = {
-  hint: "hint",
-  title3: "title-3",
+/**
+ * VizType key → the size stop its ramp step reads, and the weight that step is.
+ *
+ * The ramp stopped emitting a property per style: 14 styles share 9 sizes, so
+ * what ships is the stops, and `--db-font-size-hint` no longer exists. Reading
+ * the stop keeps the part that mattered — a chart still follows the active type
+ * context and `--db-type-scalar`, because the stop is what a context swaps.
+ *
+ * Weight is a literal because weight does not vary by context; it is what the
+ * style *is*. Stated once here, with `FALLBACK.type` derived from it, so the two
+ * cannot disagree the way they did when both carried their own copy.
+ *
+ * `px` is the value to use when the token layer has not loaded at all, which is
+ * the only case where a number has to be restated. It is the stop's default-
+ * context value.
+ */
+const TYPE_STEPS: Record<keyof VizType, { stop: string; weight: number; px: number }> = {
+  hint: { stop: "xs", weight: 400, px: 12 },
+  title3: { stop: "2xl", weight: 600, px: 20 },
 }
+
+const TYPE_KEYS = Object.keys(TYPE_STEPS) as (keyof VizType)[]
 
 /**
  * Palette name → the semantic carrying its color.
@@ -221,10 +238,10 @@ const FALLBACK: VizTheme = {
   background: UNRESOLVED_SURFACE,
   fontSans: "inherit",
   fontMono: "monospace",
-  type: {
-    hint: { size: 12, weight: 400 },
-    title3: { size: 20, weight: 600 },
-  },
+  type: overKeys(TYPE_KEYS, (key) => ({
+    size: TYPE_STEPS[key].px,
+    weight: TYPE_STEPS[key].weight,
+  })),
   isDark: false,
 }
 
@@ -327,22 +344,21 @@ function resolveType(
   if (!probe || !styles) return FALLBACK.type
 
   const type = {} as VizType
-  for (const key of Object.keys(TYPE_STEPS) as (keyof VizType)[]) {
-    const step = TYPE_STEPS[key]
+  for (const key of TYPE_KEYS) {
+    const { stop, weight } = TYPE_STEPS[key]
     const fallback = FALLBACK.type[key]
-    if (!readVar(styles, `--db-font-size-${step}`, "")) {
+    const token = `--db-font-size-${stop}`
+    if (!readVar(styles, token, "")) {
       type[key] = fallback
       continue
     }
-    probe.style.fontSize = `var(--db-font-size-${step})`
-    probe.style.fontWeight = `var(--db-font-weight-${step})`
-    const resolved = window.getComputedStyle(probe)
-    const size = Number.parseFloat(resolved.fontSize)
-    const weight = Number.parseFloat(resolved.fontWeight)
-    type[key] = {
-      size: Number.isFinite(size) && size > 0 ? size : fallback.size,
-      weight: Number.isFinite(weight) && weight > 0 ? weight : fallback.weight,
-    }
+    // The scalar is applied here rather than read off the stop, because the ramp
+    // applies it in the utility body — a stop carries its plain value so a
+    // context can swap it. Mirroring the utility is what keeps a chart the same
+    // size as the label beside it.
+    probe.style.fontSize = `calc(var(${token}) * var(--db-type-scalar, 1))`
+    const size = Number.parseFloat(window.getComputedStyle(probe).fontSize)
+    type[key] = { size: Number.isFinite(size) && size > 0 ? size : fallback.size, weight }
   }
   return type
 }

@@ -20,7 +20,7 @@ description: Find the right DBUI component for a use case. Triggers when you nee
 3. **Check the Category column** to narrow results:
    - `action` → Button, SplitButton
    - `input` → Input, Textarea, Select, Combobox, Checkbox, Switch, Slider, DateRange
-   - `selection` → Tabs, SegmentControl, RadioGroup, RadioTile, ToggleGroup
+   - `selection` → Tabs, SegmentControl, RadioGroup, RadioTile
    - `menu` → DropdownMenu, ContextMenu, Menubar
    - `overlay` → Dialog, AlertDialog, Drawer, Popover, HoverCard, Tooltip, Sonner
    - `feedback` → Alert, Badge, Status, Spinner, Skeleton, Progress, Empty
@@ -50,7 +50,7 @@ description: Find the right DBUI component for a use case. Triggers when you nee
 | Removable chip with key:value | `Tag` | `Badge` (not removable) |
 | Read-only status label | `Badge` | `Tag` (has remove button) |
 | Slide-out panel | `Drawer` | `Dialog` (centered overlay) |
-| Hierarchical data (catalog, files) | `DataTreeView` or `FileTreeView` | Nested divs or NavbarItems |
+| Hierarchical data (catalog, files) | `DataTree` or `FileTree` | Nested divs or NavbarItems |
 | Three-dot menu | `DropdownMenu` | `Popover` (for rich content, not menus) |
 
 ## Translating from Figma

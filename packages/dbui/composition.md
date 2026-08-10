@@ -7,7 +7,7 @@
 - `docs/component-rules.md` — cross-cutting rules for icons, buttons, menus, spacing
 - `docs/icon-index.md` — searchable icon lookup (**always check before inserting icons**)
 - `docs/compositions/*.md` — behavior contracts for complex components
-- `install.md` — agent install instructions (served at https://dbuidesign.vercel.app/install)
+- `install.md` — agent install instructions (served at https://dbuidesign.vercel.app/install.md)
 
 ---
 
@@ -103,7 +103,7 @@ All region widths in `px`. Scaling is continuous between breakpoints (flex-based
 **Purpose:** hierarchical data entities (Catalogs → Schemas → Tables / Volumes / Models).
 
 **Regions (left → right):**
-1. Data tree rail — `<DataTreeView>` wrapped in a tree panel
+1. Data tree rail — `<DataTree>` wrapped in a tree panel
 2. Detail surface — flex-1
 
 **Scaling:** tree rail fixed/resizable; detail surface fills remainder. Below 1024px, rail collapses to icon-only (hover-to-peek) and detail takes near-full width.
@@ -125,7 +125,7 @@ All region widths in `px`. Scaling is continuous between breakpoints (flex-based
 **Purpose:** user-mutable hierarchies (Workspace, Repos, user folders).
 
 **Regions:**
-1. File tree rail — `<FileTreeView>`
+1. File tree rail — `<FileTree>`
 2. Detail surface — list of the current folder's contents
 
 **Scaling:** same as Shell B.

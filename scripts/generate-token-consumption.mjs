@@ -68,6 +68,10 @@ const NAMESPACE_UTILITIES = {
   radius: ["rounded", "rounded-t", "rounded-r", "rounded-b", "rounded-l", "rounded-s", "rounded-e",
     "rounded-tl", "rounded-tr", "rounded-br", "rounded-bl"],
   "border-width": ["border", "border-t", "border-r", "border-b", "border-l", "border-x", "border-y"],
+  // Only the stepped classes. `shadow-none` is a CSS keyword with no token
+  // behind it and `shadow-focus` is authored in globals.css, so neither is
+  // evidence that the elevation family is read.
+  shadow: ["shadow"],
 }
 
 const escape = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
@@ -132,7 +136,7 @@ function walk(dir, out = []) {
  * consuming the value.
  */
 const SCOPES = {
-  system: ["packages/dbui/src", "packages/dbui-shells/src", "packages/dbui-viz/src", "packages/dbui-genie/src"],
+  system: ["packages/dbui/src", "packages/dbui-shells/src", "packages/dbui-viz/src", "packages/dbui-chat/src"],
   portal: ["apps/portal/src", "figma"],
 }
 
@@ -158,11 +162,11 @@ const uniqueShipped = [...new Set(shipped)]
  * turns them into a class, and is null when nothing does.
  *
  * `unit` is what a reader counts, and it is not always a custom property. Type
- * ships 14 styles and emits 74 properties, because a style sets five of them —
- * so a column headed with a property count answered a question nobody asked and
- * contradicted the ramp. `count` overrides the member count for exactly that
- * case. Every other family emits one property per thing, so the two agree and
- * the page has nothing extra to show.
+ * emits several properties per style, so a column headed with a property count
+ * answered a question nobody asked and contradicted the ramp printed beside it.
+ * `count` overrides the member count for exactly that case. Every other family
+ * emits one property per thing, so the two agree and the page has nothing extra
+ * to show.
  *
  * `supersededBy` is the Tailwind namespace that does the job the family was
  * meant to do. It is a claim about architecture, so it is declared here, but
@@ -194,8 +198,11 @@ const FAMILIES = [
     label: "Elevation",
     unit: "levels",
     match: (n) => /^--db-elevation-/.test(n),
-    bridge: null,
-    supersededBy: "--shadow-*",
+    // Bridged as of the DuBois alignment. Until then this family declared no
+    // bridge and named `--shadow-*` as the namespace that had taken its job —
+    // which was true, and was the whole defect: the tokens shipped and Tailwind
+    // rendered. The namespace is now ours, so it is a bridge, not a usurper.
+    bridge: { kind: "theme", namespace: "--shadow-*", file: TOKENS_CSS, utilities: bridgedUtilities(["shadow"]) },
   },
   {
     key: "scalars",
@@ -487,13 +494,30 @@ const bridgeKeys = [...themeBlock.matchAll(/^\s*(--(?!color-)[a-z0-9-]+):\s*([^;
  * anything is whether something downstream is read: a family whose tokens it
  * multiplies, or a Tailwind namespace it stands behind.
  */
+/**
+ * Every declaration in the generated stylesheets, as property and value.
+ *
+ * Both sheets, because the multiplication can sit on either side of the token
+ * and the two families do it differently on purpose. Space, size and radius bake
+ * the density scalar into the token's own value, so the evidence is in that
+ * declaration. Type does the opposite: a stop carries its plain value and the
+ * utility applies the scalar, so that a context can swap the stop and so that
+ * the calc resolves on the element. Looking only in tokens.css is what made the
+ * type scalar report DEAD the day it started working properly.
+ */
+const generatedDeclarations = [tokensCss, readFile(TYPE_CSS)].flatMap((sheet) =>
+  [...sheet.matchAll(/(?:^|\n)\s*(--[a-z0-9-]+|[a-z-]+):\s*([^;{}]+);/g)].map((m) => ({ prop: m[1], value: m[2] })),
+)
+
 const scalars = members.scalars.map((name) => {
-  // Which families' values contain this scalar inside their calc().
+  // A family is driven when a declaration multiplies by this scalar and either
+  // IS one of the family's tokens or READS one.
   const drives = FAMILIES.filter((f) => f.key !== "scalars").filter((f) =>
-    members[f.key].some((token) => {
-      const m = tokensCss.match(new RegExp(`^\\s*${token}:\\s*([^;]+);`, "m"))
-      return m ? m[1].includes(`var(${name})`) : false
-    })
+    members[f.key].some((token) =>
+      generatedDeclarations.some(
+        (d) => d.value.includes(`var(${name})`) && (d.prop === token || d.value.includes(`var(${token})`)),
+      ),
+    )
   ).map((f) => f.key)
   // Which Tailwind namespaces resolve through it, and whether anything uses them.
   const bridges = bridgeKeys

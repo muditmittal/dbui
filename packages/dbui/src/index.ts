@@ -9,7 +9,6 @@ export * from "./components/ui/aspect-ratio";
 export * from "./components/ui/avatar";
 export * from "./components/ui/badge";
 export * from "./components/ui/breadcrumb";
-export * from "./components/ui/button-group";
 export * from "./components/ui/button";
 export * from "./components/ui/card";
 export * from "./components/ui/chart";
@@ -60,7 +59,6 @@ export * from "./components/ui/table";
 export * from "./components/ui/tabs";
 export * from "./components/ui/tag";
 export * from "./components/ui/textarea";
-export * from "./components/ui/toggle-group";
 export * from "./components/ui/toggle";
 export * from "./components/ui/tooltip";
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState } from "react"
 import { Popover } from "@base-ui/react/popover"
 import { Input } from "dbui/components/ui/input"
 import { Checkbox } from "dbui/components/ui/checkbox"
@@ -46,10 +46,6 @@ export function FacetedFilter({
 
   const isChecked = (facet: string, value: string) => selected[facet]?.has(value) || false
 
-  const selectedChips = Object.entries(selected).flatMap(([facet, values]) =>
-    Array.from(values).map((v) => ({ facet, value: v }))
-  )
-
   const resetAll = () => {
     setSelected({})
     setActiveFacet(null)
@@ -73,7 +69,7 @@ export function FacetedFilter({
       <div className="group/ig flex items-center rounded-1 border border-transparent focus-within:border-input-border-hover focus-within:shadow-xs">
         <Input
           placeholder="Search"
-          className="h-8 flex-1 min-w-0 rounded-l-1 rounded-r-none shadow-xs focus-visible:border-transparent focus-visible:shadow-none"
+          className="h-8 flex-1 min-w-0 rounded-l-1 shape-r-square shadow-xs focus-visible:border-transparent focus-visible:shadow-none"
           onChange={(e) => onSearch?.(e.target.value)}
         />
         {/* Filter button */}
@@ -90,7 +86,7 @@ export function FacetedFilter({
                 aria-label="Filter"
                 variant="ghost"
                 size="icon-md"
-                className="rounded-l-none rounded-r-1 border border-input-border-base bg-surface-base shadow-xs text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base [&_svg]:size-4"
+                className="shape-l-square rounded-r-1 border border-input-border-base bg-surface-base shadow-xs text-text-subtle hover:bg-action-default-hover hover:text-text-base active:bg-action-selected-press focus-visible:border-focus-ring focus-visible:bg-surface-accent group-focus-within/ig:border-l group-focus-within/ig:border-y-0 group-focus-within/ig:border-r-0 group-focus-within/ig:shadow-none group-focus-within/ig:border-input-border-base [&_svg]:size-4"
               >
                 <Sliders />
               </Button>
@@ -98,7 +94,7 @@ export function FacetedFilter({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-              <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
+              <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden">
 
                 {/* Root: facet categories */}
                 {!activeFacet && (
@@ -235,7 +231,7 @@ export function FacetedFilter({
                 </Tag>
                 <Popover.Portal>
                   <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
-                    <Popover.Popup className="w-[240px] rounded-2 bg-surface-base shadow-md ring-1 ring-text-base/10 overflow-hidden">
+                    <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden">
                       <div className="p-1">
                         <div className="px-2 py-1 type-hint text-text-subtle">{facet}</div>
                       </div>

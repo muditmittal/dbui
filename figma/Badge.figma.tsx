@@ -6,6 +6,10 @@ figma.connect(Badge, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-D
     variant: figma.enum("Variant", {
       "Fill": "fill",
       "Outline": "outline",
+      "Positive": "positive",
+      "Negative": "negative",
+      "Warning": "warning",
+      "Info": "info",
     }),
   },
   example: ({ variant }) => <Badge variant={variant}>Badge</Badge>,

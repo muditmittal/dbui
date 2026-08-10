@@ -17,7 +17,7 @@ documentation failures this system has had were all a restated value or a restat
 
 Prose earns its place only if deleting it would change what someone does. "450 icons" fails
 that test. "`label` is 13/16 because the line box matches the icon box" passes, because
-without it someone normalises it to 13/20 and breaks row alignment. Write that reasoning as a
+without it someone normalizes it to 13/20 and breaks row alignment. Write that reasoning as a
 comment **at the point of change** — in `theme.config.mjs`, in the component's JSDoc — not in
 a doc the person editing it will never open.
 
@@ -57,7 +57,7 @@ reference doc describes how far along anything is.
 7. Export it from `packages/dbui/src/index.ts` and add a tsup entry in `packages/dbui/tsup.config.ts`.
 8. Add a demo tile to `apps/portal/src/stories/components/gallery-demos.tsx`, keyed by the name
    shown in `component-index.md`, then run `node scripts/generate-gallery.mjs`. The gallery renders
-   once, on `/docs/components`, and groups and links itself from the CLI — the tile is the one part
+   once, on `/components`, and groups and links itself from the CLI — the tile is the one part
    it cannot infer. A component with no tile still appears, showing its name instead of a demo.
    A new category also needs a row in the index's Categories table, because the generator reads the
    one-line descriptor the gallery prints under each heading from there.
@@ -118,8 +118,9 @@ leave a pointer.
 
 ### Changing a public API
 
-Any change to an exported name, prop, or import path also requires an entry in the changelog and a
-scan for call sites across `packages/`, `apps/`, and `figma/`.
+Any change to an exported name, prop, or import path also requires an entry in `CHANGELOG.md` and a
+scan for call sites across `packages/`, `apps/`, and `figma/`. Write what a consumer has to *do*,
+not what moved — an entry that does not say that is a commit message in the wrong file.
 
 ## Before you land anything
 

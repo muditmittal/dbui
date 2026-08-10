@@ -16,26 +16,26 @@ import { cn } from "../../lib/utils"
  */
 
 function RadioTileGroup({ className, ...props }: RadioGroupPrimitive.Props) {
-  return (
+ return (
     <RadioGroupPrimitive
-      data-slot="radio-tile-group"
-      className={cn("grid gap-3", className)}
+ data-slot="radio-tile-group"
+ className={cn("grid gap-3", className)}
       {...props}
     />
   )
 }
 
 function RadioTile({
-  className,
-  children,
+ className,
+ children,
   ...props
 }: RadioPrimitive.Root.Props) {
-  return (
+ return (
     <RadioPrimitive.Root
-      data-slot="radio-tile"
-      className={cn(
-        "group/radio-tile relative flex flex-col gap-1 rounded-1 border border-input-border-base bg-surface-base p-4 type-body shadow-xs transition-all outline-none select-none hover:border-input-border-hover active:border-focus-ring data-checked:border-action-primary-base data-checked:shadow-none focus-visible:border-focus-ring focus-visible:ring-3 focus-visible:ring-focus-ring/50 disabled:cursor-not-allowed disabled:border-border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20",
-        className
+ data-slot="radio-tile"
+ className={cn(
+        "group/radio-tile relative flex flex-col gap-1 rounded-1 border border-input-border-base bg-surface-base p-4 type-body shadow-xs transition-all outline-none select-none hover:border-input-border-hover active:border-focus-ring data-checked:border-action-primary-base data-checked:shadow-none focus-visible:border-focus-ring focus-visible:shadow-focus disabled:cursor-not-allowed disabled:border-border-disabled disabled:shadow-none disabled:text-text-disabled disabled:opacity-50 aria-invalid:border-action-negative-base aria-invalid:ring-3 aria-invalid:ring-action-negative-base/20",
+ className
       )}
       {...props}
     >
@@ -45,48 +45,48 @@ function RadioTile({
 }
 
 function RadioTileHeader({
-  className,
-  children,
+ className,
+ children,
   ...props
 }: React.ComponentProps<"div">) {
-  return (
+ return (
     <div
-      data-slot="radio-tile-header"
-      className={cn("flex items-center gap-2", className)}
+ data-slot="radio-tile-header"
+ className={cn("flex items-center gap-2", className)}
       {...props}
     >
       {children}
       <div
-        data-slot="radio-tile-indicator"
-        className="ml-auto flex size-4 shrink-0 items-center justify-center rounded-full border border-input-border-base bg-surface-base group-data-checked/radio-tile:border-action-primary-base group-data-checked/radio-tile:bg-action-primary-base"
+ data-slot="radio-tile-indicator"
+ className="ml-auto flex size-4 shrink-0 items-center justify-center shape-pill border border-input-border-base bg-surface-base group-data-checked/radio-tile:border-action-primary-base group-data-checked/radio-tile:bg-action-primary-base"
       >
-        <span className="size-1.5 rounded-full bg-action-label-inverse-base opacity-0 group-data-checked/radio-tile:opacity-100" />
+        <span className="size-1.5 shape-pill bg-action-label-inverse-base opacity-0 group-data-checked/radio-tile:opacity-100" />
       </div>
     </div>
   )
 }
 
 function RadioTileTitle({
-  className,
+ className,
   ...props
 }: React.ComponentProps<"div">) {
-  return (
+ return (
     <div
-      data-slot="radio-tile-title"
-      className={cn("font-semibold text-text-base", className)}
+ data-slot="radio-tile-title"
+ className={cn("font-semibold text-text-base", className)}
       {...props}
     />
   )
 }
 
 function RadioTileDescription({
-  className,
+ className,
   ...props
 }: React.ComponentProps<"div">) {
-  return (
+ return (
     <div
-      data-slot="radio-tile-description"
-      className={cn("type-body text-text-subtle", className)}
+ data-slot="radio-tile-description"
+ className={cn("type-body text-text-subtle", className)}
       {...props}
     />
   )
@@ -96,15 +96,15 @@ function RadioTileDescription({
  * RadioTileIcon — optional leading icon in the header.
  */
 function RadioTileIcon({
-  className,
+ className,
   ...props
 }: React.ComponentProps<"span">) {
-  return (
+ return (
     <span
-      data-slot="radio-tile-icon"
-      className={cn(
+ data-slot="radio-tile-icon"
+ className={cn(
         "pointer-events-none shrink-0 text-text-subtle [&_svg:not([class*='size-'])]:size-4",
-        className
+ className
       )}
       {...props}
     />

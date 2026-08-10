@@ -10,7 +10,7 @@ import { Close as CloseIcon } from "../icons/Close"
 /**
  * @standard Dialog
  * @guideline Footer actions: primary right-aligned, cancel left-aligned
- * @guideline Uses shadow-lg with ring-1 ring-text-base/10
+ * @guideline Uses shadow-xl with ring-1 ring-text-base/10
  * @constraint Max one dialog open at a time — never stack
  * @constraint For simple confirmations, use Alert Dialog instead
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=882-2798
@@ -73,7 +73,7 @@ function DialogContent({
         data-slot="dialog-content"
         data-size={size}
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 rounded-2 border border-border-base bg-surface-base type-body shadow-lg duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 shape-container border border-border-base bg-surface-base type-body shadow-xl duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}
@@ -87,6 +87,10 @@ function DialogContent({
                 variant="ghost"
                 className="absolute top-3 right-3"
                 size="icon-md"
+                // Icon-only, so the glyph is the whole control and a screen
+                // reader has nothing to read without this. Button's own
+                // @constraint has required it since before the rule existed.
+                aria-label="Close"
               />
             }
           >
@@ -132,7 +136,7 @@ function DialogHeaderIcon({
     <div
       data-slot="dialog-header-icon"
       className={cn(
-        "inline-flex size-10 items-center justify-center rounded-2 bg-surface-subtle [&_svg:not([class*='size-'])]:size-6",
+        "inline-flex size-10 items-center justify-center shape-container bg-surface-subtle [&_svg:not([class*='size-'])]:size-6",
         className
       )}
       {...props}

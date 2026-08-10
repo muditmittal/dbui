@@ -48,7 +48,7 @@ const MAP = {
 const SCAN_ROOTS = [
   "packages/dbui/src",
   "packages/dbui-shells/src",
-  "packages/dbui-genie/src",
+  "packages/dbui-chat/src",
   "packages/dbui-viz/src",
   "apps/portal/src",
 ];

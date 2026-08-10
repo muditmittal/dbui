@@ -1,7 +1,17 @@
 import figma from "@figma/code-connect"
+import {
+  KeyValuePair,
+  KeyValueTitle,
+  KeyValueItem,
+  KeyValueKey,
+  KeyValueValue,
+} from "../components/ui/key-value-pair"
 
-// KeyValuePair is a layout composition — no dedicated component import needed
-figma.connect("https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3178-3901", {
+// Layout has no Flexible variant on this node because the container's layout only sets width,
+// and flexible is full width like horizontal. The three-way arrangement lives on the row, not
+// here — .KeyValueItem (node-id=3178-3688) carries Type: Horizontal/Vertical/Flexible, which
+// maps to KeyValueItem and KeyValueKey together.
+figma.connect(KeyValuePair, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3178-3901", {
   props: {
     layout: figma.enum("Layout", {
       "Horizontal": "horizontal",
@@ -9,9 +19,16 @@ figma.connect("https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-S
     }),
   },
   example: ({ layout }) => (
-    <div className={`flex ${layout === "vertical" ? "flex-col gap-1" : "flex-row gap-4"}`}>
-      <dt className="text-[13px] font-semibold text-foreground">Key</dt>
-      <dd className="text-[13px] text-text-subtle">Value</dd>
-    </div>
+    <KeyValuePair layout={layout}>
+      <KeyValueTitle>Details</KeyValueTitle>
+      <KeyValueItem>
+        <KeyValueKey>Owner</KeyValueKey>
+        <KeyValueValue>mudit@databricks.com</KeyValueValue>
+      </KeyValueItem>
+      <KeyValueItem>
+        <KeyValueKey>Created</KeyValueKey>
+        <KeyValueValue>2026-04-14</KeyValueValue>
+      </KeyValueItem>
+    </KeyValuePair>
   ),
 })

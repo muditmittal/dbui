@@ -163,6 +163,129 @@
   --border-width-1: var(--db-border-1);
   --border-width-2: var(--db-border-2);
   --default-border-width: var(--db-border-1);
+  --shadow-xs: var(--db-elevation-xs);
+  --shadow-sm: var(--db-elevation-sm);
+  --shadow-md: var(--db-elevation-md);
+  --shadow-lg: var(--db-elevation-lg);
+  --shadow-xl: var(--db-elevation-xl);
+
+}
+
+/* ── Shape roles — one utility per decision, named exactly like its token.
+   A corner with no shape class is square, which is the system default. ── */
+@utility shape-square {
+  border-radius: var(--db-shape-square);
+}
+@utility shape-t-square {
+  border-top-left-radius: var(--db-shape-square);
+  border-top-right-radius: var(--db-shape-square);
+}
+@utility shape-r-square {
+  border-top-right-radius: var(--db-shape-square);
+  border-bottom-right-radius: var(--db-shape-square);
+}
+@utility shape-b-square {
+  border-bottom-right-radius: var(--db-shape-square);
+  border-bottom-left-radius: var(--db-shape-square);
+}
+@utility shape-l-square {
+  border-top-left-radius: var(--db-shape-square);
+  border-bottom-left-radius: var(--db-shape-square);
+}
+@utility shape-control {
+  border-radius: var(--db-shape-control);
+}
+@utility shape-t-control {
+  border-top-left-radius: var(--db-shape-control);
+  border-top-right-radius: var(--db-shape-control);
+}
+@utility shape-r-control {
+  border-top-right-radius: var(--db-shape-control);
+  border-bottom-right-radius: var(--db-shape-control);
+}
+@utility shape-b-control {
+  border-bottom-right-radius: var(--db-shape-control);
+  border-bottom-left-radius: var(--db-shape-control);
+}
+@utility shape-l-control {
+  border-top-left-radius: var(--db-shape-control);
+  border-bottom-left-radius: var(--db-shape-control);
+}
+@utility shape-control-lg {
+  border-radius: var(--db-shape-control-lg);
+}
+@utility shape-t-control-lg {
+  border-top-left-radius: var(--db-shape-control-lg);
+  border-top-right-radius: var(--db-shape-control-lg);
+}
+@utility shape-r-control-lg {
+  border-top-right-radius: var(--db-shape-control-lg);
+  border-bottom-right-radius: var(--db-shape-control-lg);
+}
+@utility shape-b-control-lg {
+  border-bottom-right-radius: var(--db-shape-control-lg);
+  border-bottom-left-radius: var(--db-shape-control-lg);
+}
+@utility shape-l-control-lg {
+  border-top-left-radius: var(--db-shape-control-lg);
+  border-bottom-left-radius: var(--db-shape-control-lg);
+}
+@utility shape-container {
+  border-radius: var(--db-shape-container);
+}
+@utility shape-t-container {
+  border-top-left-radius: var(--db-shape-container);
+  border-top-right-radius: var(--db-shape-container);
+}
+@utility shape-r-container {
+  border-top-right-radius: var(--db-shape-container);
+  border-bottom-right-radius: var(--db-shape-container);
+}
+@utility shape-b-container {
+  border-bottom-right-radius: var(--db-shape-container);
+  border-bottom-left-radius: var(--db-shape-container);
+}
+@utility shape-l-container {
+  border-top-left-radius: var(--db-shape-container);
+  border-bottom-left-radius: var(--db-shape-container);
+}
+@utility shape-container-lg {
+  border-radius: var(--db-shape-container-lg);
+}
+@utility shape-t-container-lg {
+  border-top-left-radius: var(--db-shape-container-lg);
+  border-top-right-radius: var(--db-shape-container-lg);
+}
+@utility shape-r-container-lg {
+  border-top-right-radius: var(--db-shape-container-lg);
+  border-bottom-right-radius: var(--db-shape-container-lg);
+}
+@utility shape-b-container-lg {
+  border-bottom-right-radius: var(--db-shape-container-lg);
+  border-bottom-left-radius: var(--db-shape-container-lg);
+}
+@utility shape-l-container-lg {
+  border-top-left-radius: var(--db-shape-container-lg);
+  border-bottom-left-radius: var(--db-shape-container-lg);
+}
+@utility shape-pill {
+  border-radius: var(--db-shape-pill);
+}
+@utility shape-t-pill {
+  border-top-left-radius: var(--db-shape-pill);
+  border-top-right-radius: var(--db-shape-pill);
+}
+@utility shape-r-pill {
+  border-top-right-radius: var(--db-shape-pill);
+  border-bottom-right-radius: var(--db-shape-pill);
+}
+@utility shape-b-pill {
+  border-bottom-right-radius: var(--db-shape-pill);
+  border-bottom-left-radius: var(--db-shape-pill);
+}
+@utility shape-l-pill {
+  border-top-left-radius: var(--db-shape-pill);
+  border-bottom-left-radius: var(--db-shape-pill);
 }
 
 :root {
@@ -192,81 +315,39 @@
   --db-radius-6: calc(var(--db-spacing-unit) * 6 * var(--db-density-scalar));
   --db-radius-full: 999px;
 
-  /* ── Type (anchored ramp, scaled together by type-scalar) ── */
+  /* ── Shape — the corner ROLES. A measurement above, a decision here. These are
+     what components bind, and the only dimensional layer a theme reassigns. ── */
+  --db-shape-square: var(--db-radius-0);
+  --db-shape-control: var(--db-radius-1);
+  --db-shape-control-lg: var(--db-radius-1);
+  --db-shape-container: var(--db-radius-2);
+  --db-shape-container-lg: var(--db-radius-4);
+  --db-shape-pill: var(--db-radius-full);
+
+  /* ── Type — the two faces and the three stop families, in the default
+     context. A style names a stop; the stop holds the value. The type scalar is
+     applied in the utility body, not here, so it resolves on the element. ── */
   --db-font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --db-mono-font-family: "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace;
-  --db-font-size-hint: calc(0.75rem * var(--db-type-scalar));
-  --db-line-height-hint: calc(1rem * var(--db-type-scalar));
-  --db-letter-spacing-hint: calc(0 * var(--db-type-scalar));
-  --db-font-weight-hint: 400;
-  --db-font-family-hint: var(--db-font-family);
-  --db-font-size-eyebrow: calc(0.6875rem * var(--db-type-scalar));
-  --db-line-height-eyebrow: calc(1rem * var(--db-type-scalar));
-  --db-letter-spacing-eyebrow: calc(0.03125rem * var(--db-type-scalar));
-  --db-font-weight-eyebrow: 600;
-  --db-font-family-eyebrow: var(--db-font-family);
-  --db-font-size-label: calc(0.8125rem * var(--db-type-scalar));
-  --db-line-height-label: calc(1rem * var(--db-type-scalar));
-  --db-letter-spacing-label: calc(0 * var(--db-type-scalar));
-  --db-font-weight-label: 400;
-  --db-font-family-label: var(--db-font-family);
-  --db-font-size-label-bold: calc(0.8125rem * var(--db-type-scalar));
-  --db-line-height-label-bold: calc(1rem * var(--db-type-scalar));
-  --db-letter-spacing-label-bold: calc(0 * var(--db-type-scalar));
-  --db-font-weight-label-bold: 600;
-  --db-font-family-label-bold: var(--db-font-family);
-  --db-font-size-body: calc(0.8125rem * var(--db-type-scalar));
-  --db-line-height-body: calc(1.25rem * var(--db-type-scalar));
-  --db-letter-spacing-body: calc(0 * var(--db-type-scalar));
-  --db-font-weight-body: 400;
-  --db-font-family-body: var(--db-font-family);
-  --db-font-size-body-bold: calc(0.8125rem * var(--db-type-scalar));
-  --db-line-height-body-bold: calc(1.25rem * var(--db-type-scalar));
-  --db-letter-spacing-body-bold: calc(0 * var(--db-type-scalar));
-  --db-font-weight-body-bold: 600;
-  --db-font-family-body-bold: var(--db-font-family);
-  --db-font-size-code: calc(0.8125rem * var(--db-type-scalar));
-  --db-line-height-code: calc(1.25rem * var(--db-type-scalar));
-  --db-letter-spacing-code: calc(0 * var(--db-type-scalar));
-  --db-font-weight-code: 400;
-  --db-font-family-code: var(--db-mono-font-family);
-  --db-font-size-block: calc(0.875rem * var(--db-type-scalar));
-  --db-line-height-block: calc(1.375rem * var(--db-type-scalar));
-  --db-letter-spacing-block: calc(0 * var(--db-type-scalar));
-  --db-font-weight-block: 400;
-  --db-font-family-block: var(--db-mono-font-family);
-  --db-font-size-paragraph: calc(0.9375rem * var(--db-type-scalar));
-  --db-line-height-paragraph: calc(1.375rem * var(--db-type-scalar));
-  --db-letter-spacing-paragraph: calc(0 * var(--db-type-scalar));
-  --db-font-weight-paragraph: 400;
-  --db-font-family-paragraph: var(--db-font-family);
-  --db-font-size-paragraph-bold: calc(0.9375rem * var(--db-type-scalar));
-  --db-line-height-paragraph-bold: calc(1.375rem * var(--db-type-scalar));
-  --db-letter-spacing-paragraph-bold: calc(0 * var(--db-type-scalar));
-  --db-font-weight-paragraph-bold: 600;
-  --db-font-family-paragraph-bold: var(--db-font-family);
-  --db-font-size-title-4: calc(1rem * var(--db-type-scalar));
-  --db-line-height-title-4: calc(1.5rem * var(--db-type-scalar));
-  --db-letter-spacing-title-4: calc(0 * var(--db-type-scalar));
-  --db-font-weight-title-4: 600;
-  --db-font-family-title-4: var(--db-font-family);
-  --db-font-size-title-3: calc(1.25rem * var(--db-type-scalar));
-  --db-line-height-title-3: calc(1.75rem * var(--db-type-scalar));
-  --db-letter-spacing-title-3: calc(0 * var(--db-type-scalar));
-  --db-font-weight-title-3: 600;
-  --db-font-family-title-3: var(--db-font-family);
-  --db-font-size-title-2: calc(1.5rem * var(--db-type-scalar));
-  --db-line-height-title-2: calc(2rem * var(--db-type-scalar));
-  --db-letter-spacing-title-2: calc(-0.0125rem * var(--db-type-scalar));
-  --db-font-weight-title-2: 600;
-  --db-font-family-title-2: var(--db-font-family);
-  --db-font-size-title-1: calc(2rem * var(--db-type-scalar));
-  --db-line-height-title-1: calc(2.5rem * var(--db-type-scalar));
-  --db-letter-spacing-title-1: calc(-0.025rem * var(--db-type-scalar));
-  --db-font-weight-title-1: 600;
-  --db-font-family-title-1: var(--db-font-family);
-  --db-font-weight: 400;
-  --db-font-weight-bold: 600;
+  --db-font-size-2xs: 0.6875rem;
+  --db-font-size-xs: 0.75rem;
+  --db-font-size-sm: 0.8125rem;
+  --db-font-size-md: 0.875rem;
+  --db-font-size-lg: 0.9375rem;
+  --db-font-size-xl: 1rem;
+  --db-font-size-2xl: 1.25rem;
+  --db-font-size-3xl: 1.5rem;
+  --db-font-size-4xl: 2rem;
+  --db-line-height-flush: 1rem;
+  --db-line-height-wrap: 1.25rem;
+  --db-line-height-read: 1.375rem;
+  --db-line-height-title-4: 1.5rem;
+  --db-line-height-title-3: 1.75rem;
+  --db-line-height-title-2: 2rem;
+  --db-line-height-title-1: 2.5rem;
+  --db-letter-spacing-eyebrow: 0.03125rem;
+  --db-letter-spacing-title-2: -0.0125rem;
+  --db-letter-spacing-title-1: -0.025rem;
 
   /* ── Size (width and height; its own stops on the same grid) ── */
   --db-size-2: calc(var(--db-spacing-unit) * 2 * var(--db-density-scalar));
@@ -291,10 +372,11 @@
   --db-ease-standard: cubic-bezier(0.24, 1, 0.4, 1);
 
   /* ── Elevation ── */
-  --db-elevation-0: none;
-  --db-elevation-1: 0 8px 40px rgba(0, 0, 0, 0.13);
-  --db-elevation-2: 0 2px 16px rgba(0, 0, 0, 0.08);
-  --db-elevation-3: 0 2px 3px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.05);
+  --db-elevation-xs: 0 1px 0 0 rgba(0, 0, 0, 0.05);
+  --db-elevation-sm: 0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02);
+  --db-elevation-md: 0 3px 6px 0 rgba(0, 0, 0, 0.05);
+  --db-elevation-lg: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
+  --db-elevation-xl: 0 8px 40px 0 rgba(0, 0, 0, 0.13);
 
   /* ══════════════════════════════════════════════════════════════════════════
    * SEMANTICS — LIGHT. Consume these (or their Tailwind utilities) in product code.
@@ -325,8 +407,8 @@
   --db-action-primary-base: #171717;
   --db-action-primary-hover: rgba(23, 23, 23, 0.9);
   --db-action-primary-press: rgba(23, 23, 23, 0.8);
-  --db-action-selected-base: rgba(0, 0, 0, 0.06);
-  --db-action-selected-hover: rgba(0, 0, 0, 0.1);
+  --db-action-selected-base: rgba(0, 0, 0, 0.08);
+  --db-action-selected-hover: rgba(0, 0, 0, 0.12);
   --db-action-selected-press: rgba(0, 0, 0, 0.14);
   --db-action-positive-base: #277C43;
   --db-action-positive-hover: #115026;
@@ -342,7 +424,7 @@
   --db-action-label-inverse-press: rgba(255, 255, 255, 0.7);
   --db-input-border-base: #E5E5E5;
   --db-input-border-hover: #A3A3A3;
-  --db-focus-ring: #171717;
+  --db-focus-ring: #404040;
   --db-focus-ring-offset: #FFFFFF;
   --db-link-base: #2272B4;
   --db-link-hover: #0E538B;
@@ -386,6 +468,13 @@
 }
 
 .dark {
+  /* ── Elevation — same geometry as light, heavier alpha. ── */
+  --db-elevation-xs: 0 1px 0 0 rgba(0, 0, 0, 0.45);
+  --db-elevation-sm: 0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26);
+  --db-elevation-md: 0 3px 6px 0 rgba(0, 0, 0, 0.45);
+  --db-elevation-lg: 0 2px 16px 0 rgba(0, 0, 0, 0.61);
+  --db-elevation-xl: 0 8px 40px 0 rgba(0, 0, 0, 0.87);
+
   /* ══════════════════════════════════════════════════════════════════════════
    * SEMANTICS — DARK.
    * ══════════════════════════════════════════════════════════════════════════ */
@@ -415,8 +504,8 @@
   --db-action-primary-base: #D1D9E1;
   --db-action-primary-hover: rgba(209, 217, 225, 0.9);
   --db-action-primary-press: rgba(209, 217, 225, 0.8);
-  --db-action-selected-base: rgba(255, 255, 255, 0.08);
-  --db-action-selected-hover: rgba(255, 255, 255, 0.12);
+  --db-action-selected-base: rgba(255, 255, 255, 0.1);
+  --db-action-selected-hover: rgba(255, 255, 255, 0.14);
   --db-action-selected-press: rgba(255, 255, 255, 0.16);
   --db-action-positive-base: #3BA65E;
   --db-action-positive-hover: #8DDDA8;
@@ -432,7 +521,7 @@
   --db-action-label-inverse-press: rgba(0, 0, 0, 0.7);
   --db-input-border-base: rgba(255, 255, 255, 0.15);
   --db-input-border-hover: #8396A5;
-  --db-focus-ring: #D1D9E1;
+  --db-focus-ring: #F6F7F9;
   --db-focus-ring-offset: #11171C;
   --db-link-base: #8ACAFF;
   --db-link-hover: #BAE1FC;
@@ -473,4 +562,59 @@
   --db-viz-sequential-8: #A5E5F9;
   --db-viz-sequential-9: #D2F1FC;
   --db-viz-sequential-10: #F6F7F9;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * TYPE CONTEXTS — the same stops at other values.
+ *
+ * Only the stops move. The 14 style names, their weights, faces and cases are
+ * context-independent, so nothing below repeats a style.
+ *
+ * Opt-in only. A context activates when something sets the attribute, never
+ * from the viewport, and these blocks follow the :root declarations so they win
+ * at equal specificity on source order. A document that sets nothing gets the
+ * default at every width.
+ * ══════════════════════════════════════════════════════════════════════════ */
+[data-type-context="desktop"] {
+  --db-font-size-2xs: 0.6875rem;
+  --db-font-size-xs: 0.75rem;
+  --db-font-size-sm: 0.8125rem;
+  --db-font-size-md: 0.875rem;
+  --db-font-size-lg: 0.9375rem;
+  --db-font-size-xl: 1rem;
+  --db-font-size-2xl: 1.25rem;
+  --db-font-size-3xl: 1.5rem;
+  --db-font-size-4xl: 2rem;
+  --db-line-height-flush: 1rem;
+  --db-line-height-wrap: 1.25rem;
+  --db-line-height-read: 1.375rem;
+  --db-line-height-title-4: 1.5rem;
+  --db-line-height-title-3: 1.75rem;
+  --db-line-height-title-2: 2rem;
+  --db-line-height-title-1: 2.5rem;
+  --db-letter-spacing-eyebrow: 0.03125rem;
+  --db-letter-spacing-title-2: -0.0125rem;
+  --db-letter-spacing-title-1: -0.025rem;
+}
+
+[data-type-context="mobile"] {
+  --db-font-size-2xs: 0.75rem;
+  --db-font-size-xs: 0.8125rem;
+  --db-font-size-sm: 0.9375rem;
+  --db-font-size-md: 1rem;
+  --db-font-size-lg: 1.0625rem;
+  --db-font-size-xl: 1.125rem;
+  --db-font-size-2xl: 1.25rem;
+  --db-font-size-3xl: 1.5rem;
+  --db-font-size-4xl: 1.75rem;
+  --db-line-height-flush: 1.25rem;
+  --db-line-height-wrap: 1.375rem;
+  --db-line-height-read: 1.5rem;
+  --db-line-height-title-4: 1.5rem;
+  --db-line-height-title-3: 1.75rem;
+  --db-line-height-title-2: 2rem;
+  --db-line-height-title-1: 2.25rem;
+  --db-letter-spacing-eyebrow: 0.03125rem;
+  --db-letter-spacing-title-2: -0.0125rem;
+  --db-letter-spacing-title-1: -0.025rem;
 }

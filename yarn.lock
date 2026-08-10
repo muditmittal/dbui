@@ -5631,17 +5631,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dbui-cli@workspace:packages/dbui-cli":
+"dbui-chat@workspace:packages/dbui-chat":
   version: 0.0.0-use.local
-  resolution: "dbui-cli@workspace:packages/dbui-cli"
-  bin:
-    dbui: ./bin/dbui.mjs
-  languageName: unknown
-  linkType: soft
-
-"dbui-genie@workspace:packages/dbui-genie":
-  version: 0.0.0-use.local
-  resolution: "dbui-genie@workspace:packages/dbui-genie"
+  resolution: "dbui-chat@workspace:packages/dbui-chat"
   dependencies:
     clsx: "npm:^2.1.1"
     tailwind-merge: "npm:^3.5.0"
@@ -5649,6 +5641,14 @@ __metadata:
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
+  languageName: unknown
+  linkType: soft
+
+"dbui-cli@workspace:packages/dbui-cli":
+  version: 0.0.0-use.local
+  resolution: "dbui-cli@workspace:packages/dbui-cli"
+  bin:
+    dbui: ./bin/dbui.mjs
   languageName: unknown
   linkType: soft
 

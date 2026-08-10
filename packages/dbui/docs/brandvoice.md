@@ -26,24 +26,38 @@ canceled. This applies to code comments and token names as well as UI copy.
 Voice is the constant personality of the product. Tone flexes with the user's
 context and the stakes involved.
 
-| Tone | Context | Guidance | Example |
-|---|---|---|---|
-| Warm | Empty states, onboarding, success toasts | Brief encouragement for first-run or success moments | Create your first query to explore your data |
-| Neutral | Nav labels, page titles, field labels | The default instructive, matter-of-fact style | Genie answers questions about your data |
-| Cautious | Errors, delete confirmations, permission grants | Firm and precise for destructive or security actions | Deleting this catalog can't be undone |
+A tone carries no example of its own. Every context a tone names has a moment
+below, and those moments are the examples — a specimen here as well would be the
+same string under a second heading.
+
+| Tone | Context | Guidance |
+|---|---|---|
+| Warm | Empty states, onboarding, success toasts | Brief encouragement for first-run or success moments |
+| Neutral | Nav labels, page titles, field labels | The default instructive, matter-of-fact style |
+| Cautious | Errors, delete confirmations, permission grants | Firm and precise for destructive or security actions |
 
 ## Tone in UI context
 
+Grouped by tone, three to five moments each. A tone with one moment reads as an
+exception to Neutral rather than a register of its own. Within Cautious the order
+escalates, from a retryable error to the change that cannot be taken back.
+
 | Moment | Tone | Guidance | Example |
 |---|---|---|---|
+| Empty state | Warm | Title of six words or fewer, one sentence for the next step | No queries yet. Create a query to start. |
+| No results | Warm | Repeat the term searched, then offer one way to widen it | No tables match “orders”. Search all catalogs or try a shorter term. |
+| Onboarding | Warm | Name the first step and what it makes possible. One sentence | Create your first query to explore your data. |
+| Success toast | Warm | Name what finished and what it produced. No congratulation | Run finished in 4 minutes and wrote 1,284 rows. |
 | Navigation label | Neutral | Noun, 1–2 words, matches the destination exactly | SQL warehouses |
 | Page title | Neutral | Names the object or task, no end punctuation | Create a metastore |
 | Button / CTA | Neutral | Verb plus object. Loading uses the present continuous | Add data · Saving… · Delete |
 | Description | Neutral | Explains what and why in two sentences or fewer | Genie answers questions about your data. |
 | Tooltip | Neutral | Adds information not already in the label. No final period | Serverless compute starts in seconds |
-| Empty state | Warm | Title of six words or fewer, one sentence for the next step | No queries yet. Create a query to start. |
 | Error message | Cautious | State what happened, why, and what to do next | Couldn't run the query. Retry in a few seconds. |
-| Destructive action | Cautious | State the exact irreversible consequence | This can't be undone. |
+| Permission denied | Cautious | Name the missing privilege and who can grant it | You need SELECT on main.sales to run this query. Ask the catalog owner for access. |
+| Limit reached | Cautious | State the limit, then the one way to proceed | You've reached the limit of 100 concurrent queries. Wait for a run to finish. |
+| Downstream impact | Cautious | Name the downstream consumers the change affects, with counts | Renaming this table breaks 3 dashboards and 1 pipeline that read from it. |
+| Destructive action | Cautious | State the exact irreversible consequence | Deleting this catalog removes 42 tables. This can't be undone. |
 
 ## Sentence casing and punctuation
 
