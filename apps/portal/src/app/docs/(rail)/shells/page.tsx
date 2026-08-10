@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { Code, DocHeader, DocSection, Para, Command, SourceNote } from "@/components/docs/Prose"
+import { DocHeader, DocSection, Para, Command } from "@/components/docs/Prose"
 import { shells } from "@/components/shell-data"
 
 export const metadata = { title: "Shells — DBUI" }
@@ -11,7 +11,11 @@ export const metadata = { title: "Shells — DBUI" }
  * pages that will describe it differently.
  */
 
-/** Storybook story ids for the shells that have a live example. */
+/**
+ * Storybook story ids for the shells that have a live example. Written by hand
+ * — nothing generates them — so `yarn design:verify-story-ids` asserts they
+ * resolve. A dead one here renders an empty frame rather than an error.
+ */
 const PREVIEW: Record<string, string> = {
   B: "components-shells-catalog-explorer--playground",
 }
@@ -90,12 +94,6 @@ export default function ShellsPage() {
         </Para>
         <Command>dbui shell</Command>
       </DocSection>
-
-      <SourceNote>
-        <Code>packages/dbui/composition.md</Code> defines every shell.{" "}
-        <Code>scripts/generate-shell-data.mjs</Code> parses it into the module this page renders, so
-        a shell edited in one place cannot go stale in the other.
-      </SourceNote>
     </>
   )
 }

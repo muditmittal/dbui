@@ -1,5 +1,6 @@
 import { DocAccordion, DocAccordionItem } from "@/components/docs/DocAccordion"
 import { Guidance } from "@/components/docs/Guidance"
+import { DocHeader } from "@/components/docs/Prose"
 
 type Principle = {
   name: string
@@ -10,15 +11,31 @@ type Principle = {
 }
 
 /**
- * Six principles, in the order they build on each other: who we serve, then how
- * the interface looks, speaks and structures itself, then what it asks the
- * reader to trust and what it tells them back.
+ * Six principles of craft, in the order they build on each other: who we serve,
+ * then how the interface looks, speaks and structures itself, then how it holds
+ * together across surfaces and across repeated use.
+ *
+ * Craft only. Ethics is not here — `/docs/constraints` owns it. The split is
+ * what each page settles: a principle decides between two designs that are both
+ * defensible, and a constraint is a line that does not bend when a deadline
+ * argues with it. Trust and Feedback used to sit in this array and were the two
+ * that failed that test; they are Agency and Accountability on the constraints
+ * page now. Do not restate either here — the two pages restating each other is
+ * what cost the constraints page its place once already.
  *
  * `aspect` names the dimension of the system the principle governs rather than
  * the virtue it praises, so two principles can be told apart by what they
  * decide. Each list carries three independent points rather than three mirrored
  * pairs, and the last don't in each set is the thing the principle gives up. A
  * principle nobody would argue against cannot settle a disagreement.
+ *
+ * Consistency and Fluency were added after reading what ten published systems
+ * name. Consistency is the one dimension every source carries — Nielsen's
+ * fourth heuristic, Carbon's "builds consistency", Apple's Familiarity, Fluent's
+ * "Natural on every platform" — and it was the only such dimension missing here.
+ * Fluency is Nielsen's seventh, which binds the novice and the expert into one
+ * interface; Salesforce ranks it second of four and Polaris put productivity
+ * above simplicity outright. Neither had a home in the four that preceded them.
  */
 const PRINCIPLES: Principle[] = [
   {
@@ -86,35 +103,35 @@ const PRINCIPLES: Principle[] = [
     ],
   },
   {
-    name: "Automate the work, surface the decision",
-    aspect: "Trust",
+    name: "Learned once, true everywhere",
+    aspect: "Consistency",
     meaning:
-      "The platform removes repetitive work so attention goes to judgment. Automation earns its place by handing the decision back, visibly, where thinking is required.",
+      "A control that looks a certain way behaves that way on every surface, so the vocabulary is bought once and spent everywhere. Predictability is the goal rather than sameness — two things that differ should look like they differ.",
     dos: [
-      "Show what was generated before it runs",
-      "Make automated actions visible and reversible",
-      "Pause where the consequence is wide or irreversible",
+      "Give the same job the same control, on every surface it appears",
+      "Make two things look different when they behave differently",
+      "Reach for the existing pattern before inventing beside it",
     ],
     donts: [
-      "Hide the scope of a bulk or generated operation",
-      "Put the opt-out behind an administrator",
-      "Build a flow that never pauses for a decision",
+      "Give one job two different controls on two surfaces",
+      "Make two things that behave differently look the same",
+      "Reword or rearrange because this one screen would read better alone",
     ],
   },
   {
-    name: "Show the trace, not just the outcome",
-    aspect: "Feedback",
+    name: "Easy the first time, fast the thousandth",
+    aspect: "Fluency",
     meaning:
-      "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads as confidently as a right one — the trace is what tells them apart.",
+      "One interface serves someone doing this once and someone doing it four hundred times a day. Depth is available on demand rather than up front, and a path that repeats earns a shortcut.",
     dos: [
-      "Show the query behind a generated answer",
-      "State freshness and scope on anything cached or partial",
-      "Answer “why can’t I see this?” with the permission that is missing",
+      "Give a repeated action a keyboard route and a bulk form",
+      "Let the interface remember what was chosen last time",
+      "Reveal depth on demand — the advanced control is one step in, not on the surface",
     ],
     donts: [
-      "Present a number with no way back to its source",
-      "Make diagnosing a failure a scavenger hunt",
-      "Trade the trace away to save space",
+      "Make the expert walk the beginner's path every time",
+      "Hide a capability where nothing hints it exists",
+      "Leave the teaching on screen after it has been learned",
     ],
   },
 ]
@@ -128,10 +145,9 @@ const PRINCIPLES: Principle[] = [
 export function PrinciplesDoc() {
   return (
     <>
-      <h1 className="type-title-1 text-text-strong">Design principles</h1>
-      <p className="type-paragraph mt-2 text-text-subtle">
-        When two designs both look reasonable, these decide which one ships.
-      </p>
+      <DocHeader title="Design principles">
+        When two solutions look reasonable, these decide which one ships.
+      </DocHeader>
 
       <img
         src="/docs/principles-hero.png"
@@ -156,8 +172,12 @@ export function PrinciplesDoc() {
                   </span>
                   <span>{principle.aspect}</span>
                 </span>
-                <span className="type-title-3 text-text-strong">{principle.name}</span>
-                <span className="type-paragraph text-text-subtle">{principle.meaning}</span>
+                <span className="type-title-4 text-text-strong">{principle.name}</span>
+                {/* A span because the trigger's header is a flex column, which
+                    puts it outside the docs column's `p, li, figcaption`
+                    default. It is still the paragraph a reader reads before
+                    opening anything, so it takes the measure explicitly. */}
+                <span className="type-paragraph measure text-text-subtle">{principle.meaning}</span>
               </>
             }
           >

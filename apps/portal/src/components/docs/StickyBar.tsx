@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { Button } from "dbui/components/ui/button"
+import { tabsListVariants, tabsTriggerVariants } from "dbui/components/ui/tabs"
 
 import { ANCHOR_OFFSET_VAR } from "./anchor"
 
@@ -13,9 +13,10 @@ import { ANCHOR_OFFSET_VAR } from "./anchor"
  *
  * The offset cannot be a constant. The header is `h-14`, which is rem, and the
  * type-scale control in the footer moves the root font size — so the header is
- * 56px at 1x and taller at 1.2x and 1.4x. A hardcoded `top-14` would leave a
- * gap at the smaller scale and hide the first line of the bar at the larger one.
- * Both are measured instead, and re-measured when either box changes size.
+ * 56px at the default 1x and taller at 1.2x and 1.4x. A hardcoded `top-14`
+ * would be right only at the default and hide the first line of the bar at both
+ * larger stops. Both are measured instead, and re-measured when either box
+ * changes size.
  *
  * One bar per page. Two would each publish an offset and the second would win,
  * so the first bar's sections would scroll to the wrong place.
@@ -71,7 +72,27 @@ export function StickyBar({
       // Opaque, because the page scrolls underneath it. The header above is
       // translucent and blurred, and the hairline between the two is what keeps
       // the difference from reading as a seam.
-      className={`sticky top-14 z-10 bg-surface-base ${className}`}
+      //
+      // `z-1`, not `z-10`. The site header is `z-10` and comes first in the
+      // document, so an equal z-index put this bar on top of it — the bar was
+      // sliding over the header rather than under. One is still enough to clear
+      // the content: `Table` is `position: relative` with `z-index: auto`, which
+      // paints below any positive z-index but through a `z-0` bar on its way
+      // past.
+      // The bottom edge belongs here, not to whichever child ends up last.
+      //
+      // It used to be the caller's job, and both callers got it from a child: the
+      // section strip from its own tab list, the icon browser from a class on the
+      // bar. Then the icon browser's rows were reordered and its last row became
+      // a tab strip whose rule had been suppressed for a reason that the reorder
+      // had just invalidated — so the bar pinned under the header with no edge at
+      // all and the rows slid up behind an invisible boundary. Nothing failed.
+      //
+      // An opaque bar over scrolling content always needs the edge, so the
+      // element that pins is the one that should carry it. A child that draws its
+      // own rule now suppresses it instead, which is one decision in one place
+      // rather than a thing every caller has to remember.
+      className={`sticky top-14 z-1 border-b border-border-base bg-surface-base ${className}`}
       style={top === null ? undefined : { top }}
     >
       {children}
@@ -98,6 +119,15 @@ export type DocSection = { id: string; label: string }
  * Links rather than tab buttons. These move the reader down one document, so
  * the element is an anchor and the state is `aria-current` — a tablist would
  * claim there are panels being swapped.
+ *
+ * It still has to look exactly like a tab strip, and it gets that from the two
+ * variant exports rather than a copy of their classes: `tabsListVariants` and
+ * `tabsTriggerVariants` carry every rule, and this reproduces the attributes
+ * those rules select on. The `group/tabs` wrapper is not decoration — the list's
+ * `h-8` and `w-full` both hang off `group-data-horizontal/tabs`, which `Tabs`
+ * would otherwise supply, and without it the bar silently loses its height and
+ * stops spanning. `data-active` is what lights the indicator, through the same
+ * declaration a real tab uses.
  */
 export function SectionTabs({ sections, label }: { sections: DocSection[]; label: string }) {
   const [active, setActive] = React.useState(sections[0]?.id ?? "")
@@ -158,25 +188,51 @@ export function SectionTabs({ sections, label }: { sections: DocSection[]; label
   }, [active])
 
   return (
-    <StickyBar className="border-b border-border-base">
-      <nav ref={strip} aria-label={label} className="flex gap-1 overflow-x-auto py-2">
-        {sections.map((section) => {
-          const current = section.id === active
-          return (
-            <Button
-              key={section.id}
-              size="sm"
-              variant={current ? "secondary" : "ghost"}
-              nativeButton={false}
-              data-section={section.id}
-              aria-current={current ? "true" : undefined}
-              render={<a href={`#${section.id}`} />}
-            >
-              {section.label}
-            </Button>
-          )
-        })}
-      </nav>
+    // `mt-6` so the strip reads as a control rather than as a third line of the
+    // deck. It sat flush against the description on both pages that use it, and
+    // the margin only moves where the bar sits in flow — `StickyBar` measures its
+    // own height for the anchor offset, which a margin does not change.
+    // `border-b-0` opts out of the bar's edge, because the tab list below draws
+    // one that has to be the visible line — see the note on the list. This is the
+    // only place that opts out, and it does so for a reason inside the variant
+    // rather than a fact about the surrounding layout.
+    <StickyBar className="mt-6 border-b-0">
+      <div className="group/tabs" data-orientation="horizontal">
+        <nav
+          ref={strip}
+          aria-label={label}
+          data-slot="tabs-list"
+          data-variant="default"
+          data-width="full"
+          // The list keeps its own rule here, and the bar gives its own up above.
+          // For `variant="default"` that rule is not a separator, it is the
+          // baseline the 3px selected segment sits on — suppress it and the
+          // indicator floats a pixel clear of the bar's edge instead of resting
+          // on a line. `pill` has no such tie, which is why the icon browser
+          // resolves the same collision the other way round.
+          className={tabsListVariants({
+            variant: "default",
+            width: "full",
+            className: "overflow-x-auto",
+          })}
+        >
+          {sections.map((section) => {
+            const current = section.id === active
+            return (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                data-section={section.id}
+                data-active={current ? "" : undefined}
+                aria-current={current ? "true" : undefined}
+                className={tabsTriggerVariants()}
+              >
+                {section.label}
+              </a>
+            )
+          })}
+        </nav>
+      </div>
     </StickyBar>
   )
 }

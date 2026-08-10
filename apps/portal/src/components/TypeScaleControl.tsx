@@ -20,8 +20,15 @@ import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-c
 const SCALES = ["1", "1.2", "1.4"] as const
 type Scale = (typeof SCALES)[number]
 
-/** The multiplier the site reads at, and the one the attribute never spells out. */
-const DEFAULT_SCALE: Scale = "1.2"
+/**
+ * The multiplier the site reads at, and the one the attribute never spells out.
+ *
+ * 1x, so the docs show the ramp at its stated values — a step documented as
+ * 13px measures 13px. The two larger stops are reading comfort, not the
+ * subject: a reader who wants roomier docs is one click away, and that choice
+ * is what gets stored.
+ */
+const DEFAULT_SCALE: Scale = "1"
 
 export const TYPE_SCALE_KEY = "dbui-type-scale"
 
@@ -60,7 +67,13 @@ export function TypeScaleControl() {
     if (next === DEFAULT_SCALE) delete root.dataset.typeScale
     else root.dataset.typeScale = next
     try {
-      localStorage.setItem(TYPE_SCALE_KEY, next)
+      // Storage follows the same rule as the attribute: it holds a deliberate
+      // non-default choice, and the default clears it. Writing the default
+      // instead would leave a value that is indistinguishable from a
+      // preference, so the next time the default moves it would override the
+      // new one for every reader who had ever touched this control.
+      if (next === DEFAULT_SCALE) localStorage.removeItem(TYPE_SCALE_KEY)
+      else localStorage.setItem(TYPE_SCALE_KEY, next)
     } catch {
       // Private browsing refuses the write. The scale still applies for this
       // session, so there is nothing useful to tell the reader.

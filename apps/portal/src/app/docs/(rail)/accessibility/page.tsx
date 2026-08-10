@@ -1,59 +1,133 @@
 import Link from "next/link"
 
-import { DocHeader, DocSection, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
-import { CodeBlock } from "@/components/docs/CodeBlock"
-import { Guidance } from "@/components/docs/Guidance"
+import { DocHeader, DocSection, Para, Code, RefTable } from "@/components/docs/Prose"
 
 export const metadata = { title: "Accessibility — DBUI" }
 
 /**
- * Rules, then reliance. Everything here is either something a person does on a
- * screen or a limit on what the system does for them. Explaining what contrast
- * or a live region is belongs to WCAG, not to a page someone opens mid-task.
+ * What the system does, and where it stops. Nothing else.
  *
- * `brandvoice.md` owns the Accessibility and Globalization checklists, so this
- * page states no rule that file does not already hold. What it adds is the shape
- * each rule takes in code, and — the part no other file covers — what nothing
- * checks. The gaps are the most useful lines here. A system that implies
- * coverage it does not have is trusted once.
+ * The copy rules themselves are owned by `brandvoice.md` and rendered by
+ * `/docs/voice`. This page held a third copy of them until 2026-08-07, which is
+ * the drift `CONTRIBUTING.md` opens by forbidding. What is left is the part no
+ * other file covers: which layer of DBUI gives you what, and what it does not.
  *
- * No number appears in this prose. The ratios, the alt-text band and the
- * expansion allowance live in `brandvoice.md` and on the Tokens page, and a
- * copied number is one edit from being wrong.
+ * Component accessibility is not application accessibility, so the page draws
+ * that line explicitly: the reliance table is what the system proves, and the
+ * Keyboard, Patterns and "still product-owned" notes are what the composed
+ * screen still has to do. Every row was checked against the repo rather than
+ * reasoned about; the cut material, and what was false, is in
+ * `notes/accessibility-page-cuts.md`. A claim goes back only when the repo
+ * demonstrates it.
  */
 
 /**
- * Read as a promise and its limit. A reader needs to know which layer to lean
- * on and where leaning stops, and only the second column of each row is
- * something they could not have assumed.
+ * A promise and its limit. Only the second column is something a reader could
+ * not have assumed, and a wrong entry there is worse than an empty one — it
+ * sends someone into a component expecting behavior that is not there.
  */
 const RELIANCE = [
   {
     layer: "Tokens",
-    gives:
-      "A contrast ratio computed for every foreground against the surface it belongs on, in light and dark, printed beside the swatch",
-    not: "A composed screen. Nothing measures text over an image, a chart or a color you introduced.",
+    gives: "An AA verdict beside every text, link and status token on the Tokens page",
+    not: "Measure a composed screen — a chart, an overlay, or a color you introduced.",
   },
   {
     layer: "Base UI primitives",
-    gives:
-      "Arrow keys, Escape, focus return to the trigger and focus containment, inside one component",
-    not: "Focus order across a screen you compose, or anything DBUI adds on top of the primitive.",
+    gives: "Arrow keys, Escape, focus trap and return to the trigger, inside one component",
+    not: "Focus order across a screen you compose.",
   },
   {
     layer: "Component JSDoc",
-    gives: "The requirement for that one component, written as a constraint where it has one",
-    not: "Nothing reads it for you. It is prose in a file the author has to open.",
-  },
-  {
-    layer: "Storybook",
-    gives: "An axe panel, one story at a time, when someone opens it",
-    not: "It gates nothing, and a story is not a screen.",
+    gives: "Each component's requirement, printed by dbui component and over MCP",
+    not: "Enforce it. Button's aria-label rule is checked by no one.",
   },
   {
     layer: "Design lint",
     gives: "Raw elements where a component exists, non-token color, off-scale spacing and type",
-    not: "No accessibility rule at all. A control with no label passes clean.",
+    not: "Any accessibility rule. A control with no label passes clean.",
+  },
+]
+
+/**
+ * Use the system component, and what breaks if you rebuild it instead. The
+ * third column is the failure, not a style note — each is a role or a keyboard
+ * contract the primitive already carries and a hand-rolled version drops.
+ */
+/**
+ * Written as rules rather than prose because each one exists to refuse a specific
+ * thing that was in the tree. The translucent row is the one worth keeping: eleven
+ * components carried `ring-focus-ring/50`, which blends to #A0A0A0 over white and
+ * measures 2.61:1 — softer looking and worse measuring than the page behind it.
+ */
+const FOCUS_RULES = [
+  {
+    rule: "Every focusable control shows one",
+    why: "2.4.7 Focus Visible. No component opts out, including the ones a designer rarely tabs to.",
+  },
+  {
+    rule: "Use the pair, not one half",
+    why: "A border alone is 1px and vanishes on a filled control. A ring alone fails 1.4.11 against the fill.",
+  },
+  {
+    rule: "Never translucent",
+    why: "A half-opacity ring blends to #A0A0A0 over white — 2.61:1, a fail. It reads softer and measures worse.",
+  },
+  {
+    rule: "focus-visible, never focus",
+    why: "A pointer user should not see it. A keyboard user always should.",
+  },
+  {
+    rule: "outline-none only beside its replacement",
+    why: "Same class list, so the two cannot drift apart in a later edit.",
+  },
+  {
+    rule: "Never Tailwind's ring-*",
+    why: "It has no theme namespace in v4, so it can never resolve to a DBUI token.",
+  },
+]
+
+const PATTERNS = [
+  {
+    use: (
+      <>
+        <Code>Dialog</Code>, <Code>AlertDialog</Code>
+      </>
+    ),
+    carries: "Focus trap, Escape to dismiss, focus returned to the trigger",
+    dont: (
+      <>
+        A <Code>div</Code> with <Code>role=&quot;dialog&quot;</Code>
+      </>
+    ),
+  },
+  {
+    use: (
+      <>
+        <Code>DropdownMenu</Code>, <Code>Menubar</Code>
+      </>
+    ),
+    carries: "The menu keyboard model as shipped",
+    dont: "A custom menu built from buttons",
+  },
+  {
+    use: <Code>Tabs</Code>,
+    carries: "default indexes a page; pill switches a panel",
+    dont: "Underline tabs to switch content",
+  },
+  {
+    use: (
+      <>
+        <Code>Select</Code>, <Code>Combobox</Code>
+      </>
+    ),
+    carries: "The active option exposed to assistive tech",
+    dont: "A list that only looks like a select",
+  },
+  {
+    use: <Code>dbui-viz</Code>,
+    carries: "A text summary and a data-table path",
+    dont: "A chart that carries meaning by itself",
   },
 ]
 
@@ -61,80 +135,13 @@ export default function AccessibilityPage() {
   return (
     <>
       <DocHeader title="Accessibility">
-        What to do so a screen works for anyone, on any input, in any language &mdash; and what the
-        system does not check for you.
+        What DBUI does for a screen that has to work on any input, and what it leaves to you. The bar
+        is WCAG 2.1 AA; a component or token meeting it does not mean a composed screen does.
       </DocHeader>
-
-      <DocSection title="Controls">
-        <Guidance
-          dos={[
-            "Give every icon-only control a label that names the action, not the glyph",
-            "Pair a foreground with the surface it was tuned for, and read the ratio on the Tokens page rather than out of prose",
-            "Write button and link text that still says what it does when read on its own",
-            "Reach every control with the keyboard before calling a screen done, and watch where focus lands when a dialog closes",
-          ]}
-          donts={[
-            "Assume a component is accessible because it came from the system",
-            "Put a subtle foreground on a surface it was not tuned for",
-            "Name a control by where it sits — a screen reader has no left",
-            "Wait for the linter to catch a missing label — it has no accessibility rule",
-          ]}
-        />
-        <CodeBlock caption="The rule that gets skipped most: an icon carries no name">
-          {`<Button size="icon-md" aria-label="Delete catalog">
-  <Trash />
-</Button>`}
-        </CodeBlock>
-      </DocSection>
-
-      <DocSection title="Strings">
-        <Guidance
-          dos={[
-            "Pass values into one whole string, so a translator is given the sentence and not its pieces",
-            "Let flex or grid size anything holding a translatable label, and check the layout against the longest translation rather than the English",
-            "Write every date in the ISO 8601 form — it sorts as a string and it cannot be read month-first by mistake",
-            "Front-load the terms that carry the meaning in alt text, and keep it inside the length band brandvoice.md sets",
-          ]}
-          donts={[
-            "Assemble a sentence from fragments at run time",
-            "Set a fixed width on anything holding a translatable string",
-            "Bake meaning into text inside an image — number the callouts and put the words beside it",
-            "Format a date to the reader's locale — nothing catches it, and nothing tells them which number is the month",
-          ]}
-        />
-        <Para>
-          There is no internationalization framework here. No message catalog, no
-          pseudo-localization pass, no translated string anywhere. Every string in the components
-          and in this portal is hardcoded English, so read these rules as what keeps the copy
-          translatable for whenever that work starts rather than as a pipeline that already runs.
-        </Para>
-      </DocSection>
-
-      <DocSection title="Direction">
-        <Para>
-          Set direction once at the root and let every component read it from context. The provider
-          is re-exported from the system, so nothing imports it from Base UI directly.
-        </Para>
-        <CodeBlock caption="Set direction once, at the root of the app">
-          {`import { DirectionProvider } from "dbui/components/ui/direction"
-
-<DirectionProvider direction="rtl">
-  <App />
-</DirectionProvider>`}
-        </CodeBlock>
-        <Para>
-          Rely on that for popup placement and for nothing else. Primitives read the provider and put
-          menus, popovers and positioned surfaces on the correct side. The components do not follow:
-          DBUI positions with physical properties rather than logical ones, so a mirrored layout does
-          not fully mirror. Icons stay where they were, gutters stay on the same side, and nothing
-          warns you. No screen in the system has been built or reviewed right to left, so budget for
-          fixing position per screen.
-        </Para>
-      </DocSection>
 
       <DocSection title="What you can rely on">
         <Para>
-          There is no automated accessibility suite and no continuous integration to run one in, so
+          There is no automated accessibility suite and no continuous integration to run one, so
           every check below is done by a person or not at all. The second column is the part worth
           reading.
         </Para>
@@ -148,15 +155,90 @@ export default function AccessibilityPage() {
         />
       </DocSection>
 
-      <SourceNote>
-        <Code>packages/dbui/docs/brandvoice.md</Code> owns the Accessibility and Globalization
-        checklists, and the{" "}
-        <Link href="/docs/voice" className="text-text-accent">
-          Voice and tone page
-        </Link>{" "}
-        renders them. Change a rule there, not here. This page says what each one looks like in
-        code.
-      </SourceNote>
+      <DocSection title="Color">
+        <Para>
+          Never carry meaning by color alone — pair status and selection with an icon or a label.
+          Use semantic tokens; do not invent a hex for status or emphasis. Text ratios are measured
+          on the{" "}
+          <Link href="/docs/tokens" className="text-text-accent">
+            Tokens
+          </Link>{" "}
+          page; a non-text indicator needs 3:1 against what sits next to it. Check hover, focus and
+          selected in both themes — dark is the harder one.
+        </Para>
+        <Para>Contrast and color-vision-deficiency results land here once the suite is run.</Para>
+      </DocSection>
+
+      <DocSection title="Keyboard">
+        <Para>
+          Inside one primitive — a dialog, menu, select or tab list — Base UI owns the keyboard and
+          focus. Across a page, you own tab order, landmarks, and where focus goes in stacked modals
+          or cells. Keep the focus ring. Do not assume a screen works because its parts came from the
+          system.
+        </Para>
+      </DocSection>
+
+      <DocSection title="Focus">
+        <Para>
+          One treatment, on every focusable control: <Code>focus-visible:border-focus-ring</Code>{" "}
+          with <Code>focus-visible:shadow-focus</Code> — a 1px offset and a 2px ring. It is the same
+          pair in Figma, where the <Code>elevation/focus</Code> effect style binds both colors to{" "}
+          <Code>focus/ring</Code> and <Code>focus/ring-offset</Code>, so it retints per mode.
+        </Para>
+        <Para>
+          The offset is the part people delete, and it is the part doing the work. A focus indicator
+          has to clear 3:1 against the page and against whatever the control is filled with. Those
+          pull opposite ways, and no single ring color satisfies both — against a page the ring
+          measures 10.37:1 in light and 16.84:1 in dark, and against a primary button&rsquo;s own
+          fill the same ring measures 1.73:1 and 1.33:1. The offset splits that one impossible
+          boundary into two easy ones, so the indicator survives on a filled control instead of
+          disappearing into it.
+        </Para>
+        <RefTable
+          columns={[
+            { key: "rule", header: "Rule", width: "w-[248px]" },
+            { key: "why", header: "Why" },
+          ]}
+          rows={FOCUS_RULES}
+        />
+        <Para>
+          One exception, and only one. A full-bleed row — a tree row spanning its rail edge to edge —
+          uses an inset ring, because an outset one would be clipped on both sides and read as two
+          vertical bars. It stays conformant by being full opacity. <Code>DataTree</Code> is the only
+          component entitled to it.
+        </Para>
+      </DocSection>
+
+      <DocSection title="Patterns">
+        <Para>Use the system component. Rebuild only when the pattern does not exist.</Para>
+        <RefTable
+          columns={[
+            { key: "use", header: "Use", width: "w-[184px]" },
+            { key: "carries", header: "What it carries" },
+            { key: "dont", header: "Don't" },
+          ]}
+          rows={PATTERNS}
+        />
+        <Para>
+          Still product-owned: full grid navigation for a dense result set, and chart alternatives
+          beyond what viz ships today.
+        </Para>
+      </DocSection>
+
+      <DocSection title="Language">
+        <Para>
+          There is no internationalization framework here — no message catalog, no
+          pseudo-localization, no translated string. Every string is hardcoded English, so the
+          globalization rules on{" "}
+          <Link href="/docs/voice" className="text-text-accent">
+            Voice and tone
+          </Link>{" "}
+          keep copy translatable for whenever that work starts. Set direction once with{" "}
+          <Code>DirectionProvider</Code>: primitives read it for popup placement, but the components
+          position with physical properties, so a mirrored layout does not fully mirror and no screen
+          has been reviewed right to left.
+        </Para>
+      </DocSection>
     </>
   )
 }

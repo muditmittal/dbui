@@ -117,7 +117,7 @@ function PatternEntry({ pattern, index }: { pattern: Pattern; index: number }) {
         {String(index).padStart(2, "0")}
       </div>
 
-      <h3 className="type-title-3 mt-1 text-text-strong">{pattern.name}</h3>
+      <h3 className="type-title-4 mt-1 text-text-strong">{pattern.name}</h3>
       <p className="type-paragraph mt-2 text-text-subtle">{pattern.intent}</p>
 
       <div className="mt-6 flex flex-col gap-6">

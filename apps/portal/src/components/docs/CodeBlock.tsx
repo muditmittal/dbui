@@ -27,7 +27,7 @@ function Frame({ caption, children }: { caption?: string; children: React.ReactN
   )
 }
 
-const PRE = "m-0 w-max font-mono type-block"
+const PRE = "m-0 w-max type-code-block"
 
 /**
  * A block of literal output or code. `language` is opt-in: much of what these

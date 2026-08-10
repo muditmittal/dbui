@@ -1,3 +1,5 @@
+import type * as React from "react"
+
 import { Badge } from "dbui"
 
 /**
@@ -18,8 +20,13 @@ export function Guidance({
   donts,
   header,
 }: {
-  dos: string[]
-  donts: string[]
+  /**
+   * Nodes rather than strings, so a rule can name the file it is about and link
+   * to it. Most items are still plain text and read better that way — a rule
+   * with two links in it is a paragraph wearing a badge.
+   */
+  dos: React.ReactNode[]
+  donts: React.ReactNode[]
   header?: { rule: string; example: string }
 }) {
   const rows = [
@@ -35,9 +42,12 @@ export function Guidance({
           <span className="type-eyebrow text-text-subtle">{header.example}</span>
         </div>
       ) : null}
+      {/* Keyed by position, because an item is no longer guaranteed to be a
+          string. These lists are written out in full at the call site and never
+          reordered at runtime, so the index is stable. */}
       {rows.map(({ text, tone }, i) => (
         <div
-          key={text}
+          key={i}
           className={`flex items-start gap-4 px-4 py-2 ${
             i < rows.length - 1 ? "border-b border-border-base" : ""
           }`}

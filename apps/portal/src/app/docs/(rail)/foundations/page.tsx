@@ -60,6 +60,19 @@ const COMPOSITIONS: Term[] = [
   "platform chrome",
 ].map((label) => ({ label }))
 
+/**
+ * Compositions have no page of their own. They ship from `dbui-shells`, and the
+ * gallery is generated from the component list, so it holds none of the four
+ * above — it used to be the bare Storybook root here, where the Compositions
+ * folder was at least sitting in the sidebar.
+ *
+ * So this points at the first of them running instead, which is both true and
+ * lands the reader with that folder open beside it. `/docs/shells` hardcodes a
+ * story id for the same reason, and `yarn design:verify-story-ids` asserts both.
+ */
+const COMPOSITION_STORY =
+  "/components?path=/story/components-compositions-tree-explorers--data-tree-explorer-story"
+
 /** Shell names without the parenthetical, which is an example rather than a name. */
 const SHELL_NAMES: Term[] = shells.map((shell) => ({
   label: shell.name.replace(/\s*\(.+\)$/, "").toLowerCase(),
@@ -100,7 +113,7 @@ const LAYERS = [
   },
   {
     name: "Components",
-    href: "/docs/components",
+    href: "/components",
     parts: COMPONENT_CATEGORIES,
     is: (
       <>
@@ -109,14 +122,14 @@ const LAYERS = [
         and when the two disagree the JSDoc wins.
       </>
     ),
-    destinations: [
-      { label: "Component rules", href: "/docs/components" },
-      { label: "Live gallery", href: "/components" },
-    ],
+    // One destination, not two. The gallery and the rules used to be separate
+    // pages and are now the same one, so a second row here would be the same
+    // link under a second name.
+    destinations: [{ label: "Components", href: "/components" }],
   },
   {
     name: "Compositions",
-    href: "/components",
+    href: COMPOSITION_STORY,
     parts: COMPOSITIONS,
     is: (
       <>
@@ -126,7 +139,7 @@ const LAYERS = [
       </>
     ),
     destinations: [
-      { label: "Live gallery", href: "/components" },
+      { label: "See one running", href: COMPOSITION_STORY },
       { label: "Behavior patterns", href: "/docs/patterns" },
     ],
   },

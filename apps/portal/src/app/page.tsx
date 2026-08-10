@@ -8,30 +8,46 @@ import { SiteHeader } from "@/components/SiteHeader"
 import { galleryTotal } from "@/stories/components/gallery-data"
 import { tokenCounts } from "@/stories/tokens/token-data"
 
+/**
+ * Four pages rather than four kinds of destination: what the system decides, how
+ * it speaks, what it is built from, and what it ships.
+ *
+ * No eyebrow. It named the kind of destination — Browse a gallery, Read prose,
+ * Review a spec, Build from a guide — which distinguished anything only while the
+ * four were four different kinds. Three of these are documentation pages, so the
+ * same scheme repeats "Read" and the line stops saying more than the title does.
+ * Do not reach for a staged verb set instead. `/docs` retired its own
+ * Decide / Write / Build / Check staging for the same reason.
+ *
+ * Titles are the labels from `docs-nav-data.ts` and the header's `NAV`, so this
+ * page cannot disagree with either about what a page is called.
+ *
+ * Each body says what its page settles, tightened from that page's own lede, and
+ * the four render within about ten pixels of each other on one line. They pair up
+ * in the grid, where a row equalizes tile heights, so a body longer than its
+ * neighbor does not push its own tile taller — it leaves the shorter one holding
+ * a pocket of empty space. Keep a replacement the same length.
+ */
 const ENTRY = [
   {
-    href: "/components",
-    eyebrow: "Browse",
-    title: "Components",
-    body: "Every component as a live tile, grouped by category, with the full variant matrix behind each one.",
+    href: "/docs/principles",
+    title: "Design principles",
+    body: "When two solutions look reasonable, these decide which one ships.",
   },
   {
-    href: "/docs",
-    eyebrow: "Read",
-    title: "Docs",
-    body: "Design language, tokens, layout rules, voice and tone, accessibility, and the tooling.",
+    href: "/docs/voice",
+    title: "Voice and tone",
+    body: "One voice for every string, so product experience is consistent.",
   },
   {
     href: "/docs/tokens",
-    eyebrow: "Review",
-    title: "Token spec",
-    body: "All 201 tokens with values and what they render at, in the shape engineering reviews.",
+    title: "Tokens",
+    body: "Every value the system can express, and the one file they all come from.",
   },
   {
-    href: "/docs/install",
-    eyebrow: "Build",
-    title: "Install",
-    body: "Point an agent at one URL. It wires up path aliases, tokens, and verifies the shell renders.",
+    href: "/components",
+    title: "Components",
+    body: "Every component running, so you try a variant rather than read about it.",
   },
 ]
 
@@ -63,7 +79,7 @@ export default function Home() {
             Tokens, icons, components, and shells — one source agents and people build from.
           </p>
           <div className="mt-2 flex items-center gap-3">
-            <Button nativeButton={false} render={<Link href="/docs" />}>
+            <Button nativeButton={false} render={<Link href="/docs/principles" />}>
               Read the docs
             </Button>
             {/*
@@ -104,7 +120,6 @@ export default function Home() {
               href={card.href}
               className="group flex flex-col gap-1.5 rounded-2 border border-border-base bg-surface-base p-5 no-underline transition-colors hover:border-border-strong hover:bg-surface-hover"
             >
-              <span className="type-eyebrow text-text-subtle">{card.eyebrow}</span>
               <span className="type-title-4 text-text-strong group-hover:underline">
                 {card.title}
               </span>

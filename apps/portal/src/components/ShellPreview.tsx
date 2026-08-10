@@ -28,7 +28,7 @@ export function ShellPreview() {
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-3 border border-border-base bg-surface-base shadow-[var(--db-elevation-2)]"
+      className="overflow-hidden rounded-3 border border-border-base bg-surface-base shadow-[var(--db-elevation-lg)]"
     >
       <div className="flex items-center gap-3 border-b border-border-base bg-surface-subtle px-4 py-2.5">
         <div className="flex gap-1.5">

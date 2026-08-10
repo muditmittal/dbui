@@ -23,6 +23,12 @@ import Link from "next/link"
 /**
  * The frame. A caption sits under it rather than over it, because a diagram is
  * read before its caption and a line above the frame delays the picture.
+ *
+ * The caption takes the measure and the frame does not. A caption here states a
+ * rule in a sentence or two, and at `type-hint` it is the smallest text on the
+ * page — set to the frame's width it was running to 129 characters, the worst
+ * line on the site. `measure` is in `ch`, so the 12px caption gets the same 66
+ * characters as a 15px paragraph rather than half again as many.
  */
 export function Figure({
   caption,
@@ -34,7 +40,9 @@ export function Figure({
   return (
     <figure className="m-0 flex flex-col gap-2">
       <div className="overflow-hidden rounded-2 border border-border-base">{children}</div>
-      {caption ? <figcaption className="type-hint text-text-subtle">{caption}</figcaption> : null}
+      {caption ? (
+        <figcaption className="type-hint measure text-text-subtle">{caption}</figcaption>
+      ) : null}
     </figure>
   )
 }

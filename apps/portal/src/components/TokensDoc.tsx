@@ -1,119 +1,72 @@
 "use client"
 
 import {
-  ColorSwatches, SpaceScale, RadiusScale, SizeScale, BorderScale,
-  ElevationScale, MotionScale, ScalarList, TypeScale, WiringTable, TailwindTable, Wired,
-  SupersededNote, wiringOf,
+  ColorTable, ColorStrip, SpaceScale, RadiusScale, SizeScale, BorderScale,
+  ElevationScale, MotionScale, ScalarList, TypeScale, typeRegisters,
 } from "@/stories/tokens/TokenKit"
 import {
-  colorGroups, type as typeSteps, space, radius, size,
-  borderWidth, elevation, duration, easing, scalars,
+  colorFamilies, colorGroups, type as typeSteps, typeContexts, typeContextAttribute,
+  space, radius, size, borderWidth, elevation, duration, easing, scalars,
 } from "@/stories/tokens/token-data"
-import {
-  families, scalars as scalarConsumption, tailwind, themeOverrides, hardcoded,
-} from "@/stories/tokens/token-consumption"
-import { RefTable, Code } from "@/components/docs/Prose"
-import { Figure, FigureRow, FigureLabel } from "@/components/docs/Diagram"
+import { scalars as scalarConsumption } from "@/stories/tokens/token-consumption"
+import { DocHeader, RefTable, Code } from "@/components/docs/Prose"
+import { DocAccordion, DocAccordionItem } from "@/components/docs/DocAccordion"
 import { SectionTabs } from "@/components/docs/StickyBar"
+import { ColorModeOverride, useColorModeOverride } from "@/components/ColorModeControl"
+import { TypeContextControl, useTypeContext } from "@/components/TypeContextControl"
 import { anchorOffset } from "@/components/docs/anchor"
-import type { Wiring } from "@/stories/tokens/TokenKit"
 
 /**
- * A reference page for someone skimming, so the unit is a table or a preview and
- * a sentence has to earn its line by removing an ambiguity. Two things are
- * load-bearing and the rest is specimen: how a name is built, and which families
- * anything actually reads.
+ * A reference page for someone skimming, so the unit is a row and a sentence has
+ * to earn its line by removing an ambiguity.
  *
- * The page used to argue its case in paragraphs — every family carried three
- * cautions and the wiring table carried a sentence per row. Reading it end to end
- * took longer than reading the CSS, which is the failure mode of a reference
- * page. What survived a cut is the mistake someone makes without it: `label` for
- * text that wraps, `border-*` on a form control, a named space step that
- * restates a numeric utility.
+ * One shape, everywhere. Every family renders the same row — the preview on the
+ * left, the name and what it resolves to on the right — because the page is read
+ * by moving between families, and a reader who has learned where color keeps
+ * its value should not have to learn it again at type. What each family gets to
+ * decide is what its preview looks like, not where anything sits.
+ *
+ * Three sections were cut rather than restyled. `How a name is built` took a
+ * grammar apart that the grouped tables now show directly: the families are the
+ * headings and the roles are the rows. `Wiring` and `What Tailwind owns` are
+ * maintenance accounts — whether a line of code resolves to a family, how many
+ * theme keys are still hand-authored — and a consumer of these docs cannot act
+ * on either. Both generators still run and `token-consumption.ts` still ships;
+ * the Foundations page reads its family list, and `generate-layout-data.mjs`
+ * asserts against its space entry. Only this page stopped rendering it.
  *
  * No value and no count is typed here. Values come from `token-data.ts`, parsed
- * out of the shipped CSS, and counts come from `token-consumption.ts`, measured
- * against the repo on every run. What this file owns is the editorial layer
- * neither generator can produce: what a family is for and what it is not for.
+ * out of the shipped CSS. What this file owns is the editorial layer no
+ * generator can produce: what a family is for and what it is not for.
  *
- * This stays a client module because `TokenKit` holds state — a show-more and a
- * motion replay — and the sticky tabs measure the header. That rules out the
- * syntax highlighted code blocks, which are server components, so commands
- * render in the plain reference table instead.
+ * This stays a client module because the tables hold state — a show-more, a
+ * motion replay, the color section's mode switch — and the sticky tabs measure
+ * the header. That rules out the syntax highlighted code blocks, which are
+ * server components, so commands render in the plain reference table instead.
  */
 
 /**
  * The tabs and the section ids are one list, so a tab cannot point at a section
- * that no longer exists. Order is the reading order: how to read a name, then
- * whether names reach code, then the families themselves, then what the system
- * does not own, then the tools.
+ * that no longer exists.
+ *
+ * One tab per section, and every scale that is built from the grid unit is
+ * inside `Dimensions` rather than beside it. Space, size, radius and border used
+ * to hold four tabs of their own, which put four siblings at the same level as
+ * the collection that explains them and made a thirteen-tab strip out of a page
+ * with six ideas in it.
  *
  * The families run in the order they are decided in. Color and type carry the
  * most decisions and are read first. Elevation comes next because it is the one
- * families argue about. `Dimensions` opens the group it names: the grid unit and
- * the two scalars that multiply it, then the four families built from them, so
- * space, size, radius and border read as one collection rather than as four
- * unrelated scales. Motion depends on none of them and goes last.
+ * families argue about. Motion depends on none of them and goes last.
  */
 const SECTIONS = [
-  { id: "name", label: "Name" },
-  { id: "wiring", label: "Wiring" },
   { id: "color", label: "Color" },
   { id: "type", label: "Type" },
   { id: "elevation", label: "Elevation" },
   { id: "dimensions", label: "Dimensions" },
-  { id: "space", label: "Space" },
-  { id: "size", label: "Size" },
-  { id: "radius", label: "Radius" },
-  { id: "border", label: "Border" },
   { id: "motion", label: "Motion" },
-  { id: "tailwind", label: "Tailwind" },
   { id: "tools", label: "Tools" },
 ]
-
-const family = (key: string) => families.find((f) => f.key === key)
-
-/**
- * The section's badge, and the line that has to sit under a superseded one.
- *
- * A section heading reading `Elevation superseded` states half of a two-part
- * fact. The other half — that Tailwind's shadow namespace is drawing every
- * shadow in the product — is the half that stops the badge reading as a defect,
- * so it is rendered from the scan rather than left to the badge to imply.
- */
-const wiring = (key: string) => {
-  const f = family(key)
-  return f ? wiringOf(f) : "unread"
-}
-
-const supersededNote = (key: string) => {
-  const f = family(key)
-  return f?.superseded ? [<SupersededNote key="superseded" family={f} />] : []
-}
-
-/**
- * Why a namespace is Tailwind's and not ours — a few words, because the table it
- * sits in is scanned rather than read.
- *
- * `z-index scale` and `ring and outline width` are the two that matter. Tailwind
- * v4 gives neither a theme namespace, so the value is baked into the utility and
- * no token could govern it even if we wrote one.
- */
-const GOVERNS: Record<string, React.ReactNode> = {
-  "--shadow-*": "Every shipped shadow. Elevation is not in this path.",
-  "ring and outline width": "No v4 theme namespace. Baked into the utility.",
-  "--animate-*": "Keyframes, from Tailwind and tw-animate-css.",
-  "z-index scale": "No v4 theme namespace. Stacking cannot be tokenized.",
-  "--default-transition-duration": "What a bare transition-* takes.",
-  "duration-* and ease-*": "Bare numbers in a class. Nobody owns the value.",
-  "--font-weight-*": "Weight outside the ramp.",
-  "--breakpoint-*": "The sm: and md: variants.",
-  "--container-*": "Named max widths on popovers and panels.",
-  "--leading-*": "Leading outside the ramp.",
-  "--blur-*": "Backdrop blur on scrims.",
-  "--text-*": "Font size outside the ramp.",
-  "--tracking-*": "Tracking outside the ramp.",
-}
 
 /** Which step to pick. The one thing in the ramp table that is not a value. */
 const TYPE_USE: Record<string, string> = {
@@ -124,7 +77,7 @@ const TYPE_USE: Record<string, string> = {
   "type-body": "Descriptions that wrap",
   "type-body-bold": "Emphasis in a description",
   "type-code": "Identifiers, paths",
-  "type-block": "Code blocks",
+  "type-code-block": "Code blocks",
   "type-paragraph": "Prose — chat, docs",
   "type-paragraph-bold": "Bold inside prose",
   "type-title-4": "Small heading",
@@ -133,7 +86,43 @@ const TYPE_USE: Record<string, string> = {
   "type-title-1": "Page heading",
 }
 
-/** What each dial multiplies, so its status reads as a consequence. */
+/**
+ * The three registers the ramp is authored in, which `theme.config.mjs` groups
+ * by comment and the Figma file makes real. Flat, the table offered fourteen
+ * equal choices and no way to narrow them before reading every row — and the
+ * split that decides most picks is a register, not a size: `label` and `body`
+ * are the same size and belong to the same one, `code` and `code-block` are a
+ * face apart and do not.
+ *
+ * Authored here rather than derived, because a register is a claim about how
+ * text is read and no property of a style can imply it. Membership only —
+ * `typeRegisters` takes the order from the ramp, and gives anything no register
+ * claims a register of its own rather than dropping it.
+ */
+const TYPE_GROUPS = [
+  {
+    label: "Interface",
+    blurb: "Glanced at, a piece at a time",
+    steps: [
+      "type-hint", "type-eyebrow", "type-label", "type-label-bold",
+      "type-body", "type-body-bold", "type-code",
+    ],
+  },
+  {
+    label: "Reading",
+    blurb: "Read straight through, line after line",
+    steps: ["type-code-block", "type-paragraph", "type-paragraph-bold"],
+  },
+  {
+    label: "Display",
+    blurb: "Headings, 4 down to 1",
+    steps: ["type-title-4", "type-title-3", "type-title-2", "type-title-1"],
+  },
+]
+
+const TYPE_REGISTERS = typeRegisters(typeSteps, TYPE_GROUPS)
+
+/** What each dial multiplies, so the caveat beside it reads as a consequence. */
 const DRIVES: Record<string, React.ReactNode> = {
   "spacing-unit": (
     <>
@@ -145,13 +134,6 @@ const DRIVES: Record<string, React.ReactNode> = {
       Padding, gaps and control sizes together, through <Code>--spacing</Code>. Not type.
     </>
   ),
-  "spacing-scalar": (
-    <>
-      Space only. Tailwind reads one key for <Code>p-4</Code> and <Code>gap-4</Code>, so a dial that
-      means gaps alone cannot ride it.
-    </>
-  ),
-  "sizing-scalar": "Control heights and icon boxes.",
   "type-scalar": "The whole type ramp, proportionally.",
 }
 
@@ -181,15 +163,8 @@ const JOBS = [
     skill: NONE,
   },
   {
-    // Both generators, because refreshing the values without re-measuring the
-    // wiring leaves a page that renders new numbers beside an old status.
     job: "Refresh what this page renders",
-    cli: (
-      <div className="flex flex-col gap-1">
-        <span>node scripts/generate-token-data.mjs</span>
-        <span>node scripts/generate-token-consumption.mjs</span>
-      </div>
-    ),
+    cli: "node scripts/generate-token-data.mjs",
     agent: NONE,
     skill: NONE,
   },
@@ -201,6 +176,11 @@ const JOBS = [
  * Cautions sit under the preview because they are what you read once you have
  * decided to use the family. Above it they buried the thing the section is for.
  *
+ * `control` is the one thing allowed beside the heading, and only color has
+ * one. In the Figma file it sits in the first family's card header; here it is a
+ * row higher, because that card header is an accordion trigger and a segment
+ * control nested inside a button is a control a keyboard cannot reach.
+ *
  * The scroll margin comes from the sticky bar, which measures the header rather
  * than assuming it. A constant here would put the first line of a section under
  * the tabs at the larger type scales.
@@ -208,235 +188,331 @@ const JOBS = [
 function Section({
   id,
   title,
-  state,
   scope,
+  control,
   cautions,
   children,
 }: {
   id: string
   title: string
-  state?: Wiring
   scope: React.ReactNode
+  control?: React.ReactNode
   cautions?: React.ReactNode[]
   children: React.ReactNode
 }) {
   return (
     <section id={id} style={anchorOffset} className="mt-14 flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <div className="flex items-baseline gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="type-title-3 text-text-strong">{title}</h2>
-          {state === undefined ? null : <Wired state={state} />}
+          {control}
         </div>
         <p className="type-body text-text-subtle">{scope}</p>
       </div>
       {children}
-      {cautions?.length ? (
-        <ul className="flex list-none flex-col gap-1.5 border-t border-border-subtle pt-3">
-          {cautions.map((caution, i) => (
-            <li key={i} className="type-body text-text-subtle">
-              {caution}
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <Cautions items={cautions} />
     </section>
   )
 }
 
-/** Every name that ships, so the diagram cannot take apart a token that does not. */
-const SHIPPED = new Set([
-  ...colorGroups.flatMap((group) => group.tokens.map((token) => token.name)),
-  ...space.map((token) => token.name),
-  ...radius.map((token) => token.name),
-])
-
-/**
- * Real names, split at the point where each part starts, and dropped if the join
- * does not match something in `SHIPPED` — so a row disappears rather than lies
- * when a token is renamed.
- *
- * The four cover every shape a name comes in: all three slots filled, a family
- * that is two words, the plain two-part case, and a scale step whose middle part
- * is a size rather than a job.
- */
-const NAMES = [
-  ["action", "primary", "hover"],
-  ["status-surface", "warning"],
-  ["text", "subtle"],
-  ["space", "3"],
-].filter((parts) => SHIPPED.has(parts.join("-")))
-
-/** The specimen is the one name that fills all three slots. */
-const HERO = NAMES.find((parts) => parts.length === 3)
-const OTHERS = NAMES.filter((parts) => parts !== HERO)
-
-/**
- * The prefix is narrow and fixed, and the three questions need room to wrap, so
- * the columns are not equal. They only have to be equal down the figure, which
- * is what makes a column mean one slot.
- */
-const GRID = "grid grid-cols-[7rem_1fr_1fr_1fr]"
-const CELL = "border-r border-border-subtle px-3 py-2.5 last:border-r-0"
-
-/**
- * The name, taken apart.
- *
- * A table of parts made the reader assemble the grammar from three labelled
- * columns. Here one real name is the specimen, the questions sit directly under
- * the parts that answer them, and three more real names run through the same
- * slots — so the rule is visible as a column rather than stated as a sentence.
- *
- * Each part keeps its trailing hyphen, so a row read left to right reassembles
- * the name it came from, and an em dash in the last slot shows that state is
- * optional without a sentence saying so.
- *
- * The last row is the same name in the two forms it reaches code as, both built
- * from the specimen rather than typed, which is the other thing a reader has to
- * know and the only place it appears.
- */
-function NameAnatomy() {
-  if (!HERO) return null
-  const full = HERO.join("-")
+/** The mistakes, wherever they are attached — a whole section or one panel. */
+function Cautions({ items }: { items?: React.ReactNode[] }) {
+  if (!items?.length) return null
   return (
-    <Figure caption="You never pick a value. You describe the job, and the name follows.">
-      <FigureRow className="bg-surface-subtle">
-        <div className={GRID}>
-          <div className={`type-code ${CELL} text-text-subtle`}>--db-</div>
-          {[0, 1, 2].map((slot) => (
-            <div key={slot} className={`type-code ${CELL} text-text-strong`}>
-              {HERO[slot]}
-              {slot < 2 ? "-" : ""}
-            </div>
-          ))}
-        </div>
-      </FigureRow>
-
-      <FigureRow>
-        <div className={GRID}>
-          <div className={`${CELL} flex flex-col gap-1`}>
-            <FigureLabel>Prefix</FigureLabel>
-            <span className="type-hint text-text-subtle">Whose token?</span>
-          </div>
-          <div className={`${CELL} flex flex-col gap-1`}>
-            <FigureLabel>Family</FigureLabel>
-            <span className="type-hint text-text-subtle">What kind of thing?</span>
-          </div>
-          <div className={`${CELL} flex flex-col gap-1`}>
-            <FigureLabel>Role</FigureLabel>
-            <span className="type-hint text-text-subtle">Which job does it do?</span>
-          </div>
-          <div className={`${CELL} flex flex-col gap-1`}>
-            <FigureLabel>State</FigureLabel>
-            <span className="type-hint text-text-subtle">What is happening to it?</span>
-          </div>
-        </div>
-      </FigureRow>
-
-      {OTHERS.map((parts) => (
-        <FigureRow key={parts.join("-")}>
-          <div className={GRID}>
-            <div className={CELL} />
-            {[0, 1, 2].map((slot) => (
-              <div key={slot} className={`type-code ${CELL} text-text-base`}>
-                {parts[slot] ? (
-                  `${parts[slot]}${slot < parts.length - 1 ? "-" : ""}`
-                ) : (
-                  <span aria-hidden="true">&mdash;</span>
-                )}
-              </div>
-            ))}
-          </div>
-        </FigureRow>
+    <ul className="flex list-none flex-col gap-1.5 border-t border-border-subtle pt-3">
+      {items.map((caution, i) => (
+        <li key={i} className="type-body text-text-subtle">
+          {caution}
+        </li>
       ))}
-
-      <FigureRow className="bg-surface-subtle">
-        <div className="grid grid-cols-2">
-          <div className={`${CELL} flex flex-col gap-1`}>
-            <FigureLabel>As a class</FigureLabel>
-            <code className="type-code text-text-base">bg-{full}</code>
-          </div>
-          <div className={`${CELL} flex flex-col gap-1`}>
-            <FigureLabel>As a var</FigureLabel>
-            <code className="type-code text-text-base">var(--db-{full})</code>
-          </div>
-        </div>
-      </FigureRow>
-    </Figure>
+    </ul>
   )
 }
 
 /**
- * Every theme key still set by hand. The generator owns the bridge, so an entry
- * here is a value it does not own — which is how radius came to be stated in two
- * files that disagreed. Measured rather than named, so the list shrinks on its
- * own as keys move into the config.
+ * What a collapsed panel says: the group's name, what it is for, and — where
+ * there is one — a sample of what opening it shows.
+ *
+ * The sample is only worth the room while the panel is shut. Open, the real
+ * swatches are on screen and the strip makes the same claim at a twelfth of the
+ * size, so it goes. The trigger already publishes its state as `aria-expanded`
+ * and `AccordionTrigger` already names itself `group/accordion-trigger` for the
+ * chevron pair, so a variant reading that group is the whole mechanism — no
+ * second copy of the state to fall out of step with the first.
+ *
+ * `display: contents` keeps the preview itself the header column's flex item
+ * rather than nesting it in a box, so the collapsed layout is byte-for-byte
+ * what it was and the wrapper only exists to carry the variant. Removing the
+ * last child of a top-aligned column cannot move the two above it: the trigger
+ * gets shorter, the title does not move.
+ *
+ * Nothing fades. The panel does not animate open in this build — the
+ * `animate-accordion-*` utilities emit nothing, because no `--animate-accordion-*`
+ * key is defined — so a strip that took 300ms to leave would be the only thing
+ * moving in an interaction that is otherwise a cut.
  */
-const handMapped = [...new Set(themeOverrides.map((o) => o.key))].sort()
-
-export function TokensDoc() {
+function PanelHeader({
+  label,
+  blurb,
+  preview,
+}: {
+  label: string
+  blurb: React.ReactNode
+  preview?: React.ReactNode
+}) {
   return (
     <>
-      <h1 className="type-title-1 text-text-strong">Tokens</h1>
-      <p className="type-paragraph mt-3 text-text-subtle">
-        <Code>theme.config.mjs</Code> is the one authored file. It does not generate everything that
-        affects rendering, and wiring is the account of what it reaches.
-      </p>
+      <span className="type-title-4 text-text-strong">{label}</span>
+      <span className="type-body text-text-subtle">{blurb}</span>
+      {preview ? (
+        <span className="contents group-aria-expanded/accordion-trigger:hidden">{preview}</span>
+      ) : null}
+    </>
+  )
+}
+
+/**
+ * The surfaces a foreground is judged against, read out of the same generated
+ * data the swatches are drawn from.
+ *
+ * Both used to be hex literals in the module — one value for two modes, which is
+ * the defect the color section exists to teach. Reading them from the group
+ * means the contrast verdict follows the mode switch, and follows the palette if
+ * either surface is ever revalued.
+ */
+const allColors = colorGroups.flatMap((group) => group.tokens)
+const colorNamed = (name: string) => allColors.find((token) => token.name === name)
+const SURFACES = {
+  light: {
+    base: colorNamed("surface-base")?.light ?? "transparent",
+    inverse: colorNamed("surface-inverse")?.light ?? "transparent",
+    borderSubtle: colorNamed("border-subtle")?.light ?? "transparent",
+  },
+  dark: {
+    base: colorNamed("surface-base")?.dark ?? "transparent",
+    inverse: colorNamed("surface-inverse")?.dark ?? "transparent",
+    borderSubtle: colorNamed("border-subtle")?.dark ?? "transparent",
+  },
+}
+
+/**
+ * Whether the family is still numbered, which decides whether the stacking rule
+ * can be stated as a direction.
+ *
+ * "Counts down" is only true while the stops are numbers. The family is being
+ * renamed, so the caution is derived rather than typed — it leaves the page by
+ * itself rather than surviving as a sentence about numbers that are gone.
+ */
+const elevationIsNumbered = elevation.length > 0 && elevation.every((t) => /-\d+$/.test(t.name))
+
+/**
+ * The four scales built from the grid unit, each with the mistakes that are its
+ * own rather than the collection's.
+ *
+ * Authored as data because the four are the same kind of thing and reading them
+ * as four hand-written blocks was how `radius` came to describe a scale it no
+ * longer had.
+ */
+const DIMENSIONS = [
+  {
+    key: "scalars",
+    label: "Scalars",
+    blurb: "The grid unit, and the two dials that multiply it.",
+    render: <ScalarList tokens={scalars} consumption={scalarConsumption} drives={DRIVES} />,
+    cautions: [
+      <>
+        Scalar means a multiplier here and nowhere else. <Code>--db-density-scalar</Code> and{" "}
+        <Code>--db-type-scalar</Code> are the only two.
+      </>,
+      <>
+        For a roomier page, move the root font size rather than <Code>--db-type-scalar</Code>. The
+        root moves type, radius and every rem utility together. The type scalar grows text inside
+        boxes that stay put.
+      </>,
+    ],
+  },
+  {
+    key: "space",
+    label: "Space",
+    blurb: "Padding, margin and gap. Each stop is its multiple of the grid unit.",
+    render: <SpaceScale tokens={space} />,
+    cautions: [
+      <>
+        The stop is the multiple, so the token and the class carry the same number —{" "}
+        <Code>--db-space-3</Code> is <Code>p-3</Code>. Nothing to look up in either direction.
+      </>,
+      <>
+        A step off this scale still compiles, because Tailwind&rsquo;s multiplier is still
+        declared. <Code>p-1.5</Code> renders 6px and no token stands behind it.
+      </>,
+    ],
+  },
+  {
+    key: "size",
+    label: "Size",
+    blurb: "Width and height. Same grid as space, so a stop is its multiple of the unit.",
+    render: <SizeScale tokens={size} />,
+    cautions: [
+      <>
+        <Code>--db-size-4</Code> is 16px and matches the <Code>label</Code> line box. Moving either
+        without the other breaks text and icon alignment in every row.
+      </>,
+      <>
+        One stop drives three namespaces — <Code>size-8</Code>, <Code>h-8</Code> and{" "}
+        <Code>w-8</Code> are all 32px. Control heights and icon boxes used to be separate families,
+        which gave a 24px control and a 24px icon two different names.
+      </>,
+    ],
+  },
+  {
+    key: "radius",
+    label: "Radius",
+    blurb: "Corners, on the same grid. Controls take 1, containers and popovers 2, cards 4, pills full.",
+    render: <RadiusScale tokens={radius} />,
+    cautions: [
+      <>
+        The old <Code>sm</Code>/<Code>md</Code>/<Code>lg</Code> names are removed rather than left
+        pointing at Tailwind, whose scale disagrees with this one at every step. A stale class emits
+        no corner instead of a plausible wrong one.
+      </>,
+      <>
+        <Code>rounded-xs</Code> and <Code>rounded-4xl</Code> are Tailwind&rsquo;s and are not on
+        this scale. <Code>rounded-full</Code> is the pill and is still Tailwind&rsquo;s too.
+      </>,
+    ],
+  },
+  {
+    key: "border",
+    label: "Border",
+    blurb: "Hairline weights, and the one family whose number counts px rather than grid units.",
+    render: <BorderScale tokens={borderWidth} />,
+    cautions: [
+      <>
+        <Code>--db-border-1</Code> is 1px. A hairline is a rendering fact, not a proportion, so it
+        is never scaled.
+      </>,
+    ],
+  },
+]
+
+export function TokensDoc() {
+  /**
+   * A local override, seeded from the footer's setting and re-seeded whenever it
+   * moves. It writes neither the class nor storage, so a reader can read the
+   * dark values of one family without the page around them going dark — and it
+   * cannot silently disagree with the footer, because the only thing it knows
+   * about the mode is what the document says on load.
+   */
+  const [mode, setMode] = useColorModeOverride()
+
+  /**
+   * Not that relationship, one section down: there is nothing ambient to seed
+   * from. A context activates only when something sets the attribute, so this
+   * opens on the default and moves only when a reader moves it. Unrelated to the
+   * footer's type scale, which magnifies whichever context this picks.
+   */
+  const [typeContext, setTypeContext] = useTypeContext()
+
+  /**
+   * Elevation's own, rather than color's. Two sections that both preview a mode
+   * are two independent questions — a reader checking a dark shadow has no
+   * reason to have moved the color tables — and sharing one switch across a
+   * page-length gap would move a table nobody is looking at.
+   */
+  const [elevationMode, setElevationMode] = useColorModeOverride()
+
+  return (
+    <>
+      <DocHeader title="Tokens">Source of truth for all interface styling.</DocHeader>
+
+      {/* Same dimensions and treatment as the principles and voice heroes. */}
+      <img
+        src="/docs/tokens-hero.png"
+        alt="Abstract mark for tokens: hexagons nested one inside the next, each a deeper red than the one around it."
+        width={864}
+        height={300}
+        className="mt-10 h-auto w-full rounded-2"
+      />
 
       <SectionTabs sections={SECTIONS} label="Token sections" />
 
       <Section
-        id="name"
-        title="How a name is built"
-        scope="Three slots in order, so reading a name left to right tells you what it is for."
-      >
-        <NameAnatomy />
-      </Section>
-
-      <Section
-        id="wiring"
-        title="Wiring"
-        scope="Whether a line of code resolves to a family, measured against the repo rather than declared."
-        cautions={[
-          <>
-            Superseded means the property renders everywhere, from Tailwind&rsquo;s namespace rather
-            than from ours. Unread means nothing renders it at all.
-          </>,
-          <>
-            Either way the names stay safe through <Code>var(--db-*)</Code>. They just stop agreeing
-            with the Tailwind utility beside them once a scalar leaves 1.
-          </>,
-        ]}
-      >
-        <WiringTable families={families} />
-      </Section>
-
-      <Section
         id="color"
         title="Color"
-        state={wiring("color")}
-        scope="Every color that ships, light beside dark. Never a size, a radius or a shadow."
+        scope="Colors grouped by their functional families, roles and states, so a name can be reasoned about rather than looked up."
+        control={
+          <ColorModeOverride
+            value={mode}
+            onValueChange={setMode}
+            label="Preview color mode"
+          />
+        }
         cautions={[
+          <>
+            A family is a grouping, never a prefix. Nothing is named{" "}
+            <Code>structure-*</Code> or <Code>interaction-*</Code>. <Code>status-*</Code> and{" "}
+            <Code>viz-*</Code> are prefixes that happen to share a family name; the other two
+            families exist only as headings.
+          </>,
           <>
             <Code>border-*</Code> is decorative. Form controls take <Code>input-border-*</Code>,
             which is darker so a field reads as editable.
           </>,
           <>Primitives do not ship as CSS, so the palette cannot be named from product code.</>,
+          <>
+            The switch above previews this section only. It starts on whatever the footer is set to
+            and follows it when that moves; it never writes it.
+          </>,
         ]}
       >
-        {colorGroups.map((group) => (
-          <div key={group.key} className="flex flex-col gap-2">
-            <div className="type-label-bold text-text-strong">{group.label}</div>
-            <div className="type-hint text-text-subtle">{group.blurb}</div>
-            <ColorSwatches group={group} limit={5} surface="#FFFFFF" />
-          </div>
-        ))}
+        <DocAccordion variant="list" defaultValue={[colorFamilies[0]?.key ?? ""]}>
+          {colorFamilies.map((family) => (
+            <DocAccordionItem
+              key={family.key}
+              value={family.key}
+              variant="list"
+              header={
+                <PanelHeader
+                  label={family.label}
+                  blurb={family.blurb}
+                  preview={
+                    <ColorStrip
+                      tokens={family.groups.flatMap((group) => group.tokens)}
+                      mode={mode}
+                    />
+                  }
+                />
+              }
+            >
+              <div className="flex flex-col gap-6">
+                {family.groups.map((group) => (
+                  <div key={group.key} className="flex flex-col gap-2">
+                    {/* A single-group family already carries the name above. */}
+                    {family.groups.length > 1 ? (
+                      <div className="type-label-bold text-text-strong">{group.label}</div>
+                    ) : null}
+                    <div className="type-hint text-text-subtle">{group.blurb}</div>
+                    <ColorTable group={group} mode={mode} surfaces={SURFACES[mode]} limit={5} />
+                  </div>
+                ))}
+              </div>
+            </DocAccordionItem>
+          ))}
+        </DocAccordion>
       </Section>
 
       <Section
         id="type"
         title="Type"
-        state={wiring("type")}
         scope="Family, size, leading, tracking, weight and case, as one class."
+        control={
+          <TypeContextControl
+            contexts={typeContexts}
+            value={typeContext}
+            onValueChange={setTypeContext}
+            label="Preview type context"
+          />
+        }
         cautions={[
           <>
             <Code>label</Code> and <Code>body</Code> are the same size and differ only in leading.
@@ -447,165 +523,116 @@ export function TokensDoc() {
             <Code>uppercase</Code>.
           </>,
           <>
+            A style names a stop, not a size, so the same class measures differently per context.
+            Never write the number — it can only be right in one of them.
+          </>,
+          <>
+            The switch above picks which context every row is showing, specimen and number
+            together. It opens on the default and stays there until you move it, because a context
+            is opt-in and nothing follows the window width. It is not the footer&rsquo;s type scale,
+            which magnifies whichever context is in force.
+          </>,
+          <>
             Numbers in a table take <Code>numeric</Code> on the cell, which also right-aligns them.
           </>,
         ]}
       >
-        <TypeScale steps={typeSteps} use={TYPE_USE} />
+        <DocAccordion variant="list" defaultValue={[TYPE_REGISTERS[0]?.key ?? ""]}>
+          {TYPE_REGISTERS.map((register) => (
+            <DocAccordionItem
+              key={register.key}
+              value={register.key}
+              variant="list"
+              header={<PanelHeader label={register.label} blurb={register.blurb} />}
+            >
+              <TypeScale
+                steps={register.steps}
+                use={TYPE_USE}
+                contexts={typeContexts}
+                context={typeContext}
+                contextAttribute={typeContextAttribute}
+              />
+            </DocAccordionItem>
+          ))}
+        </DocAccordion>
       </Section>
 
       <Section
         id="elevation"
         title="Elevation"
-        state={wiring("elevation")}
-        scope="Shadows for surfaces that float."
+        scope="Surface elevation levels, by what the surface is doing rather than by how far off the page it sits."
+        control={
+          <ColorModeOverride
+            value={elevationMode}
+            onValueChange={setElevationMode}
+            label="Preview elevation mode"
+          />
+        }
         cautions={[
-          ...supersededNote("elevation"),
-          <>Counts down. When two surfaces overlap, the one on top takes the lower number.</>,
+          ...(elevationIsNumbered
+            ? [<>Counts down. When two surfaces overlap, the one on top takes the lower number.</>]
+            : []),
+          <>
+            The only dimensional family with two value sets. Same geometry in both; only alpha
+            moves, because an opaque-black shadow tuned for white draws nothing on a dark surface.
+            The switch above previews one mode at a time on that mode&rsquo;s own surface.
+          </>,
         ]}
       >
-        <ElevationScale tokens={elevation} />
+        <ElevationScale
+          tokens={elevation}
+          mode={elevationMode}
+          surface={SURFACES[elevationMode].base}
+          border={SURFACES[elevationMode].borderSubtle}
+        />
       </Section>
 
       <Section
         id="dimensions"
         title="Dimensions"
-        scope="The collection: one grid unit, two scalars that multiply it, and the four families below — space, size, radius and border."
+        scope="One grid unit, two dials that multiply it, and the four scales built from them."
         cautions={[
           <>
-            Each family computes its own stops and carries only the ones it uses, so 7 is
-            a height and never a padding. Nothing reads another family, and the ladder of
-            multiples they share is an authoring artifact that lives in Figma, not a
-            custom property — React ships semantics only, the same way it does for color.
-          </>,
-          <>
-            Scalar means a multiplier here and nowhere else. <Code>--db-density-scalar</Code>{" "}
-            and <Code>--db-type-scalar</Code> are the only two.
-          </>,
-          <>
-            For a roomier page, move the root font size rather than{" "}
-            <Code>--db-type-scalar</Code>. The root moves type, radius and every rem utility
-            together. The type scalar grows text inside boxes that stay put.
+            Each family computes its own stops and carries only the ones it uses, so 7 is a height
+            and never a padding. Nothing reads another family, and the ladder of multiples they
+            share is an authoring artifact that lives in Figma, not a custom property — React ships
+            semantics only, the same way it does for color.
           </>,
         ]}
       >
-        <ScalarList tokens={scalars} consumption={scalarConsumption} drives={DRIVES} />
-      </Section>
-
-      <Section
-        id="space"
-        title="Space"
-        state={wiring("space")}
-        scope="Padding, margin and gap. Each stop is its multiple of the grid unit."
-        cautions={[
-          ...supersededNote("space"),
-          <>
-            The stop is the multiple, so the token and the class carry the same number —{" "}
-            <Code>--db-space-3</Code> is <Code>p-3</Code>. Nothing to look up in either direction.
-          </>,
-          <>
-            A step off this scale still compiles, because Tailwind&rsquo;s multiplier is still
-            declared. <Code>p-1.5</Code> renders 6px and no token stands behind it.
-          </>,
-        ]}
-      >
-        <SpaceScale tokens={space} />
-      </Section>
-
-      <Section
-        id="size"
-        title="Size"
-        state={wiring("size")}
-        scope="Width and height. Same grid as space, so a stop is its multiple of the unit."
-        cautions={[
-          ...supersededNote("size"),
-          <>
-            <Code>--db-size-4</Code> is 16px and matches the <Code>label</Code> line box. Moving
-            either without the other breaks text and icon alignment in every row.
-          </>,
-          <>
-            One stop drives three namespaces — <Code>size-8</Code>, <Code>h-8</Code> and{" "}
-            <Code>w-8</Code> are all 32px. Control heights and icon boxes used to be separate
-            families, which gave a 24px control and a 24px icon two different names.
-          </>,
-          <>
-            <Code>size-6</Code> is the small control height — the <Code>sm</Code> button and the{" "}
-            <Code>sm</Code> input are both <Code>h-6</Code>. It reads as droppable next to
-            space&rsquo;s own 6, and dropping it would not change a pixel, because a height
-            utility falls back to the spacing scale. It would only stop a control height from
-            being writable as one.
-          </>,
-        ]}
-      >
-        <SizeScale tokens={size} />
-      </Section>
-
-      <Section
-        id="radius"
-        title="Radius"
-        state={wiring("radius")}
-        scope="Corners, on the same grid. Controls take 1, containers and popovers 2, cards 4, pills full."
-        cautions={[
-          <>
-            The old <Code>sm</Code>/<Code>md</Code>/<Code>lg</Code> names are removed rather than
-            left pointing at Tailwind, whose scale disagrees with this one at every step. A stale
-            class emits no corner instead of a plausible wrong one.
-          </>,
-          <>
-            <Code>rounded-xs</Code> and <Code>rounded-4xl</Code> are Tailwind&rsquo;s and are not on
-            this scale. <Code>rounded-full</Code> is the pill and is still Tailwind&rsquo;s too.
-          </>,
-        ]}
-      >
-        <RadiusScale tokens={radius} />
-      </Section>
-
-      <Section
-        id="border"
-        title="Border"
-        state={wiring("border")}
-        scope="Hairline weights, and the one family whose number counts px rather than grid units — border-1 is 1px. A hairline is a rendering fact, not a proportion, so it is never scaled."
-        cautions={supersededNote("border")}
-      >
-        <BorderScale tokens={borderWidth} />
+        <DocAccordion variant="list" defaultValue={[DIMENSIONS[0]?.key ?? ""]}>
+          {DIMENSIONS.map((entry) => (
+            <DocAccordionItem
+              key={entry.key}
+              value={entry.key}
+              variant="list"
+              header={<PanelHeader label={entry.label} blurb={entry.blurb} />}
+            >
+              <div className="flex flex-col gap-4">
+                {entry.render}
+                <Cautions items={entry.cautions} />
+              </div>
+            </DocAccordionItem>
+          ))}
+        </DocAccordion>
       </Section>
 
       <Section
         id="motion"
         title="Motion"
-        state={wiring("motion")}
         scope="Three durations and one easing curve."
         cautions={[
-          ...supersededNote("motion"),
           <>
-            This was two bands of three — a min, a base and a max each — and the four
-            band members had no consumers. The question at a call site is quick or
-            considered, never three quarters of the way down the fast band.
+            This was two bands of three — a min, a base and a max each — and the four band members
+            had no consumers. The question at a call site is quick or considered, never three
+            quarters of the way down the fast band.
           </>,
         ]}
       >
-        {/* Read from the generated data rather than retyped. The curve was
+        {/* Both read from the generated data rather than retyped. The curve was
             written out here as a literal, which is the one thing a token page
             must not do — a value restated is a value that goes stale. */}
-        <MotionScale tokens={duration} easing={easing[0].value} />
-      </Section>
-
-      <Section
-        id="tailwind"
-        title="What Tailwind owns"
-        scope="Concepts the components depend on that no DBUI token governs. Anything the config maps is in Wiring instead."
-        cautions={[
-          <>
-            {handMapped.length} theme keys are still authored by hand in <Code>globals.css</Code>{" "}
-            rather than generated, so each is a value the config does not own and each can drift.
-          </>,
-          <>
-            {hardcoded.uses} px and rem literals remain in {hardcoded.files.length} component files.
-            Each is a value that will not move when the root does.
-          </>,
-        ]}
-      >
-        <TailwindTable rows={tailwind} governs={GOVERNS} />
+        <MotionScale tokens={duration} easing={easing[0]} />
       </Section>
 
       <Section
@@ -613,13 +640,11 @@ export function TokensDoc() {
         title="Tools"
         scope="Nothing here has to be read off this page. Every dbui command takes --json."
         cautions={[
-          <>
-            The MCP tools wrap the module the CLI reads. Same facts, one fewer terminal.
-          </>,
+          <>The MCP tools wrap the module the CLI reads. Same facts, one fewer terminal.</>,
           <>
             <Code>dbui check</Code> reads class strings, so it catches a hex, a px literal and a
-            primitive. It cannot see a token that ships and nothing reads, which is what the wiring
-            table is for. <Code>/docs/checks</Code> lists every rule.
+            primitive. It cannot see a token that ships and nothing reads.{" "}
+            <Code>/docs/checks</Code> lists every rule.
           </>,
         ]}
       >

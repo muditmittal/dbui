@@ -1,7 +1,8 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "dbui/components/ui/tabs"
 
-import { DocHeader, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
+import { DocHeader, Para, Code, RefTable } from "@/components/docs/Prose"
 import { DocAccordion } from "@/components/docs/DocAccordion"
+import { StickyPlate } from "@/components/docs/StickyPlate"
 import {
   AnchoredSection,
   Subsection,
@@ -65,25 +66,29 @@ const PRINCIPLES = [
   },
 ]
 
-/** The `term` of a tone on the scale is the context it belongs to. */
-const TONE_SCALE: Array<{ tone: Tone; term: string; guidance: string; example: string }> = [
+/**
+ * The `term` of a tone on the scale is the context it belongs to.
+ *
+ * There is deliberately no `example` field. A tone's specimen was the moment's
+ * string again under a second heading, or — for Warm — the only trace of a
+ * context no moment covered. Both were gaps in `MOMENTS`, and both are closed
+ * there. Adding the field back reopens them.
+ */
+const TONE_SCALE: Array<{ tone: Tone; term: string; guidance: string }> = [
   {
     tone: "Warm",
     term: "Empty states, onboarding, success toasts",
     guidance: "Brief encouragement for first-run or success moments",
-    example: "Create your first query to explore your data",
   },
   {
     tone: "Neutral",
     term: "Nav labels, page titles, field labels",
     guidance: "The default instructive, matter-of-fact style",
-    example: "Genie answers questions about your data",
   },
   {
     tone: "Cautious",
     term: "Errors, delete confirmations, permission grants",
     guidance: "Firm and precise for destructive or security actions",
-    example: "Deleting this catalog can't be undone",
   },
 ]
 
@@ -91,8 +96,40 @@ const TONE_SCALE: Array<{ tone: Tone; term: string; guidance: string; example: s
  * The `term` of a moment is the kind of string being written. Each moment names
  * the tone that governs it, and the page groups on that field rather than
  * repeating the list — a moment can belong to one tone and only one.
+ *
+ * Grouped by tone in the order the scale runs, and ordered within a tone, so
+ * this array reads in the order the page renders it. Both groupings are
+ * editorial and neither is enforced here, so keep a new moment beside the tone
+ * it belongs to rather than appending it.
+ *
+ * `brandvoice.md` owns how many moments a tone carries and what each one says.
+ * Every row here has a row there.
  */
 const MOMENTS: Array<Moment & { tone: Tone }> = [
+  {
+    term: "Empty state",
+    tone: "Warm",
+    guidance: "Title of six words or fewer, one sentence for the next step",
+    example: "No queries yet. Create a query to start.",
+  },
+  {
+    term: "No results",
+    tone: "Warm",
+    guidance: "Repeat the term searched, then offer one way to widen it",
+    example: "No tables match “orders”. Search all catalogs or try a shorter term.",
+  },
+  {
+    term: "Onboarding",
+    tone: "Warm",
+    guidance: "Name the first step and what it makes possible. One sentence",
+    example: "Create your first query to explore your data.",
+  },
+  {
+    term: "Success toast",
+    tone: "Warm",
+    guidance: "Name what finished and what it produced. No congratulation",
+    example: "Run finished in 4 minutes and wrote 1,284 rows.",
+  },
   {
     term: "Navigation label",
     tone: "Neutral",
@@ -124,22 +161,34 @@ const MOMENTS: Array<Moment & { tone: Tone }> = [
     example: "Serverless compute starts in seconds",
   },
   {
-    term: "Empty state",
-    tone: "Warm",
-    guidance: "Title of six words or fewer, one sentence for the next step",
-    example: "No queries yet. Create a query to start.",
-  },
-  {
     term: "Error message",
     tone: "Cautious",
     guidance: "State what happened, why, and what to do next",
     example: "Couldn't run the query. Retry in a few seconds.",
   },
   {
+    term: "Permission denied",
+    tone: "Cautious",
+    guidance: "Name the missing privilege and who can grant it",
+    example: "You need SELECT on main.sales to run this query. Ask the catalog owner for access.",
+  },
+  {
+    term: "Limit reached",
+    tone: "Cautious",
+    guidance: "State the limit, then the one way to proceed",
+    example: "You've reached the limit of 100 concurrent queries. Wait for a run to finish.",
+  },
+  {
+    term: "Downstream impact",
+    tone: "Cautious",
+    guidance: "Name the downstream consumers the change affects, with counts",
+    example: "Renaming this table breaks 3 dashboards and 1 pipeline that read from it.",
+  },
+  {
     term: "Destructive action",
     tone: "Cautious",
     guidance: "State the exact irreversible consequence",
-    example: "This can't be undone.",
+    example: "Deleting this catalog removes 42 tables. This can't be undone.",
   },
 ]
 
@@ -262,12 +311,12 @@ export function VoiceDoc() {
   return (
     <>
       <DocHeader title="Voice and tone">
-        One voice for every string, so a nav label and an error read as the same product.
+        One voice for every string, so product experience is consistent.
       </DocHeader>
 
       <img
         src="/docs/voice-hero.png"
-        alt="Abstract mark for voice and tone: three overlapping profiles facing one way, with a blue spark and an orange stepped pattern."
+        alt="Abstract mark for voice and tone: overlapping profiles facing one way, with a blue spark and an orange stepped pattern."
         width={864}
         height={300}
         className="mt-10 h-auto w-full rounded-2"
@@ -339,38 +388,73 @@ export function VoiceDoc() {
           The word to reach for, the name the product goes by now, and the passes to make before a
           string ships.
         </Para>
+        {/*
+          Two things pin above these tables. The docs layout accounts for the
+          site header; the tab row is the second, and `StickyPlate` is what adds
+          it — the plate measures its own lower edge and publishes it over the
+          panels, so a table header pins against the row as rendered rather than
+          against an arithmetic of the classes the row happened to carry when
+          this was written. That arithmetic is what went wrong here: it read the
+          list's `h-8` and missed the padding and the rule the row gained later,
+          leaving the table header pinned into the plate by an amount that grew
+          with the type scale.
+        */}
         <Tabs defaultValue="terminology" className="gap-4">
-          <TabsList>
-            <TabsTrigger value="terminology">Terminology</TabsTrigger>
-            <TabsTrigger value="names">Product names</TabsTrigger>
-            <TabsTrigger value="checks">Checks</TabsTrigger>
-          </TabsList>
-
           {/*
-            `keepMounted` on all three: a tab that mounts on click ships an
-            HTML document holding a third of the standard, and the two tabs
-            nobody clicked are missing from the source an agent or a crawler
-            reads.
+            `pill`, because clicking one of these replaces the table below it.
+            The bar pins, so the reader spends most of their time with the
+            selected tab and none of its panel's own heading on screen at once —
+            a filled item still answers "which one" there, and a 3px rule under
+            one word is what the section bars on the other docs pages use to
+            index a page you can scroll back through.
+
+            No padding passed to the plate. The band's own py-2 is what holds
+            the chip off the header when the bar pins — measured at 1px before
+            it, which is the squeeze — and a second gutter here would move the
+            rule off the bottom of the opaque box and let the table slide into
+            the gap.
+
+            width="full" because this variant draws a rule again, and the prop
+            exists so the rule reaches the edge of the region rather than
+            stopping at the last chip. Measured: the plate and the table's frame
+            are both 704px at x=368, so a full-width list puts the rule on the
+            same two verticals as the box below it.
           */}
-          <TabsContent keepMounted value="terminology">
-            <WordTable rows={TERMINOLOGY} widths={["w-[25%]", "w-[33%]"]} />
-          </TabsContent>
+          <StickyPlate
+            bar={
+              <TabsList variant="pill" width="full">
+                <TabsTrigger value="terminology">Terminology</TabsTrigger>
+                <TabsTrigger value="names">Product names</TabsTrigger>
+                <TabsTrigger value="checks">Checks</TabsTrigger>
+              </TabsList>
+            }
+          >
+            {/*
+              `keepMounted` on all three: a tab that mounts on click ships an
+              HTML document holding a third of the standard, and the two tabs
+              nobody clicked are missing from the source an agent or a crawler
+              reads.
+            */}
+            <TabsContent keepMounted value="terminology">
+              <WordTable rows={TERMINOLOGY} widths={["w-[25%]", "w-[33%]"]} />
+            </TabsContent>
 
-          <TabsContent keepMounted value="names">
-            <WordTable rows={PRODUCT_NAMES} widths={["w-[27%]", "w-[35%]"]} />
-          </TabsContent>
+            <TabsContent keepMounted value="names">
+              <WordTable rows={PRODUCT_NAMES} widths={["w-[27%]", "w-[35%]"]} />
+            </TabsContent>
 
-          <TabsContent keepMounted value="checks">
-            <Subsection title="Accessibility">
-              <RefTable columns={CHECKLIST_COLUMNS} rows={ACCESSIBILITY} />
-            </Subsection>
-            <Subsection title="Globalization">
-              <RefTable columns={CHECKLIST_COLUMNS} rows={GLOBALIZATION} />
-            </Subsection>
-            <Subsection title="Content quality">
-              <RefTable columns={CHECKLIST_COLUMNS} rows={CONTENT_QUALITY} />
-            </Subsection>
-          </TabsContent>
+            <TabsContent keepMounted value="checks">
+              <Subsection title="Accessibility">
+                <RefTable columns={CHECKLIST_COLUMNS} rows={ACCESSIBILITY} />
+              </Subsection>
+              <Subsection title="Globalization">
+                <RefTable columns={CHECKLIST_COLUMNS} rows={GLOBALIZATION} />
+              </Subsection>
+              <Subsection title="Content quality">
+                <RefTable columns={CHECKLIST_COLUMNS} rows={CONTENT_QUALITY} />
+              </Subsection>
+            </TabsContent>
+          </StickyPlate>
         </Tabs>
       </AnchoredSection>
 
@@ -388,14 +472,16 @@ export function VoiceDoc() {
           ]}
           rows={SOURCES}
         />
+        {/*
+          The one thing the removed source note said that a reader needed. Where
+          the guidance came from is on this page already; how settled it is was
+          not, and it changes how much weight to give a rule.
+        */}
+        <Para>
+          This is a working draft, maintained with Databricks content writers. The terminology and
+          product-name tables are the most settled part — expect the rest to move.
+        </Para>
       </AnchoredSection>
-
-      <SourceNote>
-        This page renders <Code>packages/dbui/docs/brandvoice.md</Code>, which the CLI and the MCP
-        server serve to agents through <Code>dbui docs brandvoice</Code>. That file is the source of
-        truth for the content design linters, and it is a working draft maintained with Databricks
-        content writers — the terminology and product-name tables are the most stable part.
-      </SourceNote>
     </>
   )
 }

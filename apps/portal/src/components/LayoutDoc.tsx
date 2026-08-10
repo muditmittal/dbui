@@ -1,7 +1,7 @@
 import * as React from "react"
 import Link from "next/link"
 
-import { DocHeader, DocSection, DocSubsection, Para, Code, RefTable, SourceNote } from "@/components/docs/Prose"
+import { DocHeader, DocSection, DocSubsection, Para, Code, RefTable } from "@/components/docs/Prose"
 import { DefaultPageFigure, ScrollFigure, EdgeFigure } from "@/components/LayoutDiagrams"
 import { regions, scrollOwners, spacing, shellModules } from "@/components/layout-data"
 import { shells } from "@/components/shell-data"
@@ -47,7 +47,7 @@ import {
  * than structure.
  *
  * Rendered on the statement row rather than as a fifth slot. As a slot it was a
- * fourth labelled line repeating one of two strings under every rule on the
+ * fourth labeled line repeating one of two strings under every rule on the
  * page, which is the shape of information nobody reads after the third time.
  */
 const CHECK_LABEL: Record<Rule["checked"], string> = {
@@ -450,7 +450,7 @@ export function LayoutDoc() {
           </Gap>
           <Gap title="No chat shell">
             <>
-              <Code>dbui-genie</Code> ships the transcript primitives and{" "}
+              <Code>dbui-chat</Code> ships the transcript primitives and{" "}
               <Code>AssistantPanel</Code> ships one docked instance, so a conversation inside a panel
               is supported. A full-page conversation has no shell, which means no region order and no
               scroll contract, and the bottom-anchored scroll rule is currently enforced only by the
@@ -498,18 +498,6 @@ export function LayoutDoc() {
           </Gap>
         </div>
       </DocSection>
-
-      <SourceNote>
-        <>
-          This page owns the rules that hold across every shell. <Code>composition.md</Code> owns
-          each shell&rsquo;s own regions, scaling and scroll contract and renders them on{" "}
-          <DocLink href="/docs/shells">Shells</DocLink>. A component&rsquo;s constraints live in its
-          JSDoc and outrank anything here. <DocLink href="/docs/patterns">Patterns</DocLink> owns
-          what happens over time, and{" "}
-          <DocLink href="/docs/components">component rules</DocLink> owns cross-component spacing,
-          buttons and menus.
-        </>
-      </SourceNote>
     </>
   )
 }

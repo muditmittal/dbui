@@ -73,8 +73,10 @@ export function PrincipleEntry({
       value={name}
       header={
         <>
-          <span className="type-title-3 text-text-strong">{name}</span>
-          <span className="type-paragraph text-text-subtle">{meaning}</span>
+          <span className="type-title-4 text-text-strong">{name}</span>
+          {/* Same as the principles cards: a flex-column header slot, so the
+              docs column's element default does not reach it. */}
+          <span className="type-paragraph measure text-text-subtle">{meaning}</span>
         </>
       }
     >
@@ -155,9 +157,14 @@ export function ToneScale({ zones }: { zones: Array<{ tone: Tone; where: string 
 
 /**
  * The moments a tone governs, listed under the tone rather than in a table of
- * their own. Read as one table of eight, a moment sat next to seven others it
+ * their own. Read as one flat table, a moment sat next to every other one it
  * had nothing to do with and the tone column did all the sorting; read under
  * its tone, the grouping is the point.
+ *
+ * This list is the tone's only set of examples. The panel used to open with a
+ * standalone specimen and then repeat it here under an "In UI context" heading,
+ * which read as two kinds of example and was one — for Cautious, literally the
+ * same sentence twice.
  */
 function MomentList({ moments }: { moments: Moment[] }) {
   return (
@@ -182,20 +189,20 @@ function MomentList({ moments }: { moments: Moment[] }) {
  * Tone, term, guidance and example were four columns and all four wrapped. The
  * tone is the one field with a fixed vocabulary, so it goes to a badge in a
  * fixed gutter — the same shape `Guidance` uses — and the rest becomes the
- * disclosure header, with the tone's own example and the moments it governs
- * behind it.
+ * disclosure header, with the moments it governs behind it.
+ *
+ * The header states what the tone is for, so the panel owes the reader
+ * evidence rather than a restatement: it holds the moments and nothing else.
  */
 export function ToneEntry({
   tone,
   term,
   guidance,
-  example,
   moments,
 }: {
   tone: Tone
   term: string
   guidance: string
-  example: string
   moments: Moment[]
 }) {
   return (
@@ -214,13 +221,7 @@ export function ToneEntry({
         </span>
       }
     >
-      <div className="flex flex-col gap-4">
-        <Specimen>{example}</Specimen>
-        <div className="flex flex-col gap-2">
-          <span className="type-eyebrow text-text-subtle">In UI context</span>
-          <MomentList moments={moments} />
-        </div>
-      </div>
+      <MomentList moments={moments} />
     </DocAccordionItem>
   )
 }

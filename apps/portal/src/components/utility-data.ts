@@ -63,14 +63,14 @@ export const utilityModules: UtilityModule[] = [
 
 /** Documented on the Tokens page, where the ramp they come from is rendered. */
 export const rampUtilities: string[] = [
-  "type-hint",
   "type-eyebrow",
+  "type-hint",
   "type-label",
   "type-label-bold",
   "type-body",
   "type-body-bold",
   "type-code",
-  "type-block",
+  "type-code-block",
   "type-paragraph",
   "type-paragraph-bold",
   "type-title-4",
@@ -87,6 +87,240 @@ export const cssUtilities: CssUtility[] = [
       "-ms-overflow-style: none;",
       "scrollbar-width: none;",
       "&::-webkit-scrollbar { display: none; }"
+    ]
+  },
+  {
+    "name": "shape-square",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-radius: var(--db-shape-square);"
+    ]
+  },
+  {
+    "name": "shape-t-square",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-square);",
+      "border-top-right-radius: var(--db-shape-square);"
+    ]
+  },
+  {
+    "name": "shape-r-square",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-right-radius: var(--db-shape-square);",
+      "border-bottom-right-radius: var(--db-shape-square);"
+    ]
+  },
+  {
+    "name": "shape-b-square",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-bottom-right-radius: var(--db-shape-square);",
+      "border-bottom-left-radius: var(--db-shape-square);"
+    ]
+  },
+  {
+    "name": "shape-l-square",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-square);",
+      "border-bottom-left-radius: var(--db-shape-square);"
+    ]
+  },
+  {
+    "name": "shape-control",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-radius: var(--db-shape-control);"
+    ]
+  },
+  {
+    "name": "shape-t-control",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-control);",
+      "border-top-right-radius: var(--db-shape-control);"
+    ]
+  },
+  {
+    "name": "shape-r-control",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-right-radius: var(--db-shape-control);",
+      "border-bottom-right-radius: var(--db-shape-control);"
+    ]
+  },
+  {
+    "name": "shape-b-control",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-bottom-right-radius: var(--db-shape-control);",
+      "border-bottom-left-radius: var(--db-shape-control);"
+    ]
+  },
+  {
+    "name": "shape-l-control",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-control);",
+      "border-bottom-left-radius: var(--db-shape-control);"
+    ]
+  },
+  {
+    "name": "shape-control-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-radius: var(--db-shape-control-lg);"
+    ]
+  },
+  {
+    "name": "shape-t-control-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-control-lg);",
+      "border-top-right-radius: var(--db-shape-control-lg);"
+    ]
+  },
+  {
+    "name": "shape-r-control-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-right-radius: var(--db-shape-control-lg);",
+      "border-bottom-right-radius: var(--db-shape-control-lg);"
+    ]
+  },
+  {
+    "name": "shape-b-control-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-bottom-right-radius: var(--db-shape-control-lg);",
+      "border-bottom-left-radius: var(--db-shape-control-lg);"
+    ]
+  },
+  {
+    "name": "shape-l-control-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-control-lg);",
+      "border-bottom-left-radius: var(--db-shape-control-lg);"
+    ]
+  },
+  {
+    "name": "shape-container",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-radius: var(--db-shape-container);"
+    ]
+  },
+  {
+    "name": "shape-t-container",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-container);",
+      "border-top-right-radius: var(--db-shape-container);"
+    ]
+  },
+  {
+    "name": "shape-r-container",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-right-radius: var(--db-shape-container);",
+      "border-bottom-right-radius: var(--db-shape-container);"
+    ]
+  },
+  {
+    "name": "shape-b-container",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-bottom-right-radius: var(--db-shape-container);",
+      "border-bottom-left-radius: var(--db-shape-container);"
+    ]
+  },
+  {
+    "name": "shape-l-container",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-container);",
+      "border-bottom-left-radius: var(--db-shape-container);"
+    ]
+  },
+  {
+    "name": "shape-container-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-radius: var(--db-shape-container-lg);"
+    ]
+  },
+  {
+    "name": "shape-t-container-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-container-lg);",
+      "border-top-right-radius: var(--db-shape-container-lg);"
+    ]
+  },
+  {
+    "name": "shape-r-container-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-right-radius: var(--db-shape-container-lg);",
+      "border-bottom-right-radius: var(--db-shape-container-lg);"
+    ]
+  },
+  {
+    "name": "shape-b-container-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-bottom-right-radius: var(--db-shape-container-lg);",
+      "border-bottom-left-radius: var(--db-shape-container-lg);"
+    ]
+  },
+  {
+    "name": "shape-l-container-lg",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-container-lg);",
+      "border-bottom-left-radius: var(--db-shape-container-lg);"
+    ]
+  },
+  {
+    "name": "shape-pill",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-radius: var(--db-shape-pill);"
+    ]
+  },
+  {
+    "name": "shape-t-pill",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-pill);",
+      "border-top-right-radius: var(--db-shape-pill);"
+    ]
+  },
+  {
+    "name": "shape-r-pill",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-right-radius: var(--db-shape-pill);",
+      "border-bottom-right-radius: var(--db-shape-pill);"
+    ]
+  },
+  {
+    "name": "shape-b-pill",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-bottom-right-radius: var(--db-shape-pill);",
+      "border-bottom-left-radius: var(--db-shape-pill);"
+    ]
+  },
+  {
+    "name": "shape-l-pill",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-pill);",
+      "border-bottom-left-radius: var(--db-shape-pill);"
     ]
   }
 ]

@@ -5,25 +5,58 @@
  *
  * Only routes that exist. A nav entry that 404s is worse than a missing one.
  *
- * URLs stay flat. `Docs`, `Design system` and `Tools` are groups in the nav and
- * landing pages of their own, but nothing sits at `/docs/design-system/tokens`.
- * Grouping is a navigation concern, so it does not get to rewrite every route
- * and link.
+ * URLs stay flat. `Docs` and `Tools` are groups in the nav, but nothing sits at
+ * `/docs/design-system/tokens`. Grouping is a navigation concern, so it does not
+ * get to rewrite every route and link.
  *
- * Three groups, no ungrouped entries. Every top-level label is a link to the
- * page it heads, so no heading is a dead word.
+ * Two groups, no ungrouped entries. `Tools` links to the page it heads; `Docs`
+ * does not — it is a heading only.
+ *
+ * Tokens, Icons and Components are not in the rail. They are top-level entries in
+ * the site header, and a second copy here would be the two-doors-to-one-page
+ * problem that once put the component index behind the Storybook sandbox. The
+ * `Design system` group that used to hold them is gone with them; what remained of
+ * it — Layout, Patterns, Shells — reads as part of Docs rather than as a set of its
+ * own, so it moved up rather than keeping a group alive for three rows.
+ *
+ * `/docs/utilities` and `/docs/foundations` still render but nothing links to
+ * them: Utilities was cut from the rail, and Foundations only ever existed as the
+ * `Design system` landing page.
+ *
+ * `/docs` still exists and still renders — it is kept for a later purpose — but
+ * nothing links to it. As a landing page it was a stop on the way to the page
+ * the reader wanted, and it broke the header's selected state: the top-level
+ * `Docs` entry had to match `/docs` exactly to avoid staying lit across the whole
+ * section, which meant it went dim the moment you opened anything inside it.
+ * Pointing the header at the first real page fixes both.
  */
 
-export type DocsNavItem = { href: string; label: string }
+export type DocsNavItem = {
+  href: string
+  label: string
+  /**
+   * The entry leaves the docs section. The rail marks its own page by matching
+   * the pathname, so an entry pointing outside `/docs` can never be the current
+   * one — it would read as the single row that is always dim. Marking it says
+   * that is the destination's doing rather than the rail's.
+   */
+  outbound?: true
+}
 
-export type DocsNavEntry = DocsNavItem & {
-  /** Present on a group. The entry itself is the group's landing page. */
+export type DocsNavEntry = Omit<DocsNavItem, "href"> & {
+  /**
+   * Absent when the label heads a group without being a destination itself. The
+   * rail then renders it as text, so the word is a heading rather than a link
+   * that goes somewhere the reader did not ask for.
+   */
+  href?: string
+  /** Present on a group. */
   items?: DocsNavItem[]
 }
 
 export const DOCS_NAV: DocsNavEntry[] = [
   {
-    href: "/docs",
+    // No href. `Docs` is the section's name, not a page.
     label: "Docs",
     items: [
       { href: "/docs/principles", label: "Design principles" },
@@ -36,36 +69,23 @@ export const DOCS_NAV: DocsNavEntry[] = [
       // Sits here rather than under Tools because it is a standard you follow,
       // like the principles and the voice guide. Tools holds machinery you run.
       { href: "/docs/accessibility", label: "Accessibility" },
-    ],
-  },
-  {
-    // Labelled `Design system` and served from `/docs/foundations`. The label is
-    // the reader's word for what the group holds; the route is older than the
-    // label and every link already written against it still resolves.
-    href: "/docs/foundations",
-    label: "Design system",
-    items: [
-      { href: "/docs/tokens", label: "Tokens" },
-      { href: "/docs/icons", label: "Icons" },
-      { href: "/docs/components", label: "Components" },
-      // Above Patterns because it answers the earlier question. Layout settles
-      // the frame, the regions and which container scrolls; Patterns settles
-      // what happens inside them over time.
+      // Layout above Patterns because it answers the earlier question. Layout
+      // settles the frame, the regions and which container scrolls; Patterns
+      // settles what happens inside them over time.
       { href: "/docs/layout", label: "Layout" },
       { href: "/docs/patterns", label: "Patterns" },
       // The shells used to be a top-level `/templates` gallery. One page reads
       // the generated module now, and `/templates` redirects here.
       { href: "/docs/shells", label: "Shells" },
-      { href: "/docs/utilities", label: "Utilities" },
     ],
   },
   {
     href: "/docs/overview",
     label: "Tools",
     items: [
+      { href: "/docs/checks", label: "Checks" },
       { href: "/docs/cli", label: "CLI" },
       { href: "/docs/mcp", label: "MCP servers" },
-      { href: "/docs/checks", label: "Checks" },
     ],
   },
 ]

@@ -13,6 +13,11 @@ import { ChevronUp } from "dbui/components/icons/ChevronUp"
  * Documentation primitives for the Tooling pages, built from DBUI components so
  * the docs dogfood the system they describe. Storybook's MDX has no GFM plugin,
  * so markdown tables do not render — these replace them.
+ *
+ * The primitives that carry running text add `measure`, the same cap the React
+ * docs pages use, so both surfaces set prose to one line length. It is not on
+ * `DocTable`: a cell wraps to its column, and capping the text inside one would
+ * strand the column's remaining width.
  */
 
 /**
@@ -80,7 +85,7 @@ export function ContentSummary({ children }: { children: React.ReactNode }) {
 
 export function Lede({ children }: { children: React.ReactNode }) {
   return (
-    <p style={RESET} className=" type-paragraph text-text-subtle">
+    <p style={RESET} className="type-paragraph measure text-text-subtle">
       {children}
     </p>
   )
@@ -102,7 +107,7 @@ export function Section({ title, children }: { title: string; children: React.Re
 
 export function P({ children }: { children: React.ReactNode }) {
   return (
-    <p style={RESET} className=" type-paragraph text-text-base">
+    <p style={RESET} className="type-paragraph measure text-text-base">
       {children}
     </p>
   )
@@ -128,7 +133,7 @@ export function Covers({ items }: { items: Array<[string, string]> }) {
   return (
     <ul style={{ ...RESET, listStyle: "none" }} className="flex flex-col gap-1.5">
       {items.map(([name, why]) => (
-        <li key={name} style={RESET} className="type-paragraph text-text-base">
+        <li key={name} style={RESET} className="type-paragraph measure text-text-base">
           <span className="font-semibold text-text-strong">{name}</span>
           <span className="text-text-subtle">{` — ${why}`}</span>
         </li>
@@ -140,10 +145,11 @@ export function Covers({ items }: { items: Array<[string, string]> }) {
 type Col = { key: string; header: string; width?: string; mono?: boolean }
 
 /**
- * Scrolls inside its own container rather than widening the page. Cells also
- * override DBUI's whitespace-nowrap: that is correct for a data table, where a
- * wrapped catalog name is worse than a scroll, but wrong for documentation full
- * of sentences.
+ * Cells override DBUI's whitespace-nowrap: that is correct for a data table,
+ * where a wrapped catalog name is worse than a scroll, but wrong for
+ * documentation full of sentences. Wrapping is also why this needs no scroll
+ * container of its own — and a scroll container is what `Table` pins its header
+ * against, so one here would cost the pinning and buy nothing.
  */
 export function DocTable({
   columns,
@@ -153,37 +159,35 @@ export function DocTable({
   rows: Array<Record<string, React.ReactNode>>
 }) {
   return (
-    <div className="w-full overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          {columns.map((c) => (
+            <TableHead key={c.key} className={`h-auto py-2.5 align-bottom text-[13px] whitespace-normal! ${c.width ?? ""}`}>
+              {c.header}
+            </TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {rows.map((r, i) => (
+          <TableRow key={i}>
             {columns.map((c) => (
-              <TableHead key={c.key} className={`h-auto py-2.5 align-bottom text-[13px] whitespace-normal! ${c.width ?? ""}`}>
-                {c.header}
-              </TableHead>
+              <TableCell
+                key={c.key}
+                className={
+                  c.mono
+                    ? "align-top py-2.5 font-mono text-[13px] whitespace-normal!"
+                    : "align-top py-2.5 type-paragraph whitespace-normal!"
+                }
+              >
+                {r[c.key]}
+              </TableCell>
             ))}
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map((r, i) => (
-            <TableRow key={i}>
-              {columns.map((c) => (
-                <TableCell
-                  key={c.key}
-                  className={
-                    c.mono
-                      ? "align-top py-2.5 font-mono text-[13px] whitespace-normal!"
-                      : "align-top py-2.5 type-paragraph whitespace-normal!"
-                  }
-                >
-                  {r[c.key]}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+        ))}
+      </TableBody>
+    </Table>
   )
 }
 
@@ -208,7 +212,10 @@ export function Note({
       </AlertIcon>
       <AlertContent>
         <AlertTitle>{title}</AlertTitle>
-        <AlertDescription>{children}</AlertDescription>
+        {/* A description is a `div`, so the docs column's default does not reach
+            it. These run to three sentences and need the measure like any other
+            paragraph — the alert's border is not a reason to set a longer line. */}
+        <AlertDescription className="measure">{children}</AlertDescription>
       </AlertContent>
     </Alert>
   )

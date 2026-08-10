@@ -2,7 +2,7 @@
 @source "packages/dbui/src/components/**/*.tsx";
 @source "packages/dbui-shells/src/**/*.tsx";
 @source "packages/dbui-viz/src/**/*.tsx";
-@source "packages/dbui-genie/src/**/*.tsx";
+@source "packages/dbui-chat/src/**/*.tsx";
 @source "apps/portal/src/stories/**/*.tsx";
 /* canonical DBUI tokens (--db-* semantics + scale) — GENERATED from
    theme.config.mjs by `yarn design:tokens`. Additive: does not touch the
@@ -52,6 +52,42 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }
+}
+
+/* ─── Reading measure ───
+ *
+ * A cap for running text, so a paragraph breaks at a line the eye can return
+ * from. Reading text only: tables, token grids, the gallery, code blocks and
+ * shell previews take the article's full width, and several of them want more.
+ *
+ * `ch` rather than rem because the measure has to hold when the type moves, and
+ * the type moves two ways here — the footer's scale dial and the mobile type
+ * context. `ch` resolves against the element's own font, so one number gives the
+ * same line length at every step and in both contexts, while a rem cap would
+ * hand the 12px caption a third more characters than the 15px paragraph.
+ *
+ * 46, not the 65 that gets quoted. `ch` is the advance of "0", and in Figtree
+ * that is 1.444x the mean glyph in this repo's own prose — measured across all
+ * three reading steps, where the ratio is identical because it belongs to the
+ * typeface and not the size. So 46ch sets 66 characters, the middle of the
+ * comfortable 45-75 band, and 65ch would have set 95. */
+:root {
+  /* A custom property so the number is written once. `ch` inside a variable is
+     substituted as a token, so it still resolves against whichever element ends
+     up using it rather than against `:root`. */
+  --measure: 46ch;
+  /* The documentation column. Named here because three rules now need it —
+     `content-column`, `deck-column`, and any page that caps a block to the
+     column while sitting in the wide layout. See the block comment on
+     `.content-column` for why this is not a wider `--measure`. */
+  --column: 44rem;
+}
+
+/* Applied by a component that knows its own text is prose, wherever it renders
+   — the `/components` page is not in the docs column, and an alert description
+   is a `div` that the rule below does not reach. */
+@utility measure {
+  max-width: var(--measure);
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -167,15 +203,21 @@
  * Percentages rather than px so this composes with a reader who has raised
  * their browser's default font size instead of overriding them.
  *
- * The docs read at 1.2x. That is the bare `html` rule, so the default page
- * carries no state and the attribute only ever appears when a reader has
- * chosen otherwise. 1x and 1.4x stay one click away in the rail.
+ * The docs read at 1x, which is the ramp at its stated values: a step
+ * documented as 13px measures 13px on the page, and the portal agrees with the
+ * Figma library and with any app that ships the tokens untouched. Documentation
+ * that silently enlarged the system it documents made every measurement taken
+ * off it wrong by 20%.
+ *
+ * That is the bare `html` rule, so the default page carries no state and the
+ * attribute only ever appears when a reader has chosen otherwise. 1.2x and
+ * 1.4x stay one click away in the rail for reading comfort.
  */
 /* Unlayered on purpose. Tailwind's own rules live in @layer base, and an
    unlayered rule beats every layered one, so this cannot be undone by a
    preflight reset that happens to be emitted later. */
 html {
-  font-size: 120%;
+  font-size: 100%;
 }
 html[data-type-scale="1"] {
   font-size: 100%;
@@ -193,13 +235,73 @@ html[data-type-scale="1.4"] {
   }
   body {
     @apply bg-surface-base text-text-base;
-    /* The ramp's own body step, not a restated 13/20. Identical at 1x, and it
-       is the only reason unclassed text tracks the scale instead of staying
-       frozen while everything around it grows. */
-    font-size: var(--db-font-size-body);
-    line-height: var(--db-line-height-body);
+    /* The ramp's own body step, applied as the class rather than as the two
+       properties behind it. It is the only reason unclassed text tracks the
+       scale instead of staying frozen while everything around it grows, and
+       naming the utility means it also follows the active type context — the
+       stops `body` reads are free to change without this rule knowing. */
+    @apply type-body;
   }
   html {
     @apply font-sans;
+  }
+
+  /* ─── The documentation content column ───
+   *
+   * One region, two things that are always wanted together: how wide the column
+   * is, and the fact that text inside it is prose. They were separate before,
+   * which is how the width ended up written twice — once in the docs layout and
+   * once in `/components`, which is not under it. Naming the region is what
+   * makes it one thing to state rather than two to keep in step.
+   *
+   * Not the same as `--measure` above, and not a wider version of it either. The
+   * column is what tables, grids, figures and code blocks span, in `rem` because
+   * it tracks the page. The measure is the longest line of running text, in `ch`
+   * because it tracks the font. They are different quantities: this is 704px at
+   * the default scale and the measure resolves to 442px on a paragraph. The
+   * ragged right edge between them is the point, not a rounding error. */
+  .content-column {
+    max-width: var(--column);
+  }
+
+  /* The same prose default without the column, for a page whose content wants the
+   * whole container — a token table, an icon grid. The width is the container's;
+   * what this class is for is bringing the rule below, so a wide page does not
+   * restate the measure on every paragraph it happens to contain. */
+  .wide-column {
+    max-width: none;
+  }
+
+  /* A block that is prose but not running text — the deck under a page title. It
+   * takes the column rather than the measure, because 46ch broke the short decks
+   * onto a second line holding one word.
+   *
+   * It has to name the column explicitly rather than say `max-w-none`, which is
+   * what it did when every docs page was 44rem wide and "none" therefore meant
+   * "the column". On `(wide)` there is no container cap, so "none" became 1104px
+   * and the deck ran past 150 characters — the exact thing the measure exists to
+   * stop. Naming the width makes the deck read the same in both layouts. */
+  .deck-column {
+    max-width: var(--column);
+  }
+
+  /* The prose default. `measure` on a primitive only reaches text an author
+   * routed through one, and the docs are not written that way throughout: MDX
+   * pages emit bare `<p>` from markdown, the shells and patterns pages build
+   * their prose from data, and the principles page writes its own lede. Every
+   * one of those was still running past 100 characters after the primitives
+   * were capped, so the column states the default and a new page gets it
+   * however its author writes.
+   *
+   * Only `p`, `li` and `figcaption` — the three elements that in this column are
+   * running text and essentially nothing else. A table cell is a `td`, and a card
+   * or tile description is a `span` or a `div`, so both are outside the selector
+   * rather than needing an exception. Neither table nor grid changes width.
+   *
+   * `:where()` makes this specificity zero, and it sits in `@layer base` so every
+   * Tailwind utility outranks it in the cascade. A block that needs the full
+   * column says `max-w-none` and wins — the default is a default, not a rule. */
+  :where(.content-column, .wide-column) :where(p, li, figcaption) {
+    max-width: var(--measure);
   }
 }

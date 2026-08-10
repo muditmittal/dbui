@@ -10,7 +10,7 @@ import * as React from "react"
  * at a typical hero size, which stays comfortably inside a frame budget because
  * the per-dot work is a lerp and an arc.
  *
- * Honours prefers-reduced-motion by rendering the grid at rest and never
+ * Honors prefers-reduced-motion by rendering the grid at rest and never
  * animating it.
  */
 

@@ -67,7 +67,8 @@ export const regions: Region[] = [
       "w-[180px]",
       "shrink-0",
       "overflow-y-auto",
-      "px-3"
+      "px-3",
+      "py-1"
     ]
   },
   {
@@ -81,8 +82,7 @@ export const regions: Region[] = [
       "min-w-0",
       "min-h-0",
       "overflow-y-auto",
-      "border-border-base",
-      "rounded-2"
+      "border-border-base"
     ]
   },
   {
@@ -130,7 +130,8 @@ export const panels: Panel[] = [
       "w-[180px]",
       "shrink-0",
       "overflow-y-auto",
-      "px-3"
+      "px-3",
+      "py-1"
     ]
   },
   {
@@ -163,8 +164,7 @@ export const panels: Panel[] = [
       "w-[360px]",
       "shrink-0",
       "flex-col",
-      "border-border-base",
-      "rounded-2"
+      "border-border-base"
     ]
   }
 ]
@@ -177,7 +177,12 @@ export const scrollOwners: ScrollOwner[] = [
   },
   {
     "file": "packages/dbui-shells/src/components/PlatformNav.tsx",
-    "classes": "w-[180px] shrink-0 overflow-y-auto px-3",
+    "classes": "overflow-y-auto",
+    "kind": "column"
+  },
+  {
+    "file": "packages/dbui-shells/src/components/PlatformNav.tsx",
+    "classes": "w-[180px] shrink-0 overflow-y-auto px-3 py-1",
     "kind": "column"
   },
   {
@@ -197,7 +202,7 @@ export const scrollOwners: ScrollOwner[] = [
   },
   {
     "file": "packages/dbui-shells/src/shells/Base.tsx",
-    "classes": "flex-1 min-w-0 min-h-0 overflow-y-auto border-border-base rounded-2",
+    "classes": "flex-1 min-w-0 min-h-0 overflow-y-auto border-border-base",
     "kind": "column"
   },
   {
@@ -235,7 +240,7 @@ export const spacing: Spacing = {
     "value": "0.25rem",
     "resolvesTo": "calc(var(--db-spacing-unit) * var(--db-density-scalar))",
     "origin": "override",
-    "uses": 818,
+    "uses": 819,
     "files": 78
   }
 }

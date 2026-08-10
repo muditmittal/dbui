@@ -5,7 +5,7 @@ import { Badge } from "dbui/components/ui/badge"
 import { Button } from "dbui/components/ui/button"
 import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from "dbui/components/ui/empty"
 import { Input } from "dbui/components/ui/input"
-import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
+import { Tabs, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 import {
   Table,
   TableBody,
@@ -58,6 +58,16 @@ const CATEGORY_LABEL: Record<IconCategory, string> = {
 }
 
 /**
+ * Tab order, which is not the generated `iconCategories` order.
+ *
+ * Components first because it is the category a reader is most often in without
+ * having chosen it — a chevron, a caret, a close — and the one whose icons must
+ * never be borrowed as decoration. Then the three that describe content, in the
+ * order the four-categories table reads them: a thing, a verb, a state.
+ */
+const TAB_ORDER: IconCategory[] = ["component", "object", "action", "indicator"]
+
+/**
  * Name, label, area and synonyms in one lowercased string. Built once when the
  * module loads rather than per keystroke, and joined rather than searched field
  * by field so a query can span two of them — "table stream" matches an icon
@@ -100,34 +110,43 @@ function IconGlyph({ glyph }: { glyph: Glyph | undefined }) {
 }
 
 export function IconBrowser() {
-  const [category, setCategory] = React.useState<IconCategory | "all">("all")
+  const [category, setCategory] = React.useState<IconCategory>(TAB_ORDER[0])
   const [query, setQuery] = React.useState("")
   const [expanded, setExpanded] = React.useState(false)
   const [glyphs, setGlyphs] = React.useState<Record<string, Glyph>>({})
   const requested = React.useRef(new Set<IconCategory>())
   const top = React.useRef<HTMLDivElement>(null)
 
+  // The field owns the caret; the table is allowed to arrive a frame later.
+  // Filtering is cheap, but the list it produces is not, and a deferred value
+  // is what keeps a fast typist from ever waiting on a row.
+  const deferredQuery = React.useDeferredValue(query)
+  const searching = deferredQuery.trim().length > 0
+
+  /**
+   * A query searches the WHOLE set, not the open tab.
+   *
+   * The tabs answer "show me the icons for a job", which is the question someone
+   * meeting the set has. A search answers "where is the one I already know
+   * exists", which is why anyone comes back — and scoping that to whichever tab
+   * happened to be open would hide the answer and give no clue why. So while a
+   * query is present the tabs stop filtering and each row says which category it
+   * came from instead.
+   */
   React.useEffect(() => {
-    for (const key of category === "all" ? iconCategories : [category]) {
+    for (const key of searching ? iconCategories : [category]) {
       if (requested.current.has(key)) continue
       requested.current.add(key)
       glyphChunks[key]().then((chunk) => {
         setGlyphs((loaded) => ({ ...loaded, ...chunk.default }))
       })
     }
-  }, [category])
-
-  // The field owns the caret; the table is allowed to arrive a frame later.
-  // Filtering is cheap, but the list it produces is not, and a deferred value
-  // is what keeps a fast typist from ever waiting on a row.
-  const deferredQuery = React.useDeferredValue(query)
+  }, [category, searching])
 
   const matches = React.useMemo(() => {
     const q = deferredQuery.trim().toLowerCase()
-    return searchable
-      .filter((entry) => category === "all" || entry.icon.category === category)
-      .filter((entry) => !q || entry.haystack.includes(q))
-      .map((entry) => entry.icon)
+    if (q) return searchable.filter((entry) => entry.haystack.includes(q)).map((entry) => entry.icon)
+    return searchable.filter((entry) => entry.icon.category === category).map((entry) => entry.icon)
   }, [category, deferredQuery])
 
   // A new filter is a new list, so it closes back to one window. Leaving it open
@@ -154,38 +173,78 @@ export function IconBrowser() {
         switching category or clearing the search used to mean scrolling back to
         the top first, which is the one thing a browser of 456 rows must not ask.
       */}
-      <StickyBar className="flex flex-col gap-3 border-b border-border-base pt-1 pb-3">
+      {/* The bottom edge comes from `StickyBar` itself now — see the note there. */}
+      <StickyBar className="flex flex-col gap-3 pt-1 pb-3">
         {/*
-          The switcher takes the full measure on its own row. Five segments and a
-          field side by side overrun 44rem, and squeezing the segments is the
-          worse trade: the labels are the only thing telling a reader what a
-          category is.
+          The field leads. Search is why anyone returns to this page, and it is
+          the one control that works no matter which category is open — putting
+          the tabs above it made the narrower question look like the first one.
         */}
-        <SegmentControl
-          className="flex w-full"
-          value={[category]}
-          onValueChange={(next) => setCategory((next[0] as IconCategory | "all") ?? "all")}
-          aria-label="Icon category"
-        >
-          <SegmentControlItem value="all">All</SegmentControlItem>
-          {iconCategories.map((key) => (
-            <SegmentControlItem key={key} value={key}>
-              {CATEGORY_LABEL[key]}
-            </SegmentControlItem>
-          ))}
-        </SegmentControl>
+        <Input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search a name, a concept or a synonym"
+          aria-label="Search icons"
+        />
 
-        <div className="flex items-center gap-4">
-          <Input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search a name, a concept or a synonym"
-            aria-label="Search icons"
-          />
-          <span className="type-label shrink-0 text-text-subtle" aria-live="polite">
-            {matches.length} of {icons.length}
-          </span>
+        {/*
+          Tabs or a count, never both, in a slot tall enough for the taller of
+          the two so the table below does not jump on the first keystroke.
+
+          A query searches all four categories, so the tabs stop deciding
+          anything the moment one is typed. Leaving them up would show a
+          selected category the list is ignoring, which is worse than showing
+          nothing: the reader would read the results as that category's.
+        */}
+        <div className="flex min-h-12 items-center">
+          {searching ? (
+            // aria-hidden because the live region below says the same words, and
+            // the announcement should come from the change rather than from the
+            // reader happening to cross this line.
+            <p aria-hidden className="type-label text-text-subtle">
+              {matches.length} {matches.length === 1 ? "match" : "matches"} found
+            </p>
+          ) : (
+            /*
+              variant="pill" rather than the underline the Tokens section bar
+              uses. Both pages carry a strip under the deck, but a click here
+              replaces the table where there it jumps down one long page, and the
+              component's own constraint puts a fill on the first and a rule on
+              the second.
+
+              border-b-0 because `StickyBar` draws that rule, and two on stacked
+              elements read as one thick one. The first version of this override
+              said "because the field row sits between this strip and the table",
+              which stopped being true the moment those two rows were swapped —
+              a reason about layout order does not survive a reorder. This one is
+              about which element owns the edge, and it holds either way.
+            */
+            <Tabs value={category} onValueChange={(next) => setCategory(next as IconCategory)}>
+              <TabsList
+                variant="pill"
+                width="full"
+                aria-label="Icon category"
+                className="border-b-0"
+              >
+                {TAB_ORDER.map((key) => (
+                  <TabsTrigger key={key} value={key}>
+                    {CATEGORY_LABEL[key]}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          )}
         </div>
+
+        {/*
+          Mounted in both states and empty in one, because a live region has to
+          exist before the text arrives for the change to be announced — one
+          inserted on the first keystroke is read late or not at all. Out of flow
+          under `sr-only`, so it adds no gap.
+        */}
+        <span className="sr-only" aria-live="polite">
+          {searching ? `${matches.length} matches found` : ""}
+        </span>
       </StickyBar>
 
       {matches.length === 0 ? (
@@ -199,54 +258,61 @@ export function IconBrowser() {
           </EmptyHeader>
         </Empty>
       ) : (
-        <div className="overflow-hidden rounded-2 border border-border-base">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="type-label-bold w-11 pl-3" aria-label="Preview" />
-                <TableHead className="type-label-bold w-52">Name</TableHead>
-                <TableHead className="type-label-bold">What the tag says</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {shown.map((icon) => (
-                <TableRow key={icon.name}>
-                  <TableCell className="w-11 py-1.5 pl-3">
-                    <IconGlyph glyph={glyphs[icon.name]} />
-                  </TableCell>
-                  <TableCell className="type-code w-52 py-1.5 text-text-base">
-                    {icon.name}
-                  </TableCell>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="type-label-bold w-11 pl-3" aria-label="Preview" />
+              <TableHead className="type-label-bold w-52">Name</TableHead>
+              <TableHead className="type-label-bold">What the tag says</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {shown.map((icon) => (
+              <TableRow key={icon.name}>
+                <TableCell className="w-11 py-1.5 pl-3">
+                  <IconGlyph glyph={glyphs[icon.name]} />
+                </TableCell>
+                <TableCell className="type-code w-52 py-1.5 text-text-base">
+                  {icon.name}
+                </TableCell>
+                {/*
+                  One line per icon. The label, the area and the synonyms fit
+                  inside the measure for all but the longest few, and those
+                  wrap rather than clip — the synonyms are the field that makes
+                  the set searchable, so none of it may be hidden.
+                */}
+                <TableCell className="py-1.5 whitespace-normal!">
                   {/*
-                    One line per icon. The label, the area and the synonyms fit
-                    inside the measure for all but the longest few, and those
-                    wrap rather than clip — the synonyms are the field that makes
-                    the set searchable, so none of it may be hidden.
+                    Wider than the gap inside the row, because the label and
+                    the synonyms are the same size and only differ in weight of
+                    color — without the space they read as one run of words.
                   */}
-                  <TableCell className="py-1.5 whitespace-normal!">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
+                    <span className="type-body text-text-base">{icon.label}</span>
                     {/*
-                      Wider than the gap inside the row, because the label and
-                      the synonyms are the same size and only differ in weight of
-                      color — without the space they read as one run of words.
+                      Only while searching. A results list spans all four
+                      categories, and the category is the field that decides
+                      whether the icon may be used where the reader wants it —
+                      inside a tab it is the tab's own label repeated 200 times.
                     */}
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
-                      <span className="type-body text-text-base">{icon.label}</span>
-                      {icon.area ? <Badge variant="outline">{icon.area}</Badge> : null}
-                      {icon.mapped === false ? (
-                        <Badge variant="warning">Not in the maps</Badge>
-                      ) : null}
-                      {icon.synonyms?.length ? (
-                        <span className="type-body text-text-subtle">
-                          {icon.synonyms.join(", ")}
-                        </span>
-                      ) : null}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+                    {searching ? (
+                      <Badge>{CATEGORY_LABEL[icon.category]}</Badge>
+                    ) : null}
+                    {icon.area ? <Badge variant="outline">{icon.area}</Badge> : null}
+                    {icon.mapped === false ? (
+                      <Badge variant="warning">Not in the maps</Badge>
+                    ) : null}
+                    {icon.synonyms?.length ? (
+                      <span className="type-body text-text-subtle">
+                        {icon.synonyms.join(", ")}
+                      </span>
+                    ) : null}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )}
 
       {/*

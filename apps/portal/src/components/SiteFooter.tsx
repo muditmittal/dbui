@@ -20,7 +20,7 @@ const FIGMA_URL = "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Desi
 
 const LINKS = [
   { href: FIGMA_URL, label: "Figma", external: true },
-  // Redirects to the raw install guide, which is what an agent fetches.
+  // Human install page. Agents fetch /install.md.
   { href: "/install", label: "Install", external: false },
   { href: "https://github.com/muditmittal/dbui", label: "GitHub", external: true },
 ]

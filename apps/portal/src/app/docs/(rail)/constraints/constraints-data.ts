@@ -4,288 +4,187 @@
  * Every field is a plain string and nothing here imports React, so the whole
  * array can be handed to an agent without rendering anything. That is the point
  * rather than a convenience: a constraint that only exists as a rendered page
- * cannot reach the thing writing the code. `page.tsx` is one view of this file.
+ * cannot reach the thing writing the code.
  *
- * A row earns its place by closing something off. `forbids` names what stops
- * being possible, `buys` names what you may therefore rely on and `broken`
- * names the observation that proves it was ignored. A sentence that cannot fill
- * those three is a rule about what to type, and the linter owns those.
+ * ── What this page is for ──
  *
- * `principle` is the aspect word of the principle a constraint serves, matching
- * the eyebrow on `/docs/principles`. Empty means none of the six covers it,
- * which is a finding rather than an omission.
+ * Constraints are the responsibility layer. Companies run their business on
+ * what sits behind these screens, and each entry closes off a way the interface
+ * could mislead the person accountable for it.
  *
- * `check` says who can see the violation. Nothing says `lint`, because no rule
- * in the React linter reads structure or behavior. That gap is stated on the
- * page.
+ * Craft is not here. `/docs/principles` owns it. The split is what each page
+ * settles: a principle decides between two designs that are both defensible,
+ * and a constraint is a line that does not bend when a deadline argues with it.
  *
- * `gap` is required wherever the system cannot honor the constraint today.
- * A constraint the components contradict is worth more written down than left
- * out, and less than nothing written down as though it held.
+ * That split is a correction, not a preference. This page used to hold
+ * seventeen constraints across Closed sets, Interaction and Behavior, and seven
+ * of them restated a don't already published on `/docs/principles` — motion
+ * explaining a change, the delayed loading indicator, one primary action per
+ * surface, automation showing its work first, a number carrying its source.
+ * A page that is the negative of another page has not earned its place. What
+ * was craft went back to whichever file already owned it; what was left is
+ * below, joined by the three subjects nothing in the system covered at all:
+ * custody, dark patterns and stewardship of the commons.
+ *
+ * `notes/constraints-page-cuts.md` holds the retired craft rows verbatim,
+ * including the system gaps each one recorded, and names the owner each moved
+ * to. Nothing was dropped without a forwarding address.
+ *
+ * ── The shape ──
+ *
+ * The same shape as `/docs/principles`: an aspect, a claim, and three
+ * independent dos and don'ts rather than three mirrored pairs. As there, the
+ * last don't in each set is what the constraint gives up. A constraint that
+ * costs nothing is a slogan.
+ *
+ * `broken` is the observation that proves the line was crossed, and it is
+ * required. A rule whose failure cannot be described as something a person can
+ * see is a preference, and two reviewers will disagree about a preference
+ * forever. `check` says who can see it — nothing says `lint`, because no rule
+ * in the React linter reads structure, behavior or intent.
+ *
+ * Neither `broken` nor `check` renders. They are here because they are what
+ * qualifies a row to be on this page at all, and because the CLI is meant to
+ * lift this array unchanged.
  */
 
 export type Constraint = {
   id: string
-  group: string
-  /** The closure, in the form worth remembering. */
+  /** The dimension of responsibility this closes off. */
+  aspect: string
+  /** The line, in the form worth remembering. */
   statement: string
-  forbids: string
-  buys: string
+  meaning: string
+  dos: string[]
+  donts: string[]
+  /** The observation that proves the line was crossed. */
   broken: string
-  /** Aspect word from `/docs/principles`, or empty when none of the six applies. */
-  principle: string
-  /** Where the system falls short of its own constraint. */
-  gap?: string
   check: "review" | "screen"
 }
 
-export const CONSTRAINT_GROUPS = [
-  {
-    name: "Closed sets",
-    summary:
-      "What the system refuses to grow. Every other constraint rests on these, because none of them can hold while the vocabulary is still expanding.",
-  },
-  {
-    name: "Interaction",
-    summary:
-      "What a control does in the moment it is used. The thinnest group here, and the section on gaps says why.",
-  },
-  {
-    name: "Behavior",
-    summary:
-      "What the product does with data between one click and the next. Where a workbench differs from a website.",
-  },
-] as const
-
 export const CONSTRAINTS: Constraint[] = [
   {
-    id: "S1",
-    group: "Closed sets",
-    statement: "Status is four words and nothing adds a fifth.",
-    forbids:
-      "A fifth sentiment, and a synonym for one of the four — danger, error, success, confirm.",
-    buys:
-      "A color anywhere in the product means one of four things, so the vocabulary is learned once and read everywhere.",
-    broken:
-      "A token, a badge variant or a sentence names a state the four do not already cover.",
-    principle: "Visuals",
-    check: "review",
-  },
-  {
-    id: "S2",
-    group: "Closed sets",
-    statement: "Text has four weights of emphasis and opacity never makes a fifth.",
-    forbids: "An opacity utility standing in for a de-emphasized foreground.",
-    buys:
-      "Every foreground has a contrast ratio measured against the surface it belongs on. A color arrived at by opacity has none, and nothing measures it later.",
-    broken: "An opacity utility on text, or on a control that holds text.",
-    gap: "Nine components dim a disabled control with `opacity-50` rather than the three disabled tokens, so the system breaks this itself.",
-    principle: "Evidence",
-    check: "review",
-  },
-  {
-    id: "S3",
-    group: "Closed sets",
-    statement: "Chart color and interface color never cross.",
-    forbids:
-      "Picking a hue for a series by hand, and using a chart color to carry a state.",
-    buys:
-      "A mark can never be mistaken for a status, which is the one confusion a data product cannot afford.",
-    broken:
-      "A chart module resolves a hue directly, or a status renders in a chart color.",
-    gap: "The chart semantics carry a categorical ramp and a sequential ramp and nothing else. A chart that means healthy or unhealthy borrows `status-text-*` today, so the constraint holds in one direction only.",
-    principle: "Visuals",
-    check: "review",
-  },
-  {
-    id: "S4",
-    group: "Closed sets",
-    statement: "A missing component is a gap to report, not a component to build.",
-    forbids: "A one-off control, and any icon package.",
-    buys:
-      "Everything on screen carries documented rules, so a review reads rules rather than taste.",
-    broken:
-      "A screen renders an interactive element no package exports. The linter catches a raw element and an unknown import. It does not catch a one-off assembled correctly out of parts.",
-    principle: "Restraint",
-    check: "review",
-  },
-
-  {
-    id: "I1",
-    group: "Interaction",
-    statement: "Nothing moves under the pointer.",
-    forbids:
-      "A control that resizes when it takes a busy state, a region that shifts its own trigger as it opens, and a bar that reflows the table above it.",
-    buys:
-      "A second click lands where it was aimed. At a table's density that is the difference between selecting a row and opening one.",
-    broken: "Click twice in the same place and the second click hits something else.",
-    principle: "Visuals",
-    check: "screen",
-  },
-  {
-    id: "I2",
-    group: "Interaction",
-    statement: "A loading indicator is delayed and then held. It never flashes.",
-    forbids:
-      "An indicator that can appear and disappear inside the time it takes to notice it.",
-    buys: "A screen on a fast network is still.",
-    broken: "A spinner blinks on a response that was already fast.",
-    gap: "No token defines the threshold and neither `Spinner` nor `Progress` carries a delay, so every surface picks its own number or picks none.",
-    principle: "Restraint",
-    check: "screen",
-  },
-  {
-    id: "I3",
-    group: "Interaction",
-    statement: "Zero rows and unknown rows never render the same.",
-    forbids: "An empty state while a request is in flight.",
-    buys:
-      "An empty state is always a fact about the data rather than a fact about the network.",
-    broken: "An empty state appears and is then replaced by rows.",
-    principle: "Evidence",
-    check: "screen",
-  },
-  {
-    id: "I4",
-    group: "Interaction",
-    statement: "Nothing is reachable only by hover.",
-    forbids:
-      "An action that exists only inside a hover surface, and a row control that appears on hover with no keyboard route to it.",
-    buys: "Touch and the keyboard reach everything the mouse does.",
-    broken: "Tab through the screen and a control never takes focus.",
-    principle: "",
-    check: "screen",
-  },
-  {
-    id: "I5",
-    group: "Interaction",
-    statement: "Motion explains a change or does not happen.",
-    forbids: "An entrance, a pulse or a transition that marks no change of state.",
-    buys:
-      "Movement carries meaning, so it can be watched for rather than tuned out.",
-    broken: "Something animates and nothing about the screen is different afterwards.",
-    gap: "The three duration tokens have no consumer. Every transition in the components runs at the bundler's default, so the system has an opinion about when to move and no value for how long.",
-    principle: "Visuals",
-    check: "screen",
-  },
-  {
-    id: "I6",
-    group: "Interaction",
-    statement: "One primary action per surface, and it is never destructive.",
-    forbids:
-      "Two filled buttons competing on one surface, and a destructive control reachable before a confirmation.",
-    buys:
-      "The main action is found without reading, and nothing irreversible sits where the eye goes first.",
-    broken:
-      "Two filled buttons in one header, or a red filled button that runs on the first click.",
-    principle: "Restraint",
-    check: "review",
-  },
-
-  {
-    id: "B1",
-    group: "Behavior",
-    statement: "Friction matches the blast radius, in both directions.",
-    forbids:
-      "An irreversible action that runs without naming its consequence, and a dialog on something reversible.",
-    buys:
-      "A confirmation carries information, because it stays rare enough to still be read.",
-    broken:
-      "A dialog says nothing the button label did not, or something wide runs on one click.",
-    principle: "Automation",
-    check: "review",
-  },
-  {
-    id: "B2",
-    group: "Behavior",
-    statement: "A selection is lost only when its objects are.",
-    forbids:
-      "Clearing a selection on a page turn, a sort or a refresh, and keeping rows selected that a filter has removed.",
-    buys:
-      "The count beside a bulk action is always true, which is the only thing that makes the action safe to press.",
-    broken:
-      "The count changes for a reason the reader did not cause, or fails to change when they did.",
-    principle: "Audience",
-    check: "screen",
-  },
-  {
-    id: "B3",
-    group: "Behavior",
-    statement: "What narrows a view lives in the URL.",
-    forbids: "Holding filters, search or sort only in memory.",
-    buys: "A shared link, a reload and the back button all show the same rows.",
-    broken: "Reloading a filtered page returns the unfiltered one.",
-    gap: "Nothing in the system does this. There is no filter-bar composition, so URL synchronization is written per surface and correct per surface.",
-    principle: "Audience",
-    check: "screen",
-  },
-  {
-    id: "B4",
-    group: "Behavior",
-    statement: "An incomplete answer says so where the number is.",
-    forbids:
-      "A value derived from a sample, a truncation or a cache rendered as a plain value, and a permission filter that removes rows silently.",
-    buys: "A number with no marker on it is a number that was checked.",
-    broken:
-      "A banner at the top of a region is the only place the caveat appears, or the value survives being copied out without it.",
-    gap: "Nothing in DBUI carries provenance. No component pairs a value with its freshness, its scope or its completeness, so the marker is composed differently on every surface.",
-    principle: "Evidence",
-    check: "review",
-  },
-  {
-    id: "B5",
-    group: "Behavior",
-    statement: "A partial failure is never reported as a success.",
-    forbids: "A summary that counts what succeeded and not what did not.",
-    buys:
-      "The exact set that failed can be retried, instead of running the whole operation again.",
-    broken: "An operation over many objects reports one outcome.",
-    principle: "Voice",
-    check: "review",
-  },
-  {
-    id: "B6",
-    group: "Behavior",
-    statement: "Work that outlives the click gets an identity the reader can return to.",
-    forbids:
-      "Holding a reader on a screen for work that has a run, and letting a toast be the only record that something happened.",
-    buys:
-      "Navigating away is never a loss, which is what lets the interface release someone rather than trap them.",
-    broken: "Closing the tab is the only way to find out what happened.",
-    gap: "There is no run component. A named operation with elapsed time, a cancel and a link to its result is rebuilt on every surface that has runs.",
-    principle: "Automation",
-    check: "screen",
-  },
-  {
-    id: "B7",
-    group: "Behavior",
-    statement: "Automation shows what it will do before it does it.",
-    forbids: "A generated query, filter or bulk edit that executes and shows only its result.",
-    buys:
-      "The decision stays with the person, which is what makes generation usable on data someone is accountable for.",
+    id: "C1",
+    aspect: "Agency",
+    statement: "The machine prepares, the person decides",
+    meaning:
+      "Automation earns its place by handing the decision back, visibly, wherever judgment is required. On data someone is accountable for, generation is only usable if the generated thing can be read before it runs.",
+    dos: [
+      "Show what was generated before it runs",
+      "Make an automated action visible and reversible",
+      "Pause where the consequence is wide or irreversible",
+    ],
+    donts: [
+      "Run generated work and show only its result",
+      "Put the opt-out behind an administrator",
+      "Build a flow that never pauses for a decision",
+    ],
     broken: "The outcome is visible and the thing that produced it is not.",
-    principle: "Automation",
+    check: "review",
+  },
+  {
+    id: "C2",
+    aspect: "Accountability",
+    statement: "Nothing is asserted without a way to check it",
+    meaning:
+      "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads as confidently as a right one — the trace is what tells them apart.",
+    dos: [
+      "Show the query behind a generated answer",
+      "State freshness and completeness on the value itself, not in a banner above it",
+      "Report which objects failed, not how many succeeded",
+    ],
+    donts: [
+      "Present a number with no way back to its source",
+      "Report a partial failure as a success",
+      "Trade the trace away to save space",
+    ],
+    broken:
+      "A value survives being copied out of the screen without the caveat that qualified it, or an operation over many objects reports one outcome.",
+    check: "review",
+  },
+  {
+    id: "C3",
+    aspect: "Custody",
+    statement: "Data never appears or moves without its boundary",
+    meaning:
+      "Companies run their business on what sits behind these screens. What a person can see, and where it goes when they act, is never left implied.",
+    dos: [
+      "Name the permission that is missing when something is not visible",
+      "Say when a permission removed rows, rather than showing a shorter list",
+      "Name the destination before data leaves the surface it is on",
+    ],
+    donts: [
+      "Render a permission-filtered result as though it were the whole",
+      "Move, copy or export on an action that did not say so",
+      "Keep a total clean when the honest one needs a caveat",
+    ],
+    broken:
+      "Two people with different grants see the same count and neither is told why, or data reaches a destination the control that sent it never named.",
+    check: "review",
+  },
+  {
+    id: "C4",
+    aspect: "Honesty",
+    statement: "Nothing is built to work against the reader",
+    meaning:
+      "Every interface choice is also a choice about whose interest it serves. A pattern that lifts a number by making someone act against their own judgment is a defect, whatever it does to the number.",
+    dos: [
+      "Make the safe path at least as easy as the destructive one",
+      "Default to the reversible choice",
+      "Let leaving cost no more than arriving",
+    ],
+    donts: [
+      "Pre-select the riskier option, or word a decline so that declining costs something",
+      "Manufacture urgency the system does not have",
+      "Trade a person's judgment for a better number",
+    ],
+    broken:
+      "The destructive control takes fewer clicks than the safe one, or the decline is worded as a loss.",
+    check: "screen",
+  },
+  {
+    id: "C5",
+    aspect: "Stewardship",
+    statement: "No surface optimizes itself at the system's expense",
+    meaning:
+      "The system is a commons, and every local exception is withdrawn from a shared vocabulary that only works while everyone spends it. A gap reported is worth more than a gap worked around.",
+    dos: [
+      "Report a missing component as a gap",
+      "Spend the closed sets rather than extending them",
+      "Fix the shared thing when the local fix would have been faster",
+    ],
+    donts: [
+      "Build a one-off where a component already exists",
+      "Add a fifth value to a set that closed at four",
+      "Take the fast local fix over the slower shared one",
+    ],
+    broken:
+      "A screen renders an interactive element no package exports, or a token, badge variant or sentence names a state the closed set does not already carry.",
     check: "review",
   },
 ]
 
 /**
- * Candidates that were collected and cut. Listed because the cut is the
- * argument: a page of sixty entries where half are lint rules teaches nobody
- * what a constraint is.
+ * Kinds of rule that do not belong on this page, and where each goes instead.
+ * Listed because the exclusion is the argument: a page that accepts everything
+ * teaches nobody what a constraint is.
  */
 export const CUT = [
   {
+    kind: "Craft",
+    why: "Density, motion, hierarchy, the delayed loading indicator, one primary action per surface. These decide between two defensible designs, which is what a principle is for. `/docs/principles` owns them.",
+  },
+  {
     kind: "Anything the linter reads",
-    why: "A semantic token over a hex, a type class unpaired with `leading-`, a padding on the space family. Those say what to type. `yarn dbui check` already refuses them, and a constraint that a machine settles does not need a page.",
+    why: "A semantic token over a hex, a type class unpaired with `leading-`, a padding on the space family. Those say what to type. `yarn dbui check` already refuses them, and a machine-settled question needs no page.",
+  },
+  {
+    kind: "Token rules",
+    why: "The four status words, the four weights of emphasis, chart color never crossing interface color. `docs/token-rules.md` states these as R2 and R10 and the generator enforces the closed sets. Restating them here made a second owner.",
   },
   {
     kind: "Component thresholds",
     why: "Ten options before a `Combobox`, seven tabs, five breadcrumb levels. These pick between two components rather than closing a possibility, and they are already the component's own JSDoc.",
-  },
-  {
-    kind: "Facts of construction",
-    why: "Primitives ship in no CSS. Nothing can consume one, so nothing can break it. A constraint that cannot be violated is an architecture note.",
   },
   {
     kind: "Preferences",
