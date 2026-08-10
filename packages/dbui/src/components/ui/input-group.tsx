@@ -15,6 +15,24 @@ import { Textarea } from "./textarea"
  * @constraint Inner input must use InputGroupInput, not plain Input
  * @constraint Don't nest InputGroups
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3178-3973
+ *
+ * The shell owns the border and the focus ring; the inner control draws neither.
+ * Two things were removed here for that to hold.
+ *
+ * `active:border-focus-ring` gave a pressed group the focus color, so press and
+ * focus were indistinguishable and the focus token described something that was
+ * not focus. No other input control carries a press border, so the group now
+ * matches them.
+ *
+ * A pair of `in-data-[slot=combobox-content]:focus-within:*` rules used to strip
+ * the border and ring from a group nested inside a combobox popup — which is
+ * where the popup's own search field lives. That suppressed the indicator on the
+ * one element actually holding focus, which fails WCAG 2.4.7. It had also
+ * stopped working: it cancelled `ring-0`, and the treatment moved to
+ * `shadow-focus`, which is a box-shadow that `ring-0` does not touch. So it was
+ * both wrong and dead. The search field in a popup now shows focus like any
+ * other field, and the trigger loses it because the popup is portalled out of
+ * the trigger's subtree and `focus-within` no longer matches.
  */
 
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
@@ -23,7 +41,24 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="input-group"
       role="group"
       className={cn(
-        "group/input-group relative flex h-8 w-full min-w-0 items-center rounded-1 border border-input-border-base bg-surface-base shadow-xs transition-colors outline-none hover:border-input-border-hover active:border-focus-ring in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0 has-disabled:bg-surface-disabled has-disabled:border-border-disabled has-disabled:shadow-none has-[[data-slot=input-group-control]:focus-visible]:border-focus-ring has-[[data-slot][aria-invalid=true]]:border-action-negative-base has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/20 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto dark:bg-surface-strong/30 dark:has-disabled:bg-surface-strong/80 dark:has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/40 has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-2 has-[>[data-align=inline-start]]:[&>input]:pl-2",
+        // Focus thickens this control's own edge rather than ringing it. Everything
+        // else in the system takes the ring, and that stays true — the ring is for a
+        // control with one edge to draw around. A group's edge is shared with the
+        // addon sitting inside it, so a ring around the whole assembly says the
+        // addon has focus when only the field does.
+        //
+        // The 2px comes from the 1px border plus a 1px inset ring, not from
+        // `border-2`. Widening the border eats a pixel of the inside, which drops the
+        // group's inner radius to 2px while the flush addon's outer corner stays at
+        // 4px — the corner then pokes through the curve. An inset ring changes no
+        // geometry, so the radii keep matching and nothing shifts on focus.
+        //
+        // Deliberately not `overflow-hidden`. Clipping was the obvious way to make
+        // a flush addon follow the group's corners, and it does — but a parent
+        // that clips also clips a *child's* focus ring, so the addon button's
+        // indicator came out sliced to a hard square on three sides. The addon
+        // carries its own corner instead.
+        "group/input-group relative flex h-8 w-full min-w-0 items-center rounded-1 border border-input-border-base bg-surface-base shadow-xs transition-colors outline-none hover:border-input-border-hover has-disabled:bg-surface-disabled has-disabled:border-border-disabled has-disabled:shadow-none has-[[data-slot=input-group-control]:focus-visible]:border-focus-ring has-[[data-slot=input-group-control]:focus-visible]:inset-ring-1 has-[[data-slot=input-group-control]:focus-visible]:inset-ring-focus-ring has-[[data-slot][aria-invalid=true]]:border-action-negative-base has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/20 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto dark:bg-surface-strong/30 dark:has-disabled:bg-surface-strong/80 dark:has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/40 has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-2 has-[>[data-align=inline-start]]:[&>input]:pl-2",
         className
       )}
       {...props}
@@ -38,8 +73,25 @@ const inputGroupAddonVariants = cva(
       align: {
         "inline-start":
           "order-first pl-2 has-[>button]:-ml-1 has-[>kbd]:-ml-0.5",
-        "inline-end":
-          "order-last pr-2 has-[>button]:-mr-1 has-[>kbd]:-mr-0.5",
+        // A trailing addon is a cell of the control, not something floating in
+        // it. Figma's set draws a rule between the field and the addon, and the
+        // addon runs edge to edge behind it.
+        //
+        // So: `self-stretch` for full height, the seam as a left border, and no
+        // padding of its own — a button child fills the cell instead of sitting
+        // inset inside it with its own rounded corners. Square on the seam side,
+        // the group's own corner on the outer side.
+        "inline-end": [
+          "order-last self-stretch border-l border-input-border-base p-0",
+          "[&>button]:h-full [&>button]:shape-l-square [&>button]:shape-r-control [&>button]:px-3",
+          // An icon-only addon is square rather than text-width.
+          "[&>button:has(>svg:only-child)]:aspect-square [&>button:has(>svg:only-child)]:px-0",
+          // The addon takes the same thickened edge as the field, so focus reads the
+          // same whichever half of the group holds it. Its own ring would also sit
+          // half outside the group and collide with the group's border.
+          "[&>button]:focus-visible:shadow-none [&>button]:focus-visible:inset-ring-2 [&>button]:focus-visible:inset-ring-focus-ring",
+          "has-[>kbd]:pr-2 has-[>kbd]:pl-2",
+        ].join(" "),
         "block-start":
           "order-first w-full justify-start px-3 pt-2 group-has-[>input]/input-group:pt-2 [.border-b]:pb-2",
         "block-end":
@@ -134,7 +186,12 @@ function InputGroupInput({
     <Input
       data-slot="input-group-control"
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
+        // The group draws focus, so the control must not. `Input` brings
+        // `focus-visible:shadow-focus`, and `shadow-none` here does not cancel it —
+        // the two sit in different variant groups, so both survive `cn()`. Left
+        // alone it rings the control, which is a borderless flex child ending at the
+        // seam, so the indicator came out as a hard box around the field only.
+        "flex-1 shape-square border-0 bg-transparent shadow-none ring-0 focus-visible:shadow-none focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}
@@ -150,7 +207,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none ring-0 focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
+        "flex-1 resize-none shape-square border-0 bg-transparent py-2 shadow-none ring-0 focus-visible:shadow-none focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}

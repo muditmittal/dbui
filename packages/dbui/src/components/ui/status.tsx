@@ -61,6 +61,17 @@ const statusIconMap: Record<StatusType, Record<"sm" | "md", React.ComponentType<
   error: { sm: DangerSmall, md: Danger },
 }
 
+/**
+ * Statuses whose icon turns. `Running` is drawn as two opposing arcs precisely so it
+ * can — its own icon doc lists "spinning" as the intent.
+ *
+ * `motion-safe:` rather than a bare `animate-spin`: Status requires a text label
+ * beside the icon, so the label carries the state and the motion only reinforces it.
+ * `Spinner` is deliberately left unguarded — rotation is its only signal, and a
+ * stopped spinner says nothing.
+ */
+const spinningStatuses = new Set<StatusType>(["running"])
+
 const statusColorMap: Record<StatusType, string> = {
   online: "text-status-text-positive",
   ready: "text-status-text-positive",
@@ -99,7 +110,12 @@ function Status({
       )}
       {...props}
     >
-      <Icon className="size-4" />
+      <Icon
+        className={cn(
+          "size-4",
+          spinningStatuses.has(status) && "motion-safe:animate-spin"
+        )}
+      />
     </span>
   )
 }

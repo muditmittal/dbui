@@ -19,7 +19,6 @@ import { Letters } from "../icons/Letters"
 import { Folder } from "../icons/Folder"
 import { FolderFill } from "../icons/FolderFill"
 import { FolderOpen } from "../icons/FolderOpen"
-import { FolderBranch } from "../icons/FolderBranch"
 import { FolderBranchFill } from "../icons/FolderBranchFill"
 import { FolderOpenBranch } from "../icons/FolderOpenBranch"
 import { FolderCube } from "../icons/FolderCube"
@@ -50,7 +49,7 @@ import { Query } from "../icons/Query"
  * @guideline Each node must have an icon — tree is icon-first
  * @guideline Reach for L2 wrappers (`<DataTree>` / `<FileTree>`) for typed asset trees; drop down to L1 (`<Tree>` + `<TreeNode>`) only when you need a custom hierarchy
  * @constraint Section headers use Hint style (12px Regular muted-foreground)
- * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3211-5106
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3179-24295
  */
 
 // ─── Context for tracking last-expanded node ───
@@ -172,8 +171,6 @@ function TreeSection({
 
 // ─── TreeNode — folder or file node (matches Figma `.TreeNode`) ───
 
-let treeNodeCounter = 0
-
 function TreeNode({
   className,
   nodeId: nodeIdProp,
@@ -251,7 +248,18 @@ function TreeNode({
   ).length
   const isExpandable = expandable || childCount > 0
 
-  const idRef = React.useRef(nodeIdProp ?? `tree-node-${++treeNodeCounter}`)
+  /**
+   * `useId`, not a module counter. A node without an explicit `nodeId` used to
+   * take `tree-node-${++treeNodeCounter}` from a module-level variable, which is
+   * stable within one client session and wrong everywhere else: on the server the
+   * counter carries across renders and requests, so the same node is numbered
+   * differently there than on the client. Selection and highlight both compare
+   * against this id and feed the row's className, so the mismatch surfaced as a
+   * hydration failure the moment a tree was server-rendered. Storybook never saw
+   * it because every story is client-only.
+   */
+  const generatedId = React.useId()
+  const idRef = React.useRef(nodeIdProp ?? generatedId)
   const { highlightedId, setHighlighted, selectedId, setSelected: setTreeSelected, onFocusNode, onNodeMenu } = React.useContext(TreeContext)
   const parentId = React.useContext(TreeParentContext)
   // The "highlighted" row is the one the user just expanded (or the parent
@@ -366,6 +374,15 @@ function TreeNode({
           "group/tree-item flex h-7 w-full items-center gap-1 rounded-1 px-1 type-label text-left transition-colors",
           // Pointer-driven focus (mouse hover, programmatic focus from popups,
           // etc.) must not show a ring — only keyboard navigation should.
+          //
+          // The one sanctioned exception to `border-focus-ring` + `shadow-focus`.
+          // A tree row is full-bleed: it spans the rail edge to edge, so an
+          // outset ring and its 1px offset would be clipped on both sides and
+          // the indicator would read as two vertical bars. Inset keeps all four
+          // sides. It stays conformant because it is FULL opacity against a
+          // translucent row tint — never `ring-focus-ring/50`, which is what
+          // failed 1.4.11 everywhere else it appeared. Documented in
+          // docs/component-rules.md under Focus.
           "outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-inset",
           // Row backgrounds — match Figma `.TreeNode` variant set:
           //   default → transparent

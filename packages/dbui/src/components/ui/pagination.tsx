@@ -49,6 +49,20 @@ type PaginationLinkProps = {
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">
 
+/**
+ * PaginationLink — one page in the strip.
+ *
+ * `isActive` is a fill, an accent foreground, and `aria-current`. No border: the
+ * current page used to draw one in the focus colour, which spent a focus signal on
+ * a resting state, so a focused page and the current one read almost alike. `ghost`
+ * already carries a transparent border and focus still recolours it, so nothing
+ * here restates the width.
+ *
+ * The foreground is the cue that survives. The accent surface is 1.20:1 on light
+ * and 1.07:1 on dark against the page, so the fill only tints — it is the accent
+ * foreground, at 6.63:1 and 9.61:1 on that fill, that a reader actually sees. Same
+ * division of labour `NavbarItem` uses for `active`.
+ */
 function PaginationLink({
   className,
   isActive,
@@ -59,7 +73,10 @@ function PaginationLink({
     <Button
       variant="ghost"
       size={size}
-      className={cn(isActive && "border border-focus-ring bg-surface-accent text-text-base hover:bg-surface-accent", className)}
+      className={cn(
+        isActive && "bg-surface-accent text-text-accent hover:bg-surface-accent",
+        className
+      )}
       nativeButton={false}
       render={
         <a

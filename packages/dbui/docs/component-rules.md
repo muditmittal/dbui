@@ -8,7 +8,7 @@
 - `composition.md` — shell-level rules (page layouts, regions, scaling)
 - `docs/icon-index.md` — **always search before inserting any icon**
 - `docs/compositions/*.md` — behavior contracts for complex components
-- `install.md` — agent install instructions (served at https://dbuidesign.vercel.app/install)
+- `install.md` — agent install instructions (served at https://dbuidesign.vercel.app/install.md)
 
 ---
 
@@ -126,6 +126,103 @@ Every icon file has a JSDoc comment in this format:
 | **Icon-only buttons need `aria-label`** | Error    | Accessibility.                                                                    |
 | **Destructive only in confirmed flows** | Warning  | Never show a red filled button without prior confirmation context.                |
 
+
+## Focus
+
+One treatment, everywhere: **`focus-visible:border-focus-ring focus-visible:shadow-focus`**
+— a 1px offset and a 2px ring.
+
+### Why the offset is not decoration
+
+A focus indicator must clear 3:1 against the page *and* against whatever the
+control is filled with (WCAG 1.4.11, AA). Those pull opposite ways, and no single
+ring color satisfies both:
+
+| | Ring vs page | Ring vs primary fill |
+| --- | --- | --- |
+| Light `#404040` | 10.37:1 ✅ | 1.73:1 ❌ |
+| Dark `#F6F7F9` | 16.84:1 ✅ | 1.33:1 ❌ |
+
+The 1px offset splits one impossible boundary into two easy ones — 17.93:1 and
+10.37:1 light, 12.66:1 and 16.84:1 dark. Remove the offset and the indicator
+disappears into every filled control in the system.
+
+### Rules
+
+| Rule | Severity | Why |
+| --- | --- | --- |
+| **Every focusable control shows an indicator** | Error | 2.4.7 Focus Visible. No component opts out. |
+| **Use the pair, not one half of it** | Error | A border alone is 1px and vanishes on a filled control; a ring alone fails 1.4.11 against the fill. |
+| **Never a translucent indicator** | Error | `ring-focus-ring/50` blends to `#A0A0A0` over white — 2.61:1, a fail. It looks softer and measures worse than the page. |
+| **`:focus-visible`, never `:focus`** | Error | Pointer users should not see it; keyboard users always should. |
+| **`outline-none` only beside its replacement** | Error | In the same class list, so the two can never drift apart. |
+| **Never Tailwind's `ring-*` for focus** | Error | `ring-*` has no theme namespace in v4, so it can never resolve to a DBUI token. |
+
+### The exceptions
+
+Two, both because an outset ring has nowhere to go. Each says so in its own source.
+
+A **full-bleed row** — a tree row that spans its rail edge to edge — uses
+`focus-visible:ring-2 ring-focus-ring ring-inset` instead. An outset ring would be
+clipped on both sides and read as two vertical bars. It stays conformant because it
+is full opacity. `DataTree` is the only component entitled to this.
+
+A **composite field** — a shell holding both a field and its own addon — thickens its
+edge to 2px rather than ringing it: `border-focus-ring` plus `inset-ring-1
+inset-ring-focus-ring`. The ring is for a control with one edge to draw around, and a
+group's edge is shared with the addon inside it, so ringing the assembly claims the
+addon has focus when only the field does. `InputGroup` is the only component entitled
+to this. Three things it depends on:
+
+- The 2px is a border plus an inset ring, never `border-2`. Widening the border eats a
+  pixel of the inside, dropping the shell's inner radius below the flush addon's outer
+  corner so the corner pokes through the curve. An inset ring changes no geometry.
+- The inner control must cancel its own indicator with `focus-visible:shadow-none`.
+  `shadow-none` alone does not — it and `focus-visible:shadow-focus` sit in different
+  variant groups, so both survive `cn()`, and the control then rings itself as a
+  borderless child ending at the seam.
+- The addon takes the same thickened edge scoped to itself, so focus reads the same
+  whichever half holds it.
+
+Everything else keeps the ring, `Input` and `Select` included. If you are reaching for
+a third exception, the answer is almost certainly the ring.
+
+## Assemblies — grouped and attached controls
+
+Two or more controls butted together share edges, and the question every one of
+them raises is what the shared outline is allowed to say. The rule that settles
+it: **the outline expresses the object, the fill expresses the affordance.**
+
+So an outline reacts to hover only when the parts are the same kind of control.
+A fill always reacts locally, to the part the pointer is actually over.
+
+| Assembly | Parts | Outline on hover | Example |
+| --- | --- | --- | --- |
+| **One purpose, one kind** | segments of a single choice | does not react — selection is the loud state | `SegmentControl` |
+| **One kind, different actions** | two buttons, one object | reacts across the whole assembly | `SplitButton` |
+| **Shell with addons** | one field, addons inside its border | reacts — the shell *is* one control | `InputGroup` |
+| **Separate boxes attached** | an input and a button, each with its own box | does **not** react across the seam | `FacetedFilter` |
+
+The last row is the one that gets built wrong. An input's border says "type
+here" and a button's says "press here"; lightening both because the pointer is
+over one of them claims they are a single control and misstates what a click
+will do. Each keeps its own hover.
+
+**Focus is not hover, and it does propagate.** When a field inside an assembly
+takes focus the whole assembly is one focused region — the caret is in it and
+keystrokes go to it — so it carries one ring on the outside and the internal seam
+goes quiet. `FacetedFilter` does this by dropping the trailing button's outer
+borders and shadow on `group-focus-within`, leaving only the seam line.
+
+### Seams
+
+Butt edges with a negative margin, never by deleting a border.
+
+| Rule | Severity | Why |
+| --- | --- | --- |
+| **Overlap with `-ml-px` / `-mr-px`** | Error | Every item keeps four borders, so a focused item can draw a complete ring and lift above its neighbors with `focus-visible:relative z-10`. |
+| **Never `border-l-0` on a neighbor** | Error | Deleting the shared edge leaves a focused item able to draw only three sides of its ring. This is what retired `ButtonGroup`. |
+| **Square the inner corners, round the ends** | Error | `shape-l-square` / `shape-r-square` on the inner edges, `shape-control` on the outer ones. |
 
 ## Menu Buttons
 
