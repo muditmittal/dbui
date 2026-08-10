@@ -29,6 +29,14 @@ apps/portal/out/
 .tmp.driveupload/
 .tmp.drivedownload/
 
+# Agent scratch: audit output, before/after screenshot sweeps, one-off probe scripts.
+# Written during a session to reason about the system, never an input to it.
+.tmp-*/
+
+# Raw Figma dump behind the token audits. Regenerated on demand and large enough
+# to bury a diff; the audits' committed output is what is worth reading.
+scripts/design-lint/.figma-component-dump.json
+
 # Storybook static build, emitted into the portal for /components
 apps/portal/public/storybook/
 
