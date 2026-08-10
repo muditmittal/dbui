@@ -42,9 +42,6 @@
     "BreadcrumbSeparator",
     "Button",
     "ButtonChevron",
-    "ButtonGroup",
-    "ButtonGroupSeparator",
-    "ButtonGroupText",
     "ButtonIcon",
     "Card",
     "CardAction",
@@ -327,8 +324,6 @@
     "Textarea",
     "Toaster",
     "Toggle",
-    "ToggleGroup",
-    "ToggleGroupItem",
     "Tooltip",
     "TooltipArrow",
     "TooltipContent",
@@ -363,9 +358,10 @@
     "PreviewPopup",
     "SearchPopup"
   ],
-  "genie": [
+  "chat": [
     "Action",
     "Actions",
+    "Checkpoint",
     "Conversation",
     "ConversationContent",
     "ConversationEmpty",
@@ -376,6 +372,8 @@
     "Message",
     "MessageAvatar",
     "MessageContent",
+    "Plan",
+    "PlanItem",
     "PromptInput",
     "PromptInputButton",
     "PromptInputButtonIcon",
@@ -384,11 +382,17 @@
     "PromptInputSubmit",
     "PromptInputTextarea",
     "PromptInputTools",
+    "Queue",
+    "QueueItem",
     "Reasoning",
     "Response",
+    "Source",
+    "Sources",
     "Suggestion",
     "SuggestionIcon",
-    "Suggestions"
+    "Suggestions",
+    "Task",
+    "TaskItem"
   ],
   "viz": [
     "BarChart",

@@ -72,7 +72,7 @@ function PromptInput({
       data-accent={accent}
       onSubmit={handleSubmit}
       className={cn(
-        "flex w-full flex-col gap-2 rounded-2 bg-surface-base p-2 shadow-xs",
+        "flex w-full flex-col gap-2 shape-container bg-surface-base p-2 shadow-xs",
         accent === "default" && "border border-input-border-base",
         "focus-within:border-focus-ring",
         className

@@ -148,9 +148,9 @@ function parseBlocks(markdown: string): React.ReactNode[] {
         <pre
           key={`b${key++}`}
           data-language={fence[1] || undefined}
-          className="overflow-x-auto rounded-2 bg-surface-inset p-3"
+          className="overflow-x-auto shape-container bg-surface-inset p-3"
         >
-          <code className="type-block whitespace-pre">
+          <code className="type-code-block whitespace-pre">
             {body.join("\n")}
           </code>
         </pre>

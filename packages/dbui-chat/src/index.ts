@@ -1,9 +1,9 @@
-// DBUI Genie — chat-thread components for Databricks agentic interfaces
+// DBUI Chat — chat-thread components for agentic and conversational interfaces
 //
 // Requires the dbui token layer:
 //   @import "dbui/tokens/globals.css";
 //
-// Charts inside Genie widgets come from dbui-viz, which needs no token layer
+// Charts inside chat widgets come from dbui-viz, which needs no token layer
 // beyond the one above.
 
 export {
@@ -31,6 +31,15 @@ export { Suggestions, Suggestion, SuggestionIcon } from "./components/suggestion
 export { FollowUps, FollowUp } from "./components/follow-ups"
 export { Actions, Action, type ActionProps } from "./components/actions"
 export { Loader } from "./components/loader"
+
+// Agentic — the trace of a run rather than a single answer. Task is one step that
+// happened, Plan is the steps intended, Queue is what the user stacked up behind
+// them, Checkpoint marks a seam to return to, Sources says what the answer rests on.
+export { Task, TaskItem, type TaskProps, type TaskItemProps, type TaskStatus } from "./components/task"
+export { Plan, PlanItem, type PlanProps, type PlanItemProps, type PlanItemStatus } from "./components/plan"
+export { Queue, QueueItem, type QueueProps, type QueueItemProps } from "./components/queue"
+export { Checkpoint, type CheckpointProps } from "./components/checkpoint"
+export { Sources, Source, type SourcesProps, type SourceProps } from "./components/sources"
 
 // Types
 export type {

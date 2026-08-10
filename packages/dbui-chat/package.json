@@ -1,7 +1,7 @@
 {
-  "name": "dbui-genie",
+  "name": "dbui-chat",
   "version": "0.1.0",
-  "description": "DBUI Genie — chat-thread components for Databricks agentic interfaces (Genie One, Genie Code)",
+  "description": "DBUI Chat — chat-thread components for agentic and conversational interfaces",
   "license": "MIT",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
