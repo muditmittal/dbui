@@ -6,7 +6,6 @@
   "outputDirectory": "apps/portal/.next",
   "redirects": [
     {
-      "// note": "/install.md, not /install. Redirects run ahead of the app, so sourcing /install sent every visitor to raw markdown and made the human install page — the one the site header links to — unreachable in production. AGENTS.md splits them: /install for people, /install.md for agents.",
       "source": "/install.md",
       "destination": "https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/install.md",
       "permanent": false

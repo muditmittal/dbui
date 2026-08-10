@@ -115,6 +115,12 @@ you should *act*:
   `font-` or `uppercase`. Numbers in a table use `<TableCell numeric>`, not a type class.
 - **Components are on the ramp.** Never reintroduce a `text-[Npx]` or `leading-[Npx]` literal — a px
   literal does not scale when the root font size does, so the box grows and the label does not.
+- **The portal deploys from git, and `vercel.json` is schema-validated.** Pushing `main` is the
+  deploy — there is no `.vercel/` directory locally and none is needed. That also means a bad
+  `vercel.json` fails the deploy *before* any build, in about a second, so a green local
+  `next build` proves nothing about it. It takes no comments: JSON has none, and a `"// note"`
+  key inside a redirect is an unknown property the schema rejects. Note the build command runs
+  Storybook *and* Next, so `next build` alone does not cover it either.
 - **There is no published package.** Install is clone-and-copy per `packages/dbui/install.md`.
   On Databricks-managed machines, point npm/yarn at `https://npm-proxy.dev.databricks.com`
   before scaffolding — Jamf blocks public npm. Human overview: `/install`; agent fetch: `/install.md`.
