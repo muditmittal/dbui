@@ -150,7 +150,7 @@ function SegmentControlItem({
         "relative flex-1 inline-flex items-center justify-center gap-1",
         "type-label whitespace-nowrap",
         "transition-colors outline-none select-none",
-        "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:shadow-focus focus-visible:z-20",
+        "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:shadow-focus focus-visible:z-raised",
         "disabled:pointer-events-none disabled:text-text-disabled",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 
@@ -178,7 +178,7 @@ function SegmentControlItem({
 
         // ── Outline variant items: flush (no radius), with input border dividers ──
         // Items overlap by -1px on the left so neighbors share a single 1px divider.
-        // Pressed item also overlaps -1px on the RIGHT and gets z-10 so its 4 blue
+        // Pressed item also overlaps -1px on the RIGHT and gets z-raised so its 4 blue
         // borders sit on top of the adjacent grey ones at every edge.
  isOutline && [
           "shape-square border border-input-border-base shadow-xs",
@@ -188,7 +188,7 @@ function SegmentControlItem({
           "first:rounded-l-1",
           "last:rounded-r-1",
           "aria-pressed:bg-action-selected-base aria-pressed:border-border-strong aria-pressed:shadow-none aria-pressed:text-text-strong",
-          "aria-pressed:relative aria-pressed:z-10 aria-pressed:not-last:-mr-px",
+          "aria-pressed:relative aria-pressed:z-raised aria-pressed:not-last:-mr-px",
         ],
 
         // Sizes

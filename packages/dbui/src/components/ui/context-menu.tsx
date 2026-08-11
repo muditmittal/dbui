@@ -49,7 +49,7 @@ function ContextMenuContent({
   return (
     <ContextMenuPrimitive.Portal>
       <ContextMenuPrimitive.Positioner
-        className="isolate z-50 outline-none"
+        className="isolate z-popover outline-none"
         align={align}
         alignOffset={alignOffset}
         side={side}
@@ -57,7 +57,7 @@ function ContextMenuContent({
       >
         <ContextMenuPrimitive.Popup
           data-slot="context-menu-content"
-          className={cn("z-50 max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+          className={cn("z-popover max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit outline-none", className )}
           {...props}
         />
       </ContextMenuPrimitive.Positioner>
@@ -380,7 +380,7 @@ function ContextMenuLoading({
       {...props}
     >
       <svg
-        className="size-4 animate-spin"
+        className="size-4 animate-loop"
         viewBox="0 0 16 16"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

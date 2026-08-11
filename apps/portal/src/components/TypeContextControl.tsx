@@ -10,8 +10,8 @@ import { typeContextDefault, type TypeContext } from "@/stories/tokens/token-dat
  * Which set of measurements the type ramp is showing.
  *
  * A context is not a scale, and the two controls are not variants of each
- * other. The footer's 1x/1.2x/1.4x moves the root font size — `html` at 100%,
- * 120% or 140% in globals.css — so everything authored in rem grows with it:
+ * other. The footer's 1x/1.1x/1.2x moves the root font size — `html` at 100%,
+ * 110% or 120% in globals.css — so everything authored in rem grows with it:
  * type, space, radius and control sizes together. It is deliberately not
  * `--db-type-scalar`, which moves the ramp and leaves the boxes around it where
  * they were — globals.css carries that reasoning. A context is a different value

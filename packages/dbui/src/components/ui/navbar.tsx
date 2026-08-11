@@ -173,7 +173,7 @@ function NavbarItem({
         // rule, so the accent fill survives the pointer.
         "not-data-active:hover:bg-action-default-hover",
         // The ring draws outward from a border it already has, so focus costs
-        // no layout. z-10 is for the flush stack: the next item down paints
+        // no layout. z-raised is for the flush stack: the next item down paints
         // after this one, and an accent fill would cover the ring's lower edge.
         // scroll-my-1 is what keeps the ring inside the rail. Tab on an item
         // below the fold scrolls it flush to the container edge, and a rail is
@@ -182,7 +182,7 @@ function NavbarItem({
         // horizontal axis; `scroll-container-gutter` now reads all four, and
         // the rail carries py-1 as well. This does not replace that gutter —
         // the first and last item have nowhere further to scroll.
-        "outline-none focus-visible:z-10 focus-visible:border-focus-ring focus-visible:shadow-focus scroll-my-1",
+        "outline-none focus-visible:z-raised focus-visible:border-focus-ring focus-visible:shadow-focus scroll-my-1",
         // The icon sets its own color, so dimming the label leaves it behind.
         "disabled:pointer-events-none disabled:text-text-disabled disabled:[&_[data-slot=navbar-item-icon]]:text-text-disabled",
         // One ramp class, never two. Each is the whole style, so a second would

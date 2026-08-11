@@ -21,7 +21,7 @@
   font-size: calc(var(--db-font-size-2xs) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
   letter-spacing: calc(var(--db-letter-spacing-eyebrow) * var(--db-type-scalar));
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: uppercase;
 }
 
@@ -30,7 +30,7 @@
   font-size: calc(var(--db-font-size-xs) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 400;
+  font-weight: var(--db-font-weight-normal);
   text-transform: none;
 }
 
@@ -39,7 +39,7 @@
   font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 400;
+  font-weight: var(--db-font-weight-normal);
   text-transform: none;
 }
 
@@ -48,7 +48,7 @@
   font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-flush) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: none;
 }
 
@@ -57,7 +57,7 @@
   font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-wrap) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 400;
+  font-weight: var(--db-font-weight-normal);
   text-transform: none;
 }
 
@@ -66,7 +66,7 @@
   font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-wrap) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: none;
 }
 
@@ -75,7 +75,7 @@
   font-size: calc(var(--db-font-size-sm) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-wrap) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 400;
+  font-weight: var(--db-font-weight-normal);
   text-transform: none;
 }
 
@@ -84,7 +84,7 @@
   font-size: calc(var(--db-font-size-md) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-read) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 400;
+  font-weight: var(--db-font-weight-normal);
   text-transform: none;
 }
 
@@ -93,7 +93,7 @@
   font-size: calc(var(--db-font-size-lg) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-read) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 400;
+  font-weight: var(--db-font-weight-normal);
   text-transform: none;
 }
 
@@ -102,7 +102,7 @@
   font-size: calc(var(--db-font-size-lg) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-read) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: none;
 }
 
@@ -111,7 +111,7 @@
   font-size: calc(var(--db-font-size-xl) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-title-4) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: none;
 }
 
@@ -120,7 +120,7 @@
   font-size: calc(var(--db-font-size-2xl) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-title-3) * var(--db-type-scalar));
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: none;
 }
 
@@ -129,7 +129,7 @@
   font-size: calc(var(--db-font-size-3xl) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-title-2) * var(--db-type-scalar));
   letter-spacing: calc(var(--db-letter-spacing-title-2) * var(--db-type-scalar));
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: none;
 }
 
@@ -138,6 +138,6 @@
   font-size: calc(var(--db-font-size-4xl) * var(--db-type-scalar));
   line-height: calc(var(--db-line-height-title-1) * var(--db-type-scalar));
   letter-spacing: calc(var(--db-letter-spacing-title-1) * var(--db-type-scalar));
-  font-weight: 600;
+  font-weight: var(--db-font-weight-bold);
   text-transform: none;
 }

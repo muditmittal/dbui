@@ -85,7 +85,7 @@ function IconGrid() {
     <div className="relative">
       {/* Toast */}
       {copied && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 rounded-2 bg-text-base px-4 py-2 text-[13px] leading-[20px] text-surface-base shadow-lg">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-sticky flex items-center gap-2 rounded-2 bg-text-base px-4 py-2 text-[13px] leading-[20px] text-surface-base shadow-lg">
           <span>Copied import for <span className="font-semibold">{copied}</span></span>
         </div>
       )}

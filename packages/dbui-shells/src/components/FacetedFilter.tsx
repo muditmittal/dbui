@@ -93,7 +93,7 @@ export function FacetedFilter({
             }
           />
           <Popover.Portal>
-            <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
+            <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-popover">
               <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden">
 
                 {/* Root: facet categories */}
@@ -230,7 +230,7 @@ export function FacetedFilter({
                   </TagRemove>
                 </Tag>
                 <Popover.Portal>
-                  <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-50">
+                  <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-popover">
                     <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden">
                       <div className="p-1">
                         <div className="px-2 py-1 type-hint text-text-subtle">{facet}</div>

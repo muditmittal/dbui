@@ -13,7 +13,7 @@ import { ANCHOR_OFFSET_VAR } from "./anchor"
  *
  * The offset cannot be a constant. The header is `h-14`, which is rem, and the
  * type-scale control in the footer moves the root font size — so the header is
- * 56px at the default 1x and taller at 1.2x and 1.4x. A hardcoded `top-14`
+ * 56px at the default 1x and taller at 1.1x and 1.2x. A hardcoded `top-14`
  * would be right only at the default and hide the first line of the bar at both
  * larger stops. Both are measured instead, and re-measured when either box
  * changes size.
@@ -73,12 +73,12 @@ export function StickyBar({
       // translucent and blurred, and the hairline between the two is what keeps
       // the difference from reading as a seam.
       //
-      // `z-1`, not `z-10`. The site header is `z-10` and comes first in the
-      // document, so an equal z-index put this bar on top of it — the bar was
-      // sliding over the header rather than under. One is still enough to clear
-      // the content: `Table` is `position: relative` with `z-index: auto`, which
-      // paints below any positive z-index but through a `z-0` bar on its way
-      // past.
+      // `raised`, not `sticky`. The site header takes `sticky` and comes first in
+      // the document, so an equal z-index put this bar on top of it — the bar was
+      // sliding over the header rather than under. `raised` is still enough to
+      // clear the content: `Table` is `position: relative` with `z-index: auto`,
+      // which paints below any positive z-index but through a zero one on its way
+      // past. That the two roles differ is why they are named rather than numbered.
       // The bottom edge belongs here, not to whichever child ends up last.
       //
       // It used to be the caller's job, and both callers got it from a child: the
@@ -92,7 +92,7 @@ export function StickyBar({
       // element that pins is the one that should carry it. A child that draws its
       // own rule now suppresses it instead, which is one decision in one place
       // rather than a thing every caller has to remember.
-      className={`sticky top-14 z-1 border-b border-border-base bg-surface-base ${className}`}
+      className={`sticky top-14 z-raised border-b border-border-base bg-surface-base ${className}`}
       style={top === null ? undefined : { top }}
     >
       {children}
@@ -172,7 +172,7 @@ export function SectionTabs({ sections, label }: { sections: DocSection[]; label
 
   // At the larger type scales the strip is wider than the measure, so the
   // active link can sit outside it. Scrolling the strip rather than the page is
-  // what keeps the control usable at 1.4x.
+  // what keeps the control usable at the largest stop.
   React.useEffect(() => {
     const el = strip.current
     const node = el?.querySelector<HTMLElement>(`[data-section="${active}"]`)

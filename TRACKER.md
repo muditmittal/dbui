@@ -17,7 +17,7 @@ problem: **line**, **file**, **protocol** (several files move together per `CONT
 
 | Layer | State |
 | --- | --- |
-| Tokens | Color, type and all four Dimensions families live and bridged — elevation and motion unconsumed |
+| Tokens | Color, type and all four Dimensions families live and bridged. Elevation is consumed through the `--shadow-*` bridge; motion has one consumer and two idle stops. M11 |
 | Icons | Done — six carry no metadata, so the index cannot see them. B3 |
 | Components | Done — Date Range, Aspect Ratio and Label have no story, Platform Header has no `@guideline` |
 | Compositions | Partial — exist, not documented |
@@ -28,6 +28,7 @@ problem: **line**, **file**, **protocol** (several files move together per `CONT
 | Install | Works — registry points at the Databricks npm proxy |
 | Distribution | Public scope decided — tokens, components and viz. Patterns and shells stay internal. I19 |
 | Patterns | Not started — the decision layer. Phase 1 and Phase 6 |
+| Themes | Designed, not started. Core, Omni, One and DuBois — `notes/2026-08-11-multi-theme-architecture.md`. No phase yet |
 
 ## The sequence
 
@@ -180,7 +181,7 @@ audit command, not a nice-to-have beside it.
 
 | # | What | What it costs | Fix |
 | --- | --- | --- | --- |
-| M11 | **Mostly closed 2026-08-11, and the description was wrong twice.** Elevation is not pure black with no dark value — every stop carries both modes and the dark alphas are an order up (`xs` is 0.05 light and 0.45 dark), which is exactly what makes it draw against `surface-base` in dark. It is not unconsumed either: `--shadow-xs` … `--shadow-xl` bridge to `--db-elevation-*`, so every `shadow-*` call site in the system has been reading elevation all along, and `Card`'s new `interactive`/`spotlight` stops read `xs` and `sm` deliberately. Motion has its first explicit consumer too — `effects.css` transitions the spotlight halo over `--db-duration-fast` on `--db-ease-standard`. What remains is narrower: `default` and `slow` still have no consumer, and no call site names a duration outside that one file | Two of the three claims were false, so the row was arguing for work already done | decision — whether the bare `transition-*` call sites should name a duration, or keep riding Tailwind's 150ms default, which equals `fast` |
+| M11 | **Mostly closed 2026-08-11, and the description was wrong twice.** Elevation is not pure black with no dark value — every stop carries both modes and the dark alphas are an order up (`xs` is 0.05 light and 0.45 dark), which is exactly what makes it draw against `surface-base` in dark. It is not unconsumed either: `--shadow-xs` … `--shadow-xl` bridge to `--db-elevation-*`, so every `shadow-*` call site in the system has been reading elevation all along, and `Card`'s new `interactive`/`spotlight` stops read `xs` and `sm` deliberately. Motion has its first explicit consumer too — `effects.css` transitions the spotlight halo over `--db-duration-fast` on `--db-ease-standard`. **Closed 2026-08-11.** The last open piece was whether the bare `transition-*` sites should name a duration: they now do, via `--default-transition-duration` → `--db-duration-fast`, which is value-for-value what they already rendered. `default` and `slow` are still unread and cannot be classes, because `--duration-*` is not a namespace | Two of the three claims were false, so the row was arguing for work already done | done — M4 in `verify-spacing-scale.mjs` pins the bridge |
 | M12 | `action-default-base`, `action-default-press` and the `action-label-*` triplet have no consumer. `action-default-hover` and `action-label-inverse-*` are live and must not be swept up | Semantics that are correct and that no control reads | decision — rewire the controls onto them, do not delete |
 | M15 | No `brand/*` token exists, so `DatabricksLogo` hardcodes its hex | The one place the system cannot follow its own no-hex rule | decision — a new token family |
 | I8 | `--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs` | Its two widths are the only dimensional values outside the config | file — the radius and spacing bridges already moved |
@@ -297,11 +298,15 @@ Recorded because nothing else holds them and the calls cannot be made without th
   through `xl` ascending, and `tokens.css` points every `--shadow-*` at its `--db-elevation-*`
   counterpart, so `shadow-xs` *is* `elevation-xs` at every call site that already used it. The
   bridge happened; what the old bullet measured no longer exists to measure.
-- **Motion has one consumer and two idle stops.** `effects.css` runs the spotlight halo on
-  `--db-duration-fast` and `--db-ease-standard`. `default` and `slow` are still unread. Pointing
-  `--default-transition-duration` at `fast` remains a true no-op, because the bare `transition-*`
-  call sites already run at Tailwind's default, which is the same 150ms — including `Card`'s
-  elevation lift, which is why that lift needed no duration of its own.
+- **Motion is bridged as of 2026-08-11, and two stops are still idle.**
+  `--default-transition-duration` now points at `--db-duration-fast`, so all 30 bare `transition-*`
+  call sites read the token — a value-for-value no-op, since Tailwind's own default was the same
+  150ms, but the family now owns it and moving `fast` moves all of them. Easing is bridged too:
+  `ease-linear`, `ease-standard` and `ease-exit` mint classes, and Tailwind's `ease-in`, `ease-out`
+  and `ease-in-out` are closed so a curve nobody chose emits no timing function. `duration-default`
+  and `duration-slow` remain unread, and cannot be minted as classes at all — `--duration-*` is not
+  a namespace, so a call site that wants one writes `duration-[var(--db-duration-slow)]`. M1 to M4 in
+  `verify-spacing-scale.mjs` pin all of it against the shipped CSS.
 - **Space and size deliberately do not carry the same stops.** 5, 7 and 12 are size stops and not
   space stops, so `h-5` is `--db-size-5` while `p-5` is the multiplier. The snap pass touches `p-5`
   and `p-12` and must leave `h-5` and `h-12` alone. K5b and K13b pin it.

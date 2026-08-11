@@ -39,7 +39,7 @@ function AlertDialogOverlay({
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-[var(--db-utility-scrim)] duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+        "fixed inset-0 isolate z-overlay bg-[var(--db-utility-scrim)] duration-100 supports-backdrop-filter:backdrop-blur-xs",
         className
       )}
       {...props}
@@ -61,7 +61,7 @@ function AlertDialogContent({
         data-slot="alert-dialog-content"
         data-size={size}
         className={cn(
-          "group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 shape-container border border-border-base bg-surface-base p-4 shadow-xl duration-100 outline-none data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "data-open:animate-enter data-closed:animate-exit group/alert-dialog-content fixed top-1/2 left-1/2 z-modal grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 shape-container border border-border-base bg-surface-base p-4 shadow-xl duration-100 outline-none data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-sm",
           className
         )}
         {...props}

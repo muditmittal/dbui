@@ -34,7 +34,7 @@ import { treeSections, catalogItems } from "@/stories/surfaces/catalog-data"
  * A page shell is 1440px of layout. Dropped into a row at the container's width
  * it resolves against that width instead — the nav rail collapses, the detail
  * pane wraps, and the reader sees the small-viewport layout while looking at a
- * row labelled with the desktop shell's name. Rendering at 1440 and zooming
+ * row labeled with the desktop shell's name. Rendering at 1440 and zooming
  * down keeps the layout the one the shell is for.
  *
  * Pointer events are off and the subtree is hidden from the accessibility tree:

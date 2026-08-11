@@ -97,11 +97,11 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
       // fallback rather than a guess at somebody's chrome, and it is the answer
       // for every consumer that scrolls a region rather than a document.
       //
-      // `z-1` clears the rows, which is not free: a cell may hold something
+      // `z-raised` clears the rows, which is not free: a cell may hold something
       // positioned — `Avatar` is `position: relative` — and a positioned box in
       // a later row outranks a `z-index: auto` header on document order alone.
       className={cn(
-        "sticky top-[var(--db-sticky-offset,0px)] z-1 bg-surface-subtle [&_tr]:border-b",
+        "sticky top-[var(--db-sticky-offset,0px)] z-raised bg-surface-subtle [&_tr]:border-b",
         className
       )}
       {...props}

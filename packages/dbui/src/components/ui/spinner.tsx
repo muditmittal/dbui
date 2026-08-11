@@ -12,7 +12,7 @@ import { Loading } from "../icons/Loading"
 
 function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   return (
-    <Loading role="status" aria-label="Loading" className={cn("size-4 animate-spin", className)} {...props} />
+    <Loading role="status" aria-label="Loading" className={cn("size-4 animate-loop", className)} {...props} />
   )
 }
 

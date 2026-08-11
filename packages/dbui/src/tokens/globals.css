@@ -63,8 +63,24 @@
   --color-ai-gradient-mid: var(--ai-gradient-mid);
   --color-ai-gradient-end: var(--ai-gradient-end);
 
-  /* ─── Shadows ─── */
-  --shadow-focus: 0 0 0 1px var(--db-focus-ring-offset), 0 0 0 3px var(--db-focus-ring);
+  /* ─── Shadows ───
+   *
+   * The ring, in tokens rather than in the two literals it used to carry.
+   *
+   * Both shadows are spreads from the same edge, not a gap plus a thickness, which
+   * is why the second number was 3 and not 2: the first shadow paints a 1px band
+   * over the inner 1px of the second, leaving 2px of ring showing. So the ring has
+   * always been 2px thick — the 3 was where its outer edge landed.
+   *
+   * Written as the sum, so the two facts a reader needs are the two things named:
+   * `border-1` is the gap, `border-2` is the thickness. Nothing new is defined, and
+   * nothing renders differently.
+   *
+   * Not `border-3`: a hairline family carrying a stop only this line needs would be
+   * a token invented to avoid an addition. */
+  --shadow-focus:
+    0 0 0 var(--db-border-1) var(--db-focus-ring-offset),
+    0 0 0 calc(var(--db-border-1) + var(--db-border-2)) var(--db-focus-ring);
 
   /* ─── Fonts ───
    * Both families come from the generated layer so there is one source of

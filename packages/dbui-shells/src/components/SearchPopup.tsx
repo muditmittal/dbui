@@ -40,10 +40,10 @@ export function SearchPopup({ onClose }: { onClose?: () => void }) {
   return (
     <>
       {/* Transparent overlay to catch outside clicks */}
-      <div className="fixed inset-0 z-40" onClick={onClose} />
+      <div className="fixed inset-0 z-overlay" onClick={onClose} />
       {/* Popup anchored to search input width */}
       <div
-        className="absolute left-0 right-0 top-0 z-50 bg-surface-base border border-border-base shape-container shadow-lg overflow-hidden"
+        className="absolute left-0 right-0 top-0 z-modal bg-surface-base border border-border-base shape-container shadow-lg overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input */}

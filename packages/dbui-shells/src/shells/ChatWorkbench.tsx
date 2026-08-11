@@ -290,7 +290,7 @@ export function ChatWorkbench({
                 // tray bolted to the bottom. -mt-6 pulls the fade up over the
                 // last turn; the composer itself still sits outside the scroll
                 // container, so it never scrolls away.
-                <div className="pointer-events-none relative z-10 -mt-6 shrink-0 bg-gradient-to-t from-surface-base from-60% to-transparent p-3 pt-10">
+                <div className="pointer-events-none relative z-raised -mt-6 shrink-0 bg-gradient-to-t from-surface-base from-60% to-transparent p-3 pt-10">
                   <div className="pointer-events-auto">{composer}</div>
                 </div>
               ) : null}

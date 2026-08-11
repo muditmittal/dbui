@@ -20,7 +20,7 @@ import { Separator } from "./separator"
 // `orientation` axis here had no call site in the repo and no counterpart in
 // the Figma component set, so the seam rules are the base string now.
 const splitButtonVariants = cva(
-  "flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=split-button]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-1 [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 *:data-slot:shape-r-square [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-1! [&>[data-slot]~[data-slot]]:shape-l-square [&>[data-slot]~[data-slot]]:-ml-px has-[>[data-slot]:hover]:*:data-slot:border-input-border-hover"
+  "flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-raised has-[>[data-slot=split-button]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-1 [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 *:data-slot:shape-r-square [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-1! [&>[data-slot]~[data-slot]]:shape-l-square [&>[data-slot]~[data-slot]]:-ml-px has-[>[data-slot]:hover]:*:data-slot:border-input-border-hover"
 )
 
 function SplitButton({ className, ...props }: React.ComponentProps<"div">) {

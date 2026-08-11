@@ -978,6 +978,184 @@ console.log("\n── L. No primitive scale in the shipped CSS\n")
   )
 }
 
+/* ══ M. motion reaches a class ════════════════════════════════════════════
+ *
+ * G3 proves `--ease-*` is a namespace against a fixture. That is a fact about
+ * Tailwind, not about us — and motion spent the whole token migration being the
+ * family that fact was true for and nobody had used. Read the shipped file, the
+ * way L does for radius, so a curve that is authored and unreachable fails here.
+ */
+
+console.log("\n── M. Motion is defined, bridged, and Tailwind's curves are closed\n")
+{
+  const shipped = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/tokens.css"), "utf8")
+  const bridged = (key, token) => new RegExp(`--${key}:\\s*var\\(--db-${token}\\)`).test(shipped)
+  const closed = (key) => new RegExp(`--${key}:\\s*initial`).test(shipped)
+
+  const ours = ["linear", "standard", "exit"]
+  for (const stop of ours) {
+    const defined = shipped.includes(`--db-ease-${stop}:`)
+    console.log(
+      `    --ease-${stop.padEnd(9)} ${defined ? "defined" : "MISSING"}  ${bridged(`ease-${stop}`, `ease-${stop}`) ? "bridged" : "NOT BRIDGED"}`
+    )
+  }
+  check(
+    "M1 every easing curve is defined AND bridged",
+    ours.every((s) => shipped.includes(`--db-ease-${s}:`) && bridged(`ease-${s}`, `ease-${s}`)),
+    "Authored in theme.config.mjs is only half of it — without the @theme key the class reads Tailwind's value or nothing."
+  )
+
+  const theirs = ["ease-in", "ease-out", "ease-in-out"]
+  for (const key of theirs) console.log(`    --${key.padEnd(15)} ${closed(key) ? "closed" : "STILL OPEN"}`)
+  check(
+    "M2 Tailwind's own curves are closed",
+    theirs.every(closed),
+    "A transition on a curve nobody chose looks like one on ours. Closed, it emits no timing function and gets noticed."
+  )
+
+  // Duration is the asymmetry, asserted so nobody 'fixes' it by adding keys that
+  // cannot mint anything. G1 proves --duration-* is not a namespace; this proves
+  // we did not pretend otherwise.
+  check(
+    "M3 no --duration-* key is claimed as a namespace",
+    !/^\s*--duration-\w+:/m.test(shipped),
+    "Named durations need @utility, not a theme key. --db-duration-* is read as a var by the call sites that want it."
+  )
+
+  // The one key duration CAN own. G2 proves it is overridable; this proves we
+  // took it, which is what gives a bare `transition` a token behind its 150ms.
+  const transitionDefault = /--default-transition-duration:\s*var\(--db-duration-fast\)/.test(shipped)
+  console.log(`    --default-transition-duration  ${transitionDefault ? "bridged" : "NOT BRIDGED"}`)
+  check(
+    "M4 the bare transition utility reads our duration",
+    transitionDefault,
+    "Without this key every un-pinned transition runs at Tailwind's own 150ms, and the family has one consumer instead of thirty."
+  )
+}
+
+/* ══ N. the stacking order ═════════════════════════════════════════════════
+ *
+ * The order is the whole token. A layer family whose numbers drifted out of
+ * sequence would still compile, still emit, and still put a select underneath the
+ * dialog that opened it — so the sequence is asserted rather than trusted to the
+ * order someone typed the object in.
+ */
+
+console.log("\n── N. Layer: defined, bridged, and in the right order\n")
+{
+  const shipped = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/tokens.css"), "utf8")
+  const order = ["raised", "sticky", "overlay", "modal", "popover", "tooltip"]
+
+  const value = (role) => {
+    const m = shipped.match(new RegExp(`--db-layer-${role}:\\s*([0-9.]+)`))
+    return m ? Number(m[1]) : null
+  }
+  const bridged = (role) =>
+    new RegExp(`--z-index-${role}:\\s*var\\(--db-layer-${role}\\)`).test(shipped)
+
+  const values = order.map(value)
+  for (const [i, role] of order.entries()) {
+    console.log(`    --db-layer-${role.padEnd(8)} ${String(values[i]).padStart(3)}  ${bridged(role) ? "bridged" : "NOT BRIDGED"}`)
+  }
+  check(
+    "N1 every layer is defined AND bridged",
+    values.every((v) => v !== null) && order.every(bridged),
+    "`--z-index-*` is a Tailwind namespace, so a defined layer with no @theme key would emit no class at all."
+  )
+  check(
+    "N2 the layers ascend in the documented order",
+    values.every((v, i) => i === 0 || v > values[i - 1]),
+    "raised < sticky < overlay < modal < popover < tooltip. Out of sequence, a select still renders — underneath the dialog that opened it."
+  )
+  check(
+    "N3 no layer carries a unit or a scalar",
+    order.every((role) => {
+      const m = shipped.match(new RegExp(`--db-layer-${role}:\\s*([^;]+);`))
+      return m ? /^[0-9.]+$/.test(m[1].trim()) : false
+    }),
+    "z-index is a count. A layer multiplied by the density dial would reorder the overlays when the dial moved."
+  )
+}
+
+/* ══ O. the two weights ════════════════════════════════════════════════════
+ *
+ * Weight was the one property a type style carries that had no token: family,
+ * size, line-height and tracking all shipped as stops while the weight was inlined
+ * into each utility as a bare number. That is why twelve components reached for
+ * `font-semibold` — there was nothing else to reach for.
+ */
+
+console.log("\n── O. Font weight is a token, and the ramp reads it\n")
+{
+  const shipped = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/tokens.css"), "utf8")
+  const typeCss = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/type.css"), "utf8")
+
+  const defined = ["normal", "bold"].every((w) => new RegExp(`--db-font-weight-${w}:\\s*\\d+`).test(shipped))
+  // Both names that mean "heavier" reach the one heavy weight. Tailwind calls 600
+  // semibold and reserves bold for 700, which this ramp does not have.
+  const heavy = ["bold", "semibold"].every((w) =>
+    new RegExp(`--font-weight-${w}:\\s*var\\(--db-font-weight-bold\\)`).test(shipped)
+  )
+  const literals = [...typeCss.matchAll(/font-weight:\s*([^;]+);/g)].map((m) => m[1].trim())
+  const allVars = literals.length > 0 && literals.every((v) => v.startsWith("var(--db-font-weight-"))
+
+  console.log(`    --db-font-weight-*      ${defined ? "defined" : "MISSING"}`)
+  console.log(`    bold and semibold       ${heavy ? "both reach the system weight" : "NOT BRIDGED"}`)
+  console.log(`    ramp declarations       ${literals.length} font-weight, ${allVars ? "all read the token" : "SOME ARE LITERALS"}`)
+
+  check("O1 both weights are defined as tokens", defined,
+    "The ramp carries 400 and 600. Neither shipped as a custom property until now.")
+  check("O2 every class that means heavier reaches the one heavy weight", heavy,
+    "font-bold would otherwise emit nothing or reach Tailwind's 700, which this ramp does not have.")
+  check("O3 no type utility writes a weight as a literal", allVars,
+    "A weight family the ramp does not read is the defect elevation had for months — authored, generated, and rendered from a number instead.")
+}
+
+/* ══ P. the animation roles ════════════════════════════════════════════════
+ *
+ * These replaced 28 call sites that emitted nothing: `tw-animate-css` was a
+ * dependency the CSS layer never imported, so every overlay in the system appeared
+ * and vanished instantly, and the accordion's height keyframes had no theme key to
+ * reach them either. What is asserted here is the thing that failure had in common
+ * — a name with no declaration behind it.
+ */
+
+console.log("\n── P. Animation roles resolve, and read the motion family\n")
+{
+  const shipped = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/tokens.css"), "utf8")
+  const roles = ["enter", "exit", "expand", "collapse", "loop"]
+
+  const declared = (role) => shipped.match(new RegExp(`--animate-${role}:\\s*([^;]+);`))?.[1] ?? null
+  for (const role of roles) console.log(`    --animate-${role.padEnd(9)} ${declared(role) ?? "MISSING"}`)
+
+  check(
+    "P1 every role is declared",
+    roles.every(declared),
+    "A role with no theme key is the exact shape of the defect this replaced — `animate-accordion-down` had keyframes and no key, so it never emitted."
+  )
+  check(
+    "P2 every role names its keyframes, and they exist",
+    roles.every((r) => {
+      const name = declared(r)?.trim().split(/\s+/)[0]
+      return name && new RegExp(`@keyframes ${name}\\b`).test(shipped)
+    }),
+    "An animation naming keyframes that were never emitted resolves to nothing and fails silently."
+  )
+  check(
+    "P3 every role reads a duration and a curve from the motion family",
+    roles.every((r) => {
+      const value = declared(r) ?? ""
+      return /var\(--db-duration-[a-z]+\)/.test(value) && /var\(--db-ease-[a-z]+\)/.test(value)
+    }),
+    "Literals here would freeze motion per role, so retuning the family would move nothing."
+  )
+  check(
+    "P4 nothing still names the vocabulary that never shipped",
+    !/animate-accordion-(up|down)/.test(shipped),
+    "The old keyframes are gone with the classes that pointed at them."
+  )
+}
+
 /* ══ summary ═════════════════════════════════════════════════════════════ */
 
 const failed = results.filter((r) => !r.pass)

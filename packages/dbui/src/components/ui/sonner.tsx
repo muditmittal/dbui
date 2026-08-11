@@ -39,7 +39,7 @@ const Toaster = ({ theme = "system", ...props }: ToasterProps) => {
           <DangerFill className="size-4 text-status-text-negative" />
         ),
         loading: (
-          <Loading className="size-4 animate-spin text-text-base" />
+          <Loading className="size-4 animate-loop text-text-base" />
         ),
       }}
       style={

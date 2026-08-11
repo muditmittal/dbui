@@ -19,6 +19,7 @@ export function Guidance({
   dos,
   donts,
   header,
+  gutter = "w-14",
 }: {
   /**
    * Nodes rather than strings, so a rule can name the file it is about and link
@@ -28,6 +29,16 @@ export function Guidance({
   dos: React.ReactNode[]
   donts: React.ReactNode[]
   header?: { rule: string; example: string }
+  /**
+   * A width utility for the badge column. Defaults to the badges' own size, which
+   * is right for a list that stands alone.
+   *
+   * Widen it when this sits directly under another table that has a left column of
+   * its own — the two share an outer edge, so matching the gutter is what puts both
+   * text columns on the same line. The caller passes the width because the caller
+   * is the one that knows what it is aligning to.
+   */
+  gutter?: string
 }) {
   const rows = [
     ...dos.map((text) => ({ text, tone: "do" as const })),
@@ -38,28 +49,37 @@ export function Guidance({
     <div className="overflow-hidden rounded-2 border border-border-base">
       {header ? (
         <div className="flex items-start gap-4 border-b border-border-base bg-surface-subtle px-4 py-2">
-          <span className="type-eyebrow w-14 shrink-0 text-text-subtle">{header.rule}</span>
+          <span className={`type-eyebrow ${gutter} shrink-0 text-text-subtle`}>{header.rule}</span>
           <span className="type-eyebrow text-text-subtle">{header.example}</span>
         </div>
       ) : null}
       {/* Keyed by position, because an item is no longer guaranteed to be a
           string. These lists are written out in full at the call site and never
           reordered at runtime, so the index is stable. */}
+      {/*
+        `py-4` rather than `py-2`, and the reading style rather than the interface
+        one. A rule is the only thing on these pages that has to be read rather than
+        scanned — the tables around it are for finding a name — and `type-body` was
+        sized for a single line in a control. `type-paragraph` is the Reading
+        register: two steps up, and 22px of line where there was 20.
+      */}
       {rows.map(({ text, tone }, i) => (
         <div
           key={i}
-          className={`flex items-start gap-4 px-4 py-2 ${
+          className={`flex items-start gap-4 px-4 py-4 ${
             i < rows.length - 1 ? "border-b border-border-base" : ""
           }`}
         >
           {/* Fixed gutter rather than a fixed pill width: the two labels are
-              different lengths, and the text column is what needs to line up. */}
-          <span className="w-14 shrink-0">
+              different lengths, and the text column is what needs to line up.
+              `mt-0.5` optically centers the 20px badge on the first 22px line —
+              `items-start` alone hangs it a touch high against reading text. */}
+          <span className={`${gutter} mt-0.5 shrink-0`}>
             <Badge variant={tone === "do" ? "positive" : "negative"}>
               {tone === "do" ? "Do" : "Don't"}
             </Badge>
           </span>
-          <span className="type-body text-text-base">{text}</span>
+          <span className="type-paragraph text-text-base">{text}</span>
         </div>
       ))}
     </div>

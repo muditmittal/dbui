@@ -17,7 +17,7 @@ import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-c
  * reads the DOM on mount rather than owning the value. Rendering from state
  * would either flash the wrong segment or mismatch hydration.
  */
-const SCALES = ["1", "1.2", "1.4"] as const
+const SCALES = ["1", "1.1", "1.2"] as const
 type Scale = (typeof SCALES)[number]
 
 /**
@@ -45,8 +45,8 @@ export const TYPE_SCALE_KEY = "dbui-type-scale"
  */
 const STEPS: Array<{ value: Scale; glyph: string; label: string }> = [
   { value: "1", glyph: "type-hint", label: "1x" },
-  { value: "1.2", glyph: "type-label", label: "1.2x" },
-  { value: "1.4", glyph: "type-title-4", label: "1.4x" },
+  { value: "1.1", glyph: "type-label", label: "1.1x" },
+  { value: "1.2", glyph: "type-title-4", label: "1.2x" },
 ]
 
 const isScale = (v: string | undefined): v is Scale => SCALES.includes(v as Scale)
@@ -57,6 +57,17 @@ export function TypeScaleControl() {
   React.useEffect(() => {
     const current = document.documentElement.dataset.typeScale
     setScale(isScale(current) ? current : DEFAULT_SCALE)
+    // A stop that has been retired is still in someone's storage. The pre-paint
+    // script already ignores a value it does not recognise, so the page renders
+    // correctly either way — but left there it is a preference that can never be
+    // honoured and never be seen, and it would come back to life if that string
+    // were ever reused for a different multiplier.
+    try {
+      const stored = localStorage.getItem(TYPE_SCALE_KEY)
+      if (stored !== null && !isScale(stored)) localStorage.removeItem(TYPE_SCALE_KEY)
+    } catch {
+      // Private browsing refuses both the read and the write. Nothing to clean.
+    }
   }, [])
 
   const apply = React.useCallback((next: Scale) => {

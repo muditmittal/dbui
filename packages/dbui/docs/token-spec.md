@@ -144,6 +144,8 @@ by design, and neither do the two `em` inline steps.
 | `--db-font-size-sm` | Typography | 0.8125rem | 13px |  |
 | `--db-font-size-xl` | Typography | 1rem | 16px |  |
 | `--db-font-size-xs` | Typography | 0.75rem | 12px |  |
+| `--db-font-weight-bold` | Typography | 600 |  |  |
+| `--db-font-weight-normal` | Typography | 400 |  |  |
 | `--db-letter-spacing-eyebrow` | Typography | 0.03125rem | 0.5px |  |
 | `--db-letter-spacing-title-1` | Typography | -0.025rem |  |  |
 | `--db-letter-spacing-title-2` | Typography | -0.0125rem |  |  |
@@ -162,13 +164,22 @@ by design, and neither do the two `em` inline steps.
 | `--db-elevation-xs` | Elevation | 0 1px 0 0 rgba(0, 0, 0, 0.05) |  | 0 1px 0 0 rgba(0, 0, 0, 0.45) |
 | `--db-duration-default` | Motion | 300ms |  |  |
 | `--db-duration-fast` | Motion | 150ms |  |  |
+| `--db-duration-loop` | Motion | 1000ms |  |  |
 | `--db-duration-slow` | Motion | 450ms |  |  |
+| `--db-ease-exit` | Motion | cubic-bezier(0.4, 0, 1, 1) |  |  |
+| `--db-ease-linear` | Motion | linear |  |  |
 | `--db-ease-standard` | Motion | cubic-bezier(0.24, 1, 0.4, 1) |  |  |
 | `--db-border-emphasis` | Other | #A3A3A3 |  | rgba(255, 255, 255, 0.3) |
+| `--db-layer-modal` | Other | 30 |  |  |
+| `--db-layer-overlay` | Other | 20 |  |  |
+| `--db-layer-popover` | Other | 40 |  |  |
+| `--db-layer-raised` | Other | 1 |  |  |
+| `--db-layer-sticky` | Other | 10 |  |  |
+| `--db-layer-tooltip` | Other | 50 |  |  |
 | `--db-shape-container` | Other | var(--db-radius-2) | 8px |  |
 | `--db-shape-container-lg` | Other | var(--db-radius-4) | 16px |  |
 | `--db-shape-control` | Other | var(--db-radius-1) | 4px |  |
-| `--db-shape-control-lg` | Other | var(--db-radius-1) | 4px |  |
+| `--db-shape-control-lg` | Other | var(--db-radius-full) | 999px |  |
 | `--db-shape-pill` | Other | var(--db-radius-full) | 999px |  |
 | `--db-shape-square` | Other | var(--db-radius-0) | 0px |  |
 

@@ -18,7 +18,15 @@ export type Token = {
  * CSS rather than derived, because neither is a transform of the other.
  */
 export type ModeToken = { name: string; light: string; dark: string }
-export type ColorToken = ModeToken
+
+/**
+ * Which primitive a mode resolves to, and the alpha laid over it when there is
+ * one. `null` where a token is authored as a literal rather than a reference.
+ */
+export type PrimitiveRef = { ref: string; alpha: number | null }
+export type ColorToken = ModeToken & {
+  primitive: { light: PrimitiveRef | null; dark: PrimitiveRef | null } | null
+}
 export type ColorGroup = {
   key: string
   label: string
@@ -41,6 +49,9 @@ export type TypeStep = {
   weight: string | null
   mono: boolean
   uppercase: boolean
+  /** Which stop each property names. `null` where the style writes a literal. */
+  stops: { size: string | null; line: string | null; tracking: string | null }
+  tracking: number
 }
 
 export const colorFamilies: ColorFamily[] = [
@@ -58,42 +69,122 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "surface-base",
             "light": "#FFFFFF",
-            "dark": "#11171C"
+            "dark": "#11171C",
+            "primitive": {
+              "light": {
+                "ref": "base.white",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "surface-subtle",
             "light": "#FAFAFA",
-            "dark": "#1F272D"
+            "dark": "#1F272D",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.050",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.800",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "surface-strong",
             "light": "#F5F5F5",
-            "dark": "#2B343D"
+            "dark": "#2B343D",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.700",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "surface-inverse",
             "light": "#171717",
-            "dark": "#F6F7F9"
+            "dark": "#F6F7F9",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.900",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.050",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "surface-accent",
             "light": "#D7EDFE",
-            "dark": "#021E38"
+            "dark": "#021E38",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "surface-hover",
             "light": "rgba(0, 0, 0, 0.03)",
-            "dark": "rgba(255, 255, 255, 0.04)"
+            "dark": "rgba(255, 255, 255, 0.04)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.03
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.04
+              }
+            }
           },
           {
             "name": "surface-inset",
             "light": "rgba(0, 0, 0, 0.08)",
-            "dark": "rgba(255, 255, 255, 0.08)"
+            "dark": "rgba(255, 255, 255, 0.08)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.08
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.08
+              }
+            }
           },
           {
             "name": "surface-disabled",
             "light": "rgba(0, 0, 0, 0.12)",
-            "dark": "rgba(255, 255, 255, 0.12)"
+            "dark": "rgba(255, 255, 255, 0.12)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.12
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.12
+              }
+            }
           }
         ]
       },
@@ -106,32 +197,92 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "text-base",
             "light": "#262626",
-            "dark": "#E8ECF0"
+            "dark": "#E8ECF0",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.800",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.100",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "text-strong",
             "light": "#171717",
-            "dark": "#FFFFFF"
+            "dark": "#FFFFFF",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.900",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "text-subtle",
             "light": "#525252",
-            "dark": "#92A4B3"
+            "dark": "#92A4B3",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "text-inverse",
             "light": "#FFFFFF",
-            "dark": "#11171C"
+            "dark": "#11171C",
+            "primitive": {
+              "light": {
+                "ref": "base.white",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "text-disabled",
             "light": "rgba(0, 0, 0, 0.38)",
-            "dark": "rgba(255, 255, 255, 0.38)"
+            "dark": "rgba(255, 255, 255, 0.38)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.38
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.38
+              }
+            }
           },
           {
             "name": "text-accent",
             "light": "#0E538B",
-            "dark": "#8ACAFF"
+            "dark": "#8ACAFF",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.400",
+                "alpha": null
+              }
+            }
           }
         ]
       },
@@ -144,37 +295,107 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "border-base",
             "light": "#E5E5E5",
-            "dark": "rgba(255, 255, 255, 0.1)"
+            "dark": "rgba(255, 255, 255, 0.1)",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.1
+              }
+            }
           },
           {
             "name": "border-strong",
             "light": "#D4D4D4",
-            "dark": "rgba(255, 255, 255, 0.15)"
+            "dark": "rgba(255, 255, 255, 0.15)",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.300",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.15
+              }
+            }
           },
           {
             "name": "border-subtle",
             "light": "#F5F5F5",
-            "dark": "rgba(255, 255, 255, 0.06)"
+            "dark": "rgba(255, 255, 255, 0.06)",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.06
+              }
+            }
           },
           {
             "name": "border-emphasis",
             "light": "#A3A3A3",
-            "dark": "rgba(255, 255, 255, 0.3)"
+            "dark": "rgba(255, 255, 255, 0.3)",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.3
+              }
+            }
           },
           {
             "name": "border-inverse",
             "light": "#404040",
-            "dark": "#C0CDD8"
+            "dark": "#C0CDD8",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.300",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "border-disabled",
             "light": "rgba(0, 0, 0, 0.12)",
-            "dark": "rgba(255, 255, 255, 0.12)"
+            "dark": "rgba(255, 255, 255, 0.12)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.12
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.12
+              }
+            }
           },
           {
             "name": "border-accent",
             "light": "#2272B4",
-            "dark": "#4299E0"
+            "dark": "#4299E0",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.500",
+                "alpha": null
+              }
+            }
           }
         ]
       },
@@ -187,17 +408,47 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "utility-scrim",
             "light": "rgba(0, 0, 0, 0.72)",
-            "dark": "rgba(0, 0, 0, 0.85)"
+            "dark": "rgba(0, 0, 0, 0.85)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.72
+              },
+              "dark": {
+                "ref": "base.black",
+                "alpha": 0.85
+              }
+            }
           },
           {
             "name": "utility-surface-skeleton",
             "light": "rgba(0, 0, 0, 0.12)",
-            "dark": "rgba(255, 255, 255, 0.12)"
+            "dark": "rgba(255, 255, 255, 0.12)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.12
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.12
+              }
+            }
           },
           {
             "name": "utility-text-skeleton",
             "light": "rgba(0, 0, 0, 0.2)",
-            "dark": "rgba(255, 255, 255, 0.2)"
+            "dark": "rgba(255, 255, 255, 0.2)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.2
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.2
+              }
+            }
           }
         ]
       }
@@ -217,107 +468,317 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "action-default-base",
             "light": "#FAFAFA",
-            "dark": "#1F272D"
+            "dark": "#1F272D",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.050",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.800",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-default-hover",
             "light": "rgba(0, 0, 0, 0.06)",
-            "dark": "rgba(255, 255, 255, 0.08)"
+            "dark": "rgba(255, 255, 255, 0.08)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.06
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.08
+              }
+            }
           },
           {
             "name": "action-default-press",
             "light": "rgba(0, 0, 0, 0.1)",
-            "dark": "rgba(255, 255, 255, 0.12)"
+            "dark": "rgba(255, 255, 255, 0.12)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.1
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.12
+              }
+            }
           },
           {
             "name": "action-primary-base",
             "light": "#171717",
-            "dark": "#D1D9E1"
+            "dark": "#D1D9E1",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.900",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.200",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-primary-hover",
             "light": "rgba(23, 23, 23, 0.9)",
-            "dark": "rgba(209, 217, 225, 0.9)"
+            "dark": "rgba(209, 217, 225, 0.9)",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.900",
+                "alpha": 0.9
+              },
+              "dark": {
+                "ref": "interface.cool.200",
+                "alpha": 0.9
+              }
+            }
           },
           {
             "name": "action-primary-press",
             "light": "rgba(23, 23, 23, 0.8)",
-            "dark": "rgba(209, 217, 225, 0.8)"
+            "dark": "rgba(209, 217, 225, 0.8)",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.900",
+                "alpha": 0.8
+              },
+              "dark": {
+                "ref": "interface.cool.200",
+                "alpha": 0.8
+              }
+            }
           },
           {
             "name": "action-selected-base",
             "light": "rgba(0, 0, 0, 0.08)",
-            "dark": "rgba(255, 255, 255, 0.1)"
+            "dark": "rgba(255, 255, 255, 0.1)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.08
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.1
+              }
+            }
           },
           {
             "name": "action-selected-hover",
             "light": "rgba(0, 0, 0, 0.12)",
-            "dark": "rgba(255, 255, 255, 0.14)"
+            "dark": "rgba(255, 255, 255, 0.14)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.12
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.14
+              }
+            }
           },
           {
             "name": "action-selected-press",
             "light": "rgba(0, 0, 0, 0.14)",
-            "dark": "rgba(255, 255, 255, 0.16)"
+            "dark": "rgba(255, 255, 255, 0.16)",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": 0.14
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.16
+              }
+            }
           },
           {
             "name": "action-positive-base",
             "light": "#277C43",
-            "dark": "#3BA65E"
+            "dark": "#3BA65E",
+            "primitive": {
+              "light": {
+                "ref": "status.green.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-positive-hover",
             "light": "#115026",
-            "dark": "#8DDDA8"
+            "dark": "#8DDDA8",
+            "primitive": {
+              "light": {
+                "ref": "status.green.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-positive-press",
             "light": "#093919",
-            "dark": "#B1ECC5"
+            "dark": "#B1ECC5",
+            "primitive": {
+              "light": {
+                "ref": "status.green.800",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.300",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-negative-base",
             "light": "#C82D4C",
-            "dark": "#E65B77"
+            "dark": "#E65B77",
+            "primitive": {
+              "light": {
+                "ref": "status.red.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-negative-hover",
             "light": "#9E102C",
-            "dark": "#F792A6"
+            "dark": "#F792A6",
+            "primitive": {
+              "light": {
+                "ref": "status.red.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-negative-press",
             "light": "#630316",
-            "dark": "#FBD0D8"
+            "dark": "#FBD0D8",
+            "primitive": {
+              "light": {
+                "ref": "status.red.800",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.300",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-label-base",
             "light": "#262626",
-            "dark": "#F6F7F9"
+            "dark": "#F6F7F9",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.800",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.050",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-label-hover",
             "light": "#171717",
-            "dark": "#FFFFFF"
+            "dark": "#FFFFFF",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.900",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-label-press",
             "light": "#000000",
-            "dark": "#FFFFFF"
+            "dark": "#FFFFFF",
+            "primitive": {
+              "light": {
+                "ref": "base.black",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-label-inverse-base",
             "light": "#FFFFFF",
-            "dark": "#11171C"
+            "dark": "#11171C",
+            "primitive": {
+              "light": {
+                "ref": "base.white",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "action-label-inverse-hover",
             "light": "rgba(255, 255, 255, 0.8)",
-            "dark": "rgba(0, 0, 0, 0.8)"
+            "dark": "rgba(0, 0, 0, 0.8)",
+            "primitive": {
+              "light": {
+                "ref": "base.white",
+                "alpha": 0.8
+              },
+              "dark": {
+                "ref": "base.black",
+                "alpha": 0.8
+              }
+            }
           },
           {
             "name": "action-label-inverse-press",
             "light": "rgba(255, 255, 255, 0.7)",
-            "dark": "rgba(0, 0, 0, 0.7)"
+            "dark": "rgba(0, 0, 0, 0.7)",
+            "primitive": {
+              "light": {
+                "ref": "base.white",
+                "alpha": 0.7
+              },
+              "dark": {
+                "ref": "base.black",
+                "alpha": 0.7
+              }
+            }
           }
         ]
       },
@@ -330,12 +791,32 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "input-border-base",
             "light": "#E5E5E5",
-            "dark": "rgba(255, 255, 255, 0.15)"
+            "dark": "rgba(255, 255, 255, 0.15)",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "base.white",
+                "alpha": 0.15
+              }
+            }
           },
           {
             "name": "input-border-hover",
             "light": "#A3A3A3",
-            "dark": "#8396A5"
+            "dark": "#8396A5",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.500",
+                "alpha": null
+              }
+            }
           }
         ]
       },
@@ -348,12 +829,32 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "focus-ring",
             "light": "#404040",
-            "dark": "#F6F7F9"
+            "dark": "#F6F7F9",
+            "primitive": {
+              "light": {
+                "ref": "interface.neutral.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.050",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "focus-ring-offset",
             "light": "#FFFFFF",
-            "dark": "#11171C"
+            "dark": "#11171C",
+            "primitive": {
+              "light": {
+                "ref": "base.white",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.900",
+                "alpha": null
+              }
+            }
           }
         ]
       },
@@ -366,22 +867,62 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "link-base",
             "light": "#2272B4",
-            "dark": "#8ACAFF"
+            "dark": "#8ACAFF",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "link-hover",
             "light": "#0E538B",
-            "dark": "#BAE1FC"
+            "dark": "#BAE1FC",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.300",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "link-press",
             "light": "#04355D",
-            "dark": "#D7EDFE"
+            "dark": "#D7EDFE",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.800",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.200",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "link-visited",
             "light": "#04355D",
-            "dark": "#D7EDFE"
+            "dark": "#D7EDFE",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.800",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.200",
+                "alpha": null
+              }
+            }
           }
         ]
       }
@@ -401,62 +942,182 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "status-surface-info",
             "light": "#F0F8FF",
-            "dark": "#021E38"
+            "dark": "#021E38",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-surface-negative",
             "light": "#FFF5F7",
-            "dark": "#3A010B"
+            "dark": "#3A010B",
+            "primitive": {
+              "light": {
+                "ref": "status.red.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-surface-positive",
             "light": "#F3FCF6",
-            "dark": "#04220E"
+            "dark": "#04220E",
+            "primitive": {
+              "light": {
+                "ref": "status.green.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-surface-warning",
             "light": "#FFF9EB",
-            "dark": "#381001"
+            "dark": "#381001",
+            "primitive": {
+              "light": {
+                "ref": "status.yellow.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.yellow.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-border-info",
             "light": "#0E538B",
-            "dark": "#4299E0"
+            "dark": "#4299E0",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-border-negative",
             "light": "#9E102C",
-            "dark": "#E65B77"
+            "dark": "#E65B77",
+            "primitive": {
+              "light": {
+                "ref": "status.red.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-border-positive",
             "light": "#3BA65E",
-            "dark": "#3BA65E"
+            "dark": "#3BA65E",
+            "primitive": {
+              "light": {
+                "ref": "status.green.500",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-border-warning",
             "light": "#DE7921",
-            "dark": "#DE7921"
+            "dark": "#DE7921",
+            "primitive": {
+              "light": {
+                "ref": "status.yellow.500",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.yellow.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-text-info",
             "light": "#2272B4",
-            "dark": "#8ACAFF"
+            "dark": "#8ACAFF",
+            "primitive": {
+              "light": {
+                "ref": "status.blue.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.blue.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-text-negative",
             "light": "#C82D4C",
-            "dark": "#F792A6"
+            "dark": "#F792A6",
+            "primitive": {
+              "light": {
+                "ref": "status.red.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-text-positive",
             "light": "#277C43",
-            "dark": "#8DDDA8"
+            "dark": "#8DDDA8",
+            "primitive": {
+              "light": {
+                "ref": "status.green.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "status-text-warning",
             "light": "#BE501E",
-            "dark": "#F2BE88"
+            "dark": "#F2BE88",
+            "primitive": {
+              "light": {
+                "ref": "status.yellow.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.yellow.400",
+                "alpha": null
+              }
+            }
           }
         ]
       }
@@ -476,102 +1137,302 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "viz-categorical-1",
             "light": "#9575CD",
-            "dark": "#8555C9"
+            "dark": "#8555C9",
+            "primitive": {
+              "light": {
+                "ref": "viz.purple.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.purple.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-2",
             "light": "#FFD54F",
-            "dark": "#BD7C30"
+            "dark": "#BD7C30",
+            "primitive": {
+              "light": {
+                "ref": "viz.gold.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.gold.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-3",
             "light": "#6CD7D2",
-            "dark": "#2C8985"
+            "dark": "#2C8985",
+            "primitive": {
+              "light": {
+                "ref": "viz.teal.300",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.teal.600",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-4",
             "light": "#F06292",
-            "dark": "#A11E4E"
+            "dark": "#A11E4E",
+            "primitive": {
+              "light": {
+                "ref": "viz.pink.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.pink.600",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-5",
             "light": "#D4E157",
-            "dark": "#9E9D00"
+            "dark": "#9E9D00",
+            "primitive": {
+              "light": {
+                "ref": "viz.lime.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.lime.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-6",
             "light": "#A1887F",
-            "dark": "#A8796D"
+            "dark": "#A8796D",
+            "primitive": {
+              "light": {
+                "ref": "viz.brown.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.brown.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-7",
             "light": "#90A0E0",
-            "dark": "#4E62BA"
+            "dark": "#4E62BA",
+            "primitive": {
+              "light": {
+                "ref": "viz.indigo.300",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.indigo.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-8",
             "light": "#EF9B80",
-            "dark": "#CC471F"
+            "dark": "#CC471F",
+            "primitive": {
+              "light": {
+                "ref": "viz.orange.300",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.orange.600",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-9",
             "light": "#96BEB5",
-            "dark": "#217766"
+            "dark": "#217766",
+            "primitive": {
+              "light": {
+                "ref": "viz.sage.300",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.sage.600",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-categorical-10",
             "light": "#AD6DAD",
-            "dark": "#97409A"
+            "dark": "#97409A",
+            "primitive": {
+              "light": {
+                "ref": "viz.plum.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.plum.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-1",
             "light": "#E8ECF0",
-            "dark": "#0A2C36"
+            "dark": "#0A2C36",
+            "primitive": {
+              "light": {
+                "ref": "interface.cool.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.900",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-2",
             "light": "#D2F1FC",
-            "dark": "#084150"
+            "dark": "#084150",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.800",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-3",
             "light": "#A5E5F9",
-            "dark": "#085B6E"
+            "dark": "#085B6E",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.700",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-4",
             "light": "#65D3F4",
-            "dark": "#0F7B95"
+            "dark": "#0F7B95",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.300",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.600",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-5",
             "light": "#22BFE5",
-            "dark": "#169DBD"
+            "dark": "#169DBD",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.500",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-6",
             "light": "#169DBD",
-            "dark": "#22BFE5"
+            "dark": "#22BFE5",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.500",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.400",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-7",
             "light": "#0F7B95",
-            "dark": "#65D3F4"
+            "dark": "#65D3F4",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.300",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-8",
             "light": "#085B6E",
-            "dark": "#A5E5F9"
+            "dark": "#A5E5F9",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.200",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-9",
             "light": "#084150",
-            "dark": "#D2F1FC"
+            "dark": "#D2F1FC",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.800",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.100",
+                "alpha": null
+              }
+            }
           },
           {
             "name": "viz-sequential-10",
             "light": "#0A2C36",
-            "dark": "#F6F7F9"
+            "dark": "#F6F7F9",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.900",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "interface.cool.050",
+                "alpha": null
+              }
+            }
           }
         ]
       }
@@ -590,42 +1451,122 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "surface-base",
         "light": "#FFFFFF",
-        "dark": "#11171C"
+        "dark": "#11171C",
+        "primitive": {
+          "light": {
+            "ref": "base.white",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "surface-subtle",
         "light": "#FAFAFA",
-        "dark": "#1F272D"
+        "dark": "#1F272D",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.050",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.800",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "surface-strong",
         "light": "#F5F5F5",
-        "dark": "#2B343D"
+        "dark": "#2B343D",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.700",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "surface-inverse",
         "light": "#171717",
-        "dark": "#F6F7F9"
+        "dark": "#F6F7F9",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.900",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.050",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "surface-accent",
         "light": "#D7EDFE",
-        "dark": "#021E38"
+        "dark": "#021E38",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "surface-hover",
         "light": "rgba(0, 0, 0, 0.03)",
-        "dark": "rgba(255, 255, 255, 0.04)"
+        "dark": "rgba(255, 255, 255, 0.04)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.03
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.04
+          }
+        }
       },
       {
         "name": "surface-inset",
         "light": "rgba(0, 0, 0, 0.08)",
-        "dark": "rgba(255, 255, 255, 0.08)"
+        "dark": "rgba(255, 255, 255, 0.08)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.08
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.08
+          }
+        }
       },
       {
         "name": "surface-disabled",
         "light": "rgba(0, 0, 0, 0.12)",
-        "dark": "rgba(255, 255, 255, 0.12)"
+        "dark": "rgba(255, 255, 255, 0.12)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.12
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.12
+          }
+        }
       }
     ]
   },
@@ -638,32 +1579,92 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "text-base",
         "light": "#262626",
-        "dark": "#E8ECF0"
+        "dark": "#E8ECF0",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.800",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.100",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "text-strong",
         "light": "#171717",
-        "dark": "#FFFFFF"
+        "dark": "#FFFFFF",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.900",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "text-subtle",
         "light": "#525252",
-        "dark": "#92A4B3"
+        "dark": "#92A4B3",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "text-inverse",
         "light": "#FFFFFF",
-        "dark": "#11171C"
+        "dark": "#11171C",
+        "primitive": {
+          "light": {
+            "ref": "base.white",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "text-disabled",
         "light": "rgba(0, 0, 0, 0.38)",
-        "dark": "rgba(255, 255, 255, 0.38)"
+        "dark": "rgba(255, 255, 255, 0.38)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.38
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.38
+          }
+        }
       },
       {
         "name": "text-accent",
         "light": "#0E538B",
-        "dark": "#8ACAFF"
+        "dark": "#8ACAFF",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.400",
+            "alpha": null
+          }
+        }
       }
     ]
   },
@@ -676,37 +1677,107 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "border-base",
         "light": "#E5E5E5",
-        "dark": "rgba(255, 255, 255, 0.1)"
+        "dark": "rgba(255, 255, 255, 0.1)",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.1
+          }
+        }
       },
       {
         "name": "border-strong",
         "light": "#D4D4D4",
-        "dark": "rgba(255, 255, 255, 0.15)"
+        "dark": "rgba(255, 255, 255, 0.15)",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.300",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.15
+          }
+        }
       },
       {
         "name": "border-subtle",
         "light": "#F5F5F5",
-        "dark": "rgba(255, 255, 255, 0.06)"
+        "dark": "rgba(255, 255, 255, 0.06)",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.06
+          }
+        }
       },
       {
         "name": "border-emphasis",
         "light": "#A3A3A3",
-        "dark": "rgba(255, 255, 255, 0.3)"
+        "dark": "rgba(255, 255, 255, 0.3)",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.3
+          }
+        }
       },
       {
         "name": "border-inverse",
         "light": "#404040",
-        "dark": "#C0CDD8"
+        "dark": "#C0CDD8",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.300",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "border-disabled",
         "light": "rgba(0, 0, 0, 0.12)",
-        "dark": "rgba(255, 255, 255, 0.12)"
+        "dark": "rgba(255, 255, 255, 0.12)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.12
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.12
+          }
+        }
       },
       {
         "name": "border-accent",
         "light": "#2272B4",
-        "dark": "#4299E0"
+        "dark": "#4299E0",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.500",
+            "alpha": null
+          }
+        }
       }
     ]
   },
@@ -719,17 +1790,47 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "utility-scrim",
         "light": "rgba(0, 0, 0, 0.72)",
-        "dark": "rgba(0, 0, 0, 0.85)"
+        "dark": "rgba(0, 0, 0, 0.85)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.72
+          },
+          "dark": {
+            "ref": "base.black",
+            "alpha": 0.85
+          }
+        }
       },
       {
         "name": "utility-surface-skeleton",
         "light": "rgba(0, 0, 0, 0.12)",
-        "dark": "rgba(255, 255, 255, 0.12)"
+        "dark": "rgba(255, 255, 255, 0.12)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.12
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.12
+          }
+        }
       },
       {
         "name": "utility-text-skeleton",
         "light": "rgba(0, 0, 0, 0.2)",
-        "dark": "rgba(255, 255, 255, 0.2)"
+        "dark": "rgba(255, 255, 255, 0.2)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.2
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.2
+          }
+        }
       }
     ]
   },
@@ -742,107 +1843,317 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "action-default-base",
         "light": "#FAFAFA",
-        "dark": "#1F272D"
+        "dark": "#1F272D",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.050",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.800",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-default-hover",
         "light": "rgba(0, 0, 0, 0.06)",
-        "dark": "rgba(255, 255, 255, 0.08)"
+        "dark": "rgba(255, 255, 255, 0.08)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.06
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.08
+          }
+        }
       },
       {
         "name": "action-default-press",
         "light": "rgba(0, 0, 0, 0.1)",
-        "dark": "rgba(255, 255, 255, 0.12)"
+        "dark": "rgba(255, 255, 255, 0.12)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.1
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.12
+          }
+        }
       },
       {
         "name": "action-primary-base",
         "light": "#171717",
-        "dark": "#D1D9E1"
+        "dark": "#D1D9E1",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.900",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.200",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-primary-hover",
         "light": "rgba(23, 23, 23, 0.9)",
-        "dark": "rgba(209, 217, 225, 0.9)"
+        "dark": "rgba(209, 217, 225, 0.9)",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.900",
+            "alpha": 0.9
+          },
+          "dark": {
+            "ref": "interface.cool.200",
+            "alpha": 0.9
+          }
+        }
       },
       {
         "name": "action-primary-press",
         "light": "rgba(23, 23, 23, 0.8)",
-        "dark": "rgba(209, 217, 225, 0.8)"
+        "dark": "rgba(209, 217, 225, 0.8)",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.900",
+            "alpha": 0.8
+          },
+          "dark": {
+            "ref": "interface.cool.200",
+            "alpha": 0.8
+          }
+        }
       },
       {
         "name": "action-selected-base",
         "light": "rgba(0, 0, 0, 0.08)",
-        "dark": "rgba(255, 255, 255, 0.1)"
+        "dark": "rgba(255, 255, 255, 0.1)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.08
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.1
+          }
+        }
       },
       {
         "name": "action-selected-hover",
         "light": "rgba(0, 0, 0, 0.12)",
-        "dark": "rgba(255, 255, 255, 0.14)"
+        "dark": "rgba(255, 255, 255, 0.14)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.12
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.14
+          }
+        }
       },
       {
         "name": "action-selected-press",
         "light": "rgba(0, 0, 0, 0.14)",
-        "dark": "rgba(255, 255, 255, 0.16)"
+        "dark": "rgba(255, 255, 255, 0.16)",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": 0.14
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.16
+          }
+        }
       },
       {
         "name": "action-positive-base",
         "light": "#277C43",
-        "dark": "#3BA65E"
+        "dark": "#3BA65E",
+        "primitive": {
+          "light": {
+            "ref": "status.green.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-positive-hover",
         "light": "#115026",
-        "dark": "#8DDDA8"
+        "dark": "#8DDDA8",
+        "primitive": {
+          "light": {
+            "ref": "status.green.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-positive-press",
         "light": "#093919",
-        "dark": "#B1ECC5"
+        "dark": "#B1ECC5",
+        "primitive": {
+          "light": {
+            "ref": "status.green.800",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.300",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-negative-base",
         "light": "#C82D4C",
-        "dark": "#E65B77"
+        "dark": "#E65B77",
+        "primitive": {
+          "light": {
+            "ref": "status.red.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-negative-hover",
         "light": "#9E102C",
-        "dark": "#F792A6"
+        "dark": "#F792A6",
+        "primitive": {
+          "light": {
+            "ref": "status.red.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-negative-press",
         "light": "#630316",
-        "dark": "#FBD0D8"
+        "dark": "#FBD0D8",
+        "primitive": {
+          "light": {
+            "ref": "status.red.800",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.300",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-label-base",
         "light": "#262626",
-        "dark": "#F6F7F9"
+        "dark": "#F6F7F9",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.800",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.050",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-label-hover",
         "light": "#171717",
-        "dark": "#FFFFFF"
+        "dark": "#FFFFFF",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.900",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-label-press",
         "light": "#000000",
-        "dark": "#FFFFFF"
+        "dark": "#FFFFFF",
+        "primitive": {
+          "light": {
+            "ref": "base.black",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-label-inverse-base",
         "light": "#FFFFFF",
-        "dark": "#11171C"
+        "dark": "#11171C",
+        "primitive": {
+          "light": {
+            "ref": "base.white",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "action-label-inverse-hover",
         "light": "rgba(255, 255, 255, 0.8)",
-        "dark": "rgba(0, 0, 0, 0.8)"
+        "dark": "rgba(0, 0, 0, 0.8)",
+        "primitive": {
+          "light": {
+            "ref": "base.white",
+            "alpha": 0.8
+          },
+          "dark": {
+            "ref": "base.black",
+            "alpha": 0.8
+          }
+        }
       },
       {
         "name": "action-label-inverse-press",
         "light": "rgba(255, 255, 255, 0.7)",
-        "dark": "rgba(0, 0, 0, 0.7)"
+        "dark": "rgba(0, 0, 0, 0.7)",
+        "primitive": {
+          "light": {
+            "ref": "base.white",
+            "alpha": 0.7
+          },
+          "dark": {
+            "ref": "base.black",
+            "alpha": 0.7
+          }
+        }
       }
     ]
   },
@@ -855,12 +2166,32 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "input-border-base",
         "light": "#E5E5E5",
-        "dark": "rgba(255, 255, 255, 0.15)"
+        "dark": "rgba(255, 255, 255, 0.15)",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "base.white",
+            "alpha": 0.15
+          }
+        }
       },
       {
         "name": "input-border-hover",
         "light": "#A3A3A3",
-        "dark": "#8396A5"
+        "dark": "#8396A5",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.500",
+            "alpha": null
+          }
+        }
       }
     ]
   },
@@ -873,12 +2204,32 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "focus-ring",
         "light": "#404040",
-        "dark": "#F6F7F9"
+        "dark": "#F6F7F9",
+        "primitive": {
+          "light": {
+            "ref": "interface.neutral.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.050",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "focus-ring-offset",
         "light": "#FFFFFF",
-        "dark": "#11171C"
+        "dark": "#11171C",
+        "primitive": {
+          "light": {
+            "ref": "base.white",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.900",
+            "alpha": null
+          }
+        }
       }
     ]
   },
@@ -891,22 +2242,62 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "link-base",
         "light": "#2272B4",
-        "dark": "#8ACAFF"
+        "dark": "#8ACAFF",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "link-hover",
         "light": "#0E538B",
-        "dark": "#BAE1FC"
+        "dark": "#BAE1FC",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.300",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "link-press",
         "light": "#04355D",
-        "dark": "#D7EDFE"
+        "dark": "#D7EDFE",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.800",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.200",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "link-visited",
         "light": "#04355D",
-        "dark": "#D7EDFE"
+        "dark": "#D7EDFE",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.800",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.200",
+            "alpha": null
+          }
+        }
       }
     ]
   },
@@ -919,62 +2310,182 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "status-surface-info",
         "light": "#F0F8FF",
-        "dark": "#021E38"
+        "dark": "#021E38",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-surface-negative",
         "light": "#FFF5F7",
-        "dark": "#3A010B"
+        "dark": "#3A010B",
+        "primitive": {
+          "light": {
+            "ref": "status.red.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-surface-positive",
         "light": "#F3FCF6",
-        "dark": "#04220E"
+        "dark": "#04220E",
+        "primitive": {
+          "light": {
+            "ref": "status.green.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-surface-warning",
         "light": "#FFF9EB",
-        "dark": "#381001"
+        "dark": "#381001",
+        "primitive": {
+          "light": {
+            "ref": "status.yellow.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.yellow.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-border-info",
         "light": "#0E538B",
-        "dark": "#4299E0"
+        "dark": "#4299E0",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-border-negative",
         "light": "#9E102C",
-        "dark": "#E65B77"
+        "dark": "#E65B77",
+        "primitive": {
+          "light": {
+            "ref": "status.red.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-border-positive",
         "light": "#3BA65E",
-        "dark": "#3BA65E"
+        "dark": "#3BA65E",
+        "primitive": {
+          "light": {
+            "ref": "status.green.500",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-border-warning",
         "light": "#DE7921",
-        "dark": "#DE7921"
+        "dark": "#DE7921",
+        "primitive": {
+          "light": {
+            "ref": "status.yellow.500",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.yellow.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-text-info",
         "light": "#2272B4",
-        "dark": "#8ACAFF"
+        "dark": "#8ACAFF",
+        "primitive": {
+          "light": {
+            "ref": "status.blue.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.blue.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-text-negative",
         "light": "#C82D4C",
-        "dark": "#F792A6"
+        "dark": "#F792A6",
+        "primitive": {
+          "light": {
+            "ref": "status.red.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-text-positive",
         "light": "#277C43",
-        "dark": "#8DDDA8"
+        "dark": "#8DDDA8",
+        "primitive": {
+          "light": {
+            "ref": "status.green.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "status-text-warning",
         "light": "#BE501E",
-        "dark": "#F2BE88"
+        "dark": "#F2BE88",
+        "primitive": {
+          "light": {
+            "ref": "status.yellow.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.yellow.400",
+            "alpha": null
+          }
+        }
       }
     ]
   },
@@ -987,102 +2498,302 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "viz-categorical-1",
         "light": "#9575CD",
-        "dark": "#8555C9"
+        "dark": "#8555C9",
+        "primitive": {
+          "light": {
+            "ref": "viz.purple.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.purple.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-2",
         "light": "#FFD54F",
-        "dark": "#BD7C30"
+        "dark": "#BD7C30",
+        "primitive": {
+          "light": {
+            "ref": "viz.gold.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.gold.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-3",
         "light": "#6CD7D2",
-        "dark": "#2C8985"
+        "dark": "#2C8985",
+        "primitive": {
+          "light": {
+            "ref": "viz.teal.300",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.teal.600",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-4",
         "light": "#F06292",
-        "dark": "#A11E4E"
+        "dark": "#A11E4E",
+        "primitive": {
+          "light": {
+            "ref": "viz.pink.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.pink.600",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-5",
         "light": "#D4E157",
-        "dark": "#9E9D00"
+        "dark": "#9E9D00",
+        "primitive": {
+          "light": {
+            "ref": "viz.lime.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.lime.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-6",
         "light": "#A1887F",
-        "dark": "#A8796D"
+        "dark": "#A8796D",
+        "primitive": {
+          "light": {
+            "ref": "viz.brown.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.brown.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-7",
         "light": "#90A0E0",
-        "dark": "#4E62BA"
+        "dark": "#4E62BA",
+        "primitive": {
+          "light": {
+            "ref": "viz.indigo.300",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.indigo.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-8",
         "light": "#EF9B80",
-        "dark": "#CC471F"
+        "dark": "#CC471F",
+        "primitive": {
+          "light": {
+            "ref": "viz.orange.300",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.orange.600",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-9",
         "light": "#96BEB5",
-        "dark": "#217766"
+        "dark": "#217766",
+        "primitive": {
+          "light": {
+            "ref": "viz.sage.300",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.sage.600",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-categorical-10",
         "light": "#AD6DAD",
-        "dark": "#97409A"
+        "dark": "#97409A",
+        "primitive": {
+          "light": {
+            "ref": "viz.plum.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.plum.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-1",
         "light": "#E8ECF0",
-        "dark": "#0A2C36"
+        "dark": "#0A2C36",
+        "primitive": {
+          "light": {
+            "ref": "interface.cool.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.900",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-2",
         "light": "#D2F1FC",
-        "dark": "#084150"
+        "dark": "#084150",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.800",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-3",
         "light": "#A5E5F9",
-        "dark": "#085B6E"
+        "dark": "#085B6E",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.700",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-4",
         "light": "#65D3F4",
-        "dark": "#0F7B95"
+        "dark": "#0F7B95",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.300",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.600",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-5",
         "light": "#22BFE5",
-        "dark": "#169DBD"
+        "dark": "#169DBD",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.500",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-6",
         "light": "#169DBD",
-        "dark": "#22BFE5"
+        "dark": "#22BFE5",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.500",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.400",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-7",
         "light": "#0F7B95",
-        "dark": "#65D3F4"
+        "dark": "#65D3F4",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.300",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-8",
         "light": "#085B6E",
-        "dark": "#A5E5F9"
+        "dark": "#A5E5F9",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.200",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-9",
         "light": "#084150",
-        "dark": "#D2F1FC"
+        "dark": "#D2F1FC",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.800",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.100",
+            "alpha": null
+          }
+        }
       },
       {
         "name": "viz-sequential-10",
         "light": "#0A2C36",
-        "dark": "#F6F7F9"
+        "dark": "#F6F7F9",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.900",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "interface.cool.050",
+            "alpha": null
+          }
+        }
       }
     ]
   }
@@ -1095,7 +2806,13 @@ export const type: TypeStep[] = [
     "line": 16,
     "weight": "600",
     "mono": false,
-    "uppercase": true
+    "uppercase": true,
+    "stops": {
+      "size": "2xs",
+      "line": "flush",
+      "tracking": "eyebrow"
+    },
+    "tracking": 0.5
   },
   {
     "name": "type-hint",
@@ -1103,7 +2820,13 @@ export const type: TypeStep[] = [
     "line": 16,
     "weight": "400",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "xs",
+      "line": "flush",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-label",
@@ -1111,7 +2834,13 @@ export const type: TypeStep[] = [
     "line": 16,
     "weight": "400",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "sm",
+      "line": "flush",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-label-bold",
@@ -1119,7 +2848,13 @@ export const type: TypeStep[] = [
     "line": 16,
     "weight": "600",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "sm",
+      "line": "flush",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-body",
@@ -1127,7 +2862,13 @@ export const type: TypeStep[] = [
     "line": 20,
     "weight": "400",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "sm",
+      "line": "wrap",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-body-bold",
@@ -1135,7 +2876,13 @@ export const type: TypeStep[] = [
     "line": 20,
     "weight": "600",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "sm",
+      "line": "wrap",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-code",
@@ -1143,7 +2890,13 @@ export const type: TypeStep[] = [
     "line": 20,
     "weight": "400",
     "mono": true,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "sm",
+      "line": "wrap",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-code-block",
@@ -1151,7 +2904,13 @@ export const type: TypeStep[] = [
     "line": 22,
     "weight": "400",
     "mono": true,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "md",
+      "line": "read",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-paragraph",
@@ -1159,7 +2918,13 @@ export const type: TypeStep[] = [
     "line": 22,
     "weight": "400",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "lg",
+      "line": "read",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-paragraph-bold",
@@ -1167,7 +2932,13 @@ export const type: TypeStep[] = [
     "line": 22,
     "weight": "600",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "lg",
+      "line": "read",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-title-4",
@@ -1175,7 +2946,13 @@ export const type: TypeStep[] = [
     "line": 24,
     "weight": "600",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "xl",
+      "line": "title-4",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-title-3",
@@ -1183,7 +2960,13 @@ export const type: TypeStep[] = [
     "line": 28,
     "weight": "600",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "2xl",
+      "line": "title-3",
+      "tracking": null
+    },
+    "tracking": 0
   },
   {
     "name": "type-title-2",
@@ -1191,7 +2974,13 @@ export const type: TypeStep[] = [
     "line": 32,
     "weight": "600",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "3xl",
+      "line": "title-2",
+      "tracking": "title-2"
+    },
+    "tracking": 0
   },
   {
     "name": "type-title-1",
@@ -1199,7 +2988,13 @@ export const type: TypeStep[] = [
     "line": 40,
     "weight": "600",
     "mono": false,
-    "uppercase": false
+    "uppercase": false,
+    "stops": {
+      "size": "4xl",
+      "line": "title-1",
+      "tracking": "title-1"
+    },
+    "tracking": 0
   }
 ]
 
@@ -1474,6 +3269,45 @@ export const radius: Token[] = [
   }
 ]
 
+export const shape: Token[] = [
+  {
+    "name": "shape-square",
+    "value": "var(--db-radius-0)",
+    "px": 0,
+    "multiple": null
+  },
+  {
+    "name": "shape-control",
+    "value": "var(--db-radius-1)",
+    "px": 4,
+    "multiple": null
+  },
+  {
+    "name": "shape-control-lg",
+    "value": "var(--db-radius-full)",
+    "px": 999,
+    "multiple": null
+  },
+  {
+    "name": "shape-container",
+    "value": "var(--db-radius-2)",
+    "px": 8,
+    "multiple": null
+  },
+  {
+    "name": "shape-container-lg",
+    "value": "var(--db-radius-4)",
+    "px": 16,
+    "multiple": null
+  },
+  {
+    "name": "shape-pill",
+    "value": "var(--db-radius-full)",
+    "px": 999,
+    "multiple": null
+  }
+]
+
 export const size: Token[] = [
   {
     "name": "size-2",
@@ -1598,13 +3432,70 @@ export const duration: Token[] = [
     "value": "450ms",
     "px": null,
     "multiple": null
+  },
+  {
+    "name": "duration-loop",
+    "value": "1000ms",
+    "px": null,
+    "multiple": null
   }
 ]
 
 export const easing: Token[] = [
   {
+    "name": "ease-linear",
+    "value": "linear",
+    "px": null,
+    "multiple": null
+  },
+  {
     "name": "ease-standard",
     "value": "cubic-bezier(0.24, 1, 0.4, 1)",
+    "px": null,
+    "multiple": null
+  },
+  {
+    "name": "ease-exit",
+    "value": "cubic-bezier(0.4, 0, 1, 1)",
+    "px": null,
+    "multiple": null
+  }
+]
+
+export const layer: Token[] = [
+  {
+    "name": "layer-raised",
+    "value": "1",
+    "px": null,
+    "multiple": null
+  },
+  {
+    "name": "layer-sticky",
+    "value": "10",
+    "px": null,
+    "multiple": null
+  },
+  {
+    "name": "layer-overlay",
+    "value": "20",
+    "px": null,
+    "multiple": null
+  },
+  {
+    "name": "layer-modal",
+    "value": "30",
+    "px": null,
+    "multiple": null
+  },
+  {
+    "name": "layer-popover",
+    "value": "40",
+    "px": null,
+    "multiple": null
+  },
+  {
+    "name": "layer-tooltip",
+    "value": "50",
     "px": null,
     "multiple": null
   }
@@ -1635,11 +3526,13 @@ export const tokenCounts = {
   "colorGroups": 85,
   "space": 9,
   "radius": 7,
+  "shape": 6,
   "size": 9,
   "borderWidth": 3,
   "elevation": 5,
-  "duration": 3,
-  "easing": 1,
+  "duration": 4,
+  "easing": 3,
+  "layer": 6,
   "scalars": 3,
   "type": 14,
   "typeContexts": 2

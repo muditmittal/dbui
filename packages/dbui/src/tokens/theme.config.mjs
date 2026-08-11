@@ -560,13 +560,15 @@ export const radius = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 6: 6, full: "999px" }
 export const shape = {
   square: 0,
   control: 1,
-  /* Core intends `full` here — a 32px control is a pill and a 24px one is 4px.
-   * Held at 1 so the components could be repointed onto the roles without moving
-   * a single pixel, which is the only way a rebind of this size can be verified
-   * as a no-op. Flipping it to "full" is then a one-line change with a visible
-   * diff, made on purpose rather than smuggled in with the indirection. That is
-   * the role layer earning its keep on the first day it exists. */
-  "control-lg": 1,
+  /* A 32px control is a pill; the 24px one stays at 4px. This is the flip the
+   * role layer was built to make: `control-lg` was held at `1` alongside
+   * `control` so the components could be repointed onto roles without moving a
+   * pixel, which is what let that rebind be verified as a no-op. With that done,
+   * the aesthetic decision is this one line and its diff is visible on purpose.
+   *
+   * DuBois is the theme that puts them back together at 4px, which is the case
+   * two roles exist to express and one could not. */
+  "control-lg": "full",
   /* Two container roles, because the code already made the distinction and only
    * the aggregate hid it. `container` is what floats above the page — dialog,
    * popover, menu, select, combobox, hover card, the table wrapper. `container-lg`
@@ -685,6 +687,71 @@ export const bridge = {
    * them on Tailwind's values keeps this change to elevation rather than turning
    * it into a refusal of classes nobody writes. */
   shadow: { family: "elevation", steps: ["xs", "sm", "md", "lg", "xl"] },
+  /* Motion was the last family authored in code and unreachable from a class.
+   * Every other namespace here already stands behind its tokens, so `shadow-lg`
+   * read ours while `ease-standard` read nothing and the one call site that
+   * wanted our curve had to write `var(--db-ease-standard)` by hand.
+   *
+   * Tailwind's three are closed for the reason radius closes its own: left open
+   * they keep compiling, and a transition eased on a curve nobody chose is
+   * indistinguishable from one eased on ours until someone puts them side by
+   * side. Closed, it emits no timing function at all — the transition still
+   * runs, on the browser default, and reads wrong enough to get noticed.
+   *
+   * `linear` is ours and stays. It is also a static utility in Tailwind at the
+   * same value, so the declaration is belt-and-braces rather than a change.
+   * `ease-initial` is static too and cannot be closed from here. */
+  ease: {
+    family: "ease",
+    steps: ["linear", "standard", "exit"],
+    close: ["in", "out", "in-out"],
+  },
+  /* Duration mints no class of its own — `--duration-*` is not a Tailwind
+   * namespace, so a key there would declare a variable and generate nothing. This
+   * entry exists for `defaults` alone.
+   *
+   * It is the line that gives the family a consumer. A bare `transition` bakes
+   * Tailwind's own 150ms into the utility and never reads the namespace, and a
+   * bare `transition` is how nearly every animated property in the system is
+   * written — so the durations were authored, generated, documented and read by
+   * one file. Same value, now sourced from us, and `--db-duration-fast` moving
+   * moves all of them.
+   *
+   * A call site that wants `default` or `slow` still has to name it, and cannot
+   * name it as a class: `duration-[var(--db-duration-slow)]` is the only spelling. */
+  duration: {
+    family: "duration",
+    defaults: { "default-transition-duration": "fast" },
+  },
+  /* `--z-index-*` is a namespace, which was worth checking before writing any of
+   * this — duration is not one, and a layer scale that could only be spelled
+   * `z-[var(--db-layer-modal)]` would have been a different design.
+   *
+   * Nothing is closed. `z-0`, `z-10` and `z-50` still compile off the bare number,
+   * because Tailwind mints those from the value rather than the namespace and there
+   * is no key to set to `initial`. The role names are what components take. */
+  "z-index": {
+    family: "layer",
+    steps: ["raised", "sticky", "overlay", "modal", "popover", "tooltip"],
+  },
+  /* Two weights, and three class names that reach them.
+   *
+   * The ramp carries 400 and 600 and calls the heavier one bold, because that is
+   * what the styles are named — `type-label-bold`, not `type-label-semibold`.
+   * Tailwind calls 600 semibold and reserves bold for 700, which this system does
+   * not have. So `font-bold` and `font-semibold` both resolve to the one heavy
+   * weight rather than one of them emitting nothing: a class that means "heavier"
+   * should not depend on knowing whose vocabulary it is written in.
+   *
+   * The rest are closed. A weight the ramp does not carry now emits no declaration,
+   * so `font-medium` renders at 400 and reads visibly unbolded rather than
+   * arriving at a fifth weight the type ramp never agreed to. */
+  "font-weight": {
+    family: "font-weight",
+    steps: ["normal", "bold"],
+    defaults: { "font-weight-semibold": "bold" },
+    close: ["thin", "extralight", "light", "medium", "extrabold", "black"],
+  },
 }
 
 /* Type — 14 named styles over three families of shared stops.
@@ -994,6 +1061,43 @@ export const size = { 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 10: 10, 12: 12 }
  * 2 is the focus treatment on non-filled controls. */
 export const border = { 0: 0, 1: 1, 2: 2 }
 
+/**
+ * The stacking order, named by what a thing is rather than by how high it sits.
+ *
+ * This family exists because the system had no order at all. Tooltip, dialog,
+ * drawer, popover, select, context menu, hover card, combobox and alert dialog
+ * every one of them sat at `z-50`, so which covered which was decided by the DOM
+ * order Base UI happened to portal them in. A select inside a dialog worked by
+ * luck, and the luck was invisible either way — nothing renders wrong until two
+ * of them are open at once.
+ *
+ * The order is the argument, and each step earns its place above the last:
+ *
+ * - `raised` lifts something above its own siblings — a pinned table header over
+ *   the rows, the selected half of a split button. Inside one component, not over
+ *   the page.
+ * - `sticky` is page chrome that pins. It clears `raised` because a page header
+ *   has to cover a table's own pinned header, not sit under it.
+ * - `overlay` is a scrim. Above the whole page by definition.
+ * - `modal` is what the scrim is for, so it clears the scrim.
+ * - `popover` is above `modal`, which is the fix: a select opened inside a dialog
+ *   has to render over the dialog that contains it.
+ * - `tooltip` is last, because a tooltip can describe a control inside a popover
+ *   and there is nothing a tooltip should ever sit under.
+ *
+ * Tens, so a step can be inserted without renumbering the ones above it. `tooltip`
+ * keeps 50 deliberately — it is what every overlay renders at today, so nothing
+ * that is currently on top moves down.
+ */
+export const layer = {
+  raised: 1,
+  sticky: 10,
+  overlay: 20,
+  modal: 30,
+  popover: 40,
+  tooltip: 50,
+}
+
 /* Motion — three durations, and exactly ONE easing curve for the whole system.
  * A single curve is a deliberate economy: systems that ship five easings mostly
  * ship five things nobody can choose between.
@@ -1014,8 +1118,58 @@ export const motion = {
     fast: "150ms",
     default: "300ms",
     slow: "450ms",
+    /**
+     * A loop's period, which is a different quantity from the other three.
+     *
+     * They are transition lengths — how long a thing takes to arrive. This is how
+     * long one revolution takes, and it repeats forever. 450ms would spin a
+     * loader better than twice a second, which reads frantic rather than busy;
+     * a second is what Tailwind's own spin has always been, and it is right.
+     */
+    loop: "1000ms",
   },
-  easing: { standard: "cubic-bezier(0.24, 1, 0.4, 1)" },
+  /**
+   * Three curves, one per job, ordered from no curve outward the way the other
+   * scales start at their null stop.
+   *
+   * `linear` is not a placeholder. Anything that loops has no start or finish to
+   * ease into, and a spinner on any other curve visibly stutters once per
+   * revolution.
+   *
+   * `standard` decelerates: it is the curve for something arriving or settling,
+   * and it is the default. `exit` accelerates, for something leaving — an element
+   * on its way out should clear the frame rather than linger being admired.
+   */
+  easing: {
+    linear: "linear",
+    standard: "cubic-bezier(0.24, 1, 0.4, 1)",
+    exit: "cubic-bezier(0.4, 0, 1, 1)",
+  },
+  /**
+   * The role layer over the two above, and the reason it exists is that neither
+   * duration nor easing can be applied on its own to a thing that is not there yet.
+   * A transition interpolates between two states of a present element. An overlay
+   * arriving has no previous state, so it needs keyframes — and keyframes plus a
+   * duration plus a curve is what one of these names.
+   *
+   * `shape` is the same shape of idea: a role over `radius`, so a component asks
+   * for the decision rather than the measurement.
+   *
+   * Five, not four, because a role that can only open is half a role. `expand` and
+   * `collapse` are one behavior in two directions, as are `enter` and `exit`.
+   *
+   * Each names its stops rather than its values, so retuning motion is one edit to
+   * the family above and not five here. `keyframes` is the one part that is not a
+   * token: what actually moves is geometry rather than a value a theme swaps, and
+   * the bodies live in the generator beside the CSS they become.
+   */
+  animation: {
+    enter: { keyframes: "dbui-enter", duration: "fast", easing: "standard" },
+    exit: { keyframes: "dbui-exit", duration: "fast", easing: "exit" },
+    expand: { keyframes: "dbui-expand", duration: "default", easing: "standard" },
+    collapse: { keyframes: "dbui-collapse", duration: "default", easing: "standard" },
+    loop: { keyframes: "dbui-loop", duration: "loop", easing: "linear", repeat: "infinite" },
+  },
 }
 
-export default { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion }
+export default { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion, layer }

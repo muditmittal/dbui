@@ -75,7 +75,7 @@ function Plan({
  */
 const INDICATOR: Record<PlanItemStatus, React.ReactNode> = {
   pending: <CircleOutline />,
-  active: <Running className="motion-safe:animate-spin" />,
+  active: <Running className="motion-safe:animate-loop" />,
   done: <CheckSmall />,
   cancelled: <CloseSmall />,
 }

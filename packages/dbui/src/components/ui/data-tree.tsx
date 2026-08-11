@@ -510,7 +510,7 @@ function TreeNode({
           sideOffset={4}
           align="start"
           alignOffset={-10}
-          className="z-50"
+          className="z-popover"
         >
           <Popover.Popup
             data-slot="tree-item-preview"
@@ -547,7 +547,7 @@ function TreeNode({
             {showTrailLine && (
               <div
                 className={cn(
-                  "absolute border-l pointer-events-none z-10 transition-colors",
+                  "absolute border-l pointer-events-none z-raised transition-colors",
                   isHighlighted ? "border-text-subtle" : "border-border-base",
                 )}
                 style={{

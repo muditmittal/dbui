@@ -214,8 +214,13 @@
  * off it wrong by 20%.
  *
  * That is the bare `html` rule, so the default page carries no state and the
- * attribute only ever appears when a reader has chosen otherwise. 1.2x and
- * 1.4x stay one click away in the rail for reading comfort.
+ * attribute only ever appears when a reader has chosen otherwise. 1.1x and
+ * 1.2x stay one click away in the rail for reading comfort.
+ *
+ * The steps are a tenth apart rather than a fifth. Two stops that far above the
+ * documented ramp were reading comfort at the cost of a stated value: 1.4x put a
+ * 13px step at 18px, far enough that a reader who had left the control there was
+ * measuring a different system from the one the page describes.
  */
 /* Unlayered on purpose. Tailwind's own rules live in @layer base, and an
    unlayered rule beats every layered one, so this cannot be undone by a
@@ -226,11 +231,11 @@ html {
 html[data-type-scale="1"] {
   font-size: 100%;
 }
+html[data-type-scale="1.1"] {
+  font-size: 110%;
+}
 html[data-type-scale="1.2"] {
   font-size: 120%;
-}
-html[data-type-scale="1.4"] {
-  font-size: 140%;
 }
 
 @layer base {

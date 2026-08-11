@@ -206,6 +206,19 @@ stop the bridge skips is a token nothing can reach — that is what left every
 defined and unread. Ours is a finite number rather than an infinity for the
 same reason the config is authored in px: it has to be a value Figma can hold.
 
+Easing is the one bridged family with no unit under it. Its stops are named after
+the job — `linear` for anything that loops, `standard` to arrive, `exit` to leave
+— because a curve has no multiple to be the third of, and naming it by shape
+would leave two people picking differently for the same transition. Tailwind's own
+curves are closed here for the reason radius closes its named steps: left open they
+keep compiling, and a transition eased on a curve nobody chose is indistinguishable
+from one eased on ours until the two are put side by side.
+
+Duration is the asymmetry, and it is Tailwind's rather than ours. `--duration-*` is
+not a namespace, so a named duration cannot be minted as a class at all — the call
+sites that want one read `var(--db-duration-*)` directly. A key added there would
+declare a variable and mint nothing.
+
 An explicit key beats Tailwind's multiplier for the same step, which is what makes
 the bridge load-bearing rather than decorative. Tailwind's multiplier is still
 declared, so a step DBUI has not defined keeps rendering off it. Removing the

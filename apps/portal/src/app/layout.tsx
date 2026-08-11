@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search);var s=q.get("scale")||localStorage.getItem("dbui-type-scale");if(s==="1.2"||s==="1.4")document.documentElement.dataset.typeScale=s;var t=q.get("theme")||localStorage.getItem("dbui-color-mode");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";if(t==="dark")document.documentElement.classList.add("dark")}catch(e){}})()`,
+            __html: `(function(){try{var q=new URLSearchParams(location.search);var s=q.get("scale")||localStorage.getItem("dbui-type-scale");if(s==="1.1"||s==="1.2")document.documentElement.dataset.typeScale=s;var t=q.get("theme")||localStorage.getItem("dbui-color-mode");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";if(t==="dark")document.documentElement.classList.add("dark")}catch(e){}})()`,
           }}
         />
       </head>

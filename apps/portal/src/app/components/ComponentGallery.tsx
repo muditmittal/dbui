@@ -87,8 +87,9 @@ function Row({ item }: { item: GalleryItem }) {
 
       {/*
         Wrapping, because a variant set is a row until it is not: Button's seven
-        fit on one line in the container and on three at 1.4x type. Baseline
-        alignment rather than centre — a set that mixes a field with a button
+        fit on one line in the container and on more than one at the largest type
+        scale. Baseline
+        alignment rather than center — a set that mixes a field with a button
         lines up on the text they share, not on the tallest box.
       */}
       {/*

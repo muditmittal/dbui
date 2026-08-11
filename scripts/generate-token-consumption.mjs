@@ -63,6 +63,7 @@ const NAMESPACE_UTILITIES = {
     "gap", "gap-x", "gap-y", "space-x", "space-y", "inset", "inset-x", "inset-y",
     "top", "right", "bottom", "left", "start", "end", "min-w", "max-w"],
   size: ["size"],
+  "z-index": ["z"],
   height: ["h", "min-h", "max-h"],
   width: ["w"],
   radius: ["rounded", "rounded-t", "rounded-r", "rounded-b", "rounded-l", "rounded-s", "rounded-e",
@@ -248,6 +249,13 @@ const FAMILIES = [
     bridge: { kind: "theme", namespace: "--border-width-*", file: TOKENS_CSS, utilities: bridgedUtilities(["border-width"]) },
   },
   {
+    key: "layer",
+    label: "Layer",
+    unit: "layers",
+    match: (n) => /^--db-layer-/.test(n),
+    bridge: { kind: "theme", namespace: "--z-index-*", file: TOKENS_CSS, utilities: bridgedUtilities(["z-index"]) },
+  },
+  {
     key: "motion",
     label: "Motion",
     unit: "values",
@@ -430,7 +438,13 @@ const TAILWIND = [
   { namespace: "--blur-*", probe: "--blur-xs", utilities: /^(blur|backdrop-blur)-/ },
   // z-index and ring width have no theme namespace at all in Tailwind v4 — the
   // scale is baked into the utility, so there is nothing a token could override.
-  { namespace: "z-index scale", probe: null, utilities: /^-?z-\d+$/ },
+  // `z-index scale` used to sit here, as the ordering the system did not own: every
+  // overlay wrote a bare `z-50`, which Tailwind mints from the number rather than
+  // the namespace, so which one covered which was decided by portal order. The
+  // `layer` family and the `--z-index-*` namespace close that (N1 to N3 in
+  // verify-spacing-scale), so the row moved into the family table. A bare `z-50`
+  // still compiles — there is no key to close — which is why the Layer panel says
+  // not to write one.
   { namespace: "ring and outline width", probe: null, utilities: /^(ring|outline|inset-ring)(-\d+)?$/ },
   // `border and divide width` used to sit here, as the scale the Border width
   // family was named for and did not own: a bare `border` was Tailwind's 1px,

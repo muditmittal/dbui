@@ -77,7 +77,7 @@ export function SiteHeader({ currentHref }: { currentHref?: string | null }) {
   })()
 
   return (
-    <header className="sticky top-0 z-10 border-b border-border-base bg-surface-base/85 backdrop-blur">
+    <header className="sticky top-0 z-sticky border-b border-border-base bg-surface-base/85 backdrop-blur">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center gap-8 px-6">
         <Link
           href="/"

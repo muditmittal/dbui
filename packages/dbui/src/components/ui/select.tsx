@@ -99,12 +99,12 @@ function SelectContent({
  align={align}
  alignOffset={alignOffset}
  alignItemWithTrigger={alignItemWithTrigger}
- className="isolate z-50"
+ className="isolate z-popover"
       >
         <SelectPrimitive.Popup
  data-slot="select-content"
  data-align-trigger={alignItemWithTrigger}
- className={cn("relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+ className={cn("relative isolate z-popover max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit data-[align-trigger=true]:animate-none", className )}
           {...props}
         >
           <SelectScrollUpButton />
@@ -178,7 +178,7 @@ function SelectScrollUpButton({
     <SelectPrimitive.ScrollUpArrow
  data-slot="select-scroll-up-button"
  className={cn(
-        "top-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-base py-1 [&_svg:not([class*='size-'])]:size-4",
+        "top-0 z-raised flex w-full cursor-default items-center justify-center bg-surface-base py-1 [&_svg:not([class*='size-'])]:size-4",
  className
       )}
       {...props}
@@ -197,7 +197,7 @@ function SelectScrollDownButton({
     <SelectPrimitive.ScrollDownArrow
  data-slot="select-scroll-down-button"
  className={cn(
-        "bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-base py-1 [&_svg:not([class*='size-'])]:size-4",
+        "bottom-0 z-raised flex w-full cursor-default items-center justify-center bg-surface-base py-1 [&_svg:not([class*='size-'])]:size-4",
  className
       )}
       {...props}

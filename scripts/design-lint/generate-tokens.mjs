@@ -40,7 +40,7 @@ const TYPE_CSS = path.join(ROOT, "packages/dbui/src/tokens/type.css")
 const GLOBALS_CSS = path.join(ROOT, "packages/dbui/src/tokens/globals.css")
 const TOKENS_JSON = path.join(__dirname, "tokens.json")
 
-const { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion } = cfg
+const { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion, layer } = cfg
 const PREFIX = `--${meta.prefix}-` // --db-
 
 // ── ref resolution ───────────────────────────────────────────────────────────
@@ -306,9 +306,26 @@ const stopLines = (context, pad = "  ") =>
     )
     .join("\n")
 
+/**
+ * The two weights, which were the one type property with no token at all.
+ *
+ * Every other property a style carries already shipped as a stop — family, size,
+ * line-height, tracking — and weight was inlined into each utility as a bare 400
+ * or 600. That is why twelve components reach for `font-semibold`: there was
+ * nothing to reach for, so the ramp was the only way to get a weight and the ramp
+ * brings a size with it.
+ *
+ * Unitless, and not context-dependent. A weight is the same number at every type
+ * context, which is why it sits here rather than in `stopLines`.
+ */
+const weightLines = Object.entries(type.weight)
+  .map(([k, n]) => `  ${PREFIX}font-weight-${k}: ${n};`)
+  .join("\n")
+
 const typeLines = [
   `  ${PREFIX}font-family: ${type.family.text};`,
   `  ${PREFIX}mono-font-family: ${type.family.mono};`,
+  weightLines,
   stopLines(DEFAULT_CONTEXT),
 ].join("\n")
 
@@ -344,6 +361,62 @@ const sizeLines = scaled("size", size)
 // rather than units of the grid.
 const borderLines = Object.entries(border)
   .map(([k, px]) => `  ${PREFIX}border-${k}: ${px}px;`)
+  .join("\n")
+
+/* Unitless, because z-index is a count rather than a measurement. No scalar and
+ * no grid — a layer that moved with the density dial would be a bug, not a
+ * feature. */
+const layerLines = Object.entries(layer)
+  .map(([k, n]) => `  ${PREFIX}layer-${k}: ${n};`)
+  .join("\n")
+
+/**
+ * The animation roles, as Tailwind theme keys plus the keyframes they name.
+ *
+ * A plain `@theme` rather than `@theme inline`, so the `var()` references survive
+ * into the declaration. Inlined, each role would freeze its duration and curve at
+ * build time and the family above would stop reaching them.
+ *
+ * The keyframes are here rather than in the config because they are geometry, not
+ * values: a theme retunes how long an entrance takes and on what curve, and it does
+ * so by moving a duration stop. What actually travels is the same either way.
+ *
+ * `expand` reads a chain rather than one variable. A height animation needs its own
+ * target height, which only the instance knows, so the consumer supplies it —
+ * `--db-expand-height` for anything of ours, and the two library names after it so
+ * the accordion keeps working without being rewritten. `auto` last, because a
+ * keyframe that resolves to nothing animates to zero and the panel would collapse
+ * on open.
+ */
+const KEYFRAMES = {
+  "dbui-enter": `from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }`,
+  "dbui-exit": `from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.95); }`,
+  "dbui-expand": `from { height: 0; }
+    to { height: var(--db-expand-height, var(--radix-accordion-content-height, var(--accordion-panel-height, auto))); }`,
+  "dbui-collapse": `from { height: var(--db-expand-height, var(--radix-accordion-content-height, var(--accordion-panel-height, auto))); }
+    to { height: 0; }`,
+  "dbui-loop": `from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }`,
+}
+
+const animationLines = Object.entries(motion.animation)
+  .map(([role, a]) => {
+    const parts = [a.keyframes, v(`duration-${a.duration}`), v(`ease-${a.easing}`)]
+    if (a.repeat) parts.push(a.repeat)
+    return `  --animate-${role}: ${parts.join(" ")};`
+  })
+  .join("\n")
+
+const keyframeLines = Object.entries(motion.animation)
+  .map(([, a]) => a.keyframes)
+  .filter((name, i, all) => all.indexOf(name) === i)
+  .map((name) => {
+    const body = KEYFRAMES[name]
+    if (!body) throw new Error(`animation names keyframes "${name}" with no body in KEYFRAMES`)
+    return `  @keyframes ${name} {\n    ${body}\n  }`
+  })
   .join("\n")
 
 const motionLines = [
@@ -399,6 +472,15 @@ ${bridgeLines}
 
 }
 
+/* ── Animation roles — keyframes plus a duration plus a curve, which is what a
+   thing arriving needs and a transition cannot give it. Deliberately not inlined:
+   these keep their var() references so the motion family still reaches them. ── */
+@theme {
+${animationLines}
+
+${keyframeLines}
+}
+
 /* ── Shape roles — one utility per decision, named exactly like its token.
    A corner with no shape class is square, which is the system default. ── */
 ${shapeUtilities}
@@ -429,7 +511,12 @@ ${sizeLines}
   /* ── Border width (literal px, outside the scale, never touched by density) ── */
 ${borderLines}
 
-  /* ── Motion (three durations, one easing curve for the whole system) ── */
+  /* ── Layer — the stacking order, named by what a thing is. Unitless, and the
+     one family the density dial must not touch. ── */
+${layerLines}
+
+  /* ── Motion — durations, and one curve per job: linear for anything that
+     loops, standard to arrive, exit to leave ── */
 ${motionLines}
 
   /* ── Elevation ── */
@@ -490,6 +577,11 @@ fs.writeFileSync(TOKENS_CSS, css)
  * on the element. That is what makes `--db-type-scalar` work on a subtree, and
  * it is what leaves the stop free to be swapped by a context.
  */
+/** 600 -> "bold", so a style's weight can name the token the ramp defines. */
+const WEIGHT_NAME_BY_VALUE = Object.fromEntries(
+  Object.entries(type.weight).map(([name, value]) => [value, name]),
+)
+
 const stopCalc = (prop, stop) => `calc(${v(`${prop}-${stop}`)} * ${v("type-scalar")})`
 
 const typeUtilities = Object.entries(type.scale)
@@ -499,7 +591,10 @@ const typeUtilities = Object.entries(type.scale)
       `  font-size: ${stopCalc("font-size", s.size)};`,
       `  line-height: ${stopCalc("line-height", s.line)};`,
       `  letter-spacing: ${s.tracking ? stopCalc("letter-spacing", s.tracking) : "0"};`,
-      `  font-weight: ${s.weight ?? type.weight.normal};`,
+      // The token, not the number. A weight family nothing read would be the same
+      // defect the elevation family had for months: authored, generated,
+      // documented, and every call site rendering from a literal instead.
+      `  font-weight: ${v(`font-weight-${WEIGHT_NAME_BY_VALUE[s.weight ?? type.weight.normal]}`)};`,
       // Eyebrow carries its caps in the style, so no call site retypes it.
       `  text-transform: ${s.transform ?? "none"};`,
     ]

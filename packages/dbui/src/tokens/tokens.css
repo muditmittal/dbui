@@ -26,6 +26,15 @@
   --radius-xl: initial;
   --radius-2xl: initial;
   --radius-3xl: initial;
+  --ease-in: initial;
+  --ease-out: initial;
+  --ease-in-out: initial;
+  --font-weight-thin: initial;
+  --font-weight-extralight: initial;
+  --font-weight-light: initial;
+  --font-weight-medium: initial;
+  --font-weight-extrabold: initial;
+  --font-weight-black: initial;
 }
 
 @theme inline {
@@ -169,7 +178,52 @@
   --shadow-md: var(--db-elevation-md);
   --shadow-lg: var(--db-elevation-lg);
   --shadow-xl: var(--db-elevation-xl);
+  --ease-linear: var(--db-ease-linear);
+  --ease-standard: var(--db-ease-standard);
+  --ease-exit: var(--db-ease-exit);
+  --default-transition-duration: var(--db-duration-fast);
+  --z-index-raised: var(--db-layer-raised);
+  --z-index-sticky: var(--db-layer-sticky);
+  --z-index-overlay: var(--db-layer-overlay);
+  --z-index-modal: var(--db-layer-modal);
+  --z-index-popover: var(--db-layer-popover);
+  --z-index-tooltip: var(--db-layer-tooltip);
+  --font-weight-normal: var(--db-font-weight-normal);
+  --font-weight-bold: var(--db-font-weight-bold);
+  --font-weight-semibold: var(--db-font-weight-bold);
 
+}
+
+/* ── Animation roles — keyframes plus a duration plus a curve, which is what a
+   thing arriving needs and a transition cannot give it. Deliberately not inlined:
+   these keep their var() references so the motion family still reaches them. ── */
+@theme {
+  --animate-enter: dbui-enter var(--db-duration-fast) var(--db-ease-standard);
+  --animate-exit: dbui-exit var(--db-duration-fast) var(--db-ease-exit);
+  --animate-expand: dbui-expand var(--db-duration-default) var(--db-ease-standard);
+  --animate-collapse: dbui-collapse var(--db-duration-default) var(--db-ease-standard);
+  --animate-loop: dbui-loop var(--db-duration-loop) var(--db-ease-linear) infinite;
+
+  @keyframes dbui-enter {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes dbui-exit {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.95); }
+  }
+  @keyframes dbui-expand {
+    from { height: 0; }
+    to { height: var(--db-expand-height, var(--radix-accordion-content-height, var(--accordion-panel-height, auto))); }
+  }
+  @keyframes dbui-collapse {
+    from { height: var(--db-expand-height, var(--radix-accordion-content-height, var(--accordion-panel-height, auto))); }
+    to { height: 0; }
+  }
+  @keyframes dbui-loop {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 }
 
 /* ── Shape roles — one utility per decision, named exactly like its token.
@@ -320,7 +374,7 @@
      what components bind, and the only dimensional layer a theme reassigns. ── */
   --db-shape-square: var(--db-radius-0);
   --db-shape-control: var(--db-radius-1);
-  --db-shape-control-lg: var(--db-radius-1);
+  --db-shape-control-lg: var(--db-radius-full);
   --db-shape-container: var(--db-radius-2);
   --db-shape-container-lg: var(--db-radius-4);
   --db-shape-pill: var(--db-radius-full);
@@ -330,6 +384,8 @@
      applied in the utility body, not here, so it resolves on the element. ── */
   --db-font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --db-mono-font-family: "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace;
+  --db-font-weight-normal: 400;
+  --db-font-weight-bold: 600;
   --db-font-size-2xs: 0.6875rem;
   --db-font-size-xs: 0.75rem;
   --db-font-size-sm: 0.8125rem;
@@ -366,11 +422,24 @@
   --db-border-1: 1px;
   --db-border-2: 2px;
 
-  /* ── Motion (three durations, one easing curve for the whole system) ── */
+  /* ── Layer — the stacking order, named by what a thing is. Unitless, and the
+     one family the density dial must not touch. ── */
+  --db-layer-raised: 1;
+  --db-layer-sticky: 10;
+  --db-layer-overlay: 20;
+  --db-layer-modal: 30;
+  --db-layer-popover: 40;
+  --db-layer-tooltip: 50;
+
+  /* ── Motion — durations, and one curve per job: linear for anything that
+     loops, standard to arrive, exit to leave ── */
   --db-duration-fast: 150ms;
   --db-duration-default: 300ms;
   --db-duration-slow: 450ms;
+  --db-duration-loop: 1000ms;
+  --db-ease-linear: linear;
   --db-ease-standard: cubic-bezier(0.24, 1, 0.4, 1);
+  --db-ease-exit: cubic-bezier(0.4, 0, 1, 1);
 
   /* ── Elevation ── */
   --db-elevation-xs: 0 1px 0 0 rgba(0, 0, 0, 0.05);

@@ -76,7 +76,7 @@ function Button({
     >
       {loading ? (
         <>
-          <LoadingIcon className="animate-spin" />
+          <LoadingIcon className="animate-loop" />
           {loadingText ?? <span className="opacity-0">{children}</span>}
         </>
       ) : (

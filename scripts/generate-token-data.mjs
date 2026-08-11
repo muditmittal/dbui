@@ -13,6 +13,12 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 import { declarations, resolvePx } from "./token-values.mjs"
+// The one thing read from the config rather than the shipped CSS, and it has to
+// be: a semantic's primitive is resolved away by the generator, so `tokens.css`
+// holds `#FFFFFF` with no record that it came from `base.white`. Everything else
+// on this page is read back out of what ships, which is why a value here cannot
+// drift from a value there — this field is the exception and names its source.
+import { semantics } from "../packages/dbui/src/tokens/theme.config.mjs"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const TOKENS_CSS = path.join(ROOT, "packages/dbui/src/tokens/tokens.css")
@@ -73,6 +79,30 @@ const COLOR_GROUPS = [
 /** A dimension under a color prefix: `border-1` is a width, `border-base` a color. */
 const NOT_COLOR = /^border-\d/
 
+/**
+ * Where one mode's value comes from, normalized so both authored shapes read the
+ * same downstream.
+ *
+ * A semantic is either a bare reference or a reference plus an alpha, and the
+ * second is the more interesting of the two: it is the only explanation for why
+ * `surface-hover` ships an rgba instead of a hex, and the alpha is the whole
+ * design decision — 3% over black is a wash the eye reads as a tint.
+ */
+const primitiveRef = (entry) => {
+  if (!entry) return null
+  if (typeof entry === "string") return { ref: entry, alpha: null }
+  if (typeof entry === "object" && entry.ref) return { ref: entry.ref, alpha: entry.a ?? null }
+  return null
+}
+
+const primitiveOf = (name) => {
+  const s = semantics[name]
+  if (!s) return null
+  const light = primitiveRef(s.light)
+  const dark = primitiveRef(s.dark)
+  return light || dark ? { light, dark } : null
+}
+
 const colorGroups = COLOR_GROUPS.map(([prefix, label, blurb, family]) => {
   const names = Object.keys(light).filter((n) => {
     if (!n.startsWith(prefix + "-")) return false
@@ -85,7 +115,12 @@ const colorGroups = COLOR_GROUPS.map(([prefix, label, blurb, family]) => {
     label,
     blurb,
     family,
-    tokens: names.map((n) => ({ name: n, light: light[n], dark: dark[n] ?? light[n] })),
+    tokens: names.map((n) => ({
+      name: n,
+      light: light[n],
+      dark: dark[n] ?? light[n],
+      primitive: primitiveOf(n),
+    })),
   }
 }).filter((g) => g.tokens.length)
 
@@ -171,6 +206,10 @@ const pick = (re, { onGrid = false } = {}) =>
  * to rem once, and a reviewer needs the px back.
  */
 /** Utility order in type.css is ramp order, which is neither alphabetical nor by size. */
+/** `calc(var(--db-font-size-sm) * ...)` -> "sm". Null where a literal is written. */
+const stopIn = (declaration) =>
+  declaration.match(/var\(--db-(?:font-size|line-height|letter-spacing)-([a-z0-9-]+)\)/)?.[1] ?? null
+
 const typeSteps = [...typeCss.matchAll(/@utility type-([a-z0-9-]+)\s*\{([\s\S]*?)\n\}/g)].map(
   ([, step, body]) => {
     const raw = (prop) => body.match(new RegExp(`(?:^|\\n)\\s*${prop}:\\s*([^;]+);`))?.[1]?.trim() ?? ""
@@ -182,6 +221,19 @@ const typeSteps = [...typeCss.matchAll(/@utility type-([a-z0-9-]+)\s*\{([\s\S]*?
       weight: raw("font-weight").replace(/var\((--db-[a-z0-9-]+)\)/, (_, n) => declared[n] ?? "") || null,
       mono: /mono-font-family/.test(raw("font-family")),
       uppercase: /text-transform:\s*uppercase/.test(body),
+      // Which stop each property names, read back out of the var in the utility.
+      //
+      // The px above is what a style measures; this is what it asked for. Both are
+      // worth having: 13/16 says a label is 13 on 16, and `sm` on `flush` says it
+      // shares that size with `body` and that line box with `hint` — which is why
+      // moving one stop moves several styles.
+      stops: {
+        size: stopIn(raw("font-size")),
+        line: stopIn(raw("line-height")),
+        tracking: stopIn(raw("letter-spacing")),
+      },
+      // Zero rather than a stop, for the ten styles that set no tracking at all.
+      tracking: resolvePx(raw("letter-spacing"), declared) ?? 0,
     }
   }
 )
@@ -256,6 +308,11 @@ const data = {
   colorGroups,
   space: pick(/^space-/, { onGrid: true }),
   radius: pick(/^radius-/),
+  // The roles that sit between a component and a radius stop. Not `onGrid`: a
+  // multiple would report how many grid units a corner happens to be, which is a
+  // fact about the stop it aliases rather than about the role. `pick` resolves the
+  // alias, so `shape-pill` reads as its pixel value and not as `var(--db-radius-full)`.
+  shape: pick(/^shape-/),
   size: pick(/^size-/, { onGrid: true }),
   // Not `onGrid`: this family counts px, not units of the grid step, so a
   // multiple would divide 1px by 4px and report 0.25 of a relationship that
@@ -264,6 +321,10 @@ const data = {
   elevation: pickModes(/^elevation-/),
   duration: pick(/^duration-/),
   easing: pick(/^ease-/),
+  // Not `onGrid`. A layer is a count of steps in an order, so dividing it by the
+  // grid step would report a fraction of a relationship that does not exist — the
+  // same reason border is picked plainly.
+  layer: pick(/^layer-/),
   scalars: pick(/scalar$|^spacing-unit$/),
 }
 
@@ -299,7 +360,15 @@ export type Token = {
  * CSS rather than derived, because neither is a transform of the other.
  */
 export type ModeToken = { name: string; light: string; dark: string }
-export type ColorToken = ModeToken
+
+/**
+ * Which primitive a mode resolves to, and the alpha laid over it when there is
+ * one. \`null\` where a token is authored as a literal rather than a reference.
+ */
+export type PrimitiveRef = { ref: string; alpha: number | null }
+export type ColorToken = ModeToken & {
+  primitive: { light: PrimitiveRef | null; dark: PrimitiveRef | null } | null
+}
 export type ColorGroup = {
   key: string
   label: string
@@ -322,6 +391,9 @@ export type TypeStep = {
   weight: string | null
   mono: boolean
   uppercase: boolean
+  /** Which stop each property names. \`null\` where the style writes a literal. */
+  stops: { size: string | null; line: string | null; tracking: string | null }
+  tracking: number
 }
 
 export const colorFamilies: ColorFamily[] = ${JSON.stringify(colorFamilies, null, 2)}

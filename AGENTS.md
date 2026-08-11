@@ -121,6 +121,12 @@ you should *act*:
   `next build` proves nothing about it. It takes no comments: JSON has none, and a `"// note"`
   key inside a redirect is an unknown property the schema rejects. Note the build command runs
   Storybook *and* Next, so `next build` alone does not cover it either.
+- **The dev server serves a stale bundle after a scripted file rewrite.** Twice now, editing a
+  portal file with a node script — reordering JSX blocks, stripping a prop across a file — has
+  left Turbopack reporting a `ReferenceError` for an identifier that is imported correctly and
+  typechecks. `Guidance is not defined` and `TypeStrip is not defined` were both this, and both
+  looked exactly like a broken import. If an identifier that plainly exists is reported
+  undefined, `rm -rf apps/portal/.next` and restart before touching a line of source.
 - **There is no published package.** Install is clone-and-copy per `packages/dbui/install.md`.
   On Databricks-managed machines, point npm/yarn at `https://npm-proxy.dev.databricks.com`
   before scaffolding — Jamf blocks public npm. Human overview: `/install`; agent fetch: `/install.md`.

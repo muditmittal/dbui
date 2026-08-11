@@ -95,12 +95,13 @@ export function StickyPlate({
       <div
         ref={plate}
         // Pinned at the site header, read from the same variable the docs rail
-        // and the table headers read rather than restated as `top-14`. `z-1`
-        // sits under the header's `z-10` so the plate slides beneath it, and
-        // over the table below, which is `position: relative` and would
-        // otherwise paint through the plate on its way past. Opaque, because
-        // the page scrolls underneath.
-        className={`sticky top-(--docs-header-offset) z-1 bg-surface-base ${className}`}
+        // and the table headers read rather than restated as `top-14`.
+        //
+        // `raised` rather than `sticky`, which is the whole point of naming the
+        // layers: this plate has to slide *under* the site header and *over* the
+        // table below it, and those are two different roles rather than two
+        // numbers someone picked. Opaque, because the page scrolls underneath.
+        className={`sticky top-(--docs-header-offset) z-raised bg-surface-base ${className}`}
       >
         {bar}
       </div>

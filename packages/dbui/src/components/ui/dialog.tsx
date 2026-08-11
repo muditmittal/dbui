@@ -40,7 +40,7 @@ function DialogOverlay({
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-[var(--db-utility-scrim)] duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+        "fixed inset-0 isolate z-overlay bg-[var(--db-utility-scrim)] duration-100 supports-backdrop-filter:backdrop-blur-xs",
         className
       )}
       {...props}
@@ -73,7 +73,7 @@ function DialogContent({
         data-slot="dialog-content"
         data-size={size}
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 shape-container border border-border-base bg-surface-base type-body shadow-xl duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "data-open:animate-enter data-closed:animate-exit fixed top-1/2 left-1/2 z-modal grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 shape-container border border-border-base bg-surface-base type-body shadow-xl duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px]",
           className
         )}
         {...props}
