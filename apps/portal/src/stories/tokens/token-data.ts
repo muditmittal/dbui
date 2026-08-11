@@ -157,6 +157,11 @@ export const colorFamilies: ColorFamily[] = [
             "dark": "rgba(255, 255, 255, 0.06)"
           },
           {
+            "name": "border-emphasis",
+            "light": "#A3A3A3",
+            "dark": "rgba(255, 255, 255, 0.3)"
+          },
+          {
             "name": "border-inverse",
             "light": "#404040",
             "dark": "#C0CDD8"
@@ -682,6 +687,11 @@ export const colorGroups: ColorGroup[] = [
         "name": "border-subtle",
         "light": "#F5F5F5",
         "dark": "rgba(255, 255, 255, 0.06)"
+      },
+      {
+        "name": "border-emphasis",
+        "light": "#A3A3A3",
+        "dark": "rgba(255, 255, 255, 0.3)"
       },
       {
         "name": "border-inverse",
@@ -1622,7 +1632,7 @@ export const scalars: Token[] = [
 ]
 
 export const tokenCounts = {
-  "colorGroups": 84,
+  "colorGroups": 85,
   "space": 9,
   "radius": 7,
   "size": 9,

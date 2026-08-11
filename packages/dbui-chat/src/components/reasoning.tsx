@@ -1,13 +1,9 @@
 "use client"
 
 import * as React from "react"
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "dbui/components/ui/collapsible"
-import { ChevronRight } from "dbui/components/icons/ChevronRight"
+import { SparkleFill } from "dbui/components/icons/SparkleFill"
 
+import { Disclosure } from "./disclosure"
 import { cn } from "../lib/utils"
 
 /**
@@ -15,8 +11,11 @@ import { cn } from "../lib/utils"
  * @guideline Use for the model's thinking trace — renders the "Thought for 40s" affordance
  * @guideline Set isStreaming while the model is still thinking; pass duration once it settles
  * @guideline Override `label` for a waiting state, e.g. "Waiting for user response"
+ * @guideline Render it with no children for the gap between submitting and the first token — it
+ *   becomes a live status row instead of a disclosure, so a turn needs no separate loader
  * @constraint Collapsed by default — reasoning is secondary to the answer
  * @constraint Keep reasoning above the answer it produced, never below
+ * @constraint One per turn
  */
 
 export interface ReasoningProps
@@ -44,17 +43,6 @@ function Reasoning({
   children,
   ...props
 }: ReasoningProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen)
-  const isOpen = open ?? internalOpen
-
-  const handleOpenChange = React.useCallback(
-    (next: boolean) => {
-      setInternalOpen(next)
-      onOpenChange?.(next)
-    },
-    [onOpenChange]
-  )
-
   const triggerText =
     label ??
     (isStreaming
@@ -63,34 +51,54 @@ function Reasoning({
         ? `Thought for ${duration}s`
         : "Thought process")
 
+  const face = (
+    <>
+      <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
+        <SparkleFill />
+      </span>
+      <span className={cn("min-w-0 truncate", isStreaming && "animate-pulse")}>
+        {triggerText}
+      </span>
+    </>
+  )
+
+  // No body means there is nothing to disclose. A chevron that opens an empty
+  // rail is a control that lies, so this renders as a status line instead — and
+  // that is the state a separate loader component used to occupy.
+  if (!children) {
+    return (
+      <div
+        data-slot="reasoning"
+        data-streaming={isStreaming || undefined}
+        role="status"
+        aria-live="polite"
+        className={cn(
+          "flex w-full items-center gap-2 type-body-bold text-text-subtle",
+          className
+        )}
+        {...props}
+      >
+        {face}
+      </div>
+    )
+  }
+
   return (
-    <div data-slot="reasoning" className={cn("w-full", className)} {...props}>
-      <Collapsible open={isOpen} onOpenChange={handleOpenChange}>
-        <CollapsibleTrigger
-          className={cn(
-            "flex items-center gap-1 rounded-1 type-label text-text-subtle outline-none",
-            "hover:text-text-base focus-visible:border focus-visible:border-focus-ring"
-          )}
-        >
-          <span
-            className={cn(
-              "inline-flex shrink-0 transition-transform [&_svg]:size-4",
-              isOpen && "rotate-90"
-            )}
-          >
-            <ChevronRight />
-          </span>
-          <span className={cn(isStreaming && "animate-pulse")}>
-            {triggerText}
-          </span>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="mt-2 border-l-2 border-border-base pl-3 type-body text-text-subtle">
-            {children}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
+    <Disclosure
+      slot="reasoning"
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      chevron="trailing"
+      className={className}
+      trigger={face}
+      triggerClassName="type-body-bold text-text-subtle hover:text-text-base"
+      rail
+      contentClassName="type-body text-text-subtle"
+      {...props}
+    >
+      {children}
+    </Disclosure>
   )
 }
 

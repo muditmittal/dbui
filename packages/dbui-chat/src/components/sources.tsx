@@ -1,13 +1,9 @@
 "use client"
 
 import * as React from "react"
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "dbui/components/ui/collapsible"
-import { ChevronRight } from "dbui/components/icons/ChevronRight"
+import { Button } from "dbui/components/ui/button"
 
+import { useDisclosureState } from "./disclosure"
 import { cn } from "../lib/utils"
 
 /**
@@ -15,12 +11,15 @@ import { cn } from "../lib/utils"
  * @guideline Use under an assistant answer to name what it drew on — tables, notebooks, docs
  * @guideline Give each Source the entity icon for its kind, so a table and a doc are told apart before the label is read
  * @guideline Name the asset, not the URL: "main.sales.orders", not the workspace link
+ * @guideline Place it as the last child of the answer's action row. Its trigger sits inline beside
+ *   the copy and feedback buttons; the list it opens takes the next full-width line by itself
  * @constraint Collapsed by default, and only ever below the answer it supports
  * @constraint Every entry must resolve. A source the reader cannot open is a claim, not a citation
- * @constraint Not Actions. Actions act on the answer; Sources explain where it came from
+ * @constraint Not Actions. The action row acts on the answer; Sources explains where it came from
  */
 
-export interface SourcesProps extends React.ComponentProps<"div"> {
+export interface SourcesProps
+  extends Omit<React.ComponentProps<typeof Button>, "children"> {
   /** Entry count for the trigger. */
   count: number
   /** Replaces the generated "N sources" text. */
@@ -29,8 +28,15 @@ export interface SourcesProps extends React.ComponentProps<"div"> {
   /** Controlled open state. */
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  children?: React.ReactNode
 }
 
+/**
+ * Returns a fragment rather than a container on purpose. Figma puts the trigger at
+ * the end of the answer's action row and the list on the line below it — one
+ * element cannot be both inline and full-width, so the two are siblings and the
+ * caller's `flex-wrap` row does the placing. `basis-full` is what forces the break.
+ */
 function Sources({
   count,
   label,
@@ -41,43 +47,41 @@ function Sources({
   children,
   ...props
 }: SourcesProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen)
-  const isOpen = open ?? internalOpen
+  const { isOpen, handleOpenChange } = useDisclosureState({
+    open,
+    defaultOpen,
+    onOpenChange,
+  })
 
-  const handleOpenChange = React.useCallback(
-    (next: boolean) => {
-      setInternalOpen(next)
-      onOpenChange?.(next)
-    },
-    [onOpenChange]
-  )
+  const contentId = React.useId()
 
   return (
-    <div data-slot="sources" className={cn("w-full", className)} {...props}>
-      <Collapsible open={isOpen} onOpenChange={handleOpenChange}>
-        <CollapsibleTrigger
-          className={cn(
-            "flex items-center gap-1 rounded-1 type-label text-text-subtle outline-none",
-            "hover:text-text-base focus-visible:border focus-visible:border-focus-ring"
-          )}
+    <>
+      <Button
+        data-slot="sources-trigger"
+        type="button"
+        variant="ghost"
+        size="sm"
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        onClick={() => handleOpenChange(!isOpen)}
+        className={cn("type-label text-text-subtle", className)}
+        {...props}
+      >
+        {/* Singular at one. "1 sources" is the tell that a count was interpolated
+            rather than written. */}
+        {label ?? `${count} ${count === 1 ? "source" : "sources"}`}
+      </Button>
+      {isOpen ? (
+        <div
+          id={contentId}
+          data-slot="sources"
+          className="flex basis-full flex-col gap-1"
         >
-          <span
-            className={cn(
-              "inline-flex shrink-0 transition-transform [&_svg]:size-4",
-              isOpen && "rotate-90"
-            )}
-          >
-            <ChevronRight />
-          </span>
-          {/* Singular at one. "1 sources" is the tell that a count was interpolated
-              rather than written. */}
-          {label ?? `${count} ${count === 1 ? "source" : "sources"}`}
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="mt-2 flex flex-col gap-1">{children}</div>
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
+          {children}
+        </div>
+      ) : null}
+    </>
   )
 }
 

@@ -46,7 +46,7 @@ by design, and neither do the two `em` inline steps.
 | `--db-border-inverse` | Color | #404040 |  | #C0CDD8 |
 | `--db-border-strong` | Color | #D4D4D4 |  | rgba(255, 255, 255, 0.15) |
 | `--db-border-subtle` | Color | #F5F5F5 |  | rgba(255, 255, 255, 0.06) |
-| `--db-focus-ring` | Color | #171717 |  | #D1D9E1 |
+| `--db-focus-ring` | Color | #404040 |  | #F6F7F9 |
 | `--db-focus-ring-offset` | Color | #FFFFFF |  | #11171C |
 | `--db-input-border-base` | Color | #E5E5E5 |  | rgba(255, 255, 255, 0.15) |
 | `--db-input-border-hover` | Color | #A3A3A3 |  | #8396A5 |
@@ -164,6 +164,13 @@ by design, and neither do the two `em` inline steps.
 | `--db-duration-fast` | Motion | 150ms |  |  |
 | `--db-duration-slow` | Motion | 450ms |  |  |
 | `--db-ease-standard` | Motion | cubic-bezier(0.24, 1, 0.4, 1) |  |  |
+| `--db-border-emphasis` | Other | #A3A3A3 |  | rgba(255, 255, 255, 0.3) |
+| `--db-shape-container` | Other | var(--db-radius-2) | 8px |  |
+| `--db-shape-container-lg` | Other | var(--db-radius-4) | 16px |  |
+| `--db-shape-control` | Other | var(--db-radius-1) | 4px |  |
+| `--db-shape-control-lg` | Other | var(--db-radius-1) | 4px |  |
+| `--db-shape-pill` | Other | var(--db-radius-full) | 999px |  |
+| `--db-shape-square` | Other | var(--db-radius-0) | 0px |  |
 
 ## Type styles (composed)
 

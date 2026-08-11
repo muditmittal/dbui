@@ -9,31 +9,38 @@ import {
   MessageContent,
   Response,
   Reasoning,
+  Task,
+  TaskItem,
+  Plan,
+  PlanItem,
+  Sources,
+  Source,
   PromptInput,
-  PromptInputContextBar,
+  PromptInputContext,
   PromptInputTextarea,
-  PromptInputFooter,
-  PromptInputTools,
-  PromptInputButton,
+  PromptInputActions,
   PromptInputSubmit,
-  Suggestions,
-  Suggestion,
-  SuggestionIcon,
-  FollowUps,
-  FollowUp,
-  Actions,
-  Action,
-  Loader,
   type ChatStatus,
 } from "dbui-chat"
+import { Button, ButtonIcon } from "dbui/components/ui/button"
+import { AiGradientIcon } from "dbui/components/ui/ai-gradient-icon"
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from "dbui/components/ui/tooltip"
 import { At } from "dbui/components/icons/At"
 import { Paperclip } from "dbui/components/icons/Paperclip"
 import { Copy } from "dbui/components/icons/Copy"
 import { ThumbsUp } from "dbui/components/icons/ThumbsUp"
 import { ThumbsDown } from "dbui/components/icons/ThumbsDown"
-import { Overflow } from "dbui/components/icons/Overflow"
-import { SparkleFill } from "dbui/components/icons/SparkleFill"
-import { GenieCode } from "dbui/components/icons/GenieCode"
+import { Share } from "dbui/components/icons/Share"
+import { Sparkle } from "dbui/components/icons/Sparkle"
+import { Search } from "dbui/components/icons/Search"
+import { Table as TableIcon } from "dbui/components/icons/Table"
+import { FileDocument } from "dbui/components/icons/FileDocument"
+import { Terminal } from "dbui/components/icons/Terminal"
 
 const meta: Meta = {
   title: "Components/Chat/Thread",
@@ -41,15 +48,6 @@ const meta: Meta = {
 }
 
 export default meta
-
-interface Turn {
-  id: string
-  from: "user" | "assistant"
-  text: string
-  reasoning?: string
-  duration?: number
-  followUps?: string[]
-}
 
 const ANSWER = `I found **14 enterprise customers** with elevated renewal risk this quarter, representing **$8.6M in ARR**. The top 3 accounts to review are:
 
@@ -59,28 +57,7 @@ const ANSWER = `I found **14 enterprise customers** with elevated renewal risk t
 | Bell & Finch Retail | $1.7M | Open Sev 2 support issue |
 | Atlas Benefits Group | $1.2M | No exec contact in 75 days |
 
-Overall, the risk appears less related to churn history and more related to recent engagement drop-off. I'd recommend prioritizing accounts with both declining usage and unresolved support activity.`
-
-const INITIAL_TURNS: Turn[] = [
-  {
-    id: "t1",
-    from: "user",
-    text: "Can you show me our top at-risk renewals?",
-  },
-  {
-    id: "t2",
-    from: "assistant",
-    text: ANSWER,
-    reasoning:
-      "The user wants at-risk renewals. I should join the renewals table with recent usage telemetry and open support cases, then rank by ARR at risk. Certified metrics take priority over ad-hoc ones.",
-    duration: 40,
-    followUps: [
-      "Show me the full list of at-risk renewals with owner, ARR, and risk reason",
-      "Break down renewal risk by region, segment, and account owner",
-      "Create a reusable skill to identify high-risk renewals each week",
-    ],
-  },
-]
+Overall, the risk appears less related to churn history and more related to recent engagement drop-off.`
 
 const CANNED_REPLY = `Here's the breakdown by region. \`us-east\` carries the largest share of at-risk ARR:
 
@@ -97,60 +74,89 @@ function Frame({ children }: { children: React.ReactNode }) {
   )
 }
 
-function AssistantTurn({ turn }: { turn: Turn }) {
+function Piece({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <Message from="assistant">
-      <MessageContent from="assistant">
-        {turn.reasoning ? (
-          <Reasoning duration={turn.duration} className="mb-2">
-            {turn.reasoning}
-          </Reasoning>
-        ) : null}
-        <Response>{turn.text}</Response>
-        <Actions className="mt-2">
-          <Action label="Copy">
-            <Copy />
-          </Action>
-          <Action label="Good response">
-            <ThumbsUp />
-          </Action>
-          <Action label="Bad response">
-            <ThumbsDown />
-          </Action>
-          <Action label="More actions">
-            <Overflow />
-          </Action>
-        </Actions>
-        {turn.followUps?.length ? (
-          <>
-            <hr className="my-3 border-border-base" />
-            <FollowUps>
-              {turn.followUps.map((item) => (
-                <FollowUp key={item}>{item}</FollowUp>
-              ))}
-            </FollowUps>
-          </>
-        ) : null}
-      </MessageContent>
-    </Message>
+    <section>
+      <h3 className="mb-2 type-label-bold text-text-base">{title}</h3>
+      <div className="flex flex-col gap-3 rounded-2 border border-border-base bg-surface-base p-4">
+        {children}
+      </div>
+    </section>
   )
 }
 
-/** A full thread: reasoning, markdown answer with a dbui table, actions, follow-ups. */
+/**
+ * The answer action row. This is a recipe, not a component — four ghost icon
+ * Buttons with Tooltips, then the Sources trigger, which drops its list onto the
+ * next line because the row wraps.
+ */
+function AnswerActions({ children }: { children?: React.ReactNode }) {
+  const actions = [
+    { label: "Copy", icon: <Copy /> },
+    { label: "Good response", icon: <ThumbsUp /> },
+    { label: "Bad response", icon: <ThumbsDown /> },
+    { label: "Share", icon: <Share /> },
+  ]
+
+  return (
+    <TooltipProvider>
+      <div className="flex flex-wrap items-center gap-1">
+        {actions.map((action) => (
+          <Tooltip key={action.label}>
+            <TooltipTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label={action.label}
+                />
+              }
+            >
+              {action.icon}
+            </TooltipTrigger>
+            <TooltipContent>{action.label}</TooltipContent>
+          </Tooltip>
+        ))}
+        {children}
+      </div>
+    </TooltipProvider>
+  )
+}
+
+/** A full thread: reasoning, an agent trace, a markdown answer, actions and sources. */
 export const FullThread: StoryObj = {
   render: () => {
-    const [turns, setTurns] = React.useState<Turn[]>(INITIAL_TURNS)
+    interface Turn {
+      id: string
+      from: "user" | "assistant"
+      text: string
+      reasoning?: string
+      duration?: number
+      trace?: boolean
+    }
+
+    const [turns, setTurns] = React.useState<Turn[]>([
+      { id: "t1", from: "user", text: "Can you show me our top at-risk renewals?" },
+      {
+        id: "t2",
+        from: "assistant",
+        text: ANSWER,
+        reasoning:
+          "Join the renewals table with recent usage telemetry and open support cases, then rank by ARR at risk. Certified metrics take priority over ad-hoc ones.",
+        duration: 40,
+        trace: true,
+      },
+    ])
     const [status, setStatus] = React.useState<ChatStatus>("ready")
     const [context, setContext] = React.useState([
       { id: "renewals", label: "renewals", detail: "sales_main.crm" },
     ])
 
     const handleSubmit = ({ text }: { text: string }) => {
-      const userTurn: Turn = { id: `u${Date.now()}`, from: "user", text }
-      setTurns((prev) => [...prev, userTurn])
+      setTurns((prev) => [...prev, { id: `u${Date.now()}`, from: "user", text }])
       setStatus("submitted")
 
-      // Simulate a round trip, then stream the reply word by word.
       window.setTimeout(() => {
         const id = `a${Date.now()}`
         setTurns((prev) => [...prev, { id, from: "assistant", text: "" }])
@@ -172,7 +178,7 @@ export const FullThread: StoryObj = {
             setStatus("ready")
           }
         }, 45)
-      }, 600)
+      }, 700)
     }
 
     return (
@@ -182,40 +188,78 @@ export const FullThread: StoryObj = {
             {turns.map((turn) =>
               turn.from === "user" ? (
                 <Message key={turn.id} from="user">
-                  <MessageContent from="user">{turn.text}</MessageContent>
+                  <MessageContent>{turn.text}</MessageContent>
                 </Message>
               ) : (
-                <AssistantTurn key={turn.id} turn={turn} />
+                <Message key={turn.id} from="assistant">
+                  <MessageContent>
+                    {turn.reasoning ? (
+                      <Reasoning duration={turn.duration} className="mb-2">
+                        {turn.reasoning}
+                      </Reasoning>
+                    ) : null}
+                    {turn.trace ? (
+                      <div className="mb-3 flex flex-col gap-2">
+                        <Task title="Searched the catalog">
+                          <TaskItem icon={<Search />}>
+                            modified_at &gt; now() - 7 days
+                          </TaskItem>
+                          <TaskItem icon={<TableIcon />}>sales_main.crm.renewals</TaskItem>
+                        </Task>
+                        <Plan count={3}>
+                          <PlanItem status="done">Find accounts up for renewal</PlanItem>
+                          <PlanItem status="done">Rank by ARR at risk</PlanItem>
+                          <PlanItem status="active">Summarise the top three</PlanItem>
+                        </Plan>
+                      </div>
+                    ) : null}
+                    <Response>{turn.text}</Response>
+                    {turn.text ? (
+                      <div className="mt-2">
+                        <AnswerActions>
+                          <Sources count={2}>
+                            <Source href="#" icon={<TableIcon />}>
+                              sales_main.crm.renewals
+                            </Source>
+                            <Source href="#" icon={<FileDocument />}>
+                              Renewal risk methodology
+                            </Source>
+                          </Sources>
+                        </AnswerActions>
+                      </div>
+                    ) : null}
+                  </MessageContent>
+                </Message>
               )
             )}
-            {status === "submitted" ? <Loader /> : null}
+            {status === "submitted" ? <Reasoning isStreaming /> : null}
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
 
         <div className="border-t border-border-base p-3">
           <PromptInput accent="ai" onSubmit={handleSubmit}>
-            <PromptInputContextBar
+            <PromptInputContext
               items={context}
               onRemove={(id) =>
                 setContext((prev) => prev.filter((item) => item.id !== id))
               }
             />
-            <PromptInputTextarea placeholder="Ask a question..." />
-            <PromptInputFooter>
-              <PromptInputTools>
-                <PromptInputButton aria-label="Mention an object">
+            <PromptInputTextarea placeholder="Ask genie..." />
+            <PromptInputActions>
+              <div className="flex items-center gap-0.5">
+                <Button variant="ghost" size="icon-sm" aria-label="Mention an object">
                   <At />
-                </PromptInputButton>
-                <PromptInputButton aria-label="Attach a file">
+                </Button>
+                <Button variant="ghost" size="icon-sm" aria-label="Attach a file">
                   <Paperclip />
-                </PromptInputButton>
-              </PromptInputTools>
+                </Button>
+              </div>
               <PromptInputSubmit status={status} />
-            </PromptInputFooter>
+            </PromptInputActions>
           </PromptInput>
-          <p className="mt-2 text-center text-[12px] leading-[16px] text-text-subtle">
-            Always review the accuracy of responses.
+          <p className="mt-2 text-center type-hint text-text-subtle">
+            Check responses for accuracy
           </p>
         </div>
       </Frame>
@@ -223,84 +267,221 @@ export const FullThread: StoryObj = {
   },
 }
 
-/** Empty state with starter suggestions. */
+/**
+ * Empty state.
+ *
+ * The gradient is the AI signal, so it goes on the icons and nowhere else — the
+ * composer stays quiet because it is chrome, the frame around Genie rather than
+ * Genie. No rule above the composer either: it fades into the surface, so the
+ * panel reads as one unit with the sections still in it.
+ */
 export const EmptyState: StoryObj = {
   render: () => (
     <Frame>
       <Conversation>
-        <ConversationContent className="h-full">
+        <ConversationContent className="h-full p-0">
           <ConversationEmpty
-            title="Get it done with Databricks"
-            description="Ask about your data, or pick a place to start."
-            media={<GenieCode />}
+            title="Genie"
+            description="Ask Genie to fix issues faster."
+            media={
+              <AiGradientIcon>
+                <Sparkle className="size-12" />
+              </AiGradientIcon>
+            }
           >
-            <Suggestions className="justify-center">
-              {["Analyze data", "Summarize text", "Review asset ownership"].map(
-                (item) => (
-                  <Suggestion key={item}>
-                    <SuggestionIcon>
-                      <SparkleFill />
-                    </SuggestionIcon>
-                    {item}
-                  </Suggestion>
-                )
-              )}
-            </Suggestions>
+            {["Investigate", "Assign", "Fix"].map((item) => (
+              <Button key={item} variant="secondary" size="md">
+                <ButtonIcon>
+                  <AiGradientIcon>
+                    <Sparkle />
+                  </AiGradientIcon>
+                </ButtonIcon>
+                {item}
+              </Button>
+            ))}
           </ConversationEmpty>
         </ConversationContent>
       </Conversation>
-      <div className="border-t border-border-base p-3">
-        <PromptInput accent="ai">
-          <PromptInputTextarea placeholder="Ask a question..." />
-          <PromptInputFooter>
-            <PromptInputTools>
-              <PromptInputButton aria-label="Mention an object">
+
+      <div className="-mt-6 bg-gradient-to-t from-surface-base from-60% to-transparent p-3 pt-10">
+        <PromptInput>
+          <PromptInputTextarea placeholder="Ask" />
+          <PromptInputActions>
+            <div className="flex items-center gap-0.5">
+              <Button variant="ghost" size="icon-sm" aria-label="Mention an object">
                 <At />
-              </PromptInputButton>
-            </PromptInputTools>
+              </Button>
+              <Button variant="ghost" size="icon-sm" aria-label="Attach a file">
+                <Paperclip />
+              </Button>
+            </div>
             <PromptInputSubmit />
-          </PromptInputFooter>
+          </PromptInputActions>
         </PromptInput>
+        <p className="mt-2 text-center type-hint text-text-subtle">
+          Always review the accuracy of responses.
+        </p>
       </div>
     </Frame>
   ),
 }
 
-/** Each part in isolation, for spec review against Figma. */
-export const Pieces: StoryObj = {
+/** Message — the user turn is a full-width filled box, the assistant sits flush. */
+export const Messages: StoryObj = {
+  render: () => (
+    <div className="flex max-w-[440px] flex-col gap-4">
+      <Message from="user">
+        <MessageContent>
+          Submitted prompt from the user goes here. This can include image, and other
+          media as well.
+        </MessageContent>
+      </Message>
+      <Message from="assistant">
+        <MessageContent>
+          Response from the system back to the user. This text response can include
+          formatted text styling, links, mentions, tags, etc.
+        </MessageContent>
+      </Message>
+    </div>
+  ),
+}
+
+/** Reasoning — streaming with no body is the waiting state; with a body it discloses. */
+export const ReasoningStates: StoryObj = {
+  render: () => (
+    <div className="flex max-w-[440px] flex-col gap-6">
+      <Piece title="Waiting — no body, so it is a live status row">
+        <Reasoning isStreaming />
+        <Reasoning isStreaming label="Searching catalog" />
+      </Piece>
+      <Piece title="Settled — a body makes it a disclosure">
+        <Reasoning duration={12}>
+          Checked the catalog for tables with a modified_at inside the last seven days,
+          then ranked them by row delta.
+        </Reasoning>
+        <Reasoning label="Waiting for user response">
+          Paused until the reviewer confirms the join key.
+        </Reasoning>
+      </Piece>
+    </div>
+  ),
+}
+
+/** Task — one tool call, in each of its three states. */
+export const Tasks: StoryObj = {
+  render: () => (
+    <div className="flex max-w-[440px] flex-col gap-6">
+      <Piece title="States">
+        <Task title="Searched the catalog" defaultOpen>
+          <TaskItem icon={<Search />}>modified_at &gt; now() - 7 days</TaskItem>
+          <TaskItem icon={<TableIcon />}>main.sales.orders</TaskItem>
+        </Task>
+        <Task title="Ran a query" status="running" />
+        <Task title="Read schema" status="error" />
+      </Piece>
+
+      <Piece title="Rows without an icon keep the column">
+        <Task title="Ran a query" defaultOpen>
+          <TaskItem icon={<Terminal />}>SELECT 1</TaskItem>
+          <TaskItem>Returned 14 rows in 382 ms</TaskItem>
+          <TaskItem icon={<TableIcon />}>sales_main.crm.renewals</TaskItem>
+        </Task>
+      </Piece>
+    </div>
+  ),
+}
+
+/** Plan — the checklist, open by default while a run is in flight. */
+export const Plans: StoryObj = {
+  render: () => (
+    <div className="flex max-w-[440px] flex-col gap-6">
+      <Plan count={4}>
+        <PlanItem status="done">Find tables changed this week</PlanItem>
+        <PlanItem status="active" description="Ranking by row delta">
+          Measure the size of each change
+        </PlanItem>
+        <PlanItem status="pending">Summarise the largest three</PlanItem>
+        <PlanItem status="cancelled">Check downstream dashboards</PlanItem>
+      </Plan>
+      <Plan count={4} defaultOpen={false} />
+    </div>
+  ),
+}
+
+/** Sources — the trigger sits in the action row, the list takes the line below. */
+export const SourcesInActionRow: StoryObj = {
+  render: () => (
+    <div className="max-w-[440px]">
+      <AnswerActions>
+        <Sources count={3}>
+          <Source href="#" icon={<TableIcon />}>
+            main.sales.orders
+          </Source>
+          <Source href="#" icon={<TableIcon />}>
+            main.sales.customers
+          </Source>
+          <Source href="#" icon={<FileDocument />}>
+            Weekly pipeline runbook
+          </Source>
+        </Sources>
+      </AnswerActions>
+    </div>
+  ),
+}
+
+/** Prompt Input — default border, AI gradient border, and the streaming swap. */
+export const Composer: StoryObj = {
   render: () => {
     const [status, setStatus] = React.useState<ChatStatus>("ready")
 
     return (
-      <div className="flex max-w-[680px] flex-col gap-8">
-        <Piece title="Reasoning — collapsed, streaming, and settled">
-          <Reasoning isStreaming>Working through the request…</Reasoning>
-          <Reasoning duration={40}>
-            Joining renewals with usage telemetry, then ranking by ARR at risk.
-          </Reasoning>
-          <Reasoning label="Waiting for user response" />
+      <div className="flex max-w-[440px] flex-col gap-6">
+        <Piece title="Default">
+          <PromptInput>
+            <PromptInputTextarea placeholder="Ask genie..." />
+            <PromptInputActions>
+              <PromptInputSubmit />
+            </PromptInputActions>
+          </PromptInput>
         </Piece>
 
-        <Piece title="Message — user vs assistant">
-          <Message from="user">
-            <MessageContent from="user">
-              Can you show me our top at-risk renewals?
-            </MessageContent>
-          </Message>
-          <Message from="assistant">
-            <MessageContent from="assistant">
-              <Response>
-                {
-                  "Assistant turns sit **flush** on the surface with no bubble, using `13px` body text."
-                }
-              </Response>
-            </MessageContent>
-          </Message>
+        <Piece title="Genie accent, with context and tools">
+          <PromptInput accent="ai">
+            <PromptInputContext
+              items={[{ id: "orders", label: "orders", detail: "main.sales" }]}
+            />
+            <PromptInputTextarea placeholder="Ask genie..." />
+            <PromptInputActions>
+              <div className="flex items-center gap-0.5">
+                <Button variant="ghost" size="icon-sm" aria-label="Mention an object">
+                  <At />
+                </Button>
+              </div>
+              <PromptInputSubmit status={status} />
+            </PromptInputActions>
+          </PromptInput>
+          <Button
+            variant="outline"
+            size="sm"
+            className="self-start"
+            onClick={() =>
+              setStatus((prev) => (prev === "ready" ? "streaming" : "ready"))
+            }
+          >
+            Toggle status (currently {status})
+          </Button>
         </Piece>
+      </div>
+    )
+  },
+}
 
-        <Piece title="Response — markdown coverage">
-          <Response>
-            {`### Headings, lists and code
+/** Response — markdown coverage, including a dbui table. */
+export const ResponseMarkdown: StoryObj = {
+  render: () => (
+    <div className="max-w-[560px]">
+      <Response>
+        {`### Headings, lists and code
 
 1. Ordered items render with decimal markers
 2. Inline \`code\` uses the code-background token
@@ -317,97 +498,7 @@ WHERE risk_score > 0.8
 | --- | --- |
 | Queries | 21,437 |
 | P90 latency | 382 ms |`}
-          </Response>
-        </Piece>
-
-        <Piece title="Loader">
-          <Loader />
-          <Loader label="Searching catalog" />
-        </Piece>
-
-        <Piece title="Actions">
-          <Actions>
-            <Action label="Copy">
-              <Copy />
-            </Action>
-            <Action label="Good response">
-              <ThumbsUp />
-            </Action>
-            <Action label="Bad response">
-              <ThumbsDown />
-            </Action>
-          </Actions>
-        </Piece>
-
-        <Piece title="Suggestions">
-          <Suggestions>
-            {["Analyze data", "Summarize text", "Code"].map((item) => (
-              <Suggestion key={item}>
-                <SuggestionIcon>
-                  <SparkleFill />
-                </SuggestionIcon>
-                {item}
-              </Suggestion>
-            ))}
-          </Suggestions>
-        </Piece>
-
-        <Piece title="FollowUps">
-          <FollowUps>
-            <FollowUp>Break down renewal risk by region and segment</FollowUp>
-            <FollowUp>Create a reusable skill for this check</FollowUp>
-          </FollowUps>
-        </Piece>
-
-        <Piece title="PromptInput — default border vs AI gradient border">
-          <PromptInput>
-            <PromptInputTextarea placeholder="Default composer" />
-            <PromptInputFooter>
-              <PromptInputTools />
-              <PromptInputSubmit />
-            </PromptInputFooter>
-          </PromptInput>
-          <PromptInput accent="ai">
-            <PromptInputTextarea placeholder="Genie composer" />
-            <PromptInputFooter>
-              <PromptInputTools>
-                <PromptInputButton aria-label="Mention an object">
-                  <At />
-                </PromptInputButton>
-              </PromptInputTools>
-              <PromptInputSubmit status={status} />
-            </PromptInputFooter>
-          </PromptInput>
-          <button
-            type="button"
-            className="self-start rounded-1 border border-input-border-base px-2 py-1 text-[12px] text-text-base hover:bg-action-default-hover"
-            onClick={() =>
-              setStatus((prev) => (prev === "ready" ? "streaming" : "ready"))
-            }
-          >
-            Toggle status (currently {status})
-          </button>
-        </Piece>
-      </div>
-    )
-  },
-}
-
-function Piece({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <section>
-      <h3 className="mb-2 text-[13px] leading-[20px] font-semibold text-text-base">
-        {title}
-      </h3>
-      <div className="flex flex-col gap-3 rounded-2 border border-border-base bg-surface-base p-4">
-        {children}
-      </div>
-    </section>
-  )
+      </Response>
+    </div>
+  ),
 }

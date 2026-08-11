@@ -370,7 +370,9 @@ export function shells() {
   for (const part of parts) {
     const header = part.split("\n")[0];
     const letter = header.trim()[0];
-    const title = header.replace(/^[A-E]\s*—\s*/, "").trim();
+    // [A-Z], not [A-E]: the class was pinned to the five shells that existed, so
+    // adding a sixth left its letter in its own name.
+    const title = header.replace(/^[A-Z]\s*—\s*/, "").trim();
     const section = (label) => {
       const m = part.match(new RegExp(`\\*\\*${label}[^*]*:?\\*\\*\\s*([\\s\\S]*?)(?=\\n\\*\\*|\\n---|$)`));
       return m ? m[1].trim() : null;

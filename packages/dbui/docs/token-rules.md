@@ -101,9 +101,15 @@ layer exists to remove.
 Three placements are worth stating because the obvious reading is wrong:
 
 - **`input/`** is a border and still `interaction`. The state ladder decides
-  it: no `border/*` token has a hover and both input tokens do. A decorative
+  it: no `border/*` token names a state and both input tokens do. A decorative
   rule is drawn once; a field border lightens under the pointer so the field
   reads as operable.
+  `border/emphasis` does not break this, and the distinction is the point of the
+  placement. It is a **weight** — the step above `strong` — and a component
+  chooses to reach it under a pointer, exactly as one may reach `border/strong`
+  on hover today. A token named `border/hover` would break it, which is why the
+  spotlight's halo is not called that. The test is whether the name states a
+  state, not whether a state can reach the value.
 - **`utility/`** is `structure`. A scrim is a layer over the substrate, and the
   two skeletons are placeholders shaped like the surface and the line of text
   they stand in for. `status` is the tempting alternative, since a skeleton

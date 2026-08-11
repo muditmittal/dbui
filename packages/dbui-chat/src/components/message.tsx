@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { Avatar, AvatarImage, AvatarFallback } from "dbui/components/ui/avatar"
 
 import { cn } from "../lib/utils"
 import type { MessageRole } from "../lib/types"
@@ -9,19 +8,18 @@ import type { MessageRole } from "../lib/types"
 /**
  * @standard Message
  * @guideline One Message per turn; pass from="user" or from="assistant" on Message only — MessageContent inherits it
- * @guideline User turns render as a right-aligned filled pill, assistant turns as flush body text
+ * @guideline User turns render as a full-width filled box, assistant turns as flush body text
  * @guideline Put markdown answers inside Response, not MessageContent, so formatting is handled
- * @constraint Do not give assistant turns a bubble — Databricks assistant answers sit flush on the surface
- * @constraint Avatars are optional; omit them in narrow side panels
+ * @constraint Do not give assistant turns a fill — Databricks assistant answers sit flush on the surface
+ * @constraint Do not right-align or width-cap the user turn. The thread is a transcript, not a
+ *   messaging app, and a workbench prompt is often long enough that a cap forces a ragged column
  */
 
 /**
  * The turn's role, published by `Message` so its content does not have to be told
  * again. `MessageContent` used to default to "assistant" on its own, which meant
  * `<Message from="user"><MessageContent>` — the obvious way to write it — rendered a
- * user turn as flush assistant text. The parent's `justify-end` could not save it
- * either, because the assistant branch is `w-full`. The bug was silent: correct
- * markup, wrong turn.
+ * user turn as flush assistant text. The bug was silent: correct markup, wrong turn.
  */
 const MessageFromContext = React.createContext<MessageRole>("assistant")
 
@@ -36,11 +34,7 @@ function Message({
       <div
         data-slot="message"
         data-from={from}
-        className={cn(
-          "flex w-full gap-2",
-          from === "user" ? "justify-end" : "justify-start",
-          className
-        )}
+        className={cn("flex w-full flex-col gap-2", className)}
         {...props}
       >
         {children}
@@ -66,7 +60,7 @@ function MessageContent({
       className={cn(
         "min-w-0 type-body text-text-base",
         role === "user"
-          ? "max-w-[85%] shape-container bg-surface-subtle px-3 py-2"
+          ? "w-full shape-container bg-surface-subtle px-4 py-3 shadow-xs"
           : "w-full",
         className
       )}
@@ -75,32 +69,4 @@ function MessageContent({
   )
 }
 
-function MessageAvatar({
-  src,
-  name,
-  className,
-  ...props
-}: React.ComponentProps<typeof Avatar> & { src?: string; name?: string }) {
-  const initials = name
-    ? name
-        .split(" ")
-        .map((part) => part[0])
-        .filter(Boolean)
-        .slice(0, 2)
-        .join("")
-        .toUpperCase()
-    : undefined
-
-  return (
-    <Avatar
-      data-slot="message-avatar"
-      className={cn("size-6 shrink-0", className)}
-      {...props}
-    >
-      {src ? <AvatarImage src={src} alt={name ?? ""} /> : null}
-      <AvatarFallback>{initials}</AvatarFallback>
-    </Avatar>
-  )
-}
-
-export { Message, MessageContent, MessageAvatar }
+export { Message, MessageContent }

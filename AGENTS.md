@@ -14,7 +14,7 @@ This file is the entry point. It tells you where to look; it does not repeat wha
 | `packages/dbui-mcp/` | MCP server over the same API. Wired in `.cursor/mcp.json`. |
 | `packages/dbui-shells/` | Page shells and compositions. Every screen starts here. |
 | `packages/dbui-viz/` | 5 Vega-Lite charts. |
-| `packages/dbui-chat/` | 9 conversational-analytics primitives. |
+| `packages/dbui-chat/` | Conversational and agentic chat primitives. |
 | `apps/portal/` | Storybook. The only running UI surface today. |
 | `scripts/design-lint/` | Token generator, sync verifier, React + Figma linters. |
 | `figma/` | Code Connect files (`*.figma.tsx`). |

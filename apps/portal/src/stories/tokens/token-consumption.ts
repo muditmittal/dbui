@@ -53,22 +53,26 @@ export const families: Family[] = [
   {
     "key": "color",
     "label": "Color",
-    "count": 90,
+    "count": 91,
     "unit": "colors",
-    "properties": 90,
+    "properties": 91,
     "bridge": {
       "namespace": "--color-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 1018,
+      "uses": 1039,
       "files": 76
     },
     "superseded": null,
-    "systemRefs": 24,
+    "systemRefs": 31,
     "systemConsumers": [
       {
         "file": "packages/dbui/src/components/ui/sonner.tsx",
         "refs": 15
+      },
+      {
+        "file": "packages/dbui/src/tokens/effects.css",
+        "refs": 7
       },
       {
         "file": "packages/dbui/src/tokens/globals.css",
@@ -122,7 +126,7 @@ export const families: Family[] = [
       "namespace": "type-*",
       "kind": "utility",
       "file": "packages/dbui/src/tokens/type.css",
-      "uses": 161,
+      "uses": 167,
       "files": 56
     },
     "superseded": null,
@@ -152,8 +156,8 @@ export const families: Family[] = [
       "namespace": "--shadow-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 50,
-      "files": 32
+      "uses": 52,
+      "files": 33
     },
     "superseded": null,
     "systemRefs": 0,
@@ -201,7 +205,7 @@ export const families: Family[] = [
       "namespace": "--spacing-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 570,
+      "uses": 589,
       "files": 67
     },
     "superseded": null,
@@ -221,8 +225,8 @@ export const families: Family[] = [
       "namespace": "--size-*, --height-*, --width-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 165,
-      "files": 47
+      "uses": 169,
+      "files": 49
     },
     "superseded": null,
     "systemRefs": 0,
@@ -241,8 +245,8 @@ export const families: Family[] = [
       "namespace": "--radius-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 60,
-      "files": 37
+      "uses": 57,
+      "files": 36
     },
     "superseded": null,
     "systemRefs": 5,
@@ -274,12 +278,17 @@ export const families: Family[] = [
       "namespace": "--border-width-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 17,
-      "files": 10
+      "uses": 16,
+      "files": 9
     },
     "superseded": null,
-    "systemRefs": 0,
-    "systemConsumers": [],
+    "systemRefs": 1,
+    "systemConsumers": [
+      {
+        "file": "packages/dbui/src/tokens/effects.css",
+        "refs": 1
+      }
+    ],
     "portalRefs": 0,
     "portalConsumers": [],
     "live": true
@@ -291,16 +300,17 @@ export const families: Family[] = [
     "unit": "values",
     "properties": 4,
     "bridge": null,
-    "superseded": {
-      "namespace": "--default-transition-duration",
-      "uses": 29,
-      "files": 22
-    },
-    "systemRefs": 0,
-    "systemConsumers": [],
+    "superseded": null,
+    "systemRefs": 2,
+    "systemConsumers": [
+      {
+        "file": "packages/dbui/src/tokens/effects.css",
+        "refs": 2
+      }
+    ],
     "portalRefs": 0,
     "portalConsumers": [],
-    "live": false
+    "live": true
   }
 ]
 
@@ -315,7 +325,7 @@ export const scalars: Scalar[] = [
     "bridges": [
       {
         "namespace": "--spacing",
-        "uses": 819
+        "uses": 845
       }
     ],
     "live": true
@@ -330,7 +340,7 @@ export const scalars: Scalar[] = [
     "bridges": [
       {
         "namespace": "--spacing",
-        "uses": 819
+        "uses": 845
       }
     ],
     "live": true
@@ -353,8 +363,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": "packages/dbui/src/tokens/tokens.css",
     "overriddenTo": "calc(var(--db-spacing-unit) * var(--db-density-scalar))",
     "origin": "override",
-    "uses": 819,
-    "files": 78
+    "uses": 845,
+    "files": 77
   },
   {
     "namespace": "--shadow-*",
@@ -363,8 +373,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": "packages/dbui/src/tokens/tokens.css",
     "overriddenTo": "var(--db-elevation-lg)",
     "origin": "override",
-    "uses": 81,
-    "files": 32
+    "uses": 86,
+    "files": 33
   },
   {
     "namespace": "ring and outline width",
@@ -373,8 +383,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "utility",
-    "uses": 56,
-    "files": 31
+    "uses": 48,
+    "files": 24
   },
   {
     "namespace": "--animate-*",
@@ -383,8 +393,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "tailwind",
-    "uses": 37,
-    "files": 18
+    "uses": 39,
+    "files": 20
   },
   {
     "namespace": "z-index scale",
@@ -393,8 +403,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "utility",
-    "uses": 36,
-    "files": 22
+    "uses": 35,
+    "files": 21
   },
   {
     "namespace": "--default-transition-duration",
@@ -403,8 +413,18 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "tailwind",
-    "uses": 29,
+    "uses": 30,
     "files": 22
+  },
+  {
+    "namespace": "--shadow-focus",
+    "probe": "--shadow-focus",
+    "tailwindValue": null,
+    "overriddenIn": "packages/dbui/src/tokens/globals.css",
+    "overriddenTo": "0 0 0 1px var(--db-focus-ring-offset), 0 0 0 3px var(--db-focus-ring)",
+    "origin": "addition",
+    "uses": 21,
+    "files": 20
   },
   {
     "namespace": "--radius-*",
@@ -427,16 +447,6 @@ export const tailwind: TailwindNamespace[] = [
     "files": 4
   },
   {
-    "namespace": "--font-weight-*",
-    "probe": "--font-weight-semibold",
-    "tailwindValue": "600",
-    "overriddenIn": null,
-    "overriddenTo": null,
-    "origin": "tailwind",
-    "uses": 13,
-    "files": 10
-  },
-  {
     "namespace": "duration-* and ease-*",
     "probe": null,
     "tailwindValue": null,
@@ -447,14 +457,14 @@ export const tailwind: TailwindNamespace[] = [
     "files": 9
   },
   {
-    "namespace": "--shadow-focus",
-    "probe": "--shadow-focus",
-    "tailwindValue": null,
-    "overriddenIn": "packages/dbui/src/tokens/globals.css",
-    "overriddenTo": "0 0 0 1px var(--db-focus-ring-offset), 0 0 0 3px var(--db-focus-ring)",
-    "origin": "addition",
-    "uses": 5,
-    "files": 4
+    "namespace": "--font-weight-*",
+    "probe": "--font-weight-semibold",
+    "tailwindValue": "600",
+    "overriddenIn": null,
+    "overriddenTo": null,
+    "origin": "tailwind",
+    "uses": 12,
+    "files": 9
   },
   {
     "namespace": "--container-*",
@@ -608,7 +618,7 @@ export const themeOverrides: ThemeOverride[] = [
 ]
 
 export const hardcoded: Hardcoded = {
-  "uses": 35,
+  "uses": 33,
   "files": [
     {
       "file": "packages/dbui-shells/src/shells/CatalogExplorer.tsx",
@@ -678,13 +688,6 @@ export const hardcoded: Hardcoded = {
       ]
     },
     {
-      "file": "packages/dbui/src/components/ui/item.tsx",
-      "refs": 1,
-      "samples": [
-        "ring-[3px]"
-      ]
-    },
-    {
       "file": "packages/dbui/src/components/ui/platform-header.tsx",
       "refs": 1,
       "samples": [
@@ -696,13 +699,6 @@ export const hardcoded: Hardcoded = {
       "refs": 1,
       "samples": [
         "w-[280px]"
-      ]
-    },
-    {
-      "file": "packages/dbui/src/components/ui/scroll-area.tsx",
-      "refs": 1,
-      "samples": [
-        "ring-[3px]"
       ]
     },
     {

@@ -8,6 +8,7 @@
     ".": "./src/index.ts",
     "./shell": "./src/shells/Base.tsx",
     "./catalog": "./src/shells/CatalogExplorer.tsx",
+    "./shells/*": "./src/shells/*.tsx",
     "./components/*": "./src/components/*.tsx",
     "./compositions/*": "./src/compositions/*.tsx"
   },

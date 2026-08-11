@@ -71,11 +71,12 @@ File names are kebab-case; component exports are PascalCase. Some files export m
 | `Menubar`      | App-level menu bar (File / Edit / View / …)                                              | Single trigger menus → use `DropdownMenu`                                                     | app menu, menu bar                                 | *code-only*                               |
 | `InputGroup`   | Attach icons, buttons, or text addons to an `Input` (e.g. search + clear, prefix/suffix) | Standalone inputs without addons → use `Input` directly                                       | input addon, addon group, prefix/suffix input      | `Input Group`                             |
 
-### `content` — 23 items
+### `content` — 24 items
 
 
 | Component      | Use for                                                                              | Avoid for                                                                                               | Synonyms                                     | Figma layer      |
 | -------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ---------------- |
+| `AiGradientIcon` | Marking something as Genie or AI — paints a DBUI icon with the brand gradient       | Chrome around the AI (composers, toolbars, panel edges); status or state; more than one per surface     | genie icon, ai icon, gradient icon, sparkle  | *code-only*      |
 | `Avatar`       | User identity (image, fallback initials, default icon)                               | Decorative purposes — Avatar implies a real user entity                                                 | profile pic, user image, initials            | `Avatar`         |
 | `Card`         | Bounded content surfaces with elevation (rounded-4, shadow)                          | Full-width / unbounded content; nesting cards inside cards                                              | container, panel, surface, tile              | `Card`           |
 | `Chart`        | Data visualization (recharts wrapper)                                                | Static decoration — Chart implies real data                                                             | graph, plot, viz, dataviz                    | *code-only*      |

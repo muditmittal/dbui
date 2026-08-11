@@ -46,6 +46,7 @@
   --color-border-base: var(--db-border-base);
   --color-border-strong: var(--db-border-strong);
   --color-border-subtle: var(--db-border-subtle);
+  --color-border-emphasis: var(--db-border-emphasis);
   --color-border-inverse: var(--db-border-inverse);
   --color-border-disabled: var(--db-border-disabled);
   --color-border-accent: var(--db-border-accent);
@@ -398,6 +399,7 @@
   --db-border-base: #E5E5E5;
   --db-border-strong: #D4D4D4;
   --db-border-subtle: #F5F5F5;
+  --db-border-emphasis: #A3A3A3;
   --db-border-inverse: #404040;
   --db-border-disabled: rgba(0, 0, 0, 0.12);
   --db-border-accent: #2272B4;
@@ -495,6 +497,7 @@
   --db-border-base: rgba(255, 255, 255, 0.1);
   --db-border-strong: rgba(255, 255, 255, 0.15);
   --db-border-subtle: rgba(255, 255, 255, 0.06);
+  --db-border-emphasis: rgba(255, 255, 255, 0.3);
   --db-border-inverse: #C0CDD8;
   --db-border-disabled: rgba(255, 255, 255, 0.12);
   --db-border-accent: #4299E0;

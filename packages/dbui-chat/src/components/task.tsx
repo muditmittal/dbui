@@ -1,14 +1,9 @@
 "use client"
 
 import * as React from "react"
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "dbui/components/ui/collapsible"
 import { Status } from "dbui/components/ui/status"
-import { ChevronRight } from "dbui/components/icons/ChevronRight"
 
+import { Disclosure } from "./disclosure"
 import { cn } from "../lib/utils"
 
 /**
@@ -55,53 +50,45 @@ function Task({
   children,
   ...props
 }: TaskProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen)
-  const isOpen = open ?? internalOpen
-
-  const handleOpenChange = React.useCallback(
-    (next: boolean) => {
-      setInternalOpen(next)
-      onOpenChange?.(next)
-    },
-    [onOpenChange]
-  )
-
   return (
-    <div data-slot="task" data-status={status} className={cn("w-full", className)} {...props}>
-      <Collapsible open={isOpen} onOpenChange={handleOpenChange}>
-        <CollapsibleTrigger
-          className={cn(
-            "flex w-full items-center gap-2 rounded-1 type-label text-text-subtle outline-none",
-            "hover:text-text-base focus-visible:border focus-visible:border-focus-ring"
-          )}
-        >
+    <Disclosure
+      slot="task"
+      data-status={status}
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      className={className}
+      trigger={
+        <>
+          <Status status={STATUS_MAP[status]} />
           <span
             className={cn(
-              "inline-flex shrink-0 transition-transform [&_svg]:size-4",
-              isOpen && "rotate-90"
+              "min-w-0 flex-1 truncate",
+              status === "running" && "animate-pulse"
             )}
           >
-            <ChevronRight />
-          </span>
-          <Status status={STATUS_MAP[status]} />
-          <span className={cn("min-w-0 truncate text-left", status === "running" && "animate-pulse")}>
             {title}
           </span>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          {/* Same rail as Reasoning. Both are the agent showing its work, and a
-              reader scanning a thread should not have to learn two indents. */}
-          <div className="mt-2 flex flex-col gap-1 border-l-2 border-border-base pl-3">
-            {children}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
+        </>
+      }
+      triggerClassName="type-label text-text-subtle hover:text-text-base"
+      // Same rail as Reasoning. Both are the agent showing its work, and a reader
+      // scanning a thread should not have to learn two indents.
+      rail
+      contentClassName="flex flex-col gap-1"
+      {...props}
+    >
+      {children}
+    </Disclosure>
   )
 }
 
 export interface TaskItemProps extends React.ComponentProps<"div"> {
-  /** Leading glyph — an entity icon for a file, a Terminal for a command. */
+  /**
+   * Leading glyph — an entity icon for a file, a Terminal for a command.
+   * Optional, and the column is held either way: a row with no icon keeps its
+   * label in the same place as the rows around it rather than sliding left.
+   */
   icon?: React.ReactNode
 }
 
@@ -110,12 +97,17 @@ function TaskItem({ icon, className, children, ...props }: TaskItemProps) {
     <div
       data-slot="task-item"
       className={cn(
-        "flex min-w-0 items-center gap-2 type-label text-text-subtle [&_svg]:size-4 [&_svg]:shrink-0",
+        "flex min-w-0 items-center gap-2 type-label text-text-subtle",
         className
       )}
       {...props}
     >
-      {icon}
+      <span
+        aria-hidden
+        className="inline-flex size-4 shrink-0 items-center justify-center [&_svg]:size-4 [&_svg]:shrink-0"
+      >
+        {icon}
+      </span>
       <span className="min-w-0 truncate">{children}</span>
     </div>
   )

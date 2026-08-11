@@ -132,6 +132,12 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-content-accordion--playground"
       },
       {
+        "name": "AI Gradient Icon",
+        "slug": "ai-gradient-icon",
+        "useFor": "Marking something as Genie or AI — paints a DBUI icon with the brand gradient",
+        "storyId": "components-content-ai-gradient-icon--playground"
+      },
+      {
         "name": "Aspect Ratio",
         "slug": "aspect-ratio",
         "useFor": "Lock image/video proportions inside cards and grids",
@@ -348,4 +354,4 @@ export const galleryGroups: GalleryGroup[] = [
   }
 ]
 
-export const galleryTotal = 48
+export const galleryTotal = 49

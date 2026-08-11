@@ -15,12 +15,13 @@ description: Build a full Databricks product screen from a screenshot, descripti
 
 ### Phase 1 — Identify the shell
 
-1. Read `./dbui/composition.md`. Identify which of the five shells matches the layout:
+1. Read `./dbui/composition.md`. Identify which of the six shells matches the layout:
    - **Shell A (List)** — tabular list with filters. Used for: Jobs list, Compute list, Pipelines list.
    - **Shell B (Data Tree)** — left tree + center content + optional right metadata. Used for: Catalog Explorer.
    - **Shell C (File Tree)** — file browser layout. Used for: Workspace file browser.
    - **Shell D (Editor)** — editor-centric, nav hidden by default. Used for: Notebook, SQL Editor.
    - **Shell E (Asset Detail)** — three-column detail: tree (260px) + main (flex-1) + metadata sidebar (280px). Used for: Table details, Model details.
+   - **Shell F (Chat Workbench)** — conversation rail + thread + tabbed preview + 48px tool rail. Used for: Genie, and any surface whose answer is a thread. Turns come from `dbui-chat`; the shell owns layout and the transcript's scroll.
 
 2. If unsure, default to Shell A (most common). Every shell starts with `<Base>` from `dbui-shells`.
 

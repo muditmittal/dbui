@@ -214,6 +214,16 @@ export const scrollOwners: ScrollOwner[] = [
     "file": "packages/dbui-shells/src/shells/CatalogExplorer.tsx",
     "classes": "flex-1 min-w-0 overflow-y-auto",
     "kind": "column"
+  },
+  {
+    "file": "packages/dbui-shells/src/shells/ChatWorkbench.tsx",
+    "classes": "min-h-0 flex-1 overflow-y-auto p-1",
+    "kind": "column"
+  },
+  {
+    "file": "packages/dbui-shells/src/shells/ChatWorkbench.tsx",
+    "classes": "min-h-0 flex-1 overflow-auto p-3",
+    "kind": "column"
   }
 ]
 
@@ -251,6 +261,7 @@ export const shellModules: string[] = [
   "CatalogLanding",
   "CatalogLayout",
   "CatalogTree",
+  "ChatWorkbench",
   "DataTreeExplorer",
   "FileTreeExplorer",
   "PreviewPopup"

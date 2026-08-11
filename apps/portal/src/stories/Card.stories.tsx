@@ -76,3 +76,73 @@ export const Playground: StoryObj = {
     </div>
   ),
 }
+
+/**
+ * `spotlight` — the border picks up a highlight that follows the pointer.
+ *
+ * Move slowly along a card's edge. The top row tracks; the bottom row is the
+ * same card without the prop, for comparison. Under `prefers-reduced-motion` the
+ * tracking drops and the hover becomes a flat border.
+ */
+export const Spotlight: StoryObj = {
+  render: () => {
+    const assets = [
+      { title: "at_risk_renewals", body: "sales_main.crm · 2.1M rows" },
+      { title: "renewal_risk_model", body: "ml_prod.models · v4, served" },
+      { title: "Weekly renewal review", body: "workspace / analytics" },
+      { title: "Renewal risk", body: "shared dashboards · 6 widgets" },
+    ]
+
+    return (
+      <div className="flex max-w-[720px] flex-col gap-6">
+        <section className="flex flex-col gap-2">
+          <h3 className="type-label-bold text-text-base">
+            interactive + spotlight — rests at xs, lifts to sm under the pointer
+          </h3>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {assets.map((asset) => (
+              <Card key={asset.title} size="sm" interactive spotlight>
+                <CardHeader>
+                  <CardTitle>{asset.title}</CardTitle>
+                  <CardDescription>{asset.body}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-2">
+          <h3 className="type-label-bold text-text-base">
+            interactive only — the resting lift, no halo
+          </h3>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {assets.slice(0, 2).map((asset) => (
+              <Card key={asset.title} size="sm" interactive>
+                <CardHeader>
+                  <CardTitle>{asset.title}</CardTitle>
+                  <CardDescription>{asset.body}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-2">
+          <h3 className="type-label-bold text-text-base">
+            Neither — a card that only holds content
+          </h3>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {assets.slice(0, 2).map((asset) => (
+              <Card key={asset.title} size="sm">
+                <CardHeader>
+                  <CardTitle>{asset.title}</CardTitle>
+                  <CardDescription>{asset.body}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </section>
+      </div>
+    )
+  },
+}

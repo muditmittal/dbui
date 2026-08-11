@@ -6,6 +6,13 @@ export {
   CatalogLanding,
 } from "./shells/CatalogExplorer"
 export type { CatalogSection, CatalogItem } from "./shells/CatalogExplorer"
+export { ChatWorkbench } from "./shells/ChatWorkbench"
+export type {
+  ChatWorkbenchProps,
+  ChatConversationEntry,
+  ChatPreviewTab,
+  ChatWorkbenchTool,
+} from "./shells/ChatWorkbench"
 
 // Compositions — opinionated multi-component arrangements that fit inside
 // a shell's content area (PageHeader, FilterPillBar, ListView, etc.).

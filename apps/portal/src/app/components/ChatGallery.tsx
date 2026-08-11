@@ -4,41 +4,36 @@ import * as React from "react"
 import Link from "next/link"
 
 import {
-  Actions,
-  Action,
-  Checkpoint,
   Conversation,
   ConversationContent,
-  FollowUps,
-  FollowUp,
-  Loader,
+  Details,
+  DetailsFooter,
+  DetailsHeader,
+  DetailsRow,
+  DetailsRows,
   Message,
   MessageContent,
   Plan,
   PlanItem,
   PromptInput,
-  PromptInputFooter,
+  PromptInputActions,
   PromptInputSubmit,
   PromptInputTextarea,
-  PromptInputTools,
-  Queue,
-  QueueItem,
   Reasoning,
   Response,
   Source,
   Sources,
-  Suggestion,
-  Suggestions,
   Task,
   TaskItem,
 } from "dbui-chat"
 
+import { Button } from "dbui/components/ui/button"
 import { Copy } from "dbui/components/icons/Copy"
-import { Refresh } from "dbui/components/icons/Refresh"
+import { ThumbsUp } from "dbui/components/icons/ThumbsUp"
 import { Table as TableIcon } from "dbui/components/icons/Table"
 import { FileDocument } from "dbui/components/icons/FileDocument"
-import { Terminal } from "dbui/components/icons/Terminal"
 import { Search } from "dbui/components/icons/Search"
+import { At } from "dbui/components/icons/At"
 
 import { anchorOffset } from "@/components/docs/anchor"
 
@@ -54,19 +49,16 @@ import { anchorOffset } from "@/components/docs/anchor"
  */
 
 /** A thread-width column. Chat components are composed in a panel, not a page. */
-function Panel({
-  children,
-  width = "w-90",
-}: {
-  children: React.ReactNode
-  width?: string
-}) {
-  return <div className={width}>{children}</div>
+function Panel({ children }: { children: React.ReactNode }) {
+  return <div className="w-90">{children}</div>
 }
+
+const STORY = "components-chat-thread"
 
 const CHAT: { name: string; storyId?: string; demo: React.ReactNode }[] = [
   {
     name: "Conversation",
+    storyId: `${STORY}--full-thread`,
     demo: (
       <Panel>
         <div className="h-45 rounded-2 border border-border-base">
@@ -88,19 +80,23 @@ const CHAT: { name: string; storyId?: string; demo: React.ReactNode }[] = [
   },
   {
     name: "Message",
+    storyId: `${STORY}--messages`,
     demo: (
       <Panel>
-        <Message from="user">
-          <MessageContent>Which tables changed this week?</MessageContent>
-        </Message>
-        <Message from="assistant">
-          <MessageContent>Four tables in main.sales were updated.</MessageContent>
-        </Message>
+        <div className="flex flex-col gap-2">
+          <Message from="user">
+            <MessageContent>Which tables changed this week?</MessageContent>
+          </Message>
+          <Message from="assistant">
+            <MessageContent>Four tables in main.sales were updated.</MessageContent>
+          </Message>
+        </div>
       </Panel>
     ),
   },
   {
     name: "Response",
+    storyId: `${STORY}--response-markdown`,
     demo: (
       <Panel>
         <Response>{`Four tables changed. The largest was **orders**.
@@ -112,23 +108,27 @@ const CHAT: { name: string; storyId?: string; demo: React.ReactNode }[] = [
   },
   {
     name: "Reasoning",
+    storyId: `${STORY}--reasoning-states`,
     demo: (
       <Panel>
-        <Reasoning duration={12}>
-          Checked the catalog for tables with a modified_at inside the last seven days,
-          then ranked them by row delta.
-        </Reasoning>
+        <div className="flex flex-col gap-2">
+          <Reasoning isStreaming />
+          <Reasoning duration={12}>
+            Checked the catalog for tables with a modified_at inside the last seven days,
+            then ranked them by row delta.
+          </Reasoning>
+        </div>
       </Panel>
     ),
   },
   {
     name: "Task",
+    storyId: `${STORY}--tasks`,
     demo: (
       <Panel>
         <Task title="Searched the catalog" defaultOpen>
           <TaskItem icon={<Search />}>modified_at &gt; now() - 7 days</TaskItem>
           <TaskItem icon={<TableIcon />}>main.sales.orders</TaskItem>
-          <TaskItem icon={<TableIcon />}>main.sales.customers</TaskItem>
         </Task>
         <Task title="Ran a query" status="running" />
         <Task title="Read schema" status="error" />
@@ -137,6 +137,7 @@ const CHAT: { name: string; storyId?: string; demo: React.ReactNode }[] = [
   },
   {
     name: "Plan",
+    storyId: `${STORY}--plans`,
     demo: (
       <Panel>
         <Plan count={4}>
@@ -151,89 +152,69 @@ const CHAT: { name: string; storyId?: string; demo: React.ReactNode }[] = [
     ),
   },
   {
-    name: "Queue",
-    demo: (
-      <Panel>
-        <Queue count={2} defaultOpen>
-          <QueueItem onRemove={() => {}}>Now chart the row counts over time</QueueItem>
-          <QueueItem>And export the result as CSV</QueueItem>
-        </Queue>
-      </Panel>
-    ),
-  },
-  {
-    name: "Checkpoint",
-    demo: (
-      <Panel>
-        <Checkpoint label="3 files changed" onRestore={() => {}} />
-      </Panel>
-    ),
-  },
-  {
     name: "Sources",
+    storyId: `${STORY}--sources-in-action-row`,
+    // Sources renders its trigger inline and its list on the next line, so the
+    // demo shows it where it belongs: at the end of an answer's action row.
     demo: (
       <Panel>
-        <Sources count={2} defaultOpen>
-          <Source href="#" icon={<TableIcon />}>
-            main.sales.orders
-          </Source>
-          <Source href="#" icon={<FileDocument />}>
-            Weekly pipeline runbook
-          </Source>
-        </Sources>
+        <div className="flex flex-wrap items-center gap-1">
+          <Button variant="ghost" size="icon-sm" aria-label="Copy">
+            <Copy />
+          </Button>
+          <Button variant="ghost" size="icon-sm" aria-label="Good response">
+            <ThumbsUp />
+          </Button>
+          <Sources count={2} defaultOpen>
+            <Source href="#" icon={<TableIcon />}>
+              main.sales.orders
+            </Source>
+            <Source href="#" icon={<FileDocument />}>
+              Weekly pipeline runbook
+            </Source>
+          </Sources>
+        </div>
       </Panel>
     ),
   },
   {
-    name: "Actions",
-    demo: (
-      <Actions>
-        <Action label="Copy">
-          <Copy />
-        </Action>
-        <Action label="Retry">
-          <Refresh />
-        </Action>
-      </Actions>
-    ),
-  },
-  {
-    name: "Loader",
-    demo: <Loader label="Searching catalog" />,
-  },
-  {
-    name: "Suggestion",
-    demo: (
-      <Suggestions>
-        <Suggestion>Summarise this table</Suggestion>
-        <Suggestion>Find recent changes</Suggestion>
-        <Suggestion>Chart it over time</Suggestion>
-      </Suggestions>
-    ),
-  },
-  {
-    name: "Follow Ups",
+    name: "Details",
+    storyId: "components-chat-details--playground",
     demo: (
       <Panel>
-        <FollowUps>
-          <FollowUp>Which of these feed a dashboard?</FollowUp>
-          <FollowUp>Show the schema change on customers</FollowUp>
-        </FollowUps>
+        <Details>
+          <DetailsHeader
+            icon={<TableIcon />}
+            title="user_accounts"
+            path="main . user_management"
+          />
+          <DetailsRows defaultValue={["usage"]}>
+            <DetailsRow value="details" label="Details" summary="Table" />
+            <DetailsRow value="usage" label="Usage" summary="21,437">
+              <p className="type-body text-text-subtle">
+                Queried 21,437 times in the last 30 days.
+              </p>
+            </DetailsRow>
+            <DetailsRow value="size" label="Size" summary="81.3 GB" />
+          </DetailsRows>
+          <DetailsFooter>As of 12 hours ago</DetailsFooter>
+        </Details>
       </Panel>
     ),
   },
   {
     name: "Prompt Input",
+    storyId: `${STORY}--composer`,
     demo: (
       <Panel>
-        <PromptInput>
-          <PromptInputTextarea placeholder="Ask genie…" />
-          <PromptInputFooter>
-            <PromptInputTools>
-              <Terminal />
-            </PromptInputTools>
+        <PromptInput accent="ai">
+          <PromptInputTextarea placeholder="Ask genie..." />
+          <PromptInputActions>
+            <Button variant="ghost" size="icon-sm" aria-label="Mention an object">
+              <At />
+            </Button>
             <PromptInputSubmit />
-          </PromptInputFooter>
+          </PromptInputActions>
         </PromptInput>
       </Panel>
     ),
@@ -248,9 +229,11 @@ export function ChatGallery() {
       <section id={CHAT_GROUP.id} style={anchorOffset}>
         <h2 className="type-title-4 text-text-strong">Chat</h2>
         <p className="type-body text-text-subtle">
-          The parts of a conversation with an agent. The first group renders a turn; the
-          agentic ones render the trace of a run — what it did, what it plans, what is
-          queued behind it, and what the answer rests on.
+          The parts of a conversation with an agent. Conversation and Response carry
+          behavior; Message and Prompt Input render a turn; Reasoning, Task, Plan and
+          Sources render the trace of a run — what it thought, what it did, what it
+          plans, and what the answer rests on. Answer actions and starter prompts are
+          Button recipes rather than components.
         </p>
         <div className="mt-2 divide-y divide-border-subtle border-t border-border-subtle">
           {CHAT.map((item) => (

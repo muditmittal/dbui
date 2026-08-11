@@ -36,7 +36,9 @@ import { AspectRatio } from "dbui/components/ui/aspect-ratio"
 import { Avatar, AvatarFallback, AvatarGroup } from "dbui/components/ui/avatar"
 import { Badge } from "dbui/components/ui/badge"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "dbui/components/ui/breadcrumb"
-import { Button, ButtonChevron } from "dbui/components/ui/button"
+import { Button, ButtonChevron, ButtonIcon } from "dbui/components/ui/button"
+import { AiGradientIcon } from "dbui/components/ui/ai-gradient-icon"
+import { Sparkle } from "dbui/components/icons/Sparkle"
 import { Card, CardHeader, CardTitle, CardDescription } from "dbui/components/ui/card"
 import { Checkbox } from "dbui/components/ui/checkbox"
 import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem } from "dbui/components/ui/combobox"
@@ -682,6 +684,22 @@ export const demos: Record<string, React.ReactNode> = {
   ),
 
   // Display
+  AiGradientIcon: (
+    <div className="flex items-center gap-3">
+      <AiGradientIcon>
+        <Sparkle className="size-6" />
+      </AiGradientIcon>
+      <Button variant="secondary" size="md">
+        <ButtonIcon>
+          <AiGradientIcon>
+            <Sparkle />
+          </AiGradientIcon>
+        </ButtonIcon>
+        Investigate
+      </Button>
+    </div>
+  ),
+
   Avatar: (
     <AvatarGroup>
       <Avatar>

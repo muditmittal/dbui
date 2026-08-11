@@ -1,0 +1,93 @@
+/* Effects — hand-authored CSS for things the token layer cannot express as a
+ * utility generated from a value.
+ *
+ * Imported by both `globals.css` (the consumer entry point) and the portal's own
+ * `apps/portal/src/app/globals.css`. The portal does not import `globals.css` —
+ * it imports `tokens.css` and `type.css` directly and re-declares the rest — so
+ * anything defined only in `globals.css` compiles for consumers and silently
+ * does nothing in the portal. This file exists so the two share one definition
+ * instead of a copy each. */
+
+/* Paints a DBUI icon with the AI gradient instead of a flat colour.
+ *
+ * An inline SVG cannot take a CSS gradient the way a box can — `background-image`
+ * paints behind the glyph, not into it. The only thing that fills a path with a
+ * gradient is `fill: url(#id)` pointing at an SVG <linearGradient>, which is why
+ * this utility is paired with a component that renders that definition. The
+ * icons declare `fill="currentColor"` as a presentation attribute, and a CSS
+ * `fill` outranks it, so nothing about the icons has to change.
+ *
+ * The definition's id is per-instance, so the fill arrives as a custom property
+ * rather than being hardcoded here. */
+@utility ai-gradient-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Targets the painted elements, not the <svg>. `fill` inherits, but a child
+   * that declares its own `fill="currentColor"` presentation attribute beats
+   * what it would inherit — so a rule on the <svg> alone leaves the glyph flat.
+   * Matching on the attribute also means only the parts that were following
+   * currentColor get repainted: a hardcoded `fill="none"` stays none, and a
+   * stroked icon takes the gradient on its stroke instead. */
+  & svg:not([data-ai-gradient-defs]) [fill="currentColor"] {
+    fill: var(--db-ai-icon-fill);
+  }
+
+  & svg:not([data-ai-gradient-defs]) [stroke="currentColor"] {
+    stroke: var(--db-ai-icon-fill);
+  }
+}
+
+/* Registering the halo as a colour is what lets it transition. An unregistered
+ * custom property has no type, so the browser can only swap it, and the glow
+ * would snap on instead of arriving. */
+@property --db-spotlight-halo {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+
+/* Pointer-tracking border highlight. Two stacked backgrounds: an opaque fill
+ * clipped to the padding box, and a radial gradient clipped to the border box,
+ * so the gradient is visible only in the border ring. The gradient's centre is a
+ * pair of custom properties the component writes on pointermove.
+ *
+ * Hand-written rather than composed from utilities because none of the three
+ * things it needs — @property, a two-value background-clip, or a gradient
+ * centred on a custom property — has a Tailwind equivalent. Every colour and
+ * duration still resolves from a token. */
+@utility spotlight-border {
+  --db-spotlight-halo: var(--db-border-base);
+  --db-spotlight-x: 50%;
+  --db-spotlight-y: 50%;
+  border: var(--db-border-1) solid transparent;
+  background-image:
+    linear-gradient(var(--db-surface-base), var(--db-surface-base)),
+    radial-gradient(
+      var(--db-spotlight-radius, 10rem) circle at var(--db-spotlight-x) var(--db-spotlight-y),
+      var(--db-spotlight-halo),
+      var(--db-border-base) 60%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: --db-spotlight-halo var(--db-duration-fast) var(--db-ease-standard);
+}
+
+.spotlight-border:hover {
+  --db-spotlight-halo: var(--db-border-emphasis);
+}
+
+/* A highlight that follows the pointer is motion. Reduced motion keeps the hover
+ * response — losing it would remove information — but makes it a flat border
+ * that does not track. */
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-border {
+    background-image: none;
+    border-color: var(--db-border-base);
+    transition: none;
+  }
+  .spotlight-border:hover {
+    border-color: var(--db-border-emphasis);
+  }
+}

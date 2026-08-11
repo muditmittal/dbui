@@ -208,6 +208,25 @@ export const semantics = {
   "border-base": { light: "interface.neutral.200", dark: { ref: "base.white", a: 0.1 } },
   "border-strong": { light: "interface.neutral.300", dark: { ref: "base.white", a: 0.15 } },
   "border-subtle": { light: "interface.neutral.100", dark: { ref: "base.white", a: 0.06 } },
+  /* The neutral border above `strong`, and the only one meant to be reached
+   * under a pointer rather than at rest. It exists because the weight ladder had
+   * nothing usable between `strong` (neutral.300) and `inverse` (neutral.700):
+   * `strong` measures ~7% against `base` and disappears when it is the peak of a
+   * gradient rather than a flat edge, while `inverse` is the dark chrome value
+   * and reads as a selection.
+   *
+   * It landed on 500 first and stepped down to 400 once `Card` paired the halo
+   * with an elevation change. Two signals for one hover do not each need to be
+   * legible alone — the shadow says "this lifts" and the border only has to say
+   * "and the pointer is here". At 500 the pair read as two announcements.
+   *
+   * Shares its LIGHT value with `input-border-hover` and diverges in dark, where
+   * that one takes a cool step and this one stays a white alpha like the rest of
+   * the border family. A shared value across families is already the norm here —
+   * `border-base` and `input-border-base` are both neutral.200. Still not named
+   * `*-hover` — it is a weight, and a component chooses to reach it. See the
+   * placement note in docs/token-rules.md. */
+  "border-emphasis": { light: "interface.neutral.400", dark: { ref: "base.white", a: 0.3 } },
   "border-inverse": { light: "interface.neutral.700", dark: "interface.cool.300" },
   "border-disabled": { light: { ref: "base.black", a: 0.12 }, dark: { ref: "base.white", a: 0.12 } },
   "border-accent": { light: "status.blue.600", dark: "status.blue.500" },

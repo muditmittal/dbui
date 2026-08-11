@@ -65,14 +65,19 @@ Anything else (what icon a slot uses, what hover color is applied, what a compon
 | File Tree rail (Shell C) | 260px | 200–400px | icon-only @ ≤1024px |
 | Editor tool rail (Shell D) | 44px | — | — |
 | Editor tool panel (Shell D) | 260px | 200–400px | hidden @ ≤1024px |
+| Conversation rail (Shell F) | 20% · 14–32% | drag | hideable, no auto-collapse |
+| Preview region (Shell F) | 38% · min 20% | drag | absent until a tab opens |
+| Chat tool rail (Shell F) | 48px | — | — |
 | Asset Detail sidebar (Shell E) | 280px | — | hidden @ ≤1280px, toggle to show |
 | List control bar search | 320px | grows to fill | collapses to icon @ ≤640px |
 
-All region widths in `px`. Scaling is continuous between breakpoints (flex-based); the breakpoints listed are the **collapse thresholds**.
+All region widths in `px` unless stated. Scaling is continuous between breakpoints (flex-based); the breakpoints listed are the **collapse thresholds**.
+
+Shell F is the exception: its three draggable regions are sized in **percent**, because the thread is the region that must stay readable and a percentage keeps it so at any viewport. The 44px editor tool rail is also the one width here the dimensional scale cannot express — Shell F's rail is 48px, matching the collapsed Product Nav.
 
 ---
 
-## The five shells
+## The six shells
 
 ### Shell A — List page
 
@@ -208,6 +213,41 @@ All region widths in `px`. Scaling is continuous between breakpoints (flex-based
 
 ---
 
+### Shell F — Chat Workbench (agent conversation)
+
+**Purpose:** a conversation with an agent, beside the work it produced. Genie, and any surface where the answer is a thread rather than a page.
+
+**Component:** `<ChatWorkbench>` — `import { ChatWorkbench } from "dbui-shells"`
+
+**Regions (left → right):**
+1. Conversation rail — past threads, grouped by recency. Resizable, hideable.
+2. Thread — the conversation and its composer. The primary surface, and the only region always present.
+3. Preview — what the agent produced, as closeable `<EditorTab>`s. Absent until something opens it.
+4. Tool rail — 48px icon strip. Each tool opens into the preview region as a tab.
+
+**Scaling:**
+- Rail 20% default, 14–32%, drag to resize. Hides via a toggle; there is no icon-only state, because a conversation list with its titles removed communicates nothing.
+- Thread min 30% and takes all remaining space.
+- Preview 38% default, min 20%. The region unmounts when its last tab closes.
+- Tool rail fixed. Never collapses, never resizes.
+
+**Scroll:** the thread's transcript scrolls and owns auto-scroll-to-latest; the rail and each preview tab scroll independently. The composer sits outside the transcript so it never scrolls away. **No page-level scroll.**
+
+**Primary action location:** `New conversation` at the top-right of the conversation rail header. The composer's submit is the thread's action, not the shell's.
+
+**Adjacency:**
+- ✅ Preview region may host any content type — a table, a notebook, a chart
+- ❌ No page header. The thread's own header names the conversation
+- ❌ No breadcrumb. The rail is the history
+- ❌ No metadata sidebar — that is what the preview region is for
+- ❌ Never put the composer inside the transcript
+
+**Turns are not the shell's business.** It owns layout and the transcript's scroll container; the turns come from `dbui-chat` as children, and the composer as a slot.
+
+**Panel sizes do not persist.** Deliberate: cross-shell panel persistence is an open decision (`TRACKER.md` P6) and belongs in one place rather than in this shell.
+
+---
+
 ## Cross-cutting rules at the shell level
 
 ### Breadcrumb presence
@@ -219,6 +259,7 @@ All region widths in `px`. Scaling is continuous between breakpoints (flex-based
 | C File Tree | yes |
 | D Editor | no (tabs replace it) |
 | E Asset Detail standalone | yes |
+| F Chat Workbench | no (the rail is the history) |
 
 ### Primary action location
 Always top-right of the highest-level header available:
@@ -227,6 +268,7 @@ Always top-right of the highest-level header available:
 - Shell C: title row of detail
 - Shell D: editor toolbar (Run + publish/share right)
 - Shell E: title row
+- Shell F: conversation rail header (`New conversation`)
 
 Destructive actions **never** appear as primary. They live in overflow menus or confirmation dialogs.
 
@@ -241,6 +283,8 @@ Destructive actions **never** appear as primary. They live in overflow menus or 
 - ❌ Breadcrumb on Shell A or on Shell B landing
 - ❌ Primary action anywhere but top-right of its surface
 - ❌ Page-level vertical scroll outside the content container
+- ❌ Composer inside the transcript (Shell F)
+- ❌ Page header or breadcrumb on Shell F
 
 ---
 
@@ -248,7 +292,6 @@ Destructive actions **never** appear as primary. They live in overflow menus or 
 
 Flagged for next round:
 - Homepage — mixed-content shell
-- Genie — chat shell
 - Pipeline / Notebook / Ingestion — Shell D variants
 - Designer — canvas shell
 - Dashboards canvas — Shell E with canvas content type

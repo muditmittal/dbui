@@ -180,7 +180,7 @@ audit command, not a nice-to-have beside it.
 
 | # | What | What it costs | Fix |
 | --- | --- | --- | --- |
-| M11 | Elevation and motion are unconsumed. Both elevation scales are pure black with no dark value, so neither draws against `surface-base` in dark. The three durations have no consumer, so every transition runs at the bundler default | Two token families the product cannot use | decision — see Measurements |
+| M11 | **Mostly closed 2026-08-11, and the description was wrong twice.** Elevation is not pure black with no dark value — every stop carries both modes and the dark alphas are an order up (`xs` is 0.05 light and 0.45 dark), which is exactly what makes it draw against `surface-base` in dark. It is not unconsumed either: `--shadow-xs` … `--shadow-xl` bridge to `--db-elevation-*`, so every `shadow-*` call site in the system has been reading elevation all along, and `Card`'s new `interactive`/`spotlight` stops read `xs` and `sm` deliberately. Motion has its first explicit consumer too — `effects.css` transitions the spotlight halo over `--db-duration-fast` on `--db-ease-standard`. What remains is narrower: `default` and `slow` still have no consumer, and no call site names a duration outside that one file | Two of the three claims were false, so the row was arguing for work already done | decision — whether the bare `transition-*` call sites should name a duration, or keep riding Tailwind's 150ms default, which equals `fast` |
 | M12 | `action-default-base`, `action-default-press` and the `action-label-*` triplet have no consumer. `action-default-hover` and `action-label-inverse-*` are live and must not be swept up | Semantics that are correct and that no control reads | decision — rewire the controls onto them, do not delete |
 | M15 | No `brand/*` token exists, so `DatabricksLogo` hardcodes its hex | The one place the system cannot follow its own no-hex rule | decision — a new token family |
 | I8 | `--shadow-focus` is authored in `globals.css` rather than `theme.config.mjs` | Its two widths are the only dimensional values outside the config | file — the radius and spacing bridges already moved |
@@ -291,14 +291,17 @@ and `gallery-demos.tsx` is the one story file that also renders to users, on `/c
 
 Recorded because nothing else holds them and the calls cannot be made without them.
 
-- **Elevation cannot be bridged without changing how the product looks.** Measured on one card,
-  `shadow-lg` reaches below it and nowhere above. `elevation-1` blooms on all four sides because it
-  carries no negative spread and is roughly four times wider sideways. `elevation-3` peaks far
-  darker than the `shadow-xs` on the controls that use one.
-- **Motion is the right shape and still unread.** The three that remain are `fast 150`,
-  `default 300` and `slow 450`. Pointing `--default-transition-duration` at `fast` is a true no-op
-  and the obvious next step. Pointing it anywhere else changes how the product feels, because the
-  bare `transition-*` call sites run at Tailwind's 150ms.
+- **Elevation is bridged, and the measurement that said it could not be is superseded.** The old
+  note compared `elevation-1` and `elevation-3` against `shadow-lg` and `shadow-xs` — the numbered
+  scale that ran the other way, with 1 as the highest. That scale is gone: the stops are `xs`
+  through `xl` ascending, and `tokens.css` points every `--shadow-*` at its `--db-elevation-*`
+  counterpart, so `shadow-xs` *is* `elevation-xs` at every call site that already used it. The
+  bridge happened; what the old bullet measured no longer exists to measure.
+- **Motion has one consumer and two idle stops.** `effects.css` runs the spotlight halo on
+  `--db-duration-fast` and `--db-ease-standard`. `default` and `slow` are still unread. Pointing
+  `--default-transition-duration` at `fast` remains a true no-op, because the bare `transition-*`
+  call sites already run at Tailwind's default, which is the same 150ms — including `Card`'s
+  elevation lift, which is why that lift needed no duration of its own.
 - **Space and size deliberately do not carry the same stops.** 5, 7 and 12 are size stops and not
   space stops, so `h-5` is `--db-size-5` while `p-5` is the multiplier. The snap pass touches `p-5`
   and `p-12` and must leave `h-5` and `h-12` alone. K5b and K13b pin it.

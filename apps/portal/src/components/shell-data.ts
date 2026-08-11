@@ -30,7 +30,7 @@ export const shells: Shell[] = [
     "name": "Data Tree + Detail (Catalog Explorer)",
     "purpose": "hierarchical data entities (Catalogs → Schemas → Tables / Volumes / Models)",
     "regions": [
-      "Data tree rail — <DataTreeView> wrapped in a tree panel",
+      "Data tree rail — <DataTree> wrapped in a tree panel",
       "Detail surface — flex-1"
     ],
     "scaling": "tree rail fixed/resizable; detail surface fills remainder. Below 1024px, rail collapses to icon-only (hover-to-peek) and detail takes near-full width.",
@@ -41,7 +41,7 @@ export const shells: Shell[] = [
     "name": "File Tree + List (Workspace Browser)",
     "purpose": "user-mutable hierarchies (Workspace, Repos, user folders)",
     "regions": [
-      "File tree rail — <FileTreeView>",
+      "File tree rail — <FileTree>",
       "Detail surface — list of the current folder's contents"
     ],
     "scaling": "same as Shell B.",
@@ -75,5 +75,18 @@ export const shells: Shell[] = [
     ],
     "scaling": "- Metadata sidebar hides at ≤1280px; accessible via a toggle that slides it in as an overlay\n- Main content min-width 640px before sidebar is forced to hide\n- Sub-tabs horizontally scroll if they exceed container width (rare — usually <8)",
     "scroll": "- Main content scrolls\n- Sidebar scrolls independently, sticky top"
+  },
+  {
+    "id": "F",
+    "name": "Chat Workbench (agent conversation)",
+    "purpose": "a conversation with an agent, beside the work it produced. Genie, and any surface where the answer is a thread rather than a page",
+    "regions": [
+      "Conversation rail — past threads, grouped by recency. Resizable, hideable.",
+      "Thread — the conversation and its composer. The primary surface, and the only region always present.",
+      "Preview — what the agent produced, as closeable <EditorTab>s. Absent until something opens it.",
+      "Tool rail — 48px icon strip. Each tool opens into the preview region as a tab."
+    ],
+    "scaling": "- Rail 20% default, 14–32%, drag to resize. Hides via a toggle; there is no icon-only state, because a conversation list with its titles removed communicates nothing.\n- Thread min 30% and takes all remaining space.\n- Preview 38% default, min 20%. The region unmounts when its last tab closes.\n- Tool rail fixed. Never collapses, never resizes.",
+    "scroll": "the thread's transcript scrolls and owns auto-scroll-to-latest; the rail and each preview tab scroll independently. The composer sits outside the transcript so it never scrolls away. **No page-level scroll.**"
   }
 ]

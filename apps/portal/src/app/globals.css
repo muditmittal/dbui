@@ -9,6 +9,10 @@
    legacy shadcn-flat tokens below. */
 @import "../../../../packages/dbui/src/tokens/tokens.css";
 @import "../../../../packages/dbui/src/tokens/type.css";
+/* Hand-authored effects that cannot be generated from a token value. Imported
+   here as well as in the package's own globals.css, because this file does not
+   import that one — see the note at the top of effects.css. */
+@import "../../../../packages/dbui/src/tokens/effects.css";
 /* shadcn/tailwind.css — inlined because the npm package exports a virtual path
    that doesn't resolve during Vercel production builds */
 @theme inline {

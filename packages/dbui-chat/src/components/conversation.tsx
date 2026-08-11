@@ -96,7 +96,11 @@ function Conversation({
           ref={viewportRef}
           onScroll={handleScroll}
           data-slot="conversation-viewport"
-          className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+          // `p-1` is the scroll container's gutter, not decoration: a scroll
+          // container clips on all four edges, so without it the focus ring on
+          // the first and last turn is cut off. ConversationContent carries the
+          // remaining inset, so the total is unchanged.
+          className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1"
         >
           {children}
         </div>
@@ -112,7 +116,7 @@ function ConversationContent({
   return (
     <div
       data-slot="conversation-content"
-      className={cn("flex flex-col gap-4 p-4", className)}
+      className={cn("flex flex-col gap-4 p-3", className)}
       {...props}
     />
   )
@@ -147,9 +151,19 @@ function ConversationScrollButton({
   )
 }
 
-/** Empty state for a thread with no turns yet. */
+/**
+ * Empty state for a thread with no turns yet.
+ *
+ * The identity block is centred in the region and the starter prompts sit at the
+ * foot of it, next to the composer rather than under the title. A reader opening
+ * a panel reads the name once; what they act on is the row of prompts, and that
+ * belongs where their pointer already is.
+ *
+ * Pass `media` already wrapped in AiGradientIcon — the gradient is what marks
+ * this as Genie, and this component does not decide that on the caller's behalf.
+ */
 function ConversationEmpty({
-  title = "Ask Genie anything",
+  title = "Genie",
   description,
   media,
   className,
@@ -159,22 +173,31 @@ function ConversationEmpty({
   title?: string
   description?: string
   media?: React.ReactNode
+  /** Starter prompts. Rendered at the foot of the region, not under the title. */
   children?: React.ReactNode
 }) {
   return (
     <Empty
       data-slot="conversation-empty"
-      className={cn("h-full", className)}
+      // justify-between rather than the centred default: the identity block owns
+      // the middle and the prompts hold the bottom edge.
+      className={cn("h-full justify-between gap-6 p-3", className)}
       {...props}
     >
-      <EmptyHeader>
-        {media ? <EmptyMedia variant="icon">{media}</EmptyMedia> : null}
-        <EmptyTitle>{title}</EmptyTitle>
-        {description ? (
-          <EmptyDescription>{description}</EmptyDescription>
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 px-6">
+        {media ? (
+          <EmptyMedia className="mb-0 [&_svg]:size-12">{media}</EmptyMedia>
         ) : null}
-      </EmptyHeader>
-      {children}
+        <EmptyHeader className="gap-2">
+          <EmptyTitle className="type-title-2 text-text-strong">{title}</EmptyTitle>
+          {description ? (
+            <EmptyDescription>{description}</EmptyDescription>
+          ) : null}
+        </EmptyHeader>
+      </div>
+      {children ? (
+        <div className="flex w-full flex-wrap items-start gap-2">{children}</div>
+      ) : null}
     </Empty>
   )
 }

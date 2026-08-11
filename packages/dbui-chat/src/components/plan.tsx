@@ -1,17 +1,12 @@
 "use client"
 
 import * as React from "react"
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "dbui/components/ui/collapsible"
-import { ChevronRight } from "dbui/components/icons/ChevronRight"
 import { CheckSmall } from "dbui/components/icons/CheckSmall"
 import { CircleOutline } from "dbui/components/icons/CircleOutline"
 import { CloseSmall } from "dbui/components/icons/CloseSmall"
 import { Running } from "dbui/components/icons/Running"
 
+import { Disclosure } from "./disclosure"
 import { cn } from "../lib/utils"
 
 /**
@@ -47,44 +42,24 @@ function Plan({
   children,
   ...props
 }: PlanProps) {
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen)
-  const isOpen = open ?? internalOpen
-
-  const handleOpenChange = React.useCallback(
-    (next: boolean) => {
-      setInternalOpen(next)
-      onOpenChange?.(next)
-    },
-    [onOpenChange]
-  )
-
-  const triggerText =
-    label ?? (count !== undefined ? `${count} steps` : "Plan")
+  const triggerText = label ?? (count !== undefined ? `${count} steps` : "Plan")
 
   return (
-    <div data-slot="plan" className={cn("w-full", className)} {...props}>
-      <Collapsible open={isOpen} onOpenChange={handleOpenChange}>
-        <CollapsibleTrigger
-          className={cn(
-            "flex w-full items-center gap-1 rounded-1 type-label-bold text-text-base outline-none",
-            "hover:text-text-strong focus-visible:border focus-visible:border-focus-ring"
-          )}
-        >
-          <span
-            className={cn(
-              "inline-flex shrink-0 transition-transform [&_svg]:size-4",
-              isOpen && "rotate-90"
-            )}
-          >
-            <ChevronRight />
-          </span>
-          {triggerText}
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="mt-2 flex flex-col gap-1">{children}</div>
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
+    <Disclosure
+      slot="plan"
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      className={className}
+      trigger={<span className="min-w-0 truncate">{triggerText}</span>}
+      // No gap override: the inherited 8px puts the label at the same 24px offset
+      // as a PlanItem's text, so the trigger reads as the list's first row.
+      triggerClassName="type-label-bold text-text-base hover:text-text-strong"
+      contentClassName="flex flex-col gap-1"
+      {...props}
+    >
+      {children}
+    </Disclosure>
   )
 }
 
@@ -93,10 +68,14 @@ function Plan({
  * active item reads as current even in a greyscale screenshot. `done` keeps full
  * contrast rather than dimming: a finished step is the record of what happened, and
  * a reader auditing a run needs to read it as easily as the one in flight.
+ *
+ * These are the bare glyphs, not `Status`. `Status` covers all four states but
+ * draws them circled, and it announces itself as a live region — four per plan
+ * would be four announcements for one list.
  */
 const INDICATOR: Record<PlanItemStatus, React.ReactNode> = {
   pending: <CircleOutline />,
-  active: <Running className="animate-spin" />,
+  active: <Running className="motion-safe:animate-spin" />,
   done: <CheckSmall />,
   cancelled: <CloseSmall />,
 }
