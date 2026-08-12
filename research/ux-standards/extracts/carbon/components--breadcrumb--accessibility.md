@@ -1,0 +1,57 @@
+---
+source: carbon
+title: IBM Carbon Design System
+url: https://carbondesignsystem.com/components/breadcrumb/
+license: Apache-2.0
+bucket: A
+sha: 535b874844e1863a699cda006d7e18e6d2699880
+retrieved: 2026-08-11
+---
+No accessibility annotations are needed for breadcrumbs, but keep these
+considerations in mind if you are modifying Carbon or creating a custom
+component.
+
+  What Carbon provides
+  Development considerations
+
+## What Carbon provides
+
+Carbon bakes keyboard operation into its components, improving the experience of
+blind users and others who operate via the keyboard. Carbon incorporates many
+other accessibility considerations, some of which are described below.
+
+### Keyboard interactions
+
+Each page link in the breadcrumb is reached by `Tab` and activated by `Enter`.
+The current page, if listed in the breadcrumb, is not a link. If the breadcrumb
+is truncated, the ellipsis button for the overflow menu is in the tab order. See
+[overflow menu](https://carbondesignsystem.com/components/overflow-menu/usage/)
+for details on its keyboard operation.
+
+![example of breadcrumb keyboard interaction](images/breadcrumb-accessibility-1.png)
+
+  The breadcrumb's links are reached by Tab and activated by Enter.
+
+### Labeling and regions
+
+Carbon implements each page link as a list item inside a navigation region named
+“breadcrumb.” The ellipsis symbol is a button called “more breadcrumbs” which
+opens the
+[overflow menu](https://carbondesignsystem.com/components/overflow-menu/usage/).
+
+![aria-label designates the navigation region 'breadcrumb' and the ellipsis button 'more breadcrumbs’](images/breadcrumb-accessibility-2.png)
+
+  Carbon provides the accessibility information about the breadcrumb's
+  structure.
+
+## Development considerations
+
+Keep these considerations in mind if you are modifying Carbon or creating a
+custom component:
+
+- The Carbon implementation uses an html5 `<nav>` element; this could also be
+  achieved with a “navigation” landmark on a `<div>`.
+- Each link in the breadcrumb is implemented as an unordered list item so that
+  screen readers provide more context.
+- The visual / separators do not need to be text (Carbon uses CSS) and are not
+  intended to be navigable.

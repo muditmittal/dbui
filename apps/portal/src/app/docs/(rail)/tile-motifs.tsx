@@ -228,8 +228,8 @@ const MOTIFS: Record<string, React.ReactNode> = {
   ),
 
   // A gate. Two went through and one is being held, which is the honest shape
-  // of a check — it is defined by what it stops.
-  "/docs/checks": (
+  // of a standard — it is defined by what it stops.
+  "/docs/standards": (
     <>
       <path {...FIELD} d="M2 13H22" />
       <circle {...FIELD} cx="6.5" cy="18.5" r="2.5" />

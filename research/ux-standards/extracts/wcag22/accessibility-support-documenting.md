@@ -1,0 +1,88 @@
+---
+source: wcag22
+title: WCAG 2.2 and Understanding WCAG 2.2
+url: https://www.w3.org/WAI/WCAG22/Understanding/accessibility-support-documenting
+license: W3C Document License
+bucket: A-verbatim
+sha: 5841658f8a3f18c6d058ac4cfcdbdfdd6076e64f
+retrieved: 2026-08-11
+---
+# Documenting Accessibility Support for Uses of a Web Technology
+
+The documentation of accessibility support for uses of a web technology  provides
+the information needed to determine whether it is possible to  satisfy the WCAG 2
+Success Criteria for a particular environment.
+
+Accessibility Support documentation for uses of a web technology includes the following
+information:
+
+- The version or versions of the technology
+
+-
+
+For each user agent or plug-in that supports this version of the technology:
+
+The version of the user agent or plug-in, including the operating system or platform
+
+- Ways of using the technology that are supported by the user agent; ideally, there
+are ways to meet all of the success criteria, but exceptions should be noted.
+
+- Known limitations of the user agent support for uses of the technology to meet Success
+Criteria
+
+-
+
+For each assistive technology that supports the web technology:
+
+The version of the assistive technology, including the operating system or platform
+
+-
+
+For each host user agent that is supported by this version of the assistive technology:
+
+Ways of using the technology supported by the assistive technology for this user
+agent
+
+- Known limitations in the support of uses of the technology to meet success criteria
+when using the assistive technology with this user agent
+
+Target environments are defined by the user agents and assistive technologies available
+to its users. Documentation of accessibility support involves detailed understanding
+of the ways to use functionality of a  technology to meet success criteria, and also
+of user agents and assistive technology. Because of this, vendors and developers of
+web technologies and user agents are encouraged to provide this information about
+the accessibility  support of their products. Similarly, developers and vendors of
+assistive technology are encouraged to provide this information about  the ways to
+use web technologies  that are supported by their products. Authors should need to
+document the accessibility supported ways to use a technology only  when there is
+not reliable documentation available from vendors or  testing groups for those uses.
+
+For a controlled environment, such as a corporate workplace,  the user agents and
+assistive technologies available may be a specific  set of versions of user agents
+on a specific set of platforms. To  determine whether uses of a web technology are
+accessibility supported in a  target environment, an author checks that the user agents
+and assistive  technologies available are in the set of supported user agents and
+assistive technologies listed for those uses in the Accessibility Support  documentation.
+
+For a target environment like the Internet, authors may need  to consider a much larger
+set of user agents, including older versions,  and on a wider variety of platforms.
+
+Environments that use different natural languages are different target environments.
+For example, the accessibility-supported ways of using technologies for an English
+language environment may differ from those  for an Arabic language environment, since
+there may be different user agents and assistive technologies that support these languages.
+
+The documentation includes version-specific information about all the assistive technologies
+and all the user agents and the ways  that they interact with one another. If support
+in these user agents is  similar, it will be straightforward for an author to decide
+if a documented way of using a technology is accessibility supported. If the uses
+supported are different in different versions, authors can only rely on the uses that
+are supported in the versions available to their users in  determining accessibility
+support.
+
+If a way of using a technology is not relied upon for conformance, the absence of
+accessibility support for that use does not prevent conformance of the web page. So
+if the unsupported use does not occur in the content, or if there is a conforming
+version of that content available, the web page still conforms. For instance, lack
+of accessibility support for interactive controls in a web technology would not prevent
+uses of the web technology for non-interactive content that are accessibility supported.

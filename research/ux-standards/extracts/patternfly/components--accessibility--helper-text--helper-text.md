@@ -1,0 +1,104 @@
+---
+source: patternfly
+title: Red Hat PatternFly
+url: https://www.patternfly.org/components/accessibility/helper-text
+license: MIT
+bucket: A
+sha: 7315296b4ecc182757b45b46f0474fafcff11366
+retrieved: 2026-08-11
+---
+## Accessibility
+
+To implement an accessible PatternFly **helper text**:
+
+- Give the helper text item an `id`, and pass that `id` to the main element's `aria-describedby` attribute. Alternatively if there are multiple helper text items, the helper text component can be given the `id` to be passed to the main element's `aria-describedby`. For example, the following code block includes two valid examples of passing `id` values to a main element:
+  ```noLive
+
+
+
+      Some helper text content
+
+
+
+
+
+
+      Some helper text content
+
+
+      Some other helper text content
+
+
+  ```
+- Structure the helper text as a `ul` element and each helper text item as a `li` element if there is more than one helper text item.
+- Make the helper text component an `aria-live` region if the helper text item(s) have static text and styling, but will dynamically render.
+- Ensure there is visually hidden text for assistive technologies such as screen readers that conveys the status type if:
+  - the helper text item has static text and will always be rendered, but the styling will dynamically update, or
+  - the helper text item text content itself doesn't convey a status type
+- Avoid passing interactive content as helper text.
+
+## Testing
+
+At a minimum, a helper text should meet the following criteria:
+
+
+    Each helper text item has an <code className="ws-code">id</code> attribute, whose value is also passed to the main element's <code className="ws-code">aria-describedby</code> attribute.</span>} description="This allows a user navigating via assistive technologies such as a screen reader to have the helper text content announced to them without having to move focus from the main element." />
+
+
+    If there are multiple helper text items, the helper text component is structured as a <code className="ws-code">ul</code> element and the helper text items are structured as <code className="ws-code">li</code> elements.</span>} description="This lets users known how many helper text items there are within a single helper text component when navigating via assistive technologies such as a screen reader." />
+
+
+    The <code className="ws-code">aria-live</code> value should be "polite" when doing so. This will announce to users of assistive technologies when new helper text has rendered, keeping them informed of any remaining criteria or issues that need to be addressed.</span>} />
+
+
+    This is best achieved by using our <code className="ws-code">pf-v6-screen-reader</code> class.</span>} />
+
+
+
+
+
+## React customization
+
+The following React props have been provided for more fine-tuned control over accessibility.
+
+| Prop | Applied to | Reason |
+|---|---|---|
+| `aria-label="[text that labels a helper text list]"` | `HelperText` | Adds an accessible name to the helper text component. Should only be passed when the `component` prop has a value of `"ul"`, especially when there are multiple helper text components on a page. Doing so will help differentiate the lists for users navigating via rotor menus. |
+| `component="ul"` | `HelperText` | Sets the wrapper element of the helper text component to an unordered list. **Required** when the helper text component is intended or expected to include multiple helper text items. |
+| `id` | `HelperText` | Sets the `id` attribute of the helper text component, which can be passed to the main element's `aria-describedby` attribute when there are multiple helper text items that should all be announced. |
+| `isLiveRegion` | `HelperText` | Makes the helper text component a live region with a value of `"polite"`. **Required** when helper text item(s) are intended or expected to have static text, but dynamically render. |
+| `component="li"` | `HelperTextItem` | Sets the wrapper element of the helper text item to a list item. **Required** when `HelperText` has `component="ul"` passed in. |
+| `id` | `HelperTextItem` | Sets the `id` attribute of the helper text item, which should be passed to the main element's `aria-describedby` attribute. |
+| `screenReaderText="[text that conveys status type]"` | `HelperTextItem` | Renders visually hidden text when the `isDynamic` prop is also passed in. Typically this should convey the status type of the helper text item, and will render immediately after the item text. This can be prevented from rendering by passing an empty string `''` as a value. |
+| `variant="[default, indeterminate, warning, error, or success]"` | `HelperTextItem` | Sets the text styling and icon. This prop should only be passed in when the helper text item should visually convey some sort of status. |
+
+## HTML/CSS customization
+
+The following HTML attributes and PatternFly classes can be used for more fine-tuned control over accessibility.
+
+| Attribute or class | Applied to | Reason |
+|---|---|---|
+| `aria-label="[text that labels a helper text list]"` | `ul.pf-v6-c-helper-text` | Adds an accessible name to the helper text component. Should be passed when there are multiple helper text components on a page. Doing so will help differentiate the lists for users navigating via rotor menus. |
+| `aria-live="polite"` | `.pf-v6-c-helper-text` | Makes the helper text component a live region. **Required** when helper text item(s) are intended or expected to have static text, but dynamically render. |
+| `id` | `.pf-v6-c-helper-text` | Sets the `id` attribute of the helper text component, which can be passed to the main element's `aria-describedby` attribute when there are multiple helper text items that should all be announced. |
+| `role="list"` | `ul.pf-v6-c-helper-text` | Indicates that the helper text component is a list element. **Required**.<br/><br/>This role is redundant since `.pf-v6-c-helper-text` can be a `<ul>` element, but it is required for assistive technologies to announce the list properly. |
+| `id` | `.pf-v6-c-helper-text__item` | Sets the `id` attribute of the helper text item, which should be passed to the main element's `aria-describedby` attribute if the `.pf-v6-c-helper-text` element is not given an `id` instead. |
+| `aria-hidden="true"` | `.pf-v6-c-helper-text__item-icon > i` | Removes the helper text item icon from the accessibility tree, preventing assistive technologies from potentially announcing duplicate or unnecessary information without visually hiding it. **Required**. |
+| `.pf-v6-screen-reader` | `.pf-v6-c-helper-text__item.pf-m-dynamic > span` | Renders visually hidden text that is accessible only to assistive technologies such as a screen reader. This should be included if the helper text item is intended or expected to contain static text and always be visible, but have dynamic styling, or if the helper text item content doesn't convey a status. Typically this should convey the status type of the helper text item. |
+
+## Additional considerations
+
+Consumers must ensure they take any additional considerations when customizing helper text, using it in a way not described or recommended by PatternFly, or in various other specific use-cases not outlined elsewhere on this page.
+
+### Visually hidden text
+
+While we recommend including visually hidden text for helper text items, it's important to understand more about the when and why. Typically we recommend including visually hidden text within the helper text item for 2 scenarios:
+
+- the helper text item content is static, but the styling and status will dynamically change
+- the helper text item content does not clearly convey any type of status
+
+For the first scenario, if helper text item content will always remain static, any visual styling changes themselves won't be conveyed to users. Including visually hidden text within the helper text item can help convey that change in status and styling when navigating to the helper text item, but also via `aria-live` announcements. Without this visually hidden text, the same text content would be announced without any change at best, or nothing would be announced at worst in the case of `aria-live`.
+
+For the second scenario, it can be difficult for some users to understand the difference between messages of different status types depending on the wording. Including visually hidden text that helps convey that status can help differentiate between the two, or better understand whether a single helper text item is crucial to continuing through a workflow or not.
+
+It is also worth noting that localization must also be considered when it comes to the visually hidden text. If you provide localization elsewhere in your codebase - especially the area where helper text is being used - you must provide localization for the visually hidden text of the helper text item.

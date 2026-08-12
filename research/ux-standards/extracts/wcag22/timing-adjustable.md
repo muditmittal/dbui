@@ -1,0 +1,159 @@
+---
+source: wcag22
+title: WCAG 2.2 and Understanding WCAG 2.2
+url: https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable
+license: W3C Document License
+bucket: A-verbatim
+sha: 5841658f8a3f18c6d058ac4cfcdbdfdd6076e64f
+retrieved: 2026-08-11
+---
+# Understanding Timing Adjustable
+
+## In brief
+
+**Goal** — Users have adequate time to complete tasks.
+
+**What to do** — Let users turn off, adjust, or extend time limits.
+
+**Why it's important** — People with disabilities may need more time to complete activities.
+
+## Intent of Timing Adjustable
+
+The intent of this success criterion is to ensure that users with disabilities are
+given adequate time to interact with web content whenever possible. People with disabilities
+such as blindness, low vision, dexterity impairments, and cognitive limitations may
+require more time to read content or to perform functions such as filling out on-line
+forms. If web functions are time-dependent, it will be difficult for some users to
+perform the required action before a time limit occurs. This may render the service
+inaccessible to them. Designing functions that are not time-dependent will help people
+with disabilities succeed at completing these functions. Providing options to disable
+time limits, customize the length of time limits, or request more time before a time
+limit occurs helps those users who require more time than expected to successfully
+complete tasks. These options are listed in the order that will be most helpful for
+the user. Disabling time limits is better than customizing the length of time limits,
+which is better than requesting more time before a time limit occurs.
+
+Any process that happens without user initiation after a set time or on a periodic
+basis is a time limit. This includes partial or full updates of content (for example,
+page refresh), changes to content, or the expiration of a window of opportunity for
+a user to react to a request for input.
+
+It also includes content that is advancing or updating at a rate beyond the user's ability to read and/or understand it. In other words, animated, moving or scrolling content introduces a time limit on a user's ability to read content.
+
+This success criterion is generally not applicable when the content repeats or is synchronized with other content, so long as the information and data is adjustable or otherwise under the control of the end user.  Examples of time limits for which this success criterion is not applicable include scrolling text that repeats, captioning, and [carousels](https://www.w3.org/WAI/tutorials/carousels/).  These are situations which do include time limits, but the content is still available to the user because it has controls for accessing it, as specified in [2.2.2 Pause, Stop, Hide](pause-stop-hide).
+
+In some cases, however, it is not possible to change the time limit (for example, for an auction or other real-time event) and exceptions are therefore provided for those cases.
+
+Content that operates on a timer does not need to be time adjustable if there is an alternative that does not rely on a timer. For example, a web application such as an email client provides notification of new email arriving with a temporary message (such as a 'toast' message) in the lower right-hand side of the interface, and the message disappears after 5 seconds. Users are able to identify the arrival of email through other means, such as viewing the Inbox, so the disappearance of the message does not set a time limit on the ability to determine if new mail has arrived. If the user has no other means of discovering the same information (or performing the same function), then each message would need to meet this success criterion in order to provide users with sufficient time to access the information.
+
+### Notes regarding time limits
+
+- Timed server redirects can be found below under Common Failures.
+
+- Non-timed server redirects (e.g., 3xx response codes) are not applicable because there
+is no time limit: they work instantly.
+
+- This success criterion applies only to time limits that are set by the content itself.
+For example, if a time limit is included in order to address security concerns, it
+would be considered to have been set by the content because it  is designed to be
+part of the presentation and interaction experience for that content. Time limits
+set externally to content, such as by the user agent or by factors intrinsic to the
+Internet are not under the author's control and not subject to WCAG conformance requirements.
+Time limits set by web servers should be under the author's/organization's control
+and are covered. Success Criteria
+[2.2.3 No Timing](no-timing),
+[2.2.4 Interruptions](interruptions), and
+[2.2.5 Re-Authenticating](re-authenticating) may also apply.
+
+- Certain time limits implemented for security reasons, such as time-based / time-limited
+two-factor authentication tokens, can be considered _essential_, and may be
+exempt from this criterion. However, other criteria may apply, such as
+[3.3.7 Redundant Entry](redundant-entry),
+[3.3.8 Accessible Authentication (Minimum)](accessible-authentication-minimum), and
+[3.3.9 Accessible Authentication (Enhanced)](accessible-authentication-enhanced) may also apply.
+
+- Ten times the default was chosen based on clinical experience and other guidelines.
+For example, if 15 seconds is allowed for a user to respond and hit a switch, 150
+seconds would be sufficient to allow almost all users to hit a switch even if they
+had trouble.
+
+- 20 seconds was also based on clinical experience and other guidelines. 20 seconds
+to hit 'any switch' is sufficient for almost all users including those with reduced motion.
+Some would fail, but some would fail all lengths of time. A reasonable period for
+requesting more time is required since an arbitrarily long time can provide security
+risks to all users, including those with disabilities, for some applications. For
+example, with kiosks or terminals that are used for financial transactions, it is
+quite common for people to walk away without signing off. This leaves them vulnerable
+to those walking up behind them. Providing a long period of inactivity before asking,
+and then providing a long period for the person to indicate that they are present
+can leave terminals open for abuse. If there is no activity the system should ask
+if the user is there. It should then ask for an indication that a person is there
+('hit any key') and then wait long enough for almost anyone to respond. For "hit any
+key," 20 seconds would meet this. If the person indicates that they are still present,
+the device should return the user to the exact condition that existed before it asked
+the question.
+
+- 20 hours was chosen as an upper limit because it is longer than a full waking day.
+
+In cases where timing is not an intrinsic requirement but giving users control over
+timed events would invalidate the outcome, a third party can control the time limits
+for the user (for example, granting double time on a test).
+
+See also [2.2.3 No Timing](no-timing).
+
+## Benefits of Timing Adjustable
+
+- People with physical disabilities often need more time to react, to type and to complete
+activities.  People with low vision need more time to locate things on screen and
+to read.   People who are blind and using screen readers may need more time to understand
+screen layouts, to find information and to operate controls.  People who have cognitive
+or language limitations need more time to read and to understand.  People who are
+deaf and communicate in sign language may need more time to read information printed
+in text (which may be a second language for some).
+
+- In circumstances where a sign-language interpreter may be relating audio content to
+a user who is deaf, control over time limits is also important.
+
+- People with reading disabilities, cognitive limitations, and learning disabilities
+who may need more time to read or comprehend information can have additional time
+to read the information by pausing the content.
+
+## Examples of Timing Adjustable
+
+- A website uses a client side time limit to help protect users who may step away from
+their computer.   After a period of inactivity the web page asks if the user needs
+more time.  If it doesn't get a response – it times out.
+
+- A web page has a field that automatically updates with the latest headlines in a rotating
+fashion. There is an interactive control that allows the user to extend the length
+of time between each update to as much as ten times the default. The control can be
+operated with either a mouse or a keyboard.
+
+- A web page includes an animation which includes text that appears and disappears throughout.
+In some cases, the text is scrolling across the screen and in others, it is only displayed
+for a short time before it fades into the background. The page includes a pause button
+so that users who have trouble reading the text before it disappears can read it.
+
+- In an auction, there is a time limit on the amount of time a user has to submit a
+bid. Since the time limit applies to all users who want to bid on a particular item,
+it would be unfair to extend the time limit for any one particular user. Therefore,
+a time limit is required for this type of activity and no extension, adjustment, or
+deactivation of the time limit is required by this success criterion.
+
+- An on-line ticket-purchasing site gives the user two minutes to confirm a purchase
+before the seats are returned to the general pool. Because tickets on such sites can
+sell out quickly, holding a ticket longer than that may invalidate the nature of the
+site, so this is a case in which the timing is essential and cannot be extended without
+invalidating the activity. However, the site does move as much of the process out
+of the time-critical period as possible, for instance allowing users to provide necessary
+information like name, payment method, etc., before entering the time-critical stage.
+
+- A ticket-purchasing site allows the user two minutes to confirm purchase of selected
+seats, but warns the user when their time is almost out and allows the user to extend
+this time limit some number of times with a simple action such as clicking a "Extend
+time limit" button.
+
+## Resources for Timing Adjustable
+
+{% # Data for associated techniques is defined in understanding/understanding.11tydata.js %}
+{% include "understanding/techniques.html" %}

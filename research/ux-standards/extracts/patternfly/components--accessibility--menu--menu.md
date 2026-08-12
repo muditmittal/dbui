@@ -1,0 +1,66 @@
+---
+source: patternfly
+title: Red Hat PatternFly
+url: https://www.patternfly.org/components/accessibility/menu
+license: MIT
+bucket: A
+sha: 7315296b4ecc182757b45b46f0474fafcff11366
+retrieved: 2026-08-11
+---
+## Accessibility
+
+To implement an accessible PatternFly **menu** component:
+- Due to the composable nature of the menu component, keyboard interaction will need to be added manually between the menu toggle and the menu. See the [custom menu demos](https://www.patternfly.org/components/menus/custom-menus) to see how this is done.
+- Any actions placed within a menu item will need an `aria-label` on the `MenuItemAction` to communicate to users what the action is.
+- When using the menu as a select (single or multi-select), you must ensure any applicable attributes are applied to the menu components:
+  - `role="listbox"` on the menu list, as well as `aria-multiselectable="true"` if multiple options can be selected
+  - `role="option"` and a boolean `aria-selected` on menu items
+
+## Testing
+
+At a minimum, a menu component should meet the following criteria:
+
+
+    Users should be able to use keyboard navigation to enter the menu, navigate between menu items, select an option, or escape the menu.</span>} description={<span><kbd>Tab</kbd> navigates to the menu, <kbd>Shift</kbd> + <kbd>Tab</kbd> navigates to the previous focusable element, up and down arrow keys should be used to navigate between menu items, and <kbd>Escape</kbd> should close the menu."</span>}/>
+
+
+    If using menu item actions, the actions have an accessible name via the <code className="ws-code">aria-label</code></span>} description="This will differentiate each action when announced to users of assistive technologies when navigating through a page or a screen reader's rotor menu." />
+
+
+## React customization
+
+The following React props have been provided for more fine-tuned control over accessibility.
+
+| Prop | Applied to | Reason |
+|---|---|---|
+| `aria-label=[text that labels the menu]` | `Menu` | Adds an accessible name to the menu. |
+| `aria-label=[text that labels the menu item]` | `MenuItem` | Adds an accessible name to the menu item. |
+| `icon={}`  | `MenuItem` | Renders an icon to a menu item. When icon is decorative, pass an `aria-hidden` to the icon to hide it from screen reader users. |
+| `isExternalLink` | `MenuItem` | Renders an icon on the item when it receives focus or is hovered, as well as visually hidden text, to let users of certain assistive technologies know that the item will open in a new tab/window. **Required if the item opens a new tab/window**. |
+| `aria-label=[text that labels the menu item's action]` | `MenuItemAction` | Adds an accessible name to the action item on the menu. |
+|`icon={}` | `MenuItemAction` | Renders an icon to a menu item action. When icon is decorative, pass an `aria-hidden` to the icon to hide it from screen reader users. |
+| `labelHeadingLevel=[a heading tag]` | `MenuGroup` | Adds a group label's heading level. Default is `h1`. Be sure to not skip heading levels when passing this prop in. For example, if a menu group is within a page section that has an `h2` heading, you should not pass `headingLevel="h4"`. |
+| `role="listbox"` | `Menu` | When the menu is used as a select (single or multi-select), replaces the default menu role to declare the menu as a listbox. |
+| `isAriaMultiselectable` | `MenuList` | Indicates that more than one option in the listbox can be selected at a time. Only applies when `role="listbox"` is also passed to `Menu`. |
+| `isSelected` | `MenuItem` | Indicates whether the option is currently selected. Only applies when `role="listbox"` is passed to `Menu`. **Required** on every option in a select listbox with either a value of `true` or `false`. Can also use the `selected` prop on `Menu` to manage selection state. |
+| `role="option"` | `MenuItem` | When the menu is used as a select, replaces `role="menuitem"` to assign the menu item as a selectable option in the listbox. Automatically applied when `role="listbox"` is passed to `Menu`. |
+
+## HTML/CSS customization
+
+The following HTML attributes and PatternFly classes can be used for more fine-tuned control over accessibility.
+
+| Attribute or class | Applied | Reason |
+| -- | -- | -- |
+| `role="menu"` | `.pf-v6-c-menu__list` | Declares `.pf-v6-c-menu__list` as a menu. |
+| `role="listbox"` | `.pf-v6-c-menu__list` | When the menu is used as a select (single or multi-select), replace `role="menu"` to declare `.pf-v6-c-menu__list` as a listbox. |
+| `disabled` | `button.pf-v6-c-menu__item` | When the menu item uses a button element, indicates that it is unavailable and removes it from keyboard focus. |
+| `role="menuitem"` | `.pf-v6-c-menu__item`, `.pf-v6-c-menu__list-item` (checkbox) | Assigns `.pf-v6-c-menu__item` as an option in a set of choices contained by a menu. |
+| `role="option"` | `.pf-v6-c-menu__item` | When the menu is used as a select, replace `role="menuitem"` to assign `.pf-v6-c-menu__item` as a selectable option in the listbox. |
+| `aria-selected="[true or false]"` | `.pf-v6-c-menu__item[role="option"]` | Indicates whether that option is currently selected. **Required** on every option in a select listbox; must never be omitted, even for unselected options. |
+| `aria-multiselectable="true"` | `.pf-v6-c-menu__list` (`role="listbox"`) | Indicates that more than one option in the listbox can be selected at a time. |
+| `role="none"` | `.pf-v6-c-menu__list-item` | Removes semantic meaning from `.pf-v6-c-menu__list-item`. |
+| `aria-disabled="true"` | `a.pf-v6-c-menu__item` | When the menu item uses a link element, removes it from keyboard focus. |
+| `tabindex="-1"` | `a.pf-v6-c-menu__item` | When the menu item uses a link element, removes it from keyboard focus. |
+| `aria-hidden="true"` | `.pf-v6-c-menu__item-icon`, `.pf-v6-c-menu__item-action-icon`, `.pf-v6-c-menu__item-external-icon`, `.pf-v6-c-menu__item-toggle-icon`, `.pf-v6-c-menu__item-select-icon` | Hides the icon from assistive technologies. |
+| `aria-label="[text that labels the action]"` | `.pf-v6-c-menu__item-action-icon.pf-m-favorite` | Provides an accessible label indicating that the favorite action is not selected. |
+| `aria-label="[text that labels the action]"` | `.pf-v6-c-menu__item-action-icon.pf-m-favorite.pf-m-favorited` | Provides an accessible label indicating that the favorite action is selected. |

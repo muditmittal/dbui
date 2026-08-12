@@ -1,0 +1,52 @@
+---
+source: carbon
+title: IBM Carbon Design System
+url: https://carbondesignsystem.com/components/select/
+license: Apache-2.0
+bucket: A
+sha: 535b874844e1863a699cda006d7e18e6d2699880
+retrieved: 2026-08-11
+---
+No accessibility annotations are needed for selects, but keep these
+considerations in mind if you are modifying Carbon or creating a custom
+component.
+
+What Carbon provides
+Development considerations
+
+## What Carbon provides
+
+Carbon bakes keyboard operation into its components, improving the experience of
+blind users and others who operate via keyboard. Carbon also incorporates other
+accessibility considerations, some of which are described below.
+
+### Keyboard interaction
+
+A select component is reached by `Tab` and opened with `Space`, or the `Up` or
+`Down` arrow keys. The currently selected option will have focus. The arrow keys
+are also used for navigating between options. Users can jump about in the list
+by pressing individual letter keys, which will reposition to the first option
+beginning with that letter. Options are selected with `Space` or `Enter` keys,
+which also close the select. Pressing `Esc` closes a select without changing the
+selected option.
+
+![example of select keyboard interaction](images/select-accessibility-1.png)
+
+  Selects are reached by Tab. Space and arrow keys open the list of options.
+
+![illustration showing an open select with the focus on the Previewer option while the Editor option is already selected](images/select-accessibility-2.png)
+
+  The arrow keys navigate the open list of options, with the Space or Enter keys
+  selecting the option with focus and closing the list. Esc closes the list
+  without changing the option.
+
+## Development considerations
+
+Keep these considerations in mind if you are modifying Carbon or creating a
+custom component.
+
+- Carbon uses the combined attributes `disabled`, `hidden`, and `selected` in
+  order to make a default prompt such as “Choose an option” not appear in the
+  list of options when the select is open.
+- The component is built on the HTML `select` element and has limited styling,
+  with most of the visual appearance coming from the browser.

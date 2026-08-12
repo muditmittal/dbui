@@ -62,6 +62,18 @@ export const DOCS_NAV: DocsNavEntry[] = [
       { href: "/docs/principles", label: "Design principles" },
       { href: "/docs/voice", label: "Voice and tone" },
       { href: "/docs/constraints", label: "Constraints" },
+      // Third of the three, and last on purpose. Principles and constraints are
+      // how to think; guidelines are what good looks like on one surface, and
+      // the page opens by pointing back at both. A reader who meets it first
+      // meets thirteen surfaces before the two ideas that order them.
+      { href: "/docs/guidelines", label: "Guidelines" },
+      // Standards moved out of Tools when it stopped being called Checks. The
+      // split this group is built on is stated two entries up: Docs holds a
+      // standard you follow, Tools holds machinery you run. A page named
+      // Standards fails that test in Tools. Its three commands went with it —
+      // how you verify a floor is part of the floor, and splitting them would
+      // put the rule and its check on two pages.
+      { href: "/docs/standards", label: "Standards" },
       // Not "Accessibility and internationalization". That label wrapped to
       // three rail lines, and nobody scans a rail for a twenty-letter word. The
       // language rules are announced in the page's own description.
@@ -83,7 +95,6 @@ export const DOCS_NAV: DocsNavEntry[] = [
     href: "/docs/overview",
     label: "Tools",
     items: [
-      { href: "/docs/checks", label: "Checks" },
       { href: "/docs/cli", label: "CLI" },
       { href: "/docs/mcp", label: "MCP servers" },
     ],

@@ -1,0 +1,115 @@
+---
+source: carbon
+title: IBM Carbon Design System
+url: https://carbondesignsystem.com/components/UI-shell-left-panel/
+license: Apache-2.0
+bucket: A
+sha: 535b874844e1863a699cda006d7e18e6d2699880
+retrieved: 2026-08-11
+---
+## Color
+
+The UI Shell can be customized to use any of the four IBM themes by applying an
+inline theme to the shell zone.
+
+| Element | Property         | Color token   |
+| ------- | ---------------- | ------------- |
+| Panel   | background color | `$background` |
+
+![UI shell side-nav example.](images/left-nav-style-1.png)
+
+UI shell side-nav example.
+
+### Link
+
+| State    | Property         | Color token            |
+| -------- | ---------------- | ---------------------- |
+| Enabled  | text color       | `$text-secondary`      |
+|          | icon color       | `$icon-secondary`      |
+| Hover    | background color | `$background-hover`    |
+|          | text color       | `$text-primary`        |
+|          | icon color       | `$icon-primary`        |
+| Focus    | border           | `$focus`               |
+| Active   | background color | `$background-active`   |
+|          | text color       | `$text-primary`        |
+|          | icon color       | `$icon-primary`        |
+| Selected | background color | `$background-selected` |
+|          | text color       | `$text-primary`        |
+|          | icon color       | `$icon-primary`        |
+|          | border           | `$border-interactive`  |
+
+![Link states](images/left-nav-style-4.png)
+
+Link states
+
+### Sub-menu
+
+| Element       | State    | Property         | Color token            |
+| ------------- | -------- | ---------------- | ---------------------- |
+| Sub-menu      | Enabled  | text color       | `$text-secondary`      |
+|               |          | svg              | `$icon-secondary`      |
+|               | Hover    | background color | `$background-hover`    |
+|               |          | text color       | `$text-primary`        |
+|               |          | svg              | `$icon-primary`        |
+|               | Focus    | border           | `$focus`               |
+|               | Active   | background color | `$background-active`   |
+|               |          | text color       | `$text-primary`        |
+|               |          | svg              | `$icon-primary`        |
+| Sub-menu item | Enabled  | text color       | `$text-secondary`      |
+|               | Hover    | background color | `$background-hover`    |
+|               |          | text color       | `$text-primary`        |
+|               | Focus    | border           | `$focus`               |
+|               | Active   | background color | `$background-active`   |
+|               |          | text color       | `$text-primary`        |
+|               | Selected | background color | `$background-selected` |
+|               |          | text color       | `$text-primary`        |
+|               |          | border           | `$border-interactive`  |
+
+![Sub-menu states](images/left-nav-style-4.png)
+
+Sub-menu states
+
+### Icon
+
+| State    | Property | Color token       |
+| -------- | -------- | ----------------- |
+| Enabled  | svg      | `$icon-secondary` |
+| Hover    | svg      | `$icon-primary`   |
+| Active   | svg      | `$icon-primary`   |
+| Selected | svg      | `$icon-primary`   |
+
+## Typography
+
+Menu labels and text should be set in sentence case.
+
+| Element       | Font-size (px/rem) | Font-weight    | Type token            |
+| ------------- | ------------------ | -------------- | --------------------- |
+| Link          | 14 / 0.875         | SemiBold / 600 | `$heading-compact-01` |
+| Sub-menu      | 14 / 0.875         | SemiBold / 600 | `$heading-compact-01` |
+| Sub-menu item | 14 / 0.875         | Regular / 400  | `$body-compact-01`    |
+
+## Structure
+
+The panel spans the full height of the browser and is fixed to the left edge of
+the window.
+
+| Element         | Property                    | px/rem   | Spacing token |
+| --------------- | --------------------------- | -------- | ------------- |
+| Panel           | width                       | 256 / 16 | –             |
+| Link            | height                      | 32 / 2   | –             |
+|                 | padding left, padding right | 16 / 1   | `$spacing-05` |
+| Sub-menu        | height                      | 32 / 2   | –             |
+|                 | padding left, padding right | 16 / 1   | `$spacing-05` |
+| Sub-menu item   | height                      | 32 / 2   | –             |
+|                 | padding left                | 32 / 2   | `$spacing-07` |
+|                 | padding right               | 16 / 1   | `$spacing-05` |
+| Selected border | width                       | 4 / 0.25 | –             |
+| Icon            | size                        | 16 / 1   | –             |
+
+![ui shell side-nav](images/left-nav-style-2.png)
+
+  Structure and spacing measurements for the side-nav | px | rem.
+
+![ui shell side-nav with icons](images/left-nav-style-3.png)
+
+  Structure and spacing measurements for side-nav with icons | px | rem.

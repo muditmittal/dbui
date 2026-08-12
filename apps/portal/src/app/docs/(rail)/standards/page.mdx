@@ -1,0 +1,383 @@
+import { DocPage, Lede, Section, P, C, DocTable, Note, Tag, Covers, ContentSummary } from "@/components/docs/DocKit"
+import { Cmd } from "@/components/docs/CodeBlock"
+
+<DocPage title="Standards">
+
+
+<ContentSummary>
+
+<Lede>
+  The floor. 25 rules a machine settles, stated as do and don&rsquo;t, and the list of what nothing
+  checks. Everything here either passes or fails — the judgment calls are on{" "}
+  <C>/docs/guidelines</C>.
+</Lede>
+
+<Covers items={[
+  ["The set", "all 25, by family, in one table"],
+  ["What is enforced", "each rule as do and don't, by topic"],
+  ["What is not", "the values with no check behind them"],
+  ["Running them", "three commands, five gates"],
+  ["Figma", "the same sets, sampled rather than gated"],
+  ["Agent skills", "four built procedures and four planned"],
+]} />
+
+</ContentSummary>
+
+<Section title="The set">
+
+<P>
+  Every rule, so the whole floor is readable in one place before the sections explain each one. The
+  name says how a value was written; <C>property:verdict</C> further down says what is wrong.
+</P>
+
+<DocTable
+  columns={[
+    { key: "rule", header: "Rule", width: "w-[230px]", mono: true },
+    { key: "family", header: "Family", width: "w-[120px]" },
+    { key: "catches", header: "Catches" },
+  ]}
+  rows={[
+    { rule: "no-raw-interactive-html", family: "Components", catches: "A raw button, input, select or textarea" },
+    { rule: "no-as-child", family: "Components", catches: "Radix asChild where Base UI wants render" },
+    { rule: "non-dbui-component", family: "Components", catches: "An import no DBUI package exports" },
+    { rule: "no-arbitrary-color", family: "Color", catches: "A color that is not a token" },
+    { rule: "no-hardcoded-hex", family: "Color", catches: "A hex inside a longer className" },
+    { rule: "inline-hardcoded-color", family: "Color", catches: "A color in an inline style" },
+    { rule: "no-module-color-literal", family: "Color", catches: "A color in a module or object literal" },
+    { rule: "no-primitive-token", family: "Color", catches: "A reach past the semantic layer into a primitive" },
+    { rule: "no-legacy-token", family: "Color", catches: "A name the token migration deleted" },
+    { rule: "prefer-token-class", family: "Color", catches: "An approved value written as a bracket" },
+    { rule: "off-ramp-type-size", family: "Type", catches: "A font size outside the ramp" },
+    { rule: "off-ramp-line-height", family: "Type", catches: "A line height outside the ramp" },
+    { rule: "px-type-literal", family: "Type", catches: "text-[13px], even where 13 is on the ramp" },
+    { rule: "type-class-conflict", family: "Type", catches: "A type utility paired with leading-, font- or a case utility" },
+    { rule: "inline-type-literal", family: "Type", catches: "fontSize, lineHeight, fontWeight or fontFamily inline" },
+    { rule: "off-scale-spacing", family: "Dimensions", catches: "Padding, margin, gap or inset off the space family" },
+    { rule: "off-scale-size", family: "Dimensions", catches: "A width, height or icon box off the size family" },
+    { rule: "inline-off-scale-spacing", family: "Dimensions", catches: "Spacing in an inline style" },
+    { rule: "non-token-radius", family: "Dimensions", catches: "A radius that is not a stop" },
+    { rule: "a11y-icon-control-no-name", family: "Accessibility", catches: "An icon-only control with no accessible name" },
+    { rule: "a11y-img-no-alt", family: "Accessibility", catches: "An img with no alt attribute" },
+    { rule: "a11y-positive-tabindex", family: "Accessibility", catches: "A tabIndex above 0" },
+    { rule: "a11y-aria-hidden-focusable", family: "Accessibility", catches: "aria-hidden on something Tab still reaches" },
+    { rule: "a11y-click-no-semantics", family: "Accessibility", catches: "onClick on a div with no role and no tab stop" },
+    { rule: "scroll-container-gutter", family: "Layout", catches: "A scroll container with no gutter for the focus ring" },
+  ]}
+/>
+
+<Note title="This table is hand-maintained" variant="warning">
+  It is copied from <C>RULE_SCHEMA</C> in <C>react-lint.js</C> rather than generated from it, so it
+  can drift. <C>yarn design:verify-rules</C> asserts every rule fires and has a schema entry, but
+  nothing asserts this page lists them. Until it does, the linter is the authority.
+</Note>
+
+</Section>
+
+<Section title="Components and composition">
+
+<P>Three rules. These are the non-negotiables in <C>AGENTS.md</C>, made checkable.</P>
+
+<DocTable
+  columns={[
+    { key: "dont", header: "Don't", width: "w-[46%]" },
+    { key: "do", header: "Do" },
+    { key: "rule", header: "Rule", width: "w-[200px]", mono: true },
+  ]}
+  rows={[
+    { dont: "Write a raw button, input, select or textarea", do: "Use the DBUI control for the job", rule: "no-raw-interactive-html" },
+    { dont: "Compose with asChild — Base UI accepts it, drops it, and wraps your child in its own element", do: "Compose with render", rule: "no-as-child" },
+    { dont: "Import a name a DBUI package does not export", do: "Check the name, or re-run design:sync-components if the allowlist is behind", rule: "non-dbui-component" },
+  ]}
+/>
+
+<Note title="Reading it on DBUI itself" variant="info">
+  <C>packages/dbui/src/components/ui/</C> is exempt from <C>no-raw-interactive-html</C> alone.{" "}
+  <C>Button</C> is a <C>&lt;button&gt;</C>, and so are the tree item, the editor tab and the sort
+  header — a raw control there is DBUI defining what it exports. The shells, chat, viz and the
+  portal compose rather than define, so all four are still judged.
+</Note>
+
+</Section>
+
+<Section title="Color">
+
+<P>Seven rules, all asking one question: is this value in the approved set?</P>
+
+<DocTable
+  columns={[
+    { key: "dont", header: "Don't", width: "w-[46%]" },
+    { key: "do", header: "Do" },
+    { key: "rule", header: "Rule", width: "w-[200px]", mono: true },
+  ]}
+  rows={[
+    { dont: "Write a color that is not a token", do: "Use a semantic utility — bg-surface-base, text-text-subtle", rule: "no-arbitrary-color" },
+    { dont: "Put a hex inside a longer className", do: "Name the token instead of the value", rule: "no-hardcoded-hex" },
+    { dont: "Write a color in an inline style", do: "Use the utility — an inline style cannot carry a dark value", rule: "inline-hardcoded-color" },
+    { dont: "Write a color into a module or object literal", do: "Read it from the token layer — a module value is one value in both modes", rule: "no-module-color-literal" },
+    { dont: "Reach past the semantic layer into a primitive", do: "Pick the semantic for the role. Primitives ship in no CSS at all", rule: "no-primitive-token" },
+    { dont: "Use a name the token migration deleted", do: "Use its replacement — the old name resolves to nothing", rule: "no-legacy-token" },
+    { dont: "Write an approved value as a bracket", do: "Use the class. The value is right and will not follow the token when it moves", rule: "prefer-token-class" },
+  ]}
+/>
+
+</Section>
+
+<Section title="Type">
+
+<DocTable
+  columns={[
+    { key: "dont", header: "Don't", width: "w-[46%]" },
+    { key: "do", header: "Do" },
+    { key: "rule", header: "Rule", width: "w-[200px]", mono: true },
+  ]}
+  rows={[
+    { dont: "Write a font size outside the ramp", do: "Use a ramp step", rule: "off-ramp-type-size" },
+    { dont: "Write a line height outside the ramp", do: "Let the ramp pair it — the pairing is the point of a ramp", rule: "off-ramp-line-height" },
+    { dont: "Write text-[13px], even though 13 is on the ramp", do: "Use type-label. A px literal does not scale when the root font size does", rule: "px-type-literal" },
+    { dont: "Pair a type utility with leading-, font- or a case utility", do: "Use the type class alone — each one is the whole style", rule: "type-class-conflict" },
+    { dont: "Set fontSize, lineHeight, fontWeight or fontFamily in an inline style", do: "Use the type class", rule: "inline-type-literal" },
+  ]}
+/>
+
+</Section>
+
+<Section title="Dimensions">
+
+<P>
+  Space and size are separate families with different stops, so each has its own rule. A value
+  outside a family&rsquo;s declared ends is not judged — a 420px panel is a layout dimension, not a
+  stop the family refused.
+</P>
+
+<DocTable
+  columns={[
+    { key: "dont", header: "Don't", width: "w-[46%]" },
+    { key: "do", header: "Do" },
+    { key: "rule", header: "Rule", width: "w-[200px]", mono: true },
+  ]}
+  rows={[
+    { dont: "Use padding, margin, gap or inset off the space family — gap-1.5 as much as gap-[6px]", do: "Use a space stop", rule: "off-scale-spacing" },
+    { dont: "Use a width, height or icon box off the size family", do: "Use a size stop", rule: "off-scale-size" },
+    { dont: "Write spacing in an inline style", do: "Use the utility", rule: "inline-off-scale-spacing" },
+    { dont: "Write a radius that is not a stop", do: "Use a radius stop, or the shape role where one exists", rule: "non-token-radius" },
+  ]}
+/>
+
+</Section>
+
+<Section title="Accessibility">
+
+<P>
+  Five rules, added because <C>/docs/accessibility</C> said this linter had none and that a control
+  with no label passed clean. Only defects decidable from the source.
+</P>
+
+<DocTable
+  columns={[
+    { key: "dont", header: "Don't", width: "w-[46%]" },
+    { key: "do", header: "Do" },
+    { key: "rule", header: "Rule", width: "w-[220px]", mono: true },
+  ]}
+  rows={[
+    { dont: "Ship an icon-only control with no accessible name", do: "Add aria-label naming the action, not the glyph", rule: "a11y-icon-control-no-name" },
+    { dont: "Leave an img with no alt attribute", do: "Describe what it conveys, or alt=\"\" if decorative", rule: "a11y-img-no-alt" },
+    { dont: "Set a tabIndex above 0", do: "Use tabIndex 0 to make it focusable in place, or -1 for programmatic focus", rule: "a11y-positive-tabindex" },
+    { dont: "Put aria-hidden on something Tab still reaches", do: "Take it out of the tab order too, with tabIndex -1", rule: "a11y-aria-hidden-focusable" },
+    { dont: "Put onClick on a div or span with no role and no tab stop", do: "Use Button — or add role, tabIndex and a key handler together", rule: "a11y-click-no-semantics" },
+  ]}
+/>
+
+<Note title="What it found on its first run" variant="warning">
+  Six findings across the repository, and one of them was the shipped <C>Dialog</C> close button:
+  an icon-only <C>Button</C> with no label, so every dialog in the system had a close control that
+  announced nothing. <C>button.tsx</C> had carried that requirement as a <C>@constraint</C> the
+  whole time. A rule nothing checks is a rule that is not held.
+</Note>
+
+</Section>
+
+<Section title="Layout and content">
+
+<DocTable
+  columns={[
+    { key: "dont", header: "Don't", width: "w-[46%]" },
+    { key: "do", header: "Do" },
+    { key: "rule", header: "Rule", width: "w-[200px]", mono: true },
+  ]}
+  rows={[
+    { dont: "Make a scroll container with no gutter on every edge", do: "Leave room for the focus ring — a scroll container clips on all four sides", rule: "scroll-container-gutter" },
+    { dont: "Write the other spelling of English", do: "Follow the locale. en-US by default, per brandvoice.md", rule: "verify-spelling" },
+  ]}
+/>
+
+<P>
+  Spelling reads its locale from <C>--locale=</C>, then <C>DBUI_LOCALE</C>, then{" "}
+  <C>.dbuirc.json</C>, then en-US. The pairs are held direction-free, so a team writing en-GB gets
+  the same check pointing the other way.
+</P>
+
+</Section>
+
+<Section title="How a finding is shaped">
+
+<P>
+  Both linters emit one schema, because they judge the same properties against the same sets and
+  differ only in how a value reached the surface.
+</P>
+
+<DocTable
+  columns={[
+    { key: "field", header: "Field", width: "w-[130px]", mono: true },
+    { key: "means", header: "Means" },
+  ]}
+  rows={[
+    { field: "surface", means: "react or figma" },
+    { field: "object", means: "the join key — file:line:element in code, the node id in Figma" },
+    { field: "family", means: "value, structure or a11y" },
+    { field: "property", means: "color, spacing, size, radius, type-size, line-height, font" },
+    { field: "verdict", means: "off-set, unnamed, unreachable, stale, conflict, incomplete, missing" },
+    { field: "channel", means: "class, arbitrary, inline-style, module-literal, figma-paint, figma-binding" },
+  ]}
+/>
+
+<P>
+  A rule name says how a value was written; <C>property:verdict</C> says what is wrong.{" "}
+  <C>no-hardcoded-hex</C>, <C>no-arbitrary-color</C>, <C>inline-hardcoded-color</C> and
+  Figma&rsquo;s <C>non-token-fill</C> are four names for one thing: <C>color:off-set</C>.
+</P>
+
+<P>
+  Because every finding carries an object, the report groups them and names the cause. An element
+  failing three checks is usually one mistake — a control built by hand — and it reads as one row
+  rather than three.
+</P>
+
+</Section>
+
+<Section title="Running them">
+
+<P>
+  Everything routes through three commands. The split is what each one is for: generate writes
+  artifacts, audit passes or fails, measure reports numbers without a verdict. Run them from the
+  repository root — they are <C>package.json</C> scripts, so they work here and nowhere else.
+</P>
+
+<Cmd lines={[
+  ["yarn design:generate", "9 generators in dependency order. Writes tokens, indexes, portal data"],
+  ["yarn design:audit", "the gate. Exits non-zero on any error"],
+  ["yarn design:measure", "token parity, orphans, dimensional usage. Always exits 0"],
+]} />
+
+<P>
+  Findings print to the terminal as markdown. There is no report file and no history — a known gap,
+  and the reason a designer cannot yet answer &ldquo;how are we doing&rdquo; without running a
+  command.
+</P>
+
+<P><C>design:audit</C> runs five gates in order. Each must pass before the next starts.</P>
+
+<DocTable
+  columns={[
+    { key: "gate", header: "Gate", width: "w-[210px]", mono: true },
+    { key: "asserts", header: "Asserts" },
+    { key: "fails", header: "Fails when" },
+  ]}
+  rows={[
+    { gate: "verify-token-sync", asserts: "config, tokens.css and Figma agree", fails: "A token name or value disagrees across the three" },
+    { gate: "verify-rules", asserts: "the linter itself works", fails: "A rule stops firing, fires on correct code, or has no schema entry" },
+    { gate: "verify-spacing-scale", asserts: "59 assertions on the dimensional families", fails: "A stop is undefined or unbridged" },
+    { gate: "verify-spelling", asserts: "one spelling of English, per locale", fails: "Any off-locale spelling in an authored file" },
+    { gate: "react-lint", asserts: "the 25 rules above", fails: "Any error-level rule fires" },
+  ]}
+/>
+
+<Note title="Running one on its own" variant="info">
+  Every gate is also a command. <C>yarn design:verify-rules</C>, <C>yarn design:verify-sync</C>,{" "}
+  <C>yarn design:spelling</C>, <C>yarn design:lint:react &lt;path&gt;</C>. Use the single one while
+  you work and the bundle before you land.
+</Note>
+
+</Section>
+
+<Section title="Figma">
+
+<P>
+  The same approved sets, read from the same <C>tokens.json</C>. It checks instances against the
+  published component list, fills and strokes for binding and value, spacing, radius including mixed
+  corners, size, stroke weight, font family, type size, line height and weight.
+</P>
+
+<Cmd lines={[["yarn design:lint:figma --target <nodeId>", "prints a payload to run through the Figma MCP"]]} />
+
+<Note title="Figma is sampled, code is exhaustive" variant="warning">
+  This command lints nothing on its own. It prints JavaScript for an MCP host to run inside Figma
+  through <C>use_figma</C>, against one node you choose. So it cannot join <C>design:audit</C>, and
+  any combined report inherits the asymmetry: every line of code is checked, and Figma is checked
+  where someone looked.
+</Note>
+
+</Section>
+
+<Section title="What is not checked">
+
+<P>
+  The honest half. These are stated as values elsewhere in these docs and nothing enforces them, so
+  they are held by review or not at all.
+</P>
+
+<DocTable
+  columns={[
+    { key: "area", header: "Not checked", width: "w-[240px]" },
+    { key: "why", header: "Why, and who holds it instead" },
+  ]}
+  rows={[
+    { area: "All five constraints", why: "Agency, Accountability, Custody, Honesty and Stewardship are observed in a diff or on screen. No rule reads intent" },
+    { area: "All six principles", why: "A principle decides between two defensible designs, which is not a thing a linter can settle" },
+    { area: "Contrast", why: "Needs rendering. The Tokens page prints a ratio per token pair; nothing measures a composed screen" },
+    { area: "Focus order, reading order, landmarks", why: "Needs rendering. /docs/accessibility says a person does these or nobody does" },
+    { area: "Voice beyond spelling", why: "Banned words, sentence case and stand-alone link text are in brandvoice.md and unenforced" },
+    { area: "Token values in Figma", why: "The dump carries names only until it is refreshed. verify-sync says so rather than implying agreement" },
+    { area: "Anything in CI", why: "There is no CI. Every check is a person remembering, or an agent following a skill" },
+  ]}
+/>
+
+</Section>
+
+<Section title="Agent skills">
+
+<P>
+  Procedures in <C>packages/dbui/skills/</C>, loaded when a task matches the trigger phrase rather
+  than held in context permanently. A skill is prose, not code — it tells an agent which commands to
+  run and in what order. Deleting them would stop nothing working; agents would just be less
+  consistent.
+</P>
+
+<DocTable
+  columns={[
+    { key: "skill", header: "Skill", width: "w-[220px]", mono: true },
+    { key: "fires", header: "Fires when" },
+    { key: "state", header: "State", width: "w-[110px]" },
+  ]}
+  rows={[
+    { skill: "dbui-build-screen", fires: "Building a page or screen. The primary workflow: pick a shell, map regions, fill, validate.", state: <Tag>built</Tag> },
+    { skill: "dbui-pick-component", fires: "Choosing between components, including near-miss pairs — AlertDialog vs Dialog, Select vs Combobox, Tag vs Badge.", state: <Tag>built</Tag> },
+    { skill: "dbui-pick-icon", fires: "Choosing an icon, and respecting the object / action / indicator / component categories.", state: <Tag>built</Tag> },
+    { skill: "dbui-validate", fires: "Checking output. Errors, then warnings, then information.", state: <Tag>built</Tag> },
+    { skill: "dbui-from-screenshot", fires: "A screenshot is the input. First step is classifying which shell it is.", state: <Tag>planned</Tag> },
+    { skill: "dbui-migrate", fires: "Moving a shadcn, Tailwind or Radix surface onto DBUI, one route at a time.", state: <Tag>planned</Tag> },
+    { skill: "dbui-crit", fires: "Critiquing a finished screen against the taste rules.", state: <Tag>planned</Tag> },
+    { skill: "dbui-add-component", fires: "Contributing a component. Walks the change protocol so documentation cannot drift.", state: <Tag>planned</Tag> },
+  ]}
+/>
+
+</Section>
+
+<Note title="Why no check holds its own scale" variant="info">
+  Every family, ramp step, role and deleted name comes from <C>tokens.json</C>, generated from{" "}
+  <C>theme.config.mjs</C>. The allowlist used to be copied forward on each run instead, so it went
+  on approving stops the families had dropped. The Figma runtime carried the same fault until
+  recently: its radius allowlist was a hand-written copy that matched the system by coincidence, and
+  its advice named class keys the radius bridge had closed.
+</Note>
+
+</DocPage>

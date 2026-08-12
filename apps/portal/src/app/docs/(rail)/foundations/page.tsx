@@ -167,7 +167,7 @@ const AGENT_SURFACES = [
   { label: "CLI", href: "/docs/cli", what: "Every component, icon, shell, token and doc, printed for a terminal or as a typed JSON envelope." },
   { label: "MCP servers", href: "/docs/mcp", what: "The same API over JSON-RPC, so an agent queries the system instead of reading a rendered page." },
   { label: "Skills", href: "/docs/overview", what: "Procedures an agent loads on trigger: pick a component, pick an icon, build a screen, validate the result." },
-  { label: "Design linters", href: "/docs/checks", what: "The React and Figma checks that catch a raw element, a hardcoded color or an off-scale value." },
+  { label: "Standards", href: "/docs/standards", what: "The React and Figma checks that catch a raw element, a hardcoded color or an off-scale value." },
 ]
 
 const CROSS_CUTTING = [

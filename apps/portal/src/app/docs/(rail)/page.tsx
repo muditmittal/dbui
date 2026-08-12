@@ -131,7 +131,7 @@ const TILES: Record<string, Tile> = {
 
   "/docs/cli": { span: "@md:col-span-2", lead: true },
   "/docs/mcp": {},
-  "/docs/checks": {},
+  "/docs/standards": {},
 }
 
 /**

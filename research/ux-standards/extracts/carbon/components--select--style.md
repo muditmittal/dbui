@@ -1,0 +1,213 @@
+---
+source: carbon
+title: IBM Carbon Design System
+url: https://carbondesignsystem.com/components/select/
+license: Apache-2.0
+bucket: A
+sha: 535b874844e1863a699cda006d7e18e6d2699880
+retrieved: 2026-08-11
+---
+The following page documents visual specifications such as color, typography,
+structure, size, and AI presence.
+
+Color
+Typography
+Structure
+Size
+AI presence
+Feedback
+
+## Color
+
+| Element       | Property      | Color token         |
+| ------------- | ------------- | ------------------- |
+| Field         | background    | `$field` \*         |
+|               | border-bottom | `$border-strong` \* |
+| Inline select | background    | transparent         |
+| Label         | text color    | `$text-secondary`   |
+| Field text    | text color    | `$text-primary`     |
+| Helper text   | text color    | `$text-helper`      |
+| Icon          | fill          | `$icon-primary`     |
+
+  \* Denotes a contextual color token that will change values based on the layer
+  it is placed on.
+
+![Enabled state of default select](images/select-style-enabled-default.png)
+
+![Enabled state of fluid select](images/select-style-enabled-fluid.png)
+
+### Interactive states
+
+| State     | Element         | Property                   | Color token         |
+| --------- | --------------- | -------------------------- | ------------------- |
+| Hover     | Field           | background-color           | `$field-hover` \*   |
+| Focus     | Field           | border                     | `$focus`            |
+| Invalid   | Field           | border                     | `$support-error`    |
+|           | Error message   | text-color                 | `$text-error`       |
+|           | Error icon      | fill                       | `$support-error`    |
+| Warning   | Warning message | text-color                 | `$text-primary`     |
+|           | Warning icon    | fill                       | `$support-warning`  |
+| Disabled  | Field           | background-color           | `$field` \*         |
+|           |                 | border-bottom (default)    | transparent         |
+|           |                 | border-bottom (fluid)      | `$border-subtle` \* |
+|           | Label           | text-color                 | `$text-disabled`    |
+|           | Input text      | text-color                 | `$text-disabled`    |
+|           | Chevron icon    | fill                       | `$icon-disabled`    |
+| Read-only | Field           | background-color (default) | transparent         |
+|           |                 | background-color (fluid)   | `$field` \*         |
+|           |                 | border-bottom              | `$border-subtle` \* |
+|           | Label           | text-color                 | `$text-secondary`   |
+|           | Input text      | text-color (default)       | `$text-primary`     |
+|           |                 | text-color (fluid)         | `$text-secondary`   |
+|           | Chevron icon    | fill                       | `$icon-disabled`    |
+
+  \* Denotes a contextual color token that will change values based on the layer
+  it is placed on.
+
+![Interactive states of default select](images/select-style-interactive-states-default.png)
+
+![Interactive states of fluid select](images/select-style-interactive-states-fluid.png)
+
+## Typography
+
+Select text should be set in sentence case, with only the first word in a phrase
+and any proper nouns capitalized. Select text should be three words or less.
+
+| Element         | Font-size (px/rem) | Font-weight   | Type token         |
+| --------------- | ------------------ | ------------- | ------------------ |
+| Label           | 12 / 0.75          | Regular / 400 | `$label-01`        |
+| Field text      | 14 / 0.875         | Regular / 400 | `$body-compact-01` |
+| Helper text     | 12 / 0.75          | Regular / 400 | `$helper-text`     |
+| Warning message | 12 / 0.75          | Regular / 400 | `$label-01`        |
+| Error message   | 12 / 0.75          | Regular / 400 | `$label-01`        |
+
+## Structure
+
+### Default select
+
+| Element      | Property                    | px / rem | Spacing token |
+| ------------ | --------------------------- | -------- | ------------- |
+| Label        | margin-bottom               | 8 / 0.5  | `$spacing-03` |
+| Input text   | padding-left                | 16 / 1   | `$spacing-05` |
+| Helper text  | margin-top                  | 4 / 0.25 | `$spacing-02` |
+| Field        | padding-left                | 16 / 1   | `$spacing-05` |
+|              | padding-right               | 48 / 3   | `$spacing-09` |
+|              | border-bottom               | 1px      | –             |
+| Chevron icon | padding-left, padding-right | 16 / 1   | `$spacing-05` |
+| State icon   | padding-left, padding-right | 16 / 1   | `$spacing-05` |
+
+<div className="image--fixed">
+
+![Structure and spacing measurements for default select](images/select-style-structure-default.png)
+
+</div>
+
+  Structure and spacing measurements for default select | px / rem
+
+### Default inline select
+
+| Element      | Property      | px / rem | Spacing token |
+| ------------ | ------------- | -------- | ------------- |
+| Input text   | padding-left  | 16 / 1   | `$spacing-05` |
+|              | padding-right | 8 / 0.5  | `$spacing-03` |
+| Chevron icon | padding-right | 16 / 1   | `$spacing-05` |
+|              | padding-left  | 8 / 0.5  | `$spacing-03` |
+
+<div className="image--fixed">
+
+![Structure and spacing measurements for default inline select](images/select-style-structure-inline.png)
+
+</div>
+
+  Structure and spacing measurements for default inline select | px / rem
+
+### Fluid select
+
+| Element      | Property                    | px / rem | Spacing token |
+| ------------ | --------------------------- | -------- | ------------- |
+| Label        | margin-bottom               | 4 / .25  | `$spacing-02` |
+| Input text   | padding-left                | 16 / 1   | `$spacing-05` |
+| Helper text  | margin-top                  | 4 / .25  | `$spacing-02` |
+| Field        | padding-left                | 16 / 1   | `$spacing-05` |
+|              | padding-right               | 48 / 3   | `$spacing-09` |
+|              | border-bottom               | 1px      | –             |
+| Chevron icon | padding-left, padding-right | 16 / 1   | `$spacing-05` |
+| State icon   | padding-left, padding-right | 16 / 1   | `$spacing-05` |
+
+<div className="image--fixed">
+
+![Structure and spacing measurements for fluid select](images/select-style-structure-fluid.png)
+
+</div>
+
+  Structure and spacing measurements for fluid select | px / rem
+
+## Size
+
+### Default select
+
+| Element | Size        | Height (px / rem) |
+| ------- | ----------- | ----------------- |
+| Field   | Small (sm)  | 32 / 2            |
+|         | Medium (md) | 40 / 2.5          |
+|         | Large (lg)  | 48 / 3            |
+
+<div className="image--fixed">
+
+![Sizes for default select](images/select-style-size-default.png)
+
+</div>
+
+Sizes for default select | px / rem
+
+<div className="image--fixed">
+
+![Sizes for inline select](images/select-style-size-inline.png)
+
+</div>
+
+Sizes for default inline select | px / rem
+
+### Fluid select
+
+| Element | Size    | Height (px / rem) |
+| ------- | ------- | ----------------- |
+| Field   | Default | 64 / 4            |
+
+<div className="image--fixed">
+
+![Size for fluid select](images/select-style-size-fluid.png)
+
+</div>
+
+Size for fluid select | px / rem
+
+## AI presence
+
+The following are the unique styles applied to the components when the AI label
+is present. Unless specified, all other tokens in the components remain the same
+as the non-AI variants.
+
+For more information on the AI style elements, see the
+[Carbon for AI](/guidelines/carbon-for-ai/) guidelines.
+
+| Element         | Property         | Token / Size        |
+| --------------- | ---------------- | ------------------- |
+| Linear-gradient | start            | `$ai-aura-start-sm` |
+|                 | stop             | `$ai-aura-stop`     |
+| Field           | border-bottom    | `$ai-border-strong` |
+|                 | background color | `$field` \*         |
+| AI label        | size             | mini                |
+
+  \* Denotes a contextual color token that will change values based on the layer
+  it is placed on.
+
+![Structure and spacing measurements for default select with AI](images/select-AI-default-style.png)
+
+![Structure and spacing measurements for fluid select with AI](images/select-AI-fluid-style.png)
+
+## Feedback
+
+Help us improve this component by providing feedback, asking questions, and
+leaving any other comments on
+[GitHub](https://github.com/carbon-design-system/carbon-website/issues/new?assignees=&labels=feedback&template=feedback.md).

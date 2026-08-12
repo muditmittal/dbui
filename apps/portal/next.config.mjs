@@ -19,6 +19,18 @@ const nextConfig = {
           "https://raw.githubusercontent.com/muditmittal/dbui/main/packages/dbui/install.md",
         permanent: false,
       },
+      // `/docs/checks` was renamed to `/docs/standards` once Guidelines landed
+      // beside it and the pair needed names that said which one binds. Kept
+      // permanent because the old URL is in shipped docs and in agent prompts.
+      //
+      // Also in `vercel.json`, the way `/install.md` is. Vercel resolves its own
+      // redirects before the app ever runs, so that copy is what serves
+      // production; this one is what makes the URL work in `next dev`.
+      {
+        source: "/docs/checks",
+        destination: "/docs/standards",
+        permanent: true,
+      },
     ]
   },
 }

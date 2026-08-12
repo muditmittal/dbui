@@ -1,0 +1,169 @@
+---
+source: carbon
+title: IBM Carbon Design System
+url: https://carbondesignsystem.com/deprecations.mdx/
+license: Apache-2.0
+bucket: A
+sha: 535b874844e1863a699cda006d7e18e6d2699880
+retrieved: 2026-08-11
+---
+Stay informed on deprecated packages and assets in the Carbon Design System with
+updates, migration guides, and resources for transitioning to the latest
+supported versions.
+
+React v16 and v17
+carbon-components
+carbon-components-react
+v10 Elements packages
+carbon-icons
+Resources
+
+## React v16 and v17
+
+React versions 16.x and 17.x are considered deprecated for use with Carbon v11,
+`@carbon/react@1.x`.
+
+Carbon v12, `@carbon/react@2.x`, will not support React v16 and v17.
+
+React v18 will remain a supported version in Carbon v12, but will be considered
+deprecated.
+
+### What to use instead
+
+Use the latest stable version of React, v19.2 at the time of this writing.
+
+The Carbon team recommends continually investing in your project's toolchain.
+Practicing good dependency hygiene and keeping your infrastructure up to date
+helps create a more stable and secure environment when building with Carbon.
+
+### Migration
+
+Refer to the official
+[React 19 Upgrade Guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide).
+If you're not already on v18.3+, the react team
+[recommends](https://react.dev/blog/2024/04/25/react-19-upgrade-guide#:~:text=We%20recommend%20upgrading%20to%20React%2018.3%20first%20to%20help%20identify%20any%20issues%20before%20upgrading%20to%20React%2019)
+updating to that version before migrating to v19.
+
+If updating to v18, refer to the official
+[React 18 Upgrade Guide](https://react.dev/blog/2022/03/08/react-18-upgrade-guide).
+
+React v18 and v19 have been available for over 4 years, and 2 years,
+respectively.
+
+#### Reconsider your React version blockers
+
+If you attempted to update your React version between 2022-2025 and ran into
+blockers, those blockers should be reassessed. Agentic tooling has advanced
+significantly, and migrations that previously required large, sustained effort
+may now be far more tractable.
+
+Carbon’s migration from Enzyme to React Testing Library, for example, took well
+over a year in 2022. With today’s tooling, that same type of migration could
+likely be completed in a couple afternoons by a strong developer working with a
+capable agent.
+
+## carbon-components
+
+`carbon-components` reached it's end of support on September 30, 2024. This
+package will no longer receive updates.
+
+### What to use instead
+
+`carbon-components` is replaced by `@carbon/styles`, but most projects don't
+need to install `@carbon/styles` directly.
+
+If you're using `@carbon/react` or `@carbon/web-components`, you do not need to
+install `@carbon/styles`. All `@carbon/styles` assets are already available to
+you through those framework-specific packages.
+
+Library authors should use `@carbon/styles` if they do not already rely on a
+framework-variant package such as `@carbon/react`.
+
+### Migration
+
+For those using `carbon-components@10.x`, the
+[v11 migration guide](/migrating/guide/develop/) has all the details of how to
+update.
+
+For those using `carbon-components@11.x`, these versions are already a direct
+re-export of `@carbon/styles`. See the above section on what to use instead.
+
+For questions regarding this deprecation or how to migrate,
+[contact us](/help/contact-us/).
+
+## carbon-components-react
+
+`carbon-components-react` reached it's end of support on September 30, 2024.
+This package will no longer receive updates.
+
+### What to use instead
+
+`carbon-components-react` is replaced by `@carbon/react`.
+
+### Migration
+
+For those using `carbon-components-react@7.x`, the
+[v11 migration guide](/migrating/guide/develop/) has all the details of how to
+update.
+
+For those using `carbon-components-react@8.x`, these versions are already a
+direct re-export of `@carbon/react`. After installing `@carbon/react`, you can
+replace all imports and usages of `carbon-components-react` with
+`@carbon/react`. This should be an in-place update with no other changes
+required.
+
+For questions regarding this deprecation or how to migrate,
+[contact us](/help/contact-us/).
+
+## v10 Elements packages
+
+All v10 assets reached end of support on September 30, 2024, including v10.x
+ranges of elements packages. This includes:
+
+- `@carbon/colors@10.x`
+- `@carbon/elements@10.x`
+- `@carbon/grid@10.x`
+- `@carbon/layout@10.x`
+- `@carbon/motion@10.x`
+- `@carbon/themes@10.x`
+- `@carbon/type@10.x`
+
+### What to use instead
+
+The v11.x ranges of these packages should be used instead.
+
+### Migration
+
+The [v11 migration guide](/migrating/guide/develop/) has all the details of how
+to update.
+
+For questions regarding these deprecations or how to migrate,
+[contact us](/help/contact-us/).
+
+## carbon-icons
+
+The `carbon-icons` package reached end of support on March 31, 2022 when v11 was
+released. This package will no longer receive updates.
+
+### What to use instead
+
+To use icons from the Carbon Design System, you should install the appropriate
+library to use with your framework:
+
+| Package                 | Framework          | Link                                                    |
+| :---------------------- | :----------------- | :------------------------------------------------------ |
+| `@carbon/icons-react`   | React              | [Link](https://npmjs.com/package/@carbon/icons-react)   |
+| `@carbon/icons-angular` | Angular            | [Link](https://npmjs.com/package/@carbon/icons-angular) |
+| `@carbon/icons-vue`     | Vue                | [Link](https://npmjs.com/package/@carbon/icons-vue)     |
+| `carbon-icons-svelte`   | Svelte             | [Link](https://npmjs.com/package/carbon-icons-svelte)   |
+| `@carbon/icons`         | Vanilla JavaScript | [Link](https://npmjs.com/package/@carbon/icons)         |
+
+### Migration
+
+The [v11 migration guide](/migrating/guide/develop/) has all the details of how
+to update.
+
+For questions regarding these deprecations or how to migrate,
+[contact us](/help/contact-us/).
+
+## Resources
