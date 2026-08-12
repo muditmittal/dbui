@@ -34,16 +34,19 @@ export function SiteFooter() {
     // of a short page instead of halfway up it.
     <footer className="mt-auto border-t border-border-base">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        {/* Wide enough that segment controls sharing a container fill read as
-            separate controls rather than as one long group.
+        {/* Ordered by how much each one changes, narrowest reach first: the
+            scale resizes what is already there, the mode repaints it, and the
+            theme replaces the aesthetic. Theme lands last because it is both
+            the widest axis and the only dropdown — a menu closing the row reads
+            as the end of it, where a menu opening the row makes the two icon
+            groups after it look like its contents.
 
-            Theme leads because it is the widest axis of the three: mode and
-            scale change how the same aesthetic is rendered, and this changes
-            which aesthetic it is. */}
+            The gap is wide enough that segment controls sharing a container
+            fill read as separate controls rather than as one long group. */}
         <div className="flex flex-wrap items-center gap-4">
-          <ThemeControl />
-          <ColorModeControl />
           <TypeScaleControl />
+          <ColorModeControl />
+          <ThemeControl />
         </div>
         <nav className="flex items-center gap-6">
           {LINKS.map((link) =>
