@@ -157,11 +157,10 @@ by design, and neither do the two `em` inline steps.
 | `--db-line-height-title-4` | Typography | 1.5rem | 24px |  |
 | `--db-line-height-wrap` | Typography | 1.25rem | 20px |  |
 | `--db-mono-font-family` | Typography | "Commit Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace |  |  |
-| `--db-elevation-lg` | Elevation | 0 2px 16px 0 rgba(0, 0, 0, 0.08) |  | 0 2px 16px 0 rgba(0, 0, 0, 0.61) |
-| `--db-elevation-md` | Elevation | 0 3px 6px 0 rgba(0, 0, 0, 0.05) |  | 0 3px 6px 0 rgba(0, 0, 0, 0.45) |
-| `--db-elevation-sm` | Elevation | 0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02) |  | 0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26) |
-| `--db-elevation-xl` | Elevation | 0 8px 40px 0 rgba(0, 0, 0, 0.13) |  | 0 8px 40px 0 rgba(0, 0, 0, 0.87) |
-| `--db-elevation-xs` | Elevation | 0 1px 0 0 rgba(0, 0, 0, 0.05) |  | 0 1px 0 0 rgba(0, 0, 0, 0.45) |
+| `--db-elevation-control` | Elevation | 0 1px 0 0 rgba(0, 0, 0, 0.05) |  | 0 1px 0 0 rgba(0, 0, 0, 0.45) |
+| `--db-elevation-modal` | Elevation | 0 8px 40px 0 rgba(0, 0, 0, 0.13) |  | 0 8px 40px 0 rgba(0, 0, 0, 0.87) |
+| `--db-elevation-popover` | Elevation | 0 2px 16px 0 rgba(0, 0, 0, 0.08) |  | 0 2px 16px 0 rgba(0, 0, 0, 0.61) |
+| `--db-elevation-raised` | Elevation | 0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02) |  | 0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26) |
 | `--db-duration-default` | Motion | 300ms |  |  |
 | `--db-duration-fast` | Motion | 150ms |  |  |
 | `--db-duration-loop` | Motion | 1000ms |  |  |
@@ -178,6 +177,7 @@ by design, and neither do the two `em` inline steps.
 | `--db-layer-tooltip` | Other | 50 |  |  |
 | `--db-shape-container` | Other | var(--db-radius-2) | 8px |  |
 | `--db-shape-container-lg` | Other | var(--db-radius-4) | 16px |  |
+| `--db-shape-container-md` | Other | var(--db-radius-3) | 12px |  |
 | `--db-shape-control` | Other | var(--db-radius-1) | 4px |  |
 | `--db-shape-control-lg` | Other | var(--db-radius-full) | 999px |  |
 | `--db-shape-pill` | Other | var(--db-radius-full) | 999px |  |
@@ -187,21 +187,21 @@ by design, and neither do the two `em` inline steps.
 
 A style names a stop rather than a number, so the same 14 utilities resolve to a
 different set of measurements per context. Weight, family and case are
-context-independent. A context is opt-in. Set `data-type-context="<name>"` on the document or on any subtree to turn `mobile` on; nothing activates from the viewport, so a document that sets nothing renders `desktop` at every width.
+context-independent. A context is opt-in. Set `data-type-context="<name>"` on the document or on any subtree to turn `mobile`, `core`, `core`, `core`, `core`, `dubois`, `dubois`, `dubois`, `dubois`, `one`, `one`, `one`, `one` on; nothing activates from the viewport, so a document that sets nothing renders `desktop` at every width.
 
-| Utility | Size | Line height | mobile size | mobile line height | Weight | Family | Case |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `type-eyebrow` | 11px | 16px | 12px | 20px | 600 | sans | uppercase |
-| `type-hint` | 12px | 16px | 13px | 20px | 400 | sans | none |
-| `type-label` | 13px | 16px | 15px | 20px | 400 | sans | none |
-| `type-label-bold` | 13px | 16px | 15px | 20px | 600 | sans | none |
-| `type-body` | 13px | 20px | 15px | 22px | 400 | sans | none |
-| `type-body-bold` | 13px | 20px | 15px | 22px | 600 | sans | none |
-| `type-code` | 13px | 20px | 15px | 22px | 400 | mono | none |
-| `type-code-block` | 14px | 22px | 16px | 24px | 400 | mono | none |
-| `type-paragraph` | 15px | 22px | 17px | 24px | 400 | sans | none |
-| `type-paragraph-bold` | 15px | 22px | 17px | 24px | 600 | sans | none |
-| `type-title-4` | 16px | 24px | 18px | 24px | 600 | sans | none |
-| `type-title-3` | 20px | 28px | 20px | 28px | 600 | sans | none |
-| `type-title-2` | 24px | 32px | 24px | 32px | 600 | sans | none |
-| `type-title-1` | 32px | 40px | 28px | 36px | 600 | sans | none |
+| Utility | Size | Line height | mobile size | mobile line height | core size | core line height | core size | core line height | core size | core line height | core size | core line height | dubois size | dubois line height | dubois size | dubois line height | dubois size | dubois line height | dubois size | dubois line height | one size | one line height | one size | one line height | one size | one line height | one size | one line height | Weight | Family | Case |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `type-eyebrow` | 11px | 16px | 12px | 20px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 11px | 16px | 600 | sans | uppercase |
+| `type-hint` | 12px | 16px | 13px | 20px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 12px | 16px | 400 | sans | none |
+| `type-label` | 13px | 16px | 15px | 20px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 400 | sans | none |
+| `type-label-bold` | 13px | 16px | 15px | 20px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 13px | 16px | 600 | sans | none |
+| `type-body` | 13px | 20px | 15px | 22px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 400 | sans | none |
+| `type-body-bold` | 13px | 20px | 15px | 22px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 600 | sans | none |
+| `type-code` | 13px | 20px | 15px | 22px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 13px | 20px | 400 | mono | none |
+| `type-code-block` | 14px | 22px | 16px | 24px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 14px | 22px | 400 | mono | none |
+| `type-paragraph` | 15px | 22px | 17px | 24px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 400 | sans | none |
+| `type-paragraph-bold` | 15px | 22px | 17px | 24px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 15px | 22px | 600 | sans | none |
+| `type-title-4` | 16px | 24px | 18px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 16px | 24px | 600 | sans | none |
+| `type-title-3` | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 20px | 28px | 600 | sans | none |
+| `type-title-2` | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 24px | 32px | 600 | sans | none |
+| `type-title-1` | 32px | 40px | 28px | 36px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 32px | 40px | 600 | sans | none |

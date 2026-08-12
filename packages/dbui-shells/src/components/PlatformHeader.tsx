@@ -57,7 +57,7 @@ export function PlatformHeader({
       <div className="relative w-full h-8" style={{ maxWidth: 640 }}>
         <Button
           variant="outline"
-          className={`w-full justify-start gap-2 px-3 shadow-xs overflow-hidden hover:border-input-border-hover active:border-focus-ring ${searchOpen ? "opacity-0 pointer-events-none" : ""}`}
+          className={`w-full justify-start gap-2 px-3 shadow-control overflow-hidden hover:border-input-border-hover active:border-focus-ring ${searchOpen ? "opacity-0 pointer-events-none" : ""}`}
           onClick={() => setSearchOpen(true)}
         >
           <Search className="size-4 shrink-0 text-text-subtle" />

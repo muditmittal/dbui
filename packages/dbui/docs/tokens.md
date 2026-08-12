@@ -138,6 +138,93 @@ value and the utility applies the scalar, so the multiplication resolves on the
 element and a subtree that sets the scalar actually moves. Do not confuse either
 with `data-type-scale`, which is the portal's own root-font-size dial.
 
+## Themes
+
+Three today: **Core**, the system's own aesthetic; **DuBois**, the legacy product
+one; and **One**, the warm-toned sibling. Core is in `:root`, so a consumer that
+imports `tokens.css` and sets nothing gets a complete system and never has to
+know the axis exists.
+
+**A theme varies values. It never varies names.** This is the invariant the axis
+rests on, and it is enforced rather than documented: `generate-tokens.mjs` throws
+on a theme that declares a name the base lacks, and `verify-token-sync` fails
+when two theme blocks do not declare the identical set. A theme carrying a token
+another lacks would mean no component can render in both, which makes them two
+systems sharing a word.
+
+**A theme may override five things and nothing else:** its chrome `ramp`, any
+`semantics` name, any `shape` role, the two `type.family` faces, and any
+`elevation` stop. Space, density, motion, the type ramp steps, the icon set and
+component structure are not themeable. Density earns the hardest no — if spacing
+forked per theme, every layout, screenshot and spec would fork with it, and
+nothing learned in one would transfer to another.
+
+**`ramp` is the lever that makes a theme cheap.** Every semantic already names
+the primitive ramp that drives it — `surface-base` is `interface.cool.900` in
+dark — so a `ramp` entry rewrites one ramp to another everywhere it is
+referenced, in plain refs and inside alpha refs alike. One re-skins every neutral
+in the system with two lines. As value overrides it would have been forty, and
+the answer to "what does this theme do?" would have been a diff rather than a
+sentence.
+
+It is a rewrite rather than a filter, so it also catches the two
+`viz-sequential-*` stops that borrow the chrome ramp for the pale end of their
+scale. That is the behavior worth having: a sequential scale whose lightest cell
+stayed cool on a warm page would read as a mistake.
+
+**`semantics` applies after `ramp`**, so a theme can re-skin broadly and still
+correct the few tokens that do not follow. Reversed, the rebinding would
+overwrite the correction it was supposed to precede.
+
+**Every theme emits the same keys**, including the default and including keys it
+does not itself move, so a nested block can reset the one around it.
+`[data-theme="core"]` inside a DuBois document has to put the pill back, and it
+can only do that by declaring the role.
+
+**A theme activates on `data-theme`, on any element.** The attribute is
+unprefixed by `:root`, so setting it on a subtree themes that subtree — Core and
+DuBois can render side by side in one page, which is what a migration surface
+needs. Same mechanism as the type contexts.
+
+**Mode composes with a theme rather than competing with it.** `.dark` and
+`[data-theme]` are one class against one attribute — equal specificity — so a
+theme's light block emitted after `.dark` would paint straight over dark mode.
+Each theme's dark values therefore ship under three two-compound selectors:
+`.dark [data-theme=x]`, `[data-theme=x].dark`, and `[data-theme=x] .dark`. The
+result is that theme, mode and both dials are four independent axes, and setting
+one cannot disturb the other three.
+
+**What the two non-default themes actually change**, and the two halves are
+deliberately complementary — DuBois moves the corner and keeps the neutral, One
+moves the neutral and keeps the corner:
+
+| | DuBois | One |
+| --- | --- | --- |
+| Chrome | neutral, unchanged | `interface.warm`, both modes |
+| Primary | `status.blue`, explicit | `warm.900` — falls out of the ramp |
+| Accent | unchanged (blue) | `brand.orange` on the three `*-accent` tokens |
+| Shape | both control roles at 4px | Core's — pill at 32px, 4px at 24px |
+| Face | San Francisco, not served | DM Sans / DM Mono, served |
+| Declarations | 3 groups, 8 tokens | 3 groups, ~29 tokens |
+
+DuBois has to restate its focus ring by hand, because it changes hue without
+changing ramp and a ring the color of the fill it surrounds is invisible on the
+one control most likely to be tabbed to — which Core learned the expensive way.
+One does not: rebinding the ramp carries Core's "two stops off the end" reasoning
+across intact. That difference is the argument for the ramp lever in one line.
+
+Two things neither theme overrides. **Links stay blue in both** — `link-*` is its
+own family with its own state ladder, and blue-for-navigable is a web-wide
+affordance rather than a house style, so a theme is the wrong altitude to
+overrule it. **Elevation is untouched** — Core's stops were read out of the
+production DuBois library in the first place.
+
+`brand.orange` is the one name the axis has added rather than revalued, and its
+500 is `#FF5F46` — a hex that was already in `globals.css` three times over as
+`--ai-gradient-end` with no token behind it. Naming it closed a gap that predates
+theming. It is **not in Figma yet**, so `verify-token-sync` reports ten missing
+primitives until it is.
+
 ## Surface
 
 Which step to reach for is `DESIGN.md`'s to say. One mechanical fact belongs
@@ -170,10 +257,17 @@ and another under `.dark`, the same way a semantic color does. It is not a
 color and cannot ride the semantics table, so the generator emits it into both
 blocks itself.
 
-It is also bridged, so the step name is the Tailwind class: `shadow-lg` reads
-`--db-elevation-lg` rather than Tailwind's own scale. Before that bridge existed
-the family was generated and read by nothing, and every shadow in the system
-rendered Tailwind's values while the tokens described DuBois's.
+It is also bridged, so the role name is the Tailwind class: `shadow-popover` reads
+`--db-elevation-popover` rather than Tailwind's own scale. Before that bridge
+existed the family was generated and read by nothing, and every shadow in the
+system rendered Tailwind's values while the tokens described DuBois's.
+
+The stops are roles rather than sizes, and the names came out of what they were
+already used for: `control` for a control or a resting card, `raised` for something
+picked up, `popover` for what floats over content, `modal` for what has taken the
+page. They match the layer family deliberately — a menu is `layer-popover` and
+`shadow-popover`. Tailwind's own `shadow-xs` through `shadow-xl` are closed, so a
+size name emits nothing rather than a plausible wrong shadow.
 
 ## The Tailwind bridge
 

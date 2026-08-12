@@ -141,7 +141,7 @@ function ConversationScrollButton({
       aria-label="Scroll to latest message"
       onClick={() => scrollToBottom()}
       className={cn(
-        "absolute bottom-3 left-1/2 z-raised -translate-x-1/2 shape-pill shadow-md",
+        "absolute bottom-3 left-1/2 z-raised -translate-x-1/2 shape-pill shadow-raised",
         className
       )}
       {...props}

@@ -58,7 +58,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
         // that clips also clips a *child's* focus ring, so the addon button's
         // indicator came out sliced to a hard square on three sides. The addon
         // carries its own corner instead.
-        "group/input-group relative flex h-8 w-full min-w-0 items-center rounded-1 border border-input-border-base bg-surface-base shadow-xs transition-colors outline-none hover:border-input-border-hover has-disabled:bg-surface-disabled has-disabled:border-border-disabled has-disabled:shadow-none has-[[data-slot=input-group-control]:focus-visible]:border-focus-ring has-[[data-slot=input-group-control]:focus-visible]:inset-ring-1 has-[[data-slot=input-group-control]:focus-visible]:inset-ring-focus-ring has-[[data-slot][aria-invalid=true]]:border-action-negative-base has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/20 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto dark:bg-surface-strong/30 dark:has-disabled:bg-surface-strong/80 dark:has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/40 has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-2 has-[>[data-align=inline-start]]:[&>input]:pl-2",
+        "group/input-group relative flex h-8 w-full min-w-0 items-center shape-control-lg border border-input-border-base bg-surface-base shadow-control transition-colors outline-none hover:border-input-border-hover has-disabled:bg-surface-disabled has-disabled:border-border-disabled has-disabled:shadow-none has-[[data-slot=input-group-control]:focus-visible]:border-focus-ring has-[[data-slot=input-group-control]:focus-visible]:inset-ring-1 has-[[data-slot=input-group-control]:focus-visible]:inset-ring-focus-ring has-[[data-slot][aria-invalid=true]]:border-action-negative-base has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/20 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto dark:bg-surface-strong/30 dark:has-disabled:bg-surface-strong/80 dark:has-[[data-slot][aria-invalid=true]]:ring-action-negative-base/40 has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-2 has-[>[data-align=inline-start]]:[&>input]:pl-2",
         className
       )}
       {...props}
@@ -67,7 +67,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 const inputGroupAddonVariants = cva(
-  "flex h-auto cursor-text items-center justify-center gap-2 py-2 type-label-bold text-text-subtle select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--db-radius-2)-5px)] [&>svg:not([class*='size-'])]:size-4",
+  "flex h-auto cursor-text items-center justify-center gap-2 py-2 type-label-bold text-text-subtle select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:shape-control [&>svg:not([class*='size-'])]:size-4",
   {
     variants: {
       align: {
@@ -83,7 +83,9 @@ const inputGroupAddonVariants = cva(
         // the group's own corner on the outer side.
         "inline-end": [
           "order-last self-stretch border-l border-input-border-base p-0",
-          "[&>button]:h-full [&>button]:shape-l-square [&>button]:shape-r-control [&>button]:px-3",
+          // The outer cap follows the group, so the button ends in the same curve
+        // the group does; the edge meeting the field stays square.
+        "[&>button]:h-full [&>button]:shape-l-square [&>button]:shape-r-control-lg [&>button]:px-3",
           // An icon-only addon is square rather than text-width.
           "[&>button:has(>svg:only-child)]:aspect-square [&>button:has(>svg:only-child)]:px-0",
           // The addon takes the same thickened edge as the field, so focus reads the
@@ -131,10 +133,13 @@ const inputGroupButtonVariants = cva(
   {
     variants: {
       size: {
-        xs: "h-6 gap-1 rounded-[calc(var(--db-radius-2)-3px)] px-2 [&>svg:not([class*='size-'])]:size-3.5",
+        // These held `radius-2` minus the inset, a concentric corner derived from
+        // an 8px group. The group is a pill now, so the arithmetic described a
+        // corner that no longer exists; an inset control takes the small-control
+        // role instead.
+        xs: "h-6 gap-1 shape-control px-2 [&>svg:not([class*='size-'])]:size-3.5",
         sm: "",
-        "icon-xs":
-          "size-6 rounded-[calc(var(--db-radius-2)-3px)] p-0 has-[>svg]:p-0",
+        "icon-xs": "size-6 shape-control p-0 has-[>svg]:p-0",
         "icon-sm": "size-8 p-0 has-[>svg]:p-0",
       },
     },

@@ -3295,6 +3295,12 @@ export const shape: Token[] = [
     "multiple": null
   },
   {
+    "name": "shape-container-md",
+    "value": "var(--db-radius-3)",
+    "px": 12,
+    "multiple": null
+  },
+  {
     "name": "shape-container-lg",
     "value": "var(--db-radius-4)",
     "px": 16,
@@ -3388,27 +3394,22 @@ export const borderWidth: Token[] = [
 
 export const elevation: ModeToken[] = [
   {
-    "name": "elevation-xs",
+    "name": "elevation-control",
     "light": "0 1px 0 0 rgba(0, 0, 0, 0.05)",
     "dark": "0 1px 0 0 rgba(0, 0, 0, 0.45)"
   },
   {
-    "name": "elevation-sm",
+    "name": "elevation-raised",
     "light": "0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02)",
     "dark": "0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26)"
   },
   {
-    "name": "elevation-md",
-    "light": "0 3px 6px 0 rgba(0, 0, 0, 0.05)",
-    "dark": "0 3px 6px 0 rgba(0, 0, 0, 0.45)"
-  },
-  {
-    "name": "elevation-lg",
+    "name": "elevation-popover",
     "light": "0 2px 16px 0 rgba(0, 0, 0, 0.08)",
     "dark": "0 2px 16px 0 rgba(0, 0, 0, 0.61)"
   },
   {
-    "name": "elevation-xl",
+    "name": "elevation-modal",
     "light": "0 8px 40px 0 rgba(0, 0, 0, 0.13)",
     "dark": "0 8px 40px 0 rgba(0, 0, 0, 0.87)"
   }
@@ -3526,10 +3527,10 @@ export const tokenCounts = {
   "colorGroups": 85,
   "space": 9,
   "radius": 7,
-  "shape": 6,
+  "shape": 7,
   "size": 9,
   "borderWidth": 3,
-  "elevation": 5,
+  "elevation": 4,
   "duration": 4,
   "easing": 3,
   "layer": 6,

@@ -3,6 +3,56 @@
 Four themes: **Core** (what we are building), **Omni** (Omniagent), **One** (warm tone), and
 **DuBois** (the legacy product aesthetic, present only so people can migrate off it).
 
+> **Status, August 2026.** Steps 1 and 3 are built and shipped together, out of the order below.
+> The axis exists, Core and DuBois are both emitted, and the portal footer switches between them.
+> Step 1's success criterion held exactly as written: `:root`, `.dark` and the type-context blocks
+> came out byte-identical, and the theme section is purely appended.
+>
+> The open question that mattered — *does DuBois need names Core lacks?* — **is answered: no.**
+> It is 8 tokens, all of them names Core already declares: `action-primary-{base,hover,press}`,
+> `focus-ring`, the `control` and `control-lg` shape roles, and the two type faces. So the model
+> holds, DuBois is a theme rather than a compatibility layer, and Omni should be routine.
+>
+> Two answers fell out of building it. **The `data-type-scale` collision was a non-issue** —
+> different attributes, and they compose. What did collide was the portal's `?theme=` query
+> param, which already meant the color mode and is load-bearing in `scripts/shot.mjs`; it is now
+> read as the theme when the value is a theme and as the mode when it is `light` or `dark`, with
+> `?mode=` as the unambiguous spelling going forward. **The font payload question answered itself
+> for this theme**: DuBois's faces are San Francisco, reached through `-apple-system` and
+> `ui-monospace` rather than served, so it costs zero bytes. A theme wanting a face we would have
+> to host still has that question open.
+>
+> Steps 0, 4 and 6 are untouched.
+>
+> **Step 2 (One) followed, and it paid for the ramp lever.** Ramp binding was deliberately not
+> built for DuBois — a value-override diff was enough, and building the cheaper lever before a
+> theme needed it would have been speculative. One needed it: rebinding `interface.neutral` and
+> `interface.cool` onto `interface.warm` re-skins about forty semantics from two lines, and the
+> same written as overrides would have been forty values and unreadable as an intent. The
+> prediction in "What a theme is" held exactly — One is one ramp binding plus three accent
+> corrections plus a face.
+>
+> Two things the lever turned out to buy that were not predicted. It **carries reasoning across,
+> not just values**: Core's focus ring is two stops off the end of the ramp specifically so it can
+> never match the primary fill, and One inherits that property for free where DuBois had to
+> restate it by hand. And it **reaches tokens outside the family you were thinking about** —
+> `viz-sequential-1` and `-10` borrow the chrome ramp for the pale end of their scale, so they
+> follow the rebinding. That is correct rather than incidental: a sequential scale whose lightest
+> cell stayed cool on a warm page would read as a mistake.
+>
+> One also forced the first **new primitive family**: `brand.orange`, for the accent. Its 500 is
+> `#FF5F46`, which is the hex this note already flagged as living in `globals.css` with no token
+> behind it — so the theme closed that gap rather than opening one. It is not in Figma, and
+> `verify-token-sync` correctly reports ten primitives missing until it is. Note this is a name
+> added to the PALETTE, not to the semantic layer: the invariant is intact, since primitives are
+> generator input and every theme still declares the identical set of semantic names.
+>
+> One correction to the model as written. "A theme states only what it changes" is true of the
+> AUTHORING and false of the EMISSION: every theme emits the union of what any theme moves, so a
+> nested block can reset the one around it. The generator computes that union from a difference in
+> resolved value rather than from declared keys, which the ramp lever makes essential — One
+> declares three semantics and moves twenty-nine.
+
 ## The invariant
 
 **A theme varies values. It never varies names.**

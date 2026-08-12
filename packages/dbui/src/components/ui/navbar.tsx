@@ -239,7 +239,7 @@ function NavbarNewButton({ className, ...props }: React.ComponentProps<"button">
     <button
  data-slot="navbar-new-button"
  className={cn(
-        "flex h-8 w-full items-center gap-2 rounded-3 bg-surface-base dark:bg-surface-strong px-3 shadow-md type-label-bold text-text-base",
+        "flex h-8 w-full items-center gap-2 shape-control-lg bg-surface-base dark:bg-surface-strong px-3 shadow-raised type-label-bold text-text-base",
         "[&_svg:not([class*='size-'])]:size-4",
  className
       )}

@@ -225,8 +225,10 @@ export const CHAT_GROUP = { id: "group-chat", label: "Chat" }
 
 export function ChatGallery() {
   return (
-    <div data-doc-generated className="mt-12">
-      <section id={CHAT_GROUP.id} style={anchorOffset}>
+    // No wrapper and no top margin: this renders inside the gallery's own column
+    // now, between Content and Feedback, so the column's gap sets the spacing the
+    // way it does for every other group.
+    <section data-doc-generated id={CHAT_GROUP.id} style={anchorOffset}>
         <h2 className="type-title-4 text-text-strong">Chat</h2>
         <p className="type-body text-text-subtle">
           The parts of a conversation with an agent. Conversation and Response carry
@@ -257,7 +259,6 @@ export function ChatGallery() {
             </div>
           ))}
         </div>
-      </section>
-    </div>
+    </section>
   )
 }

@@ -1,15 +1,16 @@
 import Link from "next/link"
 
 import { ColorModeControl } from "./ColorModeControl"
+import { ThemeControl } from "./ThemeControl"
 import { TypeScaleControl } from "./TypeScaleControl"
 
 /**
- * Site-wide, mounted once in the root layout so the two controls are reachable
- * from every route rather than only from the docs rail they used to live in.
+ * Site-wide, mounted once in the root layout so the controls are reachable from
+ * every route rather than only from the docs rail they used to live in.
  *
- * Four things, all of which do something. There is no tagline: a line naming
- * the system under a header that already names it changes nothing about what
- * anyone does next.
+ * Everything here does something. There is no tagline: a line naming the system
+ * under a header that already names it changes nothing about what anyone does
+ * next.
  */
 
 /**
@@ -33,9 +34,14 @@ export function SiteFooter() {
     // of a short page instead of halfway up it.
     <footer className="mt-auto border-t border-border-base">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        {/* Wide enough that two segment controls with the same container fill
-            read as two controls rather than as one five-segment group. */}
-        <div className="flex items-center gap-4">
+        {/* Wide enough that segment controls sharing a container fill read as
+            separate controls rather than as one long group.
+
+            Theme leads because it is the widest axis of the three: mode and
+            scale change how the same aesthetic is rendered, and this changes
+            which aesthetic it is. */}
+        <div className="flex flex-wrap items-center gap-4">
+          <ThemeControl />
           <ColorModeControl />
           <TypeScaleControl />
         </div>

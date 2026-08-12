@@ -144,9 +144,24 @@ for (const f of files) {
 /* ── the token inventory, read out of the shipped CSS ─────────────────────── */
 
 const tokensCss = read("packages/dbui/src/tokens/tokens.css")
+/**
+ * One block each, bounded to its own closing brace.
+ *
+ * `.dark` used to run to the end of the file, which held only while nothing
+ * after it declared a `--db-*`. The theme blocks do, so an unbounded read now
+ * picks up a theme's values and files them as dark ones.
+ */
+function cssBlock(selector) {
+  const marker = `\n${selector} {\n`
+  const start = tokensCss.indexOf(marker)
+  if (start < 0) return ""
+  const open = start + marker.length
+  const end = tokensCss.indexOf("\n}", open)
+  return end < 0 ? "" : tokensCss.slice(open, end)
+}
 /** Only the :root block — the .dark block restates the same color names. */
-const rootBlock = tokensCss.slice(tokensCss.indexOf(":root {"), tokensCss.indexOf(".dark {"))
-const darkBlock = tokensCss.slice(tokensCss.indexOf(".dark {"))
+const rootBlock = cssBlock(":root")
+const darkBlock = cssBlock(".dark")
 const shipped = [...rootBlock.matchAll(/^\s*(--db-[a-z0-9-]+):\s*([^;]+);/gm)].map((m) => ({ name: m[1], value: m[2].trim() }))
 const darkValues = Object.fromEntries(
   [...darkBlock.matchAll(/^\s*(--db-[a-z0-9-]+):\s*([^;]+);/gm)].map((m) => [m[1], m[2].trim()])

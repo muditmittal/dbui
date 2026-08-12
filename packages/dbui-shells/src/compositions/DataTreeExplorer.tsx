@@ -441,7 +441,7 @@ export function DataTreeExplorer({
             />
             <Popover.Portal>
               <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-popover">
-                <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden p-1">
+                <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-popover ring-1 ring-text-base/10 overflow-hidden p-1">
                   {/* Path */}
                   {focusPath.length > 0 ? (
                     focusPath.map((entry, i) => {

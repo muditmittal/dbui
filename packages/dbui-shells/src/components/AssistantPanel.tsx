@@ -74,7 +74,7 @@ export function AssistantPanel({ onClose }: { onClose?: () => void }) {
       {/* Input area */}
       <div className="px-3 pt-2">
         <div
-          className="shape-container shadow-xs"
+          className="shape-container shadow-control"
           style={{
             border: "1px solid transparent",
             backgroundImage:

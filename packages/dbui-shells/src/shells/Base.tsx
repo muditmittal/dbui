@@ -9,7 +9,7 @@ import { AssistantPanel } from "../components/AssistantPanel"
  * Provides:
  *   - Platform header (48px, bg-surface-subtle, fixed)
  *   - Sidebar nav (180px, collapsible)
- *   - Content surface (white, rounded-3, scrollable)
+ *   - Content surface (white, shape-container-md, scrollable)
  *
  * Usage:
  *   <Base defaultActive="catalog">

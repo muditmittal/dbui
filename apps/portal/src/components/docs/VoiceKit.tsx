@@ -75,8 +75,9 @@ export function PrincipleEntry({
         <>
           <span className="type-title-4 text-text-strong">{name}</span>
           {/* Same as the principles cards: a flex-column header slot, so the
-              docs column's element default does not reach it. */}
-          <span className="type-paragraph measure text-text-subtle">{meaning}</span>
+              docs column's element default does not reach it, and no `measure`
+              because the card already caps the line. */}
+          <span className="type-paragraph text-text-subtle">{meaning}</span>
         </>
       }
     >

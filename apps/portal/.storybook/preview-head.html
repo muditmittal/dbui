@@ -1,16 +1,23 @@
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 
 <!--
-  Figtree (Erik Kennedy) for text and display, Commit Mono (Eigil Nikolajsen)
-  for code. Commit Mono is not on Google Fonts, so it comes from Fontsource.
-  Loaded from CDNs rather than npm because the corporate proxy blocks the
-  registry; consumers of the package install them however they prefer.
+  Every served face, for every theme. Core is Figtree (Erik Kennedy) for text
+  and Commit Mono (Eigil Nikolajsen) for code; One is DM Sans and DM Mono.
+  Commit Mono is not on Google Fonts, so it comes from Fontsource. Loaded from
+  CDNs rather than npm because the corporate proxy blocks the registry;
+  consumers of the package install them however they prefer.
+
+  DuBois adds nothing: San Francisco and SF Mono are reached through
+  `-apple-system` and `ui-monospace` rather than served.
+
+  Kept in step with `apps/portal/src/app/layout.tsx`, which loads the same set
+  for the Next surface. The css2 API requires families in alphabetical order.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+  href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
 />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/commit-mono/400.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/commit-mono/700.css" />

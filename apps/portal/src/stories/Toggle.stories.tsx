@@ -66,10 +66,10 @@ export const Playground: StoryObj = {
           <tr>
             <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>Pill</td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Toggle variant="pill"><Notebook /> Notebooks</Toggle>
+              <Toggle variant="filter"><Notebook /> Notebooks</Toggle>
             </td>
             <td style={{ padding: "14px 24px 14px 0" }}>
-              <Toggle variant="pill" defaultPressed><Notebook /> Notebooks</Toggle>
+              <Toggle variant="filter" defaultPressed><Notebook /> Notebooks</Toggle>
             </td>
           </tr>
         </tbody>

@@ -47,7 +47,7 @@ export const Playground: StoryObj = {
             <tr key={type}>
               <td style={{ padding: "14px 24px 14px 0", color: "#6F6F6F", fontSize: 12 }}>{type}</td>
               <td style={{ padding: "14px 24px 14px 0" }}>
-                <div className="flex w-[360px] items-center gap-3 rounded-2 border border-border-base bg-surface-base px-4 py-3 shadow-md">
+                <div className="flex w-[360px] items-center gap-3 rounded-2 border border-border-base bg-surface-base px-4 py-3 shadow-raised">
                   <span style={{ color, flexShrink: 0 }}>{icon}</span>
                   <span className="text-[13px] leading-[20px]">{message}</span>
                 </div>

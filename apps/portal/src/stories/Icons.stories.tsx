@@ -85,7 +85,7 @@ function IconGrid() {
     <div className="relative">
       {/* Toast */}
       {copied && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-sticky flex items-center gap-2 rounded-2 bg-text-base px-4 py-2 text-[13px] leading-[20px] text-surface-base shadow-lg">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-sticky flex items-center gap-2 rounded-2 bg-text-base px-4 py-2 text-[13px] leading-[20px] text-surface-base shadow-popover">
           <span>Copied import for <span className="font-semibold">{copied}</span></span>
         </div>
       )}
@@ -96,7 +96,7 @@ function IconGrid() {
           placeholder="Search by name, concept, product area, or synonym..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="h-8 w-[400px] rounded-1 border border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-xs outline-none placeholder:text-text-subtle focus-visible:border-focus-ring"
+          className="h-8 w-[400px] rounded-1 border border-input-border-base bg-surface-base px-3 text-[13px] leading-[20px] shadow-control outline-none placeholder:text-text-subtle focus-visible:border-focus-ring"
         />
         <span className="text-[12px] text-text-subtle">
           {totalFiltered} of {iconNames.length} icons

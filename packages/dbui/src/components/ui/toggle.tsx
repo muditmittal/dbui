@@ -9,9 +9,9 @@ import { cn } from "../../lib/utils"
 /**
  * @standard Toggle Button
  * @guideline Use when button needs to save state
- * @guideline Pill variant used as quick filters
- * @constraint Filter variant auto-swaps checkbox/checkmark — don't override icon
- * @constraint Pill variant should be used in groups, not standalone
+ * @guideline Reach for filter in a group of quick filters, default standalone
+ * @constraint FilterToggle auto-swaps checkbox/checkmark — don't override icon
+ * @constraint The corner comes from the size, not a variant — never pass a rounded- class
  * @constraint Icon variant requires aria-label
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=478-613
  */
@@ -19,16 +19,18 @@ import { cn } from "../../lib/utils"
 /**
  * Toggle Button styles for DBUI.
  *
- * Figma component: "Toggle Button" (4 variants × 2 sizes × 5 states)
+ * Figma component: "Toggle Button" (3 variants × 2 sizes × 5 states)
  *
- * Variants: default (no border), filter (border-input-border-base + shadow), pill (shadow + checkbox pattern), icon (icon-only)
- * Sizes: sm (24px), md (32px) — matches Button sizing
+ * Variants: default (no border), filter (border-input-border-base + shadow), icon (icon-only)
+ * Sizes: sm (24px), md (32px) — matches Button sizing, corner included
  * States:   Default, Hover, Press, Selected, Disabled
  */
 const toggleVariants = cva(
  [
     "group/toggle inline-flex items-center justify-center gap-1",
-    "rounded-1 border",
+    // The corner follows the size below, not this base, because a default-size
+    // toggle is a pill and a small one is 4px.
+    "border",
     "type-label whitespace-nowrap",
     "transition-all outline-none select-none",
     "text-text-base",
@@ -46,21 +48,14 @@ const toggleVariants = cva(
  variant: {
  default: "border-transparent bg-transparent",
  filter:
-          "border-input-border-base shadow-xs hover:border-input-border-hover disabled:border-border-disabled disabled:shadow-none aria-pressed:border-border-strong data-[state=on]:border-border-strong",
- pill: [
-          "shadow-xs border-input-border-base bg-transparent gap-2 shape-pill",
-          "hover:bg-action-default-hover hover:border-input-border-hover",
-          "aria-pressed:bg-action-selected-base aria-pressed:hover:bg-action-selected-hover aria-pressed:active:bg-action-selected-press aria-pressed:text-text-strong aria-pressed:border-border-strong aria-pressed:shadow-none",
-          "data-[state=on]:bg-action-selected-base data-[state=on]:text-text-strong data-[state=on]:border-border-strong data-[state=on]:shadow-none",
-          "disabled:border-border-disabled disabled:shadow-none",
-        ].join(" "),
+          "border-input-border-base shadow-control hover:border-input-border-hover disabled:border-border-disabled disabled:shadow-none aria-pressed:border-border-strong data-[state=on]:border-border-strong",
  icon: "border-transparent bg-transparent",
       },
  size: {
- sm: "h-6 min-w-6 px-2",
- md: "h-8 min-w-8 px-3",
-        "icon-sm": "size-6",
-        "icon-md": "size-8",
+ sm: "h-6 min-w-6 px-2 shape-control",
+ md: "h-8 min-w-8 px-3 shape-control-lg",
+        "icon-sm": "size-6 shape-control",
+        "icon-md": "size-8 shape-control-lg",
       },
     },
  defaultVariants: {

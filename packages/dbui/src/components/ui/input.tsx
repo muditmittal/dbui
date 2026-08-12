@@ -29,9 +29,10 @@ function Input({
  data-size={size}
  data-validation={validation}
  className={cn(
-        "w-full min-w-0 rounded-1 border border-input-border-base bg-surface-base type-label shadow-xs transition-colors outline-none hover:border-input-border-hover active:border-focus-ring file:inline-flex file:h-6 file:border-0 file:bg-transparent file:type-label-bold file:text-text-base placeholder:text-text-subtle focus-visible:border-focus-ring focus-visible:shadow-focus disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-action-negative-base data-[validation=warning]:border-status-border-warning data-[validation=success]:border-action-positive-base dark:bg-surface-strong/30 dark:disabled:bg-surface-strong/80 dark:aria-invalid:border-action-negative-base/50",
- size === "default" && "h-8 px-3 py-0",
- size === "sm" && "h-6 px-2 py-0",
+        "w-full min-w-0 border border-input-border-base bg-surface-base type-label shadow-control transition-colors outline-none hover:border-input-border-hover active:border-focus-ring file:inline-flex file:h-6 file:border-0 file:bg-transparent file:type-label-bold file:text-text-base placeholder:text-text-subtle focus-visible:border-focus-ring focus-visible:shadow-focus disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-action-negative-base data-[validation=warning]:border-status-border-warning data-[validation=success]:border-action-positive-base dark:bg-surface-strong/30 dark:disabled:bg-surface-strong/80 dark:aria-invalid:border-action-negative-base/50",
+        // The corner rides the size, as on every other 32px control.
+        size === "default" && "h-8 px-3 py-0 shape-control-lg",
+        size === "sm" && "h-6 px-2 py-0 shape-control",
  className
       )}
       {...props}

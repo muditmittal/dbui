@@ -75,7 +75,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
   return (
     <ComboboxPrimitive.Clear
       data-slot="combobox-clear"
-      className={cn("inline-flex shrink-0 items-center justify-center text-text-subtle hover:text-text-base [&_svg]:size-3.5", className)}
+      className={cn("inline-flex shrink-0 items-center justify-center text-text-subtle hover:text-text-base [&_svg]:size-4", className)}
       {...props}
     >
       <Close className="pointer-events-none" />
@@ -103,9 +103,12 @@ function ComboboxInput({
       ref={anchor}
       data-slot="combobox-input-wrapper"
       className={cn(
-        "flex w-full items-center rounded-1 border border-input-border-base bg-surface-base shadow-xs transition-colors hover:border-input-border-hover has-[:focus-visible]:border-focus-ring has-[:focus-visible]:shadow-focus has-[:disabled]:bg-surface-subtle has-[:disabled]:border-border-disabled has-[:disabled]:shadow-none has-[:disabled]:pointer-events-none has-[[aria-invalid=true]]:border-action-negative-base",
-        inputSize === "default" && "h-8 gap-2 px-3",
-        inputSize === "sm" && "h-6 gap-1 px-2",
+        "flex w-full items-center border border-input-border-base bg-surface-base shadow-control transition-colors hover:border-input-border-hover has-[:focus-visible]:border-focus-ring has-[:focus-visible]:shadow-focus has-[:disabled]:bg-surface-subtle has-[:disabled]:border-border-disabled has-[:disabled]:shadow-none has-[:disabled]:pointer-events-none has-[[aria-invalid=true]]:border-action-negative-base",
+        // The corner rides the size, as it does on Button, Select and Toggle:
+        // a pill at the default size, 4px small. Select pairs `shape-control-lg`
+        // with the same `px-3`, so the label sits clear of the curve.
+        inputSize === "default" && "h-8 gap-2 px-3 shape-control-lg",
+        inputSize === "sm" && "h-6 gap-1 px-2 shape-control",
         className
       )}
     >
@@ -156,7 +159,7 @@ function ComboboxContent({
         <ComboboxPrimitive.Popup
           data-slot="combobox-content"
           data-chips={!!anchor}
-          className={cn("group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-(--anchor-width) origin-(--transform-origin) overflow-hidden shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:mb-1 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input-border-base/30 *:data-[slot=input-group]:bg-border-strong/30 *:data-[slot=input-group]:shadow-none", className )}
+          className={cn("group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-(--anchor-width) origin-(--transform-origin) overflow-hidden shape-container bg-surface-base p-1 text-text-base shadow-popover ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:mb-1 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input-border-base/30 *:data-[slot=input-group]:bg-border-strong/30 *:data-[slot=input-group]:shadow-none", className )}
           {...props}
         />
       </ComboboxPrimitive.Positioner>
@@ -267,7 +270,10 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
       className={cn(
-        "flex min-h-8 flex-wrap items-center gap-1 rounded-1 border border-input-border-base bg-transparent bg-clip-padding px-3 py-1 type-label shadow-xs transition-colors focus-within:border-focus-ring focus-within:shadow-focus has-aria-invalid:border-action-negative-base has-data-[slot=combobox-chip]:px-2 has-data-[slot=combobox-chip]:py-0.5 dark:bg-surface-strong/30 dark:has-aria-invalid:border-action-negative-base/50 dark:has-aria-invalid:ring-action-negative-base/40",
+        // Wraps to more rows as chips are added, so it takes Textarea's 16px
+        // rather than the pill the single-line combobox takes. The two growing
+        // text-entry surfaces answer this the same way.
+        "flex min-h-8 flex-wrap items-center gap-1 shape-container-lg border border-input-border-base bg-transparent bg-clip-padding px-3 py-1 type-label shadow-control transition-colors focus-within:border-focus-ring focus-within:shadow-focus has-aria-invalid:border-action-negative-base has-data-[slot=combobox-chip]:px-2 has-data-[slot=combobox-chip]:py-0.5 dark:bg-surface-strong/30 dark:has-aria-invalid:border-action-negative-base/50 dark:has-aria-invalid:ring-action-negative-base/40",
         className
       )}
       {...props}

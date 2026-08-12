@@ -1,6 +1,8 @@
+import Link from "next/link"
+
 import { DocAccordion, DocAccordionItem } from "@/components/docs/DocAccordion"
 import { Guidance } from "@/components/docs/Guidance"
-import { DocHeader } from "@/components/docs/Prose"
+import { DocHeader, Para } from "@/components/docs/Prose"
 
 type Principle = {
   name: string
@@ -42,7 +44,7 @@ const PRINCIPLES: Principle[] = [
     name: "Built for people accountable for the data",
     aspect: "Audience",
     meaning:
-      "The same table is read by an engineer debugging a pipeline, an analyst checking a metric and a steward approving access. Design the object to carry its own context, not the screen for one reader.",
+      "An engineer, an analyst and a steward read the same table. Design the object to carry its own context, not the screen for one reader.",
     dos: [
       "Let an object explain itself wherever it appears — in search, in lineage, in a result",
       "Carry context across a handoff — people arrive mid-task from somewhere else",
@@ -58,7 +60,7 @@ const PRINCIPLES: Principle[] = [
     name: "Calm carries the work",
     aspect: "Visuals",
     meaning:
-      "Color, weight and motion belong to the content, not the frame. Density is part of calm — forty quiet rows read better than twelve decorated ones.",
+      "Color, weight and motion belong to the content, not the frame. Forty quiet rows read better than twelve decorated ones.",
     dos: [
       "Reserve color for meaning: status, selection, links",
       "Divide with borders — save shadow for what genuinely floats",
@@ -74,7 +76,7 @@ const PRINCIPLES: Principle[] = [
     name: "Clear over clever, honest over hype",
     aspect: "Voice",
     meaning:
-      "Say what is true, including the inconvenient parts. People using the product know the technical terms and will find the limits anyway — the only question is whether they hear it from you first.",
+      "Say what is true, including the inconvenient parts. People find the limits anyway; the only question is whether they hear it from you first.",
     dos: [
       "Name a limit before someone hits it",
       "Use the precise technical term over the friendlier approximation",
@@ -90,7 +92,7 @@ const PRINCIPLES: Principle[] = [
     name: "Every element earns its place",
     aspect: "Structure",
     meaning:
-      "The test is subtraction: remove it, and if nothing breaks and nobody notices, it had not earned its place. Time counts too — a spinner that flashes costs more than it saves.",
+      "The test is subtraction: remove it, and if nothing breaks and nobody notices, it had not earned its place. Time counts too.",
     dos: [
       "Put the burden of proof on whoever is adding",
       "Keep one primary action per surface",
@@ -106,7 +108,7 @@ const PRINCIPLES: Principle[] = [
     name: "Learned once, true everywhere",
     aspect: "Consistency",
     meaning:
-      "A control that looks a certain way behaves that way on every surface, so the vocabulary is bought once and spent everywhere. Predictability is the goal rather than sameness — two things that differ should look like they differ.",
+      "A control that looks a certain way behaves that way everywhere. Predictability rather than sameness: two things that differ should look like they differ.",
     dos: [
       "Give the same job the same control, on every surface it appears",
       "Make two things look different when they behave differently",
@@ -122,7 +124,7 @@ const PRINCIPLES: Principle[] = [
     name: "Easy the first time, fast the thousandth",
     aspect: "Fluency",
     meaning:
-      "One interface serves someone doing this once and someone doing it four hundred times a day. Depth is available on demand rather than up front, and a path that repeats earns a shortcut.",
+      "One interface serves someone doing this once and someone doing it four hundred times a day. A path that repeats earns a shortcut.",
     dos: [
       "Give a repeated action a keyboard route and a bulk form",
       "Let the interface remember what was chosen last time",
@@ -146,8 +148,16 @@ export function PrinciplesDoc() {
   return (
     <>
       <DocHeader title="Design principles">
-        When two solutions look reasonable, these decide which one ships.
+        When two solutions are both defensible, these decide which one ships.
       </DocHeader>
+
+      <Para>
+        Six dimensions of craft — the half this system controls directly.{" "}
+        <Link href="/docs/constraints" className="text-text-accent no-underline hover:underline">
+          Constraints
+        </Link>{" "}
+        is the other half: what a screen owes the person on the other side of it.
+      </Para>
 
       <img
         src="/docs/principles-hero.png"
@@ -175,9 +185,14 @@ export function PrinciplesDoc() {
                 <span className="type-title-4 text-text-strong">{principle.name}</span>
                 {/* A span because the trigger's header is a flex column, which
                     puts it outside the docs column's `p, li, figcaption`
-                    default. It is still the paragraph a reader reads before
-                    opening anything, so it takes the measure explicitly. */}
-                <span className="type-paragraph measure text-text-subtle">{principle.meaning}</span>
+                    default.
+
+                    No `measure`. The cap exists to stop running text spanning
+                    the full docs column; inside a card the card is already the
+                    narrower container, so the two caps compound and leave a
+                    short ragged column with empty card beside it. One container
+                    should decide a line length, and here it is the card. */}
+                <span className="type-paragraph text-text-subtle">{principle.meaning}</span>
               </>
             }
           >

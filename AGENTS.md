@@ -108,8 +108,18 @@ before assuming anything about progress. The rest of this section is the part th
 you should *act*:
 
 - **The token migration is complete.** Components consume the generated `--db-*` semantics; the
-  legacy color layer is pruned. Never reintroduce a legacy name — `bg-primary`, `text-foreground`
-  and friends no longer exist.
+ legacy color layer is pruned. Never reintroduce a legacy name — `bg-primary`, `text-foreground`
+ and friends no longer exist.
+- **There are three themes, and a theme varies values but never names.** Core is in `:root`;
+ DuBois and One ship behind `data-theme` and the portal footer switches between them. Theme, mode
+ and the two dials are four independent axes that compose. A theme may override only its chrome
+ ramp, semantics, shape roles, the two type faces and elevation — never a token name, never
+ spacing or density. Reach for `ramp` before writing value overrides: it re-skins all of chrome in
+ one line. The generator throws and `design:verify-sync` fails on a theme that breaks the
+ invariant; see `packages/dbui/docs/tokens.md`.
+- **`design:verify-sync` currently reports 10 missing Figma primitives, and that is real.** One's
+ accent needs `brand.orange`, which exists in the config and not yet in the Figma file. Add it
+ there and refresh the dump — do not silence the check.
 - **Type goes through the ramp.** `type-label` for single-line UI, `type-body` for text that wraps,
   `type-paragraph` for prose. Each class is the whole style, so never pair it with `leading-`,
   `font-` or `uppercase`. Numbers in a table use `<TableCell numeric>`, not a type class.

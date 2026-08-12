@@ -60,7 +60,7 @@ function MessageContent({
       className={cn(
         "min-w-0 type-body text-text-base",
         role === "user"
-          ? "w-full shape-container bg-surface-subtle px-4 py-3 shadow-xs"
+          ? "w-full shape-container bg-surface-subtle px-4 py-3 shadow-control"
           : "w-full",
         className
       )}

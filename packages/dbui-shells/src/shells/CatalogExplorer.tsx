@@ -170,7 +170,7 @@ function CatalogTree({
           />
           <Popover.Portal>
             <Popover.Positioner side="bottom" sideOffset={4} align="start" className="z-popover">
-              <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-lg ring-1 ring-text-base/10 overflow-hidden p-1">
+              <Popover.Popup className="w-[240px] shape-container bg-surface-base shadow-popover ring-1 ring-text-base/10 overflow-hidden p-1">
                 {/* Path — default shows "Catalog" as root; when focused shows indented breadcrumb */}
                 {focusPath.length > 0 ? (
                   focusPath.map((entry, i) => {
@@ -435,7 +435,7 @@ function CatalogLanding({
         {filters.map((filter) => (
           <Toggle
             key={filter}
-            variant="pill"
+            variant="filter"
             size="sm"
             pressed={activeFilter === filter}
             onPressedChange={() => setActiveFilter(filter)}

@@ -56,7 +56,7 @@ function DropdownMenuContent({
       >
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
-          className={cn("z-popover max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit outline-none data-closed:overflow-hidden", className )}
+          className={cn("z-popover max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-popover ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit outline-none data-closed:overflow-hidden", className )}
           {...props}
         />
       </MenuPrimitive.Positioner>
@@ -164,7 +164,7 @@ function DropdownMenuSubContent({
   return (
     <DropdownMenuContent
       data-slot="dropdown-menu-sub-content"
-      className={cn("w-auto min-w-24 shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100", className )}
+      className={cn("w-auto min-w-24 shape-container bg-surface-base p-1 text-text-base shadow-popover ring-1 ring-text-base/10 duration-100", className )}
       align={align}
       alignOffset={alignOffset}
       side={side}

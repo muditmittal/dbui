@@ -10,7 +10,7 @@ import { Close as CloseIcon } from "../icons/Close"
 /**
  * @standard Dialog
  * @guideline Footer actions: primary right-aligned, cancel left-aligned
- * @guideline Uses shadow-xl with ring-1 ring-text-base/10
+ * @guideline Uses shadow-modal with ring-1 ring-text-base/10
  * @constraint Max one dialog open at a time — never stack
  * @constraint For simple confirmations, use Alert Dialog instead
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=882-2798
@@ -73,7 +73,7 @@ function DialogContent({
         data-slot="dialog-content"
         data-size={size}
         className={cn(
-          "data-open:animate-enter data-closed:animate-exit fixed top-1/2 left-1/2 z-modal grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 shape-container border border-border-base bg-surface-base type-body shadow-xl duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px]",
+          "data-open:animate-enter data-closed:animate-exit fixed top-1/2 left-1/2 z-modal grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-0 shape-container border border-border-base bg-surface-base type-body shadow-modal duration-100 outline-none data-[size=normal]:sm:max-w-[640px] data-[size=wide]:sm:max-w-[880px] data-[size=extrawide]:sm:max-w-[1200px]",
           className
         )}
         {...props}

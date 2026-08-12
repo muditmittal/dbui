@@ -28,7 +28,7 @@ problem: **line**, **file**, **protocol** (several files move together per `CONT
 | Install | Works — registry points at the Databricks npm proxy |
 | Distribution | Public scope decided — tokens, components and viz. Patterns and shells stay internal. I19 |
 | Patterns | Not started — the decision layer. Phase 1 and Phase 6 |
-| Themes | Designed, not started. Core, Omni, One and DuBois — `notes/2026-08-11-multi-theme-architecture.md`. No phase yet |
+| Themes | Axis shipped — Core, DuBois and One switch from the portal footer. Omni not built. `brand.orange` is not yet in Figma, so `design:verify-sync` reports 10 primitives. `notes/2026-08-11-multi-theme-architecture.md`. No phase yet |
 
 ## The sequence
 

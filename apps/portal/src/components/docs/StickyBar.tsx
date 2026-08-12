@@ -213,7 +213,25 @@ export function SectionTabs({ sections, label }: { sections: DocSection[]; label
           className={tabsListVariants({
             variant: "default",
             width: "full",
-            className: "overflow-x-auto",
+            // `h-auto` beside the scroll, and the two go together.
+            //
+            // A trigger is 35px — 16px of label, 8px either side, and the 3px
+            // indicator. The list's own height is `h-8`, so the indicator normally
+            // paints outside the box and lands on the rule below it, which is the
+            // effect the variant wants. A scroll container cannot allow that: it
+            // clips on all four edges, and declaring one axis forces the other from
+            // `visible` to `auto`. So the strip both hid 2px of the indicator and
+            // grew a vertical scrollbar to offer the 2px back.
+            //
+            // Letting the box fit its content fixes both at once and keeps the
+            // horizontal scroll, which the active-link effect below still needs at
+            // the largest type scale.
+            //
+            // The variant prefix has to match. The list's height is
+            // `group-data-horizontal/tabs:h-8`, and `cn()` reads a prefixed class and
+            // a bare one as different properties — so a plain `h-auto` sat beside it
+            // and lost, which is the override trap the utils JSDoc describes.
+            className: "group-data-horizontal/tabs:h-auto overflow-x-auto",
           })}
         >
           {sections.map((section) => {

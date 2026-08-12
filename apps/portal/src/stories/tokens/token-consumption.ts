@@ -53,14 +53,14 @@ export const families: Family[] = [
   {
     "key": "color",
     "label": "Color",
-    "count": 91,
+    "count": 92,
     "unit": "colors",
-    "properties": 91,
+    "properties": 92,
     "bridge": {
       "namespace": "--color-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 1053,
+      "uses": 1040,
       "files": 77
     },
     "superseded": null,
@@ -153,26 +153,21 @@ export const families: Family[] = [
   {
     "key": "elevation",
     "label": "Elevation",
-    "count": 5,
+    "count": 4,
     "unit": "levels",
-    "properties": 5,
+    "properties": 4,
     "bridge": {
       "namespace": "--shadow-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 52,
+      "uses": 51,
       "files": 33
     },
     "superseded": null,
     "systemRefs": 0,
     "systemConsumers": [],
-    "portalRefs": 1,
-    "portalConsumers": [
-      {
-        "file": "apps/portal/src/components/ShellPreview.tsx",
-        "refs": 1
-      }
-    ],
+    "portalRefs": 0,
+    "portalConsumers": [],
     "live": true
   },
   {
@@ -209,7 +204,7 @@ export const families: Family[] = [
       "namespace": "--spacing-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 620,
+      "uses": 619,
       "files": 68
     },
     "superseded": null,
@@ -249,32 +244,19 @@ export const families: Family[] = [
       "namespace": "--radius-*",
       "kind": "theme",
       "file": "packages/dbui/src/tokens/tokens.css",
-      "uses": 59,
-      "files": 37
+      "uses": 38,
+      "files": 27
     },
     "superseded": null,
-    "systemRefs": 5,
+    "systemRefs": 1,
     "systemConsumers": [
-      {
-        "file": "packages/dbui/src/components/ui/input-group.tsx",
-        "refs": 3
-      },
-      {
-        "file": "packages/dbui/src/components/ui/native-select.tsx",
-        "refs": 1
-      },
       {
         "file": "packages/dbui/src/components/ui/sonner.tsx",
         "refs": 1
       }
     ],
-    "portalRefs": 1,
-    "portalConsumers": [
-      {
-        "file": "apps/portal/src/components/docs/DocAccordion.tsx",
-        "refs": 1
-      }
-    ],
+    "portalRefs": 0,
+    "portalConsumers": [],
     "live": true
   },
   {
@@ -363,7 +345,7 @@ export const scalars: Scalar[] = [
     "bridges": [
       {
         "namespace": "--spacing",
-        "uses": 878
+        "uses": 877
       }
     ],
     "live": true
@@ -378,7 +360,7 @@ export const scalars: Scalar[] = [
     "bridges": [
       {
         "namespace": "--spacing",
-        "uses": 878
+        "uses": 877
       }
     ],
     "live": true
@@ -401,18 +383,8 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": "packages/dbui/src/tokens/tokens.css",
     "overriddenTo": "calc(var(--db-spacing-unit) * var(--db-density-scalar))",
     "origin": "override",
-    "uses": 878,
+    "uses": 877,
     "files": 78
-  },
-  {
-    "namespace": "--shadow-*",
-    "probe": "--shadow-lg",
-    "tailwindValue": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
-    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
-    "overriddenTo": "var(--db-elevation-lg)",
-    "origin": "override",
-    "uses": 86,
-    "files": 33
   },
   {
     "namespace": "ring and outline width",
@@ -421,7 +393,7 @@ export const tailwind: TailwindNamespace[] = [
     "overriddenIn": null,
     "overriddenTo": null,
     "origin": "utility",
-    "uses": 48,
+    "uses": 49,
     "files": 24
   },
   {
@@ -433,6 +405,16 @@ export const tailwind: TailwindNamespace[] = [
     "origin": "tailwind",
     "uses": 33,
     "files": 20
+  },
+  {
+    "namespace": "--shadow-*",
+    "probe": "--shadow-lg",
+    "tailwindValue": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+    "overriddenIn": "packages/dbui/src/tokens/tokens.css",
+    "overriddenTo": "initial",
+    "origin": "override",
+    "uses": 32,
+    "files": 16
   },
   {
     "namespace": "--default-transition-duration",

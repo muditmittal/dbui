@@ -167,7 +167,7 @@ export const demos: Record<string, React.ReactNode> = {
       */}
       <Toggle defaultPressed>Default</Toggle>
       <FilterToggle>Filter</FilterToggle>
-      <Toggle variant="pill">Tables</Toggle>
+      <Toggle variant="filter">Tables</Toggle>
       <Toggle size="icon-md" variant="icon" aria-label="Pin table">
         <Pin />
       </Toggle>

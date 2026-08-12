@@ -957,9 +957,10 @@ export function TokensDoc() {
                 {...GUIDANCE_PROPS}
                 dos={[
                   <>
-                    Read the scale by what the surface is doing, not by how far off the page it sits.
-                    <Code>xs</Code> is an edge still on the page and <Code>xl</Code> has taken the
-                    page over. Where two overlap, the higher step goes on top.
+                    Ask for the role rather than a depth. <Code>control</Code> is a control or a card
+                    at rest, <Code>raised</Code> is something picked up, <Code>popover</Code> floats
+                    over content and <Code>modal</Code> has taken the page. They match the layer
+                    names, so a menu is <Code>layer-popover</Code> and <Code>shadow-popover</Code>.
                   </>,
                   <>
                     Expect this to be the one family with two value sets. The geometry is identical
@@ -978,9 +979,10 @@ export function TokensDoc() {
                     <Code>xs</Code>.
                   </>,
                   <>
-                    Reach for a <Code>shadow-*</Code> step outside this list.{" "}
-                    <Code>shadow-2xs</Code>, <Code>shadow-2xl</Code> and <Code>shadow-inner</Code>{" "}
-                    are Tailwind&rsquo;s own and have no token behind them.
+                    Reach for a size. <Code>shadow-sm</Code> and its siblings are closed and emit no
+                    shadow at all, which is deliberate — Tailwind&rsquo;s values disagree with these
+                    at every step, so a missed call site renders nothing rather than something
+                    plausible and wrong.
                   </>,
                 ]}
               />

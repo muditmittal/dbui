@@ -45,16 +45,13 @@ export default function ConstraintsPage() {
   return (
     <>
       <DocHeader title="Constraints">
-        What the system will not do. People act on this data and are accountable for it, so each
-        line below closes off a way the interface could mislead them.
+        What a screen owes the person acting on the data.
       </DocHeader>
 
       <Para>
-        Craft is not here. <DocLink href="/docs/principles">Design principles</DocLink> decides
-        between two designs that are both defensible; a constraint is the line that does not bend
-        when a deadline argues with it. Nothing below is machine-checked — no rule in the React
-        linter reads structure, behavior or intent — so each one names the observation that proves
-        it was crossed, and a person is what sees it.
+        <DocLink href="/docs/principles">Design principles</DocLink> choose between two defensible
+        designs; these rule one out. Most is beyond what a component can enforce — we name it
+        because the screens that break it are built from this system.
       </Para>
 
       <DocAccordion variant="card" className="mt-10">
@@ -75,9 +72,9 @@ export default function ConstraintsPage() {
                 <span className="type-title-4 text-text-strong">{constraint.statement}</span>
                 {/* A span because the trigger's header is a flex column, which
                     puts it outside the docs column's `p, li, figcaption`
-                    default. It is still the paragraph a reader reads before
-                    opening anything, so it takes the measure explicitly. */}
-                <span className="type-paragraph measure text-text-subtle">
+                    default. No `measure` — the card is already the narrower
+                    container, and two caps compound. See PrinciplesDoc. */}
+                <span className="type-paragraph text-text-subtle">
                   {constraint.meaning}
                 </span>
               </>

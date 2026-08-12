@@ -114,7 +114,7 @@ function PromptInput({
       onMouseDown={handleMouseDown}
       className={cn(
         // cursor-text because the whole box behaves as the field.
-        "flex w-full cursor-text flex-col gap-4 shape-container-lg bg-surface-base p-4 shadow-xs",
+        "flex w-full cursor-text flex-col gap-4 shape-container-lg bg-surface-base p-4 shadow-control",
         accent === "default" && "border border-border-base focus-within:border-focus-ring",
         // The ring goes on the container, not the textarea. The textarea has no
         // visible edge of its own, so a ring around it drew a second box inside

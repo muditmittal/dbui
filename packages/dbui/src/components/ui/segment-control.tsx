@@ -31,14 +31,14 @@ type SegmentControlVariantProps = {
  * Figma component: "Segment Control" (2 variants × 2 sizes)
  *
  * ── Default variant ──
- * Container: bg-surface-inset, rounded-1, p-1 (Default) / p-0.5 (Small), gap-1 / gap-0.5
- * Selected item: bg-surface-base (surface-strong under dark), shadow-xs, NO border, rounded-1
+ * Container: bg-surface-inset, shape-control-lg (Default) / shape-control (Small), p-1 / p-0.5, gap-1 / gap-0.5
+ * Selected item: bg-surface-base (surface-strong under dark), shadow-control, NO border, matches the container's corner
  * Unselected items: transparent, no border, no shadow
  *
  * ── Outline variant ──
- * Container: bg-surface-base, rounded-1, shadow-xs, p-0, gap-0
+ * Container: bg-surface-base, rounded-1, shadow-control, p-0, gap-0
  * Selected item: bg-action-selected-base, border-border-strong (blue), NO rounded corners (flush)
- * Unselected items: no fill, border-input-border-base (grey dividers), shadow-xs, NO rounded corners
+ * Unselected items: no fill, border-input-border-base (grey dividers), shadow-control, NO rounded corners
  *
  * Single-select radio-group semantics by default: exactly one item is active
  * at all times. Clicking the active item is a no-op (cannot toggle off all
@@ -100,7 +100,16 @@ function SegmentControl({
  data-orientation={orientation}
  onValueChange={handleValueChange}
  className={cn(
-        "group/segment-control inline-flex items-center rounded-1",
+        // The track follows the control pair rather than a fixed corner: a pill at
+        // the default size, 4px small. The outline variant keeps `shape-control`
+        // whatever the size, because its cells are flush and a pill track around
+        // square cells shows the track's corner through the gap.
+        "group/segment-control inline-flex items-center",
+        variant === "outline"
+          ? "shape-control"
+          : size === "sm"
+            ? "shape-control"
+            : "shape-control-lg",
         // Default variant: recessed track with padding and gap.
         //
         // `surface-inset`, not `surface-subtle`. The selected item is
@@ -114,7 +123,7 @@ function SegmentControl({
           size === "sm" ? "p-0.5 gap-0.5" : "p-1 gap-1",
         ],
         // Outline variant: white bg container, no padding/gap, with shadow
- variant === "outline" && "bg-surface-base p-0 gap-0 shadow-xs",
+ variant === "outline" && "bg-surface-base p-0 gap-0 shadow-control",
  orientation === "vertical" && "flex-col items-stretch",
  className
       )}
@@ -147,7 +156,11 @@ function SegmentControlItem({
  data-slot="segment-control-item"
  onPressedChange={onPressedChange}
  className={cn(
-        "relative flex-1 inline-flex items-center justify-center gap-1",
+        // No `flex-1`. It is `flex: 1 1 0%`, so every segment grew from a zero
+        // basis to the same width and the widest label decided that width —
+        // which left shorter labels with more side padding than px-* asks for.
+        // Segments size to their content instead, and the padding stays put.
+        "relative inline-flex items-center justify-center gap-1",
         "type-label whitespace-nowrap",
         "transition-colors outline-none select-none",
         "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:shadow-focus focus-visible:z-raised",
@@ -160,19 +173,24 @@ function SegmentControlItem({
         // ramp in both themes — the whitest step under light, the darkest under
         // dark — so on a subtle track it sits above the backdrop in light and
         // below it in dark. The dark: step moves it to surface-strong, the
-        // ramp's light end under dark. shadow-xs cannot cover the difference:
+        // ramp's light end under dark. shadow-control cannot cover the difference:
         // it is a 1px hard edge, and in dark it is black at 45%, which deepens
         // the recess rather than lifting the pill out of it.
-        // `shape-control` at every size, deliberately not the size-aware pair.
-        // A segment is not a standalone control with a pill edge — it is one cell
-        // of a track, and the outline variant's cells are flush with shared
-        // borders. Pointing these at `control-lg` would turn them into pills the
-        // day that role is repointed, which is wrong in both variants. Naming the
-        // role still gets them off the raw primitive.
+        // The size-aware pair, so a segment matches the track it sits in — a pill
+        // inside a pill at the default size, 4px inside 4px when small.
+        //
+        // This read `shape-control` at every size, on the argument that a segment is
+        // a cell of a track rather than a standalone control and should not take a
+        // pill edge. The outline half of that argument still holds and is honored
+        // below, where flush cells share borders. The recessed half did not: the
+        // selected segment there is a free-floating fill with its own shadow, and a
+        // 4px fill inside a pill track leaves two visibly different corners a few
+        // pixels apart.
         !isOutline && [
-          "shape-control text-text-subtle",
+          resolvedSize === "sm" ? "shape-control" : "shape-control-lg",
+          "text-text-subtle",
           "hover:text-text-base",
-          "aria-pressed:bg-surface-base aria-pressed:shadow-xs aria-pressed:text-text-base",
+          "aria-pressed:bg-surface-base aria-pressed:shadow-control aria-pressed:text-text-base",
           "dark:aria-pressed:bg-surface-strong",
         ],
 
@@ -181,12 +199,12 @@ function SegmentControlItem({
         // Pressed item also overlaps -1px on the RIGHT and gets z-raised so its 4 blue
         // borders sit on top of the adjacent grey ones at every edge.
  isOutline && [
-          "shape-square border border-input-border-base shadow-xs",
+          "shape-square border border-input-border-base shadow-control",
           "hover:bg-action-default-hover",
           "active:bg-action-selected-press",
           "not-first:-ml-px",
-          "first:rounded-l-1",
-          "last:rounded-r-1",
+          "first:shape-l-control",
+          "last:shape-r-control",
           "aria-pressed:bg-action-selected-base aria-pressed:border-border-strong aria-pressed:shadow-none aria-pressed:text-text-strong",
           "aria-pressed:relative aria-pressed:z-raised aria-pressed:not-last:-mr-px",
         ],

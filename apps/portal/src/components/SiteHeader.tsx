@@ -45,10 +45,10 @@ const NAV = [
  * The sandbox passes `null` to say that no entry is the current page.
  *
  * Deliberately not a rule that compares the whole URL. `?path=` is the only
- * query in the portal that selects a different page; `?theme=` and `?scale=`
- * are display preferences that apply to every route, and a URL comparison
- * would drop the highlight on `/?theme=dark` — a link this repo hands out for
- * screenshots.
+ * query in the portal that selects a different page; `?theme=`, `?mode=` and
+ * `?scale=` are display preferences that apply to every route, and a URL
+ * comparison would drop the highlight on `/?theme=dark` — a link this repo
+ * hands out for screenshots.
  *
  * `isCurrent` decides both the accent fill and `aria-current`, from one call.
  * They are two renderings of one fact, and the reason to keep them on the same

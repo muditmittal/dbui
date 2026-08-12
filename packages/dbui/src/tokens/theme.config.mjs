@@ -125,6 +125,36 @@ export const primitives = {
       500: "#A8796D", 600: "#8C6156", 700: "#6F4F46", 800: "#533D37", 900: "#3A2D2A",
     },
   },
+  /* Brand — the accent a theme reaches for when its accent is the brand rather
+   * than a status hue. One consumer today: the One theme's three `*-accent`
+   * tokens. Core's accent is `status.blue`, which is why this family is not in
+   * the base and is not a fifth status sentiment.
+   *
+   * `500` is #FF5F46, and it did not come from nowhere: it is already in the
+   * system as `--ai-gradient-end` in `globals.css`, hard-coded three times over
+   * with no token behind it. `notes/2026-08-11-multi-theme-architecture.md`
+   * flags exactly that — "nine are the AI gradient, which is authored as three
+   * hexes in globals.css and has no token behind it either" — so naming it here
+   * closes a gap that predates theming rather than opening a new one. The
+   * gradient's other two stops are already ramp steps: its start is
+   * `status.blue.500` and `--icon-folder` is `status.blue.400`.
+   *
+   * The other nine steps are derived, not picked. #FF5F46 measures H8 S100 L64,
+   * and the lightness profile follows `status.red` and `viz.orange` so the ramp
+   * reads as their sibling. Every step One consumes was contrast-checked against
+   * the surface it lands on: `700` on white is 8.00:1, `400` on warm.900 is
+   * 8.04:1, and both borders clear 3:1.
+   *
+   * NOT in Figma yet. This is the one part of One that adds a name rather than a
+   * value, so `verify-token-sync` will report ten primitives the Figma file does
+   * not have until they are added there. That report is correct — do not silence
+   * it. */
+  brand: {
+    orange: {
+      "050": "#FFF7F5", 100: "#FFEFEB", 200: "#FFD5CC", 300: "#FFB7A8", 400: "#FF8E7A",
+      500: "#FF5F46", 600: "#CC3119", 700: "#9C200D", 800: "#691407", 900: "#420D05",
+    },
+  },
   base: { white: "#FFFFFF", black: "#000000" },
 }
 
@@ -586,11 +616,43 @@ export const shape = {
    * Naming them apart is also what keeps this a no-op: every component keeps the
    * corner it has today, so there is nothing to review and nothing to regress.
    *
-   * The 12px band is deliberately absent. It is not a third tier — it is a card's
-   * INNER corners, which are 12px because they nest inside a 16px one, plus the
-   * grouped-control corners in button-group and split-button. Neither is a
-   * container decision, so neither gets a container role. */
+   * The 12px band was absent on the argument that it was a card's INNER corners
+   * plus the grouped-control corners in button-group and split-button, and so was
+   * derived rather than decided. Half of that is gone: button-group is retired and
+   * split-button's text segment now takes `control-lg` to match the pill buttons
+   * beside it. What is left is ten sites in nine components — a card's header,
+   * footer and both image caps, an alert dialog's footer, Empty's icon, a field
+   * label wrapping a field, an accordion trigger and an Item row — which is a band
+   * being used, not a rounding error. Unnamed, every one of them had to write
+   * `rounded-3` and reach past the role layer to do it.
+   *
+   * `-md` breaks this file's own rule that a role names a job and never a
+   * measurement, and the rule is a good one: `radius-lg` meant 12px while
+   * `space-lg` meant 24px, which is the collision the role layer exists to
+   * prevent. It is taken here anyway, with eyes open, because the alternative
+   * names were worse. `nested` and `inner` describe the seven concentric sites and
+   * lie about the accordion trigger and the Item row, which nest inside nothing.
+   * A role that has to be explained before it can be used correctly is not
+   * clearer than one that is honest about being the middle container size.
+   *
+   * The exposure is narrower than the rule implies. `md` is a Tailwind radius key
+   * the bridge closes, and it stays closed — this mints `shape-container-md`, not
+   * `rounded-md`, so a missed class still renders square rather than plausibly
+   * wrong. The name only collides in prose, where `container-md` sits between two
+   * roles whose sizes are written down beside it. */
   container: 2,
+  "container-md": 3,
+  /* NOTE, and a naming question left open: `container-lg` is also the corner the
+   * two GROWING controls take — Textarea and Combobox's chips input. They cannot
+   * take `control-lg`, because a pill on a box that grows is a stadium, and 4px
+   * beside pill siblings reads as unrounded rather than as deliberate contrast.
+   * 16px is the value that looks intended at any height, and this is the only
+   * role that carries it.
+   *
+   * So a theme that moves card and drawer corners moves those two controls with
+   * them, which is the coupling roles exist to prevent. Two sites did not justify
+   * an eighth token; if a theme ever needs them to diverge, that is the signal to
+   * split this role and rename the halves. */
   "container-lg": 4,
   pill: "full",
 }
@@ -677,16 +739,25 @@ export const bridge = {
     steps: [0, 1, 2],
     defaults: { "default-border-width": 1 },
   },
-  /* Elevation is the family that was authored, generated, documented and read by
-   * nothing. Every `shadow-*` in the tree resolved to Tailwind's own scale, so
-   * the tokens described one system and the screen rendered another — the whole
-   * reason DBUI's overlays never matched DuBois. This line is what closes that:
-   * the stop names are shared, so `shadow-lg` finally reads `--db-elevation-lg`.
+  /* Elevation was authored, generated, documented and read by nothing: every
+   * `shadow-*` in the tree resolved to Tailwind's own scale, so the tokens described
+   * one system while the screen rendered another. Bridging closed that. Renaming the
+   * stops to roles is what stops the map from living in people's heads.
    *
-   * Nothing is closed. `2xs`, `2xl` and `inner` have no call sites, and leaving
-   * them on Tailwind's values keeps this change to elevation rather than turning
-   * it into a refusal of classes nobody writes. */
-  shadow: { family: "elevation", steps: ["xs", "sm", "md", "lg", "xl"] },
+  /* Closed, and this is the half that matters. The stops are role names now, so
+   * every `shadow-xs` through `shadow-xl` would otherwise fall straight back to
+   * Tailwind's own values — which disagree with these at every step, so a call site
+   * the rename missed would render a plausible wrong shadow forever. Closed, it
+   * renders none, which someone notices. Same bargain radius made.
+   *
+   * `2xs`, `2xl` and `inner` are closed too. They were never ours and nothing reads
+   * them, and leaving them open would keep three sizes spellable in a family that no
+   * longer has sizes. */
+  shadow: {
+    family: "elevation",
+    steps: ["control", "raised", "popover", "modal"],
+    close: ["xs", "sm", "md", "lg", "xl", "2xs", "2xl", "inner"],
+  },
   /* Motion was the last family authored in code and unreachable from a class.
    * Every other namespace here already stands behind its tokens, so `shadow-lg`
    * read ours while `ease-standard` read nothing and the one call site that
@@ -986,23 +1057,43 @@ export const type = {
  * alphas the two orders composite identically; the order is documented because
  * the next person reading the Figma panel will see them the other way round. */
 export const elevation = {
-  xs: {
+  /**
+   * Roles, not sizes, and named to match the layer family so the two read as one
+   * vocabulary: a menu is `layer-popover` and `elevation-popover`, a dialog is
+   * `layer-modal` and `elevation-modal`.
+   *
+   * The names came out of what the stops were already used for rather than being
+   * imposed on them — 24 call sites on one stop for controls and resting cards,
+   * nine on another for every popup, four on a third for dialog, drawer and alert.
+   * The map existed; it just was not written down anywhere.
+   *
+   * `raised` shares its word with `layer-raised` and does not co-occur with it. A
+   * card on hover takes this and no layer, a pinned table header takes that layer
+   * and no shadow. The shared word means "above its context" in both, which is the
+   * point, but it is not a pairing.
+   *
+   * The old `md` retired with the rename. It had exactly one consumer — the navbar's
+   * New button, a control lifted off the rail — and at that weight the button
+   * out-lifted a hovered card, which is hard to defend. It reads `raised` now, and a
+   * stop with one user is usually the stop being wrong rather than the user being
+   * special.
+   *
+   * Geometry is identical per mode and only the alpha moves. An opaque-black shadow
+   * tuned for white draws nothing on a near-black surface.
+   */
+  control: {
     light: "0 1px 0 0 rgba(0, 0, 0, 0.05)",
     dark: "0 1px 0 0 rgba(0, 0, 0, 0.45)",
   },
-  sm: {
+  raised: {
     light: "0 2px 3px -1px rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.02)",
     dark: "0 2px 3px -1px rgba(0, 0, 0, 0.45), 0 1px 0 0 rgba(0, 0, 0, 0.26)",
   },
-  md: {
-    light: "0 3px 6px 0 rgba(0, 0, 0, 0.05)",
-    dark: "0 3px 6px 0 rgba(0, 0, 0, 0.45)",
-  },
-  lg: {
+  popover: {
     light: "0 2px 16px 0 rgba(0, 0, 0, 0.08)",
     dark: "0 2px 16px 0 rgba(0, 0, 0, 0.61)",
   },
-  xl: {
+  modal: {
     light: "0 8px 40px 0 rgba(0, 0, 0, 0.13)",
     dark: "0 8px 40px 0 rgba(0, 0, 0, 0.87)",
   },
@@ -1172,4 +1263,294 @@ export const motion = {
   },
 }
 
-export default { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion, layer }
+/* ══════════════════════════════════════════════════════════════════════════
+ * THEMES — the third axis, after mode and the density/type dials.
+ *
+ * ── The invariant ─────────────────────────────────────────────────────────
+ *
+ * A THEME VARIES VALUES. IT NEVER VARIES NAMES.
+ *
+ * If a theme carries a token another lacks, they are not themes — they are two
+ * systems sharing a word, and no component can render in both. That rule is
+ * what buys one component set, one Figma construction and one linter allowlist
+ * across N aesthetics, and the generator throws rather than emitting a theme
+ * that breaks it.
+ *
+ * ── What a theme is, structurally ─────────────────────────────────────────
+ *
+ * A DIFF against the default. Everything above this comment is the base; a
+ * theme states only what it changes, so "what does this theme actually do?" is
+ * answerable by reading the theme rather than by diffing 85 values. It may
+ * override five things and nothing else:
+ *
+ *   ramp        which PRIMITIVE RAMP drives the chrome — see below
+ *   semantics   any name already in `semantics`, either mode
+ *   shape       any role already in `shape`
+ *   type.family `text` and `mono` — the FACE, never the ramp steps
+ *   elevation   any stop already in `elevation`, either mode
+ *
+ * ── `ramp` is the lever that makes a theme cheap ──────────────────────────
+ *
+ * Every semantic already names which primitive ramp drives it: `surface-base`
+ * is `interface.cool.900` in dark, `text-subtle` is `interface.neutral.600` in
+ * light. A `ramp` entry rewrites one ramp to another everywhere it is
+ * referenced, in both plain refs and inside alpha refs, so re-skinning the
+ * whole of chrome is one declaration instead of forty value overrides.
+ *
+ * It is a REWRITE and not a filter: it catches every reference to the ramp,
+ * including the two `viz-sequential-*` stops that borrow the chrome ramp for
+ * the pale end of their scale. That is the behavior worth having — a sequential
+ * scale whose lightest cell stayed cool on a warm page would read as a mistake.
+ *
+ * `semantics` is applied AFTER `ramp`, so a theme can rebind the ramp and still
+ * correct the handful of tokens that do not follow from it. That ordering is
+ * what lets One be four declarations rather than forty.
+ *
+ * Space, density, motion, the type ramp steps, the icon set and component
+ * structure are deliberately NOT themeable. Density earns the hardest no: if
+ * spacing forked per theme, every layout, screenshot and spec would fork with
+ * it and nothing learned in one would transfer. Density stays what it is — an
+ * orthogonal dial any theme can turn, not a property of a theme.
+ *
+ * ── How it ships ──────────────────────────────────────────────────────────
+ *
+ * Each theme emits scoped to `[data-theme="<name>"]`, and the default ALSO
+ * lands in `:root` so a product that imports one file needs no attribute. The
+ * portal loads every theme and sets the attribute; a product picks one at build
+ * time and ignores it. Same authoring either way.
+ *
+ * The attribute is unprefixed by `:root` when emitted, exactly like the type
+ * contexts, so Core and DuBois can sit side by side in one page scoped to
+ * different subtrees — which is what a migration surface needs, and what makes
+ * the switch provable rather than assertable.
+ *
+ * Mode and theme COMPOSE rather than compete. `.dark` and `[data-theme]` are
+ * one class against one attribute — equal specificity — so a theme's dark block
+ * has to out-specify its own light block to survive dark mode. The generator
+ * pairs them (`.dark [data-theme=x]`, `[data-theme=x].dark`) for that reason.
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+/** The attribute a theme activates on. Not `data-type-scale`, which is the
+ * portal's root-font-size dial, and not the `dark` class, which is the mode. */
+export const themeAttr = "data-theme"
+
+/** The theme whose values land in `:root`. Everything above is authored as it. */
+export const defaultTheme = "core"
+
+export const themes = {
+  /* Core is the base, so it declares no overrides — its values are the ones
+   * this file states directly. The empty object is not a placeholder: it is
+   * what "the default is the source, not a diff against something else" looks
+   * like, and it keeps `:root` byte-identical to a single-theme emission. */
+  core: {
+    label: "Core",
+    description: "The system's own aesthetic. Neutral chrome, Figtree, pill controls.",
+  },
+
+  /* DuBois — the legacy Databricks aesthetic, present so people can migrate off
+   * it and so the theme axis has a stress test rather than a sibling.
+   *
+   * It is deliberately the FIRST theme after Core for that reason. Omni and One
+   * are ramp swaps and would prove almost nothing; DuBois is the only theme that
+   * can invalidate the model, because it differs in face and corner as well as
+   * color. The question it had to answer was precise — can DuBois be expressed
+   * without adding a token name Core lacks? It can, and the three groups below
+   * are the whole answer.
+   *
+   * What it does NOT change is as much of the point. The chrome ramp stays
+   * neutral/cool, because legacy DuBois was grey-chromed too. Elevation stays,
+   * because Core's five stops were read out of the production DuBois library in
+   * the first place and were never Core's own invention. Links stay, because
+   * `link-base` is already `status.blue.600` — the exact legacy link color. A
+   * theme that changed those would be changing them to look busy. */
+  dubois: {
+    label: "DuBois",
+    description: "The legacy product aesthetic. Blue primary, SF Pro, 4px controls.",
+
+    /* 1. PRIMARY IS BLUE.
+     *
+     * Core's primary is the near-black/near-white pair, which is the single
+     * loudest thing about its aesthetic; legacy DuBois fills its primary button
+     * with `status.blue.600` and that is the single loudest thing about that
+     * one. Nothing else in the color system has to move for the switch to read.
+     *
+     * The state ladder follows `action-positive` and `action-negative` rather
+     * than Core's own primary, which washes one ink with alpha. Those two are
+     * already the pattern for a SATURATED fill: step down the ramp in light,
+     * step UP in dark. Alpha-washing a blue over a white page lightens it toward
+     * grey, which is exactly the read a blue primary is here to avoid.
+     *
+     * Dark inverts the same way Core's does — a light fill with dark type — so
+     * `action-label-inverse-*` needs no override in either mode. White on
+     * #2272B4 measures 5.08:1; #11171C on #8ACAFF measures 10.15:1. */
+    semantics: {
+      "action-primary-base": { light: "status.blue.600", dark: "status.blue.400" },
+      "action-primary-hover": { light: "status.blue.700", dark: "status.blue.300" },
+      "action-primary-press": { light: "status.blue.800", dark: "status.blue.200" },
+
+      /* The ring is blue too, and is deliberately NOT the same blue as the fill.
+       *
+       * Core learned this the expensive way: the ring used to sit on the exact
+       * values `action-primary-base` carried in the same mode, so the most
+       * important control in the system had a focus ring the color of its own
+       * fill and the treatment vanished on the one button most likely to be
+       * tabbed to. Only a 1px offset separated them, and an offset is a gap
+       * rather than a ring. Pointing DuBois's ring at `blue.600` would rebuild
+       * that defect inside the theme that was supposed to prove the axis works.
+       *
+       * So the ring steps off the fill in both modes, in the direction that has
+       * contrast: light goes DARKER (blue.700, 7.99:1 on white), dark goes
+       * LIGHTER (blue.300). `focus-ring-offset` is the gap and stays the
+       * surface color in both modes, so it needs no override. */
+      "focus-ring": { light: "status.blue.700", dark: "status.blue.300" },
+    },
+
+    /* 2. THE FACE IS SF.
+     *
+     * The two stacks already existed in `type.legacy` below, where they were
+     * kept alive purely so the linter would not fail components that had not
+     * migrated off them yet. They are the same strings, now with a consumer.
+     *
+     * `-apple-system` carries this rather than the quoted family names. "SF Pro
+     * Text" is not a name a browser can resolve to an installed face on most
+     * machines, while `-apple-system` and `ui-monospace` are the sanctioned
+     * hooks into San Francisco and SF Mono. The quoted names lead so a machine
+     * that DOES have them licensed and installed uses them; the keywords behind
+     * them are what actually fires on macOS. Off Apple hardware this degrades to
+     * the platform UI face, which is the honest answer — SF is not ours to
+     * serve, and a theme that shipped a webfont for it would be shipping a
+     * licensing problem rather than an aesthetic.
+     *
+     * Only the FACE moves. The ramp steps do not, and that split is load
+     * bearing: 13/16 stays 13/16 in DuBois, so every measurement, screenshot and
+     * spec taken in Core still describes the theme beside it. A theme that
+     * retuned the ramp would fork all of them. */
+    type: {
+      family: {
+        text: '"SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        mono: '"SF Mono", SFMono-Regular, ui-monospace, "Cascadia Code", "Fira Code", monospace',
+      },
+    },
+
+    /* 3. BOTH CONTROL HEIGHTS TAKE 4px.
+     *
+     * This is the case the role layer was built for, called by name in `shape`'s
+     * own comment above: Core makes the 32px control a pill and holds the 24px
+     * one at 4px, and DuBois puts them back together. Two roles could express
+     * that and one could not — which is why `control` and `control-lg` are split
+     * by control height rather than collapsed into a single `control`.
+     *
+     * It is also the cheapest possible proof that the role layer works. Every
+     * button, input, select, toggle, combobox and split button in the library
+     * changes corner, and not one component file is touched: they bind
+     * `shape-control` / `shape-control-lg` and the theme reassigns what those
+     * resolve to.
+     *
+     * `pill` is deliberately left alone, which is the other half of the same
+     * proof. It sits on `full` in Core alongside `control-lg`, and the two look
+     * like one decision until a theme pulls them apart — DuBois has 4px buttons
+     * and round avatars. Collapsing them would have lost that.
+     *
+     * The container roles stay too. Legacy dialogs and cards were not square,
+     * and changing them would be an aesthetic opinion this theme has no source
+     * for. `square` cannot be reassigned at all — the generator throws — because
+     * flush control groups depend on it being exactly zero. */
+    shape: {
+      control: 1,
+      "control-lg": 1,
+    },
+  },
+
+  /* One — the warm-toned sibling, and the theme that pays for the `ramp` lever.
+   *
+   * DuBois proved the axis could carry an aesthetic that differs in face and
+   * corner. One proves the cheap path: it re-skins every neutral in the system
+   * and does it in FOUR declarations, because the chrome was already named by
+   * ramp rather than by value. Written as overrides it would have been forty,
+   * and the answer to "what does this theme do?" would have been a diff.
+   *
+   * `interface.warm` has had all ten stops and no consumer since the palette was
+   * written. It was One, waiting. */
+  one: {
+    label: "One",
+    description: "Warm neutrals, DM Sans, brand orange accent. Core's shapes.",
+
+    /* 1. THE CHROME GOES WARM.
+     *
+     * Both entries, because the two ramps are one decision seen from two modes:
+     * `interface.neutral` drives light chrome and `interface.cool` drives dark,
+     * and a warm theme that kept a cool dark mode would be warm only half the
+     * time. The warm ramp runs the same direction as both — 050 near-white to
+     * 900 near-black — so every semantic keeps the tonal relationship it was
+     * tuned with and only the hue moves.
+     *
+     * Two consequences fall out of this rather than being declared, and both
+     * are the ones asked for:
+     *
+     *   • PRIMARY STAYS BLACK-ISH. `action-primary-base` is the deepest chrome
+     *     stop by construction, so it lands on `warm.900` (#1B1612) in light and
+     *     `warm.200` in dark — the deepest tone of the warm palette, with the
+     *     inversion Core already makes. No override.
+     *   • THE FOCUS RING STAYS OFF THE FILL. Core's ring is two stops off the
+     *     end of the ramp rather than at it, precisely so it never matches the
+     *     primary fill. Rebinding the ramp carries that reasoning across intact:
+     *     warm.700 ring against a warm.900 fill. DuBois had to restate this by
+     *     hand because it changed hue without changing ramp; One does not.
+     *
+     * `surface-base` stays `base.white` in light, which is correct rather than
+     * an oversight — white is not a neutral grey, and Core does the same. The
+     * warmth arrives on `surface-subtle` and everything drawn on top. */
+    ramp: {
+      "interface.neutral": "interface.warm",
+      "interface.cool": "interface.warm",
+    },
+
+    /* 2. THE ACCENT IS THE BRAND ORANGE.
+     *
+     * The three `*-accent` tokens and nothing else. They are the only place the
+     * system says "this is the accent", which is what makes this three lines
+     * instead of a hunt.
+     *
+     * Links deliberately stay blue. `link-*` is its own family carrying its own
+     * state ladder, and blue-for-navigable is a web-wide affordance rather than
+     * a house style — a theme is the wrong altitude to overrule it. The two are
+     * meant to be separable, and One is the theme that separates them.
+     *
+     * Each stop matches the role Core's blue plays at the same name, so the
+     * accent family keeps its internal shape: a pale tint for surface, the deep
+     * end for text, the middle for a border. */
+    semantics: {
+      "surface-accent": { light: "brand.orange.200", dark: "brand.orange.900" },
+      "text-accent": { light: "brand.orange.700", dark: "brand.orange.400" },
+      "border-accent": { light: "brand.orange.600", dark: "brand.orange.500" },
+    },
+
+    /* 3. THE FACE IS DM.
+     *
+     * Both from Google Fonts, so unlike DuBois's San Francisco these have to be
+     * served — the portal loads them beside Figtree. A theme's face is a token;
+     * loading it is the consumer's job, and this is the theme that makes that
+     * distinction cost something.
+     *
+     * DM Mono ships 300/400/500 only, with no 600. `code` and `code-block` are
+     * the two styles that read it and both are weight 400, so nothing in the
+     * ramp asks for a weight it does not have — code emphasis is carried by
+     * color rather than weight, which is a rule that predates this theme. */
+    type: {
+      family: {
+        text: '"DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        mono: '"DM Mono", ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace',
+      },
+    },
+
+    /* 4. SHAPE IS CORE'S, so there is no fourth declaration.
+     *
+     * Stated here only because its absence is a decision: a 32px control is a
+     * pill and a 24px one is 4px, exactly as in Core. One is a re-skin, not a
+     * re-shape, and the two axes staying independent is the point — DuBois moves
+     * the corner and keeps the neutral, One moves the neutral and keeps the
+     * corner. Between them they cover both halves of the claim. */
+  },
+}
+
+export default { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion, layer, themes, themeAttr, defaultTheme }

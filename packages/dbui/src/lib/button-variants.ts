@@ -23,7 +23,7 @@ import { cva } from "./cva"
  * - Disabled: per-variant (filled → bg-surface-disabled + inverse label, non-filled → transparent + text-text-disabled)
  * - Focus: filled → shadow-focus (white gap + blue ring), non-filled → border-2 border-focus-ring
  * - Focus on Danger: uses border-focus-ring (blue) NOT border-action-negative-base — consistent system focus ring
- * - Shadow: shadow-xs on filled/bordered variants (not ghost/link)
+ * - Shadow: shadow-control on filled/bordered variants (not ghost/link)
  */
 export const buttonVariants = cva(
   [
@@ -39,14 +39,14 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: [
-          "shadow-xs border-transparent bg-action-primary-base text-action-label-inverse-base",
+          "shadow-control border-transparent bg-action-primary-base text-action-label-inverse-base",
           "hover:bg-action-primary-hover",
           "active:bg-action-primary-press",
           "focus-visible:shadow-focus focus-visible:overflow-clip",
           "disabled:bg-surface-disabled disabled:text-text-disabled disabled:shadow-none disabled:border-transparent",
         ].join(" "),
         outline: [
-          "shadow-xs border-input-border-base",
+          "shadow-control border-input-border-base",
           "hover:bg-action-default-hover hover:border-input-border-hover hover:text-action-label-hover",
           "active:bg-action-default-press active:border-focus-ring active:text-action-label-press",
           "focus-visible:border-2 focus-visible:border-focus-ring",
@@ -55,7 +55,7 @@ export const buttonVariants = cva(
         secondary: [
           // Resting text color is set in compoundVariants so it never competes
           // with the muted icon-only treatment.
-          "shadow-xs border-transparent bg-action-default-base",
+          "shadow-control border-transparent bg-action-default-base",
           "hover:bg-action-default-hover hover:text-action-label-hover",
           "active:bg-action-default-press active:text-action-label-press",
           "focus-visible:border-2 focus-visible:border-focus-ring",
@@ -77,14 +77,14 @@ export const buttonVariants = cva(
           "disabled:text-text-disabled disabled:bg-transparent",
         ].join(" "),
         destructive: [
-          "shadow-xs border-transparent bg-action-negative-base text-action-label-inverse-base",
+          "shadow-control border-transparent bg-action-negative-base text-action-label-inverse-base",
           "hover:bg-action-negative-hover",
           "active:bg-action-negative-press",
           "focus-visible:shadow-focus focus-visible:overflow-clip",
           "disabled:bg-surface-disabled disabled:text-text-disabled disabled:shadow-none disabled:border-transparent",
         ].join(" "),
         danger: [
-          "shadow-xs border-action-negative-base text-status-text-negative",
+          "shadow-control border-action-negative-base text-status-text-negative",
           "hover:border-action-negative-hover hover:text-action-negative-hover",
           "active:bg-action-negative-base/20 active:border-action-negative-press active:text-action-negative-press",
           "focus-visible:border-2 focus-visible:border-focus-ring focus-visible:shadow-none focus-visible:overflow-clip",

@@ -40,7 +40,7 @@ const TYPE_CSS = path.join(ROOT, "packages/dbui/src/tokens/type.css")
 const GLOBALS_CSS = path.join(ROOT, "packages/dbui/src/tokens/globals.css")
 const TOKENS_JSON = path.join(__dirname, "tokens.json")
 
-const { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion, layer } = cfg
+const { meta, primitives, semantics, scalars, space, radius, shape, bridge, size, border, type, elevation, motion, layer, themes, themeAttr, defaultTheme } = cfg
 const PREFIX = `--${meta.prefix}-` // --db-
 
 // ── ref resolution ───────────────────────────────────────────────────────────
@@ -66,6 +66,198 @@ const names = Object.keys(semantics)
 const varName = (n) => `${PREFIX}${n}`
 
 const theme = names.map((n) => `  --color-${n}: var(${varName(n)});`).join("\n")
+
+/* ── themes ──────────────────────────────────────────────────────────────────
+ *
+ * The third axis. Mode is `.dark`, the dials are scalars, and this is the set
+ * of AESTHETICS the same component library can render in.
+ *
+ * A theme is a DIFF against the default, and it may only restate a name the
+ * base already declares — asserted below rather than trusted, because the whole
+ * economy of the axis rests on it. One theme carrying a token another lacks
+ * would mean no component could render in both, and the failure would show up
+ * as a missing property at a call site rather than here.
+ *
+ * The four overridable groups are the four that legitimately vary. Space,
+ * density, motion and the type ramp steps are absent on purpose: a theme that
+ * moved those would fork every layout, screenshot and spec taken in another.
+ */
+const themeNames = Object.keys(themes ?? {})
+if (!themeNames.length) throw new Error("theme.config.mjs declares no themes. It must declare at least the default.")
+if (!themes[defaultTheme]) {
+  throw new Error(`defaultTheme "${defaultTheme}" is not one of themes (${themeNames.join(", ")})`)
+}
+
+/** `text` → `--db-font-family`, `mono` → `--db-mono-font-family`. */
+const FAMILY_VAR = { text: "font-family", mono: "mono-font-family" }
+
+const overridesOf = (t) => ({
+  ramp: t.ramp ?? {},
+  semantics: t.semantics ?? {},
+  shape: t.shape ?? {},
+  family: t.type?.family ?? {},
+  elevation: t.elevation ?? {},
+})
+
+/**
+ * Rebind a semantic's primitive ramp.
+ *
+ * The lever that makes a theme cheap. Every semantic already names the ramp
+ * that drives it — `surface-base` is `interface.cool.900` in dark — so
+ * rewriting one ramp prefix to another re-skins the whole of chrome from a
+ * single declaration. One is four declarations because of this; as value
+ * overrides it would have been forty, and unreadable as an intent.
+ *
+ * Applies inside alpha refs as well as plain ones, or a theme would rebind
+ * `action-primary-base` and leave its own hover and press behind on the old
+ * ramp — the failure would be a button that changes color when you point at it.
+ */
+const rebind = (value, ramp) => {
+  if (!ramp || !Object.keys(ramp).length) return value
+  const swap = (dotted) => {
+    for (const [from, to] of Object.entries(ramp)) {
+      if (dotted === from || dotted.startsWith(`${from}.`)) return to + dotted.slice(from.length)
+    }
+    return dotted
+  }
+  return isAlpha(value) ? { ...value, ref: swap(value.ref) } : swap(value)
+}
+
+/** A ramp is only bindable to a ramp that exists, and only from one that does. */
+const rampNames = new Set(
+  Object.entries(primitives).flatMap(([fam, ramps]) =>
+    fam === "base" ? [] : Object.keys(ramps).map((r) => `${fam}.${r}`)
+  )
+)
+
+/** The invariant, enforced. A theme varies values; it never varies names. */
+const assertKnown = (themeName, group, keys, known) => {
+  const unknown = keys.filter((k) => !known.includes(k))
+  if (unknown.length) {
+    throw new Error(
+      `theme "${themeName}" overrides ${group} the base does not declare: ${unknown.join(", ")}.\n` +
+        `A theme varies VALUES, never NAMES — every theme must declare the identical set, or no ` +
+        `component can render in both. Add the name to the base first, or correct the spelling.`
+    )
+  }
+}
+
+/* The portal's pre-paint script reads one `?theme=` param for both axes — it
+ * shipped as the color mode and `scripts/shot.mjs` still appends `?theme=dark`
+ * — and tells them apart by value. A theme called `light` or `dark` would make
+ * that undecidable, so the name is refused here rather than debugged there. */
+const MODE_WORDS = ["light", "dark"]
+for (const name of themeNames.filter((n) => MODE_WORDS.includes(n))) {
+  throw new Error(
+    `theme "${name}" collides with a color mode. "light" and "dark" name the mode axis, and the ` +
+      `portal's ?theme= param resolves the two by value — pick another name.`
+  )
+}
+
+for (const [name, t] of Object.entries(themes)) {
+  const o = overridesOf(t)
+  assertKnown(name, "semantics", Object.keys(o.semantics), names)
+  assertKnown(name, "shape roles", Object.keys(o.shape), Object.keys(shape ?? {}))
+  assertKnown(name, "type families", Object.keys(o.family), Object.keys(type.family))
+  assertKnown(name, "elevation stops", Object.keys(o.elevation), Object.keys(elevation))
+  // Both ends of a rebinding, because a typo on either silently does nothing:
+  // an unknown source matches no ref and the theme renders as the base, and an
+  // unknown target resolves to no hex and the generator throws somewhere less
+  // useful than here.
+  assertKnown(name, "ramp sources", Object.keys(o.ramp), [...rampNames])
+  assertKnown(name, "ramp targets", Object.values(o.ramp), [...rampNames])
+}
+
+/**
+ * A theme's full value set: the base, rebound onto the theme's ramps, with its
+ * own overrides laid over the top.
+ *
+ * The order is the contract. `ramp` is the broad stroke and `semantics` is the
+ * correction, so a theme can re-skin all of chrome and still fix the handful of
+ * tokens that do not follow from the ramp. Reversed, an override would be
+ * rewritten by the rebinding that was supposed to precede it.
+ *
+ * Merged per MODE rather than per token, so a theme can restate dark alone and
+ * inherit light.
+ */
+const effective = (themeName) => {
+  const o = overridesOf(themes[themeName])
+  const bound = (n) => ({
+    light: rebind(semantics[n].light, o.ramp),
+    dark: rebind(semantics[n].dark, o.ramp),
+  })
+  return {
+    semantics: Object.fromEntries(names.map((n) => [n, { ...bound(n), ...o.semantics[n] }])),
+    shape: { ...shape, ...o.shape },
+    family: { ...type.family, ...o.family },
+    elevation: Object.fromEntries(Object.keys(elevation).map((k) => [k, { ...elevation[k], ...o.elevation[k] }])),
+  }
+}
+
+/**
+ * A square corner is the system default, and flush groups depend on it being
+ * exactly zero — a grouped button whose inner edge rounds stops butting against
+ * its neighbor. Asserted for EVERY theme, because it is the one role a theme
+ * could plausibly reach for and get wrong.
+ */
+for (const themeName of themeNames) {
+  const sq = effective(themeName).shape?.square
+  if (sq !== undefined && sq !== 0) {
+    throw new Error(
+      `theme "${themeName}" sets shape.square to ${sq}. It must be 0 — it is the default corner ` +
+        `and flush control groups depend on it.`
+    )
+  }
+}
+
+/* The base theme is what `:root` and `.dark` carry, so a product importing one
+ * file needs no attribute at all. Read through `effective` rather than off the
+ * config directly, so the default cannot disagree with its own theme block. */
+const base = effective(defaultTheme)
+
+const byTheme = Object.fromEntries(themeNames.map((n) => [n, effective(n)]))
+
+/**
+ * Which names any theme actually moves. Every theme then emits exactly this set
+ * — not only its own diff — because a block has to be able to RESET what a theme
+ * around it changed. `[data-theme="core"]` inside a DuBois document is the case
+ * a diff-only emission cannot serve, and it is the same reason the type contexts
+ * emit the default context rather than leaving it to `:root`.
+ *
+ * Measured as a DIFFERENCE IN RESOLVED VALUE rather than read off the override
+ * objects, and the ramp lever is why. One declares three semantics and moves
+ * about forty; a set built from declared keys would emit those three, and the
+ * other thirty-seven would silently fall through to `:root` and render Core's
+ * greys inside a warm theme. Resolving first also means a rebinding that lands
+ * back on the same hex correctly counts as no change.
+ *
+ * Filtered against the base's own key order so a theme block reads in the order
+ * the base declares, and sized by what is actually themed: a config with one
+ * theme moves nothing, emits nothing, and leaves tokens.css byte-identical to a
+ * build that had never heard of themes.
+ */
+const themedKeys = (order, moves) => order.filter(moves)
+
+const themedFamilies = themedKeys(Object.keys(FAMILY_VAR), (k) =>
+  themeNames.some((t) => byTheme[t].family[k] !== base.family[k])
+)
+const themedShape = themedKeys(Object.keys(shape ?? {}), (r) =>
+  themeNames.some((t) => byTheme[t].shape[r] !== base.shape[r])
+)
+const themedElevation = themedKeys(Object.keys(elevation), (s) =>
+  themeNames.some(
+    (t) =>
+      byTheme[t].elevation[s].light !== base.elevation[s].light ||
+      byTheme[t].elevation[s].dark !== base.elevation[s].dark
+  )
+)
+const themedSemantics = themedKeys(names, (n) =>
+  themeNames.some((t) =>
+    ["light", "dark"].some((mode) => resolve(byTheme[t].semantics[n][mode]) !== resolve(base.semantics[n][mode]))
+  )
+)
+const themedCount =
+  themedFamilies.length + themedShape.length + themedElevation.length + themedSemantics.length
 
 /**
  * Everything spatial ships in rem, authored in px.
@@ -169,9 +361,10 @@ const tokenStop = (step) => String(step).replace(".", "-")
  * It is a decision about which multiple a card gets, and it is the layer a theme
  * reassigns without touching a component.
  */
-const shapeLines = Object.entries(shape ?? {})
-  .map(([role, stop]) => `  ${PREFIX}shape-${role}: ${v(`radius-${tokenStop(stop)}`)};`)
-  .join("\n")
+const shapeRoleLines = (roles, byRole) =>
+  roles.map((role) => `  ${PREFIX}shape-${role}: ${v(`radius-${tokenStop(byRole[role])}`)};`).join("\n")
+
+const shapeLines = shapeRoleLines(Object.keys(shape ?? {}), base.shape)
 
 /**
  * Roles mint their OWN utility rather than a key in Tailwind's radius namespace,
@@ -183,16 +376,6 @@ const shapeLines = Object.entries(shape ?? {})
  * Sides are emitted because a drawer rounds one edge and a grouped control
  * squares one. Corner-level forms are not emitted until something needs them.
  */
-/**
- * A square corner is the system default, and flush groups depend on it being
- * exactly zero — a grouped button whose inner edge rounds stops butting against
- * its neighbor. Asserted rather than trusted, because it is the one role a
- * theme could plausibly reach for and get wrong.
- */
-if (shape && shape.square !== 0) {
-  throw new Error(`shape.square must be 0 — it is the default corner and flush control groups depend on it. Got ${shape.square}.`)
-}
-
 const SHAPE_SIDES = {
   "": ["border-radius"],
   "t-": ["border-top-left-radius", "border-top-right-radius"],
@@ -251,6 +434,11 @@ const bridgeLines = Object.entries(bridge ?? {})
 /** '"Figtree", -apple-system, sans-serif' → ["Figtree", "-apple-system", "sans-serif"] */
 const splitFamily = (stack) =>
   stack.split(",").map((f) => f.trim().replace(/^["']|["']$/g, "")).filter(Boolean)
+
+/** Every face any theme puts on one slot, default's stack first, deduped. */
+const themeFamilies = (key) => [
+  ...new Set(themeNames.flatMap((name) => splitFamily(effective(name).family[key]))),
+]
 
 /* ── Type: stops, not styles ─────────────────────────────────────────────────
  *
@@ -322,9 +510,12 @@ const weightLines = Object.entries(type.weight)
   .map(([k, n]) => `  ${PREFIX}font-weight-${k}: ${n};`)
   .join("\n")
 
+/** The two faces. A theme reassigns these; the stops below it never move. */
+const familyLines = (keys, byKey) =>
+  keys.map((key) => `  ${PREFIX}${FAMILY_VAR[key]}: ${byKey[key]};`).join("\n")
+
 const typeLines = [
-  `  ${PREFIX}font-family: ${type.family.text};`,
-  `  ${PREFIX}mono-font-family: ${type.family.mono};`,
+  familyLines(Object.keys(FAMILY_VAR), base.family),
   weightLines,
   stopLines(DEFAULT_CONTEXT),
 ].join("\n")
@@ -428,16 +619,93 @@ const motionLines = [
 // color, so it cannot ride the semantics table, but a black shadow tuned for
 // white draws nothing on a dark surface — so the stop name has to resolve to a
 // different alpha under `.dark`, exactly as a semantic does.
-const elevationLines = Object.entries(elevation)
-  .map(([k, v]) => `  ${PREFIX}elevation-${k}: ${v.light};`)
-  .join("\n")
+const elevationModeLines = (stops, byStop, mode) =>
+  stops.map((k) => `  ${PREFIX}elevation-${k}: ${byStop[k][mode]};`).join("\n")
 
-const elevationDarkLines = Object.entries(elevation)
-  .map(([k, v]) => `  ${PREFIX}elevation-${k}: ${v.dark};`)
-  .join("\n")
+const elevationLines = elevationModeLines(Object.keys(elevation), base.elevation, "light")
+const elevationDarkLines = elevationModeLines(Object.keys(elevation), base.elevation, "dark")
 
-const lightSemantics = names.map((n) => `  ${varName(n)}: ${resolve(semantics[n].light)};`).join("\n")
-const darkSemantics = names.map((n) => `  ${varName(n)}: ${resolve(semantics[n].dark)};`).join("\n")
+const semanticModeLines = (tokens, byToken, mode) =>
+  tokens.map((n) => `  ${varName(n)}: ${resolve(byToken[n][mode])};`).join("\n")
+
+const lightSemantics = semanticModeLines(names, base.semantics, "light")
+const darkSemantics = semanticModeLines(names, base.semantics, "dark")
+
+/* ── the theme blocks ────────────────────────────────────────────────────────
+ *
+ * One pair per theme: the mode-independent declarations plus light, then dark.
+ *
+ * ## Why dark needs three selectors
+ *
+ * `.dark` and `[data-theme="x"]` are one class against one attribute — equal
+ * specificity — so on `<html class="dark" data-theme="dubois">` the LATER of the
+ * two wins outright. A theme block emitted after `.dark` would therefore paint
+ * its light values straight over dark mode, and the two axes would compete
+ * instead of composing. Every dark selector below is two compounds, which
+ * out-specifies the theme's own light block and settles it by weight rather
+ * than by source order:
+ *
+ *   .dark [data-theme="x"]    a themed subtree inside a dark document
+ *   [data-theme="x"].dark     both on one element — the portal's case
+ *   [data-theme="x"] .dark    a dark subtree inside a themed document
+ *
+ * ## Why every theme emits the same keys
+ *
+ * Including the default, and including keys it does not itself move. A block
+ * has to RESET what a theme around it changed: `[data-theme="core"]` nested in a
+ * DuBois document must put the pill back, and it can only do that by declaring
+ * the role. Same reasoning as the type contexts emitting the default context.
+ *
+ * ## Why this can emit nothing
+ *
+ * If no theme moves anything, `themedCount` is 0 and the section is omitted
+ * entirely — so a single-theme config produces the byte-identical tokens.css it
+ * produced before the axis existed. The axis costs exactly what it is used for.
+ */
+const themeBlocks = !themedCount
+  ? ""
+  : themeNames
+      .map((name) => {
+        const eff = byTheme[name]
+        const sel = `[${themeAttr}="${name}"]`
+        const darkSel = [`.dark ${sel}`, `${sel}.dark`, `${sel} .dark`].join(",\n")
+        const light = [
+          themedFamilies.length && familyLines(themedFamilies, eff.family),
+          themedShape.length && shapeRoleLines(themedShape, eff.shape),
+          themedElevation.length && elevationModeLines(themedElevation, eff.elevation, "light"),
+          themedSemantics.length && semanticModeLines(themedSemantics, eff.semantics, "light"),
+        ].filter(Boolean)
+        const dark = [
+          themedElevation.length && elevationModeLines(themedElevation, eff.elevation, "dark"),
+          themedSemantics.length && semanticModeLines(themedSemantics, eff.semantics, "dark"),
+        ].filter(Boolean)
+        const blocks = [`/* ── ${themes[name].label ?? name} ── */\n${sel} {\n${light.join("\n\n")}\n}`]
+        if (dark.length) blocks.push(`${darkSel} {\n${dark.join("\n\n")}\n}`)
+        return blocks.join("\n\n")
+      })
+      .join("\n\n")
+
+const themeSection = !themedCount
+  ? ""
+  : `
+/* ══════════════════════════════════════════════════════════════════════════
+ * THEMES — the same token names at another set of values.
+ *
+ * ${themeNames.length} themes over ${themedCount} token${themedCount === 1 ? "" : "s"}. Only what a theme moves is restated, and
+ * every theme restates the same set so a nested block can reset the one around
+ * it. "${themes[defaultTheme].label ?? defaultTheme}" is also in :root above, so a product that imports this file
+ * and sets no attribute still gets a complete system.
+ *
+ * A theme activates on ${themeAttr}, unprefixed by :root, so it matches any
+ * element and the values inherit — which is what lets two themes render side by
+ * side in one page. Mode composes rather than competes: the dark selectors are
+ * two compounds each so they out-specify the theme's own light block.
+ *
+ * Names never vary here, only values. The generator throws on a theme that
+ * declares a name the base does not.
+ * ══════════════════════════════════════════════════════════════════════════ */
+${themeBlocks}
+`
 
 const css = `/* ─────────────────────────────────────────────────────────────────────────────
  * DBUI tokens — GENERATED. Do not hand-edit.
@@ -550,7 +818,7 @@ ${darkSemantics}
  * default at every width.
  * ══════════════════════════════════════════════════════════════════════════ */
 ${contextBlocks}
-`
+${themeSection}`
 
 fs.writeFileSync(TOKENS_CSS, css)
 
@@ -645,12 +913,21 @@ for (const fam of Object.values(primitives)) {
     else for (const hex of Object.values(ramp)) hexes.add(hex.toUpperCase())
   }
 }
-// config semantics → resolved solid hexes / alphas
-for (const n of names) {
-  for (const mode of ["light", "dark"]) {
-    const v = semantics[n][mode]
-    if (isAlpha(v)) alphas.add(resolve(v))
-    else hexes.add(resolve(v))
+/* config semantics → resolved solid hexes / alphas, across EVERY theme.
+ *
+ * The union rather than the default's set, because the linter reads this as
+ * "which colors are approved" and a themed value is as approved as a base one.
+ * Scoped to the default theme, a hex only DuBois resolves to would read as a
+ * violation the moment someone pasted it — the rule would be reporting the
+ * system against itself. */
+for (const themeName of themeNames) {
+  const themed = effective(themeName).semantics
+  for (const n of names) {
+    for (const mode of ["light", "dark"]) {
+      const value = themed[n][mode]
+      if (isAlpha(value)) alphas.add(resolve(value))
+      else hexes.add(resolve(value))
+    }
   }
 }
 // legacy globals.css hexes/alphas so not-yet-migrated components keep passing
@@ -694,10 +971,24 @@ const LEGACY_COLOR_NAMES = [
   "surface-info", "surface-success", "surface-warning", "surface-danger",
   "sidebar", "sidebar-foreground", "sidebar-primary", "sidebar-accent", "sidebar-border", "sidebar-ring",
 ]
-// A name that came back as a semantic is not dead. Nothing is on both lists
-// today, but the filter is what stops a future rename from being reported as
-// drift the moment it lands.
-const deletedLegacy = LEGACY_COLOR_NAMES.filter((n) => !names.includes(n))
+/**
+ * A name that came back is not dead, whichever family took it.
+ *
+ * `names` catches a name reclaimed as a color semantic. The second list catches one
+ * reclaimed by elevation, and it is not hypothetical: `shadow` accepts a color in
+ * Tailwind, so the linter's legacy rule pairs every color prefix with every dead
+ * name — and the moment elevation's stops became roles, `shadow-popover` matched a
+ * `popover` that died in the shadcn migration. Nine shipped components were
+ * reported as naming a deleted token while the token was declared two files away.
+ *
+ * Elevation is the only non-color family bridged onto a color-capable prefix today.
+ * `z-*`, `rounded-*`, `animate-*` and `ease-*` cannot collide, so subtracting those
+ * would only blunt the rule.
+ */
+const RECLAIMED_BY_ELEVATION = bridge.shadow?.steps ?? []
+const deletedLegacy = LEGACY_COLOR_NAMES.filter(
+  (n) => !names.includes(n) && !RECLAIMED_BY_ELEVATION.includes(n),
+)
 
 // semantic token names grouped by first segment
 const semGroups = {}
@@ -819,13 +1110,73 @@ const out = {
   // Derived from theme.config.mjs so the linter's allowlist cannot fall behind
   // the shipped families. `legacy` stays allowed until every component stops
   // declaring SF Pro; drop it from the config once that migration lands.
+  /* Unioned across themes for the same reason the hexes are: a face only DuBois
+   * declares is still an approved face, and a linter scoped to the default
+   * would report the theme as non-standard. `sans` and `display` share a stack
+   * because the system has one text face per theme, not two. */
   fonts: {
     $comment:
-      "Approved font families, generated from theme.config.mjs `type.family` (+ `type.legacy` during migration). Anything else is non-standard.",
-    sans: splitFamily(type.family.text),
-    display: splitFamily(type.family.text),
-    mono: splitFamily(type.family.mono),
+      "Approved font families, generated from theme.config.mjs `type.family` across every theme (+ `type.legacy` during migration). Anything else is non-standard.",
+    sans: themeFamilies("text"),
+    display: themeFamilies("text"),
+    mono: themeFamilies("mono"),
     legacy: type.legacy ?? {},
+  },
+  /* The theme axis, so the CLI, the MCP server and the portal read one
+   * description of it rather than three. `overrides` is the diff a theme
+   * declares — the answer to "what does this theme actually do?" without
+   * diffing 85 values — and it is the same set every theme emits into CSS. */
+  themes: {
+    $comment:
+      "The aesthetics the component library renders in. A theme varies VALUES, never NAMES — the generator throws on a theme that declares a name the base lacks. `attribute` activates one on any element; `default` is additionally in :root. Mode (.dark) and the density/type dials compose with a theme rather than belonging to one.",
+    attribute: themeAttr,
+    default: defaultTheme,
+    themed: {
+      semantics: themedSemantics,
+      shape: themedShape,
+      family: themedFamilies,
+      elevation: themedElevation,
+    },
+    list: Object.fromEntries(
+      themeNames.map((name) => {
+        const t = themes[name]
+        const eff = effective(name)
+        const o = overridesOf(t)
+        return [
+          name,
+          {
+            label: t.label ?? name,
+            description: t.description ?? "",
+            isDefault: name === defaultTheme,
+            overrides: {
+              semantics: Object.fromEntries(
+                Object.keys(o.semantics).map((n) => [
+                  n,
+                  { light: resolve(eff.semantics[n].light), dark: resolve(eff.semantics[n].dark) },
+                ]),
+              ),
+              shape: Object.fromEntries(
+                Object.keys(o.shape).map((role) => [
+                  role,
+                  {
+                    stop: eff.shape[role],
+                    px: typeof eff.shape[role] === "string"
+                      ? parseFloat(radius[eff.shape[role]])
+                      : radius[eff.shape[role]] * GRID_PX,
+                  },
+                ]),
+              ),
+              family: Object.fromEntries(
+                Object.keys(o.family).map((key) => [key, splitFamily(eff.family[key])]),
+              ),
+              elevation: Object.fromEntries(
+                Object.keys(o.elevation).map((stop) => [stop, eff.elevation[stop]]),
+              ),
+            },
+          },
+        ]
+      }),
+    ),
   },
   /* One role-named ramp; `ramp` stays the linter's allowed size/line set.
    *
@@ -909,6 +1260,7 @@ const primCount = Object.values(primMap).reduce((n, r) => n + Object.keys(r).len
 const alphaSem = names.filter((n) => isAlpha(semantics[n].light) || isAlpha(semantics[n].dark)).length
 const typeProps = 2 + stopFamilies.reduce((n, [, stops]) => n + Object.keys(stops).length, 0)
 console.log(`tokens.css   : ${names.length} semantics (light + dark), ${Object.keys(space).length} space, ${Object.keys(radius).length} radius, ${Object.keys(elevation).length} elevation.`)
+console.log(`themes       : ${themeNames.length} (${themeNames.join(", ")}; ${defaultTheme} in :root) over ${themedCount} themed token${themedCount === 1 ? "" : "s"} — ${themedSemantics.length} semantic, ${themedShape.length} shape, ${themedFamilies.length} face, ${themedElevation.length} elevation.`)
 console.log(`type         : ${Object.keys(type.scale).length} styles over ${typeProps} properties (2 faces + ${stopFamilies.map(([, s]) => Object.keys(s).length).join(" + ")} stops), ${contexts.length} contexts (${contexts.join(", ")}, ${DEFAULT_CONTEXT} in :root, attribute-only).`)
 console.log(`tokens.json  : ${hexes.size} hex, ${alphas.size} alpha, ${primCount} primitives, ${names.length} semantic tokens (${alphaSem} carry alpha).`)
 console.log(`Primitives shipped as CSS vars: 0 (resolved inline — generator input only).`)

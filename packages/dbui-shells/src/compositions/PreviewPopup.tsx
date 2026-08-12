@@ -124,7 +124,7 @@ export function PreviewPopup({
     <div
       data-slot="preview-popup"
       className={cn(
-        "flex flex-col gap-3 shape-container border border-border-base bg-surface-base py-3 px-4 shadow-lg",
+        "flex flex-col gap-3 shape-container border border-border-base bg-surface-base py-3 px-4 shadow-popover",
         className
       )}
       style={{ width }}

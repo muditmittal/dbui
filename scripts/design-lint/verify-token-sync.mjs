@@ -85,6 +85,12 @@
  *                             of the config (config → CSS is faithful)
  *   7. Figma value parity — Figma's light/dark values === the same resolution,
  *                             when the dump carries values
+ *   8. Theme name parity  — no theme declares a name the base lacks, and every
+ *                             theme block declares the SAME set in both modes.
+ *                             The invariant the axis rests on: a theme varies
+ *                             values, never names.
+ *   9. Theme round-trip   — each theme block's values === the config resolution
+ *                             of that theme, per mode
  *
  * Usage:  node scripts/design-lint/verify-token-sync.mjs [--strict]
  *         --strict also fails when Figma values cannot be compared at all.
@@ -99,7 +105,7 @@ const ROOT = path.resolve(__dirname, "../../")
 const TOKENS_CSS = path.join(ROOT, "packages/dbui/src/tokens/tokens.css")
 const DUMP = path.join(__dirname, ".figma-token-dump.json")
 
-const { meta, primitives, semantics } = cfg
+const { meta, primitives, semantics, shape, type, elevation, themes, themeAttr, defaultTheme } = cfg
 const PREFIX = `--${meta.prefix}-`
 const css = fs.readFileSync(TOKENS_CSS, "utf-8")
 const figma = JSON.parse(fs.readFileSync(DUMP, "utf-8"))
@@ -128,17 +134,37 @@ for (const [famName, fam] of Object.entries(primitives)) {
 }
 const cfgSemantics = new Set(Object.keys(semantics))
 
-// ── parse tokens.css into its three regions ───────────────────────────────────
+/* ── parse tokens.css into its regions ────────────────────────────────────────
+ *
+ * Bounded to one block each, rather than sliced from one selector to the next.
+ *
+ * They used to be slices — `:root` ran to `.dark`, and `.dark` ran to the end of
+ * the file — which was correct only while nothing after `.dark` declared a
+ * SEMANTIC. The type contexts do not (they carry stops), so it held. The theme
+ * blocks do, and the last declaration wins in a flat scan, so check 6 would have
+ * compared the config's Core dark values against whichever theme happened to be
+ * emitted last and reported the system as drifted against itself.
+ *
+ * Reading exactly one block also means a theme block can be read on its own,
+ * which is what checks 8 and 9 need. */
+const blockBody = (selector) => {
+  const marker = `\n${selector} {\n`
+  const i = css.indexOf(marker)
+  if (i < 0) return null
+  const start = i + marker.length
+  const end = css.indexOf("\n}", start)
+  return end < 0 ? null : css.slice(start, end)
+}
+
 const iTheme = css.indexOf("@theme inline {")
 const iRoot = css.indexOf(":root {")
-const iDark = css.indexOf(".dark {")
-if (iTheme < 0 || iRoot < 0 || iDark < 0) {
+const rootStr = blockBody(":root")
+const darkStr = blockBody(".dark")
+if (iTheme < 0 || iRoot < 0 || rootStr == null || darkStr == null) {
   console.error("tokens.css is missing an expected region (@theme / :root / .dark). Run `yarn design:tokens`.")
   process.exit(1)
 }
 const themeStr = css.slice(iTheme, iRoot)
-const rootStr = css.slice(iRoot, iDark)
-const darkStr = css.slice(iDark)
 
 const themeUtils = new Set()
 for (const m of themeStr.matchAll(/--color-([a-z0-9-]+)\s*:/gi)) themeUtils.add(m[1])
@@ -156,8 +182,11 @@ const darkDb = dbDecls(darkStr)
 
 // A shipped var is a "primitive" if its de-prefixed name is a ramp step or base.
 const RAMP_STEP = new Set(["050", "100", "200", "300", "400", "500", "600", "700", "800", "900"])
+/* The families are named rather than matched loosely, so a family added to the
+ * palette has to be added here too. `brand` arrived with the One theme and was
+ * invisible to this check until it was: an unlisted family cannot leak-test. */
 const isPrimitiveName = (n) => {
-  const m = n.match(/^(?:interface|status|viz)-[a-z]+-(\d{2,3})$/)
+  const m = n.match(/^(?:interface|status|viz|brand)-[a-z]+-(\d{2,3})$/)
   if (m) return RAMP_STEP.has(m[1])
   return /^base-(white|black)$/.test(n)
 }
@@ -246,6 +275,147 @@ if (figValues) {
   )
 }
 
+/* 8 + 9. The theme axis.
+ *
+ * Two properties, and the first is the one the whole axis rests on:
+ *
+ *   8. NAMES DO NOT VARY. A theme may only restate a name the base declares,
+ *      and every theme must emit the same set — including the default, and
+ *      including names it does not itself move. A theme missing a name another
+ *      carries cannot reset it, so `[data-theme="core"]` nested inside DuBois
+ *      would keep DuBois's corner and the two aesthetics could not coexist on
+ *      one page. The generator throws on the first half of this; the check
+ *      exists because a throw only covers what the generator was asked to do,
+ *      and a hand-edited tokens.css is exactly the case it cannot see.
+ *
+ *   9. VALUES ROUND-TRIP, per theme and per mode — the same assertion check 6
+ *      makes for the base, applied to each theme block.
+ *
+ * Figma is not compared here. The dump holds the two Core collections, and a
+ * derived themed file is a separate artifact with its own audit. */
+const themeNames = Object.keys(themes ?? {})
+const themeSel = (name) => `[${themeAttr}="${name}"]`
+const themeDarkSel = (name) =>
+  [`.dark ${themeSel(name)}`, `${themeSel(name)}.dark`, `${themeSel(name)} .dark`].join(",\n")
+
+const overridesOf = (t) => ({
+  ramp: t.ramp ?? {},
+  semantics: t.semantics ?? {},
+  shape: t.shape ?? {},
+  family: t.type?.family ?? {},
+  elevation: t.elevation ?? {},
+})
+const unionOf = (group) =>
+  new Set(themeNames.flatMap((n) => Object.keys(overridesOf(themes[n])[group])))
+
+/* Ramp rebinding, re-implemented rather than imported from the generator.
+ *
+ * The same choice this file already makes for `resolve`: a verifier that shares
+ * the code it verifies proves only that one implementation is self-consistent.
+ * Two implementations disagreeing is the signal worth having. */
+const rebind = (value, ramp) => {
+  if (!Object.keys(ramp).length) return value
+  const swap = (d) => {
+    for (const [from, to] of Object.entries(ramp)) {
+      if (d === from || d.startsWith(`${from}.`)) return to + d.slice(from.length)
+    }
+    return d
+  }
+  return isAlphaRef(value) ? { ...value, ref: swap(value.ref) } : swap(value)
+}
+
+const effectiveSemantic = (themeName, n, mode) => {
+  const o = overridesOf(themes[themeName])
+  return o.semantics[n]?.[mode] ?? rebind(semantics[n][mode], o.ramp)
+}
+const effectiveShape = (themeName, r) => overridesOf(themes[themeName]).shape[r] ?? shape?.[r]
+const effectiveFamily = (themeName, k) => overridesOf(themes[themeName]).family[k] ?? type?.family?.[k]
+
+// 8a. Nothing a theme declares may be a name the base lacks — either end of a
+// ramp rebinding included, since an unknown source silently matches nothing.
+const rampNames = new Set(
+  Object.entries(primitives).flatMap(([fam, ramps]) =>
+    fam === "base" ? [] : Object.keys(ramps).map((r) => `${fam}.${r}`)
+  )
+)
+for (const [group, known] of [
+  ["semantics", cfgSemantics],
+  ["shape", new Set(Object.keys(shape ?? {}))],
+  ["family", new Set(Object.keys(type?.family ?? {}))],
+  ["elevation", new Set(Object.keys(elevation ?? {}))],
+  ["ramp", rampNames],
+]) {
+  note(`theme ${group} the base does not declare`, diff(unionOf(group), known))
+}
+note(
+  "theme ramp targets the base does not declare",
+  diff(new Set(themeNames.flatMap((n) => Object.values(overridesOf(themes[n]).ramp))), rampNames)
+)
+
+/* The CSS names each themed token is expected to appear under.
+ *
+ * Derived from a DIFFERENCE IN RESOLVED VALUE, not from the override objects,
+ * and the ramp lever is why: One declares three semantics and moves about
+ * forty. A set read off declared keys would assert the three and let the other
+ * thirty-seven fall through to `:root`, which is a theme rendering the base's
+ * greys and a check that reports it as correct. */
+const FAMILY_VAR = { text: "font-family", mono: "mono-font-family" }
+const moved = (order, differs) => order.filter(differs)
+
+const themedSemantics = moved([...cfgSemantics], (n) =>
+  themeNames.some((t) =>
+    ["light", "dark"].some(
+      (m) => resolve(effectiveSemantic(t, n, m)) !== resolve(effectiveSemantic(defaultTheme, n, m))
+    )
+  )
+)
+const themedShape = moved(Object.keys(shape ?? {}), (r) =>
+  themeNames.some((t) => effectiveShape(t, r) !== effectiveShape(defaultTheme, r))
+)
+const themedFamily = moved(Object.keys(type?.family ?? {}), (k) =>
+  themeNames.some((t) => effectiveFamily(t, k) !== effectiveFamily(defaultTheme, k))
+)
+const themedElevation = [...unionOf("elevation")]
+
+const expectedLight = [
+  ...themedFamily.map((k) => FAMILY_VAR[k]).filter(Boolean),
+  ...themedShape.map((r) => `shape-${r}`),
+  ...themedElevation.map((s) => `elevation-${s}`),
+  ...themedSemantics,
+]
+const expectedDark = [...themedElevation.map((s) => `elevation-${s}`), ...themedSemantics]
+
+const themeDrift = []
+if (expectedLight.length) {
+  for (const name of themeNames) {
+    const eff = (n) => ({
+      light: effectiveSemantic(name, n, "light"),
+      dark: effectiveSemantic(name, n, "dark"),
+    })
+    for (const [label, sel, expected, mode] of [
+      ["light", themeSel(name), expectedLight, "light"],
+      ["dark", themeDarkSel(name), expectedDark, "dark"],
+    ]) {
+      const body = blockBody(sel)
+      if (body == null) {
+        problems.push(`theme "${name}" has no ${label} block in tokens.css — expected \`${sel.split("\n")[0]}…\``)
+        continue
+      }
+      const declared = dbDecls(body)
+      // 8b. Same set, no more and no less.
+      note(`theme "${name}" ${label} block missing`, diff(new Set(expected), new Set(Object.keys(declared))))
+      note(`theme "${name}" ${label} block declares unthemed`, diff(new Set(Object.keys(declared)), new Set(expected)))
+      // 9. Values agree with the config.
+      for (const token of themedSemantics) {
+        if (!declared[token]) continue
+        const want = resolve(eff(token)[mode])
+        if (declared[token] !== want) themeDrift.push(`${name} ${token} ${mode}: css=${declared[token]} config=${want}`)
+      }
+    }
+  }
+}
+note("theme value drift (regenerate with `yarn design:tokens`)", themeDrift)
+
 // ── report ──
 const pass = problems.length === 0
 const figValueLine = figValues
@@ -256,12 +426,17 @@ console.log("# Token sync — theme.config.mjs ↔ tokens.css ↔ Figma\n")
 console.log(`config:    ${cfgPrimitives.size} primitive · ${cfgSemantics.size} semantic`)
 console.log(`tokens.css: ${Object.keys(rootDb).filter(isPrimitiveName).length} primitive vars · ${shippedLight.size} semantic (light) · ${shippedDark.size} (dark)`)
 console.log(`@theme:    ${themeUtils.size} Tailwind color utilities`)
+console.log(`themes:    ${themeNames.length} (${themeNames.join(", ")}; ${defaultTheme} in :root) · ${expectedLight.length} themed token${expectedLight.length === 1 ? "" : "s"}`)
 console.log(`figma:     ${figPrim.size} primitive · ${figSem.size} semantic names · ${figValueLine}\n`)
 
 if (pass) {
   console.log("Names match across config, tokens.css and Figma. Every semantic ships in")
   console.log("both modes with exactly one Tailwind utility, no primitive leaks into code,")
   console.log("and every shipped value round-trips from the config.\n")
+  if (themeNames.length > 1) {
+    console.log(`Every theme declares the same ${expectedLight.length} themed names in both modes and no others,`)
+    console.log("so no theme adds a name, omits one, or fails to reset another's.\n")
+  }
   if (figValues) {
     console.log(`✅ In sync, values included — ${figCompared} Figma values agree with the config.`)
   } else {

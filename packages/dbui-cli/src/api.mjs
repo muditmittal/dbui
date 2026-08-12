@@ -412,11 +412,30 @@ export function shell(id) {
 
 /* -------------------------------------------------------------- tokens --- */
 
+/**
+ * The body of one top-level block, brace-counted rather than sliced to the next
+ * selector.
+ *
+ * `dark` used to run from `.dark` to the end of the file, which was correct only
+ * while nothing after it declared a `--db-*` a reader would mistake for a dark
+ * value. The theme blocks do — `[data-theme="core"]` restates the shape roles at
+ * their Core values — so an unbounded slice reported a dark value for tokens
+ * that have no dark variant, and would have reported the last theme's value as
+ * "dark" for the ones that do.
+ */
+function cssBlock(css, selector) {
+  const start = css.indexOf(`\n${selector} {\n`);
+  if (start < 0) return "";
+  const open = start + selector.length + 3;
+  const end = css.indexOf("\n}", open);
+  return end < 0 ? "" : css.slice(open, end);
+}
+
 export function tokens(group) {
   requireRepo();
   const css = read(path.join(PATHS.tokens, "tokens.css")) ?? "";
-  const root = css.slice(css.indexOf(":root"), css.indexOf(".dark"));
-  const dark = css.slice(css.indexOf(".dark"));
+  const root = cssBlock(css, ":root");
+  const dark = cssBlock(css, ".dark");
   const groups = {};
   for (const m of root.matchAll(/^\s*--db-([a-z0-9-]+)\s*:\s*([^;]+);/gm)) {
     const name = m[1];

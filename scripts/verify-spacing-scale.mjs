@@ -1156,6 +1156,54 @@ console.log("\n── P. Animation roles resolve, and read the motion family\n")
   )
 }
 
+/* ══ Q. elevation is roles, and the sizes are gone ═════════════════════════
+ *
+ * The rename is only safe while the old names emit nothing. Left open, `shadow-lg`
+ * would fall back to Tailwind's own value — which disagrees with ours at every step
+ * — so a call site the rename missed would render a plausible wrong shadow forever
+ * instead of no shadow at all. Same bargain radius made, asserted the same way.
+ */
+
+console.log("\n── Q. Elevation roles, and Tailwind's sizes closed\n")
+{
+  const shipped = fs.readFileSync(path.join(ROOT, "packages/dbui/src/tokens/tokens.css"), "utf8")
+  const roles = ["control", "raised", "popover", "modal"]
+  const sizes = ["xs", "sm", "md", "lg", "xl", "2xs", "2xl", "inner"]
+
+  const defined = (r) => new RegExp(`--db-elevation-${r}:`).test(shipped)
+  const bridged = (r) =>
+    new RegExp(`--shadow-${r}:\\s*var\\(--db-elevation-${r}\\)`).test(shipped)
+  const closed = (n) => new RegExp(`--shadow-${n}:\\s*initial`).test(shipped)
+
+  for (const r of roles) {
+    console.log(`    --shadow-${r.padEnd(9)} ${defined(r) ? "defined" : "MISSING"}  ${bridged(r) ? "bridged" : "NOT BRIDGED"}`)
+  }
+  console.log(`    sizes closed          ${sizes.filter(closed).length} of ${sizes.length}`)
+
+  check(
+    "Q1 every elevation role is defined AND bridged",
+    roles.every((r) => defined(r) && bridged(r)),
+    "A role with no @theme key mints no class, which is how this family spent months generated and unread."
+  )
+  check(
+    "Q2 every size name is closed",
+    sizes.every(closed),
+    "An open size falls back to Tailwind's value. Closed, a missed call site renders no shadow, which someone notices."
+  )
+  check(
+    "Q3 both modes carry every role",
+    roles.every(
+      (r) => (shipped.match(new RegExp(`--db-elevation-${r}:`, "g")) ?? []).length === 2
+    ),
+    "Elevation is the one dimensional family that ships per mode. A role in light only draws nothing on a near-black surface."
+  )
+  check(
+    "Q4 no size survives as a token",
+    !/--db-elevation-(xs|sm|md|lg|xl):/.test(shipped),
+    "The rename is a rename, not an alias — two names for one shadow is how a map drifts."
+  )
+}
+
 /* ══ summary ═════════════════════════════════════════════════════════════ */
 
 const failed = results.filter((r) => !r.pass)

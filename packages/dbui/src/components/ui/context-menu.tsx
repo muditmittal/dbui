@@ -57,7 +57,7 @@ function ContextMenuContent({
       >
         <ContextMenuPrimitive.Popup
           data-slot="context-menu-content"
-          className={cn("z-popover max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit outline-none", className )}
+          className={cn("z-popover max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-popover ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit outline-none", className )}
           {...props}
         />
       </ContextMenuPrimitive.Positioner>
@@ -153,7 +153,7 @@ function ContextMenuSubContent({
   return (
     <ContextMenuContent
       data-slot="context-menu-sub-content"
-      className="shadow-lg"
+      className="shadow-popover"
       side="right"
       {...props}
     />

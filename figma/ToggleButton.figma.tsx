@@ -15,9 +15,23 @@ figma.connect(Toggle, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
   props: {
     variant: figma.enum("Variant", {
       Default: "default",
-      Filter: "filter",
       Icon: "icon",
-      Pill: "pill",
+      // Figma's Filter and Pill are both the bordered toggle; Filter is the one
+      // that also carries a checkbox, which is a different React component
+      // rather than a different variant — see `checkbox` below.
+      Filter: "filter",
+      // Pill is bordered without the checkbox, so it is `filter` in React. The
+      // name is Figma-side only and describes a shape the size now decides:
+      // Pill/Small renders a 4px corner, so the name already lies there.
+      Pill: "filter",
+    }),
+    // Which component to reach for, kept separate from which variant it takes.
+    // Overloading `variant` with a component choice is what made Pill ambiguous.
+    checkbox: figma.enum("Variant", {
+      Default: false,
+      Filter: true,
+      Icon: false,
+      Pill: false,
     }),
     size: figma.enum("Size", {
       Default: "md",
@@ -38,8 +52,8 @@ figma.connect(Toggle, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-
       Disabled: false,
     }),
   },
-  example: ({ variant, size, disabled, defaultPressed }) =>
-    variant === "filter" ? (
+  example: ({ variant, size, disabled, defaultPressed, checkbox }) =>
+    checkbox ? (
       <FilterToggle size={size} disabled={disabled} defaultPressed={defaultPressed}>
         Label
       </FilterToggle>

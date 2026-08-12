@@ -6,7 +6,8 @@ import { cn } from "../../lib/utils"
 
 /**
  * @standard Card
- * @guideline Uses rounded-4 (16px) radius — the largest radius in the system
+ * @guideline Takes shape-container-lg (16px); its header, footer and image caps
+ *   take shape-container-md, the 12px a corner becomes when it nests inside 16px
  * @guideline A resting card is a hairline ring and no elevation. Elevation is what says
  *   "this one you can press", so set interactive on a card that is itself a target
  * @guideline Set interactive for the resting lift and the pointer cursor; add spotlight on
@@ -98,15 +99,15 @@ function Card({
         handleSpotlight(event)
       }}
       className={cn(
-        "group/card flex flex-col gap-4 overflow-hidden shape-container-lg bg-surface-base py-4 type-body text-text-base ring-1 ring-text-base/10 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-3 *:[img:last-child]:rounded-b-3",
+        "group/card flex flex-col gap-4 overflow-hidden shape-container-lg bg-surface-base py-4 type-body text-text-base ring-1 ring-text-base/10 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:shape-t-container-md *:[img:last-child]:shape-b-container-md",
         // The ring goes because the halo needs a real border to paint into, and a
         // ring outside a border would draw two edges.
         spotlight && "spotlight-border ring-0",
         // One stop, xs at rest and sm under the pointer. Tailwind's default
         // transition duration is the same 150ms as --db-duration-fast, so the
         // lift already runs at the system's fast stop.
-        interactive && "cursor-pointer shadow-xs transition-shadow",
-        spotlight && "transition-shadow hover:shadow-sm",
+        interactive && "cursor-pointer shadow-control transition-shadow",
+        spotlight && "transition-shadow hover:shadow-raised",
         className
       )}
       {...props}
@@ -119,7 +120,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-header"
       className={cn(
-        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-3 px-4 group-data-[size=sm]/card:px-3 has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
+        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 shape-t-container-md px-4 group-data-[size=sm]/card:px-3 has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
         className
       )}
       {...props}
@@ -178,7 +179,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-footer"
       className={cn(
-        "flex items-center rounded-b-3 border-t bg-surface-subtle/50 p-4 group-data-[size=sm]/card:p-3",
+        "flex items-center shape-b-container-md border-t bg-surface-subtle/50 p-4 group-data-[size=sm]/card:p-3",
         className
       )}
       {...props}

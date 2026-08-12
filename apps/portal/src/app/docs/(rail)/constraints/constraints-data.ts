@@ -23,12 +23,23 @@
  * surface, automation showing its work first, a number carrying its source.
  * A page that is the negative of another page has not earned its place. What
  * was craft went back to whichever file already owned it; what was left is
- * below, joined by the three subjects nothing in the system covered at all:
- * custody, dark patterns and stewardship of the commons.
+ * below, joined by the subjects nothing in the system covered at all: custody,
+ * choice architecture, and access as a line rather than a checklist.
  *
  * `notes/constraints-page-cuts.md` holds the retired craft rows verbatim,
  * including the system gaps each one recorded, and names the owner each moved
  * to. Nothing was dropped without a forwarding address.
+ *
+ * ── Two neighbours, stated here rather than in a `meaning` ──
+ *
+ * C4 Fairness is choice architecture — what a control costs to click, what is
+ * preselected. Whether the sentence on it is honest belongs to `/docs/voice`.
+ * C5 Access is the line; `/docs/accessibility` is the contract behind it, and
+ * says what a primitive already carries versus what the composed screen owes.
+ *
+ * Both used to sit in the rendered `meaning`, which is the one field a reader
+ * sees before opening anything. It has to fit two lines, so a cross-reference
+ * for the next maintainer is the wrong thing to spend it on.
  *
  * ── The shape ──
  *
@@ -48,6 +59,13 @@
  * lift this array unchanged.
  */
 
+/**
+ * A rule and the concrete case that shows it. The example is required: a
+ * constraint argued in the abstract is a constraint two people can agree with
+ * and still ship opposite screens.
+ */
+export type Rule = { rule: string; example: string }
+
 export type Constraint = {
   id: string
   /** The dimension of responsibility this closes off. */
@@ -55,8 +73,8 @@ export type Constraint = {
   /** The line, in the form worth remembering. */
   statement: string
   meaning: string
-  dos: string[]
-  donts: string[]
+  dos: Rule[]
+  donts: Rule[]
   /** The observation that proves the line was crossed. */
   broken: string
   check: "review" | "screen"
@@ -68,16 +86,34 @@ export const CONSTRAINTS: Constraint[] = [
     aspect: "Agency",
     statement: "The machine prepares, the person decides",
     meaning:
-      "Automation earns its place by handing the decision back, visibly, wherever judgment is required. On data someone is accountable for, generation is only usable if the generated thing can be read before it runs.",
+      "Automation earns its place by handing the decision back. Generated work is only usable if it can be read before it runs.",
     dos: [
-      "Show what was generated before it runs",
-      "Make an automated action visible and reversible",
-      "Pause where the consequence is wide or irreversible",
+      {
+        rule: "Show what was generated before it runs",
+        example: "The generated SQL renders in the cell, and Run stays the reader's click.",
+      },
+      {
+        rule: "Make an automated action visible and reversible",
+        example: "An agent that renamed twelve columns lists them, each one undoable.",
+      },
+      {
+        rule: "Pause where the consequence is wide or irreversible",
+        example: "Dropping a table used by four dashboards stops to name them first.",
+      },
     ],
     donts: [
-      "Run generated work and show only its result",
-      "Put the opt-out behind an administrator",
-      "Build a flow that never pauses for a decision",
+      {
+        rule: "Run generated work and show only its result",
+        example: "A summary appears and the query that produced it is nowhere on the screen.",
+      },
+      {
+        rule: "Put the opt-out behind an administrator",
+        example: "Turning off auto-apply needs a workspace admin, so nobody turns it off.",
+      },
+      {
+        rule: "Build a flow that never pauses for a decision",
+        example: "A wizard that ends in a write with no step between the prompt and the commit.",
+      },
     ],
     broken: "The outcome is visible and the thing that produced it is not.",
     check: "review",
@@ -87,16 +123,34 @@ export const CONSTRAINTS: Constraint[] = [
     aspect: "Accountability",
     statement: "Nothing is asserted without a way to check it",
     meaning:
-      "Source, freshness and scope travel with the thing being shown. A subtly wrong join reads as confidently as a right one — the trace is what tells them apart.",
+      "Source, freshness and scope travel with the value. A wrong join reads as confidently as a right one; the trace is what tells them apart.",
     dos: [
-      "Show the query behind a generated answer",
-      "State freshness and completeness on the value itself, not in a banner above it",
-      "Report which objects failed, not how many succeeded",
+      {
+        rule: "Show the query behind a generated answer",
+        example: "\u201c14 accounts at risk\u201d opens to the join that counted them.",
+      },
+      {
+        rule: "State freshness and completeness on the value itself, not in a banner above it",
+        example: "\u201c81.3 GB \u00b7 as of 12 hours ago\u201d, so the caveat survives a screenshot.",
+      },
+      {
+        rule: "Report which objects failed, not how many succeeded",
+        example: "\u201c3 of 40 tables could not be scanned\u201d, each one named and retryable.",
+      },
     ],
     donts: [
-      "Present a number with no way back to its source",
-      "Report a partial failure as a success",
-      "Trade the trace away to save space",
+      {
+        rule: "Present a number with no way back to its source",
+        example: "A metric tile with no query, no owner and no timestamp.",
+      },
+      {
+        rule: "Report a partial failure as a success",
+        example: "A green toast after a job that skipped nine partitions.",
+      },
+      {
+        rule: "Trade the trace away to save space",
+        example: "The freshness stamp is the first thing cut when the card gets narrow.",
+      },
     ],
     broken:
       "A value survives being copied out of the screen without the caveat that qualified it, or an operation over many objects reports one outcome.",
@@ -107,16 +161,34 @@ export const CONSTRAINTS: Constraint[] = [
     aspect: "Custody",
     statement: "Data never appears or moves without its boundary",
     meaning:
-      "Companies run their business on what sits behind these screens. What a person can see, and where it goes when they act, is never left implied.",
+      "Companies run their business on what sits behind these screens. What someone can see, and where data goes when they act, is never implied.",
     dos: [
-      "Name the permission that is missing when something is not visible",
-      "Say when a permission removed rows, rather than showing a shorter list",
-      "Name the destination before data leaves the surface it is on",
+      {
+        rule: "Name the permission that is missing when something is not visible",
+        example: "\u201cHidden \u2014 needs SELECT on main.finance\u201d, rather than an empty panel.",
+      },
+      {
+        rule: "Say when a permission removed rows, rather than showing a shorter list",
+        example: "\u201cShowing 214 of 900 \u2014 686 hidden by grants.\u201d",
+      },
+      {
+        rule: "Name the destination before data leaves the surface it is on",
+        example: "\u201cSend to Slack #analytics\u201d on the button, not \u201cShare\u201d.",
+      },
     ],
     donts: [
-      "Render a permission-filtered result as though it were the whole",
-      "Move, copy or export on an action that did not say so",
-      "Keep a total clean when the honest one needs a caveat",
+      {
+        rule: "Render a permission-filtered result as though it were the whole",
+        example: "A row count that silently means \u201cthe rows you happen to be allowed\u201d.",
+      },
+      {
+        rule: "Move, copy or export on an action that did not say so",
+        example: "\u201cOpen in notebook\u201d that also writes the result to a new table.",
+      },
+      {
+        rule: "Keep a total clean when the honest one needs a caveat",
+        example: "Dropping the \u201cpartial\u201d qualifier because it spoils the tile.",
+      },
     ],
     broken:
       "Two people with different grants see the same count and neither is told why, or data reaches a destination the control that sent it never named.",
@@ -124,19 +196,37 @@ export const CONSTRAINTS: Constraint[] = [
   },
   {
     id: "C4",
-    aspect: "Honesty",
+    aspect: "Fairness",
     statement: "Nothing is built to work against the reader",
     meaning:
-      "Every interface choice is also a choice about whose interest it serves. A pattern that lifts a number by making someone act against their own judgment is a defect, whatever it does to the number.",
+      "Every interface choice serves someone's interest. A pattern that lifts a number by working against the reader's judgment is a defect, whatever it does to the number.",
     dos: [
-      "Make the safe path at least as easy as the destructive one",
-      "Default to the reversible choice",
-      "Let leaving cost no more than arriving",
+      {
+        rule: "Make the safe path at least as easy as the destructive one",
+        example: "Cancel and Delete are the same size, the same distance, equally reachable.",
+      },
+      {
+        rule: "Default to the reversible choice",
+        example: "\u201cDetach\u201d is preselected over \u201cDelete permanently\u201d.",
+      },
+      {
+        rule: "Let leaving cost no more than arriving",
+        example: "One click enabled the sync; one click turns it off, in the same place.",
+      },
     ],
     donts: [
-      "Pre-select the riskier option, or word a decline so that declining costs something",
-      "Manufacture urgency the system does not have",
-      "Trade a person's judgment for a better number",
+      {
+        rule: "Pre-select the riskier option, or word a decline so that declining costs something",
+        example: "\u201cNo thanks, I don't want reliable pipelines.\u201d",
+      },
+      {
+        rule: "Manufacture urgency the system does not have",
+        example: "A countdown on a migration with no deadline behind it.",
+      },
+      {
+        rule: "Trade a person's judgment for a better number",
+        example: "Burying the cost estimate because showing it lowers conversion.",
+      },
     ],
     broken:
       "The destructive control takes fewer clicks than the safe one, or the decline is worded as a loss.",
@@ -144,23 +234,41 @@ export const CONSTRAINTS: Constraint[] = [
   },
   {
     id: "C5",
-    aspect: "Stewardship",
-    statement: "No surface optimizes itself at the system's expense",
+    aspect: "Access",
+    statement: "No one is locked out of what they are accountable for",
     meaning:
-      "The system is a commons, and every local exception is withdrawn from a shared vocabulary that only works while everyone spends it. A gap reported is worth more than a gap worked around.",
+      "A component meeting the bar does not mean the screen does. Composition is where someone gets shut out, and no component can refuse it.",
     dos: [
-      "Report a missing component as a gap",
-      "Spend the closed sets rather than extending them",
-      "Fix the shared thing when the local fix would have been faster",
+      {
+        rule: "Make every action reachable from the keyboard, in an order that matches the page",
+        example: "The row's overflow menu opens on Enter, not only on hover.",
+      },
+      {
+        rule: "Carry state in something other than color as well",
+        example: "A failed run reads \u201cFailed\u201d beside the red dot, not just red.",
+      },
+      {
+        rule: "Name what a control does, not what it looks like",
+        example: "\u201cRemove filter: owner is me\u201d, rather than \u201cClose\u201d.",
+      },
     ],
     donts: [
-      "Build a one-off where a component already exists",
-      "Add a fifth value to a set that closed at four",
-      "Take the fast local fix over the slower shared one",
+      {
+        rule: "Put an action behind hover alone",
+        example: "A delete that only exists once the pointer is over the row.",
+      },
+      {
+        rule: "Let a decision rest on a distinction some readers cannot see",
+        example: "Two series told apart by red and green and nothing else.",
+      },
+      {
+        rule: "Trap attention where it cannot get out",
+        example: "A dialog that takes focus and never returns it to the trigger.",
+      },
     ],
     broken:
-      "A screen renders an interactive element no package exports, or a token, badge variant or sentence names a state the closed set does not already carry.",
-    check: "review",
+      "The task cannot be completed with a keyboard alone, or the only carrier of a state is a color.",
+    check: "screen",
   },
 ]
 
@@ -185,6 +293,10 @@ export const CUT = [
   {
     kind: "Component thresholds",
     why: "Ten options before a `Combobox`, seven tabs, five breadcrumb levels. These pick between two components rather than closing a possibility, and they are already the component's own JSDoc.",
+  },
+  {
+    kind: "How the system is contributed to",
+    why: "Reporting a gap instead of building a one-off, spending the closed sets rather than extending them. This was C5 Stewardship until 2026-08-11, and it failed the page's own test: every other constraint is owed to the person on the other side of the screen, and this one was owed to the design system. It is also already stated — `AGENTS.md` rule 1 and the ask-first boundary in `CONTRIBUTING.md` — so keeping it here made a second owner of a rule that had one. `Access` took the slot, which is the case this page was missing.",
   },
   {
     kind: "Preferences",

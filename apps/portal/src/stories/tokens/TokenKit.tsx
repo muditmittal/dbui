@@ -945,7 +945,7 @@ export function BorderScale({ tokens }: { tokens: Token[] }) {
  * and is worse than not offering the preview.
  *
  * Values are read from the token rather than through `var()` for the same
- * reason: `var(--db-elevation-xl)` resolves against whatever mode the document
+ * reason: `var(--db-elevation-modal)` resolves against whatever mode the document
  * is in, so it could only ever show one of the two.
  *
  * Nothing about the family is written here. The stops are whatever the generator

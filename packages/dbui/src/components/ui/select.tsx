@@ -61,8 +61,8 @@ function SelectTrigger({
         // radius the default-size trigger becomes a pill and the small one does
         // not, without this file changing again.
         "flex w-fit items-center justify-between bg-surface-base type-label whitespace-nowrap transition-colors outline-none select-none data-[size=default]:shape-control-lg data-[size=sm]:shape-control focus-visible:border-focus-ring focus-visible:shadow-focus active:border-focus-ring disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-disabled disabled:border-border-disabled disabled:shadow-none disabled:pointer-events-none aria-invalid:border-action-negative-base data-placeholder:text-text-subtle data-[size=default]:h-8 data-[size=default]:px-3 data-[size=default]:py-0 data-[size=default]:gap-2 data-[size=sm]:h-6 data-[size=sm]:px-2 data-[size=sm]:py-0 data-[size=sm]:gap-1 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 dark:aria-invalid:border-action-negative-base/50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
- variant === "default" && "border border-input-border-base shadow-xs hover:border-input-border-hover dark:bg-surface-strong/30 dark:hover:bg-surface-strong/50",
- variant === "ghost" && "border border-transparent shadow-none hover:border-input-border-hover hover:shadow-xs data-[size=default]:px-2",
+ variant === "default" && "border border-input-border-base shadow-control hover:border-input-border-hover dark:bg-surface-strong/30 dark:hover:bg-surface-strong/50",
+ variant === "ghost" && "border border-transparent shadow-none hover:border-input-border-hover hover:shadow-control data-[size=default]:px-2",
  className
       )}
       {...props}
@@ -104,7 +104,7 @@ function SelectContent({
         <SelectPrimitive.Popup
  data-slot="select-content"
  data-align-trigger={alignItemWithTrigger}
- className={cn("relative isolate z-popover max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-lg ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit data-[align-trigger=true]:animate-none", className )}
+ className={cn("relative isolate z-popover max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto shape-container bg-surface-base p-1 text-text-base shadow-popover ring-1 ring-text-base/10 duration-100 data-open:animate-enter data-closed:animate-exit data-[align-trigger=true]:animate-none", className )}
           {...props}
         >
           <SelectScrollUpButton />
