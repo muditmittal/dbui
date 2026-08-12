@@ -116,6 +116,30 @@ Cognitive Dimensions and Shneiderman are the two that matter most and that nobod
 Nielsen nor Carbon can express what is wrong with out-of-order notebook execution; hidden
 dependencies can.
 
+### Review prep is forum-agnostic, and stage is the durable axis
+
+Decided 2026-08-12, and it simplifies the tool considerably.
+
+Databricks runs at least three review forums — a weekly design critique, a Design Review broadcast to
+around three hundred people, and Product Excellence Reviews that carry sign-offs. The tool models
+**none of them**. It assumes only that an internal stakeholder review exists and prepares the builder
+for it.
+
+The reason is that **forums churn and stages do not.** Names, cadences and audiences change every
+year or two; the process doc describing those three is already four years old. A tool that branched
+on forum would be encoding the most perishable thing in the system, and would need re-teaching every
+reorganization.
+
+What survives is **stage** — concept, detailed, pre-ship. Note that even Product Excellence, the most
+formal of the three, defines its two gates by stage rather than by ceremony: at the napkin phase, and
+a few weeks before private preview. Stage is what the forums are themselves organized around, so it
+is the layer to reason on.
+
+Consequences. `forum` stays in the coded bank as provenance, never as an input the tool branches on.
+`stage` is a first-class field and drives which tier leads the report. And there is no "which review
+are you preparing for?" prompt, because the honest answer is that it does not change the questions
+worth rehearsing.
+
 ### Layer 2 — the Databricks question bank
 
 Derived by coding review transcripts into structured entries. Not raw text — the bank is the asset,
@@ -130,9 +154,17 @@ consequence, not frequency.
 
 ### Layer 3 — the Databricks platform baseline
 
-What the product is, what it is called, who uses it, where it is going. Built and dated at
-[`research/databricks-baseline/`](../research/databricks-baseline/README.md), derived from the
-`db-bricksearch` plugin.
+What the product is, what it is called, who uses it, where it is going.
+
+**This layer lives outside the repo**, at `~/.cache/dbui-databricks-baseline/`. This repository is
+public, and the baseline mixes public documentation with material derived from internal sources —
+named owners, internal system names, unreleased status, telemetry, pricing. The rule adopted
+2026-08-12 is that **no internal-derived Databricks research is committed here at all**, even where a
+given paragraph happens to be public-sourced, because a mixed directory is one careless edit away
+from leaking and nobody can see provenance in a diff.
+
+What stays in the repo is [`research/ux-standards/`](../research/ux-standards/README.md) — openly
+licensed, publicly citable, and safe by construction.
 
 This is what lets review prep say "this overlaps Catalog Explorer" rather than generic UX advice.
 
@@ -150,13 +182,33 @@ the workspace shell, developer experience, every non-governance persona, the con
 compute, AI and ML objects, external positioning, customer voice and anything regulatory all have
 **no backing at all**.
 
-One finding lands directly on DBUI rather than on the tool. Du Bois — the Databricks design system —
-has a published accessibility posture that its own vision doc calls short on keyboard navigation,
-focus management and ARIA compliance; dark-mode SQL IDE hover measures 3.2:1 against a 4.5:1
-requirement; there has been no published VPAT since 2023; eleven named accounts gate procurement on
-it and one expansion was lost to a certified competitor. The stated leverage point is the design
-system layer, "so improvements propagate." That is the layer this repo occupies, and it bears on
-`TRACKER.md` M10.
+One finding from that layer lands on DBUI rather than on the tool, and it argues that accessibility
+work here propagates further than it looks. The specifics are internal and are recorded outside this
+repo; `TRACKER.md` M10 is the matching open decision.
+
+### The corpus, as it actually is
+
+Located 2026-08-12 in Google Drive rather than delivered as files: **22 documents**, Gemini meeting
+notes rather than raw transcripts, which is better — each carries named attendees, a Summary, an
+explicit **Decisions** section, assigned **Next steps**, and a **Details** section of bullets naming
+who said what against a timestamp.
+
+Two properties of the corpus decide what the bank can honestly claim.
+
+**Twenty of the twenty-two are GovHub.** Cross-area material exists in Drive — rolling design-team
+notes, a Discovery design sync — and was **deliberately left out**. So the coverage skew is a
+standing condition rather than a gap awaiting a fix, and the bank must say so wherever it speaks.
+
+**They are working sessions, not stakeholder reviews.** The same seven people meet weekly to design
+together. That yields what a team debates among itself, which is not the same as what a room of
+stakeholders asks someone presenting. Expect the bank to be strong on recurring design tensions and
+weak on the adversarial question — and do not paper over the difference, because the adversarial
+question is the one review prep exists to rehearse.
+
+Raw transcripts live outside the repo, in `~/.cache/dbui-review-transcripts/`. They carry named
+people, unreleased work and candid criticism, and this repo is scoped for a public release. Only the
+**de-identified** coded bank may come in, and even that sits with shells and patterns on the internal
+side of the line.
 
 ### The coverage matrix — how a narrow sample stops being a problem
 
@@ -369,11 +421,11 @@ whole thing behind a data-collection task. Heuristics breaks that dependency.
 - **Where the report lives.** Terminal, a portal page, or a comment written back into Figma.
 - **Transcript handling.** Whether they are de-identified, and where the coded bank is stored given
   that it holds attributable internal review content.
-- **Whether the bank is public.** The repo is scoped for a public release of tokens, components and
-  viz. Heuristics are publishable and would carry real authority outside. The question bank and the
-  overlap index are not, which puts them on the same side of the line as shells and patterns.
-- **Databricks baseline refresh.** Addressed for now — Rev 1 is dated and versioned at
-  [`research/databricks-baseline/`](../research/databricks-baseline/README.md), and each refresh
-  writes a new dated file so a critique can name the baseline it was made against. What is still open
-  is the trigger: no cadence is set, and the source knowledge base is already past its own 90-day
-  expiry with every fact stamped March or April 2026.
+- **Whether the bank is public.** Settled 2026-08-12, and more sharply than expected: **this
+  repository is public.** Heuristics are publishable and would carry real authority outside. The
+  question bank, the overlap index and the platform baseline are not, and they now live outside the
+  repo entirely rather than merely being marked internal. See Layer 3.
+- **Databricks baseline refresh.** The baseline is dated and versioned, and each refresh writes a new
+  dated file so a critique can name the revision it was made against. What is still open is the
+  trigger: no cadence is set, and terminology is the shortest-lived section — twelve product renames
+  landed in roughly a year.

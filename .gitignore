@@ -43,3 +43,7 @@ apps/portal/public/storybook/
 # Computed-style snapshots from scripts/fingerprint.mjs. Megabytes each, and
 # only meaningful against the running portal that produced them.
 .fingerprints/
+
+# Databricks-internal research never enters this public repo.
+# Lives at ~/.cache/dbui-databricks-baseline/ — see notes/2026-08-11-design-crit-spec.md
+research/databricks-baseline/
