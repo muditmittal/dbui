@@ -112,30 +112,26 @@ function Row({ item }: { item: GalleryItem }) {
 }
 
 /**
- * `after` places a hand-written group inside the generated sequence, keyed by the
- * generated group it follows. Chat lives in its own package, so `gallery-data.ts`
- * cannot carry it, but it still belongs third in the reading order rather than
- * last — and appending it as a sibling of this column put it after every group and
- * gave it a different gap.
+ * Every group comes from `gallery-data.ts`. There used to be an `after` prop that
+ * spliced a hand-written group into the sequence, for Chat — its own package, which
+ * `component-index.md` did not cover. The index covers it now, so the generated
+ * group carries Chat and the splice was producing a second one.
  */
-export function ComponentGallery({ after }: { after?: Record<string, React.ReactNode> }) {
+export function ComponentGallery() {
   return (
     // Marked as generated so the word count on this page can separate the
     // editorial layer from 48 captions the CLI wrote.
     <div data-doc-generated className="mt-8 flex flex-col gap-12">
       {galleryGroups.map((group) => (
-        <React.Fragment key={group.key}>
-          <section id={groupId(group.key)} style={anchorOffset}>
-            <h2 className="type-title-4 text-text-strong">{group.label}</h2>
-            <p className="type-body text-text-subtle">{group.blurb}</p>
-            <div className="mt-2 divide-y divide-border-subtle border-t border-border-subtle">
-              {group.items.map((item) => (
-                <Row key={item.name} item={item} />
-              ))}
-            </div>
-          </section>
-          {after?.[group.key]}
-        </React.Fragment>
+        <section key={group.key} id={groupId(group.key)} style={anchorOffset}>
+          <h2 className="type-title-4 text-text-strong">{group.label}</h2>
+          <p className="type-body text-text-subtle">{group.blurb}</p>
+          <div className="mt-2 divide-y divide-border-subtle border-t border-border-subtle">
+            {group.items.map((item) => (
+              <Row key={item.name} item={item} />
+            ))}
+          </div>
+        </section>
       ))}
     </div>
   )

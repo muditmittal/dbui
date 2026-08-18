@@ -100,6 +100,15 @@ export type Guideline = {
   evidence: "sourced" | "thin"
   /** The condition that makes this relevant, so a review can skip the rest. */
   appliesWhen: string
+  /**
+   * What it costs to miss this one, using the words reviews already use.
+   *
+   * A property of the guideline rather than of a finding, which is what keeps
+   * the model to two questions: does it apply, and is it met. Nothing is scored
+   * and nothing is totalled — a tool that hands out a verdict gets argued with,
+   * and this one is meant to be read.
+   */
+  severity: "critical" | "important" | "nice-to-have"
 }
 
 export const GUIDELINES: Guideline[] = [
@@ -165,6 +174,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "sourced",
+    severity: "critical",
   },
   {
     id: "G2",
@@ -228,6 +238,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "sourced",
+    severity: "critical",
   },
   {
     id: "G3",
@@ -286,6 +297,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "sourced",
+    severity: "important",
   },
   {
     id: "G4",
@@ -335,6 +347,7 @@ export const GUIDELINES: Guideline[] = [
       { name: "APG grid pattern", url: "https://www.w3.org/WAI/ARIA/apg/patterns/grid/", bucket: "A" },
     ],
     evidence: "sourced",
+    severity: "important",
   },
   {
     id: "G5",
@@ -383,6 +396,7 @@ export const GUIDELINES: Guideline[] = [
       { name: "Abby Covert, IA heuristics", url: "https://abbycovert.com/ia-tools/ia-heuristics/", bucket: "B" },
     ],
     evidence: "thin",
+    severity: "important",
   },
   {
     id: "G6",
@@ -441,6 +455,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "thin",
+    severity: "important",
   },
   {
     id: "G7",
@@ -495,6 +510,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "sourced",
+    severity: "important",
   },
   {
     id: "G8",
@@ -553,6 +569,7 @@ export const GUIDELINES: Guideline[] = [
       { name: "Google PAIR guidebook", url: "https://pair.withgoogle.com/guidebook/", bucket: "B" },
     ],
     evidence: "sourced",
+    severity: "critical",
   },
   {
     id: "G9",
@@ -607,6 +624,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "sourced",
+    severity: "critical",
   },
   {
     id: "G10",
@@ -659,6 +677,7 @@ export const GUIDELINES: Guideline[] = [
       { name: "PatternFly page", url: "https://www.patternfly.org/components/page/", bucket: "A" },
     ],
     evidence: "sourced",
+    severity: "important",
   },
   {
     id: "G11",
@@ -711,6 +730,7 @@ export const GUIDELINES: Guideline[] = [
       { name: "Carbon dialog pattern", url: "https://carbondesignsystem.com/patterns/dialog-pattern/", bucket: "A" },
     ],
     evidence: "sourced",
+    severity: "critical",
   },
   {
     id: "G12",
@@ -748,6 +768,11 @@ export const GUIDELINES: Guideline[] = [
         example:
           "A fourth encoded variable costs the legibility of the first three.",
       },
+      {
+        rule: "Show a composite score without its inputs and their weights",
+        example:
+          "A score two thirds made of a default constant reads as measured and is not.",
+      },
     ],
     sources: [
       {
@@ -767,6 +792,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "sourced",
+    severity: "important",
   },
   {
     id: "G13",
@@ -823,6 +849,7 @@ export const GUIDELINES: Guideline[] = [
       },
     ],
     evidence: "sourced",
+    severity: "nice-to-have",
   },
 ]
 

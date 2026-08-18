@@ -7,6 +7,9 @@ import {
   ConversationEmpty,
   Message,
   MessageContent,
+  MessageActions,
+  MessageThumbnail,
+  type MessageFeedback,
   Response,
   Reasoning,
   Task,
@@ -82,45 +85,6 @@ function Piece({ title, children }: { title: string; children: React.ReactNode }
         {children}
       </div>
     </section>
-  )
-}
-
-/**
- * The answer action row. This is a recipe, not a component — four ghost icon
- * Buttons with Tooltips, then the Sources trigger, which drops its list onto the
- * next line because the row wraps.
- */
-function AnswerActions({ children }: { children?: React.ReactNode }) {
-  const actions = [
-    { label: "Copy", icon: <Copy /> },
-    { label: "Good response", icon: <ThumbsUp /> },
-    { label: "Bad response", icon: <ThumbsDown /> },
-    { label: "Share", icon: <Share /> },
-  ]
-
-  return (
-    <TooltipProvider>
-      <div className="flex flex-wrap items-center gap-1">
-        {actions.map((action) => (
-          <Tooltip key={action.label}>
-            <TooltipTrigger
-              render={
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label={action.label}
-                />
-              }
-            >
-              {action.icon}
-            </TooltipTrigger>
-            <TooltipContent>{action.label}</TooltipContent>
-          </Tooltip>
-        ))}
-        {children}
-      </div>
-    </TooltipProvider>
   )
 }
 
@@ -216,7 +180,7 @@ export const FullThread: StoryObj = {
                     <Response>{turn.text}</Response>
                     {turn.text ? (
                       <div className="mt-2">
-                        <AnswerActions>
+                        <MessageActions copyText="Sales grew 4.2% week over week." onFeedbackChange={() => {}} onShare={() => {}}>
                           <Sources count={2}>
                             <Source href="#" icon={<TableIcon />}>
                               sales_main.crm.renewals
@@ -225,7 +189,7 @@ export const FullThread: StoryObj = {
                               Renewal risk methodology
                             </Source>
                           </Sources>
-                        </AnswerActions>
+                        </MessageActions>
                       </div>
                     ) : null}
                   </MessageContent>
@@ -410,9 +374,19 @@ export const Plans: StoryObj = {
 
 /** Sources — the trigger sits in the action row, the list takes the line below. */
 export const SourcesInActionRow: StoryObj = {
-  render: () => (
+  render: () => {
+    // Held here so the thumbs demonstrate what they are: one value, not two
+    // toggles. Clicking the active one clears it.
+    const [feedback, setFeedback] = React.useState<MessageFeedback | null>(null)
+
+    return (
     <div className="max-w-[440px]">
-      <AnswerActions>
+      <MessageActions
+        copyText="Sales grew 4.2% week over week."
+        feedback={feedback}
+        onFeedbackChange={setFeedback}
+        onShare={() => {}}
+      >
         <Sources count={3}>
           <Source href="#" icon={<TableIcon />}>
             main.sales.orders
@@ -424,9 +398,13 @@ export const SourcesInActionRow: StoryObj = {
             Weekly pipeline runbook
           </Source>
         </Sources>
-      </AnswerActions>
+      </MessageActions>
+      <p className="mt-3 type-hint text-text-subtle">
+        feedback: {feedback ?? "none"}
+      </p>
     </div>
-  ),
+    )
+  },
 }
 
 /** Prompt Input — default border, AI gradient border, and the streaming swap. */
@@ -499,6 +477,22 @@ WHERE risk_score > 0.8
 | Queries | 21,437 |
 | P90 latency | 382 ms |`}
       </Response>
+    </div>
+  ),
+}
+
+/** A turn carrying media. The tiles hold a 40px square whether the image resolves or not. */
+export const MediaInATurn: StoryObj = {
+  render: () => (
+    <div className="max-w-[440px]">
+      <Message from="user">
+        <div className="flex flex-wrap gap-2">
+          <MessageThumbnail src="https://example.invalid/revenue.png" alt="Revenue by region" />
+          <MessageThumbnail />
+          <MessageThumbnail />
+        </div>
+        <MessageContent>What changed in these two dashboards?</MessageContent>
+      </Message>
     </div>
   ),
 }

@@ -36,9 +36,12 @@ Four themes: **Core** (what we are building), **Omni** (Omniagent), **One** (war
 > not just values**: Core's focus ring is two stops off the end of the ramp specifically so it can
 > never match the primary fill, and One inherits that property for free where DuBois had to
 > restate it by hand. And it **reaches tokens outside the family you were thinking about** —
-> `viz-sequential-1` and `-10` borrow the chrome ramp for the pale end of their scale, so they
-> follow the rebinding. That is correct rather than incidental: a sequential scale whose lightest
-> cell stayed cool on a warm page would read as a mistake.
+> `viz-sequential-1` and `-10` borrowed the chrome ramp for the pale end of their scale, so they
+> followed the rebinding.
+>
+> _Superseded Aug 15 2026._ Those two stops now resolve to `viz.cyan.050`, so the sequential scale
+> is all cyan and no longer varies by theme. The `ramp` mechanism is unchanged; it simply has two
+> fewer references to catch.
 >
 > One also forced the first **new primitive family**: `brand.orange`, for the accent. Its 500 is
 > `#FF5F46`, which is the hex this note already flagged as living in `globals.css` with no token
@@ -100,6 +103,12 @@ One, waiting.
 Density earns the hardest no. If spacing varies per theme, every layout, screenshot, spec and
 measurement forks four ways and nothing learned in one transfers to another. Density stays what it
 is today: an orthogonal dial any theme can turn, not a property of a theme.
+
+> **This table has a proposed amendment**, and so does **Two audiences, two bindings** below.
+> `2026-08-11-theme-override-generalization.md` argues that the forking cost this row protects
+> against is downstream of assuming one system renders several themes. A theme belongs to a product
+> team and a product renders one, so it proposes a file per theme and no restriction on what a theme
+> may move. Nothing is built; these sections are what ships until that is accepted or rejected.
 
 ## Two audiences, two bindings
 

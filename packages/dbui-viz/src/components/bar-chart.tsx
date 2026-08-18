@@ -21,8 +21,12 @@ import {
  * @guideline Use for counts or amounts compared across categories or time buckets
  * @guideline Set orientation="horizontal" when category labels are long
  * @guideline Pass `series` on each datum to produce a stacked bar chart
+ * @guideline Leave `palette` alone. `sequential-5` is the single-series accent every chart in the system draws in, and the Figma components are bound to it — override only when the bars carry a state, and then reach for a `level-*` step
+ * @guideline Pass `xType="ordinal"` for pre-bucketed labels like "Jul 16". Bar order is the order of `data`
  * @constraint Bars use a gradient fill plus a 1px border — this is the GovernanceHub bar treatment, do not flatten it
+ * @constraint Stacked segments take `VIZ_SERIES_ORDER` and ignore `palette` — a stack's segments are peers being told apart, which is what the categorical family is for
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=5089-7826
  */
 
 export interface BarDatum {
@@ -54,7 +58,7 @@ export interface BarChartProps
 function BarChart({
   data,
   label = "Bar chart",
-  palette = "categorical-1",
+  palette = "sequential-5",
   orientation = "vertical",
   height = 172,
   showAxis = true,
@@ -96,6 +100,10 @@ function BarChart({
         ? { labelAngle: 0, title: null, grid: false }
         : null,
       scale: { paddingInner: 0.25, paddingOuter: 0.1 },
+      // An ordinal axis sorts alphabetically unless told otherwise, which puts
+      // "Jul 16" before "Jul 2". `null` keeps the order the caller passed —
+      // buckets arrive already ordered and rearranging them invents a series.
+      ...(xType === "ordinal" ? { sort: null } : {}),
     }
     const valueEncoding = {
       field: "y",

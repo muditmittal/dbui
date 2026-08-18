@@ -16,6 +16,7 @@ import { cn } from "../lib/utils"
  * @constraint Collapsed by default — reasoning is secondary to the answer
  * @constraint Keep reasoning above the answer it produced, never below
  * @constraint One per turn
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4839-17676
  */
 
 export interface ReasoningProps

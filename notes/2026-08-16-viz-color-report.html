@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DBUI viz colour — the cyan change, 14 → 15 Aug 2026</title>
+<style>
+  :root {
+    --ink: #11171C;
+    --sub: #5F7281;
+    --mute: #92A4B3;
+    --line: #E5E5E5;
+    --soft: #F5F5F5;
+    --panel: #FAFAFA;
+    --bg: #FFFFFF;
+    --good: #277C43;
+    --bad: #C82D4C;
+    --warn: #BE501E;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 15px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 56px 32px 96px;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+
+  header { border-bottom: 1px solid var(--line); padding-bottom: 28px; margin-bottom: 44px; }
+  .eyebrow { font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); font-weight: 600; }
+  h1 { font-size: 34px; line-height: 1.15; letter-spacing: -.022em; font-weight: 640; margin: 10px 0 14px; }
+  .lede { font-size: 17px; line-height: 1.55; color: var(--sub); max-width: 74ch; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  h2 { font-size: 22px; letter-spacing: -.015em; font-weight: 620; margin: 0 0 6px; }
+  h3 { font-size: 15.5px; font-weight: 620; margin: 0 0 6px; }
+  section { margin-bottom: 60px; }
+  .sub { color: var(--sub); font-size: 14.5px; max-width: 76ch; }
+  .sub + .sub { margin-top: 10px; }
+  .mute { color: var(--mute); font-size: 13px; max-width: 82ch; }
+  .sechead { margin-bottom: 22px; }
+  code { font: 500 12.5px/1 var(--mono); background: var(--soft); border: 1px solid var(--line); border-radius: 4px; padding: 2px 5px; }
+
+  /* controls */
+  .controls { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .ctl { display: flex; gap: 6px; align-items: center; }
+  .ctl > span { font-size: 12.5px; color: var(--mute); }
+  button {
+    font: 400 12.5px/1 inherit; color: var(--sub); background: transparent;
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer;
+  }
+  button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; font-weight: 590; }
+
+  /* swatch grid */
+  .stops { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 16px; }
+  .stop-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+  .stop-name { font: 700 14px/1 var(--mono); }
+  .delta { font-size: 11.5px; color: var(--mute); }
+  .delta.moved { color: var(--ink); font-weight: 600; }
+  .tile { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .half { height: 76px; display: flex; align-items: flex-end; padding: 8px; }
+  .half span { font: 500 10.5px/1 var(--mono); opacity: .8; }
+  .divider { height: 1px; background: var(--line); }
+  .ba { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--mute); margin-top: 6px; }
+
+  /* chart table */
+  .charts { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+  .chartgrid { display: grid; grid-template-columns: 110px minmax(0,1fr) minmax(0,1fr); gap: 18px; align-items: center; }
+  .colhead { font-size: 12.5px; color: var(--mute); font-weight: 500; }
+  .colhead.after { color: var(--ink); font-weight: 700; }
+  .rowlabel { font-size: 13.5px; color: var(--sub); font-weight: 500; }
+  .chart { border-radius: 6px; display: block; width: 100%; }
+
+  /* wheel */
+  .wheelwrap { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 32px; align-items: start; }
+  @media (max-width: 900px) { .wheelwrap { grid-template-columns: 1fr; } .stops { grid-template-columns: repeat(2, minmax(0,1fr)); } .chartgrid { grid-template-columns: 90px 1fr 1fr; } }
+
+  /* palette tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 500; color: var(--mute); padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--soft); color: var(--sub); vertical-align: middle; }
+  td.name { color: var(--ink); font: 500 12.5px/1 var(--mono); }
+  .chip { width: 15px; height: 15px; border-radius: 3px; border: 1px solid var(--line); display: inline-block; vertical-align: -3px; margin-right: 8px; }
+  .chipdark { background: #11171C; padding: 3px; border-radius: 5px; display: inline-block; vertical-align: -4px; }
+  .fam { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+  .fam > header { border: 0; padding: 18px 20px 14px; margin: 0; background: transparent; }
+  .fam h3 { margin-bottom: 4px; }
+  .role { font-size: 13.5px; color: var(--sub); }
+  .fam .tablewrap { padding: 0 8px 8px; }
+  .ramp { display: flex; border-radius: 5px; overflow: hidden; margin: 0 20px 16px; }
+  .ramp div { flex: 1; height: 40px; }
+
+  /* callout */
+  .note { border-left: 3px solid var(--line); padding: 2px 0 2px 18px; margin: 22px 0; }
+  .note.key { border-left-color: var(--ink); }
+
+  /* refs */
+  .refs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; }
+  @media (max-width: 900px) { .refs { grid-template-columns: 1fr; } }
+  .refs a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .refs a:hover { border-bottom-color: var(--ink); }
+  .refs li { list-style: none; padding: 5px 0; }
+  .refs .who { color: var(--mute); font-size: 12.5px; }
+  .refgroup h3 { margin-bottom: 8px; }
+  footer { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">DBUI design system · data visualisation</div>
+  <h1>What changed in the cyan ramp</h1>
+  <p class="lede">
+    Every stop moved on lightness only. <strong>Hue and saturation are untouched at all ten</strong> —
+    this was not a desaturation. The pale end came down so it stops glowing against white, the dark
+    end came up so it stops sinking into the dark canvas, and the middle interpolates between them.
+    Values as of 14 Aug against what ships today.
+  </p>
+</header>
+
+<section>
+  <div class="sechead">
+    <h2>Every stop, before and after</h2>
+    <p class="sub">
+      The ramp pivots around step 300, which did not move. Above it everything is slightly darker,
+      below it slightly lighter — a gentle compression rather than a shift in one direction. Total
+      lightness span went from 80.4 to 74.9.
+    </p>
+  </div>
+  <div class="stops" id="stops"></div>
+</section>
+
+<section>
+  <div class="sechead">
+    <h2>The same colours in charts</h2>
+    <p class="sub">
+      Each row is one chart type drawn from the sequential scale — before on the left, after on the
+      right. Switch the surface to see why the two ends moved in opposite directions.
+    </p>
+  </div>
+  <div class="controls">
+    <div class="ctl"><span>Surface</span>
+      <button id="sLight" aria-pressed="true">Light</button>
+      <button id="sDark" aria-pressed="false">Dark</button>
+    </div>
+  </div>
+  <div class="charts">
+    <div class="chartgrid" id="chartgrid"></div>
+  </div>
+  <p class="mute" style="margin-top:14px">
+    The scale also lost its grey step. Its lightest cell used to borrow a neutral from the interface
+    palette; it is the palest cyan now, so the whole scale is one hue. That is the visible difference
+    in the treemap's “other” tile.
+  </p>
+</section>
+
+<section>
+  <div class="sechead">
+    <h2>Where cyan sits among the other colours</h2>
+    <p class="sub">
+      Angle is hue, distance from the centre is chroma — how colourful something is. Every viz and
+      status colour is plotted, so the palette can be read as one picture. Circles are viz, diamonds
+      are status.
+    </p>
+  </div>
+  <div class="wheelwrap">
+    <div>
+      <svg id="wheel" viewBox="0 0 760 760" style="display:block;width:100%"></svg>
+    </div>
+    <div>
+      <div class="note key">
+        <h3>Cyan is one of the quietest hues we have</h3>
+        <p class="sub">
+          It peaks at chroma 39 — eighth of eleven viz families, against gold at 83 and pink at 74.
+          The distance from the centre is the measure, and cyan sits well inside most of the palette.
+          So the loudness was never saturation.
+        </p>
+      </div>
+      <div class="note">
+        <h3>And it sits in the only clear arc</h3>
+        <p class="sub">
+          The categorical colours run out at teal, 192°, and pick up again at indigo, 286°. Cyan at
+          230° occupies a stretch nothing else claims, which is what lets a cyan primary appear
+          beside any series without collision.
+        </p>
+      </div>
+      <div class="note">
+        <h3>Which is why the hue did not move</h3>
+        <p class="sub">
+          Rotating toward blue takes it toward the blue used for links. Rotating toward green lands
+          it 7° from the existing teal and, for red-green colourblind viewers, stops it separating
+          from grey. The dashed arc marks where cyan can travel.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <h2>The four viz palettes</h2>
+    <p class="sub">
+      Charts draw from these four families and nothing else. Never hand-pick a hue primitive for a
+      series, and never borrow <code>status/*</code> or <code>text/*</code> — those are tuned to
+      contrast with the page, not with a neighbouring mark.
+    </p>
+    <p class="mute" style="margin-top:10px">
+      Roles as documented in <code>docs/token-rules.md</code> R10. 38 semantics in total.
+    </p>
+  </div>
+  <div id="families"></div>
+</section>
+
+<section>
+  <div class="sechead">
+    <h2>References</h2>
+    <p class="sub">The methods and thresholds this work leaned on.</p>
+  </div>
+  <div class="refs">
+    <div class="refgroup">
+      <h3>Palette design, in practice</h3>
+      <ul>
+        <li><a href="https://www.tableau.com/blog/colors-upgrade-tableau-10-56782">How we designed the new color palettes in Tableau 10</a><br><span class="who">Maureen Stone, Tableau</span></li>
+        <li><a href="https://medium.com/carbondesign/color-palettes-and-accessibility-features-for-data-visualization-7869f4874fca">Color palettes and accessibility features for data visualization</a><br><span class="who">Shixie, IBM Carbon</span></li>
+        <li><a href="https://www.datawrapper.de/blog/colors-for-data-vis-style-guides">A detailed guide to colors in data vis style guides</a><br><span class="who">Lisa Charlotte Muth, Datawrapper</span></li>
+        <li><a href="https://adobe.design/ideas/reinventing-adobe-spectrum-s-colors">Reinventing Adobe Spectrum’s colors</a><br><span class="who">Nate Baldwin, Adobe</span></li>
+        <li><a href="https://atlassian.design/foundations/color/data-visualization-color">Data visualization color</a><br><span class="who">Atlassian Design System</span></li>
+        <li><a href="https://carbondesignsystem.com/data-visualization/color-palettes/">Data visualization colour palettes</a><br><span class="who">IBM Carbon</span></li>
+      </ul>
+    </div>
+    <div class="refgroup">
+      <h3>Measurement and thresholds</h3>
+      <ul>
+        <li><a href="http://danielleszafir.com/colordiff_vis2017.pdf">Modeling Color Difference for Visualization Design</a><br><span class="who">Danielle Albers Szafir, IEEE TVCG 2018 — the size-dependent JND tables</span></li>
+        <li><a href="https://idl.cs.washington.edu/files/2012-ColorNameModels-CHI.pdf">Color Naming Models for Color Selection, Image Editing and Palette Design</a><br><span class="who">Heer &amp; Stone, CHI 2012</span></li>
+        <li><a href="https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html">A Physiologically-based Model for Simulation of Color Vision Deficiency</a><br><span class="who">Machado, Oliveira &amp; Fernandes, 2009 — the CVD matrices used here</span></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast">Understanding SC 1.4.11 Non-text Contrast</a><br><span class="who">W3C — the 3:1 rule for graphical objects, and its exemptions</span></li>
+        <li><a href="https://bottosson.github.io/posts/oklab/">A perceptual color space for image processing</a><br><span class="who">Björn Ottosson — Oklab</span></li>
+        <li><a href="https://doi.org/10.1002/col.20610">Investigation of colour size effect for colour appearance assessment</a><br><span class="who">Xiao, Luo, Li &amp; Hong, Color Res. Appl. 2011 — why large areas read louder</span></li>
+        <li><a href="https://doi.org/10.1109/jphot.2022.3213336">How Visual Discomfort Is Affected by Colour Saturation: A fNIRS Study</a><br><span class="who">Shi et al., 2022 — preference and comfort diverge with saturation</span></li>
+        <li><a href="https://colorbrewer2.org/">ColorBrewer</a><br><span class="who">Cynthia Brewer &amp; Mark Harrower</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="mute">
+    Lightness measured as CIELAB L*. Colour distances as ΔE2000. Colourblind simulation uses the
+    Machado, Oliveira &amp; Fernandes 2009 model at severity 1.0. Shipped in
+    <code>theme.config.mjs</code>, Figma and the portal on 15 Aug 2026.
+  </p>
+</footer>
+
+</div>
+
+<script>
+/* ── colour maths: sRGB ↔ CIELAB, and the a*b* plane the wheel is drawn in ── */
+const s2l = c => c <= .04045 ? c/12.92 : Math.pow((c+.055)/1.055, 2.4);
+const l2s = c => c <= .0031308 ? c*12.92 : 1.055*Math.pow(c, 1/2.4) - .055;
+const Xn = 95.047, Yn = 100, Zn = 108.883;
+
+function lab(hex) {
+  const h = hex.replace('#','');
+  const r = s2l(parseInt(h.slice(0,2),16)/255),
+        g = s2l(parseInt(h.slice(2,4),16)/255),
+        b = s2l(parseInt(h.slice(4,6),16)/255);
+  const X = (.4124564*r + .3575761*g + .1804375*b)*100,
+        Y = (.2126729*r + .7151522*g + .072175*b)*100,
+        Z = (.0193339*r + .119192*g + .9503041*b)*100;
+  const f = t => t > 216/24389 ? Math.cbrt(t) : (841/108)*t + 4/29;
+  const fx = f(X/Xn), fy = f(Y/Yn), fz = f(Z/Zn);
+  return [116*fy - 16, 500*(fx-fy), 200*(fy-fz)];
+}
+function lch(hex) {
+  const [L,a,b] = lab(hex);
+  let h = Math.atan2(b,a)*180/Math.PI; if (h < 0) h += 360;
+  return { L, C: Math.hypot(a,b), h };
+}
+function labToLin(L,a,b) {
+  const fy = (L+16)/116, fx = fy + a/500, fz = fy - b/200;
+  const g = t => t**3 > 216/24389 ? t**3 : (116*t-16)/(24389/27);
+  const X = g(fx)*Xn/100, Y = g(fy)*Yn/100, Z = g(fz)*Zn/100;
+  return [3.2404542*X - 1.5371385*Y - .4985314*Z,
+          -.969266*X + 1.8760108*Y + .041556*Z,
+          .0556434*X - .2040259*Y + 1.0572252*Z];
+}
+const inGamut = v => v.every(c => c >= -1e-4 && c <= 1.0001);
+function ringColour(L, deg) {
+  const r = deg*Math.PI/180;
+  const at = c => labToLin(L, c*Math.cos(r), c*Math.sin(r));
+  let lo = 0, hi = 140;
+  for (let i=0;i<26;i++){ const m=(lo+hi)/2; inGamut(at(m)) ? lo=m : hi=m; }
+  const v = at(lo);
+  const f = c => Math.round(Math.max(0,Math.min(1,l2s(Math.max(0,Math.min(1,c)))))*255).toString(16).padStart(2,'0');
+  return '#'+f(v[0])+f(v[1])+f(v[2]);
+}
+
+/* ── data ── */
+const STEPS = ['050','100','200','300','400','500','600','700','800','900'];
+const BEFORE = ['#E9F8FD','#D2F1FC','#A5E5F9','#65D3F4','#22BFE5','#169DBD','#0F7B95','#085B6E','#084150','#0A2C36'];
+const AFTER  = ['#E5F4F9','#CEEDF8','#A3E3F7','#65D3F4','#28C1E7','#21A1C2','#1D819B','#186376','#164A5A','#15353F'];
+
+const SEQ_BEFORE_LIGHT = ['#E8ECF0'].concat(BEFORE.slice(1));
+const SEQ_AFTER_LIGHT  = AFTER.slice();
+const SEQ_BEFORE_DARK  = BEFORE.slice(1).reverse().concat('#F6F7F9');
+const SEQ_AFTER_DARK   = AFTER.slice().reverse();
+
+const VIZ = {
+  pink:['#F7F3F4','#EDDEE3','#E6BCCA','#E68AA9','#F06292','#D4005B','#A11E4E','#79173C','#5A102D','#3F0A21'],
+  plum:['#F6F4F6','#E8E3E8','#D8CAD8','#C7A8C7','#AD6DAD','#97409A','#882F80','#781B65','#57194A','#3B1634'],
+  purple:['#F4F4F6','#E4E1EA','#CEC5DD','#B09ED2','#9575CD','#8555C9','#6B3CAE','#563389','#422A64','#302245'],
+  indigo:['#F3F4F7','#DFE1EC','#BFC6E3','#90A0E0','#6B7ED6','#4E62BA','#435A98','#375276','#2D3E56','#232D3C'],
+  cyan:AFTER,
+  teal:['#EAFBFA','#C6F4F1','#9BE8E3','#6CD7D2','#3FC3BD','#35A7A2','#2C8985','#226A67','#1A4E4C','#143735'],
+  sage:['#F4F6F6','#E1EAE9','#C2D4CF','#96BEB5','#72B3A6','#3D8F7E','#217766','#065F4D','#084438','#0A2D26'],
+  lime:['#F6F9E3','#E6F283','#D4E157','#C1C94B','#ADB045','#9E9D00','#807E39','#656330','#4A4824','#312F17'],
+  gold:['#F9F7EF','#F9E9BA','#FFD54F','#FFA400','#DD9232','#BD7C30','#9D662C','#7D5125','#5E3C1C','#3F2711'],
+  orange:['#F7F3F2','#EFE0DC','#EAC4B8','#EF9B80','#FF8A65','#E96030','#CC471F','#B12E0B','#7F2710','#552012'],
+  brown:['#F5F5F4','#E7E5E4','#D5CFCD','#C0B4AF','#A1887F','#A8796D','#8C6156','#6F4F46','#533D37','#3A2D2A'],
+};
+const STATUS = {
+  blue:['#F5FBFF','#F0F8FF','#D7EDFE','#BAE1FC','#8ACAFF','#4299E0','#2272B4','#0E538B','#04355D','#021E38'],
+  red:['#FFFAFB','#FFF5F7','#FDE2E8','#FBD0D8','#F792A6','#E65B77','#C82D4C','#9E102C','#630316','#3A010B'],
+  green:['#F8FEF9','#F3FCF6','#D4F7DF','#B1ECC5','#8DDDA8','#3BA65E','#277C43','#115026','#093919','#04220E'],
+  yellow:['#FFFCF4','#FFF9EB','#FCEACA','#F8D4A5','#F2BE88','#DE7921','#BE501E','#93320B','#5F1B02','#381001'],
+};
+
+const FAMILIES = [
+  { name: 'viz-categorical', title: 'Categorical', count: 10,
+    role: 'Identity. Unordered series where the colour says which thing this is, not how much of it there is. Take them in order; never skip to pick a nicer one.',
+    rows: [['1','#9575CD','#8555C9','purple'],['2','#FFD54F','#BD7C30','gold'],['3','#6CD7D2','#2C8985','teal'],['4','#F06292','#A11E4E','pink'],['5','#D4E157','#9E9D00','lime'],['6','#A1887F','#A8796D','brown'],['7','#90A0E0','#4E62BA','indigo'],['8','#EF9B80','#CC471F','orange'],['9','#96BEB5','#217766','sage'],['10','#AD6DAD','#97409A','plum']] },
+  { name: 'viz-sequential', title: 'Sequential', count: 10,
+    role: 'Magnitude. One hue at varying strength, for ordered data — heatmaps, treemaps, donuts, segmented bars. The scale reverses under dark so a low step is always nearest the canvas.',
+    rows: [['1','#E5F4F9','#15353F','cyan.050 / cyan.900'],['2','#CEEDF8','#164A5A','cyan.100 / cyan.800'],['3','#A3E3F7','#186376','cyan.200 / cyan.700'],['4','#65D3F4','#1D819B','cyan.300 / cyan.600'],['5','#28C1E7','#21A1C2','cyan.400 / cyan.500'],['6','#21A1C2','#28C1E7','cyan.500 / cyan.400'],['7','#1D819B','#65D3F4','cyan.600 / cyan.300'],['8','#186376','#A3E3F7','cyan.700 / cyan.200'],['9','#164A5A','#CEEDF8','cyan.800 / cyan.100'],['10','#15353F','#E5F4F9','cyan.900 / cyan.050']] },
+  { name: 'viz-level', title: 'Level', count: 15,
+    role: 'A judgement. Five levels — pass, high, medium, low, info — each with a base, a subtle fill and a strong text or border weight. Built on status primitives so the sentiment reads, but tuned to contrast with each other rather than with the page.',
+    rows: [['pass-base','#8DDDA8','#D4F7DF',''],['high-base','#E65B77','#F792A6',''],['medium-base','#DE7921','#DE7921',''],['low-base','#F9E9BA','#9D662C',''],['info-base','#A3E3F7','#65D3F4',''],['pass-subtle','#D4F7DF','#093919',''],['high-subtle','#FFF5F7','#630316',''],['medium-subtle','#FFF9EB','#5F1B02',''],['low-subtle','#F9F7EF','#5E3C1C',''],['info-subtle','#CEEDF8','#164A5A',''],['pass-strong','#277C43','#8DDDA8',''],['high-strong','#9E102C','#FBD0D8',''],['medium-strong','#BE501E','#DE7921',''],['low-strong','#9D662C','#BD7C30',''],['info-strong','#1D819B','#21A1C2','']] },
+  { name: 'viz-neutral', title: 'Neutral', count: 3,
+    role: 'Absence, and de-emphasis. A segmented-bar track, an empty heatmap cell, the tail of a top-N list, a previous-period series. Alpha rather than fixed values, so a neutral inherits whatever surface it is drawn on — and sourced from the cyan ramp, so it carries a trace of the brand hue instead of reading as flat grey beside it.',
+    rows: [['subtle','rgba(21, 53, 63, 0.04)','rgba(206, 237, 248, 0.04)','track, empty cell'],['base','rgba(21, 53, 63, 0.08)','rgba(206, 237, 248, 0.08)','bottom-N, de-emphasis'],['strong','rgba(21, 53, 63, 0.48)','rgba(206, 237, 248, 0.48)','previous period']] },
+];
+
+/* ── swatch grid ── */
+const L_BEFORE = BEFORE.map(h => lch(h).L);
+const L_AFTER  = AFTER.map(h => lch(h).L);
+document.getElementById('stops').innerHTML = STEPS.map((st,i) => {
+  const moved = BEFORE[i] !== AFTER[i];
+  const d = L_AFTER[i] - L_BEFORE[i];
+  const inkA = i <= 5 ? '#11171C' : '#FFFFFF';
+  return `<div>
+    <div class="stop-head">
+      <span class="stop-name">${st}</span>
+      <span class="delta ${moved?'moved':''}">${moved ? (d>0?'+':'') + d.toFixed(1) + ' L*' : 'unchanged'}</span>
+    </div>
+    <div class="tile">
+      <div class="half" style="background:${BEFORE[i]}"><span style="color:${inkA}">${BEFORE[i]}</span></div>
+      <div class="divider"></div>
+      <div class="half" style="background:${AFTER[i]}"><span style="color:${inkA}">${AFTER[i]}</span></div>
+    </div>
+    <div class="ba"><span>before</span><span>after</span></div>
+  </div>`;
+}).join('');
+
+/* ── charts ── */
+function timeSeries(s, bg) {
+  const v = [22,31,18,40,27,35,12,44,29,38,16,33,25,41,20,30,36,23,34,28], W=340,H=92,bw=(W-8)/v.length;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" style="background:${bg}">${
+    v.map((n,i)=>`<rect x="${4+i*bw}" y="${H-6-(n/48)*(H-14)}" width="${bw-2}" height="${(n/48)*(H-14)}" rx="1" fill="${s[4]}"/>`).join('')
+  }</svg>`;
+}
+function bars(s, bg, ink) {
+  const rows=[['ingest_pipeline',.96],['feature_store',.71],['model_registry',.52],['audit_events',.34]];
+  return `<svg class="chart" viewBox="0 0 340 92" style="background:${bg}">${
+    rows.map(([l,w],i)=>`<rect x="0" y="${3+i*22}" width="${w*340}" height="19" rx="2" fill="${s[1]}"/><text x="9" y="16.5" transform="translate(0,${3+i*22})" fill="${ink}" font-size="11" font-family="ui-sans-serif,system-ui,sans-serif">${l}</text>`).join('')
+  }</svg>`;
+}
+function treemap(s, bg, ink) {
+  const t=[[0,0,148,92,2,'main','412 GiB'],[150,0,92,45,1,'hive','180 GiB'],[150,47,92,45,1,'dev','176 GiB'],[244,0,96,54,1,'samples','132 GiB'],[244,56,96,36,0,'other','61 GiB']];
+  return `<svg class="chart" viewBox="0 0 340 92" style="background:${bg}">${
+    t.map(([x,y,w,h,i,l,v])=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${s[i]}" stroke="${bg}" stroke-width="1.25"/><text x="${x+8}" y="${y+17}" fill="${ink}" font-size="11" font-weight="590" font-family="ui-sans-serif,system-ui,sans-serif">${l}</text><text x="${x+8}" y="${y+31}" fill="${ink}" opacity=".6" font-size="9.5" font-family="ui-sans-serif,system-ui,sans-serif">${v}</text>`).join('')
+  }</svg>`;
+}
+function heatmap(s, bg) {
+  const g=[[0,1,1,2,3,1,2,4,3,2,1,0,1,2],[1,1,2,3,5,2,3,6,4,3,1,1,2,3],[1,2,3,4,6,3,4,7,5,4,2,1,3,4],[0,1,1,2,3,1,2,4,2,1,1,0,1,2]];
+  const c=23;
+  return `<svg class="chart" viewBox="0 0 ${14*c} ${4*c}" style="background:${bg}">${
+    g.map((row,y)=>row.map((v,x)=>`<rect x="${x*c}" y="${y*c}" width="${c-1.5}" height="${c-1.5}" rx="1.5" fill="${s[v]}"/>`).join('')).join('')
+  }</svg>`;
+}
+function donut(s, bg) {
+  const segs=[[.38,7],[.25,5],[.2,3],[.17,1]]; let a0=-Math.PI/2; const cx=170,cy=46;
+  const p=(r,a)=>`${(cx+r*Math.cos(a)).toFixed(2)},${(cy+r*Math.sin(a)).toFixed(2)}`;
+  return `<svg class="chart" viewBox="0 0 340 92" style="background:${bg}">${
+    segs.map(([v,i])=>{const a1=a0+v*Math.PI*2, big=v>.5?1:0;
+      const d=`M${p(41,a0)} A41,41 0 ${big} 1 ${p(41,a1)} L${p(24,a1)} A24,24 0 ${big} 0 ${p(24,a0)} Z`;
+      a0=a1; return `<path d="${d}" fill="${s[i]}" stroke="${bg}" stroke-width="1.5"/>`;}).join('')
+  }</svg>`;
+}
+const CHARTS = [['Time series',timeSeries],['Labelled bars',bars],['Treemap',treemap],['Heatmap',heatmap],['Donut',donut]];
+
+let mode = 'light';
+function renderCharts() {
+  const bg  = mode === 'light' ? '#FFFFFF' : '#11171C';
+  const ink = mode === 'light' ? '#11171C' : '#FFFFFF';
+  const b = mode === 'light' ? SEQ_BEFORE_LIGHT : SEQ_BEFORE_DARK;
+  const a = mode === 'light' ? SEQ_AFTER_LIGHT  : SEQ_AFTER_DARK;
+  document.getElementById('chartgrid').innerHTML =
+    `<span></span><span class="colhead">Before</span><span class="colhead after">After</span>` +
+    CHARTS.map(([n,fn]) => `<span class="rowlabel">${n}</span><div>${fn(b,bg,ink)}</div><div>${fn(a,bg,ink)}</div>`).join('');
+}
+document.getElementById('sLight').onclick = () => { mode='light';
+  document.getElementById('sLight').setAttribute('aria-pressed','true');
+  document.getElementById('sDark').setAttribute('aria-pressed','false'); renderCharts(); };
+document.getElementById('sDark').onclick = () => { mode='dark';
+  document.getElementById('sDark').setAttribute('aria-pressed','true');
+  document.getElementById('sLight').setAttribute('aria-pressed','false'); renderCharts(); };
+renderCharts();
+
+/* ── the wheel ── */
+(function(){
+  const S=760, CX=S/2, CY=S/2, R=S/2-58, CMAX=90;
+  const pos=(h,C)=>{const r=(Math.min(C,CMAX)/CMAX)*R, a=h*Math.PI/180; return [CX+r*Math.cos(a), CY-r*Math.sin(a)];};
+  const WRAP=new Set(['pink','red']);
+  const un=(fam,h)=>WRAP.has(fam)&&h>180?h-360:h;
+  let out='';
+
+  // hue ring, generated at the same angles the marks sit at
+  const stroke=(2*Math.PI*(R+21))/180+1.2;
+  for(let d=0;d<360;d+=2){
+    const a=d*Math.PI/180;
+    out+=`<line x1="${CX+(R+12)*Math.cos(a)}" y1="${CY-(R+12)*Math.sin(a)}" x2="${CX+(R+30)*Math.cos(a)}" y2="${CY-(R+30)*Math.sin(a)}" stroke="${ringColour(60,d)}" stroke-width="${stroke}"/>`;
+  }
+  // grid
+  [20,40,60,80].forEach(c=>{out+=`<circle cx="${CX}" cy="${CY}" r="${(c/CMAX)*R}" fill="none" stroke="#E5E5E5"/>`;});
+  out+=`<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="#E5E5E5"/>`;
+  for(let d=0;d<360;d+=30){const a=d*Math.PI/180;
+    out+=`<line x1="${CX}" y1="${CY}" x2="${CX+R*Math.cos(a)}" y2="${CY-R*Math.sin(a)}" stroke="#F0F0F0"/>`;
+    out+=`<text x="${CX+(R-16)*Math.cos(a)}" y="${CY-(R-16)*Math.sin(a)}" fill="#92A4B3" font-size="10" font-family="${'ui-monospace,monospace'}" text-anchor="middle" dominant-baseline="middle">${d}°</text>`;}
+  [20,40,60,80].forEach(c=>{out+=`<text x="${CX+5}" y="${CY-(c/CMAX)*R-5}" fill="#92A4B3" font-size="10" font-family="ui-monospace,monospace">${c}</text>`;});
+
+  // the arc cyan can move within, teal 192 to blue 249
+  const arc=(from,to,r)=>{const p=a=>`${CX+r*Math.cos(a*Math.PI/180)},${CY-r*Math.sin(a*Math.PI/180)}`;
+    return `<path d="M${p(from)} A${r},${r} 0 0 0 ${p(to)}" fill="none" stroke="#11171C" stroke-width="1.5" stroke-dasharray="5 4" opacity=".5"/>`;};
+  out+=arc(194,247,R-40);
+
+  // ramps
+  const draw=(table,group)=>{
+    Object.keys(table).forEach(fam=>{
+      const pts=table[fam].map(hex=>{const p=lch(hex); return {hex,...p,h:un(fam,p.h)};});
+      out+=`<path d="${pts.map((p,i)=>{const [x,y]=pos(p.h,p.C); return (i?'L':'M')+x.toFixed(1)+','+y.toFixed(1);}).join(' ')}" fill="none" stroke="${table[fam][5]}" stroke-width="${group==='status'?2.4:1.7}" stroke-linejoin="round"${group==='status'?' stroke-dasharray="5 3"':''}/>`;
+      pts.forEach(p=>{const [x,y]=pos(p.h,p.C);
+        out+= group==='status'
+          ? `<path d="M${x},${y-7} L${x+7},${y} L${x},${y+7} L${x-7},${y} Z" fill="${p.hex}" stroke="#E5E5E5" stroke-width=".75"/>`
+          : `<circle cx="${x}" cy="${y}" r="6.5" fill="${p.hex}" stroke="#E5E5E5" stroke-width=".75"/>`;});
+      const peak=pts.reduce((a,b)=>b.C>a.C?b:a);
+      const rr=(Math.min(peak.C,CMAX)/CMAX)*R+(group==='status'?42:24), a=peak.h*Math.PI/180;
+      out+=`<text x="${CX+rr*Math.cos(a)}" y="${CY-rr*Math.sin(a)}" fill="${group==='status'?'#11171C':'#5F7281'}" font-size="${group==='status'?12:11.5}" font-weight="${group==='status'?700:590}" text-anchor="middle" dominant-baseline="middle" font-family="ui-sans-serif,system-ui,sans-serif">${fam}</text>`;
+    });
+  };
+  draw(VIZ,'viz'); draw(STATUS,'status');
+
+  // mark the cyan primary, before and after
+  [['before',BEFORE[4],'#92A4B3'],['after',AFTER[4],'#11171C']].forEach(([label,hex,ring],k)=>{
+    const p=lch(hex); const [x,y]=pos(p.h,p.C);
+    out+=`<circle cx="${x}" cy="${y}" r="12" fill="${hex}" stroke="${ring}" stroke-width="2.5"/>`;
+    out+=`<text x="${x}" y="${y-20+k*40}" fill="#11171C" font-size="10.5" font-weight="600" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif">${label}</text>`;
+  });
+
+  out+=`<text x="${CX}" y="${S-8}" fill="#92A4B3" font-size="11" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif">radius = chroma C*ab · angle = hue h_ab · circle = viz, diamond = status · dashed arc = where cyan can travel</text>`;
+  document.getElementById('wheel').innerHTML=out;
+})();
+
+/* ── palette families ── */
+document.getElementById('families').innerHTML = FAMILIES.map(f => {
+  const swatch = v => v.startsWith('rgba')
+    ? `<span class="chip" style="background:${v}"></span>`
+    : `<span class="chip" style="background:${v}"></span>`;
+  const rampStrip = f.rows.length === 10 || f.rows.length === 15
+    ? `<div class="ramp">${f.rows.map(r=>`<div style="background:${r[1]}"></div>`).join('')}</div>` : '';
+  return `<div class="fam">
+    <header>
+      <h3>${f.title} <span style="font:500 12.5px/1 var(--mono);color:var(--mute);margin-left:6px">${f.name}-* · ${f.count}</span></h3>
+      <p class="role">${f.role}</p>
+    </header>
+    ${rampStrip}
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th style="width:30%">Token</th><th style="width:27%">Light</th><th style="width:27%">Dark</th><th>Primitive</th></tr></thead>
+        <tbody>${f.rows.map(r=>`<tr>
+          <td class="name">${f.name}-${r[0]}</td>
+          <td>${swatch(r[1])}<span style="font:500 12px/1 var(--mono)">${r[1]}</span></td>
+          <td><span class="chipdark">${swatch(r[2])}</span><span style="font:500 12px/1 var(--mono)">${r[2]}</span></td>
+          <td style="color:var(--mute)">${r[3]||''}</td>
+        </tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>`;
+}).join('');
+</script>
+</body>
+</html>

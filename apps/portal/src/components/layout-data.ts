@@ -250,7 +250,7 @@ export const spacing: Spacing = {
     "value": "0.25rem",
     "resolvesTo": "calc(var(--db-spacing-unit) * var(--db-density-scalar))",
     "origin": "override",
-    "uses": 819,
+    "uses": 877,
     "files": 78
   }
 }

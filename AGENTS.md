@@ -13,7 +13,7 @@ This file is the entry point. It tells you where to look; it does not repeat wha
 | `packages/dbui-cli/` | The machine-readable surface. `--json` for typed envelopes. |
 | `packages/dbui-mcp/` | MCP server over the same API. Wired in `.cursor/mcp.json`. |
 | `packages/dbui-shells/` | Page shells and compositions. Every screen starts here. |
-| `packages/dbui-viz/` | 5 Vega-Lite charts. |
+| `packages/dbui-viz/` | 5 Vega-Lite charts, plus `Leaderboard` and `Legend` drawn as DOM. |
 | `packages/dbui-chat/` | Conversational and agentic chat primitives. |
 | `apps/portal/` | Storybook. The only running UI surface today. |
 | `scripts/design-lint/` | Token generator, sync verifier, React + Figma linters. |
@@ -33,9 +33,10 @@ yarn workspace portal storybook   # dev surface, port 6006
 yarn design:tokens                # theme.config.mjs -> tokens.css + tokens.json
 yarn design:sync-components       # the packages -> dbui-components.json
 yarn design:verify-sync           # assert config <-> CSS <-> Figma parity
-yarn design:lint:react [path]     # 19 rules; add --json for machine output
+yarn design:lint:react [path]     # 25 rules; add --json for machine output
 yarn design:lint:shells           # same linter scoped to dbui-shells
 yarn design:verify-rules          # assert every lint rule fires, and only when it should
+yarn design:audit-portal          # assert every component is visible on /components: row, link, tile
 yarn design:verify-story-ids      # assert every story id the portal links to resolves; needs 6006
 yarn design:lint:figma --target <nodeId>   # emits JS to run via Figma MCP
 ```
@@ -66,6 +67,7 @@ Read the discovery layer before writing UI. Per-component rules live in JSDoc, n
 
 | To do this | Read |
 |---|---|
+| Know what kind of thing you are adding | `packages/dbui/docs/structure.md` — the five tiers, and the one test that decides them |
 | Understand the visual language | `packages/dbui/DESIGN.md` |
 | Pick a component | `packages/dbui/docs/component-index.md` |
 | Pick an icon | `packages/dbui/docs/icon-index.md` |
@@ -80,10 +82,61 @@ Read the discovery layer before writing UI. Per-component rules live in JSDoc, n
 Skills in `packages/dbui/skills/` cover the common workflows: `dbui-pick-component`,
 `dbui-pick-icon`, `dbui-build-screen`, `dbui-validate`.
 
+**Review is five checks plus an orchestrator.** `dbui-review` frames the design, dispatches all five
+in parallel as subagents, then dedupes and synthesizes into one critique — *what's working, what
+should be fixed, what can be improved, what you'll be asked*. **Every check is independently
+invokable**, and a builder who wants only copy reviewed should be sent straight to the voice check.
+
+| Check | Skill | Needs |
+|---|---|---|
+| Standards | `dbui-validate` | The linter. Also the standalone compliance pass |
+| Guidelines | `dbui-check-guidelines` | The 13 general UX topics |
+| Voice | `dbui-check-voice` | `packages/dbui/docs/brandvoice.md` |
+| Principles | `dbui-check-principles` | 6 principles, 5 constraints — embedded in the skill |
+| Ecosystem | `dbui-check-ecosystem` | ⚠️ A local `context/ecosystem/` that **does not ship**. Degrades cleanly when absent |
+
+All five return the same three-severity contract (`FIX` / `IMPROVE` / `WORKING`), which is what makes
+synthesis possible. A check that returns freeform prose breaks the orchestrator.
+
+⚠️ **The principles and constraints are duplicated** — canonically in the portal
+(`PrinciplesDoc.tsx`, `constraints-data.ts`), and restated in `dbui-check-principles.md` because the
+portal does not ship. They are the most stable content in the system, but a change to either needs to
+land in both.
+
+## The five tiers
+
+Token, Icon, Component, Composition, Shell. Full definitions and the decision
+procedure are in `packages/dbui/docs/structure.md`; the part you need before writing
+anything is the definition of Component, because it is the one people get wrong:
+
+> **A Component is reachable — you can import it, place it, and pass it props.**
+
+Not "irreducible". `Task` is built from `Disclosure` and `Status` and is still a
+Component; `BarChart` is built from nothing and is a Component for the same reason
+`Input` is. Being an assembly is an implementation detail, not a tier.
+
+Anything that only ever appears *inside* another component is a **Part**, not a
+Component: dot-prefix it in Figma (`.TreeNode`) or file it under `Viz/Inner/`, and keep
+it out of `component-index.md`, the gallery and Code Connect. 62 of the 160 Figma
+components are Parts, and every audit skips them — that exclusion is what keeps the
+word Component meaning something.
+
+A **Recipe** is a documented arrangement with nothing single to import. Never create an
+export or a package called `recipes`; the word already means "assemble it yourself".
+
+Package, category and tier are three independent axes. Package follows **dependency
+weight** — `dbui-viz` is separate because Vega is ~12 MB, not because charts are a
+different kind of thing. A builder only ever sees the package in the import line.
+
 ## Boundaries
 
 **Always**
 - Run `yarn design:lint:react <path>` on any file you create or modify, and fix what it reports.
+- Run `yarn design:audit-portal` after adding, removing or renaming a component. The portal is the
+  only running UI surface, so it is the only place a change can be *seen* — and a component can be
+  exported, documented, linted and Code Connected while being invisible there. A missing demo tile
+  is the failure no other check catches: the row renders, and it claims the component has no default
+  state.
 - Run `yarn design:verify-sync` after touching anything under `packages/dbui/src/tokens/`.
 - Run `yarn design:verify-rules` after touching `scripts/design-lint/`. A rule that stops matching
   fails there rather than going quiet.

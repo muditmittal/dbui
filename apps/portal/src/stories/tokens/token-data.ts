@@ -1286,11 +1286,11 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-1",
-            "light": "#E8ECF0",
-            "dark": "#0A2C36",
+            "light": "#E5F4F9",
+            "dark": "#15353F",
             "primitive": {
               "light": {
-                "ref": "interface.cool.100",
+                "ref": "viz.cyan.050",
                 "alpha": null
               },
               "dark": {
@@ -1301,8 +1301,8 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-2",
-            "light": "#D2F1FC",
-            "dark": "#084150",
+            "light": "#CEEDF8",
+            "dark": "#164A5A",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.100",
@@ -1316,8 +1316,8 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-3",
-            "light": "#A5E5F9",
-            "dark": "#085B6E",
+            "light": "#A3E3F7",
+            "dark": "#186376",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.200",
@@ -1332,7 +1332,7 @@ export const colorFamilies: ColorFamily[] = [
           {
             "name": "viz-sequential-4",
             "light": "#65D3F4",
-            "dark": "#0F7B95",
+            "dark": "#1D819B",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.300",
@@ -1346,8 +1346,8 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-5",
-            "light": "#22BFE5",
-            "dark": "#169DBD",
+            "light": "#28C1E7",
+            "dark": "#21A1C2",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.400",
@@ -1361,8 +1361,8 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-6",
-            "light": "#169DBD",
-            "dark": "#22BFE5",
+            "light": "#21A1C2",
+            "dark": "#28C1E7",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.500",
@@ -1376,7 +1376,7 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-7",
-            "light": "#0F7B95",
+            "light": "#1D819B",
             "dark": "#65D3F4",
             "primitive": {
               "light": {
@@ -1391,8 +1391,8 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-8",
-            "light": "#085B6E",
-            "dark": "#A5E5F9",
+            "light": "#186376",
+            "dark": "#A3E3F7",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.700",
@@ -1406,8 +1406,8 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-9",
-            "light": "#084150",
-            "dark": "#D2F1FC",
+            "light": "#164A5A",
+            "dark": "#CEEDF8",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.800",
@@ -1421,15 +1421,285 @@ export const colorFamilies: ColorFamily[] = [
           },
           {
             "name": "viz-sequential-10",
-            "light": "#0A2C36",
-            "dark": "#F6F7F9",
+            "light": "#15353F",
+            "dark": "#E5F4F9",
             "primitive": {
               "light": {
                 "ref": "viz.cyan.900",
                 "alpha": null
               },
               "dark": {
-                "ref": "interface.cool.050",
+                "ref": "viz.cyan.050",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-neutral-subtle",
+            "light": "rgba(21, 53, 63, 0.04)",
+            "dark": "rgba(206, 237, 248, 0.04)",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.900",
+                "alpha": 0.04
+              },
+              "dark": {
+                "ref": "viz.cyan.100",
+                "alpha": 0.04
+              }
+            }
+          },
+          {
+            "name": "viz-neutral-base",
+            "light": "rgba(21, 53, 63, 0.08)",
+            "dark": "rgba(206, 237, 248, 0.08)",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.900",
+                "alpha": 0.08
+              },
+              "dark": {
+                "ref": "viz.cyan.100",
+                "alpha": 0.08
+              }
+            }
+          },
+          {
+            "name": "viz-neutral-strong",
+            "light": "rgba(21, 53, 63, 0.48)",
+            "dark": "rgba(206, 237, 248, 0.48)",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.900",
+                "alpha": 0.48
+              },
+              "dark": {
+                "ref": "viz.cyan.100",
+                "alpha": 0.48
+              }
+            }
+          },
+          {
+            "name": "viz-level-pass-base",
+            "light": "#8DDDA8",
+            "dark": "#D4F7DF",
+            "primitive": {
+              "light": {
+                "ref": "status.green.400",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.200",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-high-base",
+            "light": "#E65B77",
+            "dark": "#F792A6",
+            "primitive": {
+              "light": {
+                "ref": "status.red.500",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.400",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-medium-base",
+            "light": "#DE7921",
+            "dark": "#DE7921",
+            "primitive": {
+              "light": {
+                "ref": "status.yellow.500",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.yellow.500",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-low-base",
+            "light": "#F9E9BA",
+            "dark": "#9D662C",
+            "primitive": {
+              "light": {
+                "ref": "viz.gold.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.gold.600",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-info-base",
+            "light": "#A3E3F7",
+            "dark": "#65D3F4",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.300",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-pass-subtle",
+            "light": "#D4F7DF",
+            "dark": "#093919",
+            "primitive": {
+              "light": {
+                "ref": "status.green.200",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.800",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-high-subtle",
+            "light": "#FFF5F7",
+            "dark": "#630316",
+            "primitive": {
+              "light": {
+                "ref": "status.red.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.800",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-medium-subtle",
+            "light": "#FFF9EB",
+            "dark": "#5F1B02",
+            "primitive": {
+              "light": {
+                "ref": "status.yellow.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.yellow.800",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-low-subtle",
+            "light": "#F9F7EF",
+            "dark": "#5E3C1C",
+            "primitive": {
+              "light": {
+                "ref": "viz.gold.050",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.gold.800",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-info-subtle",
+            "light": "#CEEDF8",
+            "dark": "#164A5A",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.100",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.800",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-pass-strong",
+            "light": "#277C43",
+            "dark": "#8DDDA8",
+            "primitive": {
+              "light": {
+                "ref": "status.green.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.green.400",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-high-strong",
+            "light": "#9E102C",
+            "dark": "#FBD0D8",
+            "primitive": {
+              "light": {
+                "ref": "status.red.700",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.red.300",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-medium-strong",
+            "light": "#BE501E",
+            "dark": "#DE7921",
+            "primitive": {
+              "light": {
+                "ref": "status.yellow.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "status.yellow.500",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-low-strong",
+            "light": "#9D662C",
+            "dark": "#BD7C30",
+            "primitive": {
+              "light": {
+                "ref": "viz.gold.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.gold.500",
+                "alpha": null
+              }
+            }
+          },
+          {
+            "name": "viz-level-info-strong",
+            "light": "#1D819B",
+            "dark": "#21A1C2",
+            "primitive": {
+              "light": {
+                "ref": "viz.cyan.600",
+                "alpha": null
+              },
+              "dark": {
+                "ref": "viz.cyan.500",
                 "alpha": null
               }
             }
@@ -2647,11 +2917,11 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-1",
-        "light": "#E8ECF0",
-        "dark": "#0A2C36",
+        "light": "#E5F4F9",
+        "dark": "#15353F",
         "primitive": {
           "light": {
-            "ref": "interface.cool.100",
+            "ref": "viz.cyan.050",
             "alpha": null
           },
           "dark": {
@@ -2662,8 +2932,8 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-2",
-        "light": "#D2F1FC",
-        "dark": "#084150",
+        "light": "#CEEDF8",
+        "dark": "#164A5A",
         "primitive": {
           "light": {
             "ref": "viz.cyan.100",
@@ -2677,8 +2947,8 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-3",
-        "light": "#A5E5F9",
-        "dark": "#085B6E",
+        "light": "#A3E3F7",
+        "dark": "#186376",
         "primitive": {
           "light": {
             "ref": "viz.cyan.200",
@@ -2693,7 +2963,7 @@ export const colorGroups: ColorGroup[] = [
       {
         "name": "viz-sequential-4",
         "light": "#65D3F4",
-        "dark": "#0F7B95",
+        "dark": "#1D819B",
         "primitive": {
           "light": {
             "ref": "viz.cyan.300",
@@ -2707,8 +2977,8 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-5",
-        "light": "#22BFE5",
-        "dark": "#169DBD",
+        "light": "#28C1E7",
+        "dark": "#21A1C2",
         "primitive": {
           "light": {
             "ref": "viz.cyan.400",
@@ -2722,8 +2992,8 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-6",
-        "light": "#169DBD",
-        "dark": "#22BFE5",
+        "light": "#21A1C2",
+        "dark": "#28C1E7",
         "primitive": {
           "light": {
             "ref": "viz.cyan.500",
@@ -2737,7 +3007,7 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-7",
-        "light": "#0F7B95",
+        "light": "#1D819B",
         "dark": "#65D3F4",
         "primitive": {
           "light": {
@@ -2752,8 +3022,8 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-8",
-        "light": "#085B6E",
-        "dark": "#A5E5F9",
+        "light": "#186376",
+        "dark": "#A3E3F7",
         "primitive": {
           "light": {
             "ref": "viz.cyan.700",
@@ -2767,8 +3037,8 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-9",
-        "light": "#084150",
-        "dark": "#D2F1FC",
+        "light": "#164A5A",
+        "dark": "#CEEDF8",
         "primitive": {
           "light": {
             "ref": "viz.cyan.800",
@@ -2782,15 +3052,285 @@ export const colorGroups: ColorGroup[] = [
       },
       {
         "name": "viz-sequential-10",
-        "light": "#0A2C36",
-        "dark": "#F6F7F9",
+        "light": "#15353F",
+        "dark": "#E5F4F9",
         "primitive": {
           "light": {
             "ref": "viz.cyan.900",
             "alpha": null
           },
           "dark": {
-            "ref": "interface.cool.050",
+            "ref": "viz.cyan.050",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-neutral-subtle",
+        "light": "rgba(21, 53, 63, 0.04)",
+        "dark": "rgba(206, 237, 248, 0.04)",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.900",
+            "alpha": 0.04
+          },
+          "dark": {
+            "ref": "viz.cyan.100",
+            "alpha": 0.04
+          }
+        }
+      },
+      {
+        "name": "viz-neutral-base",
+        "light": "rgba(21, 53, 63, 0.08)",
+        "dark": "rgba(206, 237, 248, 0.08)",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.900",
+            "alpha": 0.08
+          },
+          "dark": {
+            "ref": "viz.cyan.100",
+            "alpha": 0.08
+          }
+        }
+      },
+      {
+        "name": "viz-neutral-strong",
+        "light": "rgba(21, 53, 63, 0.48)",
+        "dark": "rgba(206, 237, 248, 0.48)",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.900",
+            "alpha": 0.48
+          },
+          "dark": {
+            "ref": "viz.cyan.100",
+            "alpha": 0.48
+          }
+        }
+      },
+      {
+        "name": "viz-level-pass-base",
+        "light": "#8DDDA8",
+        "dark": "#D4F7DF",
+        "primitive": {
+          "light": {
+            "ref": "status.green.400",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.200",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-high-base",
+        "light": "#E65B77",
+        "dark": "#F792A6",
+        "primitive": {
+          "light": {
+            "ref": "status.red.500",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.400",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-medium-base",
+        "light": "#DE7921",
+        "dark": "#DE7921",
+        "primitive": {
+          "light": {
+            "ref": "status.yellow.500",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.yellow.500",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-low-base",
+        "light": "#F9E9BA",
+        "dark": "#9D662C",
+        "primitive": {
+          "light": {
+            "ref": "viz.gold.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.gold.600",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-info-base",
+        "light": "#A3E3F7",
+        "dark": "#65D3F4",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.300",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-pass-subtle",
+        "light": "#D4F7DF",
+        "dark": "#093919",
+        "primitive": {
+          "light": {
+            "ref": "status.green.200",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.800",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-high-subtle",
+        "light": "#FFF5F7",
+        "dark": "#630316",
+        "primitive": {
+          "light": {
+            "ref": "status.red.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.800",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-medium-subtle",
+        "light": "#FFF9EB",
+        "dark": "#5F1B02",
+        "primitive": {
+          "light": {
+            "ref": "status.yellow.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.yellow.800",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-low-subtle",
+        "light": "#F9F7EF",
+        "dark": "#5E3C1C",
+        "primitive": {
+          "light": {
+            "ref": "viz.gold.050",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.gold.800",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-info-subtle",
+        "light": "#CEEDF8",
+        "dark": "#164A5A",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.100",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.800",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-pass-strong",
+        "light": "#277C43",
+        "dark": "#8DDDA8",
+        "primitive": {
+          "light": {
+            "ref": "status.green.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.green.400",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-high-strong",
+        "light": "#9E102C",
+        "dark": "#FBD0D8",
+        "primitive": {
+          "light": {
+            "ref": "status.red.700",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.red.300",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-medium-strong",
+        "light": "#BE501E",
+        "dark": "#DE7921",
+        "primitive": {
+          "light": {
+            "ref": "status.yellow.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "status.yellow.500",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-low-strong",
+        "light": "#9D662C",
+        "dark": "#BD7C30",
+        "primitive": {
+          "light": {
+            "ref": "viz.gold.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.gold.500",
+            "alpha": null
+          }
+        }
+      },
+      {
+        "name": "viz-level-info-strong",
+        "light": "#1D819B",
+        "dark": "#21A1C2",
+        "primitive": {
+          "light": {
+            "ref": "viz.cyan.600",
+            "alpha": null
+          },
+          "dark": {
+            "ref": "viz.cyan.500",
             "alpha": null
           }
         }
@@ -2798,6 +3338,226 @@ export const colorGroups: ColorGroup[] = [
     ]
   }
 ]
+
+/**
+ * What each theme moves, by theme then mode, keyed by the unprefixed token name.
+ *
+ * Every other value on this page is one value, because until themes landed there
+ * was one. A token's `light` and `dark` are the default theme's, so a page
+ * rendering under another theme has to look here first or it documents an
+ * aesthetic nobody is looking at.
+ *
+ * Absent name means the theme does not move it. Use `themed()` rather than
+ * reaching in — the fallback to the base value is the whole contract.
+ */
+export const themeValues: Record<string, { light: Record<string, string>; dark: Record<string, string> }> =
+  {
+  "core": {
+    "light": {
+      "font-family": "\"Figtree\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "mono-font-family": "\"Commit Mono\", ui-monospace, SFMono-Regular, \"Cascadia Code\", \"Fira Code\", monospace",
+      "shape-control-lg": "var(--db-radius-full)",
+      "surface-base": "#FFFFFF",
+      "surface-subtle": "#FAFAFA",
+      "surface-strong": "#F5F5F5",
+      "surface-inverse": "#171717",
+      "surface-accent": "#D7EDFE",
+      "text-base": "#262626",
+      "text-strong": "#171717",
+      "text-subtle": "#525252",
+      "text-inverse": "#FFFFFF",
+      "text-accent": "#0E538B",
+      "border-base": "#E5E5E5",
+      "border-strong": "#D4D4D4",
+      "border-subtle": "#F5F5F5",
+      "border-emphasis": "#A3A3A3",
+      "border-inverse": "#404040",
+      "border-accent": "#2272B4",
+      "action-default-base": "#FAFAFA",
+      "action-primary-base": "#171717",
+      "action-primary-hover": "rgba(23, 23, 23, 0.9)",
+      "action-primary-press": "rgba(23, 23, 23, 0.8)",
+      "action-label-base": "#262626",
+      "action-label-hover": "#171717",
+      "action-label-inverse-base": "#FFFFFF",
+      "input-border-base": "#E5E5E5",
+      "input-border-hover": "#A3A3A3",
+      "focus-ring": "#404040",
+      "focus-ring-offset": "#FFFFFF"
+    },
+    "dark": {
+      "surface-base": "#11171C",
+      "surface-subtle": "#1F272D",
+      "surface-strong": "#2B343D",
+      "surface-inverse": "#F6F7F9",
+      "surface-accent": "#021E38",
+      "text-base": "#E8ECF0",
+      "text-strong": "#FFFFFF",
+      "text-subtle": "#92A4B3",
+      "text-inverse": "#11171C",
+      "text-accent": "#8ACAFF",
+      "border-base": "rgba(255, 255, 255, 0.1)",
+      "border-strong": "rgba(255, 255, 255, 0.15)",
+      "border-subtle": "rgba(255, 255, 255, 0.06)",
+      "border-emphasis": "rgba(255, 255, 255, 0.3)",
+      "border-inverse": "#C0CDD8",
+      "border-accent": "#4299E0",
+      "action-default-base": "#1F272D",
+      "action-primary-base": "#D1D9E1",
+      "action-primary-hover": "rgba(209, 217, 225, 0.9)",
+      "action-primary-press": "rgba(209, 217, 225, 0.8)",
+      "action-label-base": "#F6F7F9",
+      "action-label-hover": "#FFFFFF",
+      "action-label-inverse-base": "#11171C",
+      "input-border-base": "rgba(255, 255, 255, 0.15)",
+      "input-border-hover": "#8396A5",
+      "focus-ring": "#F6F7F9",
+      "focus-ring-offset": "#11171C"
+    }
+  },
+  "dubois": {
+    "light": {
+      "font-family": "\"SF Pro Text\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "mono-font-family": "\"SF Mono\", SFMono-Regular, ui-monospace, \"Cascadia Code\", \"Fira Code\", monospace",
+      "shape-control-lg": "var(--db-radius-1)",
+      "surface-base": "#FFFFFF",
+      "surface-subtle": "#FAFAFA",
+      "surface-strong": "#F5F5F5",
+      "surface-inverse": "#171717",
+      "surface-accent": "#D7EDFE",
+      "text-base": "#262626",
+      "text-strong": "#171717",
+      "text-subtle": "#525252",
+      "text-inverse": "#FFFFFF",
+      "text-accent": "#0E538B",
+      "border-base": "#E5E5E5",
+      "border-strong": "#D4D4D4",
+      "border-subtle": "#F5F5F5",
+      "border-emphasis": "#A3A3A3",
+      "border-inverse": "#404040",
+      "border-accent": "#2272B4",
+      "action-default-base": "#FAFAFA",
+      "action-primary-base": "#2272B4",
+      "action-primary-hover": "#0E538B",
+      "action-primary-press": "#04355D",
+      "action-label-base": "#262626",
+      "action-label-hover": "#171717",
+      "action-label-inverse-base": "#FFFFFF",
+      "input-border-base": "#E5E5E5",
+      "input-border-hover": "#A3A3A3",
+      "focus-ring": "#0E538B",
+      "focus-ring-offset": "#FFFFFF"
+    },
+    "dark": {
+      "surface-base": "#11171C",
+      "surface-subtle": "#1F272D",
+      "surface-strong": "#2B343D",
+      "surface-inverse": "#F6F7F9",
+      "surface-accent": "#021E38",
+      "text-base": "#E8ECF0",
+      "text-strong": "#FFFFFF",
+      "text-subtle": "#92A4B3",
+      "text-inverse": "#11171C",
+      "text-accent": "#8ACAFF",
+      "border-base": "rgba(255, 255, 255, 0.1)",
+      "border-strong": "rgba(255, 255, 255, 0.15)",
+      "border-subtle": "rgba(255, 255, 255, 0.06)",
+      "border-emphasis": "rgba(255, 255, 255, 0.3)",
+      "border-inverse": "#C0CDD8",
+      "border-accent": "#4299E0",
+      "action-default-base": "#1F272D",
+      "action-primary-base": "#8ACAFF",
+      "action-primary-hover": "#BAE1FC",
+      "action-primary-press": "#D7EDFE",
+      "action-label-base": "#F6F7F9",
+      "action-label-hover": "#FFFFFF",
+      "action-label-inverse-base": "#11171C",
+      "input-border-base": "rgba(255, 255, 255, 0.15)",
+      "input-border-hover": "#8396A5",
+      "focus-ring": "#BAE1FC",
+      "focus-ring-offset": "#11171C"
+    }
+  },
+  "one": {
+    "light": {
+      "font-family": "\"DM Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+      "mono-font-family": "\"DM Mono\", ui-monospace, SFMono-Regular, \"Cascadia Code\", \"Fira Code\", monospace",
+      "shape-control-lg": "var(--db-radius-full)",
+      "surface-base": "#FFFFFF",
+      "surface-subtle": "#F9F7F4",
+      "surface-strong": "#F1ECE6",
+      "surface-inverse": "#1B1612",
+      "surface-accent": "#FFD5CC",
+      "text-base": "#2E2620",
+      "text-strong": "#1B1612",
+      "text-subtle": "#786A5C",
+      "text-inverse": "#FFFFFF",
+      "text-accent": "#9C200D",
+      "border-base": "#E2DAD0",
+      "border-strong": "#D1C6BA",
+      "border-subtle": "#F1ECE6",
+      "border-emphasis": "#AFA193",
+      "border-inverse": "#5A4D41",
+      "border-accent": "#CC3119",
+      "action-default-base": "#F9F7F4",
+      "action-primary-base": "#1B1612",
+      "action-primary-hover": "rgba(27, 22, 18, 0.9)",
+      "action-primary-press": "rgba(27, 22, 18, 0.8)",
+      "action-label-base": "#2E2620",
+      "action-label-hover": "#1B1612",
+      "action-label-inverse-base": "#FFFFFF",
+      "input-border-base": "#E2DAD0",
+      "input-border-hover": "#AFA193",
+      "focus-ring": "#5A4D41",
+      "focus-ring-offset": "#FFFFFF"
+    },
+    "dark": {
+      "surface-base": "#1B1612",
+      "surface-subtle": "#2E2620",
+      "surface-strong": "#5A4D41",
+      "surface-inverse": "#F9F7F4",
+      "surface-accent": "#420D05",
+      "text-base": "#F1ECE6",
+      "text-strong": "#FFFFFF",
+      "text-subtle": "#AFA193",
+      "text-inverse": "#1B1612",
+      "text-accent": "#FF8E7A",
+      "border-base": "rgba(255, 255, 255, 0.1)",
+      "border-strong": "rgba(255, 255, 255, 0.15)",
+      "border-subtle": "rgba(255, 255, 255, 0.06)",
+      "border-emphasis": "rgba(255, 255, 255, 0.3)",
+      "border-inverse": "#D1C6BA",
+      "border-accent": "#FF5F46",
+      "action-default-base": "#2E2620",
+      "action-primary-base": "#E2DAD0",
+      "action-primary-hover": "rgba(226, 218, 208, 0.9)",
+      "action-primary-press": "rgba(226, 218, 208, 0.8)",
+      "action-label-base": "#F9F7F4",
+      "action-label-hover": "#FFFFFF",
+      "action-label-inverse-base": "#1B1612",
+      "input-border-base": "rgba(255, 255, 255, 0.15)",
+      "input-border-hover": "#9E8F80",
+      "focus-ring": "#F9F7F4",
+      "focus-ring-offset": "#1B1612"
+    }
+  }
+}
+
+/**
+ * The value a token renders at, for a theme and a mode.
+ *
+ * `fallback` is the default theme's value, which every caller already has on
+ * the token itself — passing it keeps this a lookup rather than a second copy of
+ * the base map.
+ */
+export function themed(
+  name: string,
+  mode: "light" | "dark",
+  theme: string,
+  fallback: string,
+): string {
+  return themeValues[theme]?.[mode]?.[name] ?? fallback
+}
 
 export const type: TypeStep[] = [
   {
@@ -3524,7 +4284,7 @@ export const scalars: Token[] = [
 ]
 
 export const tokenCounts = {
-  "colorGroups": 85,
+  "colorGroups": 103,
   "space": 9,
   "radius": 7,
   "shape": 7,

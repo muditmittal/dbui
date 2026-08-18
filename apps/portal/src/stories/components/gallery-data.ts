@@ -141,7 +141,7 @@ export const galleryGroups: GalleryGroup[] = [
         "name": "Aspect Ratio",
         "slug": "aspect-ratio",
         "useFor": "Lock image/video proportions inside cards and grids",
-        "storyId": null
+        "storyId": "components-content-aspect-ratio--playground"
       },
       {
         "name": "Avatar",
@@ -162,6 +162,12 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-content-card--playground"
       },
       {
+        "name": "Code Block",
+        "slug": "code-block",
+        "useFor": "A block of code on its own — a query the agent wrote, a snippet in a doc, a preview tab",
+        "storyId": "components-content-surfaces--code"
+      },
+      {
         "name": "Editor Tabs",
         "slug": "editor-tabs",
         "useFor": "Code-editor style closeable tabs with file-type icons",
@@ -177,7 +183,13 @@ export const galleryGroups: GalleryGroup[] = [
         "name": "Label",
         "slug": "label",
         "useFor": "The name of a form field",
-        "storyId": null
+        "storyId": "components-controls-label--playground"
+      },
+      {
+        "name": "Metric Card",
+        "slug": "metric-card",
+        "useFor": "One metric, its shape and one way into the surface behind it — the overview card unit",
+        "storyId": "components-content-metric-card--playground"
       },
       {
         "name": "Navbar",
@@ -192,10 +204,22 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-content-pagination--playground"
       },
       {
+        "name": "Schema Browser",
+        "slug": "schema-browser",
+        "useFor": "Reading a table's shape — columns, their types, which are keys",
+        "storyId": "components-content-surfaces--schema"
+      },
+      {
         "name": "Separator",
         "slug": "separator",
         "useFor": "Visual divider between content groups",
         "storyId": "components-content-separator--playground"
+      },
+      {
+        "name": "Stat Card",
+        "slug": "stat-card",
+        "useFor": "One headline total in a row of peers — the KPI band at the top of an overview",
+        "storyId": "components-content-stat-card--playground"
       },
       {
         "name": "Table",
@@ -216,10 +240,119 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-content-tag--playground"
       },
       {
+        "name": "Terminal",
+        "slug": "terminal",
+        "useFor": "Command output a reader watches arrive — a build, a test run, a pipeline log",
+        "storyId": "components-content-surfaces--command-output"
+      },
+      {
         "name": "Tree",
         "slug": "data-tree",
         "useFor": "Hierarchical data browsing (catalogs, schemas, tables) — every node has a typed icon",
         "storyId": "components-content-tree-data-tree--default"
+      }
+    ]
+  },
+  {
+    "key": "chat",
+    "label": "Chat",
+    "blurb": "A turn in an agent conversation, or the trace behind one",
+    "items": [
+      {
+        "name": "Artifact",
+        "slug": "artifact",
+        "useFor": "Something the agent produced that a reader can open — a notebook, a query, a dashboard",
+        "storyId": "components-chat-interaction--outputs"
+      },
+      {
+        "name": "Checkpoint",
+        "slug": "checkpoint",
+        "useFor": "A point in the thread a reader can return to",
+        "storyId": "components-chat-interaction--outputs"
+      },
+      {
+        "name": "Confirmation",
+        "slug": "confirmation",
+        "useFor": "A question the agent needs answered before it continues — approving a destructive step",
+        "storyId": "components-chat-interaction--answering"
+      },
+      {
+        "name": "Conversation",
+        "slug": "conversation",
+        "useFor": "The scrolling transcript — sticks to the latest turn while streaming, releases on scroll up",
+        "storyId": "components-chat-thread--full-thread"
+      },
+      {
+        "name": "Details",
+        "slug": "details",
+        "useFor": "Answering \"what is this asset\" in the thread — a table, model or dashboard the agent named",
+        "storyId": "components-chat-details--playground"
+      },
+      {
+        "name": "Message",
+        "slug": "message",
+        "useFor": "One turn. from=\"user\" is a filled box, from=\"assistant\" is flush body text",
+        "storyId": "components-chat-thread--messages"
+      },
+      {
+        "name": "Message Actions",
+        "slug": "message-actions",
+        "useFor": "The row that acts on an answer — copy, feedback, share, then Sources",
+        "storyId": "components-chat-thread--sources-in-action-row"
+      },
+      {
+        "name": "Message Thumbnail",
+        "slug": "message-thumbnail",
+        "useFor": "Media attached to a turn — a dropped image, a chart the agent produced",
+        "storyId": "components-chat-thread--media-in-a-turn"
+      },
+      {
+        "name": "Plan",
+        "slug": "plan",
+        "useFor": "The checklist the agent keeps across a long run — what is still left",
+        "storyId": "components-chat-thread--plans"
+      },
+      {
+        "name": "Prompt Input",
+        "slug": "prompt-input",
+        "useFor": "The composer. accent=\"ai\" for the Genie gradient border",
+        "storyId": "components-chat-thread--composer"
+      },
+      {
+        "name": "Queue",
+        "slug": "queue",
+        "useFor": "The state of work the agent is holding, in the rail — pending, running, done",
+        "storyId": "components-chat-interaction--work-queue"
+      },
+      {
+        "name": "Reasoning",
+        "slug": "reasoning",
+        "useFor": "The thinking trace — \"Thought for 40s\". With no children it is a live status row",
+        "storyId": "components-chat-thread--reasoning-states"
+      },
+      {
+        "name": "Response",
+        "slug": "response",
+        "useFor": "Every assistant answer — renders the markdown models emit, with zero dependencies",
+        "storyId": "components-chat-thread--response-markdown"
+      },
+      {
+        "name": "Sources",
+        "slug": "sources",
+        "useFor": "Naming what an answer drew on, inside MessageActions as its last child",
+        "storyId": "components-chat-thread--sources-in-action-row"
+      },
+      {
+        "name": "Suggestion",
+        "slug": "suggestion",
+        "useFor": "Next steps a reader may take or ignore, under the answer they follow from",
+        "storyId": "components-chat-interaction--answering"
+      },
+      {
+        "name": "Task",
+        "slug": "task",
+        "useFor": "One thing the agent did on its own — read a file, ran a query. Past tense, with the object",
+        "storyId": "components-chat-thread--tasks"
       }
     ]
   },
@@ -336,7 +469,13 @@ export const galleryGroups: GalleryGroup[] = [
         "name": "Date Range",
         "slug": "date-range",
         "useFor": "Pair of start + end date fields (run history, audit windows, time-window filters)",
-        "storyId": null
+        "storyId": "components-controls-date-range--playground"
+      },
+      {
+        "name": "Dropzone",
+        "slug": "dropzone",
+        "useFor": "A file upload target that accepts a drop and a click — ingestion, volume uploads",
+        "storyId": "components-compositions-dropzone--playground"
       },
       {
         "name": "Page Header",
@@ -351,7 +490,62 @@ export const galleryGroups: GalleryGroup[] = [
         "storyId": "components-compositions-platform-header--default"
       }
     ]
+  },
+  {
+    "key": "viz",
+    "label": "Viz",
+    "blurb": "Encodes a number as length, angle, area or colour",
+    "items": [
+      {
+        "name": "Bar Chart",
+        "slug": "bar-chart",
+        "useFor": "Counts or amounts across categories or time buckets; stacks when a datum has series",
+        "storyId": "components-viz-charts--bars"
+      },
+      {
+        "name": "Donut Chart",
+        "slug": "donut-chart",
+        "useFor": "A small part-to-whole split where the total matters (centerValue)",
+        "storyId": "components-viz-charts--donut"
+      },
+      {
+        "name": "Heatmap",
+        "slug": "heatmap",
+        "useFor": "One measure across two ordered axes — activity by day and four-hour window",
+        "storyId": "components-viz-charts--heatmap-grid"
+      },
+      {
+        "name": "Leaderboard",
+        "slug": "leaderboard",
+        "useFor": "Top-N rows where the bar length *is* the value and the label sits over the bar",
+        "storyId": "components-viz-charts--leaderboard-rows"
+      },
+      {
+        "name": "Legend",
+        "slug": "legend",
+        "useFor": "**Inner part.** A colour key with a value column, beside a chart that cannot draw its own",
+        "storyId": "components-viz-charts--donut"
+      },
+      {
+        "name": "Line Series",
+        "slug": "line-series",
+        "useFor": "A metric over time; drop the axes for an inline sparkline; multi-line when data has series",
+        "storyId": "components-viz-charts--line"
+      },
+      {
+        "name": "Segmented Bar",
+        "slug": "segmented-bar",
+        "useFor": "Part-to-whole in a single row — asset types, cost split, health mix (≤5 segments)",
+        "storyId": "components-viz-charts--segmented"
+      },
+      {
+        "name": "Treemap",
+        "slug": "treemap",
+        "useFor": "Two-level hierarchies sized by a metric — catalogs by schema size, cost by service",
+        "storyId": "components-viz-charts--treemap-tiles"
+      }
+    ]
   }
 ]
 
-export const galleryTotal = 49
+export const galleryTotal = 79

@@ -46,6 +46,37 @@ const light = unprefixed(css, ":root")
 const dark = unprefixed(css, ".dark")
 
 /**
+ * What each theme moves, by theme then mode, keyed the same way as `light` and
+ * `dark`.
+ *
+ * Read out of the theme blocks in the shipped CSS for the same reason the rest
+ * of this file is: the page must show what ships, and a theme's value is only
+ * final after the ramp rebinding the generator applies.
+ *
+ * Without this the Tokens page documented `:root` under every theme — the
+ * swatch, the printed value and the contrast verdict all stayed on the default
+ * while the rest of the page repainted. The page that documents the theme axis
+ * was the last surface not to have it.
+ *
+ * A theme block declares the union of what any theme moves rather than only its
+ * own diff, so the default's map is mostly a restatement of `:root`. Kept rather
+ * than diffed away: what a theme block says is what that theme renders, and a
+ * value deliberately restated is not noise.
+ */
+const themeValues = Object.fromEntries(
+  Object.keys(themes ?? {}).map((name) => [
+    name,
+    {
+      // `declarations` takes the first match, and the light block precedes the
+      // dark one for every theme, so the bare attribute reaches light and the
+      // `.dark`-prefixed form reaches dark.
+      light: unprefixed(css, `[${themeAttr}="${name}"]`),
+      dark: unprefixed(css, `.dark [${themeAttr}="${name}"]`),
+    },
+  ]),
+)
+
+/**
  * The four families the semantic color layer is organized into, each answering
  * "what does this color". `theme.config.mjs` holds the same split in its
  * section structure and `docs/token-rules.md` holds the contract; this list is
@@ -405,6 +436,36 @@ export const colorFamilies: ColorFamily[] = ${JSON.stringify(colorFamilies, null
 
 /** The same groups, flat, for anything that wants every color without the split. */
 export const colorGroups: ColorGroup[] = ${JSON.stringify(data.colorGroups, null, 2)}
+
+/**
+ * What each theme moves, by theme then mode, keyed by the unprefixed token name.
+ *
+ * Every other value on this page is one value, because until themes landed there
+ * was one. A token's \`light\` and \`dark\` are the default theme's, so a page
+ * rendering under another theme has to look here first or it documents an
+ * aesthetic nobody is looking at.
+ *
+ * Absent name means the theme does not move it. Use \`themed()\` rather than
+ * reaching in — the fallback to the base value is the whole contract.
+ */
+export const themeValues: Record<string, { light: Record<string, string>; dark: Record<string, string> }> =
+  ${JSON.stringify(themeValues, null, 2)}
+
+/**
+ * The value a token renders at, for a theme and a mode.
+ *
+ * \`fallback\` is the default theme's value, which every caller already has on
+ * the token itself — passing it keeps this a lookup rather than a second copy of
+ * the base map.
+ */
+export function themed(
+  name: string,
+  mode: "light" | "dark",
+  theme: string,
+  fallback: string,
+): string {
+  return themeValues[theme]?.[mode]?.[name] ?? fallback
+}
 
 export const type: TypeStep[] = ${JSON.stringify(typeSteps, null, 2)}
 

@@ -2,7 +2,7 @@
   "name": "dbui",
   "private": true,
   "version": "0.2.0",
-  "description": "DBUI — an AI-first design system for data and AI workbench UIs",
+  "description": "DBUI \u2014 an AI-first design system for data and AI workbench UIs",
   "license": "MIT",
   "sideEffects": false,
   "exports": {
@@ -49,13 +49,19 @@
     "design:lint:figma": "node scripts/design-lint/figma-lint.js",
     "design:tokens": "node scripts/design-lint/generate-tokens.mjs",
     "design:audit-tokens": "node scripts/audit-component-tokens.mjs",
-    "design:audit-figma": "node scripts/design-lint/figma-token-audit.js",
+    "design:audit-figma": "node scripts/audit-figma-parity.mjs",
+    "design:audit-portal": "node scripts/audit-portal-parity.mjs",
+    "design:audit-tokens": "node scripts/audit-token-values.mjs",
+    "design:audit-variants": "node scripts/audit-variant-parity.mjs",
     "design:audit-parity": "node scripts/audit-token-parity.mjs",
     "design:audit-orphans": "node scripts/audit-token-orphans.mjs",
     "design:sync-components": "node scripts/design-lint/sync-components.mjs",
     "design:verify-sync": "node scripts/design-lint/verify-token-sync.mjs",
     "design:verify-rules": "node scripts/design-lint/verify-rules.mjs",
-    "design:verify-story-ids": "node scripts/verify-story-ids.mjs"
+    "design:verify-story-ids": "node scripts/verify-story-ids.mjs",
+    "design:verify-heatmap": "node scripts/verify-heatmap-spec.mjs",
+    "design:audit-viz": "node scripts/audit-viz-parity.mjs",
+    "design:verify-cards": "node scripts/verify-card-render.mjs"
   },
   "packageManager": "yarn@4.13.0",
   "engines": {

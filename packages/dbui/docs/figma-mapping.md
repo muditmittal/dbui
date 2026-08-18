@@ -462,6 +462,203 @@ Neither Figma variant is a prop on `SplitButton`. Both live on the children. `Sp
 
 ---
 
+## Overview widget · `metric-card`
+
+The family behind every Governance overview page. Figma keeps the count small by drawing one
+widget frame and swapping what sits in the middle, so the layer names describe **slots**, not
+components:
+
+```
+widget                     the card
+├── Metric                 title + info icon, the one number, and the header control
+├── Viz                    the slot — a chart, a Leaderboard, a Legend, a SegmentedBar
+└── Action                 the handoff button, full width
+```
+
+`Metric tile` is the flat cousin: the same `Metric` block with no `Viz` and no `Action`, used for
+the KPI band at the top of the page.
+
+The trap here is `Viz`. It looks like a component and is a slot — four widgets on the reference page
+are the same `widget` frame with different children. Reach for `MetricCard` and pass the chart as
+`children`; there is no `type` prop that walks that space.
+
+### Layer to export
+
+Everything below lives in the **`Viz Components — Live`** section. The parent `Viz Components`
+section holds the GovernanceHub-era originals, which nothing in this repo points at — if a layer
+name is not in this table, check that you are not reading one of those.
+
+The section is four layers, and the name tells you which one a component is in:
+
+| Layer | What it is | Members |
+|---|---|---|
+| `Viz/Inner/*` | Parts that are only ever nested. Never place one directly | `Axis Label`, `Metric`, `Legend`, `Donut`, `Header` |
+| `Viz/Medium/*` | The card tiles. All **400 × 168** except `Segmented Bar`, which is 12 tall | `Bar`, `Stacked Bar`, `Line`, `Leaderboard`, `Donut`, `Treemap`, `Segmented Bar` |
+| `Viz/Large/*` | The full-width page charts, all **1160 × 208** — a 1112 × 168 band plus axes | `Bar`, `Stacked Bar`, `Line`, `Multiline`, `Treemap`, `Heatmap` |
+| `Viz/Card/*` | The cards, one per chart type. `Metric` carries no chart | `Metric`, `Bar`, `Line`, `Leaderboard`, `Donut`, `Treemap`, `SegmentedBar` |
+
+**Every chart type is its own component, at both sizes.** Grouping Line and Bar under a
+`TimeSeries` card was tried and reverted: a designer scanning the picker cannot see that Line lives
+inside TimeSeries, so they detach and rebuild the tile instead of swapping it. Explicit beats clever
+when the component picker is the discovery surface.
+
+The two sizes are one React component each. Width is measured through `useMeasure` and height is a
+prop, so **large is a bigger number, not a different component** — and `density-scalar` deliberately
+does not reach `dbui-viz`, so nothing scales implicitly either. What actually differs at large is
+density: five y ticks rather than three, more x ticks, and treemap **leaf** labels that have no room
+at medium.
+
+`Viz/Large/*` is the chart that sits between a control bar and a table on a usage page. Set it to
+fill its container rather than trusting 1160 — the region is `flex-1`, so its real width runs from
+about 688px (Shell E with the detail sidebar) to about 1220px (a full-width page).
+
+There is no medium `Heatmap` and no large `Donut`, `Leaderboard` or `Segmented Bar`. A heatmap needs
+enough columns to read as a field, which 400px cannot give it; a donut gains nothing from width past
+its ring, and its own constraint caps it at six slices.
+
+| Figma | React |
+|---|---|
+| `KPIs` | a `grid grid-cols-3 gap-3` of `StatCard` — no wrapper component |
+| `Viz/Card/Metric` | `StatCard` |
+| `Viz/Card/Bar` · `Line` · `Leaderboard` · `Donut` · `Treemap` · `SegmentedBar` | `MetricCard` with that chart as `children`. One React component, one card per chart type |
+| `Viz/Card/*` → `Header` → `Viz/Inner/Header` | the card's own header, rendered from `label` / `value` / `hint` / `delta` / `action`. Not a component — never write one |
+| `Viz/Inner/Header` `Prop=Default` | no `action` passed |
+| `Viz/Inner/Header` `Prop=Toggle` | `action={<SegmentControl …>}` — the scope switch the usage pages use |
+| `Viz/Inner/Header` `Prop=Menu` | `action={<IconButton …>}` with the `Overflow` glyph |
+| `Viz/Card/*` → `Viz/Inner/Metric` | rendered for you by `label` / `value` / `hint` — never write it |
+| `Viz/Inner/Metric` → `Title` → `menuIcon` | the `hint` prop. The glyph is `InfoSmall`, not a menu |
+| `Viz/Inner/Metric` `Show change` | `delta` plus `deltaWindow`. `deltaTone` is the reader's verdict and has no Figma axis — cost up 30% is negative, coverage up 30% is positive |
+| `Viz/Inner/Metric` `Type=Compact` · `Type=Default` | `MetricCard` uses Compact — value and change on one line, because the card header is 44px. `StatCard` uses Default and stacks them |
+| `Viz/Card/Metric` `Show link` | whether `action` is passed |
+| `Viz/Card/*` → `Viz` | `children` — the viz slot |
+| `Viz/Card/*` → `Action` | the `link` prop — `MetricCard` draws the button and its chevron |
+| `Viz/Medium/Bar` · `Viz/Large/Bar` | `BarChart` |
+| `Viz/Medium/Stacked Bar` · `Viz/Large/Stacked Bar` | `BarChart` with a `series` on each datum |
+| `Viz/Medium/Line` `Type=Line` · `Type=Dots` | `LineSeries`, with and without point markers |
+| `Viz/Large/Line` | `LineSeries` — `area` on, `showEndDot` on |
+| `Viz/Large/Multiline` | `LineSeries` with a `series` on each datum. Colours come from `VIZ_SERIES_ORDER`, which is `categorical-1..10` in order — the Figma strokes bind `viz/categorical/1,2,3` to match |
+| `Viz/Medium/Treemap` · `Viz/Large/Treemap` | `Treemap`. `Type` is not a prop — React names a group whenever the tile is wide enough, which is why large shows leaf names and medium does not |
+| `Viz/Large/Heatmap` | `Heatmap`. Large only — 30 columns, 6 rows, 28px cells |
+| `Viz/Medium/Leaderboard` `Type=Overlay` | `Leaderboard` |
+| `Viz/Medium/Donut` `Type=Legend` | `DonutChart showLegend={false}` beside a `Legend` — the pairing, not one component |
+| `Viz/Medium/Donut` `Type=Centred` | `DonutChart` on its own |
+| `Viz/Medium/Segmented Bar` | `SegmentedBar`. `Colors` is the segment count, `Type` which end the failing segment takes — both are data |
+| `Viz/Inner/Donut` | the ring on its own, nested inside `Viz/Medium/Donut` |
+| `Viz/Inner/Legend` | `Legend`. Also the `Key` panel beside `Viz/Large/Stacked Bar` |
+| `Viz/Inner/Legend` → `Header` | the `columns` prop, not an item |
+| `Viz/Inner/Axis Label` | nothing — Vega draws axes, configured once in `vizVegaConfig` |
+| `Viz/Medium/Leaderboard` → `.Row` → `Bar` | rendered for you from `weight` — never a sized div |
+
+### Axis labels
+
+`.AxisLabel` carries an `Axis` property with two values, and both are sized to zero on one edge:
+`Axis=X` is **0 wide**, `Axis=Y` is **0 tall**. Dropped into a `SPACE_BETWEEN` row or column, each
+one lands exactly on its tick and its text overflows symmetrically from that point — so labels of
+different widths still centre on their ticks and still spread evenly. That is the whole reason it
+exists; never place a bare text node on an axis.
+
+Two consequences worth knowing before you edit a chart:
+
+- **Every frame between the label and the chart edge must have `clipsContent` off.** A single
+  clipping ancestor cuts the overflowing half and the axis silently loses its first and last label.
+- **The plot gives up the room instead.** A label centred on the extreme tick needs half its width
+  beyond it, so `Viz/Large/Bar` and `Viz/Large/Line` inset 8px top and bottom and 20px either side
+  of the x-axis row. Without that, "1,000" and "Feb 4" hang outside the 376 × 168 box and get cut by
+  the widget.
+
+There is nothing to map in React: axis rendering is Vega's, configured once in `vizVegaConfig`.
+`.AxisLabel` is how the design file reproduces it.
+
+### Compositions
+
+#### The KPI band
+
+`Metric tile` carries `delta` and `link` as alternatives, not siblings. The delta is two-part: the
+change is toned, the window beside it stays subtle.
+
+```tsx
+<div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+  <StatCard label="Total Catalogs" value="177" delta="+2.7%" deltaWindow="vs past 30d" deltaTone="positive" />
+  <StatCard label="Total Assets" value="24.8K" delta="+2.7%" deltaWindow="vs past 30d" deltaTone="positive" />
+  <StatCard label="Total Principals" value="13.1K" action={{ label: "Manage", onClick: manage }} />
+</div>
+```
+
+#### A widget with a chart
+
+```tsx
+<MetricCard
+  label="Asset usage"
+  value="16.6M queries"
+  link={{ label: "Review Data Usage", onClick: review }}
+>
+  <BarChart data={queriesByDay} xType="temporal" label="Queries per day" />
+</MetricCard>
+```
+
+#### A widget with a header control
+
+`Segment Control` inside `Metric` changes what the card shows. Navigation never goes there — that
+is what `Action` is for.
+
+```tsx
+<MetricCard
+  label="Active users"
+  value="489 principals"
+  hint="Principals that ran at least one query"
+  action={
+    <SegmentControl defaultValue={["agents"]}>
+      <SegmentControlItem value="all">All</SegmentControlItem>
+      <SegmentControlItem value="agents">Agents</SegmentControlItem>
+    </SegmentControl>
+  }
+  link={{ label: "Review Usage by Agents", onClick: review }}
+>
+  <Leaderboard
+    columns={{ label: "Principal", value: "Queries" }}
+    items={principals}
+  />
+</MetricCard>
+```
+
+#### A donut with a keyed legend
+
+The Vega legend cannot carry a value column, which is why Figma draws `Legend` by hand beside the
+ring. Turn the built-in legend off and pair the two.
+
+```tsx
+<MetricCard label="Data Access" value="7.8K grants" link={{ label: "Review Access", onClick: review }}>
+  <div className="flex items-center gap-4">
+    <DonutChart slices={grants} showLegend={false} size={112} label="Grants by level" />
+    <Legend
+      className="flex-1"
+      columns={{ label: "Grants by levels", value: "Assign %" }}
+      items={grantLevels}
+    />
+  </div>
+</MetricCard>
+```
+
+#### A percentage or health bar
+
+Neither is `Progress`. `Progress` means a task is on its way to a known endpoint; these report a
+share of a population, which is what `SegmentedBar` is for — and it already tones a segment.
+
+```tsx
+<MetricCard label="Data Quality" value="94.1% healthy tables" link={{ label: "Review Data Quality", onClick: review }}>
+  <SegmentedBar
+    showLegend={false}
+    label="Table health"
+    segments={[
+      { label: "Healthy", value: 94.1, palette: "positive" },
+      { label: "Failing", value: 5.9, palette: "negative" },
+    ]}
+  />
+</MetricCard>
+```
+
+---
+
 ## Shared leaf slots
 
 Three private components appear inside many families. Recognizing them saves a lookup.
@@ -503,6 +700,8 @@ Real gaps, not lookup failures. Both sides are listed so neither surface silentl
 | `Split Button` `Size` | the child `Button`'s `size` — the wrapper has no size |
 | `Input Group` `Type` | a different addon arrangement |
 | `Form Input` `Type` | a different control child |
+| `Chart` | a Figma-drawn bar chart with `Y Axis Labels` and `Bar` children. React reads the marks and picks `BarChart`; the layer name does not say which chart it is |
+| `Viz/Medium/Leaderboard` `Type=Column` | nothing. React draws the label on the bar and has no `layout` prop, so the column reading is design-only until one is added. Its Code Connect binds `Type=Overlay` alone rather than claim the set |
 
 The first three are the ones worth closing. Each one currently forces either a raw element or an undocumented utility class into a system that bans both.
 

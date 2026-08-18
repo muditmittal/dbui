@@ -40,8 +40,36 @@ each with a surface, a border and a text token. Do not invent a fifth.
 **Blue is not a brand color here, it is a link color.** It also marks selection
 as border-accent and surface-accent. It never fills a button.
 
-**Charts get their own palette**, deliberately not drawn from the interface
-colors, so a chart series can never be confused with a status.
+**Charts get their own palette** in four families — `viz-categorical` for which
+series a mark is, `viz-sequential` for how much, `viz-level` for a judgement
+about it, and `viz-neutral` for absence. A *series* is deliberately not drawn
+from the interface colors, so it can never be confused with a status.
+
+Which family a chart reaches for follows from what it is counting, and there is
+one answer per case so a new chart does not need a debate:
+
+| The chart shows | Family | Default |
+|---|---|---|
+| One measured series | `viz-sequential` | **`sequential-5`** — bars, lines, areas |
+| Several series that are peers | `viz-categorical` | `categorical-1` upward, in `VIZ_SERIES_ORDER` |
+| Ordered magnitudes in a whole | `viz-sequential` | `sequential-7`, `-5`, `-3`, `-1` |
+| A state or a severity | `viz-level` | `level-pass` · `-high` · `-medium` · `-low` · `-info` |
+| A track, a tail, or missing data | `viz-neutral` | `neutral-subtle` for a track, `neutral-base` for "Others" |
+
+`sequential-5` is the single-series accent, and every chart component defaults to
+it. Reaching for `level-info` instead says the bar carries a risk rating, and
+reaching for `categorical-1` says it is being told apart from peers it does not
+have. Both were in the system at once and the same chart came out three different
+colours depending on whether you opened Figma, Storybook, or the source —
+`yarn design:audit-viz` now fails if the React default and the Figma binding
+disagree.
+
+`viz-level` is the exception that proves the rule. A mark encoding pass or fail
+*should* read as the same red and green the rest of the UI uses, so it references
+the same hues — but at its own values, because a status color is tuned to
+contrast with the page while a mark has to contrast with the mark beside it.
+Borrowing `status-text-*` put passed and high-risk 0.8 L\* apart: identical in
+greyscale, on the one comparison a security page exists to make.
 
 Every token has a real dark value, not a computed inversion.
 

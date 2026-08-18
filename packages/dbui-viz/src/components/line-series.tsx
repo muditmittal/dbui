@@ -18,9 +18,12 @@ import {
  * @standard Line Series
  * @guideline Use for any metric over time — usage, spend, failures, query counts
  * @guideline Omit axes (showAxis={false}) for an inline sparkline inside a card or table cell
- * @guideline Leave `palette` unset for the default ink line, and set it only when a series needs its own color
+ * @guideline Leave `palette` alone. `sequential-5` is the single-series accent every chart in the system draws in, and the Figma components are bound to it — override only when the series carries a state, and then reach for a `level-*` step
+ * @guideline Pass `xType="ordinal"` for pre-bucketed labels like "Jul 16". Column order is the order of `data`
  * @constraint The end dot marks "latest value" — it is hidden automatically for multi-series charts
+ * @constraint Multi-series colours come from `VIZ_SERIES_ORDER` and are not yours to set — `palette` styles one series, and a chart with several is naming them by position
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4839-17735
  */
 
 export interface LinePoint {
@@ -37,7 +40,7 @@ export interface LineSeriesProps
   data: LinePoint[]
   /** Accessible description of the chart. */
   label?: string
-  /** Series color. Defaults to the foreground ink line used across GovernanceHub. */
+  /** Series color. `sequential-5` is the single-series accent the system draws in. */
   palette?: VizPaletteName
   /** Fill the area under the line. */
   area?: boolean
@@ -55,7 +58,7 @@ export interface LineSeriesProps
 function LineSeries({
   data,
   label = "Line chart",
-  palette,
+  palette = "sequential-5",
   area = true,
   height = 172,
   showAxis = true,
@@ -84,7 +87,7 @@ function LineSeries({
   const isMultiSeries = seriesNames.length > 1
 
   const spec = React.useMemo<VisualizationSpec>(() => {
-    const accent = palette ? theme.palettes[palette].solid : theme.foreground
+    const accent = theme.palettes[palette].solid
     const seriesColors = seriesNames.map(
       (_, index) =>
         theme.palettes[VIZ_SERIES_ORDER[index % VIZ_SERIES_ORDER.length]].solid
@@ -97,6 +100,10 @@ function LineSeries({
         ? { labelAngle: 0, tickCount: 5, title: null, grid: false }
         : null,
       scale: { nice: false },
+      // An ordinal axis sorts alphabetically unless told otherwise, which put
+      // "Jul 16" before "Jul 2" and reversed a chronological run. `null` keeps
+      // the caller's order, which is the only order a time series can have.
+      ...(xType === "ordinal" ? { sort: null } : {}),
     }
     const yEncoding = {
       field: "y",

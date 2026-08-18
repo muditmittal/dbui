@@ -43,6 +43,14 @@ export const PATHS = ROOT
       root: ROOT,
       dbui: path.join(ROOT, base()),
       ui: path.join(ROOT, base(), "src/components/ui"),
+      // The charts and the chat set are sibling packages, so they miss every path
+      // derived from `base()`. Left out, `dbui component Treemap` answered
+      // ERR_UNKNOWN_COMPONENT for a component that ships with full JSDoc, and an
+      // agent that cannot find a chart builds one out of divs instead. `dbui-chat`
+      // had the same hole for longer and it was harder to see, because the whole
+      // category was missing rather than one component inside a category.
+      viz: path.join(ROOT, base().replace(/dbui$/, "dbui-viz"), "src/components"),
+      chat: path.join(ROOT, base().replace(/dbui$/, "dbui-chat"), "src/components"),
       icons: path.join(ROOT, base(), "src/components/icons"),
       lib: path.join(ROOT, base(), "src/lib"),
       tokens: path.join(ROOT, base(), "src/tokens"),

@@ -13,6 +13,7 @@ import type { MessageRole } from "../lib/types"
  * @constraint Do not give assistant turns a fill — Databricks assistant answers sit flush on the surface
  * @constraint Do not right-align or width-cap the user turn. The thread is a transcript, not a
  *   messaging app, and a workbench prompt is often long enough that a cap forces a ragged column
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4839-17688
  */
 
 /**

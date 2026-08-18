@@ -23,6 +23,7 @@ import { cn } from "../lib/utils"
  *   twenty is a page
  * @constraint Never the only place a value appears. The card is a summary, so every row
  *   should be reachable on the asset's own surface too
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4839-17814
  */
 
 function Details({ className, ...props }: React.ComponentProps<"div">) {

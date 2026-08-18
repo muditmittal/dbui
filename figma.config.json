@@ -3,12 +3,18 @@
     "include": [
       "figma/*.figma.tsx",
       "packages/dbui/src/components/ui/*.tsx",
-      "packages/dbui/src/components/icons/*.tsx"
+      "packages/dbui/src/components/icons/*.tsx",
+      "packages/dbui-viz/src/components/*.tsx",
+      "packages/dbui-chat/src/components/*.tsx",
+      "packages/dbui-shells/src/components/*.tsx",
+      "packages/dbui-shells/src/compositions/*.tsx"
     ],
     "paths": {
       "../components/ui/*": ["packages/dbui/src/components/ui/*"],
       "../components/icons/*": ["packages/dbui/src/components/icons/*"],
-      "../packages/dbui-shells/src/*": ["packages/dbui-shells/src/*"]
+      "../packages/dbui-shells/src/*": ["packages/dbui-shells/src/*"],
+      "../packages/dbui-viz/src/*": ["packages/dbui-viz/src/*"],
+      "../packages/dbui-chat/src/*": ["packages/dbui-chat/src/*"]
     },
     "parser": "react"
   }

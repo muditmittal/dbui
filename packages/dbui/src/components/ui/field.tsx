@@ -7,7 +7,10 @@ import { cn } from "../../lib/utils"
 import { Label } from "./label"
 import { Separator } from "./separator"
 
-/** @standard Field (internal utility) */
+/**
+ * @standard Field (internal utility)
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3157-3399
+ */
 
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return (

@@ -131,6 +131,24 @@
   --color-viz-sequential-8: var(--db-viz-sequential-8);
   --color-viz-sequential-9: var(--db-viz-sequential-9);
   --color-viz-sequential-10: var(--db-viz-sequential-10);
+  --color-viz-neutral-subtle: var(--db-viz-neutral-subtle);
+  --color-viz-neutral-base: var(--db-viz-neutral-base);
+  --color-viz-neutral-strong: var(--db-viz-neutral-strong);
+  --color-viz-level-pass-base: var(--db-viz-level-pass-base);
+  --color-viz-level-high-base: var(--db-viz-level-high-base);
+  --color-viz-level-medium-base: var(--db-viz-level-medium-base);
+  --color-viz-level-low-base: var(--db-viz-level-low-base);
+  --color-viz-level-info-base: var(--db-viz-level-info-base);
+  --color-viz-level-pass-subtle: var(--db-viz-level-pass-subtle);
+  --color-viz-level-high-subtle: var(--db-viz-level-high-subtle);
+  --color-viz-level-medium-subtle: var(--db-viz-level-medium-subtle);
+  --color-viz-level-low-subtle: var(--db-viz-level-low-subtle);
+  --color-viz-level-info-subtle: var(--db-viz-level-info-subtle);
+  --color-viz-level-pass-strong: var(--db-viz-level-pass-strong);
+  --color-viz-level-high-strong: var(--db-viz-level-high-strong);
+  --color-viz-level-medium-strong: var(--db-viz-level-medium-strong);
+  --color-viz-level-low-strong: var(--db-viz-level-low-strong);
+  --color-viz-level-info-strong: var(--db-viz-level-info-strong);
 
   /* ── Tailwind bridge — the namespaces DBUI tokens stand behind ── */
   --spacing: calc(var(--db-spacing-unit) * var(--db-density-scalar));
@@ -552,16 +570,34 @@
   --db-viz-categorical-8: #EF9B80;
   --db-viz-categorical-9: #96BEB5;
   --db-viz-categorical-10: #AD6DAD;
-  --db-viz-sequential-1: #E8ECF0;
-  --db-viz-sequential-2: #D2F1FC;
-  --db-viz-sequential-3: #A5E5F9;
+  --db-viz-sequential-1: #E5F4F9;
+  --db-viz-sequential-2: #CEEDF8;
+  --db-viz-sequential-3: #A3E3F7;
   --db-viz-sequential-4: #65D3F4;
-  --db-viz-sequential-5: #22BFE5;
-  --db-viz-sequential-6: #169DBD;
-  --db-viz-sequential-7: #0F7B95;
-  --db-viz-sequential-8: #085B6E;
-  --db-viz-sequential-9: #084150;
-  --db-viz-sequential-10: #0A2C36;
+  --db-viz-sequential-5: #28C1E7;
+  --db-viz-sequential-6: #21A1C2;
+  --db-viz-sequential-7: #1D819B;
+  --db-viz-sequential-8: #186376;
+  --db-viz-sequential-9: #164A5A;
+  --db-viz-sequential-10: #15353F;
+  --db-viz-neutral-subtle: rgba(21, 53, 63, 0.04);
+  --db-viz-neutral-base: rgba(21, 53, 63, 0.08);
+  --db-viz-neutral-strong: rgba(21, 53, 63, 0.48);
+  --db-viz-level-pass-base: #8DDDA8;
+  --db-viz-level-high-base: #E65B77;
+  --db-viz-level-medium-base: #DE7921;
+  --db-viz-level-low-base: #F9E9BA;
+  --db-viz-level-info-base: #A3E3F7;
+  --db-viz-level-pass-subtle: #D4F7DF;
+  --db-viz-level-high-subtle: #FFF5F7;
+  --db-viz-level-medium-subtle: #FFF9EB;
+  --db-viz-level-low-subtle: #F9F7EF;
+  --db-viz-level-info-subtle: #CEEDF8;
+  --db-viz-level-pass-strong: #277C43;
+  --db-viz-level-high-strong: #9E102C;
+  --db-viz-level-medium-strong: #BE501E;
+  --db-viz-level-low-strong: #9D662C;
+  --db-viz-level-info-strong: #1D819B;
 }
 
 .dark {
@@ -649,16 +685,34 @@
   --db-viz-categorical-8: #CC471F;
   --db-viz-categorical-9: #217766;
   --db-viz-categorical-10: #97409A;
-  --db-viz-sequential-1: #0A2C36;
-  --db-viz-sequential-2: #084150;
-  --db-viz-sequential-3: #085B6E;
-  --db-viz-sequential-4: #0F7B95;
-  --db-viz-sequential-5: #169DBD;
-  --db-viz-sequential-6: #22BFE5;
+  --db-viz-sequential-1: #15353F;
+  --db-viz-sequential-2: #164A5A;
+  --db-viz-sequential-3: #186376;
+  --db-viz-sequential-4: #1D819B;
+  --db-viz-sequential-5: #21A1C2;
+  --db-viz-sequential-6: #28C1E7;
   --db-viz-sequential-7: #65D3F4;
-  --db-viz-sequential-8: #A5E5F9;
-  --db-viz-sequential-9: #D2F1FC;
-  --db-viz-sequential-10: #F6F7F9;
+  --db-viz-sequential-8: #A3E3F7;
+  --db-viz-sequential-9: #CEEDF8;
+  --db-viz-sequential-10: #E5F4F9;
+  --db-viz-neutral-subtle: rgba(206, 237, 248, 0.04);
+  --db-viz-neutral-base: rgba(206, 237, 248, 0.08);
+  --db-viz-neutral-strong: rgba(206, 237, 248, 0.48);
+  --db-viz-level-pass-base: #D4F7DF;
+  --db-viz-level-high-base: #F792A6;
+  --db-viz-level-medium-base: #DE7921;
+  --db-viz-level-low-base: #9D662C;
+  --db-viz-level-info-base: #65D3F4;
+  --db-viz-level-pass-subtle: #093919;
+  --db-viz-level-high-subtle: #630316;
+  --db-viz-level-medium-subtle: #5F1B02;
+  --db-viz-level-low-subtle: #5E3C1C;
+  --db-viz-level-info-subtle: #164A5A;
+  --db-viz-level-pass-strong: #8DDDA8;
+  --db-viz-level-high-strong: #FBD0D8;
+  --db-viz-level-medium-strong: #DE7921;
+  --db-viz-level-low-strong: #BD7C30;
+  --db-viz-level-info-strong: #21A1C2;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -719,7 +773,7 @@
 /* ══════════════════════════════════════════════════════════════════════════
  * THEMES — the same token names at another set of values.
  *
- * 3 themes over 32 tokens. Only what a theme moves is restated, and
+ * 3 themes over 30 tokens. Only what a theme moves is restated, and
  * every theme restates the same set so a nested block can reset the one around
  * it. "Core" is also in :root above, so a product that imports this file
  * and sets no attribute still gets a complete system.
@@ -766,8 +820,6 @@
   --db-input-border-hover: #A3A3A3;
   --db-focus-ring: #404040;
   --db-focus-ring-offset: #FFFFFF;
-  --db-viz-sequential-1: #E8ECF0;
-  --db-viz-sequential-10: #0A2C36;
 }
 
 .dark [data-theme="core"],
@@ -800,8 +852,6 @@
   --db-input-border-hover: #8396A5;
   --db-focus-ring: #F6F7F9;
   --db-focus-ring-offset: #11171C;
-  --db-viz-sequential-1: #0A2C36;
-  --db-viz-sequential-10: #F6F7F9;
 }
 
 /* ── DuBois ── */
@@ -838,8 +888,6 @@
   --db-input-border-hover: #A3A3A3;
   --db-focus-ring: #0E538B;
   --db-focus-ring-offset: #FFFFFF;
-  --db-viz-sequential-1: #E8ECF0;
-  --db-viz-sequential-10: #0A2C36;
 }
 
 .dark [data-theme="dubois"],
@@ -872,8 +920,6 @@
   --db-input-border-hover: #8396A5;
   --db-focus-ring: #BAE1FC;
   --db-focus-ring-offset: #11171C;
-  --db-viz-sequential-1: #0A2C36;
-  --db-viz-sequential-10: #F6F7F9;
 }
 
 /* ── One ── */
@@ -910,8 +956,6 @@
   --db-input-border-hover: #AFA193;
   --db-focus-ring: #5A4D41;
   --db-focus-ring-offset: #FFFFFF;
-  --db-viz-sequential-1: #F1ECE6;
-  --db-viz-sequential-10: #0A2C36;
 }
 
 .dark [data-theme="one"],
@@ -944,6 +988,4 @@
   --db-input-border-hover: #9E8F80;
   --db-focus-ring: #F9F7F4;
   --db-focus-ring-offset: #1B1612;
-  --db-viz-sequential-1: #0A2C36;
-  --db-viz-sequential-10: #F9F7F4;
 }

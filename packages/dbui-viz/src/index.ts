@@ -25,6 +25,22 @@ export {
   type TreemapProps,
   type TreemapSelection,
 } from "./components/treemap"
+export {
+  Heatmap,
+  type HeatmapCell,
+  type HeatmapProps,
+} from "./components/heatmap"
+
+// DOM marks. Same palette vocabulary, no Vega — a page that only needs these
+// pulls no chart runtime through the per-component paths.
+export {
+  Leaderboard,
+  type LeaderboardItem,
+  type LeaderboardPalette,
+  type LeaderboardProps,
+} from "./components/leaderboard"
+export { type VizTint } from "./lib/theme"
+export { Legend, type LegendItem, type LegendProps } from "./components/legend"
 
 // Theming
 export {
@@ -41,6 +57,8 @@ export {
   type VizType,
   type VizTypeStep,
 } from "./lib/theme"
+
+export { PALETTE_FILL, TINT_FILL } from "./lib/palette-fill"
 
 // Utilities
 export { cn } from "./lib/utils"

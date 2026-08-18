@@ -17,6 +17,7 @@ import { cn } from "../lib/utils"
  * @guideline Open it while the run is in flight and let the reader collapse it — this is the one trace worth showing by default
  * @constraint Not a Task list. A Task is one thing that already happened; a Plan item is one thing intended
  * @constraint Never reorder items as they complete. The order is the argument
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4849-5156
  */
 
 export type PlanItemStatus = "pending" | "active" | "done" | "cancelled"

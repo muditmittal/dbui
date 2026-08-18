@@ -21,6 +21,7 @@ import {
  * @guideline Assign `palette` per segment when a segment means something — positive, negative or neutral for empty
  * @constraint Segments use solid palette fills, not gradients — at 12px tall a gradient reads as flat, and Vega cannot bind a gradient per datum
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4839-18429
  */
 
 export interface Segment {

@@ -144,13 +144,42 @@ title case for generic labels. Follow US English, and do not use semicolons.
 
 ## Product names
 
+The single source for product and feature naming. Everything that writes user-facing copy reads this
+table — no second copy anywhere, and a rename lands here first.
+
+Names churn faster than anything else in this file: eighteen entries below, almost all of them from a
+single year. **Check this table rather than trusting a screenshot, a deck or a dashboard**, because
+legacy names survive in telemetry, billing and doc URLs long after the UI stops using them.
+
 | Use | Not | Reason |
 |---|---|---|
-| Git folders | Repos | Avoid the legacy name |
-| AI/BI dashboards | Lakeview, legacy dashboards | Avoid the legacy name |
+| Lakeflow pipelines | Delta Live Tables, DLT, Lakeflow Declarative Pipelines, Spark Declarative Pipelines | Renamed twice. Lowercase *p* — the branded family is Lakeflow, the noun is generic |
 | Lakeflow Jobs | Workflows | Avoid the legacy name |
-| Lakeflow Pipelines | Delta Live Tables | Avoid the legacy name |
-| SQL warehouse | SQL endpoint | Avoid the legacy name |
+| Lakeflow Connect | — | Ingestion. One of four Lakeflow products |
+| Lakeflow Designer | Visual Data Prep, Designer | The sidebar and the docs disagree; the docs name wins in copy |
+| AI/BI dashboards | Lakeview, legacy dashboards | Avoid the legacy name |
+| Genie One | Databricks One | Renamed. The business-user surface |
+| Genie Agents | Genie spaces, Genie data rooms | Renamed. A configured environment, not a UI |
+| Genie Code | Databricks Assistant | Renamed. The developer assistant |
+| OpenSharing | Delta Sharing | Renamed on donation to the Linux Foundation |
+| AI Search | Vector Search, Mosaic AI Vector Search | Renamed |
+| Unity AI Gateway | Mosaic AI Gateway, AI Gateway | Renamed |
+| Supervisor Agent | Multi-Agent Supervisor | Renamed |
+| Declarative Automation Bundles | Databricks Asset Bundles, DABs | Renamed |
+| Git folders | Repos | Avoid the legacy name |
+| SQL warehouse | SQL endpoint | Renamed in 2023 |
+| Standard access mode | Shared access mode | Renamed. The API still says `USER_ISOLATION` |
+| Dedicated access mode | Single user | Renamed. The API still says `SINGLE_USER` |
+| Compute plane | Data plane | The docs moved to compute plane; three planes exist, not two |
+| Free Edition | Community Edition | Renamed |
+| Data quality monitoring | Lakehouse Monitoring | Renamed |
+
+**The Genie family is three different things.** Genie One is the business-user surface. Genie Agents
+are configured domain environments that power its answers. Genie Code is the developer assistant. All
+three have an "Agent mode" and the three modes differ — this is the likeliest naming error to make.
+
+**Lakeflow is an umbrella over four products** — Connect, pipelines, Jobs, Designer. Collapsing them
+into "Lakeflow" loses the distinction the names exist to carry.
 
 ## Methodology
 

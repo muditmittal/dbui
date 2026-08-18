@@ -1,0 +1,76 @@
+{
+  "theme": {
+    "canvasBackgroundColor": {
+      "light": "#FAFAFA",
+      "dark": "#1F272D"
+    },
+    "widgetBackgroundColor": {
+      "light": "#FFFFFF",
+      "dark": "#11171C"
+    },
+    "widgetBorderColor": {
+      "light": "#E5E5E5",
+      "dark": "#292E33"
+    },
+    "fontColor": {
+      "light": "#262626",
+      "dark": "#E8ECF0"
+    },
+    "selectionColor": {
+      "light": "#2272B4",
+      "dark": "#4299E0"
+    },
+    "visualizationColors": [
+      "#9575CD",
+      "#FFD54F",
+      "#6CD7D2",
+      "#F06292",
+      "#D4E157",
+      "#A1887F",
+      "#90A0E0",
+      "#EF9B80"
+    ],
+    "widgetHeaderAlignment": "LEFT",
+    "fontFamily": "Figtree",
+    "widgetPadding": 12,
+    "widgetMargin": 8,
+    "widgetCornerRadius": 8,
+    "fontSettings": {
+      "base": {
+        "fontFamily": "Figtree",
+        "fontColor": {
+          "light": "#262626",
+          "dark": "#E8ECF0"
+        },
+        "fontSize": 13,
+        "fontWeight": 400
+      },
+      "widgetTitle": {
+        "fontSize": 16,
+        "fontWeight": 600
+      },
+      "widgetDescription": {
+        "fontColor": {
+          "light": "#525252",
+          "dark": "#92A4B3"
+        }
+      },
+      "fieldTitle": {
+        "fontFamily": "Commit Mono",
+        "textCase": "TEXT_CASE_UPPERCASE",
+        "fontWeight": 600
+      },
+      "fieldValue": {
+        "fontFamily": "Commit Mono"
+      }
+    },
+    "gridLineColor": {
+      "light": "#F5F5F5",
+      "dark": "#1F252A"
+    },
+    "axisLineColor": {
+      "light": "#D4D4D4",
+      "dark": "#353A3E"
+    }
+  }
+}

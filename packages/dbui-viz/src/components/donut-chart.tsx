@@ -21,6 +21,7 @@ import {
  * @guideline Keep to 6 slices or fewer; group the tail into "Others"
  * @constraint Never use a full pie — the center hole is where the total lives
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=5020-16723
  */
 
 export interface DonutSlice {

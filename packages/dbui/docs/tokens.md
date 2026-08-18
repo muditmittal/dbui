@@ -6,6 +6,74 @@ cannot derive by reading `tokens.css`.
 To see values: the portal's Tokens page renders every one from the shipped CSS,
 and `dbui token [group]` prints them.
 
+**Or read them on a canvas.** The Figma file's Tokens page carries six boards, in
+one band, left to right:
+
+| Board | Shows | Node |
+|---|---|---|
+| Type | The 14 ramp styles live, Desktop and Mobile side by side; then a Figtree specimen and a Commit Mono specimen with the features each was chosen for | `5113:4212` |
+| Effects | An isometric elevation chain carrying the real shadows, easing curves, and an isometric layer stack | `5114:4212` |
+| Dimensions | Space, size, radius and border to true measure, plus the density dial | `5116:4212` |
+| Color primitives · Color semantics · UI Color Primitive | Every colour, both modes | pre-existing |
+
+**Each easing token carries two visuals, and the second is the one that reads.** The plot
+is the real cubic bezier — drawn as a bezier, not sampled — with its control handles and a
+dashed constant-speed diagonal to deviate from. Beside it, a strip marks where the thing
+actually *is* every 100ms across a 1000ms run, which is what makes the speed change
+legible: `ease-standard` is 64% of the way there at 200ms, `ease-exit` only 22%. Those
+figures are solved from the curve rather than estimated — finding progress at a given
+*time* means solving `x(t)` by bisection first, because `t` is not time.
+
+**The elevation diagram is stacked in composition order, not shadow order.** A modal is
+the surface you work in, a card sits inside it, a control sits on the card, and a
+popover opens above all of it — which is the order a reader meets them, and it agrees
+with `layer-popover` 40 over `layer-modal` 30. It is deliberately *not* ordered by
+shadow size: the modal carries the largest shadow of the four and still sits lowest.
+The rows beneath the diagram list the specs in ascending shadow order, so both readings
+are available. Each plane is drawn as the thing it names, in abstract bars rather than
+text, because text inside an isometric transform is unreadable.
+
+**Two numbers on the Type board were measured in the file, not looked up.** Figtree's
+x-height is 71% of its cap height — the Gotham and Proxima Nova band, well clear of a
+Futura-style geometric near 60% — which is what lets `type-label` hold at 13px. And
+its digits run 6px for the `1` against 9px for the `0` at 13px, a 3px spread that puts
+`1111` at 22px and `0000` at 34px. That is the whole argument for `TableCell numeric`,
+and it is why the board states it rather than leaving it to `table.tsx`'s JSDoc.
+
+### Re-verifying a colour board
+
+Both colour boards had drifted, in different ways, and neither was catchable offline.
+The rule that came out of it: **a board has two channels and only one can be bound.**
+
+- The **swatch** binds to its variable. Bind it and it cannot drift.
+- The **printed hex** is always a copy. It has to be *regenerated* from the variable,
+  never typed — the semantic board printed pre-retune cyan next to correct chips, and
+  printed 6% next to a chip that had moved to 8% the same evening.
+- **Coverage is a third failure.** The semantic board was accurate about all 88 rows it
+  had and silent about 19 tokens it did not.
+
+To re-check either board with `use_figma`: walk its tiles, read each one's
+`fills[0].boundVariables.color`, resolve that variable in the column's mode, and assert
+the printed label equals it — then diff the set of bound variable names against the
+`Colors` collection to catch tokens with no row. Node ids here are **not stable**: three
+of the six boards have been recreated, so match on name.
+
+⚠️ **Commit Mono is not installed in this Figma file.** The mono specimen is set in
+JetBrains Mono, which Commit Mono cites as a reference, and the board says so on its
+face. The same substitution affects the `Code Block` and `Terminal` components, which
+are drawn in a stand-in rather than the face the token names. Installing Commit Mono
+in the org is the fix; until then no mono surface in Figma is truthful.
+
+The three new boards exist because the portal reads top to bottom and cannot be
+zoomed — a canvas can hold the whole ramp at once and be compared across columns,
+which is the thing a linear page cannot do.
+
+Two properties worth preserving if you edit them. **Every fill is bound to a
+variable**, so a token change moves the board rather than dating it. And the Type
+board's two columns are one set of bindings with each panel pinned to a Typography
+mode via `setExplicitVariableModeForCollection` — Desktop and Mobile are not drawn
+twice, so they cannot drift from each other or from the file.
+
 ## Files
 
 | File | Role |
@@ -167,10 +235,15 @@ in the system with two lines. As value overrides it would have been forty, and
 the answer to "what does this theme do?" would have been a diff rather than a
 sentence.
 
-It is a rewrite rather than a filter, so it also catches the two
-`viz-sequential-*` stops that borrow the chrome ramp for the pale end of their
-scale. That is the behavior worth having: a sequential scale whose lightest cell
-stayed cool on a warm page would read as a mistake.
+It is a rewrite rather than a filter, so it catches every reference to the ramp
+wherever it appears, not only the tokens a theme was thinking about.
+
+Until Aug 2026 that included the two `viz-sequential-*` stops, which borrowed the
+chrome ramp for the pale end of their scale so a warm page got a warm lightest
+cell. Those now resolve to `viz.cyan.050` in both directions, so **the sequential
+scale is all cyan and no longer varies by theme**. If a warm page ever needs a
+warm pale end again, that is a `semantics` override on `viz-sequential-1` and
+`-10`, not something `ramp` will do for free.
 
 **`semantics` applies after `ramp`**, so a theme can re-skin broadly and still
 correct the few tokens that do not follow. Reversed, the rebinding would

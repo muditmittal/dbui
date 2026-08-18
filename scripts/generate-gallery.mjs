@@ -86,9 +86,23 @@ const storyId = (title, name) => `${sanitize(title)}--${sanitize(name)}`
  * above is the only step that matters.
  */
 
-/** Collect every story title in the Components root, keyed by its leaf name. */
+/**
+ * Collect every story in the Components root, keyed by its title's leaf name and
+ * also by each of its exports.
+ *
+ * The leaf key is the common case — one file per component, `Components/Viz/Donut`
+ * answering to "Donut". The per-export keys are for a file that holds several
+ * components, where the leaf names the group rather than any one of them: the
+ * charts all live under `Components/Viz/Charts`, so "Heatmap" can only be found
+ * by the export that draws it. Without this, every chart sharing that file was
+ * reported as having no story while its story sat right there.
+ *
+ * A leaf key wins over an export key, because a file named after a component is a
+ * stronger claim than an export inside a group.
+ */
 function indexStories() {
   const found = new Map()
+  const byExport = new Map()
   const walk = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const p = path.join(dir, entry.name)
@@ -100,8 +114,8 @@ function indexStories() {
       const src = fs.readFileSync(p, "utf8")
       const title = src.match(/title:\s*"([^"]+)"/)?.[1]
       if (!title || !title.startsWith("Components/")) continue
-      // Prefer Playground; fall back to the first exported story.
       const names = [...src.matchAll(/export const (\w+):\s*StoryObj/g)].map((m) => m[1])
+      // Prefer Playground; fall back to the first exported story.
       const story = names.includes("Playground") ? "Playground" : names[0]
       if (!story) continue
       const leaf = title.split("/").pop()
@@ -109,19 +123,69 @@ function indexStories() {
         title,
         id: storyId(title, startCase(story)),
       })
+
+      // Each export, under both its identifier and its sidebar `name` if it has
+      // one — `LeaderboardRows` named "Leaderboard" has to answer to the label a
+      // reader sees, while the id stays the identifier.
+      for (const exportName of names) {
+        const id = storyId(title, startCase(exportName))
+        const keys = [exportName]
+        const labelled = src.match(
+          new RegExp(`export const ${exportName}:\\s*StoryObj\\s*=\\s*\\{\\s*name:\\s*"([^"]+)"`)
+        )?.[1]
+        if (labelled) keys.push(labelled)
+        for (const key of keys) {
+          const k = key.toLowerCase().replace(/[^a-z0-9]/g, "")
+          if (!byExport.has(k)) byExport.set(k, { title, id })
+        }
+      }
     }
   }
   walk(STORIES)
-  return found
+  // Leaf keys take precedence, so they are written last.
+  return new Map([...byExport, ...found])
 }
 
-/** Component-index names whose story lives under a different label. */
+/**
+ * Component-index names whose story lives under a different label.
+ *
+ * The viz entries point a component name at the export that draws it inside
+ * `Components/Viz/Charts`: the story section is called "Bars", the component is
+ * `BarChart`, and neither normalizes to the other.
+ */
 const ALIASES = {
   tree: "datatree",
   progressbar: "progress",
   radio: "radiogroup",
   togglebutton: "toggle",
   chart: "charts",
+  barchart: "bars",
+  lineseries: "line",
+  donutchart: "donut",
+  segmentedbar: "segmented",
+  // Legend is an inner part with no entry of its own — it is only ever placed
+  // beside something, so its demo lives in the Donut story where the pairing is.
+  legend: "donut",
+
+  // The chat stories are named for scenarios rather than components, because a
+  // turn is only legible next to the turns around it — `Messages` shows Message,
+  // `Answering` shows the pair a reader chooses between. So each component points
+  // at the scenario that demonstrates it.
+  conversation: "fullthread",
+  message: "messages",
+  messageactions: "sourcesinactionrow",
+  messagethumbnail: "mediainaturn",
+  promptinput: "composer",
+  reasoning: "reasoningstates",
+  response: "responsemarkdown",
+  task: "tasks",
+  plan: "plans",
+  sources: "sourcesinactionrow",
+  confirmation: "answering",
+  suggestions: "answering",
+  suggestion: "answering",
+  artifact: "outputs",
+  checkpoint: "outputs",
 }
 
 const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "")
@@ -143,9 +207,17 @@ const ORDER = [
   ["action", "Action"],
   ["controls", "Controls"],
   ["content", "Content"],
+  // Chat reads with Content rather than after Compositions: it is a category a
+  // reader browses, not an afterthought. It used to be spliced into this position
+  // by the Components page, because the index was scoped to `packages/dbui` and
+  // could not generate it. The index covers `dbui-chat` now, so naming it here is
+  // what keeps it from falling through to the end — and what removed the
+  // hand-written second Chat group the splice had started duplicating.
+  ["chat", "Chat"],
   ["feedback", "Feedback"],
   ["overlays", "Overlays"],
   ["compositions", "Compositions"],
+  ["viz", "Viz"],
 ]
 
 const stories = indexStories()

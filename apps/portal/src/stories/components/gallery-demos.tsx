@@ -29,6 +29,35 @@
  */
 import * as React from "react"
 
+// Chat lives in its own package. The gallery still lists it, so the demos have to
+// import from there — `dbui` does not re-export it.
+import { Artifact } from "dbui-chat/components/artifact"
+import { Checkpoint } from "dbui-chat/components/checkpoint"
+import { Confirmation } from "dbui-chat/components/confirmation"
+import { Conversation, ConversationContent } from "dbui-chat/components/conversation"
+import { Details, DetailsHeader, DetailsRows, DetailsRow } from "dbui-chat/components/details"
+import { Message, MessageContent } from "dbui-chat/components/message"
+import { MessageActions } from "dbui-chat/components/message-actions"
+import { MessageThumbnail } from "dbui-chat/components/message-thumbnail"
+import { Plan, PlanItem } from "dbui-chat/components/plan"
+import {
+  PromptInput,
+  PromptInputActions,
+  PromptInputSubmit,
+  PromptInputTextarea,
+} from "dbui-chat/components/prompt-input"
+import { Queue, QueueSection, QueueItem } from "dbui-chat/components/queue"
+import { Reasoning } from "dbui-chat/components/reasoning"
+import { Response } from "dbui-chat/components/response"
+import { Sources, Source } from "dbui-chat/components/sources"
+import { Suggestions, Suggestion } from "dbui-chat/components/suggestion"
+import { Task, TaskItem } from "dbui-chat/components/task"
+import { CodeBlock } from "dbui/components/ui/code-block"
+import { Terminal } from "dbui/components/ui/terminal"
+import { SchemaBrowser } from "dbui/components/ui/schema-browser"
+import { Dropzone } from "dbui/components/ui/dropzone"
+import { At } from "dbui/components/icons/At"
+
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "dbui/components/ui/accordion"
 import { Alert, AlertContent, AlertIcon, AlertTitle } from "dbui/components/ui/alert"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "dbui/components/ui/alert-dialog"
@@ -104,6 +133,59 @@ import { WarningFill } from "dbui/components/icons/WarningFill"
 import { Workflows } from "dbui/components/icons/Workflows"
 
 import { CheckboxIndeterminateDemo } from "./gallery-demos-stateful"
+
+import { MetricCard } from "dbui/components/ui/metric-card"
+import { StatCard } from "dbui/components/ui/stat-card"
+import {
+  BarChart,
+  DonutChart,
+  Heatmap,
+  Leaderboard,
+  Legend,
+  LineSeries,
+  SegmentedBar,
+  Treemap,
+} from "dbui-viz"
+
+/* The viz demos need data, and a chart with three points is a chart nobody can
+ * read. Declared here rather than inline so the tiles below stay legible, and
+ * shared where two of them measure the same thing. */
+const vizDays = Array.from({ length: 24 }, (_, index) => ({
+  x: `d${index}`,
+  y: Math.max(60, Math.round(420 + Math.sin(index / 1.7) * 240 + (index % 4) * 70)),
+}))
+
+const vizRanked = [
+  { id: "1", label: "sales_main", value: "11.7K", weight: 11700 },
+  { id: "2", label: "marketing_prod", value: "7.6K", weight: 7600 },
+  { id: "3", label: "ml_feature_store", value: "6.1K", weight: 6100 },
+]
+
+const vizLevels = [
+  { id: "asset", label: "Asset level", value: "23.4%", palette: "sequential-7" as const },
+  { id: "schema", label: "Schema level", value: "62.1%", palette: "sequential-5" as const },
+  { id: "catalog", label: "Catalog level", value: "6.1%", palette: "sequential-3" as const },
+]
+
+const vizHeatmapRows = ["00–04", "04–08", "08–12", "12–16", "16–20", "20–24"]
+// A fortnight rather than the full month, because the gallery tile is 408 wide and
+// thirty columns there would be 12px each.
+const vizHeatmap = Array.from({ length: 14 }, (_, day) =>
+  vizHeatmapRows.map((row, index) => ({
+    x: `d${day}`,
+    y: row,
+    // One window of missing data, so the tile shows what absent looks like.
+    value:
+      day === 8 && index > 2
+        ? null
+        : Math.round(
+            900 *
+              (index === 3 ? 1 : index === 2 || index === 4 ? 0.7 : 0.3) *
+              (day % 7 < 2 ? 0.3 : 1) *
+              (0.8 + ((day * 5 + index * 3) % 9) / 24)
+          ),
+  }))
+).flat()
 
 export const demos: Record<string, React.ReactNode> = {
   // Action
@@ -684,7 +766,9 @@ export const demos: Record<string, React.ReactNode> = {
   ),
 
   // Display
-  AiGradientIcon: (
+  // Keyed by the gallery's display name, which is what `demos[item.name]` looks
+  // up. Keyed as `AiGradientIcon` this demo existed and never rendered.
+  "AI Gradient Icon": (
     <div className="flex items-center gap-3">
       <AiGradientIcon>
         <Sparkle className="size-6" />
@@ -969,6 +1053,321 @@ export const demos: Record<string, React.ReactNode> = {
           </Avatar>
         </PlatformHeaderRight>
       </PlatformHeader>
+    </div>
+  ),
+  // Content — the overview pair. Shown at the width they are designed for: a
+  // widget under about 400px stops holding a readable chart, and a tile shown
+  // alone loses the comparison that is the whole reason it has no chart.
+  "Stat Card": (
+    <div className="grid w-150 grid-cols-3 gap-3">
+      <StatCard
+        label="Total Catalogs"
+        value="177"
+        delta="+2.7%"
+        deltaWindow="vs past 30d"
+        deltaTone="positive"
+      />
+      <StatCard
+        label="Monthly spend"
+        value="$41.2K"
+        delta="+12.8%"
+        deltaWindow="vs past 30d"
+        deltaTone="negative"
+      />
+      <StatCard label="Total Principals" value="13.1K" action={{ label: "Manage" }} />
+    </div>
+  ),
+  "Metric Card": (
+    <div className="w-102">
+      <MetricCard
+        label="Active users"
+        value="489 principals"
+        hint="Principals that ran at least one query"
+        link={{ label: "Review Usage by Agents" }}
+      >
+        <Leaderboard columns={{ label: "Principal", value: "Queries" }} items={vizRanked} />
+      </MetricCard>
+    </div>
+  ),
+  // Viz. Every one of these renders through Vega except the last two, which are
+  // DOM — so the row is also the demonstration that both read as one language.
+  "Bar Chart": (
+    <div className="w-102">
+      <BarChart data={vizDays} height={140} label="Queries per day" />
+    </div>
+  ),
+  "Line Series": (
+    <div className="w-102">
+      <LineSeries data={vizDays} height={140} area label="Queries per day" />
+    </div>
+  ),
+  "Segmented Bar": (
+    <div className="w-102">
+      <SegmentedBar
+        label="Table health"
+        segments={[
+          { label: "Healthy", value: 94.1, palette: "positive" },
+          { label: "Failing", value: 5.9, palette: "negative" },
+        ]}
+      />
+    </div>
+  ),
+  "Donut Chart": (
+    <div className="w-102">
+      <DonutChart
+        slices={vizLevels.map((level) => ({
+          label: level.label,
+          value: Number.parseFloat(level.value),
+          palette: level.palette,
+        }))}
+        size={140}
+        centerValue="7.8K"
+        centerLabel="grants"
+        label="Grants by level"
+      />
+    </div>
+  ),
+  Heatmap: (
+    <div className="w-102">
+      <Heatmap
+        data={vizHeatmap}
+        rowOrder={vizHeatmapRows}
+        height={112}
+        label="Query activity by day and four-hour window"
+      />
+    </div>
+  ),
+  Treemap: (
+    <div className="w-102">
+      <Treemap
+        height={180}
+        label="Storage by catalog"
+        data={[
+          {
+            id: "sales",
+            name: "sales_main",
+            leaves: [
+              { id: "crm", name: "crm", value: 2200 },
+              { id: "orders", name: "orders", value: 1400 },
+            ],
+          },
+          {
+            id: "ml",
+            name: "ml_feature_store",
+            leaves: [
+              { id: "features", name: "features", value: 1800 },
+              { id: "training", name: "training", value: 700 },
+            ],
+          },
+        ]}
+      />
+    </div>
+  ),
+  Leaderboard: (
+    <div className="w-102">
+      <Leaderboard columns={{ label: "Catalog", value: "Queries" }} items={vizRanked} />
+    </div>
+  ),
+  Legend: (
+    <div className="w-102">
+      <Legend columns={{ label: "Grants by levels", value: "Assign %" }} items={vizLevels} />
+    </div>
+  ),
+
+  // ── Content surfaces ───────────────────────────────────────────────────────
+  // Short bodies on purpose. These three are scroll containers in use, and a row
+  // in a gallery is not the place to prove a scrollbar works.
+  "Code Block": (
+    <div className="w-102">
+      <CodeBlock
+        label="revenue_by_region.sql"
+        language="sql"
+        code={"select region, sum(amount) as revenue\nfrom main.sales.orders\ngroup by region"}
+      />
+    </div>
+  ),
+  Terminal: (
+    <div className="w-102">
+      <Terminal
+        className="h-28"
+        command="pnpm build"
+        output={"✓ Building application...\n  src/app.tsx → dist/app.js\n\nDone in 1.2s"}
+      />
+    </div>
+  ),
+  "Schema Browser": (
+    <div className="w-80">
+      <SchemaBrowser
+        tables={[
+          {
+            id: "orders",
+            name: "orders",
+            defaultExpanded: true,
+            columns: [
+              { id: "o1", name: "order_id", type: "id", dataType: "bigint", key: "primary" },
+              { id: "o2", name: "amount", type: "decimal", dataType: "decimal(12,2)" },
+              { id: "o3", name: "region", type: "string", dataType: "varchar(64)" },
+            ],
+          },
+          { id: "customers", name: "customers", columns: [] },
+        ]}
+      />
+    </div>
+  ),
+  Dropzone: (
+    <div className="w-102">
+      <Dropzone label="Drop a CSV here" hint="Up to 50 MB. Or click to browse." />
+    </div>
+  ),
+
+  // ── Chat ───────────────────────────────────────────────────────────────────
+  // Every handler on these is optional, so the whole set renders on the server
+  // uncontrolled — the open ones use `defaultOpen`, and the two that own a
+  // decision use `state` rather than a callback.
+  Message: (
+    <div className="flex w-102 flex-col gap-3">
+      <Message from="user">
+        <MessageContent>Which tables in main.staging are unused?</MessageContent>
+      </Message>
+      <Message from="assistant">
+        <MessageContent>Three, all last queried more than 90 days ago.</MessageContent>
+      </Message>
+    </div>
+  ),
+  Response: (
+    <div className="w-102">
+      <Response>{"Three tables are unused. The **largest** is `staging.orders_tmp` at 4.2 GiB."}</Response>
+    </div>
+  ),
+  Reasoning: (
+    <div className="w-102">
+      <Reasoning defaultOpen duration={4}>
+        Checking last query time for each table in the schema, then filtering to
+        those with no reads in 90 days.
+      </Reasoning>
+    </div>
+  ),
+  Task: (
+    <div className="w-102">
+      <Task title="Scanned main.staging" status="complete" defaultOpen>
+        <TaskItem>Listed 12 tables</TaskItem>
+        <TaskItem>Read query history for each</TaskItem>
+      </Task>
+    </div>
+  ),
+  Plan: (
+    <div className="w-102">
+      <Plan label="Drop unused tables" count={3} defaultOpen>
+        <PlanItem status="done">Identify tables with no reads</PlanItem>
+        <PlanItem status="active">Confirm with the owner</PlanItem>
+        <PlanItem status="pending">Drop and record in the audit log</PlanItem>
+      </Plan>
+    </div>
+  ),
+  Sources: (
+    <div className="w-102">
+      <Sources count={3} defaultOpen>
+        <Source href="#">main.staging.orders_tmp</Source>
+        <Source href="#">Query history, last 90 days</Source>
+        <Source href="#">Table retention policy</Source>
+      </Sources>
+    </div>
+  ),
+  "Prompt Input": (
+    <div className="w-102">
+      <PromptInput accent="ai">
+        <PromptInputTextarea placeholder="Ask genie..." />
+        <PromptInputActions>
+          <div className="flex items-center gap-0.5">
+            <Button variant="ghost" size="icon-sm" aria-label="Mention an object">
+              <At />
+            </Button>
+          </div>
+          <PromptInputSubmit status="ready" />
+        </PromptInputActions>
+      </PromptInput>
+    </div>
+  ),
+  Details: (
+    <div className="w-80">
+      <Details>
+        <DetailsHeader title="orders_tmp" path="main . staging" />
+        <DetailsRows defaultValue={["size"]}>
+          <DetailsRow value="owner" label="Owner" summary="data-platform" />
+          <DetailsRow value="size" label="Size" summary="4.2 GiB" />
+          <DetailsRow value="queried" label="Last queried" summary="94 days ago" />
+        </DetailsRows>
+      </Details>
+    </div>
+  ),
+  "Message Actions": (
+    <div className="w-102">
+      <MessageActions copyText="Three tables are unused." feedback="up" />
+    </div>
+  ),
+  "Message Thumbnail": (
+    <div className="flex items-center gap-2">
+      <MessageThumbnail alt="Query plan" />
+      <MessageThumbnail alt="Dashboard export" />
+    </div>
+  ),
+  Confirmation: (
+    <div className="w-102">
+      <Confirmation
+        title="Drop 3 tables in main.staging?"
+        state="request"
+        acceptLabel="Drop tables"
+      >
+        staging.orders_tmp, staging.users_tmp and staging.scratch.
+      </Confirmation>
+    </div>
+  ),
+  Suggestion: (
+    <div className="w-102">
+      <Suggestions>
+        <Suggestion>Show me the failing tables</Suggestion>
+        <Suggestion>Group these by catalog</Suggestion>
+        <Suggestion>Who owns them?</Suggestion>
+      </Suggestions>
+    </div>
+  ),
+  Queue: (
+    <div className="w-80">
+      <Queue>
+        <QueueSection label="Pending" count={2}>
+          <QueueItem status="running">Add form validation</QueueItem>
+          <QueueItem status="pending">Write unit tests</QueueItem>
+        </QueueSection>
+        <QueueSection label="Completed" count={1} defaultOpen={false}>
+          <QueueItem status="done">Rename the column</QueueItem>
+        </QueueSection>
+      </Queue>
+    </div>
+  ),
+  Checkpoint: (
+    <div className="w-102">
+      <Checkpoint label="Before the schema change" timestamp="2 min ago" />
+    </div>
+  ),
+  Artifact: (
+    <div className="w-102">
+      <Artifact title="revenue_by_region.sql" kind="SQL">
+        {"select region, sum(amount) as revenue\nfrom main.sales.orders\ngroup by region"}
+      </Artifact>
+    </div>
+  ),
+  Conversation: (
+    <div className="w-102">
+      <Conversation className="max-h-40">
+        <ConversationContent>
+          <Message from="user">
+            <MessageContent>Which tables are unused?</MessageContent>
+          </Message>
+          <Message from="assistant">
+            <MessageContent>Three, all idle for more than 90 days.</MessageContent>
+          </Message>
+        </ConversationContent>
+      </Conversation>
     </div>
   ),
 }

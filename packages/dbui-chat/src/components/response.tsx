@@ -10,6 +10,8 @@ import {
   TableRow,
 } from "dbui/components/ui/table"
 
+import { CodeBlock } from "dbui/components/ui/code-block"
+
 import { cn } from "../lib/utils"
 
 /**
@@ -145,15 +147,14 @@ function parseBlocks(markdown: string): React.ReactNode[] {
       }
       index++ // consume the closing fence when present
       blocks.push(
-        <pre
+        // The same component a standalone block uses, so a fence in an answer and
+        // a code surface elsewhere cannot drift apart. It also brings copy with
+        // it, which a hand-rolled `pre` here never had.
+        <CodeBlock
           key={`b${key++}`}
-          data-language={fence[1] || undefined}
-          className="overflow-x-auto shape-container bg-surface-inset p-3"
-        >
-          <code className="type-code-block whitespace-pre">
-            {body.join("\n")}
-          </code>
-        </pre>
+          code={body.join("\n")}
+          language={fence[1] || undefined}
+        />
       )
       continue
     }

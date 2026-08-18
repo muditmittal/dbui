@@ -15,6 +15,7 @@ import { cn } from "../lib/utils"
  * @constraint Collapsed by default — a task is evidence, not the answer
  * @constraint One Task per tool call. A run of six reads is six Tasks, not one with six titles
  * @constraint Never use it for something the user did — that is a Message
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4847-16131
  */
 
 export type TaskStatus = "running" | "complete" | "error"
@@ -97,7 +98,12 @@ function TaskItem({ icon, className, children, ...props }: TaskItemProps) {
     <div
       data-slot="task-item"
       className={cn(
-        "flex min-w-0 items-center gap-2 type-label text-text-subtle",
+        // min-h-5 rather than the 16px the type ramp gives this row on its own.
+        // `type-label` is 13/16 and the icon is 16, so the row was exactly as tall
+        // as its glyph: with rows 4px apart, consecutive icons sat 4px from each
+        // other and read as touching. The extra 4px is inside the row so the icon
+        // centres in it, which keeps the label baseline where it was.
+        "flex min-h-5 min-w-0 items-center gap-2 type-label text-text-subtle",
         className
       )}
       {...props}
@@ -113,4 +119,51 @@ function TaskItem({ icon, className, children, ...props }: TaskItemProps) {
   )
 }
 
-export { Task, TaskItem }
+export interface TaskIOProps extends React.ComponentProps<"div"> {
+  /** Names the block — "Input", "Result", "Error". */
+  label?: React.ReactNode
+}
+
+/**
+ * TaskInput / TaskOutput — what a tool call was given, and what it returned.
+ *
+ * These are parts of `Task` rather than a `Tool` component of their own. `Task`
+ * already declares one per tool call, so a second component modelling the same
+ * call would mean two answers to "which do I reach for" — and the only thing it
+ * would add is these two blocks.
+ *
+ * Preformatted and capped: arguments and results arrive as JSON or a row dump, and
+ * a tool that returned four hundred rows must not make the transcript unusable.
+ */
+function TaskIO({
+  slot,
+  label,
+  className,
+  children,
+  ...props
+}: TaskIOProps & { slot: string }) {
+  return (
+    <div
+      data-slot={slot}
+      className={cn("flex min-w-0 flex-col gap-1", className)}
+      {...props}
+    >
+      {label ? (
+        <span className="type-hint text-text-subtle">{label}</span>
+      ) : null}
+      <pre className="max-h-40 overflow-auto shape-container bg-surface-inset p-2 type-code whitespace-pre text-text-base">
+        {children}
+      </pre>
+    </div>
+  )
+}
+
+function TaskInput({ label = "Input", ...props }: TaskIOProps) {
+  return <TaskIO slot="task-input" label={label} {...props} />
+}
+
+function TaskOutput({ label = "Result", ...props }: TaskIOProps) {
+  return <TaskIO slot="task-output" label={label} {...props} />
+}
+
+export { Task, TaskItem, TaskInput, TaskOutput }

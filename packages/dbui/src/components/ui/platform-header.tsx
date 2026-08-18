@@ -6,6 +6,14 @@ import { cn } from "../../lib/utils"
 
 /**
  * @standard Platform Header
+ * @guideline Never place this on a page. The `Base` shell renders it, so a page
+ * that adds its own ends up with two top bars.
+ * @guideline Fill all three slots, in order — Left, Center, Right. The bar is
+ * `justify-between`, so a missing Center pulls the right cluster into the middle
+ * of the window rather than leaving a gap where search belongs.
+ * @constraint The bar is 48px and the Center slot is 552px. Both are fixed because
+ * every product page shares this bar, and a page that sets its own height moves
+ * the content below it out of alignment with every other page.
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3225-4233
  */
 

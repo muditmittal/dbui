@@ -7,7 +7,9 @@ import { cn } from "../../lib/utils"
 /**
  * @standard Hover Card
  * @guideline Use for preview content on hover (user profiles, link previews)
+ * @guideline `side` is the Figma `Arrow` axis — the arrow points back at the trigger, so the side and the arrow are one decision
  * @constraint Don't use for actions — it's for passive information only
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=5053-8796
  */
 
 function HoverCard({ ...props }: PreviewCardPrimitive.Root.Props) {

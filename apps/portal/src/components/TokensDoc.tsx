@@ -16,6 +16,7 @@ import {
 import {
   colorFamilies, colorGroups, type as typeSteps, typeContexts, typeContextAttribute,
   space, radius, shape, size, borderWidth, elevation, duration, easing, layer, scalars,
+  themed,
 } from "@/stories/tokens/token-data"
 import { scalars as scalarConsumption } from "@/stories/tokens/token-consumption"
 import { DocHeader, RefTable, Code, Para } from "@/components/docs/Prose"
@@ -23,6 +24,7 @@ import { Guidance } from "@/components/docs/Guidance"
 import { DocAccordion, DocAccordionItem } from "@/components/docs/DocAccordion"
 import { SectionTabs } from "@/components/docs/StickyBar"
 import { ColorModeOverride, useColorModeOverride } from "@/components/ColorModeControl"
+import { useGlobalTheme } from "@/components/ThemeControl"
 import { TypeContextControl, useTypeContext } from "@/components/TypeContextControl"
 import { DensityControl, useDensity, densityStyle } from "@/components/DensityControl"
 import { anchorOffset } from "@/components/docs/anchor"
@@ -318,21 +320,30 @@ function PanelHeader({
  * the defect the color section exists to teach. Reading them from the group
  * means the contrast verdict follows the mode switch, and follows the palette if
  * either surface is ever revalued.
+ *
+ * A function of the theme rather than a constant, for the same reason one step
+ * further out: a ratio is only evidence if both sides of it are the values on
+ * screen. A theme that moves `surface-base` and is judged against the default's
+ * would report a number nothing renders.
  */
 const allColors = colorGroups.flatMap((group) => group.tokens)
 const colorNamed = (name: string) => allColors.find((token) => token.name === name)
-const SURFACES = {
+const surfaceValue = (name: string, mode: "light" | "dark", theme: string) => {
+  const token = colorNamed(name)
+  return token ? themed(name, mode, theme, token[mode]) : "transparent"
+}
+const surfacesFor = (theme: string) => ({
   light: {
-    base: colorNamed("surface-base")?.light ?? "transparent",
-    inverse: colorNamed("surface-inverse")?.light ?? "transparent",
-    borderSubtle: colorNamed("border-subtle")?.light ?? "transparent",
+    base: surfaceValue("surface-base", "light", theme),
+    inverse: surfaceValue("surface-inverse", "light", theme),
+    borderSubtle: surfaceValue("border-subtle", "light", theme),
   },
   dark: {
-    base: colorNamed("surface-base")?.dark ?? "transparent",
-    inverse: colorNamed("surface-inverse")?.dark ?? "transparent",
-    borderSubtle: colorNamed("border-subtle")?.dark ?? "transparent",
+    base: surfaceValue("surface-base", "dark", theme),
+    inverse: surfaceValue("surface-inverse", "dark", theme),
+    borderSubtle: surfaceValue("border-subtle", "dark", theme),
   },
-}
+})
 
 /**
  * Whether the family is still numbered, which decides whether the stacking rule
@@ -758,6 +769,17 @@ export function TokensDoc() {
   const [mode, setMode] = useColorModeOverride()
 
   /**
+   * The theme the document is in, read off the attribute and observed.
+   *
+   * There is no override control for this one and there should not be: mode and
+   * type context are previews of a state the reader is asking about, and a theme
+   * is the aesthetic the whole page is already rendering in. The footer switches
+   * it; this page reports it.
+   */
+  const theme = useGlobalTheme()
+  const surfaces = surfacesFor(theme)
+
+  /**
    * Not that relationship, one section down: there is nothing ambient to seed
    * from. A context activates only when something sets the attribute, so this
    * opens on the default and moves only when a reader moves it. Unrelated to the
@@ -815,12 +837,9 @@ export function TokensDoc() {
               header={
                 <PanelHeader
                   label={family.label}
-                  preview={
-                    <ColorStrip
-                      tokens={family.groups.flatMap((group) => group.tokens)}
-                      mode={mode}
-                    />
-                  }
+                  // No `mode`: the strip paints from variables now, and the
+                  // header already sits inside the forced mode.
+                  preview={<ColorStrip tokens={family.groups.flatMap((group) => group.tokens)} />}
                 />
               }
             >
@@ -834,7 +853,8 @@ export function TokensDoc() {
                     <ColorTable
                       group={group}
                       mode={mode}
-                      surfaces={SURFACES[mode]}
+                      surfaces={surfaces[mode]}
+                      theme={theme}
                       functionLabel={family.label}
                       limit={5}
                     />
@@ -939,8 +959,8 @@ export function TokensDoc() {
                   <ElevationStrip
                     tokens={elevation}
                     mode={elevationMode}
-                    surface={SURFACES[elevationMode].base}
-                    border={SURFACES[elevationMode].borderSubtle}
+                    surface={surfaces[elevationMode].base}
+                    border={surfaces[elevationMode].borderSubtle}
                   />
                 }
               />
@@ -950,8 +970,8 @@ export function TokensDoc() {
               <ElevationScale
                 tokens={elevation}
                 mode={elevationMode}
-                surface={SURFACES[elevationMode].base}
-                border={SURFACES[elevationMode].borderSubtle}
+                surface={surfaces[elevationMode].base}
+                border={surfaces[elevationMode].borderSubtle}
               />
               <Guidance
                 {...GUIDANCE_PROPS}

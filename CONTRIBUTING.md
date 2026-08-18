@@ -55,15 +55,25 @@ reference doc describes how far along anything is.
 6. Add or update the Code Connect file in `figma/<Name>.figma.tsx`, and add variant mappings to
    `apps/portal/src/stories/components/variant-mappings.json`.
 7. Export it from `packages/dbui/src/index.ts` and add a tsup entry in `packages/dbui/tsup.config.ts`.
-8. Add a demo tile to `apps/portal/src/stories/components/gallery-demos.tsx`, keyed by the name
-   shown in `component-index.md`, then run `node scripts/generate-gallery.mjs`. The gallery renders
-   once, on `/components`, and groups and links itself from the CLI — the tile is the one part
-   it cannot infer. A component with no tile still appears, showing its name instead of a demo.
+8. Add a demo tile to `apps/portal/src/stories/components/gallery-demos.tsx`, keyed by the **display
+   name** the gallery shows — `"AI Gradient Icon"`, not `AiGradientIcon`. The lookup is
+   `demos[item.name]`, so a key in any other shape resolves to nothing and the tile you wrote never
+   renders. Then run `node scripts/generate-gallery.mjs`. The gallery renders once, on `/components`,
+   and groups and links itself from the CLI — the tile is the one part it cannot infer.
    A new category also needs a row in the index's Categories table, because the generator reads the
    one-line descriptor the gallery prints under each heading from there.
 9. Run `yarn design:lint:react packages/dbui/src/components/ui/<name>.tsx`.
+10. Run `yarn design:audit-portal`. **This is the step that makes the portal non-optional.** A
+    component with no tile does not degrade to showing its name — it prints "No default state — fires
+    from code", which is a claim, and it is true of exactly one component in the library. Twenty rows
+    once said it because chat and the content surfaces were added everywhere except here. The audit
+    fails on a missing row, a missing story link, a missing tile, and a tile keyed to no row.
 
-Removing a component reverses all nine, and requires a note in the changelog because it breaks
+The portal is the only running UI surface, which makes it the only place a change can be looked at
+and the easiest place to skip. A component that is exported, documented, linted and connected to
+Figma can still be invisible, and none of the other checks notice.
+
+Removing a component reverses all ten, and requires a note in the changelog because it breaks
 consumers.
 
 ### Adding or changing an icon

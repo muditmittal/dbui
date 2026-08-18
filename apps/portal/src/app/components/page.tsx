@@ -11,7 +11,6 @@ import { SectionTabs } from "@/components/docs/StickyBar"
 import { galleryGroups } from "@/stories/components/gallery-data"
 
 import { ComponentGallery, groupId } from "./ComponentGallery"
-import { ChatGallery, CHAT_GROUP } from "./ChatGallery"
 
 /**
  * One route, two states. Without `?path=` it is the gallery — the index the top
@@ -83,22 +82,19 @@ const componentName = (story: string) =>
  * and their anchors — a link to #render still lands — they are just not tabs.
  */
 /**
- * Chat is spliced in rather than appended. It comes from its own package, which
- * `component-index.md` does not cover, so `gallery-data.ts` cannot generate it —
- * but it is a category a reader browses, not an afterthought, and it reads with
- * Content rather than after Compositions. `CHAT_AFTER` keeps this list and the
- * gallery's own order from drifting apart: both derive the position from it.
+ * Chat used to be spliced in here by hand, because `component-index.md` was scoped
+ * to `packages/dbui` and could not generate a second package. It covers `dbui-chat`
+ * now, so chat arrives with every other group and the generator holds its position.
+ * Leaving the splice in place gave the page two Chat groups and two Chat tabs.
  *
  * Shells are not here. They have their own page at `/docs/shells`, and a category
  * that is really a link to somewhere else makes the strip a table of contents for
  * the site instead of a filter across this set.
  */
-const CHAT_AFTER = "content"
-
-const SECTIONS = galleryGroups.flatMap((group) => {
-  const section = { id: groupId(group.key), label: group.label }
-  return group.key === CHAT_AFTER ? [section, CHAT_GROUP] : [section]
-})
+const SECTIONS = galleryGroups.map((group) => ({
+  id: groupId(group.key),
+  label: group.label,
+}))
 
 /** The whole rule surface for a component, and what each tag is answerable for. */
 const TAGS = [
@@ -202,7 +198,7 @@ function Gallery() {
 
         <SectionTabs sections={SECTIONS} label="Component categories" />
 
-        <ComponentGallery after={{ [CHAT_AFTER]: <ChatGallery /> }} />
+        <ComponentGallery />
 
         <div className="content-column">
           <DocSection id="jsdoc" title="The rules live in the JSDoc">

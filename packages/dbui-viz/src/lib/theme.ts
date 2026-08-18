@@ -30,12 +30,24 @@ export const VEGA_EMBED_OPTIONS: EmbedOptions = {
 /**
  * The palettes a chart may draw from.
  *
- * A numbered step is an identity — which series this is — and carries no order
- * and no magnitude. Reach for one whenever the series are peers.
+ * A categorical step is an identity — which series this is — and carries no
+ * order and no magnitude. Reach for one whenever the series are peers.
  *
- * The three named ones say something about the datum rather than separating it
- * from its neighbors, so they hold still while the numbered steps shift with
- * the series count.
+ * A sequential step is the opposite: one hue at increasing strength, so the
+ * swatch itself reads as more or less. Reach for one when the rows are ranked or
+ * the levels nest, and for anything a treemap draws.
+ *
+ * A level says what the datum IS rather than which one it is or how much of it
+ * there is — `pass` is clean, `high`/`medium`/`low` are degrees of concern,
+ * `info` is noted and not a concern. Held at min 4.8 ΔL* apart so the five stay
+ * separable for a reader who cannot use the red-green axis.
+ *
+ * `positive`, `negative` and `neutral` are kept for the call sites that already
+ * name them and now resolve to the level family. They were the borrow this
+ * family exists to end: both pointed at `status-text-*`, which is tuned to
+ * contrast with the page rather than with a neighbouring mark, and the two
+ * landed 0.8 L* apart — identical in greyscale on the one comparison that
+ * mattered. Prefer the explicit `level-*` name in new code.
  */
 export type VizPaletteName =
   | "categorical-1"
@@ -48,9 +60,57 @@ export type VizPaletteName =
   | "categorical-8"
   | "categorical-9"
   | "categorical-10"
+  | "sequential-1"
+  | "sequential-2"
+  | "sequential-3"
+  | "sequential-4"
+  | "sequential-5"
+  | "sequential-6"
+  | "sequential-7"
+  | "sequential-8"
+  | "sequential-9"
+  | "sequential-10"
+  | "level-pass"
+  | "level-high"
+  | "level-medium"
+  | "level-low"
+  | "level-info"
+  | "neutral-subtle"
+  | "neutral-strong"
   | "positive"
   | "negative"
   | "neutral"
+
+/**
+ * The fills a mark may take when it carries content on top of itself.
+ *
+ * A subset of the palette vocabulary, and the one place a fill is constrained.
+ * Most marks sit ON the canvas and can take any step; a leaderboard draws its
+ * label on the bar and a treemap draws its stroke on the tile, so the fill has
+ * to stay near the canvas or the thing above it loses the contrast it borrowed
+ * from the page. A prop that accepts a value which breaks the component is a
+ * value it will be passed.
+ *
+ * Low sequential steps rather than light ones, because that ramp is authored in
+ * reverse under `.dark`: step 2 is near-white on white and near-black on black
+ * while `text-base` is far from the canvas in both, so naming the step is what
+ * makes one expression right in both modes. The `level` entries are the `subtle`
+ * role for the same reason — every one of them carries `text-base` at better
+ * than 12:1.
+ *
+ * Shared by `Leaderboard` and `Treemap`, which is why it lives here rather than
+ * beside either one.
+ */
+export type VizTint =
+  | "sequential-1"
+  | "sequential-2"
+  | "sequential-3"
+  | "sequential-4"
+  | "level-pass-subtle"
+  | "level-high-subtle"
+  | "level-medium-subtle"
+  | "level-low-subtle"
+  | "level-info-subtle"
 
 export interface VizPalette {
   /** Flat mark fill, mark stroke and legend swatch. */
@@ -133,21 +193,15 @@ const TYPE_KEYS = Object.keys(TYPE_STEPS) as (keyof VizType)[]
 /**
  * Palette name → the semantic carrying its color.
  *
- * The numbered steps are the shipped categorical scale, one to one. The three
- * named ones are borrowed, because the viz family has ten categorical steps and
- * ten sequential steps and nothing else: it describes no state and no absence.
+ * Every entry now names a `viz` semantic. Nothing here borrows from `status` or
+ * `text` any more, which is what closed the defect this map used to carry: a
+ * chart meaning healthy read `status-text-positive` and one meaning failed read
+ * `status-text-negative`, and those two are 0.8 L* apart because both are tuned
+ * to contrast with the page rather than with each other. Adjacent segments of a
+ * bar were the same color for any reader who cannot use the red-green axis.
  *
- * `status` gives up its `text` step rather than its `border` step because only
- * `text` moves between light and dark — `status-border-positive` is one value
- * in both modes, so a chart built on it would inherit the very defect this file
- * exists to remove.
- *
- * `neutral` takes `text-disabled` for that reason and one more. Every
- * surface-role semantic is tuned to sit behind content, so at the size of a
- * donut slice all of them wash out into the canvas — `surface-disabled` and
- * `border-strong` both leave the wedge unreadable in either mode.
- * `text-disabled` is the only semantic that means inactive and is still drawn
- * to be seen against the page, which is the whole job of a mark.
+ * The three legacy names resolve into the level family so existing call sites
+ * are fixed rather than broken.
  */
 const PALETTE_VARS: Record<VizPaletteName, string> = {
   "categorical-1": "--db-viz-categorical-1",
@@ -160,9 +214,28 @@ const PALETTE_VARS: Record<VizPaletteName, string> = {
   "categorical-8": "--db-viz-categorical-8",
   "categorical-9": "--db-viz-categorical-9",
   "categorical-10": "--db-viz-categorical-10",
-  positive: "--db-status-text-positive",
-  negative: "--db-status-text-negative",
-  neutral: "--db-text-disabled",
+  "sequential-1": "--db-viz-sequential-1",
+  "sequential-2": "--db-viz-sequential-2",
+  "sequential-3": "--db-viz-sequential-3",
+  "sequential-4": "--db-viz-sequential-4",
+  "sequential-5": "--db-viz-sequential-5",
+  "sequential-6": "--db-viz-sequential-6",
+  "sequential-7": "--db-viz-sequential-7",
+  "sequential-8": "--db-viz-sequential-8",
+  "sequential-9": "--db-viz-sequential-9",
+  "sequential-10": "--db-viz-sequential-10",
+  "level-pass": "--db-viz-level-pass-base",
+  "level-high": "--db-viz-level-high-base",
+  "level-medium": "--db-viz-level-medium-base",
+  "level-low": "--db-viz-level-low-base",
+  "level-info": "--db-viz-level-info-base",
+  // All three neutral roles, so a chart can name the empty cell as well as the
+  // de-emphasised series. `neutral` is the base step.
+  "neutral-subtle": "--db-viz-neutral-subtle",
+  "neutral-strong": "--db-viz-neutral-strong",
+  positive: "--db-viz-level-pass-base",
+  negative: "--db-viz-level-high-base",
+  neutral: "--db-viz-neutral-base",
 }
 
 /**

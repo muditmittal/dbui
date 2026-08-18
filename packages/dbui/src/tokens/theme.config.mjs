@@ -96,9 +96,19 @@ export const primitives = {
       "050": "#F3F4F7", 100: "#DFE1EC", 200: "#BFC6E3", 300: "#90A0E0", 400: "#6B7ED6",
       500: "#4E62BA", 600: "#435A98", 700: "#375276", 800: "#2D3E56", 900: "#232D3C",
     },
+    // Tuned against the surface each stop renders on, by moving L* only — chroma and hue
+    // are the original values, so every contrast ratio is a function of the shift alone.
+    // 050 and 100 sit on white, where a pale high-chroma tint reads as emitted light, so
+    // they drop 1.5. 800 and 900 sit on the dark canvas, where the opposite is true, so
+    // they lift 4. The middle interpolates between those two anchors rather than stepping,
+    // which keeps the ramp free of a kink at the handover.
+    //
+    // Two stops sit on a threshold after the shift and should not be lifted further:
+    // 500 is 3.03:1 on white (WCAG 1.4.11 wants 3:1) and 600 is 4.50:1, the floor for
+    // white text on the fill.
     cyan: {
-      "050": "#E9F8FD", 100: "#D2F1FC", 200: "#A5E5F9", 300: "#65D3F4", 400: "#22BFE5",
-      500: "#169DBD", 600: "#0F7B95", 700: "#085B6E", 800: "#084150", 900: "#0A2C36",
+      "050": "#E5F4F9", 100: "#CEEDF8", 200: "#A3E3F7", 300: "#65D3F4", 400: "#28C1E7",
+      500: "#21A1C2", 600: "#1D819B", 700: "#186376", 800: "#164A5A", 900: "#15353F",
     },
     teal: {
       "050": "#EAFBFA", 100: "#C6F4F1", 200: "#9BE8E3", 300: "#6CD7D2", 400: "#3FC3BD",
@@ -469,8 +479,15 @@ export const semantics = {
   "viz-categorical-9": { light: "viz.sage.300", dark: "viz.sage.600" },
   "viz-categorical-10": { light: "viz.plum.400", dark: "viz.plum.500" },
 
-  // ── Viz / Sequential (cyan ramp; reversed for dark) ──
-  "viz-sequential-1": { light: "interface.cool.100", dark: "viz.cyan.900" },
+  /* ── Viz / Sequential (cyan ramp; reversed for dark) ──
+   *
+   * All ten stops are cyan. The pale extreme used to borrow `interface.cool` so a
+   * warm-page theme could rewrite it via `ramp`, which is why `tokens.md` describes
+   * the scale as reaching into chrome — that is no longer true, and the scale no
+   * longer varies by theme. The cost of the change is the first step: grey-to-cyan
+   * carried it on hue at ΔE 9.2, and cyan.050-to-cyan.100 carries it on 3.4 L* at
+   * ΔE 5.3. Widen cyan.050 if the treemap's "other" tile stops separating. */
+  "viz-sequential-1": { light: "viz.cyan.050", dark: "viz.cyan.900" },
   "viz-sequential-2": { light: "viz.cyan.100", dark: "viz.cyan.800" },
   "viz-sequential-3": { light: "viz.cyan.200", dark: "viz.cyan.700" },
   "viz-sequential-4": { light: "viz.cyan.300", dark: "viz.cyan.600" },
@@ -479,7 +496,107 @@ export const semantics = {
   "viz-sequential-7": { light: "viz.cyan.600", dark: "viz.cyan.300" },
   "viz-sequential-8": { light: "viz.cyan.700", dark: "viz.cyan.200" },
   "viz-sequential-9": { light: "viz.cyan.800", dark: "viz.cyan.100" },
-  "viz-sequential-10": { light: "viz.cyan.900", dark: "interface.cool.050" },
+  "viz-sequential-10": { light: "viz.cyan.900", dark: "viz.cyan.050" },
+
+  /* ── Viz / Neutral ──
+   *
+   * Alpha rather than solid values, so a neutral inherits whatever surface it is
+   * drawn on: the same token comes out cool on the dark canvas and picks up a warm
+   * page under One, which no fixed hex can do. The source is the cyan ramp rather
+   * than black, so the greys carry a slight cast of the brand hue instead of
+   * reading as flat grey beside it — at 48% that is C*ab 6.1 at hue 226.
+   *
+   * They are three roles, not a scale:
+   *   subtle  segmented-bar track, empty heatmap cell — chrome, no data beside it
+   *   base    bottom-N bars, de-emphasised series. 8% lands within 2.4 L* of the
+   *           labelled-bar fill, so it reads as the same weight with the colour
+   *           taken out rather than as something heavier
+   *   strong  previous-period series, where colour is the only channel separating
+   *           two identical shapes. 15.7 dE from the current-period cyan, 12.0
+   *           under protanopia
+   *
+   * `strong` resolves to 2.77:1 on white, under the 3:1 in WCAG 1.4.11. That is a
+   * deliberate call — it is a de-emphasised reference series and being quiet is the
+   * point — but it means it should not be the only thing carrying a value. 52%
+   * would clear 3:1 if that changes.
+   *
+   * Because the source is cyan, retuning the cyan ramp moves these too. */
+  "viz-neutral-subtle": { light: { ref: "viz.cyan.900", a: 0.04 }, dark: { ref: "viz.cyan.100", a: 0.04 } },
+  "viz-neutral-base": { light: { ref: "viz.cyan.900", a: 0.08 }, dark: { ref: "viz.cyan.100", a: 0.08 } },
+  "viz-neutral-strong": { light: { ref: "viz.cyan.900", a: 0.48 }, dark: { ref: "viz.cyan.100", a: 0.48 } },
+
+  /* ── Viz / Level ──
+   *
+   * The third kind of viz scale. `categorical` says WHICH series, `sequential`
+   * says HOW MUCH, and this one says WHAT LEVEL — the colour carries a judgement
+   * about the datum rather than its identity or its magnitude. Five levels:
+   * `pass` is clean, `high`/`medium`/`low` are degrees of concern, `info` is
+   * noted and not a concern.
+   *
+   * It exists because a chart meaning healthy used to borrow `status-text-*`,
+   * and those are tuned as TEXT — each one contrasts with the page and none of
+   * them with its siblings, which is exactly backwards for a mark. The proof was
+   * `status-text-positive` and `status-text-negative` landing 0.8 L* apart: on a
+   * segmented bar, passed and high-risk were the same colour in greyscale, and
+   * that is the one comparison a security page exists to make.
+   *
+   * Three roles, and only ONE of them is comparative:
+   *   base    the mark. Sits beside its siblings, so mutual separation is the
+   *           whole job. Held at min 4.8 ΔL* across all five, both modes
+   *   subtle  a tint carrying content on top — a leaderboard bar under its label,
+   *           a tinted row. Never comparative: one level per chart, so the five
+   *           are free to sit at the same lightness
+   *   strong  the level as text. Text contrasts with the page and never with
+   *           another text colour, so collisions here are harmless too
+   *
+   * `base` varies by mode and the two directions are opposite, which is the part
+   * to read before editing. In light the ramp runs worse-is-DARKER, because a
+   * dark mark is the prominent one on a white page. In dark it runs worse-is-
+   * LIGHTER for the same reason inverted, so `high` is a light pink there and a
+   * deep red here. Both directions are checked: `high` > `medium` > `low` in
+   * lightness under `.dark`, and the reverse in `:root`.
+   *
+   * Light `pass`, `low` and `info` sit at 1.61, 1.21 and 1.41 against white —
+   * under the 3:1 in WCAG 1.4.11 — and that is the deliberate half of the trade.
+   * No assignment of five hues clears 3:1, separates by 10 ΔL* AND keeps the hues
+   * recognisable: with all three enforced the search is forced to `red.900` for
+   * light `high` and `red.050` for dark, and neither reads as red. These are
+   * large adjacent fills read against each other rather than against the page,
+   * and every surface that uses them also states the value in text.
+   *
+   * Light separation is 3.4 ΔL* at its tightest (`high`/`medium`), which is the
+   * cost of the softer pastel bases. Dark is 7.9 (`high`/`info`). Anything that
+   * drops either number is a regression — the family exists because the borrowed
+   * `status-text-*` pair sat 0.8 apart.
+   *
+   * `low` comes off `viz.gold` rather than `status.yellow` because that ramp is
+   * really orange — its 500 is #DE7921. On the shared ramp, `low-strong` and
+   * `medium-strong` both resolved to #BE501E: one value under two names. */
+
+  /* ── base — the mark, and the only comparative role ──
+   * Light runs worse-is-darker; dark runs worse-is-lighter. */
+  "viz-level-pass-base": { light: "status.green.400", dark: "status.green.200" },
+  "viz-level-high-base": { light: "status.red.500", dark: "status.red.400" },
+  "viz-level-medium-base": { light: "status.yellow.500", dark: "status.yellow.500" },
+  "viz-level-low-base": { light: "viz.gold.100", dark: "viz.gold.600" },
+  "viz-level-info-base": { light: "viz.cyan.200", dark: "viz.cyan.300" },
+
+  /* ── subtle — a tint that carries content on top ──
+   * Every one clears 12:1 for `text-base` in light and 8:1 in dark. */
+  "viz-level-pass-subtle": { light: "status.green.200", dark: "status.green.800" },
+  "viz-level-high-subtle": { light: "status.red.100", dark: "status.red.800" },
+  "viz-level-medium-subtle": { light: "status.yellow.100", dark: "status.yellow.800" },
+  "viz-level-low-subtle": { light: "viz.gold.050", dark: "viz.gold.800" },
+  "viz-level-info-subtle": { light: "viz.cyan.100", dark: "viz.cyan.800" },
+
+  /* ── strong — the level as text ──
+   * Floored at 4.5:1 against the canvas, which is what holds `low` and `info` at
+   * the 600 step in light: 500 renders them at 2.55 and 3.03, unreadable. */
+  "viz-level-pass-strong": { light: "status.green.600", dark: "status.green.400" },
+  "viz-level-high-strong": { light: "status.red.700", dark: "status.red.300" },
+  "viz-level-medium-strong": { light: "status.yellow.600", dark: "status.yellow.500" },
+  "viz-level-low-strong": { light: "viz.gold.600", dark: "viz.gold.500" },
+  "viz-level-info-strong": { light: "viz.cyan.600", dark: "viz.cyan.500" },
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -1297,10 +1414,13 @@ export const motion = {
  * referenced, in both plain refs and inside alpha refs, so re-skinning the
  * whole of chrome is one declaration instead of forty value overrides.
  *
- * It is a REWRITE and not a filter: it catches every reference to the ramp,
- * including the two `viz-sequential-*` stops that borrow the chrome ramp for
- * the pale end of their scale. That is the behavior worth having — a sequential
- * scale whose lightest cell stayed cool on a warm page would read as a mistake.
+ * It is a REWRITE and not a filter: it catches every reference to the ramp
+ * wherever it appears, not only the tokens a theme had in mind.
+ *
+ * It used to catch the two `viz-sequential-*` stops as well, which borrowed the
+ * chrome ramp for the pale end of their scale. Those are `viz.cyan.050` now, so
+ * the sequential scale is all cyan and theme-invariant. A warm pale end would
+ * have to be a `semantics` override on those two tokens.
  *
  * `semantics` is applied AFTER `ramp`, so a theme can rebind the ramp and still
  * correct the handful of tokens that do not follow from it. That ordering is

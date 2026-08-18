@@ -25,6 +25,7 @@ import { ChevronDown } from "dbui/components/icons/ChevronDown"
 import { ChevronUp } from "dbui/components/icons/ChevronUp"
 
 import type { ColorGroup, ColorToken, ModeToken, Token, TypeContext, TypeStep } from "./token-data"
+import { themed } from "./token-data"
 import type { Scalar } from "./token-consumption"
 
 /**
@@ -363,7 +364,13 @@ function ratioOn(a: string, b: string, backdrop: string): number | null {
  * without were visibly two shapes. The verdict is the same fact, on the note
  * line every other family uses for the thing its value cannot say.
  */
-function verdict(t: ColorToken, mode: "light" | "dark", surfaces: Surfaces): string | null {
+function verdict(
+  t: ColorToken,
+  mode: "light" | "dark",
+  surfaces: Surfaces,
+  /** The theme's value for this token, which is what actually renders. */
+  value: string,
+): string | null {
   // Only foreground tokens have a meaningful ratio against a surface.
   if (!/^(text|link|status-text|action-label)/.test(t.name)) return null
   // WCAG 1.4.3 exempts disabled controls from the contrast minimum.
@@ -371,7 +378,7 @@ function verdict(t: ColorToken, mode: "light" | "dark", surfaces: Surfaces): str
   // Inverse foregrounds are designed for the inverse surface, so measuring them
   // against the base one would report a failure that is not there.
   const against = /inverse/.test(t.name) ? surfaces.inverse : surfaces.base
-  const ratio = ratioOn(t[mode], against, surfaces.base)
+  const ratio = ratioOn(value, against, surfaces.base)
   if (ratio === null) return null
   const r = Math.round(ratio * 100) / 100
   // 4.5:1 is the WCAG AA threshold for body text; 3:1 for large text and UI.
@@ -385,14 +392,20 @@ function verdict(t: ColorToken, mode: "light" | "dark", surfaces: Surfaces): str
  * Painted on the mode's own base surface rather than the page's, because a third
  * of this family is a translucent overlay and an alpha over the wrong backdrop
  * is a different color.
+ *
+ * Both fills are the variable rather than a value read out of the data. The
+ * section already renders inside a forced color mode and the document already
+ * carries the theme, so the cascade resolves both axes for free — and a swatch
+ * that paints itself from a literal is a swatch that keeps showing the default
+ * theme after someone switches away from it. That was the bug.
  */
-function Swatch({ color, on }: { color: string; on: string }) {
+function Swatch({ name, on }: { name: string; on: string }) {
   return (
     <span
       className="block size-10 overflow-hidden rounded-1 border border-border-base"
       style={{ background: on }}
     >
-      <span className="block size-full" style={{ background: color }} />
+      <span className="block size-full" style={{ background: `var(--db-${name})` }} />
     </span>
   )
 }
@@ -476,12 +489,15 @@ export function ColorTable({
   group,
   mode,
   surfaces,
+  theme,
   functionLabel,
   limit = 5,
 }: {
   group: ColorGroup
   mode: "light" | "dark"
   surfaces: Surfaces
+  /** The active theme. Its values win over the default's for every row. */
+  theme: string
   /** The section the group sits under. The group knows its key, not its label. */
   functionLabel?: string
   limit?: number
@@ -494,11 +510,15 @@ export function ColorTable({
       // wonder whether they are two sets.
       unit={`${group.label.toLowerCase()} colors`}
       limit={limit}
-      rows={group.tokens.map((t) => ({
+      rows={group.tokens.map((t) => {
+        // What this token renders at here. `t[mode]` is the default theme's
+        // value, which is only the answer when the default is what is on screen.
+        const value = themed(t.name, mode, theme, t[mode])
+        return {
         key: t.name,
-        preview: <Swatch color={t[mode]} on={surfaces.base} />,
+        preview: <Swatch name={t.name} on={surfaces.base} />,
         name: `--db-${t.name}`,
-        value: t[mode],
+        value,
         meta: {
           type: "Color",
           function: functionLabel,
@@ -511,9 +531,14 @@ export function ColorTable({
           // The check the system runs, named so it reads as a check rather than a
           // remark. It is the evidence that a pairing is legal, and it belongs
           // wherever someone is deciding about one token.
-          extra: [{ term: "Contrast", definition: verdict(t, mode, surfaces) }],
+          //
+          // Measured against the value this theme renders, not the default's —
+          // a ratio quoted from another aesthetic is worse than none, because it
+          // reads as evidence.
+          extra: [{ term: "Contrast", definition: verdict(t, mode, surfaces, value) }],
         },
-      }))}
+        }
+      })}
     />
   )
 }
@@ -528,20 +553,21 @@ export function ColorTable({
  */
 export function ColorStrip({
   tokens,
-  mode,
   limit = 12,
 }: {
   tokens: ColorToken[]
-  mode: "light" | "dark"
   limit?: number
 }) {
   return (
     <span aria-hidden="true" className="flex flex-wrap gap-1">
+      {/* The variable, not the value — same reason as `Swatch`. A collapsed
+          family's preview is the only colour a reader sees before opening it,
+          so it is the worst place to show another theme's palette. */}
       {tokens.slice(0, limit).map((t) => (
         <span
           key={t.name}
           className="block size-6 rounded-1 border border-border-base"
-          style={{ background: t[mode] }}
+          style={{ background: `var(--db-${t.name})` }}
         />
       ))}
     </span>

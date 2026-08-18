@@ -24,6 +24,7 @@ import type { ChatStatus, PromptContextItem, PromptSubmission } from "../lib/typ
  * @constraint Never disable submit while streaming — swap it to a stop control instead
  * @constraint The accuracy disclaimer is not part of this component. It is product copy, so it
  *   belongs to the surface, which is also what lets one composer serve a panel and a full page
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4839-17704
  */
 
 const TEXTAREA_NAME = "prompt"

@@ -5,12 +5,35 @@ description: Validate that code follows DBUI design system rules. Triggers when 
 
 # Validate DBUI compliance
 
+**This is the standards check.** It runs standalone, and it is also the first of five
+checks dispatched by `dbui-review` — when called that way, return the output contract at
+the bottom of this file rather than the human-readable report.
+
 ## When to use
 
 - After writing or editing any `.tsx` file that uses DBUI components
 - After completing a screen build (run this as the final step of `dbui-build-screen`)
 - When reviewing code for design system violations
 - When the user says "check", "lint", "validate", or "audit"
+
+## Spend the effort on what is bespoke
+
+**Always run the linter — it takes seconds and it is the only thing here that cannot be
+wrong.** What changes is where the *judgment* goes afterwards.
+
+If the code was just generated from DBUI components and tokens, most of the surface is
+compliant by construction and re-reading it finds nothing. **The bespoke parts are where
+the findings are:** a locally defined component, a `className` doing something a prop
+should, an arbitrary value, hand-rolled markup, anything the generator improvised because
+no component fit.
+
+So: run the full linter, then **read only the bespoke parts closely**, and **report only
+what was found.** Do not narrate the passes — "47 components use correct tokens" is
+output nobody needs.
+
+⚠️ **Do not skip the linter on the assumption that generated code is clean.** "I used
+tokens" and "the linter agrees I used tokens" differ more often than expected — `text-sm`
+instead of `type-label` is the common case and it looks correct in every diff.
 
 ## Procedure
 
@@ -20,7 +43,7 @@ description: Validate that code follows DBUI design system rules. Triggers when 
 yarn dbui check <path>          # or: yarn design:lint:react <path>
 ```
 
-Nineteen rules cover every token and composition rule that can be decided from
+Twenty-five rules cover every token, accessibility and composition rule decidable from
 the source: raw HTML, `asChild`, hardcoded and deleted colors, drift off the
 space, size, radius and type families, and type set outside the ramp. Each
 finding carries its own fix, generated from the shipped tokens, so the
@@ -28,7 +51,7 @@ suggestion cannot name something that no longer exists.
 
 **Do not re-derive what it checks.** Restating a rule here is how a second,
 disagreeing copy of it starts. `scripts/design-lint/README.md` lists all
-nineteen. Report what the linter reports, grouped by severity.
+all twenty-five. Report what the linter reports, grouped by severity.
 
 ### 2. Then check what it cannot see
 
@@ -83,3 +106,33 @@ Report findings as:
 ```
 
 PASS if zero errors. Warnings don't fail the check but should be addressed.
+
+## Output contract, when dispatched by `dbui-review`
+
+Return exactly this instead of the report above. No preamble.
+
+```
+CHECK: standards
+STATUS: ran
+
+FIX
+- <headline> :: <detail and the fix> :: <rule name or line>
+
+IMPROVE
+- <headline> :: <detail> :: <rule name or line>
+
+WORKING
+- <headline> :: <detail>
+```
+
+**Linter errors are `FIX`. Linter warnings are `IMPROVE`.** The human-only checks above
+map by whether they are decidable: a non-DBUI icon import or a missing `Base` shell is a
+`FIX`; a possible duplicate of an existing component or a questionable ramp step is an
+`IMPROVE`.
+
+**`WORKING` is not optional.** If the design used shells and components correctly, say so
+in one line — "composed from `dbui-shells` `Base` with no raw interactive HTML" — because
+the orchestrator needs something to put in "what's working" and this check is the only one
+that can confirm it mechanically.
+
+Do not paste the full linter output into the contract. Findings only.

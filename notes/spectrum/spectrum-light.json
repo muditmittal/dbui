@@ -1,0 +1,26 @@
+{
+  "categorical": {
+    "purple": "#9575CD",
+    "gold": "#FFD54F",
+    "teal": "#6CD7D2",
+    "pink": "#F06292",
+    "lime": "#D4E157",
+    "brown": "#A1887F",
+    "indigo": "#90A0E0",
+    "orange": "#EF9B80",
+    "sage": "#96BEB5",
+    "plum": "#AD6DAD"
+  },
+  "sequential": {
+    "1": "#F1ECE6",
+    "2": "#CEEDF8",
+    "3": "#A3E3F7",
+    "4": "#65D3F4",
+    "5": "#28C1E7",
+    "6": "#21A1C2",
+    "7": "#1D819B",
+    "8": "#186376",
+    "9": "#164A5A",
+    "10": "#15353F"
+  }
+}

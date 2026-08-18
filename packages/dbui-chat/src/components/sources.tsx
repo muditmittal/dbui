@@ -16,6 +16,7 @@ import { cn } from "../lib/utils"
  * @constraint Collapsed by default, and only ever below the answer it supports
  * @constraint Every entry must resolve. A source the reader cannot open is a claim, not a citation
  * @constraint Not Actions. The action row acts on the answer; Sources explains where it came from
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=4890-5458
  */
 
 export interface SourcesProps

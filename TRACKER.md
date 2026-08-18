@@ -209,7 +209,7 @@ I20 is closed — the package is `dbui-chat` as of 2026-08-08, before any chat c
 
 | # | What | What it costs | Fix |
 | --- | --- | --- | --- |
-| B12 | The `Components/Chat/Thread` `Pieces` story wedges the renderer in headless Chrome. `Runtime.evaluate` and `Page.captureScreenshot` both time out | The one story no automated visual check can cover — and the surface Phase 3 is about to grow | file — bisect the story; `Response`'s hand-written markdown parser renders the widest input there |
+| ~~B12~~ | ~~The `Components/Chat/Thread` `Pieces` story wedges the renderer in headless Chrome~~ | **Stale — there is no `Pieces` story.** The Thread file exports `FullThread`, `EmptyState`, `Messages`, `ReasoningStates`, `Tasks`, `Plans`, `SourcesInActionRow`, `Composer` and `ResponseMarkdown`. Headless Chrome cannot screenshot *any* Storybook story on this machine, so the symptom was never specific to this one — see the note under the parity section |
 
 Then the seven primitives Phase 1 scoped. Each is `decision — new component`, and the decision is
 Phase 1's output rather than a fresh one.
@@ -234,8 +234,361 @@ Then the two new sets.
 
 | # | What | What it costs | Fix |
 | --- | --- | --- | --- |
-| M13 | The viz semantics carry ten categorical and ten sequential steps and nothing else. A chart meaning healthy borrows `status-text-*`, one meaning no data borrows `text-disabled` | The chart layer contradicts `token-rules.md` R10 in one direction | decision — a `viz` state and inert set |
+| ~~M13~~ | ~~The viz semantics carry ten categorical and ten sequential steps and nothing else~~ | **Closed.** `viz-neutral-*` is the inert set and `viz-level-*` the state set — five levels over `base`/`subtle`/`strong`. `PALETTE_VARS` borrows nothing; R10 now names all four families. The borrow was worse than untidy: `status-text-positive` and `status-text-negative` sit 0.8 L\* apart, so passed and high-risk were the same colour in greyscale on the one comparison a security page exists to make | — |
 | B7 | `SegmentedBar` clamps the Vega view height to `barHeight` | `showLegend` is a prop that draws nothing | decision — the height prop is the contract and widening it moves every call site |
+| ~~B15~~ | ~~`StatCard` and `SegmentedBar` Code Connect fail to parse~~ | **Closed.** Both mapped a Figma property the node does not have — `figma.boolean("Show link")` on a component with no properties, and `figma.enum("Type")` where the axis is `Colors` — and fed each into a ternary. Code Connect serializes a value map but not a conditional, so both files published nothing. `ToggleButton` still fails the same way and is open | — |
+| B16 | `ToggleButton` Code Connect fails to parse, and every `dbui` connect file warns `Import could not be resolved` for the `../components/ui/*` alias | One component publishes nothing; the alias warning is 500 lines of noise that hid B15 for weeks | file — same conditional-in-`example` shape as B15; the alias needs checking against `figma.config.json` `paths` |
+
+### Charts, 2026-08-16
+
+Six large charts now exist alongside the medium tier: `Viz/Large/Bar`, `Stacked Bar`, `Line`,
+`Multiline`, `Treemap`, `Heatmap`, all **1160 × 208** — a 1112 × 168 band plus axes, taken from the
+usage-page mocks rather than invented. `Heatmap` is the one new React component; the other five
+needed no code, because width is measured and height is a prop.
+
+Two things worth not relearning:
+
+- **`density-scalar` does not reach `dbui-viz`.** There are no references to it in the package, so a
+  large chart is a bigger `height`, never a scaled component. Only `--db-type-scalar` crosses over,
+  and only for chart label sizes.
+- **The medium tier is now explicit per chart type.** `Viz/Medium/Bar` was a `Type=Bar|Stacked` set
+  and is two components; `Viz/Card/*` is one card per chart rather than `TimeSeries`/`Distribution`.
+  A variant one level down is invisible in the component browser, so designers detached and rebuilt
+  the tile instead of swapping it.
+
+`Heatmap` cost three bugs that a screenshot would only have shown as a blank chart, which is why
+`yarn design:verify-heatmap` exists: a temporal x scale has no `bandwidth` so cells had no width; the
+Vega expression language has no `undefined` literal and read the word as a signal name; and
+Vega-Lite filters null rows before the mark, so no-data cells vanished rather than rendering grey.
+The script compiles the real spec, reads token values out of `tokens.css` so it cannot drift from the
+palette, and asserts 180 cells, 28px rows, zero off-palette fills and a visible gap between the
+empty cell and the lowest step, in both modes.
+
+### Figma ↔ React parity, 2026-08-16
+
+`yarn design:audit-viz` walks all 24 viz components in Figma against the nine steps in
+`CONTRIBUTING.md` and exits non-zero on a gap. It found four real ones, now closed:
+
+- **`MetricCard` had no `delta`.** Every `Viz/Card/*` header is `Viz/Inner/Metric` with
+  `Show change=true`, rendering "+2.6% past 30d" — a thing the Figma card drew and React could not.
+  It now takes `delta` / `deltaWindow` / `deltaTone`, matching `StatCard`, and the tone scale moved
+  to `lib/delta-tone.ts` so the two cards cannot drift. It is not in the barrel on purpose: it is how
+  the cards agree with each other, not a surface to compose against.
+- **`Leaderboard` and `Legend` had no tsup entry.** They are the two charts with no Vega in them, and
+  the barrel says out loud that a page needing only these should pull no chart runtime — which is
+  precisely what the missing per-component path broke.
+- **`metric-card.tsx` `@figma` pointed at `4995-9316`**, a node deleted in the card restructure. Dead
+  since then, and invisible because nothing checks a JSDoc URL resolves.
+- **Nine of ten viz components had no `variant-mappings.json` entry**, so the portal's Figma↔code
+  table was blank for the whole family.
+
+`yarn design:verify-cards` server-renders both cards and asserts the delta, its tone, and that the
+two agree on the tone class — the check that would catch the shared scale being forked again.
+
+### One palette rule, 2026-08-16
+
+The same chart was three different colours depending on where you looked: Figma drew a bar in
+`level/info/base` (`#A3E3F7`, pale enough to be weak as a mark), React defaulted it to
+`categorical-1`, and the line was `sequential/5` in Figma against `theme.foreground` ink in React.
+`DESIGN.md` now carries the rule — one series is `sequential-5`, peers are `categorical-1` upward,
+a state is `level-*`, a track or tail is `viz-neutral-*` — and `design:audit-viz` fails when a React
+default and its Figma binding disagree, including if the ink fallback comes back.
+
+Both mediums now draw one shared 30-value series over one axis (Jan 7 → Feb 4, the range the usage
+mocks use), so a story and its mock are checkable side by side rather than merely similar. The story
+sections name the Figma layer they mirror.
+
+Two bugs fell out of looking:
+
+- **An ordinal x axis sorted alphabetically** in both `LineSeries` and `BarChart`, so "Jul 16" came
+  before "Jul 2" and a chronological run rendered scrambled. Neither passed `sort`, and it was
+  visible in a published story. Same bug as the Heatmap's, fixed the same way.
+- **`level-info-base` was doing duty as a data accent.** It is a severity step, so a plain volume bar
+  was claiming a risk rating — and at `#A3E3F7` it sits near 1.4:1 on white.
+
+One residual: `DonutChart` with no per-slice palette falls back to `VIZ_SERIES_ORDER`, but the Figma
+Donut only offers `Type=Sequential` and `Type=Status`. A categorical donut renders in code and has no
+mock. Either add the variant or default the donut to the sequential ramp — not decided.
+
+### Chat is built and was unreachable, 2026-08-17
+
+The chat set reads as unpolished and the components are not the reason. There are 10 public
+components, all with `@standard`, `@guideline` and `@constraint`, and Shell F `ChatWorkbench` already
+implements the four-region layout. What was missing was every path to them:
+
+- **The CLI never scanned `dbui-chat`.** `PATHS` had `ui`, `viz` and `icons`, so `dbui search message`
+  returned `Alert` and two icons. This is the same hole that hid `Treemap`, and it was harder to see
+  here because the whole category was absent rather than one component inside a category.
+- **`component-index.md` had no `chat` section**, so nothing was categorized even once the CLI could
+  read it. Added, with `Conversation` and `Response` marked `*code-only*` — a scroll container and a
+  markdown renderer have nothing static to draw.
+- **Not one chat component carried `@figma`.** Seven now do; the three that do not are the two
+  code-only ones and the internal `Disclosure`.
+- `variant-mappings.json` covered 4 of 10. Now 10 of 10.
+
+Indexing a sibling package surfaced a second thing: **`components()` was about to publish
+`Disclosure`**, which powers four components and is deliberately unexported. The CLI now treats
+"public" as "re-exported from the package barrel", which is the honest definition and stops the
+catalogue from listing something nobody can import.
+
+`MessageActions` graduated from recipe to component. The Thread story had it as a local helper with
+the comment *"This is a recipe, not a component"*, and that call was right on the arrangement and
+wrong on the state: the thumbs are **one value, not two toggles**, and copy has a confirmed state.
+Both are behaviour every call site would otherwise reimplement, which is the barrel's own test for
+earning a place. Figma has drawn it as `.Actions` all along.
+
+### Boards consolidated, and Details resolved, 2026-08-17
+
+Every section on both component pages now holds either public components or nested parts, never both.
+`.Inner Chat`, `.Inner Viz` and `.Inner Chrome` joined the existing `.Inner Content`, `.Inner Controls`
+and `.Inner Overlays`, and the strays went where they belong: `.SliderField` into `.Inner Controls`,
+and `Cursor` and `Track` renamed to `.Cursor` and `.Track` — both sat in inner sections without the
+prefix that marks them, so every name-based tool read them as public.
+
+**`Details` versus `Asset card` had a clear answer and it was not the obvious one.** `Asset card` was
+the composed component — it instanced `Header`, `Asset details` and `Footer`, and its `.Row` had 21
+instances across the file. `Details` was a *flattened copy*: raw frames, hardcoded text, no `.Row`
+instances, zero usage. `Asset card`'s structure also maps one-to-one onto React — `DetailsHeader`
+with icon, name, badge, path and actions, then rows, then a footer.
+
+So the composed one survives as `Details`, its parts renamed to the React exports (`.DetailsHeader`,
+`.DetailsRows`, `.DetailsRow`, `.DetailsFooter`), and the flat copy is deleted. Worth recording that
+**React's `@figma` tag and its Code Connect both pointed at the flat copy** — the design side had two
+candidates and the code picked the wrong one, silently, because nothing checks that a node is the
+composed one rather than a snapshot of it.
+
+`Recipes` now exists as a section, and the assembled Page Header lives there as
+`Recipe/Page header with breadcrumb and tabs`. That closes B19: there is no longer a duplicate
+`Page Header`, and the audit skips `Recipe/` because an arrangement has no single component to point
+at — which is the definition rather than an exception.
+
+Two Figma components still have no Code Connect, and both only became visible once the boards were
+tidied: `AssistantPanel`, which is a real `dbui-shells` component, and `Preview Popup`, which is the
+asset-shaped composition over `HoverCard`.
+
+`MessageThumbnail` closed the last Figma-only piece — `.Thumbnail` was drawn, referenced by
+`Message`'s `Content=Media` variant, and had nothing to render it. All 11 chat components now resolve
+in both directions.
+
+The `Conversation` demonstration frame is now `Recipe/Chat thread` in a `Recipes` section on the
+Components page. Every element in it was already a live instance — no detached copies, no orphaned
+mains — so the only thing wrong was where it lived: a demonstration of how components fit together
+has no single component to place, which is what makes it a recipe rather than a component.
+
+Two suspicions checked and dismissed, which is worth recording so they are not re-investigated:
+
+- **`Details` is not flat.** It carries `surface/subtle`, a 1px `border/base` and an 8px radius, and
+  its expanded row carries `surface/base` with the same border and radius. React's is
+  `shape-container border border-border-base bg-surface-subtle`, and `--db-shape-container` resolves
+  to 8px — so the two match exactly. `Card` is 16px because it sits on a page; `Details` is 8px
+  because it sits inside a message, and reading quieter than a page card is the intent.
+- **The chart does not overflow its panel.** An instance reported its `Line series` group 132px wider
+  than the plot, but the source component's is 2px wider — the stroke. The instance figure is a stale
+  group bound inside a resized instance, not geometry.
+
+**The expanded Task's rail now matches React**, and this one was Figma catching up rather than both
+moving. React draws the disclosed content as a 16px column holding a centred 2px `border-base` line,
+then an 8px gap, then the rows — which puts the item icon at x=24 and its label at x=48, exactly under
+the trigger's status icon and label. Figma had a 2px left border on the content frame and a 12px
+padding instead, so the line sat flush at x=0 and the whole item column ran 12px left of the header it
+belongs to. Nothing about that reads as wrong in isolation; it only shows up when you measure the two
+columns against each other, which is why it survived several passes.
+
+One trap worth recording: setting `layoutMode` on an existing Figma frame resets it to hug, so the
+content shrank from 360 to 124 and wrapped every label. Sizing has to be re-asserted after the
+layout mode changes, not before.
+
+**Task rows are 20px on both sides.** They were 16 in Figma and 16 in React, which matched — but
+16 is exactly the height of the 16px glyph inside them, so with rows 4px apart consecutive icons sat
+4px from each other and read as touching. The fix is `min-h-5` on `TaskItem` and a fixed 20px row in
+all six Figma variants, with contents centred so the label baseline does not move. Worth noting the
+two sides *agreed* before this change: raising Figma alone would have introduced the drift the
+`design:audit-figma` check exists to catch, which is why both moved together.
+
+### The portal was the step being skipped, 2026-08-17
+
+Everything else had a check. The portal did not, and it is the only running UI surface — so it is
+simultaneously the only place a change can be *looked at* and the easiest place to forget. Nine
+components shipped fully wired through the CLI, the index, Code Connect and Figma while being either
+invisible or actively misdescribed on `/components`.
+
+What was actually broken, none of which any existing check could see:
+
+- **Twenty of 79 gallery rows had no demo tile**, so they rendered "No default state — fires from
+  code. Open it in Storybook." That sentence is a claim about `Toast`, whose `toast()` is imperative;
+  said of `Message` or `Task` it is simply false. All sixteen chat rows plus `Code Block`, `Terminal`,
+  `Schema Browser` and `Dropzone` said it.
+- **`AI Gradient Icon`'s tile existed and never rendered.** It was keyed `AiGradientIcon` while the
+  row is named `AI Gradient Icon`, and the lookup is `demos[item.name]`. A tile keyed in any other
+  shape fails silently — no type error, no lint error, no broken link.
+- **The page had two Chat groups and two Chat tabs.** `ChatGallery.tsx` existed because
+  `component-index.md` was once scoped to `packages/dbui`; when the CLI and index gained `dbui-chat`,
+  the generated group arrived alongside the hand-written one. The hand-written file is deleted, the
+  `after` splice with it, and `chat` is now named in the generator's `ORDER` so it keeps the position
+  the splice was there to give it — after Content, not last.
+- **`Aspect Ratio`, `Label` and `Date Range` had a row and no story**, so three names rendered as
+  plain text with a "No story yet" badge. All three now have one.
+
+`design:audit-portal` is the fix that outlasts this note. It checks four things offline — a row per
+component, a story link per row, a tile per row, and no tile keyed to a row that does not exist — and
+its exemption list has exactly one entry. `design:verify-story-ids` remains the fifth axis and needs a
+running Storybook, so it stays separate.
+
+**`DataTree` renders invalid HTML, and the portal is how that surfaced.** A tree row is a `<button>`,
+and it renders the Focus and Overflow actions as `<button>`s *inside* it — unconditionally, whenever
+the node is `selectable`. A button may not contain interactive content, so React reports a hydration
+mismatch and the `/components` dev overlay carries it. Not introduced here: the row-as-button
+structure predates this work, and the `Schema Browser` tile only made it visible on a page that gets
+looked at. Left unfixed deliberately — the fix changes the DOM of the most-used content component in
+the system, and belongs in its own change with the keyboard behaviour re-verified.
+
+### The nine components from the AI Elements comparison, 2026-08-17
+
+Built in React and wired through the discovery layer. Two decisions inside this worth not relitigating:
+
+- **`Tool` did not become a component.** AI Elements has one, but our `Task` already declares "one per
+  tool call", so a second component modelling the same call would mean two answers to "which do I
+  reach for". The only thing it added was rendering the call's input and result, so those are
+  `TaskInput` and `TaskOutput` — parts of `Task`.
+- **`SchemaBrowser` is built on `Tree`.** A second tree would drift from the catalog tree a reader
+  used ten seconds earlier, and `columnTypeIcons` already existed for exactly this. Columns are
+  leaves, so they take no chevron and no focus action.
+
+`CodeBlock` also replaced the hand-rolled `<pre>` inside `Response`, so a fenced block in an answer
+and a standalone code surface are now the same component by construction — and fences gained a copy
+control they never had.
+
+Two constraints are deliberate losses, recorded so they are not read as gaps: **`CodeBlock` does no
+syntax highlighting**, because every highlighter is a dependency the Databricks environment cannot
+install and a block that colours in one product and not another is worse than one that never does;
+and **`Terminal` strips ANSI codes** rather than rendering them, because eight fixed colours cannot
+answer to a mode switch on a surface where contrast is the whole job.
+
+The Figma side is now **done**. Eight components landed — `Confirmation` `5080:7831`, `Suggestions`
+`5080:7848`, `Checkpoint` `5080:7857`, `Queue` `5080:7889` and `Artifact` `5080:7902` in
+`Chat Components`; `Code Block` `5087:7835`, `Terminal` `5087:7848` and `Schema Browser` `5087:7890`
+in `Content`. Every `@figma` tag is repointed off the `0-0` placeholder, every index row names its real
+layer, and all eight have Code Connect and a `variant-mappings` entry. `Tool` never needed one, being
+`TaskInput` / `TaskOutput`.
+
+Three Figma Plugin API traps cost most of that pass, all with the same shape — a default that looks
+like a layout bug:
+
+- **`createFrame()` is 100×100 and stays there.** It does not hug unless told to, so every wrapper
+  sat at exactly 100px tall no matter what it held. Set `layoutSizingVertical` on each frame you
+  create, not just the component root.
+- **`textAutoResize = 'HEIGHT'` fixes the width.** Reaching for it to make a component hug did the
+  opposite: every label kept its old width and clipped, which is how `Add form validation` became
+  `Add form va`. Labels want `WIDTH_AND_HEIGHT`; only text meant to wrap wants `HEIGHT`, and it needs
+  `layoutSizingHorizontal = 'FILL'` alongside.
+- **A frame stacked in a vertical parent does not fill it.** Left alone the rows keep the 100px
+  default and clip, so set `FILL` on frames whose parent is `VERTICAL`.
+- **Icon components live on the Icons page, not the Components page.** A `findOne` scoped to the
+  current page silently returns nothing and the component publishes with no glyphs.
+
+`design:audit-figma` now reports **no gaps** across all 90 components. Getting there turned up three
+real problems the audit had been blind to rather than passing on:
+
+- **The dump only covered the Components page.** Compositions moved to their own page, so `DataTree`,
+  `FileTree`, `Navbar`, `ControlsBar`, `DateRange`, `Dropzone`, `PageHeader` and `PlatformHeader` all
+  read as dead nodes and name mismatches — 14 of the 15 findings were this one omission. The dump now
+  covers both pages and records which in a `pages` key.
+- **`AssistantPanel` and `PreviewPopup` had a Figma master and a React implementation and nothing
+  joining them.** Both are connected now, in `figma/Shells.figma.tsx`, and `figma.config.json` includes
+  `dbui-shells` so the imports resolve.
+- **The `Viz/Medium/Bar` split was left half-finished.** The set had been renamed to bare `Viz` — Figma
+  auto-names a set from its variants' common prefix — while still carrying a `Type=Bar|Stacked Bar`
+  axis. It is now two standalone components, `Viz/Medium/Bar` `5089:7826` and `Viz/Medium/Stacked Bar`
+  `5089:7869`, with the one dependent instance repointed and the tag, audit and Code Connect ids
+  updated. Repoint instances *before* deleting a set: `getMainComponentAsync` resolves to nothing once
+  the variant is gone.
+
+`dbui doctor` is clean too, which it was not before: `Platform Header` had no `@guideline`. Note there
+are **two** PlatformHeaders — the slotted primitive in `dbui` that the CLI reads, and the filled-in
+composition in `dbui-shells`. Both now carry guidelines, but a tag added to the shells one does not
+clear the doctor warning.
+
+One thing this did **not** do: publishing Code Connect needs a `FIGMA_ACCESS_TOKEN` that is not set
+locally, so `figma connect parse` is the gate here and `publish` remains a manual step. The
+"Import for X could not be resolved" warnings it prints are pre-existing and hit every file,
+`Accordion` included.
+
+Still open for the thread experience, in the order they matter:
+
+| # | What | Why it matters |
+| --- | --- | --- |
+| M15 | A reader can now answer the agent — `Confirmation` takes a question, `Suggestions` offers next steps — but nothing returns a **selection** from a set of results. `Details` rows carry a `Selected` state with no multi-select or submit around it | Genie replying with twelve tables and asking "which ones" is the common case, and it is the one shape still missing |
+| M16 | No `Notebook` widget for an inline notebook reply, and no compute-shaped `Details` | Two of the four reply types the product needs have no component |
+| M17 | Logs have icons and story mocks only. `Terminal` and `SchemaBrowser` now exist, but `ChatWorkbench`'s preview tabs still fake their content with `Response` code fences | The components landed; the shell has not been rewired to use them |
+| M18 | Shell F's rail is threads-only. `Navbar` already ships `NavbarSection` groups, but nothing combines nav items and threads in one rail | The described left nav cannot be built from the shell as it stands |
+| B22 | `DataTree` nests `<button>` inside `<button>` — the row is a button and its Focus / Overflow actions are buttons within it. Invalid HTML, and React reports a hydration mismatch on any page holding a tree | It is the most-used content component, so the fix needs its own change with keyboard nav re-verified. Repro: `/components`, dev overlay |
+
+### Library-wide Figma parity, 2026-08-17
+
+`yarn design:audit-figma` checks the whole library, not just viz, and answers three questions that
+fail independently: does a counterpart exist, can you navigate to it **in both directions**, and do
+the variants agree. It reads `scripts/design-lint/.figma-component-dump.json` rather than Figma, so
+it runs offline and in CI; `--how` says how to refresh the dump.
+
+It found 53 things. Twenty-one were the audit misreading the index's own conventions — `*code-only*`
+is a deliberate marker for the 11 components with no Figma counterpart, a parenthetical after a layer
+name is a qualifier, and the "Removed" section's two-column table is not a category. Those are fixed
+in the checker. Of the rest, closed straight away:
+
+- **`DonutChart`'s `@figma` pointed at `4970-9243`, a node that does not exist.** The second dead
+  JSDoc URL found this week, after `MetricCard`'s. Nothing had ever checked that an `@figma` tag
+  resolves, which is exactly why both survived — a dead link looks identical to a live one in review.
+- **Five Figma layer names in `component-index.md` did not match Figma**, so the React → Figma lookup
+  failed on all five: `Radio Tile` vs `Radio tile`, `Tree` vs `Data Tree`, `PlatformNav` vs
+  `Platform Nav`, `Progress` vs `Progress Bar`, `Alert Dialog` vs `AlertDialog`. Four are a space or
+  a capital, which is the failure mode a human reviewer skims straight past.
+- **`Field` had no `@figma` tag** despite the index naming `Form Input` for it.
+- **`MetricCard`'s layer cell used a shorthand** — `Viz/Card/Bar · Line · Leaderboard` — that reads
+  fine and resolves to nothing. Spelled out.
+
+Open, in `TRACKER` terms:
+
+| # | What | What it costs |
+| --- | --- | --- |
+| ~~B17~~ | ~~`HoverCard` exists in React with no Figma component~~ | **Closed.** Built as a `Hover Card` set in Overlays, cloned from `Popover` so every token binding came with it, with the four `Arrow` variants that map to React's `side`. Tagged and connected both ways. `Preview Popup` turned out to be the *asset-shaped composition* built on top of it, not the primitive — which is why the gap read as filled |
+| ~~B18~~ | ~~15 Figma components no Code Connect claims~~ | **Mostly closed.** Added Code Connect for the 7 chat components, `Data Tree`, `File Tree`, `Date Range` and `Controls Bar`, and put `dbui-chat` in `figma.config.json` — the whole package was invisible from Figma because its path alias was never registered. Four remain and all four are B19 or below |
+| B19 | Two Figma components share a name, and in both cases the second is a **composition example published as a component**: `Page Header` (Compositions, 1000×116, breadcrumb + title + tabs nested) alongside the real one (Header, 1200×48, one row); `Slider` (200×40, label + value + a nested `Slider`) alongside the primitive. React's own JSDoc says a page header is a *single row* with tabs as a **sibling, not nested**, so the Compositions one models a structure the code forbids | A by-name lookup cannot resolve either, and one of each pair documents the wrong contract |
+| B21 | `Dropzone` exists in Figma with no React component and no index row — invisible to the React → Figma check because that only walks indexed components | A component designers can specify and nobody can build |
+| ~~B20~~ | ~~Seven components with Figma variants have no `variant-mappings.json` entry~~ | **Closed.** Filled all seven plus `Hover Card`'s `Arrow`. Two entries that existed were also wrong: `segment-control` listed a `Slider` option Figma had renamed to `Default`, and `avatar` filed its `Type` options under a `Size` key. Both are the drift this check exists to catch |
+
+Note the audit deliberately does **not** compare variant names for equality. Button's own JSDoc
+records `Primary → default`, and demanding equality would flag every intentional rename while missing
+the thing that actually breaks: an axis or option that exists in Figma and is written down nowhere.
+`variant-mappings.json` is the artifact whose job is that translation, so coverage of it is the test.
+
+### Viz stories are one group, 2026-08-16
+
+All seven charts are stories under `Components/Viz/Charts`. Heatmap and Leaderboard had their own
+titles, which filed them a level above the charts they belong with, and `Legend` had one despite
+being `Viz/Inner/Legend` — only ever placed beside something. Legend now appears inside the Donut and
+Treemap stories where the pairing is, and `component-index.md` marks it an inner part rather than a
+peer of the six. It keeps its row so it stays searchable and `dbui doctor` stays at zero uncategorized.
+
+Two things this fixed on the way:
+
+- **The gallery could not link any chart that shared a story file.** It indexed stories only by the
+  leaf of the title, so `Components/Viz/Charts` answered to "Charts" and nothing else — Bar Chart,
+  Line Series, Donut Chart, Segmented Bar and Treemap were all reported as having no story while
+  their story sat right there. It now also indexes each export, under both its identifier and its
+  sidebar `name`. Linked went from 51 to 56 of 59; the three left are Aspect Ratio, Label and
+  Date Range, which genuinely have no story.
+- **The five original charts had no source or mapping panel.** Only Leaderboard and Legend did. Every
+  chart story now ends with `ComponentMeta` and `ProductionMap`, which is also what stopped folding
+  the other two in from being a downgrade.
+
+An export whose name matches the component it imports collides, so `Leaderboard` and `Heatmap` are
+`LeaderboardRows` and `HeatmapGrid` carrying a `name` — the convention `TreemapTiles` already used.
+The story id follows the identifier, not the name, which is why the gallery indexes both.
+
+**Headless Chrome cannot screenshot the Storybook dev server on this machine.** Every variant of
+`--screenshot`, `--dump-dom`, `--virtual-time-budget` and `--headless=old|new` either hangs or writes
+zero bytes against `localhost:6006`, though it renders a local `file://` fine. Both verify scripts
+exist because of it. Do not spend another hour on the browser — render the thing directly instead.
 
 ## Phase 4 — Prove it agrees with itself
 

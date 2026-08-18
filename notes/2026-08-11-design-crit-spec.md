@@ -328,8 +328,9 @@ code cannot be at 95%.
 | Bucket | What it holds | Source |
 |---|---|---|
 | **Questions** | What you will be asked, ranked by consequence, not frequency | The transcript bank |
+| **Live debates** | Arguments the forum has not settled, that your design touches | The debates register |
 | **Prior art** | Where this overlaps something already shipped — inside Databricks first, outside second | Surface inventory |
-| **What's working** | What to preserve through the next iteration | Heuristics met, notably |
+| **What's working** | What to preserve through the next iteration | Guidelines met, notably |
 | **Ideas** | Explicitly last, explicitly marked as ideation | — |
 
 Four notes on that table, each of which was a decision.
@@ -347,6 +348,20 @@ earns a place because telling someone what not to break in the next iteration is
 **Ideas sit apart from the critique.** *Discussing Design* separates critique from ideation for a
 reason: mixed together, the questions read as leading and the reader defends rather than thinks.
 Keep them last and labelled, or gate them behind an explicit ask.
+
+**Live debates is the bucket this design was missing**, and it came from reading a review skill a
+colleague assembled from a different forum. Four entries in theirs: whether two scope switchers can
+coexist, whether workspace selection should be additive, whether a soft tab should reimplement a page
+or host it, whether a security control undercuts the AI story.
+
+None of those is a guideline, because there is no right answer yet. None is a question from history,
+because none is settled. They are **unresolved institutional arguments**, and a designer whose work
+touches one will be asked about it with certainty — which makes them the highest-value thing review
+prep can surface and the easiest to be blindsided by.
+
+They are also the fastest-decaying content in the system. A debate resolves and the entry becomes
+actively wrong, where a stale guideline merely becomes dull. Every entry carries the date it was last
+seen open, and an unrefreshed register is worse than none.
 
 **No bucket carries a verdict.** Review prep is the tier where nobody is right.
 

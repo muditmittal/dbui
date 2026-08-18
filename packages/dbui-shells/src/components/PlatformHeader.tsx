@@ -16,12 +16,14 @@ import { SearchPopup } from "./SearchPopup"
  *
  * Layout: [Left fixed] — 16px — [Search flexible] — 16px — [Switcher shrinkable | Buttons fixed]
  *
- * Shrink order:
- *   1. Search placeholder truncates
- *   2. Workspace switcher name truncates (down to min 56px)
- *   3. Search bar shrinks (down to min 80px)
- *   4. Left side and action buttons NEVER shrink
- *
+ * @guideline Never place this yourself. A shell renders it, so a page that adds
+ * its own gets two top bars.
+ * @guideline The bar gives up width in a fixed order, and the order is the point:
+ * the search placeholder truncates first, then the workspace name (to 56px), then
+ * the search field itself (to 80px). Text a reader can infer goes before a target
+ * they have to hit.
+ * @constraint The left cluster and the action buttons never shrink. They are the
+ * only way out of a page, so a narrow window may not take them away.
  * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=3225-4233
  */
 export function PlatformHeader({

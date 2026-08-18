@@ -105,3 +105,18 @@ Run this checklist before considering the screen complete:
 - [ ] No banned words: "utilize", "leverage", "seamless", "robust", "simply", "just"
 - [ ] Buttons use action verbs ("Delete", "Save"), not generic ("OK", "Yes")
 - [ ] Error messages state cause + next step, not "Something went wrong"
+
+## After the build
+
+The checklist above is hygiene. For judgment, hand off to **`dbui-review`** — it dispatches
+five checks in parallel (standards, guidelines, voice, principles, ecosystem fit) and
+synthesizes one critique.
+
+**Most of what you just built is compliant by construction**, so the review's value is in
+the bespoke parts: anything improvised because no component fit, any `className` doing a
+prop's job, any string you wrote rather than took from a spec. Point the review at those
+specifically.
+
+Offer it rather than assuming it: *"Want me to run the full review before you share
+this?"* — and if the user only wants one thing checked, send them to that single check
+instead of the orchestrator.

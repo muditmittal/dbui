@@ -15,6 +15,7 @@ import { useVizTheme, VEGA_EMBED_OPTIONS, vizVegaConfig } from "../lib/theme"
  * @guideline Give it at least 240px of height — treemaps become unreadable when short
  * @constraint Leaf tiles hide themselves automatically below 4px, and when their parent group is under 20px
  * @constraint Always pass a meaningful `label` so the chart is announced to screen readers
+ * @figma https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=5020-16745
  *
  * Ported from governance-hub-prototype `src/components/widgets/TreemapChart.tsx`
  * (Vega `stratify` + `treemap` transforms). Every tile takes a step of the

@@ -242,9 +242,27 @@ export function components() {
   const rowsByHandle = new Map(Object.entries(rows).map(([k, v]) => [handle(k), v]));
   const recipes = compositions();
   const out = {};
-  for (const file of listFiles(PATHS.ui)) {
+  // `dbui` first, so a slug that exists in both packages resolves to the one a
+  // consumer gets from the barrel.
+  const sources = [
+    { dir: PATHS.ui, importBase: "dbui/components/ui" },
+    { dir: PATHS.viz, importBase: "dbui-viz/components" },
+    { dir: PATHS.chat, importBase: "dbui-chat/components" },
+  ];
+  for (const { dir, importBase } of sources) {
+    // Public means exported from the package barrel. A file in the components
+    // directory that the barrel does not re-export is an internal — `dbui-chat`'s
+    // `Disclosure` powers four components and is deliberately not shipped — and
+    // indexing it puts a component nobody can import into the catalogue, then
+    // reports it as undocumented forever.
+    const barrel = read(path.join(dir, "..", "index.ts")) ?? "";
+    const publicFile = (slug) => !barrel || barrel.includes(`/${slug}"`);
+
+  for (const file of listFiles(dir)) {
     const slug = file.replace(/\.tsx$/, "");
-    const src = read(path.join(PATHS.ui, file)) ?? "";
+    if (out[slug]) continue;
+    if (!publicFile(slug)) continue;
+    const src = read(path.join(dir, file)) ?? "";
     const doc = parseJsdoc(src);
     const exports = parseExports(src);
     // Several components keep their CVA in lib/*-variants.ts so it can be
@@ -277,9 +295,10 @@ export function components() {
       figmaLayer: meta.figmaLayer ?? null,
       variants: { ...parseVariants(variantSrc), ...parseVariants(src) },
       compositions: recipes[slug] ?? [],
-      importPath: `dbui/components/ui/${slug}`,
-      sourcePath: path.relative(PATHS.root, path.join(PATHS.ui, file)),
+      importPath: `${importBase}/${slug}`,
+      sourcePath: path.relative(PATHS.root, path.join(dir, file)),
     };
+  }
   }
   _components = out;
   return out;
@@ -461,6 +480,9 @@ export function tokens(group) {
 /* ---------------------------------------------------------------- docs --- */
 
 const DOC_TOPICS = {
+  // First, because it answers "what kind of thing am I adding" — the question that
+  // decides which of the other topics applies.
+  structure: () => ({ file: path.join(PATHS.docs, "structure.md"), title: "The five tiers: token, icon, component, composition, shell" }),
   design: () => ({ file: PATHS.design, title: "Design language" }),
   composition: () => ({ file: PATHS.composition, title: "Page shells and composition" }),
   brandvoice: () => ({ file: path.join(PATHS.docs, "brandvoice.md"), title: "Voice and tone" }),

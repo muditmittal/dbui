@@ -81,6 +81,47 @@ export const rampUtilities: string[] = [
 
 export const cssUtilities: CssUtility[] = [
   {
+    "name": "ai-gradient-icon",
+    "source": "tokens/effects.css",
+    "declarations": [
+      "display: inline-flex;",
+      "align-items: center;",
+      "justify-content: center;",
+      "/* Targets the painted elements, not the <svg>. `fill` inherits, but a child",
+      "* that declares its own `fill=\"currentColor\"` presentation attribute beats",
+      "* what it would inherit — so a rule on the <svg> alone leaves the glyph flat.",
+      "* Matching on the attribute also means only the parts that were following",
+      "* currentColor get repainted: a hardcoded `fill=\"none\"` stays none, and a",
+      "* stroked icon takes the gradient on its stroke instead. */",
+      "& svg:not([data-ai-gradient-defs]) [fill=\"currentColor\"] {",
+      "fill: var(--db-ai-icon-fill);",
+      "}",
+      "& svg:not([data-ai-gradient-defs]) [stroke=\"currentColor\"] {",
+      "stroke: var(--db-ai-icon-fill);",
+      "}"
+    ]
+  },
+  {
+    "name": "spotlight-border",
+    "source": "tokens/effects.css",
+    "declarations": [
+      "--db-spotlight-halo: var(--db-border-base);",
+      "--db-spotlight-x: 50%;",
+      "--db-spotlight-y: 50%;",
+      "border: var(--db-border-1) solid transparent;",
+      "background-image:",
+      "linear-gradient(var(--db-surface-base), var(--db-surface-base)),",
+      "radial-gradient(",
+      "var(--db-spotlight-radius, 10rem) circle at var(--db-spotlight-x) var(--db-spotlight-y),",
+      "var(--db-spotlight-halo),",
+      "var(--db-border-base) 60%",
+      ");",
+      "background-origin: border-box;",
+      "background-clip: padding-box, border-box;",
+      "transition: --db-spotlight-halo var(--db-duration-fast) var(--db-ease-standard);"
+    ]
+  },
+  {
     "name": "no-scrollbar",
     "source": "tokens/globals.css",
     "declarations": [
@@ -243,6 +284,45 @@ export const cssUtilities: CssUtility[] = [
     "declarations": [
       "border-top-left-radius: var(--db-shape-container);",
       "border-bottom-left-radius: var(--db-shape-container);"
+    ]
+  },
+  {
+    "name": "shape-container-md",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-radius: var(--db-shape-container-md);"
+    ]
+  },
+  {
+    "name": "shape-t-container-md",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-container-md);",
+      "border-top-right-radius: var(--db-shape-container-md);"
+    ]
+  },
+  {
+    "name": "shape-r-container-md",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-right-radius: var(--db-shape-container-md);",
+      "border-bottom-right-radius: var(--db-shape-container-md);"
+    ]
+  },
+  {
+    "name": "shape-b-container-md",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-bottom-right-radius: var(--db-shape-container-md);",
+      "border-bottom-left-radius: var(--db-shape-container-md);"
+    ]
+  },
+  {
+    "name": "shape-l-container-md",
+    "source": "tokens/tokens.css",
+    "declarations": [
+      "border-top-left-radius: var(--db-shape-container-md);",
+      "border-bottom-left-radius: var(--db-shape-container-md);"
     ]
   },
   {
