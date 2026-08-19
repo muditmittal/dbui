@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { InputGroup, InputGroupInput, InputGroupAddon } from "../components/ui/input-group"
-import { Button } from "../components/ui/button"
+import { InputGroup, InputGroupInput, InputGroupAddon } from "dbui/components/ui/input-group"
+import { Button } from "dbui/components/ui/button"
 
 figma.connect(InputGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3178-3973", {
   props: {

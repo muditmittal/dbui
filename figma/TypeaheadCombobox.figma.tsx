@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Combobox, ComboboxChips, ComboboxChip, ComboboxChipsInput, ComboboxContent, ComboboxList, ComboboxItem } from "../components/ui/combobox"
+import { Combobox, ComboboxChips, ComboboxChip, ComboboxChipsInput, ComboboxContent, ComboboxList, ComboboxItem } from "dbui/components/ui/combobox"
 
 // TypeaheadCombobox — multi-select with chips, 6 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=842-889

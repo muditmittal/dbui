@@ -4,17 +4,25 @@
       "figma/*.figma.tsx",
       "packages/dbui/src/components/ui/*.tsx",
       "packages/dbui/src/components/icons/*.tsx",
+      "packages/dbui/src/lib/*.ts",
       "packages/dbui-viz/src/components/*.tsx",
+      "packages/dbui-viz/src/lib/*.tsx",
+      "packages/dbui-viz/src/lib/*.ts",
       "packages/dbui-chat/src/components/*.tsx",
       "packages/dbui-shells/src/components/*.tsx",
-      "packages/dbui-shells/src/compositions/*.tsx"
+      "packages/dbui-shells/src/compositions/*.tsx",
+      "packages/dbui-shells/src/shells/*.tsx"
     ],
     "paths": {
-      "../components/ui/*": ["packages/dbui/src/components/ui/*"],
-      "../components/icons/*": ["packages/dbui/src/components/icons/*"],
-      "../packages/dbui-shells/src/*": ["packages/dbui-shells/src/*"],
-      "../packages/dbui-viz/src/*": ["packages/dbui-viz/src/*"],
-      "../packages/dbui-chat/src/*": ["packages/dbui-chat/src/*"]
+      "dbui/components/ui/*": ["packages/dbui/src/components/ui/*"],
+      "dbui/components/icons/*": ["packages/dbui/src/components/icons/*"],
+      "dbui/lib/*": ["packages/dbui/src/lib/*"],
+      "dbui-viz/components/*": ["packages/dbui-viz/src/components/*"],
+      "dbui-viz/lib/*": ["packages/dbui-viz/src/lib/*"],
+      "dbui-chat/components/*": ["packages/dbui-chat/src/components/*"],
+      "dbui-shells/components/*": ["packages/dbui-shells/src/components/*"],
+      "dbui-shells/compositions/*": ["packages/dbui-shells/src/compositions/*"],
+      "dbui-shells/shells/*": ["packages/dbui-shells/src/shells/*"]
     },
     "parser": "react"
   }

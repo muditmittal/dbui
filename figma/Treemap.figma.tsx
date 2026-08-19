@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Treemap } from "../packages/dbui-viz/src/components/treemap"
+import { Treemap } from "dbui-viz/components/treemap"
 
 // `Viz/Medium/Treemap` — 400x168 — and `Viz/Large/Treemap` — 1160x208 — are the same
 // component at two sizes, where `height` is the only difference in code.

@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Input } from "../components/ui/input"
+import { Input } from "dbui/components/ui/input"
 
 // Input — 2 sizes × 8 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=722-658

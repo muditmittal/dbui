@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { Switch } from "../components/ui/switch"
-import { Label } from "../components/ui/label"
+import { Switch } from "dbui/components/ui/switch"
+import { Label } from "dbui/components/ui/label"
 
 figma.connect("https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3165-2582", {
   props: {

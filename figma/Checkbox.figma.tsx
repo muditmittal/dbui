@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Checkbox } from "../components/ui/checkbox"
+import { Checkbox } from "dbui/components/ui/checkbox"
 
 // Checkbox — 3 checked states × 5 interaction states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=713-650

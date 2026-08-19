@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../components/ui/table"
+} from "dbui/components/ui/table"
 
 figma.connect(
   Table,

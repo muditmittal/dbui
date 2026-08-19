@@ -3,7 +3,7 @@ import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
-} from "../components/ui/hover-card"
+} from "dbui/components/ui/hover-card"
 
 // `Hover Card` — the read-only preview popup. It was the library's one real
 // existence gap: React had it, Figma did not, and the index named a `Hover Card`

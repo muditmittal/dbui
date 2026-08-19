@@ -1,17 +1,17 @@
 import figma from "@figma/code-connect"
-import { Leaderboard } from "../packages/dbui-viz/src/components/leaderboard"
+import { Leaderboard } from "dbui-viz/components/leaderboard"
 
-// `Viz/Medium/Leaderboard` — 400x168, the card tile.
+// `Viz/Medium/Leaderboard` — 440x168.
 //
-// Only `Type=Overlay` is mapped. React draws the label on the bar and has no
-// `layout` prop, so `Type=Column` is a Figma-only variant today — see the gaps
-// table in `docs/figma-mapping.md`. Connecting the set as a whole would claim the
-// component renders a layout it cannot.
+// The whole set connects, with no variant restriction. This used to be scoped to
+// `Type=Overlay` against a Figma-only `Type=Column` layout React could not render;
+// the set was restructured and its axis is now `Even` / `Skewed`, which is the
+// spread of `items[].weight` rather than a layout. Both are the same component fed
+// different data, so there is nothing to exclude.
 figma.connect(
   Leaderboard,
   "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=5020-9417",
   {
-    variant: { Type: "Overlay" },
     example: () => (
       <Leaderboard
         columns={{ label: "Principal", value: "Queries" }}

@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { SegmentControl, SegmentControlItem } from "../components/ui/segment-control"
+import { SegmentControl, SegmentControlItem } from "dbui/components/ui/segment-control"
 
 // SegmentControl — 2 variants × 2 sizes
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=481-661

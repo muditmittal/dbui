@@ -3,8 +3,8 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../components/ui/popover"
-import { Button } from "../components/ui/button"
+} from "dbui/components/ui/popover"
+import { Button } from "dbui/components/ui/button"
 
 figma.connect(
   Popover,

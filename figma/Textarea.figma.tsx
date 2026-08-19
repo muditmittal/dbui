@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Textarea } from "../components/ui/textarea"
+import { Textarea } from "dbui/components/ui/textarea"
 
 // Textarea — 6 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=724-658

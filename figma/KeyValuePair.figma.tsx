@@ -5,7 +5,7 @@ import {
   KeyValueItem,
   KeyValueKey,
   KeyValueValue,
-} from "../components/ui/key-value-pair"
+} from "dbui/components/ui/key-value-pair"
 
 // Layout has no Flexible variant on this node because the container's layout only sets width,
 // and flexible is full width like horizontal. The three-way arrangement lives on the row, not

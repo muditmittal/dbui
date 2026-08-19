@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { StatCard } from "../components/ui/stat-card"
+import { StatCard } from "dbui/components/ui/stat-card"
 
 // `Viz/Card/Metric` — the local DBUI component. This used to point at `Metric tile`,
 // which is `remote: true`: a component from a different library that the Data

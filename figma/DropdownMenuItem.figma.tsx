@@ -7,7 +7,7 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-} from "../components/ui/dropdown-menu"
+} from "dbui/components/ui/dropdown-menu"
 
 const FIGMA_URL =
   "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=766-671"

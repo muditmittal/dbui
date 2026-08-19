@@ -347,7 +347,97 @@ for (const cat of CATEGORIES) {
   console.log("")
 }
 
+/**
+ * A Code Connect snippet is the one piece of this system a consumer copies out of
+ * Figma and pastes into their editor, so its import has to be the specifier they
+ * would actually write — `dbui/components/ui/button`, the same string
+ * `dbui component` prints. A repo-relative path resolves here and nowhere else.
+ *
+ * This was wrong for all 572 imports: the published snippets carried
+ * `../components/ui/button`, and Figma's Dev Mode was serving a path that had not
+ * existed since the packages split. Nothing caught it, because parsing succeeds
+ * either way — the file compiles, the snippet is just useless.
+ */
+const badImports = []
+for (const file of readdirSync(join(ROOT, "figma"))) {
+  if (!file.endsWith(".figma.tsx")) continue
+  const body = read(`figma/${file}`) ?? ""
+  for (const m of body.matchAll(/from\s+["']([^"']+)["']/g)) {
+    const spec = m[1]
+    if (spec.startsWith(".") || spec.startsWith("/")) {
+      badImports.push(`${file}: ${spec} — must be a package specifier, e.g. dbui/components/ui/<name>`)
+    }
+  }
+}
+
+/**
+ * Code Connect names Figma properties directly — `figma.enum("Type", …)`, a
+ * `variant: { Type: "Skewed" }` restriction — and those names are a third surface
+ * that can go stale, separate from the JSDoc tag and from `variant-mappings.json`.
+ *
+ * Nothing checked them, so `Avatar` asked for a `Size` axis it never had and
+ * `Leaderboard` scoped itself to a `Type=Overlay` option that a restructure
+ * removed. Both parsed fine and both were rejected by Figma at publish, which is
+ * the worst place to find out: the publish is all-or-nothing, so two stale strings
+ * blocked all 557 connections.
+ */
+/**
+ * Two things this must not do, both learned by getting them wrong:
+ *
+ * - **Read comments.** Several of these files explain the mapping they replaced —
+ *   "this previously mapped `figma.enum("Type", …)`" — and scanning raw source
+ *   reported the explanation as the bug it documents.
+ * - **Treat every helper as a property.** `figma.textContent`, `figma.children` and
+ *   `figma.nestedProps` take *layer* names; only `enum`, `boolean`, `string` and
+ *   `instance` name a component property.
+ */
+const stripComments = (src) =>
+  src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/.*$/gm, "$1")
+
+const propGaps = []
+for (const file of readdirSync(join(ROOT, "figma"))) {
+  if (!file.endsWith(".figma.tsx")) continue
+  const body = stripComments(read(`figma/${file}`) ?? "")
+  // Which node does each connect call target? Take them in source order.
+  const nodes = [...body.matchAll(/node-id=([\d-]+)/g)].map((m) => m[1])
+  if (!nodes.length) continue
+
+  const check = (propName, option, at) => {
+    // Attribute the reference to the nearest preceding connect call.
+    let node = nodes[0]
+    let best = -1
+    for (const m of body.matchAll(/node-id=([\d-]+)/g)) {
+      if (m.index < at && m.index > best) {
+        best = m.index
+        node = m[1]
+      }
+    }
+    const comp = figmaById.get(node)
+    if (!comp || !comp.p) return
+    const axes = Object.keys(comp.p)
+    if (!axes.includes(propName)) {
+      propGaps.push(`${file}: "${propName}" is not a property of ${comp.n} — it has ${axes.join(", ") || "none"}`)
+      return
+    }
+    const options = comp.p[propName]
+    if (option && Array.isArray(options) && !options.includes(option)) {
+      propGaps.push(`${file}: ${comp.n} · ${propName} has no option "${option}" — only ${options.join(", ")}`)
+    }
+  }
+
+  for (const m of body.matchAll(/figma\.(?:enum|boolean|string|instance)\(\s*["']([^"']+)["']/g)) {
+    check(m[1], null, m.index)
+  }
+  for (const m of body.matchAll(/variant:\s*\{([^}]*)\}/g)) {
+    for (const kv of m[1].matchAll(/["']?([A-Za-z][\w ]*)["']?\s*:\s*["']([^"']+)["']/g)) {
+      check(kv[1].trim(), kv[2], m.index)
+    }
+  }
+}
+
 const sections = [
+  ["Code Connect names a Figma property that does not exist", propGaps],
+  ["Code Connect imports a consumer could not paste", badImports],
   ["React components with no @figma tag", findings.noTag],
   ["@figma tags pointing at a node that does not exist", findings.deadTag],
   ["No Figma layer named in component-index", findings.noLayer],

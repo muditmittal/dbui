@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Heatmap } from "../packages/dbui-viz/src/components/heatmap"
+import { Heatmap } from "dbui-viz/components/heatmap"
 
 // `Viz/Large/Heatmap` — 1160x208. Thirty day columns against six four-hour rows,
 // which puts the grid at 1112x168 and every cell on the system's 28px row.

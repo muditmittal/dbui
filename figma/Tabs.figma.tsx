@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "dbui/components/ui/tabs"
 
 // The Variant property lives on the Figma set but on TabsList in code: Tabs is
 // the root that owns state, and the strip is what carries the treatment.

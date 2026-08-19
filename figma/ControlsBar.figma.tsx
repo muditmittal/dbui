@@ -3,10 +3,10 @@ import {
   ControlsBar,
   ControlsBarFilters,
   ControlsBarActions,
-} from "../components/ui/controls-bar"
-import { Button } from "../components/ui/button"
-import { Input } from "../components/ui/input"
-import { ToggleButton } from "../components/ui/toggle"
+} from "dbui/components/ui/controls-bar"
+import { Button } from "dbui/components/ui/button"
+import { Input } from "dbui/components/ui/input"
+import { ToggleButton } from "dbui/components/ui/toggle"
 
 // `Controls Bar` — the filter/search/sort row below `PageHeader`. Another one that
 // pointed at Figma and had nothing pointing back.

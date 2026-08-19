@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Dropzone } from "../components/ui/dropzone"
+import { Dropzone } from "dbui/components/ui/dropzone"
 
 // `Dropzone` — 828×240, a dashed `action/primary/base` border around an Empty.
 //

@@ -1,11 +1,11 @@
 import figma from "@figma/code-connect"
-import { MetricCard } from "../components/ui/metric-card"
-import { BarChart } from "../packages/dbui-viz/src/components/bar-chart"
-import { LineSeries } from "../packages/dbui-viz/src/components/line-series"
-import { DonutChart } from "../packages/dbui-viz/src/components/donut-chart"
-import { Treemap } from "../packages/dbui-viz/src/components/treemap"
-import { SegmentedBar } from "../packages/dbui-viz/src/components/segmented-bar"
-import { Leaderboard } from "../packages/dbui-viz/src/components/leaderboard"
+import { MetricCard } from "dbui/components/ui/metric-card"
+import { BarChart } from "dbui-viz/components/bar-chart"
+import { LineSeries } from "dbui-viz/components/line-series"
+import { DonutChart } from "dbui-viz/components/donut-chart"
+import { Treemap } from "dbui-viz/components/treemap"
+import { SegmentedBar } from "dbui-viz/components/segmented-bar"
+import { Leaderboard } from "dbui-viz/components/leaderboard"
 
 // `Viz/Card/*` — 408x300, three slots in reading order: metric header, a 376x168
 // viz slot, then the handoff.

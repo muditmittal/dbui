@@ -8,8 +8,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../components/ui/drawer"
-import { Button } from "../components/ui/button"
+} from "dbui/components/ui/drawer"
+import { Button } from "dbui/components/ui/button"
 
 figma.connect(
   Drawer,

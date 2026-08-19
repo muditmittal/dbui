@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../components/ui/select"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "dbui/components/ui/select"
 
 // Select — 2 types × 2 sizes × 6 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=732-601

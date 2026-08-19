@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { SegmentedBar } from "../packages/dbui-viz/src/components/segmented-bar"
+import { SegmentedBar } from "dbui-viz/components/segmented-bar"
 
 // `Viz/Medium/Segmented Bar`, renamed from `Percentage bar`. The one variant axis is
 // `Colors` — the number of segments — which is data rather than a prop, so it maps to

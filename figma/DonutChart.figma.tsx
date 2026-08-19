@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { DonutChart } from "../packages/dbui-viz/src/components/donut-chart"
-import { Legend } from "../packages/dbui-viz/src/components/legend"
+import { DonutChart } from "dbui-viz/components/donut-chart"
+import { Legend } from "dbui-viz/components/legend"
 
 // `Viz/Medium/Donut` — 400x168. `Centred` is the ring alone; `Legend` pairs it with
 // `Viz/Inner/Legend`, because Vega draws a legend but cannot put a figure beside

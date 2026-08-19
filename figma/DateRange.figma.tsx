@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { DateRange, DateRangeField } from "../components/ui/date-range"
+import { DateRange, DateRangeField } from "dbui/components/ui/date-range"
 
 // `Date Range` — the start/end pair. It had a live `@figma` tag pointing at this
 // node and no Code Connect coming back, so the link only worked in one direction.

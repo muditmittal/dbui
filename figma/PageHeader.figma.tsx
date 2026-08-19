@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { PageHeader, PageHeaderTitle, PageHeaderActions } from "../components/ui/page-header"
-import { Button } from "../components/ui/button"
+import { PageHeader, PageHeaderTitle, PageHeaderActions } from "dbui/components/ui/page-header"
+import { Button } from "dbui/components/ui/button"
 
 // Figma: Page Header (single horizontal row — title + actions)
 // url=https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3860-1619

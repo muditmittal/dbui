@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group"
+import { RadioGroup, RadioGroupItem } from "dbui/components/ui/radio-group"
 
 // Radio — 2 selected states × 5 interaction states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=715-650

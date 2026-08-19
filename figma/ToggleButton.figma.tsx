@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { Toggle, FilterToggle } from "../components/ui/toggle"
-import { ThumbsUp } from "../components/icons/ThumbsUp"
+import { Toggle, FilterToggle } from "dbui/components/ui/toggle"
+import { ThumbsUp } from "dbui/components/icons/ThumbsUp"
 
 // ToggleButton — 4 variants × 2 sizes × 5 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=478-613

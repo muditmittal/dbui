@@ -5,8 +5,8 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu"
-import { Button } from "../components/ui/button"
+} from "dbui/components/ui/dropdown-menu"
+import { Button } from "dbui/components/ui/button"
 
 figma.connect(
   DropdownMenu,

@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group"
-import { Label } from "../components/ui/label"
+import { RadioGroup, RadioGroupItem } from "dbui/components/ui/radio-group"
+import { Label } from "dbui/components/ui/label"
 
 figma.connect(RadioGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3157-2958", {
   example: () => (

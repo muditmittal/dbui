@@ -1,7 +1,7 @@
 import figma from "@figma/code-connect"
-import { CodeBlock } from "../components/ui/code-block"
-import { Terminal } from "../components/ui/terminal"
-import { SchemaBrowser } from "../components/ui/schema-browser"
+import { CodeBlock } from "dbui/components/ui/code-block"
+import { Terminal } from "dbui/components/ui/terminal"
+import { SchemaBrowser } from "dbui/components/ui/schema-browser"
 
 // The three content surfaces a workbench preview tab needs. None has a variant
 // axis: what changes between uses is the content, not a mode.

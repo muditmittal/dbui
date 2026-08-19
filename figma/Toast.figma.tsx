@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Toaster } from "../components/ui/sonner"
+import { Toaster } from "dbui/components/ui/sonner"
 
 // The Toast (Sonner) component is a function call, not a React component.
 // Code Connect maps the Figma Toast component to the toast() imperative API.

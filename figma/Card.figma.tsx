@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../components/ui/card"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "dbui/components/ui/card"
 
 figma.connect(Card, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3154-4736", {
   props: {

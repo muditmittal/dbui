@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { AspectRatio } from "../components/ui/aspect-ratio"
+import { AspectRatio } from "dbui/components/ui/aspect-ratio"
 
 figma.connect(AspectRatio, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3178-2833", {
   props: {

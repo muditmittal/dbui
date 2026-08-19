@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { Label } from "../components/ui/label"
-import { Input } from "../components/ui/input"
+import { Label } from "dbui/components/ui/label"
+import { Input } from "dbui/components/ui/input"
 
 // FormInput is a composition — connect to the Field Figma node
 // Shows a simple Input field with label; other types (Textarea, Select, Combobox) have their own Code Connect files

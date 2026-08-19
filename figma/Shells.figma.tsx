@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { AssistantPanel } from "../packages/dbui-shells/src/components/AssistantPanel"
-import { PreviewPopup } from "../packages/dbui-shells/src/compositions/PreviewPopup"
+import { AssistantPanel } from "dbui-shells/components/AssistantPanel"
+import { PreviewPopup } from "dbui-shells/compositions/PreviewPopup"
 
 // Two compositions that had a Figma master and a React implementation but nothing
 // connecting them, so opening either in Dev Mode offered no code.

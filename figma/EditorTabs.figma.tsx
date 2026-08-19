@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { EditorTabs, EditorTab, EditorTabAddButton } from "../components/ui/editor-tabs"
+import { EditorTabs, EditorTab, EditorTabAddButton } from "dbui/components/ui/editor-tabs"
 
 figma.connect(EditorTabs, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3179-5135", {
   example: () => (

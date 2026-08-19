@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Legend } from "../packages/dbui-viz/src/components/legend"
+import { Legend } from "dbui-viz/components/legend"
 
 // `Viz/Inner/Legend` — an inner part, placed inside `Viz/Medium/Donut`. It carries no variant axis yet:
 // the header is a row a designer hides, so `columns` maps to whether the prop is

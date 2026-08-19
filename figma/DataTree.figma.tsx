@@ -1,8 +1,8 @@
 import figma from "@figma/code-connect"
-import { DataTree, FileTree } from "../components/ui/data-tree"
-import { Catalog } from "../components/icons/Catalog"
-import { Database } from "../components/icons/Database"
-import { Table } from "../components/icons/Table"
+import { DataTree, FileTree } from "dbui/components/ui/data-tree"
+import { Catalog } from "dbui/components/icons/Catalog"
+import { Database } from "dbui/components/icons/Database"
+import { Table } from "dbui/components/icons/Table"
 
 // The two L2 trees. `Tree.figma.tsx` already connects the L1 `.TreeNode` primitive;
 // these are the assembled `Data Tree` and `File Tree` compositions, which had no

@@ -1,29 +1,29 @@
 import figma from "@figma/code-connect"
-import { Message, MessageContent } from "../packages/dbui-chat/src/components/message"
-import { Confirmation } from "../packages/dbui-chat/src/components/confirmation"
-import { Suggestions, Suggestion } from "../packages/dbui-chat/src/components/suggestion"
-import { Checkpoint } from "../packages/dbui-chat/src/components/checkpoint"
-import { Queue, QueueSection, QueueItem } from "../packages/dbui-chat/src/components/queue"
-import { Artifact } from "../packages/dbui-chat/src/components/artifact"
-import { MessageActions } from "../packages/dbui-chat/src/components/message-actions"
-import { MessageThumbnail } from "../packages/dbui-chat/src/components/message-thumbnail"
-import { Source as SourceLink, Sources as SourcesList } from "../packages/dbui-chat/src/components/sources"
-import { Reasoning } from "../packages/dbui-chat/src/components/reasoning"
-import { Task, TaskItem } from "../packages/dbui-chat/src/components/task"
-import { Plan, PlanItem } from "../packages/dbui-chat/src/components/plan"
-import { Sources, Source } from "../packages/dbui-chat/src/components/sources"
+import { Message, MessageContent } from "dbui-chat/components/message"
+import { Confirmation } from "dbui-chat/components/confirmation"
+import { Suggestions, Suggestion } from "dbui-chat/components/suggestion"
+import { Checkpoint } from "dbui-chat/components/checkpoint"
+import { Queue, QueueSection, QueueItem } from "dbui-chat/components/queue"
+import { Artifact } from "dbui-chat/components/artifact"
+import { MessageActions } from "dbui-chat/components/message-actions"
+import { MessageThumbnail } from "dbui-chat/components/message-thumbnail"
+import { Source as SourceLink, Sources as SourcesList } from "dbui-chat/components/sources"
+import { Reasoning } from "dbui-chat/components/reasoning"
+import { Task, TaskItem } from "dbui-chat/components/task"
+import { Plan, PlanItem } from "dbui-chat/components/plan"
+import { Sources, Source } from "dbui-chat/components/sources"
 import {
   PromptInput,
   PromptInputTextarea,
   PromptInputActions,
   PromptInputSubmit,
-} from "../packages/dbui-chat/src/components/prompt-input"
+} from "dbui-chat/components/prompt-input"
 import {
   Details,
   DetailsHeader,
   DetailsRows,
   DetailsRow,
-} from "../packages/dbui-chat/src/components/details"
+} from "dbui-chat/components/details"
 
 // The chat family, in one file because they are one surface: a thread is a Message
 // holding a Reasoning, a Task, a Plan and its Sources, with a PromptInput below.

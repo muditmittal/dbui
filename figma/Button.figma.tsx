@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Button } from "../components/ui/button"
+import { Button } from "dbui/components/ui/button"
 
 // Button — 7 variants × 2 sizes × 6 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=477-773

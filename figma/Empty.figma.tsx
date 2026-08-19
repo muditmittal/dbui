@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "../components/ui/empty"
-import { Button } from "../components/ui/button"
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "dbui/components/ui/empty"
+import { Button } from "dbui/components/ui/button"
 
 figma.connect(Empty, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3130-1793", {
   example: () => (

@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Slider } from "../components/ui/slider"
+import { Slider } from "dbui/components/ui/slider"
 
 // Slider — 5 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=1039-2406

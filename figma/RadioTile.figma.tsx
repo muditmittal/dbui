@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "../components/ui/radio-tile"
+import { RadioTileGroup, RadioTile, RadioTileHeader, RadioTileTitle, RadioTileDescription } from "dbui/components/ui/radio-tile"
 
 figma.connect(RadioTileGroup, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=1021-3727", {
   props: {

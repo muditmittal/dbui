@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { LineSeries } from "../packages/dbui-viz/src/components/line-series"
+import { LineSeries } from "dbui-viz/components/line-series"
 
 // `LineSeries` answers to three Figma components.
 //

@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem } from "../components/ui/combobox"
+import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem } from "dbui/components/ui/combobox"
 
 // Combobox — 2 sizes × 6 states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=811-976

@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { BarChart } from "../packages/dbui-viz/src/components/bar-chart"
+import { BarChart } from "dbui-viz/components/bar-chart"
 
 // `BarChart` answers to four Figma components: plain and stacked, at each size.
 //

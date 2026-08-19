@@ -1,6 +1,6 @@
 import figma from "@figma/code-connect"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose, DialogTrigger } from "../components/ui/dialog"
-import { Button } from "../components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose, DialogTrigger } from "dbui/components/ui/dialog"
+import { Button } from "dbui/components/ui/button"
 
 figma.connect(
   Dialog,

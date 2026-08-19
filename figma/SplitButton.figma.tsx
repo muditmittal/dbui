@@ -1,7 +1,7 @@
 import figma from "@figma/code-connect"
-import { SplitButton, SplitButtonSeparator } from "../components/ui/split-button"
-import { Button } from "../components/ui/button"
-import { ChevronDown } from "../components/icons/ChevronDown"
+import { SplitButton, SplitButtonSeparator } from "dbui/components/ui/split-button"
+import { Button } from "dbui/components/ui/button"
+import { ChevronDown } from "dbui/components/icons/ChevronDown"
 
 // SplitButton — 2 variants × 2 sizes
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=580-527

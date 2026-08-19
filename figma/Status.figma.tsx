@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Status } from "../components/ui/status"
+import { Status } from "dbui/components/ui/status"
 
 figma.connect(Status, "https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv/DBUI-Design-System?node-id=3174-4132", {
   props: {

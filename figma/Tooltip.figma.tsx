@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "dbui/components/ui/tooltip"
 
 figma.connect(
   Tooltip,

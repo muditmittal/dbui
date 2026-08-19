@@ -1,5 +1,5 @@
 import figma from "@figma/code-connect"
-import { Switch } from "../components/ui/switch"
+import { Switch } from "dbui/components/ui/switch"
 
 // Switch — 2 sizes × 2 on states × 5 interaction states
 // Figma node: https://www.figma.com/design/OftbSQf85jOPln9RhSEhVv?node-id=717-650

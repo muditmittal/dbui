@@ -1,7 +1,7 @@
 import figma from "@figma/code-connect"
-import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertAction, AlertClose } from "../components/ui/alert"
-import { Button } from "../components/ui/button"
-import { InfoFill } from "../components/icons/InfoFill"
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription, AlertAction, AlertClose } from "dbui/components/ui/alert"
+import { Button } from "dbui/components/ui/button"
+import { InfoFill } from "dbui/components/icons/InfoFill"
 
 figma.connect(
   Alert,
